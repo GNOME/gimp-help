@@ -36,7 +36,8 @@ MAKEINDEX = $(top_srcdir)/stylesheets/makeindex.xsl
 HELP_STAMPS = \
 	clean.stamp	\
 	css.stamp	\
-	print.stamp	\
+	latex.stamp	\
+	pdf.stamp	\
 	html.stamp	\
 	images.stamp	\
 	index.stamp	\
@@ -104,23 +105,33 @@ profile.stamp: mkdirs.stamp $(XML_FILES) $(DTD_FILES)
 	  echo '-- Profiling XML for '$$lang;\
 	  $(XSLTPROC) $(XSLTFLAGS) --xinclude \
 	     --stringparam profile.lang $$lang -o $$lang.xml \
-	     $(STYLEBASE)/profiling/profile.xsl \
+	     ../stylesheets/profile.xsl \
              ../src/gimp.xml; \
 	done;
 	touch profile.stamp
 
-print.stamp: profile.stamp $(XML_FILES) $(DTD_FILES)
-	@echo '*** Building PDF ***'
+latex.stamp: profile.stamp $(XML_FILES) $(DTD_FILES)
+	@echo '*** Building LaTeX files ***'
 	cd $(top_srcdir)/print && ln -s ../images ./images;
 	for lang in $(ALL_LINGUAS); do \
-	  echo '-- Building PDF for '$$lang;\
+	  echo '-- Building LaTeX for '$$lang;\
 	  (cd $(top_srcdir)/print/$$lang && \
-	    $(XSLTPROC) $(XSLTFLAGS) -o $$lang.tex --xinclude \
+	    $(XSLTPROC) $(XSLTFLAGS) --noout -o $$lang.tex --xinclude \
 		--stringparam l10n.gentext.default.language $$lang \
 		--stringparam profile.lang $$lang \
 		../../stylesheets/plainprint.xsl ../../xml/$$lang.xml); \
 	done;
-	touch print.stamp
+	touch latex.stamp
+
+pdf.stamp: latex.stamp $(XML_FILES) $(DTD_FILES)
+	@echo '*** Building PDF files ***'
+	cd $(top_srcdir)/print;
+	for lang in $(ALL_LINGUAS); do \
+	  echo '-- Building PDF for '$$lang; \
+	  (cd $(top_srcdir)/print/$$lang && \
+	    pdflatex  $$lang.tex); \
+	done;
+	touch pdf.stamp
 
 html.stamp: profile.stamp $(XML_FILES) $(DTD_FILES)
 	@echo '*** Building HTML ***'
@@ -144,11 +155,15 @@ index.stamp: html.stamp
 	done;
 	touch index.stamp
 
-lint:
+lint: profile.stamp $(XML_FILES) $(DTD_FILES)
 	@echo '*** Checking XML for well-formed-ness ***'
 	@for xml in $(XML_FILES); do \
 	  xmllint --noout $$xml || exit; \
 	done
+
+#valid: profile.stamp $(XML_FILES) $(DTD_FILES)
+#	@echo '*** Checking XML for validity ***'
+#	cd xml && xmllint --noout --valid ${LANG}.xml || exit; 
 
 if GIMP_HELP_BUILD
 
