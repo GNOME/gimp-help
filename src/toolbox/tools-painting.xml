@@ -4,13 +4,15 @@
   <title lang="en">Painting Tools (Pencil, Paintbrush, Airbrush)</title>
   <title lang="de">Bleistift, Pinsel, Airbrush</title>
   <title lang="fr">Crayon, Pinceau, Aérographe</title>
+  <title lang="zh_CN">涂画工具(铅笔，画笔和喷枪)</title>
 
   <indexterm>
     <primary lang="en">Toolbox</primary>
     <primary lang="de">Werkzeugfenster</primary>
     <primary lang="fr">Boîte à Outils</primary>
-    <primary lang="zh_CN">工具栏</primary>
+    <primary lang="zh_CN">工具箱</primary>
     <secondary lang="en">Painting Tools</secondary>
+    <secondary lang="zh_CN">涂画工具</secondary>
   </indexterm>
   
   <informalfigure>
@@ -27,6 +29,9 @@
         shown in upper left), using the Pencil (left), Paintbrush
         (middle), and Airbrush (right).
       </para>
+      <para lang="zh_CN">
+        三个使用相同圆的模糊画笔(显示在左上方)涂画的笔划，分别使用铅笔(左)，画笔(中)和喷枪(右)。
+      </para>
     </caption>
   </informalfigure>
 
@@ -37,6 +42,9 @@
     the <link linkend='gimp-tool-brush'>Common Features</link>
     section.  Features specific to an individual tool are described in
     the section devoted to that tool.
+  </para>
+  <para lang="zh_CN">
+    该组的工具是 GIMP 中基本的涂画工具，它们有很多相同的特性，所以有必要在这节将它们一起介绍。画笔工具的所以共同特性在<link linkend='gimp-tool-brush'>基本特性</link>中有介绍，而每个工具单独的特性则在其自己的章节中介绍。
   </para>
 
   <para lang='en'>
@@ -49,11 +57,17 @@
     This flexibility also makes it a bit more difficult to use than
     the Paintbrush, however.
   </para>
+  <para lang="zh_CN">
+    铅笔是该组中最原始的工具：它产生硬质，没有平滑边缘的画笔笔划。画笔则高级一些：它可能是该组中最常用的。喷枪是最灵活和可控制的：它是唯一依靠画笔移动速度来决定其涂画量，不过该灵活性使它比画笔稍微难使用一些。
+  </para>
 
   <para lang='en'>
     All of these tools share the same brushes, and the same options
     for choosing colors, either from the basic palette or from a
     gradient. All are capable of painting in a wide variety of modes. 
+  </para>
+  <para lang="zh_CN">
+    所以这些工具共享相同的画笔，和相同的选择颜色的选项--从渐变或基本色板中。它们都可以在多种模式中涂画。
   </para>
   
   <simplesect>
@@ -73,9 +87,9 @@
         <term lang="fr">
           <keycap>Ctrl</keycap>
         </term>
-	<term lang="zh_CN">
-	  <keycap>Ctrl</keycap>
-	</term>
+	    <term lang="zh_CN">
+	      <keycap>Ctrl</keycap>
+	    </term>
         <listitem>
           <para lang="en">
             Holding down the Ctrl key changes each of these tools to a <link
@@ -94,9 +108,8 @@
             <keycap>Ctrl</keycap> transforme le crayon en <link
               linkend='gimp-tool-color-picker'>Pipette à couleurs</link>.
           </para>
-	  <para lang="zh_CN">
-	    <keycap>Ctrl</keycap> 使铅笔工具转为<link
-              linkend='gimp-tool-color-picker'>颜色拾取</link>。
+	      <para lang="zh_CN">
+	        按住 <keycap>Ctrl</keycap> 会使这些工具转为<link linkend='gimp-tool-color-picker'>颜色拾取</link>：点击任何图层中的像素，将使前景色(显示在工具箱颜色区域中)变为该像素的颜色。
           </para>
         </listitem>
       </varlistentry>
@@ -192,9 +205,38 @@
         </para>
       </listitem>
       <listitem lang="zh_CN">
-	<para>
-	  模式下拉列表提供一系列涂画应用模式。术语表中右这些模式的列表。
-	</para>
+        <para>          
+          模式下拉菜单提供一系列涂画应用模式。这些模式显示在所有的画笔工具的工具选项中，不过在除了该组的其它工具中是灰色的，不如墨水和克隆工具。可选模式的列表在<link linkend='glossary-modes'>术语表</link>中。这些模式大部分和图层对话框中可用的图层组合模式相同，要理解这些效果，可以将它们想象是在目标图层上的一个选定模式的单独图层上进行涂画。有三个模式比较特殊：
+        </para>
+        <formalpara>
+          <title>颜色擦除</title>
+          该模式擦除前景色，并用部分透明代替，其效果和对画笔笔划使用<link linkend='plug-in-colortoalpha'>颜色到 Alpha</link>滤镜相同。需要注意的是它只能对有 Alpha 通道的图层上工作，否则就相当与“正常”模式。
+        </formalpara>
+        <formalpara>
+          <title>背后</title>
+          <para>该模式只对应用在图层的有透明度区域：不透明度越低，应用的涂画越多，因此对不透明的图层没有效果;涂画透明区域则和正常模式相同。其结果常常是使不透明度增加。当然对于没有 Alpha 通道的图层该模式没有意义。
+          </para>
+        </formalpara>
+        <informalfigure>
+          <mediaobject>
+            <imageobject>
+              <imagedata
+                fileref='../images/toolbox/dissolve-mode-example.png'
+                format="PNG"/> 
+            </imageobject>
+          </mediaobject>
+          <caption>
+            <para>
+              用相同圆形模糊画笔的喷枪产生的画笔笔划：左：普通模式。右：融化模式。
+            </para>
+          </caption>
+        </informalfigure>
+        <formalpara>
+          <title>融化</title>
+          <para>
+          这是非常有用的模式，对于模糊画笔，其画笔的灰度等级不光决定涂画密度，还有应用画笔的机率。它提供了一种生成粗糙画笔的好办法。
+          </para>
+        </formalpara>
       </listitem>
     </varlistentry>
 
@@ -207,7 +249,7 @@
 
       <listitem>
         <informalfigure>
-          <mediaobject lang="en">
+          <mediaobject>
             <imageobject>
               <imagedata
               fileref='../images/toolbox/tool-options-paint-gradient.png'
@@ -217,6 +259,9 @@
           <caption>
             <para lang='en'>
               Gradient options for painting tools.
+            </para>
+            <para lang="zh_CN">
+              涂画工具的渐变选项。
             </para>
           </caption>
         </informalfigure>
@@ -250,10 +295,14 @@
           située juste à droite de "Dégradé". En cochant la case 
           <guilabel>Inverser</guilabel> vous inversez le sens du dégradé.
         </formalpara>
-        <para lang='zh_CN'>
-          可以从下拉列表中选择不同的渐变图案。该工具生成一个从前景色逐渐转为背景色的淡出图案，其方向由用户在图像上画线的方向决定。<guilabel>反向</guilabel>勾选框交换渐变中的前景和背景色。
-        </para>
 
+        <para lang="zh_CN">   
+          除了使用前景色(在工具箱颜色区域显示)，通过“使用渐变中的颜色”选项，您可以用渐变中的颜色来涂画，其颜色会随画笔轨迹逐渐变化。关于渐变的基本信息，情看<link linkend='gimp-gradients'>渐变</link>这节。
+        </para>
+        <para lang="zh_CN">
+          您有很多控制使用什么渐变和如何排列的选项。
+        </para>
+ 
         <formalpara lang='en'>
           <title>Gradient</title>
           Here you see a display of the current gradient.
@@ -280,9 +329,18 @@
           l'option "Couleur à partir du dégradé". Ce dégradé peut être 
           inversé en cochant l'option <guilabel>Inverser</guilabel>.
         </para>
-        <para lang="zh_CN">
-          勾取勾选框时，将使用渐变中的颜色，而不是前景和背景色。
-        </para> 
+        <formalpara lang="zh_CN">
+          <title>渐变</title>
+          <para>
+            这里显示当前渐变。点击它将唤出渐变选择器，其中可以选择不同的渐变。
+          </para>
+        </formalpara>
+        <formalpara lang="zh_CN">
+          <title>反向</title>
+          <para>
+            画笔笔划其颜色一般是从渐变左边的颜色向右边进行，而勾选“反向”，笔划将从渐变右边的颜色向左边进行。
+          </para>
+        </formalpara>
 
         <formalpara lang='en'>
           <title>Length</title>
@@ -296,9 +354,12 @@
           représentation du dégradé). Toute la séquence du dégradé sera 
           utilisée sur la <guilabel>Longueur</guilabel> fixée.
         </para>
-        <para lang="zh_CN">
-          渐变将被向前涂画。整个渐变的颜色顺序会在设定的长度内被渲染。
-        </para>
+        <formalpara lang="zh_CN">
+          <title>长度</title>
+            <para>
+              该选项设置遍历渐变颜色完整一圈的距离，其默认单位是像素，不过通过单位菜单可以更改为不同的单位。
+            </para>
+        </formalpara>
 
       <informaltable frame='none'>
         <tgroup cols='3'>
@@ -332,7 +393,7 @@
                 Dégradé
               </para>
               <para lang='zh_CN'>
-                渐变
+                Abstract2 渐变
               </para>
             </entry>
             <entry />
@@ -374,6 +435,9 @@
               <para lang='fr'>
                 Aucun
               </para>
+              <para lang="zh_CN">
+                无
+              </para>
             </entry>
             <entry>
               <para lang='en'>
@@ -384,6 +448,9 @@
               </para>
               <para lang='fr'>
                 En dents de scie
+              </para>
+              <para lang="zh_CN">
+                锯齿
               </para>
             </entry>
             <entry>
@@ -396,6 +463,9 @@
               <para lang='fr'>
                 Triangulaire
               </para>
+              <para lang="zh_CN">
+                三角
+              </para>
             </entry>
           </row>
         </tbody>
@@ -404,6 +474,9 @@
           <para lang='en'>
             Illustration of the effects of the three gradient-repeat
             options, for the "Abstract 2" gradient. 
+          </para>
+          <para lang="zh_CN">
+            “Abstract 2”渐变的三种渐变重复模式。
           </para>
         </caption>
       </informaltable>
@@ -458,12 +531,12 @@
           <guilabel>Aucun</guilabel>: le dégradé ne sera appliqué 
           qu'une fois lors du coup de pinceau, sur la longueur fixée.
         </para>
-        <para lang="zh_CN">
-          <guilabel>锯齿波</guilabel>：反复渲染渐变。渐变从每个长度结束处重新开始渲染。	
-        </para>
-        <para lang="zh_CN">
-          <guilabel>三角波</guilabel>：重复渲染渐变。渐变在每个长度结束时都掉转方向继续渲染。
-        </para>
+        <formalpara lang="zh_CN">
+          <title>重复</title>
+          <para>
+            该选项决定当画笔笔划超出上面设定的长度值时如何处理。有三种可能：“无”表示剩下的笔划将使用渐变尾部的颜色;“锯齿波”指反复渲染渐变，渐变从每个长度结束处重新从头开始渲染，它常常导致颜色不连贯。“三角波”也是重复渲染渐变，不过渐变在每个长度结束时都掉转方向继续渲染直到笔划结束。
+          </para>
+        </formalpara>
       </listitem>
     </varlistentry>
 
