@@ -16,14 +16,14 @@ C: $(XML_FILES) ../stylesheets/plainhtml.xsl
 	mkdir C
 	cp ../stylesheets/gimp-help-plain.css C/
 	cd C && $(XSLTPROC) --nonet ../../stylesheets/plainhtml.xsl ../$(BASE_FILE)
-	$(XSLTPROC) ../stylesheets/makeindex.xsl C/gimp-xrefs-en.xml > C/gimp-help.xml
+	$(XSLTPROC) ../stylesheets/makeindex.xsl C/gimp-xrefs-en.xml > gimp-help.xml
 
 de: $(XML_FILES) ../stylesheets/plainhtml.de.xsl
 	rm -rf de
 	mkdir de
 	cp ../stylesheets/gimp-help-plain.css de/
 	cd de && $(XSLTPROC) --nonet ../../stylesheets/plainhtml.de.xsl ../$(BASE_FILE)
-	$(XSLTPROC) ../stylesheets/makeindex.xsl de/gimp-xrefs-de.xml > de/gimp-help.xml
+	$(XSLTPROC) ../stylesheets/makeindex.xsl de/gimp-xrefs-de.xml > gimp-help.xml
 
 clean: rm -rf de
 	rm -rf C
