@@ -12,49 +12,65 @@ XML_FILES = \
 	$(wildcard $(top_srcdir)/src/*.xml)	\
 	$(wildcard $(top_srcdir)/src/*/*.xml)
 
+CSS_FILE = $(top_srcdir)/stylesheets/gimp-help-plain.css
+
 HELP_STAMPS = html-build.stamp
 
 
 all-local: html-build.stamp
 
 
-html-build.stamp:  $(XML_FILES)
+html-build.stamp:  $(XML_FILES) $(CSS_FILE)
 	@echo '*** Building HTML ***'
+
 	rm -rf $(srcdir)/html 
 	mkdir $(srcdir)/html
+
 	for lang in C $(ALL_LINGUAS); do \
 	  mkdir $(srcdir)/html/$$lang; \
-	  cp $(top_srcdir)/stylesheets/gimp-help-plain.css $(srcdir)/html/$$lang; \
+	  cp $(CSS_FILE) $(srcdir)/html/$$lang; \
 	done;
 
 	@echo '-- Building HTML for C';
-	(cd $(srcdir)/html/C && $(XSLTPROC) $(XSLTFLAGS) --xinclude ../../stylesheets/plainhtml.xsl ../../src/gimp.xml)
+	(cd $(srcdir)/html/C && \
+           $(XSLTPROC) $(XSLTFLAGS) --xinclude \
+              --stringparam l10n.gentext.default.language en \
+              --stringparam profile.lang en \
+              ../../stylesheets/plainhtml.xsl ../../src/gimp.xml)
 
 	for lang in $(ALL_LINGUAS); do \
 	  echo '-- Building HTML for '$$lang; \
-	  (cd $(srcdir)/html/$$lang && $(XSLTPROC) $(XSLTFLAGS) --xinclude ../../stylesheets/plainhtml.$$lang.xsl ../../src/gimp.xml); \
+	  (cd $(srcdir)/html/$$lang && \
+             $(XSLTPROC) $(XSLTFLAGS) --xinclude \
+                --stringparam l10n.gentext.default.language $$lang \
+                --stringparam profile.lang $$lang \
+                ../../stylesheets/plainhtml.xsl ../../src/gimp.xml); \
 	done;
 
 	@echo '*** Generating index ***';
 
 	@echo '-- Generating index for C';
-	$(XSLTPROC) $(XSLTFLAGS) $(top_srcdir)/stylesheets/makeindex.xsl $(srcdir)/html/C/gimp-xrefs.xml > $(srcdir)/html/gimp-help.xml;
+	$(XSLTPROC) $(XSLTFLAGS) \
+          $(top_srcdir)/stylesheets/makeindex.xsl \
+          $(srcdir)/html/C/gimp-xrefs.xml > $(srcdir)/html/gimp-help.xml;
 
 	for lang in $(ALL_LINGUAS); do \
 	  echo '-- Generating index for '$$lang; \
-	  $(XSLTPROC) $(XSLTFLAGS) $(top_srcdir)/stylesheets/makeindex.xsl $(srcdir)/html/$$lang/gimp-xrefs.xml > $(srcdir)/html/gimp-help.$$lang.xml; \
+	  $(XSLTPROC) $(XSLTFLAGS) \
+	     $(top_srcdir)/stylesheets/makeindex.xsl \
+	     $(srcdir)/html/$$lang/gimp-xrefs.xml > $(srcdir)/html/gimp-help.$$lang.xml; \
 	done;
 
 	@echo '*** Copying images ***'
 	mkdir $(srcdir)/html/images
 	for dir in $(IMAGES_DIRS); do \
 	  if test -d $(IMAGES_BASE)/$$dir; then \
-	    echo '-- Copying images from '$(IMAGES_BASE)/$$dir ; \
-	    mkdir $(srcdir)/html/images/$$dir && cp $(IMAGES_BASE)/$$dir/*.png $(srcdir)/html/images/$$dir ; \
+	    mkdir $(srcdir)/html/images/$$dir && \
+              cp $(IMAGES_BASE)/$$dir/*.png $(srcdir)/html/images/$$dir ; \
 	    for lang in $(ALL_LINGUAS); do \
 	      if test -d $(IMAGES_BASE)/$$dir/$$lang; then \
-	        echo '-- Copying images from '$(IMAGES_BASE)/$$dir/$$lang ; \
-	        mkdir $(srcdir)/html/images/$$dir/$$lang && cp $(IMAGES_BASE)/$$dir/$$lang/*.png $(srcdir)/html/images/$$dir/$$lang ; \
+	        mkdir $(srcdir)/html/images/$$dir/$$lang && \
+	          cp $(IMAGES_BASE)/$$dir/$$lang/*.png $(srcdir)/html/images/$$dir/$$lang ; \
 	      fi \
 	    done; \
 	  fi \
