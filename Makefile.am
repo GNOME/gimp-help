@@ -58,7 +58,7 @@ EXTRA_DIST = \
 clean.stamp:
 	@echo '*** Removing the built help files ***'
 	rm -rf html
-	rm -rf print
+	rm -rf pdf 
 	rm -rf xml
 	@echo '*** Removing temporary files ***'
 	rm -rf `find . -name "*~"`
@@ -69,10 +69,11 @@ clean.stamp:
 
 mkdirs.stamp:
 	@echo '*** Creating directories ***'
+	$(mkinstalldirs) pdf/;
 	@for lang in $(ALL_LINGUAS); do \
 	  $(mkinstalldirs) html/$$lang; \
 	  cp $(CSS_FILES) html/$$lang; \
-	  $(mkinstalldirs) print/$$lang; \
+	  $(mkinstalldirs) pdf/$$lang; \
 	done;
 	$(mkinstalldirs) xml; \
 	$(mkinstalldirs) html/images; \
@@ -102,6 +103,15 @@ images.stamp: mkdirs.stamp $(IMAGE_FILES)
 	done
 	touch images.stamp
 
+convert.stamp: mkdirs.stamp images.stamp $(IMAGE_FILES)
+	@echo '*** Converting Images to 8bit depth ***'
+	cd $(top_srcdir)/html/images/; \
+	for i in `find ./ -name '*.png' -type f`; do \
+	  echo "Converting" $$i && \
+	  $(CONVERT) $$i $$i; \
+	done; \
+	touch convert.stamp
+
 profile.stamp: mkdirs.stamp $(XML_FILES) $(DTD_FILES)
 	@echo '*** Profiling XML files ***'
 	@cd $(top_srcdir) && \
@@ -118,10 +128,10 @@ profile.stamp: mkdirs.stamp $(XML_FILES) $(DTD_FILES)
 
 latex.stamp: profile.stamp $(XML_FILES) $(DTD_FILES)
 	@echo '*** Building LaTeX files ***'
-	@cd $(top_srcdir)/print && ln -s ../images ./images;
+	@cd $(top_srcdir)/pdf && ln -s ../images ./images;
 	@for lang in $(ALL_LINGUAS); do \
 	  echo '-- Building LaTeX for '$$lang;\
-	  (cd $(top_srcdir)/print/$$lang && \
+	  (cd $(top_srcdir)/pdf/$$lang && \
 	    $(XSLTPROC) $(XSLTFLAGS) --noout -o $$lang.tex --xinclude \
 		--stringparam l10n.gentext.default.language $$lang \
 		--stringparam profile.lang $$lang \
@@ -131,10 +141,10 @@ latex.stamp: profile.stamp $(XML_FILES) $(DTD_FILES)
 
 pdf.stamp: latex.stamp $(XML_FILES) $(DTD_FILES)
 	@echo '*** Building PDF files ***'
-	@cd $(top_srcdir)/print;
+	@cd $(top_srcdir)/pdf;
 	@for lang in $(ALL_LINGUAS); do \
 	  echo '-- Building PDF for '$$lang; \
-	  (cd $(top_srcdir)/print/$$lang && \
+	  (cd $(top_srcdir)/pdf/$$lang && \
 	    pdflatex  $$lang.tex); \
 	done;
 	touch pdf.stamp
@@ -172,14 +182,15 @@ validate: profile.stamp $(XML_FILES) $(DTD_FILES)
 	@for lang in $(ALL_LINGUAS); do \
 	  echo '-- Validating XML for '$$lang;\
 	  xmllint --noout --valid xml/$$lang.xml >/dev/null 2>xml/$$lang-validity_errors.log; \
-	done
+	done; \
+	echo '!!! Please correct these errors before writing new content !!!'
 
 
 if GIMP_HELP_BUILD
 
 dist-check-build:
 
-all-local: clean.stamp css.stamp images.stamp index.stamp
+all-local: clean.stamp css.stamp images.stamp index.stamp validate
 
 CLEANFILES = $(HELP_STAMPS)
 
