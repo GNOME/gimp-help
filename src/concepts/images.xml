@@ -1,0 +1,353 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<sect1 id='gimp-concepts-images' xmlns:xi="http://www.w3.org/2001/XInclude"
+  lang="en;de;fr;zh_CN">
+  <title lang="en">Working with Images</title>
+  <title lang='de'>Mit Bildern arbeiten</title>
+  <title lang="fr">Travailler avec des Images</title>
+  <title lang="zh_CN">了解图像</title>
+
+  <sect2>
+    <title lang='en'>Image types</title>
+    <title lang='de'>Bildtypen</title>
+   <title lang='fr'>Types d'images</title>
+    <title lang="zh_CN">图像格式</title>
+
+    <para lang='en'>
+      It is tempting to think of an <emphasis>image</emphasis> as
+      something that corresponds a single display window, or to a single
+      file such as a <link linkend='file-jpeg-load'>JPEG</link> file,
+      but really a Gimp image is a rather complicated structure,
+      containing a stack of layers plus several other types of objects:
+      a selection mask, a set of channels, a set of paths, an "undo"
+      history, etc.  In this section we are going to take a detailed
+      look at all of the components of an image, and the things you can
+      do with them.
+    </para>
+    <para lang='de'>
+      Man möchte am liebsten den Begriff des <emphasis>Bildes</emphasis>
+      durch ein Bildformat wie es <link
+      linkend='file-jpeg-load'>JPEG</link> beispielsweise ist,
+      beschreiben.  Vielleicht könnte man den Begriff auch annähern in
+      dem man das Bildfenster beschreibt.  Jedoch ist ein
+      <acronym>Gimp</acronym> Bild etwas viel komplexeres. Eine Struktu
+      aus einem Stapel von Ebenen, Bildobjekten, Masken, Pfaden etc. In
+      diesem Abschnitt möchten wir ihnen einen detailierten Überblick
+      über alle Bildkomponenten geben und was man damit anstellen kann.
+    </para>
+    <para lang='fr'>
+      Dans Gimp, une image est quelque chose de complexe. Elle contient 
+      un ou plusieurs calques et, éventuellement, plusieurs autres objets: 
+      un masque de sélection, une série de canaux, des chemins, un 
+      historique d'annulation...etc. Nous allons voir en détail chacun des 
+      composants d'une image, et ce que vous pouvez faire avec.
+    </para>
+    <para lang="zh_CN">
+      <emphasis>图像</emphasis>常让人联想到和一个单独显示窗口相关的东西，或一个单独的文件如一个 JPEG 文件，不过一个真正的 Gimp 图像一个相当复杂的结构，包括一堆图层和许多其它类型的对象：一个选区蒙板，一系列通道和路径，一个“撤消”历史等。我们将在这一节对一个图像的所有元素和能用它们干什么来一个仔细的了解。
+    </para>
+
+    <para lang='en'>               <!--changed 041006-->
+      The most basic property of an image is its
+      <emphasis>mode</emphasis>.  There are three possible modes: RGB,
+      grayscale, and indexed. RGB stands
+      for Red-Green-Blue, and indicates that each point in the image
+      is represented by a "red" level, a "green" level, and a "blue"
+      level.  Because every humanly distinguishable color can be
+      represented as a combination of red, green, and blue, RGB images
+      are full-color.  Each color channel has 256 possible intensity
+      levels. More details in <link linkend='glossary-colormodel'>
+      Color Models</link>
+    </para>
+    <para lang='fr'>
+      La propriété de base d'une image est son <emphasis>mode</emphasis>: 
+      RVB, Niveaux de gris et Indexé. RVB veut dire Rouge Vert Bleu et 
+      indique que chaque point de l'image est représenté par un niveau de 
+      rouge, un niveau de vert et un niveau de bleu. Chaque canal de couleur 
+      possède 256 niveaux d'intensité. Plus de détails peuvent être trouvés 
+      dans <link linkend='glossary-colormodel'>Couleurs: modèles</link>
+    </para>
+    <para lang='de'>
+      Die wohl grundlegenste Eigenschaft eines Bildes ist der
+      <emphasis>Modus</emphasis>. Es gibt drei mögliche Modi: RGB,
+      Graustufen oder Indiziert. Jeder Pixel im Bild wird durch einen
+      (R)oten,(G)rünen und (B)lauen Wert beschrieben. Da die Farben, die
+      das menschliche Auge ebenfalls durch eine Kombination von Rot,
+      Grün und Blau beschrieben werden kann, spricht man auch von
+      Echtfarben. Jeder Farbkanal hat 256 mögliche Intensitätsstufen.
+    </para>
+		<para lang="zh_CN">
+      一个图像最基本的属性就是它的<emphasis>模式</emphasis>。这有三种模式：RGB，灰度和索引。RGB 代表红-绿-蓝，代表图像上的每个点用一个“红色”色阶，一个“绿色”色阶和一个“蓝色”色阶表示。人类能辨别的每种颜色都能用红，绿和蓝组合来表现，每一个颜色通道都有 256 种可能的亮度程度。
+    </para>
+
+    <para lang='en'>
+      In a grayscale image, each point is represented by a brightness
+      value, ranging from 0 (black) to 255 (white), with intermediate
+      values representing different levels of gray.
+    </para>
+    <para lang='de'>
+      In einem Graustufenbild wird jeder Pixel durch einen
+      Helligkeitswert beschrieben. Dieser Helligkeitswert reicht von 0
+      für Schwarz bis einem Wert von 255 (Weiß).  Inmitten von Schwarz
+      und Weiß verstehen sich die Stufen als Grauwerte.
+    </para>
+    <para lang='fr'>
+      Dans une image en Niveaux de gris, chaque point est représenté par une 
+      valeur de luminosité, de 0 (noir) à 255 (blanc), les valeurs 
+      intermédiaires représentant les différents niveaux de gris.
+    </para>
+    <para lang="zh_CN">
+      对一个灰度的图像，每个点由从 0 (黑色)到 255 (白色)的亮度值来表现，其中间的值来表现不同程度的灰。
+    </para>
+
+    <para lang='en'>
+      Essentially the difference between a grayscale image and an RGB
+      image is the number of "color channels":  a grayscale image has
+      one; an RGB image has three.  An RGB image can be thought of as
+      three superimposed grayscale images, one colored red, one green,
+      and one blue.
+    </para>
+    <para lang='de'>
+      Der Unterschwied zwischen einem Graustufen und RGB Bild besteht in
+      der Anzahl der "Farbkanäle": Ein Graustufenbild besitzt einen; ein
+      RGB Bild gleich drei. Ein RGB Bild auch als eine Komposition aus
+      drei Graustufenbilder – jedes Bild beschreibt einen Farbkanal –
+      verstanden werden.
+    </para>
+    <para lang='fr'>
+      La différence essentielle entre une image en niveaux de gris et une 
+      image RVB est le nombre de canaux de couleur: une image en niveau de 
+      gris n'en a qu'un alors que l'image RVB en a trois. 
+    </para>
+    <para lang="zh_CN">
+      一个灰度图像和一个 RGB 图像最本质的区别就是它们“颜色通道”的数量：一个灰度图像只有一个；一个 RGB 图像有三个。一个 RGB 图像可以认为是三个灰度图像的叠加，一个为红色，一个为绿色，另一个为蓝色。
+    </para>
+
+    <para lang='en'>
+      Actually, both RGB and grayscale images have one additional
+      color channel, called the <emphasis>alpha</emphasis> channel,
+      representing opacity.  When the alpha value at a given location
+      in a given layer is zero, the layer is completely transparent,
+      and the color at that location is determined by what lies
+      underneath.  When alpha is maximal, the layer is opaque, and the
+      color is determined by the color of the layer.  Intermediate
+      alpha values correspond to varying degrees of translucency:  the
+      color at the location is a proportionl mixture of color from the
+      layer and color from underneath.
+    </para>
+    <para lang='de'>
+      Eigentlich haben beide Modi – also RGB und Graustufen – einen
+      zusätzlichen Farbkanal; den sogenannten <emphasis>Alpha</emphasis>
+      Kanal. Dieser beschreibt die Deckkraft. Wenn ein Bereich im Bild
+      einen Alphawert von 0 besitzt, ist dieser Bereich vollkommen
+      transparent und wird im Aussehen dadurch bestimmt, was "unter"
+      diesen Bereich hindurch zu sehen ist. Ist der Alphawert jedoch auf
+      den Maximalwert, ist dieser Bereich komplett deckend und das
+      Aussehen dieses Bereiches wird durch die Farbe in diesem Bereich
+      bestimmt. Alphawerte können verschiedene Arten des Durchscheinens
+      oder Blendens
+      beschreiben. So werden die Farben zweier Ebenen beispielsweise
+      gemischt, wenn die oberste Ebene einen mittleren Alphawert
+      besitzt.
+    </para>
+    <para lang="fr">
+      En fait, les images RVB et Niveaux de gris ont un canal suplémentaire 
+      appelé <emphasis>Canal Alpha</emphasis>, représentant l'opacité ou la 
+      transparence si on préfère. Quand la valeur alpha en un point d'un 
+      calque est égale à zéro, ce point est complètement transparent et la 
+      couleur de l'image en ce point dépend de ce qui est sous le point. 
+      Quand l'alpha est maximum, le calque est opaque et la couleur est 
+      celle du calque. Les valeurs intermédiaires de l'alpha correspondent 
+      à des niveaux variés de transparence. La couleur est un mélange 
+      proportionnel de la couleur du calque et de la couleur située dessous.
+    </para> 
+    <para lang="zh_CN">
+      准确的说，RGB 和灰度图像都有一个附加的颜色通道，叫做 <emphasis>alpha</emphasis> 通道，它代表不透明度。当选定的图层其上位置的不透明度为零，图层就完全是透明的，这样那个位置的颜色由它下面是什么决定。当 alpha 为最大值，图层就是不透明的，该位置的颜色有图层颜色决定。其中间的 alpha 值用来区分不同的透明程度：该位置的颜色就由一定比例的图层颜色和图层下面的颜色决定。
+   </para>
+
+    <para lang='en'>
+      In Gimp, every color channel, including the alpha channel, has a
+      range of possible values from 0 to 255; in computing
+      terminology, a depth of 8 bits.  Some digital cameras can
+      produce image files with a depth of 16 bits per color channel.
+      Gimp cannot load such a file without losing resolution.  In most
+      cases the effects are too subtle to be detected by the human
+      eye, but in some cases, mainly where there are large areas with
+      slowly varying color gradients, the difference may be
+      perceptible. 
+    </para>
+    <para lang='de'>
+      Jeder Farb- und Alphakanal in <acronym>Gimp</acronym> hat einen
+      Wertebereich von 0 bis 255; rechentechnisch 8 Bit. Dieser
+      Wertebereich wird auch Farbtiefe genannt. Einige
+      hochwertige Digitalkameras können Bilder mit einer Farbtiefe von
+      16 Bit pro Farbkanal erzeugen. <acronym>Gimp</acronym> kann diese
+      Bilder nicht ohne Verlust laden.  In den meisten Fällen wird der
+      Verlust durch Menschen nicht wahrgenommen und ist zu
+      vernachlässigen. Jedoch besteht in manchen Fällen dringenden
+      Bedarf für 16 Bit Farbtiefe. Vor allem bei großen Bildbereichen
+      mit kaum sichtbaren Kontrastveränderungen ist ein Unterschied in
+      der Farbtiefe zu erkennen.
+    </para>
+    <para lang="fr">
+      Dans Gimp, chaque canal de couleur, y compris le canal alpha, varie de 
+      0 à 255, soit, en termes informatiques, une profondeur de couleur de 
+      8 bits. Certains appareils photo numériques peuvent fournir des images 
+      avec une profondeur de couleur de 16 bits. Gimp ne peut pas les 
+      charger sans perte de définition. Dans la plupart des cas la 
+      différence n'est pas perceptible par l'œil humain. Néanmoins, une 
+      différence peut être perçue dans les grandes plages ayant un dégradé de 
+      couleur très progressif.    
+    </para>
+    <para lang="zh_CN">
+      Gimp 中，每个颜色通道包括 alpha 通道其可能的值都在 0 到 255 之间；用计算机术语说就是 8 位深度。一些数码相机能产生每个颜色通道 16 位深度的图像文件。Gimp 无法读取这种文件而不丢失分辨率。大部分情况下，那样的效果太细微以至人眼无法查觉，但在一些情况中，主要是缓慢颜色渐变的大片区域，还是能够查觉到其差别。
+    </para>
+
+    <para lang='en'>
+      The third type, <emphasis>indexed</emphasis> images, is a bit
+      more complicated to understand.  In an 
+      indexed image, only a limited set of discrete colors are used,
+      usually 256 or less.  These colors form the "colormap" of the
+      image, and each point in the image is assigned a color from the
+      colormap.  Indexed images have the advantage that they can be
+      represented inside a computer in a way that consumes relatively
+      little memory, and back in the dark ages (say, ten years ago),
+      they were very commmonly used.  As time goes on, they are used
+      less and less, but they are still important enough to be worth
+      supporting in Gimp.  (Also, there are a few important kinds of
+      image manipulation that are easier to implement with indexed
+      images than with continuous-color RGB images.)
+    </para>
+    <para lang='de'>
+      Der dritte und letzte Typ der hier beschrieben wird, sind
+      <emphasis>indizierte</emphasis> Bilder. Dieser Modus ist etwas
+      schwerer zu verstehen, da es in einem indizierten Bild nur eine
+      Anzahl von 256 (oder wenigeren) wohldefinierten Farben gibt.
+      Diese maximal 256 wohldefinierten Farben werden in einer Tabelle
+      geführt, die auch als Farbpalette oder im englischen Colormap
+      bezeichnet wird. Indizierte Bilder haben den Vorteil, dass Sie im
+      Rechner mit wenig Ressourcen dargestellt und gespeichert werden
+      können. Dieser Vorteil ist vor allem in Zeiten der Vernetzung mit
+      langsamen Bandbreiten ein entscheidener Punkt. So waren indizierte
+      Bilder in den Anfangen des World Wide Webs sehr stark verbreitet.
+    </para>
+    <para lang="fr">
+      Le troisième type, celui des <emphasis>Images Indexées</emphasis>,
+      est un peu plus difficile à comprendre. Dans une image indexée, n'est 
+      employé qu'un nombre réduit de couleurs, 256 ou moins. Ces couleurs 
+      constituent la «palette» des couleurs et à chaque point de l'image est 
+      assignée une des couleurs de la palette. L'avantage des images 
+      indexées est qu'elles occupent peu de place en mémoire, ce qui était 
+      très important il y a 10 ans. Ca l'est beaucoup moins actuellement, 
+      mais le format reste intéressant dans certaines circonstances, en 
+      particulier dans les animations.
+    </para>
+    <para lang="zh_CN">
+      第三种类型，<emphasis>索引</emphasis>图像，要了解它有点复杂。在一个索引图像种，只使用有限的一部分不连续的色彩，常常是 256 色或更少。这些颜色来之图像的“颜色表”，并且图像中的每个点都从颜色表中获取颜色。索引图像的优点在于能在计算机内部表现，这种方法消耗相对少的内存。索引图像在十年前使用很普遍。随着时间的前进，它们被使用得越来越少，不过仍然足够重要让 Gimp 支持它。(而且，还有一些重要的图像处理方式在索引图像上比在连续颜色的 RGB 图像上更容易实现。)
+    </para>
+
+    <para lang='en'>
+      Some very commonly used types of files (including <link
+      linkend='file-gif-load'>GIF</link>) produce
+      indexed images when they are opened in Gimp.  Many of Gimp's
+      tools don't work very well on indexed images–and many filters
+      don't work at all–because of the limited number of colors
+      available.  Because of this, it is usually best to convert an
+      image to RGB mode before working on it.  If necessary, you can
+      convert it back to indexed mode when you are ready of save it
+    </para>
+    <para lang='de'>
+      Verschiedene Bildformate werden als indizierte Bilder in
+      <acronym>Gimp</acronym> geöffnet (z.B. <link
+      linkend='file-gif-load'>GIF</link>, <link
+      linkend='file-png-load'>PNG</link>).  Viele der
+      <acronym>Gimp</acronym> Werkzeuge funktionieren durch die
+      begrenzte Anzahl von Farben, nicht richtig auf indizierten
+      Bildern. Demnach ist es besser die geöffneten Bilder nach RGB zu
+      konvertieren, bevor das Bild manipuliert wird. Falls nötig kann
+      das bearbeitete Bild wieder zurückkonvertiert werden.
+    </para>
+    <para lang="fr">
+      Le principal format indexé est le format <link
+      linkend='file-gif-load'>GIF</link>. Rares sont les 
+      fonctions de Gimp qui acceptent les images GIF, surtout en raison du 
+      nombre réduit de couleurs. Aussi, vous devrez le plus souvent les 
+      convertir au format RVB, quitte à les convertir ensuite à nouveau en 
+      indexées.
+    </para>
+		<para lang="zh_CN">
+      一些非常常见的文件类型(包括 GIF)在 Gimp 中打开时都是作为索引图像。许多 Gimp 工具对索引图像工作地不好--而且许多滤镜完全无法使用--因为它只有有限数量的可用颜色。因此，最好在进行这些操作之前，将图像转换为 RGB 图像。如果有必要，您也能在准备保存它时转换回来成索引模式。
+    </para>
+
+    <para lang='en'>
+      Gimp makes it easy to convert from one image type to another,
+      using the <link linkend='gimp-image-mode'>Mode</link> command in
+      the Image menu.  Some types of conversions, of course (RGB to
+      grayscale or indexed, for example) lose information that cannot
+      be regained by converting back in the other direction.  
+    </para>
+    <para lang='de'>
+      Mit <acronym>Gimp</acronym> ist es einfach von einen Farbmodus in
+      den Farbmodus mittels <link linkend='gimp-image-mode'>Modus</link>
+      zu konvertieren. Angemerkt sei noch, dass bestimmte
+      Konvertierungen verlustbehaftet sind, wie z.B. RGB nach
+      Graustufen.
+    </para>
+    <para lang="fr">
+      Il est facile avec Gimp de convertir un type d'image en un autre, 
+      grâce à la commande <link linkend='gimp-image-mode'>Mode</link> du 
+      menu image. Certains types de conversion, par exemple RVB en Niveaux 
+      de gris, font perdre des informations que vous ne retrouverez pas en 
+      faisant la transformation inverse.
+    </para>
+    <para lang="zh_CN">
+      Gimp 是从一种图像类型转换为另一种类型变得容易，使用图像菜单中的<link linkend='gimp-image-mode'>模式</link>命令。一些类型转换，比如 RGB 到灰度或索引会丢失信息，而且当转换回来时也无法恢复。
+    </para>
+
+    <note>
+      <para lang='en'>
+        If you are trying to use a filter on an image, and it appears
+        grayed out in the menu, usually the cause is that the image (or,
+        more specifically, the layer) you are working on is the wrong
+        type.  Many filters can't be used on indexed images.  Some can
+        be used only on RGB images, or only on grayscale images.  Some
+        also require the presence or absence of an alpha channel.
+        Usually the fix is to convert the image to a different type,
+        most commonly RGB.
+      </para>
+      <para lang='de'>
+        Sollten Sie einen Filter benutzen wollen, der ausgegraut
+        im Menü erscheint, liegt es am falschen Farbmodus der Ebene oder
+        des Bildes. Manche Filter funktionieren nur auf Bilder mit RGB
+        Farbmodus. Manche davon benötigen noch einen zusätzlichen
+        Alphakanal. Meistens reicht es jedoch aus, den Farbmodus auf RGB
+        zu ändern.
+      </para>
+      <para lang='fr'>
+      Si vous essayez d'utiliser un filtre sur une image et qu'il apparaisse 
+      en grisé dans le menu, c'est que l'image, ou plus précisément le 
+      calque, sur lequel vous travaillez, n'est pas du bon type. Beaucoup de 
+      filtres ne s'utilisent pas sur les images indexées; d'autres ne 
+      peuvent être utilisés qu'avec les images RVB, ou seulement avec les 
+      images en Niveaux de gris, ou encore nécessitent la présence ou 
+      l'absence d'un canal Alpha. La solution est alors  de convertir 
+      l'image en mode RVB.
+      </para>
+      <para lang="zh_CN">
+      如果您尝试对一个图像使用滤镜，而在菜单上却是灰色的，常常是因为您操作的图像(或更明确的，是图层)是错误的模式。许多滤镜无法对索引图像使用。一些只能对 RGB 或灰度图像使用。一些却需要有或没有一个 alpha 通道。一般的解决方法就是转换图像到另一个模式，最通常是 RGB。
+      </para>
+    </note>
+  </sect2>
+  
+  <xi:include href="qmask.xml" />
+  <xi:include href="layers.xml" />
+  <xi:include href="selection.xml" />
+  <xi:include href="undo.xml" />
+  <xi:include href="grid-and-guides.xml" />
+  <xi:include href="paths.xml" />
+  <xi:include href="brushes.xml" />
+  <xi:include href="gradients.xml" />
+  <xi:include href="patterns.xml" />
+  <xi:include href="palettes.xml" />
+  <xi:include href="fonts-and-text.xml" />
+  <xi:include href="stroking.xml" />
+</sect1>
