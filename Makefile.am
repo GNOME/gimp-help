@@ -24,8 +24,6 @@ XML_FILES = \
 	$(wildcard $(top_srcdir)/src/*/*/*.xml)	\
 	$(wildcard $(top_srcdir)/src/*/*/*/*.xml)
 
-FORMATS = html pdf
-
 DTD_FILES = \
 	$(top_srcdir)/src/linkset.dtd
 
@@ -44,7 +42,10 @@ HELP_STAMPS = \
 	images.stamp	\
 	index.stamp	\
 	mkdirs.stamp	\
-	profile.stamp
+	profile.stamp	\
+	validate.stamp
+
+FORMATS = html pdf
 
 EXTRA_DIST = \
 	TERMINOLOGY			\
@@ -175,7 +176,7 @@ index.stamp: html.stamp
 	done;
 	touch index.stamp
 
-validate: profile.stamp $(XML_FILES) $(DTD_FILES)
+validate.stamp: profile.stamp $(XML_FILES) $(DTD_FILES)
 	@echo '*** Validating profiled XML ***'
 	@for lang in $(ALL_LINGUAS); do \
 	  echo -n '-- Validating XML for '$$lang; \
@@ -184,7 +185,8 @@ validate: profile.stamp $(XML_FILES) $(DTD_FILES)
 	  grep "validity error" xml/$$lang-validity-errors.log | wc -l; \
 	done; \
 	echo 'Log files of the validation process have been generated in the xml directory.'; \
-	echo 'Please correct any errors before writing new content.'
+	echo 'Please correct any errors before writing new content.';
+	touch validate.stamp
 
 lint: profile.stamp $(XML_FILES) $(DTD_FILES)
 	@echo '*** Checking XML for well-formed-ness ***'
@@ -192,11 +194,12 @@ lint: profile.stamp $(XML_FILES) $(DTD_FILES)
 	  xmllint --noout $$xml || exit; \
 	done
 
+
 if GIMP_HELP_BUILD
 
 dist-check-build:
 
-all-local: clean.stamp css.stamp images.stamp index.stamp validate
+all-local: clean.stamp css.stamp images.stamp validate.stamp index.stamp
 
 CLEANFILES = $(HELP_STAMPS)
 
