@@ -3,11 +3,11 @@
 IMAGE_DIRS = \
 	dialogs		\
 	filters		\
-	filters/examples		\
+	filters/examples\
 	glossary	\
 	tool-options	\
-	toolbox	\
-	callouts \
+	toolbox		\
+	callouts	\
 	using
 
 IMAGE_FILES = \
@@ -29,7 +29,13 @@ CSS_FILES = \
 MAKEINDEX = $(top_srcdir)/stylesheets/makeindex.xsl
 
 HELP_STAMPS = \
-	clean.stamp mkdirs.stamp css.stamp images.stamp html.stamp index.stamp
+	clean.stamp	\
+	css.stamp	\
+	html.stamp	\
+	images.stamp	\
+	index.stamp	\
+	mkdirs.stamp	\
+	profile.stamp
 
 
 EXTRA_DIST = \
@@ -44,6 +50,7 @@ EXTRA_DIST = \
 clean.stamp:
 	@echo '*** Removing the built help files ***'
 	rm -rf html
+	rm -rf xml
 	touch clean.stamp
 
 mkdirs.stamp:
@@ -52,7 +59,7 @@ mkdirs.stamp:
 	  $(mkinstalldirs) html/$$lang; \
 	  cp $(CSS_FILES) html/$$lang; \
 	done;
-	$(mkinstalldirs) html/xml; \
+	$(mkinstalldirs) xml; \
 	$(mkinstalldirs) html/images; \
 	touch mkdirs.stamp
 
@@ -82,25 +89,25 @@ images.stamp: mkdirs.stamp $(IMAGE_FILES)
 
 profile.stamp: mkdirs.stamp $(XML_FILES)
 	@echo '*** Profiling XML files ***'
-	cd html/xml && \
+	cd $(top_srcdir)/xml && \
 	for lang in $(ALL_LINGUAS); do \
-		echo '-- Profiling XML for '$$lang;\
-			$(XSLTPROC) $(XSLTFLAGS) --xinclude \
-			--stringparam profile.lang $$lang -o $$lang.xml\
-			/usr/share/xml/docbook/stylesheet/nwalsh/profiling/profile.xsl ../../src/gimp.xml; \
+	  echo '-- Profiling XML for '$$lang;\
+	  $(XSLTPROC) $(XSLTFLAGS) --xinclude \
+	     --stringparam profile.lang $$lang -o $$lang.xml \
+	     /usr/share/xml/docbook/stylesheet/nwalsh/profiling/profile.xsl \
+             ../src/gimp.xml; \
 	done;
 	touch profile.stamp
-		
 
-html.stamp: mkdirs.stamp profile.stamp $(XML_FILES)
+html.stamp: profile.stamp $(XML_FILES)
 	@echo '*** Building HTML ***'
 	for lang in $(ALL_LINGUAS); do \
 	  echo '-- Building HTML for '$$lang; \
-	  (cd html/$$lang && \
+	  (cd $(top_srcdir)/html/$$lang && \
 	    $(XSLTPROC) $(XSLTFLAGS) --xinclude \
 	       --stringparam l10n.gentext.default.language $$lang \
 	       --stringparam profile.lang $$lang \
-	       ../../stylesheets/plainhtml.xsl ../xml/$$lang.xml); \
+	       ../../stylesheets/plainhtml.xsl ../../xml/$$lang.xml); \
 	done;
 	touch html.stamp
 
@@ -118,7 +125,7 @@ if GIMP_HELP_BUILD
 
 dist-check-build:
 
-all-local: clean.stamp css.stamp images.stamp profile.stamp html.stamp index.stamp
+all-local: clean.stamp css.stamp images.stamp html.stamp index.stamp
 
 CLEANFILES = $(HELP_STAMPS)
 
