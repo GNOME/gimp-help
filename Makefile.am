@@ -60,6 +60,11 @@ clean.stamp:
 	rm -rf html
 	rm -rf print
 	rm -rf xml
+	@echo '*** Removing temporary files ***'
+	rm -rf `find . -name *~`
+	rm -rf `find . -name *.orig`
+	rm -rf `find . -name *.bak`
+	rm -rf `find . -name *.rej`
 	touch clean.stamp
 
 mkdirs.stamp:
