@@ -1,0 +1,416 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<sect2 id='plug-in-convmatrix'>
+  <title lang="en">Convolution matrix</title>
+  <title lang="fr">Matrice de convolution</title>
+
+  <indexterm>
+    <primary lang="en">Filter</primary>
+    <secondary lang="en">Generic</secondary>
+    <tertiary lang="en">Convolution</tertiary>    
+    
+    <primary lang="fr">Filtre</primary>
+    <tertiary lang="fr">Générique</tertiary>
+    <tertiary lang="fr">Convolution</tertiary>      
+  </indexterm>
+  
+  <mediaobject lang="en">
+    <imageobject>
+      <imagedata fileref='../images/filters/filters-generic-convolution.png' format='png'/>
+    </imageobject>
+  </mediaobject>
+  <mediaobject lang="fr">
+    <imageobject>
+      <imagedata fileref='../images/filters/fr/filters-generic-convolution.png' format='png'/>
+    </imageobject>
+  </mediaobject>
+
+  <simplesect>
+    <title lang="en">Overview</title>
+    <title lang="fr">Généralités</title>
+    <variablelist>
+      <varlistentry> 
+        <listitem lang="en">
+          <para>
+            This filter is found in 
+            <guimenuitem>Image&gt;Filters/Generic/<accel>C</accel>onvolution Matrix</guimenuitem>  
+          </para>
+          <para>
+            Here is a mathematician's domain. Most of filters are using convolution matrix. With the 
+            Convolution Matrix filter, if the fancy takes you, you can build a custom filter. 
+          </para> 
+          <para>
+            What is a convolution matrix? It's possible to get a rough idea of it without using 
+            mathematical tools that only a few ones know. Convolution is the treatment of a matrix 
+            by another one which is called &quot;kernel&quot;. 
+          </para>
+          <para>
+            The Convolution Matrix filter uses a first matrix which is the Image to be treated. 
+            The image is a bi-dimensionnal collection of pixels in rectangular coordinates. The 
+            used kernel depends on the effect you want.
+          </para> 
+          <para>
+            GIMP uses 5x5 or 3x3 matrices. We will consider only 3x3 matrices, they are the most used 
+            and they are enough for all effects you want. If all border values of a kernel are set to 
+            zero, then system will consider it as a 3x3 matrix.
+          </para>
+          <para>
+            The filter studies successively every pixel of the image. For each of them, that we will 
+            name &quot;initial pixel&quot;, it multiplies value of this pixel and values of the 8 surrounding 
+            pixels by the kernel corresponding value. Then it adds results and the initial pixel 
+            takes this final result value.
+          </para>
+          <para>
+            A simple example:
+            <imageobject>
+              <imagedata fileref="../images/filters/examples/convolution-example1.png" format="png" />
+            </imageobject>
+            On the left is the image matrix: each pixel is marked with its value. The initial pixel has 
+            a red border. The kernel action area has a green border. In middle is the kernel and, on 
+            the right, is the convolution result.
+          </para>
+          <para>
+            Here is what happened: the filter read successively, from left to right and from top to 
+            bottom, all the pixels of the kernel action area. It multiplied the value of each of them 
+            by the kernel corresponding value and added results: (100*0)+(50*1)+(50*0)*(100*0)+(100*0) 
+            +(100*0)+(100*0)+(100*0)+(100*0)+(100*0) = 50. The initial pixel tooks value 50. Previously, 
+            when the initial pixel had value=50, it tooks the value 100 of above pixel (filter doesn't 
+            work on image but on a copy) and so disappeared into the "100" background pixels. As a 
+            graphical result, the initial pixel moved a pixel downwards. 
+          </para>
+ 
+        </listitem>
+
+        <listitem lang="fr">  
+          <para>
+            Ce filtre se trouve à 
+            <guimenuitem>Image&gt;Filtres/Générique/Matrice de <accel>c</accel>onvolution</guimenuitem>
+          </para>
+          <para>
+            Nous sommes là dans le coin des mathématiciens. La plupart des filtres de traitement 
+            des images utilisent des matrices de convolution. Avec le filtre Matrice de convolution, 
+            vous pouvez, si le coeur vous en dit, vous concocter un petit filtre sur mesure.
+          </para> 
+          <para>
+            Mais qu'est-ce que c'est qu'une matrice de convolution? On peut s'en faire une idée 
+            approximative sans utiliser les outils mathématiques que bien peu connaissent. Une 
+            convolution est un traitement d'une matrice par une autre appelée matrice de 
+            convolution ou «noyau» (kernel).
+          </para>
+          <para> 
+            Notre filtre «Matrice de convolution» utilise une première matrice qui est l'image, c-à-d 
+            une collection de pixels en coordonnées rectangulaires 2D (il y a des matrices 3D...), et 
+            un noyau variable selon l'effet souhaité.
+          </para>
+          <para>
+            Gimp utilise des matrices de convolution 5x5 ou 3x3. Nous nous limiterons aux matrices 3x3, 
+            les plus utilisées. Elles suffisent à tous les effets recherchés. Si toutes les cases des 
+            bords du noyau sont à 0, le système considère qu'il s'agit d'une matrice 3x3.
+          </para>
+          <para>
+            Le filtre étudie successivement chacun des pixels de l'image. Pour chaque pixel, que nous 
+            appellerons «pixel initial», il multiplie la valeur de ce pixel et de chacun des 8 pixels 
+            qui l'entourent par la valeur correspondante dans le noyau. Il additionne l'ensemble des 
+            résultats et le pixel initial prend alors la valeur du résultat final.
+          </para> 
+          <para>
+            Vite un exemple, simple: 
+            <imageobject>
+              <imagedata fileref="../images/filters/examples/convolution-example1.png" format="png" />
+            </imageobject>
+            À gauche se trouve la matrice de l'image: chaque pixel est indiqué par sa valeur. Le pixel 
+            initial est encadré de rouge. La zone d'action du noyau est encadré de vert. Au centre, se 
+            trouve le noyau et, à droite, le résultat de la convolution.
+          </para>
+          <para>
+            Voici ce qui s'est passé: le filtre a lu successivement, de gauche à droite et de haut en 
+            bas, les pixels de la zone d'action du noyau et il a multiplié chacun d'eux par la valeur 
+            correspondante du noyau et additionné les résultats: (100*0)+(50*1)+(50*0)*(100*0)+(100*0) 
+            +(100*0)+(100*0)+(100*0)+(100*0)+(100*0) = 50. Le pixel initial a pris la valeur 50. 
+            Précédemment, quand le pixel initial a eu la valeur 50, il a pris la valeur 100 du pixel au
+            dessus (le filtre dépose ses résultats sur une copie de l'image et pas directement dans 
+            l'image) et s'est fondu dans l'arrière-plan 100. Le résultat graphique est un décalage du 
+            pixel initial d'un pixel vers le bas.
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </simplesect>
+
+  <simplesect>
+    <title lang="en">Options</title>
+    <title lang="fr">Options</title>
+    <variablelist>
+    
+      <varlistentry>
+        <term lang="en">Matrix</term>
+        <term lang="fr">Matrice</term>
+        <listitem lang="en">
+          <para>
+            This is the 5x5 kernel matrix: you enter wanted values directly into boxes.
+          </para> 
+          <para>
+            <guilabel>Divisor</guilabel>: The result of previous calculation will be divided by 
+            this divisor. You will hardly use 1, that lets result unchanged, and 9 or 25 
+            according to matrix size, that gives the average of pixel values.
+          </para>
+          <para>
+            <guilabel>Offset</guilabel>: this value is added to the division result. This is 
+            useful if result may be negative. This offset may be negative.
+          </para>
+        </listitem>  
+        <listitem lang="fr">
+          <para>
+            C'est la matrice 5x5 du noyau que vous voulez créer: vous entrez les valeurs voulues 
+            directement dans les cases.
+          </para>
+          <para>
+            <guilabel>Diviseur</guilabel>: le résultat du calcul précédent sera divisé par ce 
+            diviseur. Vous n'utiliserez guère que 1 qui laisse le résultat inchangé, et 9 ou 25 
+            selon la taille de la matrice utilisée, ce qui donne la moyenne de la valeur des pixels.
+          </para>
+          <para>
+            <guilabel>Décalage</guilabel>: cette valeur est ajoutée au résultat de la division. 
+            C'est utile si le résultat risque d'être négatif. Le Décalage peut être négatif.
+          </para> 
+        </listitem>  
+      </varlistentry>
+
+      <varlistentry>
+        <term lang="en">Border</term>
+        <term lang="fr">Bordure</term>
+        <listitem lang="en">
+          <para>
+            When the initial pixel is on a border, a part of kernel is out of image. You have to 
+            decide what filter must do:
+          </para> 
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="../images/filters/filters-convolution-milord.png" format="png"/>
+            </imageobject>
+          </mediaobject>
+          <itemizedlist>
+            <listitem>
+              <para>
+                <guilabel>Extend</guilabel>: this part of kernel is not taken into acount.
+              </para>
+                <mediaobject>
+                <imageobject>
+                  <imagedata fileref="../images/filters/filters-convolution-extend.png" format="png"/>
+                </imageobject>
+              </mediaobject>
+            </listitem>
+            <listitem>
+              <para>
+                <guilabel>Wrap</guilabel>: this part of kernel will study pixels of the opposite 
+                border, so pixels disappearing from one side reappear on the other side.
+              </para>
+              <mediaobject>
+                <imageobject>
+                  <imagedata fileref="../images/filters/filters-convolution-wrap.png" format="png"/>
+                </imageobject>
+              </mediaobject>
+            </listitem>
+            <listitem>
+              <para>
+                <guilabel>Crop</guilabel>: Pixels on borders are not modified, but they are cropped.
+              </para>
+              <mediaobject>
+                <imageobject>
+                  <imagedata fileref="../images/filters/filters-convolution-crop.png" format="png"/>
+                </imageobject>
+              </mediaobject>
+            </listitem>  
+          </itemizedlist>
+        </listitem>
+        <listitem lang="fr">
+          <para>
+            Quand le pixel initial est sur un bord, une partie du noyau porte en dehors des limites 
+            de l'image. Vous devez décider de ce que doit faire le filtre. Dans les exemples 
+            ci-dessous, le noyau simple de déplacement décrit plus haut a été appliqué plusieurs 
+            fois, grâce à Ctrl-F, à l'image:
+          </para>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="../images/filters/filters-convolution-milord.png" format="png"/>
+            </imageobject>
+          </mediaobject>
+          <itemizedlist> 
+            <listitem>
+              <para>  
+                <guilabel>Étendre</guilabel>: cette partie du noyau n'est pas prise en compte. 
+                Des pixels disparaissent. La ligne libérée est remplacée par une extension de 
+                la ligne suivante. 
+              </para>
+              <mediaobject>
+                <imageobject>
+                  <imagedata fileref="../images/filters/filters-convolution-extend.png" format="png"/>
+                </imageobject>
+              </mediaobject>
+            </listitem>
+            <listitem>
+              <para>
+                <guilabel>Enrouler</guilabel>: cette partie du noyau étudiera les pixels du bord 
+                opposé, ce qui équivaut à faire réapparaître de l'autre côté les pixels qui 
+                disparaissent d'un côté.  
+              </para>
+              <mediaobject>
+                <imageobject>
+                  <imagedata fileref="../images/filters/filters-convolution-wrap.png" format="png"/>
+                </imageobject>
+              </mediaobject>
+            </listitem>  
+            <listitem>
+              <para>
+                <guilabel>Rogner</guilabel>: Les pixels situés en bordure disparaissent et les 
+                parties libérées sont transparentes. Si l'option Poids Alpha n'est pas cochée et 
+                si l'image n'a pas de canal alpha, cette option est en grisé.
+              </para>
+              <mediaobject>
+                <imageobject>
+                  <imagedata fileref="../images/filters/filters-convolution-crop.png" format="png"/>
+                </imageobject>
+              </mediaobject>
+            </listitem>
+          </itemizedlist>  
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term lang="en">Channels</term>
+        <term lang="fr">Canaux</term>
+        <listitem lang="en">
+          <para>
+            You can select there one or several channels the filter will work with.
+          </para> 
+        </listitem>  
+        <listitem lang="fr">
+          <para>
+            Vous pouvez choisir là le ou les canaux sur lesquels agira le filtre.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term lang="en">Automatic</term>
+        <term lang="fr">Automatique</term>
+        <listitem lang="en">
+          <para>
+            If this option is checked, The Divisor takes the result value of convolution. If 
+            this result is equal to zero (it's not possible to divide by zero), then a 128 
+            offset is applied. If it is negative ( a negative color is not possible), a 
+            255 offset is applied (inverts result).
+          </para> 
+        </listitem> 
+        <listitem lang="fr">
+          <para>
+            Quand cette otion est cochée, le Diviseur prend la valeur du résultat du calcul de 
+            convolution. Si ce résultat est égal à 0 (on ne peut pas diviser par 0), un Décalage 
+            de 128 est appliqué. S'il est négatif (on ne peut pas avoir de couleur négative), 
+            c'est un décalage de 255 qui est appliqué (ce qui inverse le résultat).
+          </para>
+        </listitem> 
+      </varlistentry>
+ 
+      <varlistentry>
+        <term lang="en">Alpha weighting</term>
+        <term lang="fr">Poids alpha</term>
+         <listitem lang="en">
+          <para>
+            If this option is not checked, the filter doesn't take in account transparency and this 
+            may be cause of some artefacts when blurring. 
+          </para> 
+        </listitem> 
+        <listitem lang="fr">
+          <para>
+            Si cette option n'est pas cochée, le calcul ne tient pas compte du degré de 
+            transparence des couleurs, ce qui peut être cause d'artéfacts lors de l'application 
+            d'un flou.
+          </para>
+        </listitem>
+      </varlistentry>
+ 
+    </variablelist> 
+  </simplesect>
+
+  <simplesect>
+    <title lang="en">Examples</title>
+    <title lang="fr">Exemples</title>  
+    <variablelist>
+      
+      <varlistentry>
+        <listitem>
+          <para lang="en">
+            Design of kernels is based on high levels mathematics. You can find ready-made kernels on 
+            the Web. Here are some examples:
+          </para>
+          <para lang="fr">
+            La création de noyaux nécessite des connaissances mathématiques de haut niveau. Mais vous 
+            en trouverez de tout faits sur la Toile. En voici quelques exemples:
+          </para>
+        </listitem>
+      </varlistentry>
+ 
+      <varlistentry>
+        <term lang="en">Sharpen</term>
+        <term lang="fr">Augmenter le contraste</term>
+        <listitem>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="../images/filters/examples/convolution-sharpen.png" format="png"/>
+            </imageobject>
+          </mediaobject>
+        </listitem> 
+      </varlistentry>
+     
+      <varlistentry>
+        <term lang="en">Blur</term>
+        <term lang="fr">Flou</term>
+        <listitem>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="../images/filters/examples/convolution-blur.png" format="png"/>
+            </imageobject>
+          </mediaobject>
+        </listitem>
+      </varlistentry>
+  
+      <varlistentry>
+        <term lang="en">Edge enhance</term>
+        <term lang="fr">Amélioration des bords</term>
+        <listitem>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="../images/filters/examples/convolution-edge.png" format="png"/>
+            </imageobject>
+          </mediaobject>
+        </listitem>
+      </varlistentry>
+  
+      <varlistentry>
+        <term lang="en">Edge detect</term>
+        <term lang="fr">Détection des bords</term>
+        <listitem>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="../images/filters/examples/convolution-edge-detect1.png" format="png"/>
+            </imageobject>
+          </mediaobject>
+        </listitem>
+      </varlistentry>
+  
+      <varlistentry>
+        <term lang="en">Emboss</term>
+        <term lang="fr">Repoussage</term>
+        <listitem>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="../images/filters/examples/convolution-emboss.png" format="png"/>
+            </imageobject>
+          </mediaobject>
+        </listitem>
+      </varlistentry>
+  
+    </variablelist>
+  </simplesect>
+</sect2>
