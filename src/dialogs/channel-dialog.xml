@@ -4,6 +4,7 @@
   <title lang="en">Channels dialog</title>
   <title lang="de">Kanaldialog</title>
   <title lang="fr">Dialogue des canaux</title>
+  <title lang="zh_CN">通道对话框</title>
   <indexterm lang="en" >
     <primary>Dialog</primary>
     <secondary>Channel</secondary>
@@ -20,6 +21,12 @@
     <secondary>Canal</secondary>
     <tertiary>Gestion des canaux</tertiary>
   </indexterm>
+
+  <indexterm lang="zh_CN">
+    <primary>对话框</primary>
+    <secondary>通道</secondary> 
+    <tertiary>管理通道</tertiary>
+  </indexterm>
   
   <mediaobject lang="en" >
     <imageobject>
@@ -34,6 +41,11 @@
   <mediaobject lang="fr" >
     <imageobject>
       <imagedata fileref="../images/dialogs/fr/dialogs-channel.png" format="PNG" />
+    </imageobject>
+  </mediaobject>
+  <mediaobject lang="zh_CN" >
+    <imageobject>
+      <imagedata fileref="../images/dialogs/dialogs-channel.png" format="PNG" />
     </imageobject>
   </mediaobject>
   
@@ -145,6 +157,17 @@
       du RGB.
     </note>
   </para>
+
+  <para lang="zh_CN">
+    通道对话框是编辑，修改和管理通道的主界面。通道有两种有法，这也是其对话框要分成两部分的原因：一部分是颜色通道，另一部分是选区通道。
+  </para>
+
+  <para lang="zh_CN"> 
+    颜色通道：颜色通道应用到图像而不是一个特定的图层。一般来说，三原色足够渲染所有的自然色。与其它数码处理软件一样，<acronym>Gimp</acronym> 使用红，绿和蓝这三原色。主通道显示图像中每个像素的<guilabel>红色</guilabel>，<guilabel>绿色</guilabel>和<guilabel>蓝色</guilabel>值。在每个通道前是表现每个通道的灰度缩略图，白色代表 100% 的该原色而黑色代表 0%。但如果您的图像不是彩色而是黑白(灰度)的，就只有一个叫作<guilabel>灰度</guilabel>的主通道。而对于只有一些特定颜色的索引图像而言，就只有一个叫作<guilabel>索引</guilabel>的主通道。另外，还有一个可选的次通道叫作 <guilabel>Alpha</guilabel>，它显示图像中每个像素的透明度值。在这个通道前是表现透明度的灰度缩略图，其中白色表示不透明和可见，黑色表示透明和不可见。假如创建的是没有透明度的图像，那么就没有 Alpha 通道，不过可以在<link linkend="gimp-layer-dialog">图层对话框菜单</link>中添加，而且当您的图像中有多个图层，GIMP 将自动新建一个 Alpha 通道。
+    <note>
+      GIMP 不支持 CMYK 或 YUV 颜色模型。 
+    </note>
+  </para>
   
   
   <para lang="en" >
@@ -200,10 +223,23 @@
     canal bleu et seront absents dans les autres.
   </para>
 
+  <para lang="zh_CN" >
+    一个带通道图像的表现：
+  </para>
+  <para lang="zh_CN">
+      <imageobject> <imagedata
+        fileref="../images/dialogs/dialogs-channels-example.png"
+        format="PNG" /> </imageobject>
+  </para>
+  <para lang="zh_CN">
+    右边的图像分解为三个颜色通道(红，绿和蓝)和表示透明度的 Alpha 通道。右边图像其透明部分用一个灰色棋盘格子表示。颜色通道中白色总是显示为白色，因为它包括所有颜色，而黑色则总是黑色。红帽在红色通道中可见，但在其它通道中就看不到，对没有杂色的绿和蓝也是一样，只在自己通道中可见。
+  </para>
+
   <simplesect>
     <title lang="en">Dialog call</title>
     <title lang="de">Dialogaufruf</title>
     <title lang="fr">Lancement du dialogue</title>
+    <title lang="zh_CN">唤出对话框</title>
     <para lang="en">
       The Channel dialog can be called in many ways :
       <itemizedlist>
@@ -279,6 +315,27 @@
         </listitem>
       </itemizedlist>
     </para>
+    <para lang="zh_CN">
+      有多种方法唤出通道对话框：
+      <itemizedlist>
+        <listitem>      
+          在工具栏菜单：
+          <guimenuitem>文件</guimenuitem>/
+          <guimenuitem>对话框</guimenuitem>/
+          <guimenuitem>通道</guimenuitem>
+        </listitem>
+        <listitem>
+          在图像菜单：
+          <guimenuitem>对话框</guimenuitem>/
+          <guimenuitem>通道</guimenuitem>
+        </listitem>
+        <listitem>
+          在其它的对话框菜单：
+          <guimenuitem>添加页签</guimenuitem>/
+          <guimenuitem>通道</guimenuitem>
+        </listitem>
+      </itemizedlist>
+    </para>
   </simplesect> <!-- end Dialog call -->
 
   <simplesect>
@@ -286,10 +343,12 @@
       <title lang="en">Using the Channeldialog</title>
       <title lang="de">Kanaldialog benutzen</title>
       <title lang="fr">Usage</title>
+      <title lang="zh_CN">使用通道对话框</title>
       <varlistentry>
         <term lang="en">Overview</term>
         <term lang="de">Übersicht</term>
         <term lang="fr">Généralités</term>
+        <term lang="zh_CN">概述</term>
         <listitem lang="en" >
           <para>
             The top channels are the color channels and the optional Alpha
@@ -322,12 +381,18 @@
             Menu).
           </para>
         </listitem>
+        <listitem lang="zh_CN">
+          <para>
+            最上面的通道是颜色通道和可选的 Alpha 通道，它么总是保持这样的排列并且不能被删除。选区蒙板在下面有描述，它在对话框中也列表形式显示。列表中的每个通道则以缩略图的形式出现。在一个通道缩略图上右键点击则打开<link linkend="gimp-channel-menu">通道菜单</link>。
+          </para>
+        </listitem>
       </varlistentry> <!-- end Overview -->
       
       <varlistentry>
         <term lang="en">Channel attributes</term>
         <term lang="de">Kanalattribute</term>
         <term lang="fr">Attributs d'un canal</term>
+        <term lang="zh_CN">通道属性</term>
         <listitem lang="en" >
           <para>
             Every channel is shown in the list with its own attributes. The
@@ -468,12 +533,30 @@
             complémentaire jaune.
           </caution>
         </listitem>
+
+        <listitem lang="zh_CN" >
+          <para>
+            列表中显示的每个通道都有自己的属性。最主要的属性就是通道自己的名字，双击它们的名字就可以更改选区蒙板的名字，而双击缩略图则会打开一个完整对话框，在其中还能设置通道在图像窗口中视觉方面的选项。在缩略图前则有一个眼睛图标：
+            <guiicon>
+              <inlinegraphic fileref="../images/dialogs/dialogs-icon-eye.png" />
+            </guiicon>
+通过点击它，您就定义该通道是否可见。调整该可见性的结果就是，改变图像窗口中图像显示，比如去掉蓝色显示，一个白色图像将变为黄色，因为黄色是蓝色的补色。假如去掉 Alpha 通道的显示，所有图像都变为透明，只能看到一个灰色的棋盘格子。该虚拟背景可以在<link linkend="gimp-prefs-dialog">首选项</link>中更改。链条图标
+            <guiicon>
+              <inlinegraphic fileref="../images/dialogs/dialogs-icon-vchain.png" />
+            </guiicon>
+组合多个通道，可以对它们一起操作。
+          <caution>
+            通道被开启后用蓝色高亮表示。在列表中点击一个通道切换相应通道是否开启。关闭一个红色，蓝色或绿色的颜色通道会产生严重的后果。比如假如您关闭蓝色通道，那从现在起，任何添加到图像上的像素将没有蓝色成分，因此一个白色像素就变为黄色。
+          </caution>
+        </para>
+        </listitem>
       </varlistentry> <!-- end Attributs -->
       
       <varlistentry> 
         <term lang="en">Managing channels</term>
         <term lang="de">Kanäle verwalten</term>
         <term lang="fr" >Gestion des canaux</term>
+        <term lang="zh_CN">管理通道</term>
         <listitem lang="en">
           <para>
             Under the channel list is a set of buttons allowing you to
@@ -868,6 +951,102 @@
               </listitem>
             </itemizedlist>
           </para>    
+        </listitem>
+        <listitem lang="zh_CN">
+          <para>
+            通道列表下方是一些可以对通道列表进行基本操作的按钮。
+          </para>  
+          <para>
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <imageobject>
+                    <imagedata fileref='../images/dialogs/dialogs-icon-edit.png' format="PNG"/>
+                  </imageobject>
+                  <anchor id='gimp-channel-edit' />
+                  <guilabel>编辑通道属性</guilabel>，只对选区蒙板有效。在其中可以改变<guilabel>通道名字</guilabel>，另外两个参数影响通道在图像窗口中的可见度；它控制<guilabel>不透明度</guilabel>和在图像窗口中蒙板的颜色。单击颜色按钮，会显示 GIMP 颜色选择器，然后改变蒙板颜色。
+                </para>
+                
+              </listitem>
+              <listitem>
+                <para>
+                  <imageobject>
+                    <imagedata fileref='../images/dialogs/dialogs-icon-new.png' format="PNG"/>
+                  </imageobject>
+                  <anchor id='gimp-channel-new' />
+                  <guilabel>新建通道</guilabel>：这里您能新建一个可以保存选区的通道。其对话框让您改变<guilabel>不透明度</guilabel>和在图像中蒙板用作表现选区的颜色。
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <imageobject>
+                    <imagedata fileref='../images/dialogs/dialogs-icon-raise.png' format="PNG"/>
+                  </imageobject>               
+                  <anchor id='gimp-channel-raise' />
+                  <guilabel>升高通道</guilabel>，只对选区蒙板有效：这里您可以将通道在列表中向上移动一位。按住 <keycap>Shift</keycap> 则移动通道到列表最顶部。
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <imageobject>
+                    <imagedata fileref='../images/dialogs/dialogs-icon-lower.png' format="PNG"/>
+                  </imageobject>   
+                  <anchor id='gimp-channel-lower' />
+                  <guilabel>降低通道</guilabel>：这里您可以将通道在列表中向下移动一位。按住 <keycap>Shift</keycap> 则移动通道到列表最底部。
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <imageobject>
+                    <imagedata fileref='../images/dialogs/dialogs-icon-duplicate.png' format="PNG"/>
+                  </imageobject>
+                  <anchor id='gimp-channel-duplicate' />
+                  <guilabel>复制通道</guilabel>：这里您可以创建当前通道的一份拷贝。新通道名字由源通道名字后面再加一个数字构成。
+                </para>
+                <tip>
+                  您也可以复制一个颜色通道或 Alpha 通道，这是保留它们的一个拷贝并在以后把它们作为一个图像的选区的简单方法。
+                </tip>
+              </listitem>
+              <listitem>
+                <para>
+                  <imageobject>
+                    <imagedata fileref='../images/dialogs/dialogs-icon-delete.png' format="PNG"/>
+                  </imageobject>   
+                  <anchor id='gimp-channel-selection-delete' /> 
+                  <guilabel>删除通道</guilabel>，只对选区蒙板有效：这里您可以删除活动通道。
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <imageobject>
+                    <imagedata fileref='../images/dialogs/dialogs-icon-selection.png' format="PNG"/>
+                  </imageobject>
+                  <anchor id='gimp-channel-selection-replace' />
+                  <guilabel>通道到选区</guilabel>：这里您可以转换通道变为一个选区。从一个通道生成的选区默认值是替代以前的活动选区，不过可以通过按控制键来改变这种情况。
+                  <itemizedlist>
+                    <listitem>
+                      <para>
+                        <anchor id='gimp-channel-selection-add' />
+                        <keycap>Shift</keycap>：从一个通道生成的选区添加到以前的活动选区中，最终选区是它们的结合。
+                      </para>
+                    </listitem>
+                    <listitem >
+                      <para>
+                        <anchor id='gimp-channel-selection-subtract' />
+                        <keycap>Ctrl</keycap>：最终选区是以前的活动选区减去从一个通道生成的选区。
+                      </para>
+                    </listitem>
+                    <listitem>
+                      <para>
+                        <anchor id='gimp-channel-selection-intersect' />
+                        <keycap>Shift Ctrl</keycap>：最终选区是从一个通道生成的选区与以前的活动选区相交，只保留相同的部分。
+                      </para>
+                    </listitem>
+                  </itemizedlist>
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>              
         </listitem>
       </varlistentry>  <!-- end Managing -->  
     </variablelist>

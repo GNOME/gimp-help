@@ -2,9 +2,12 @@
 
 <sect2 id='gimp-undo' xmlns:xi="http://www.w3.org/2001/XInclude">
   <title lang="en">Undoing</title>
+  <title lang="zh_CN">撤消</title>
   <indexterm>
     <primary lang="en">Image</primary>
+    <primary lang="zh_CN">图像</primary>
     <secondary lang="en">Undo</secondary>
+    <secondary lang="zh_CN">撤消</secondary>
   </indexterm>
 
   <para lang='en'>
@@ -16,6 +19,18 @@
     </menuchoice>
     from the image menu, but this is done so frequently that you
     really should memorize the keyboard shortcut,
+    <keycombo>
+      <keycode>Ctrl</keycode>
+      <keycode>Z</keycode>
+    </keycombo>.
+  </para>
+  <para lang="zh_CN">
+    几乎可以撤消在 GIMP 中对一个图像所做的任何操作。要撤消最近的操作，选择图像菜单中的
+    <menuchoice>
+      <guimenu>编辑</guimenu>
+      <guimenuitem>撤消</guimenuitem>
+    </menuchoice> 
+    不过由于经常使用它，有必要记住其快捷键，
     <keycombo>
       <keycode>Ctrl</keycode>
       <keycode>Z</keycode>
@@ -39,6 +54,19 @@
     consume any extra resources or alter the undo history, so there is
     never any harm in it.
   </para>
+  <para lang="zh_CN">
+    撤消本身也能被撤消。在撤消一个动作后，您也能<emphasis>重做</emphasis>它，选择在图像菜单中的
+    <menuchoice>
+      <guimenu>编辑</guimenu>
+      <guimenuitem>重做</guimenuitem>
+    </menuchoice>
+    ，或使用快捷键,
+    <keycombo>
+      <keycode>Ctrl</keycode>
+      <keycode>Y</keycode>
+    </keycombo>。
+    通过反复地撤消和重做一个动作，对判断其效果常常是非常有用的。这通常是非常快捷，不会耗费任何多余资源，而且也不会更改撤消历史，因此这样做没有任何坏处。
+    </para>
 
   <caution lang='en'>
     If you undo one or more actions and then operate on the image in
@@ -49,7 +77,10 @@
     original, because the undo/redo history is not copied when you
     duplicate an image.)
   </caution>
-
+  <caution lang="zh_CN">
+    当您撤消一个或多个命令后，又对图像进行了除撤消或重做以外的操作，那么您就不可能再重做这些操作了：它们永远地丢失了。如果您觉得这样不妥，解决方法就是先复制图像，然后在其拷贝上进行操作。(<emphasis>不是</emphasis>原图像，因为在复制图像时，重做/撤消历史不会被拷贝。)
+  </caution>
+ 
   <para lang='en'>
     If you often find yourself undoing and redoing many steps at a
     time, it may be more convenient to work with the <link
@@ -57,6 +88,9 @@
     dockable dialog that shows you a small sketch of each point in the
     Undo History, allowing you to go back or forward to that point by
     clicking. 
+  </para>
+  <para lang="zh_CN">
+    假如您每次常常重做或撤消很多步，这时也许使用<link linkend='gimp-undo-dialog'>撤消历史对话框</link>更加方便。它是一个显示撤消历史中各点的概要的可停靠对话框，允许您通过点击来后退或前进到某点。
   </para>
 
   <para lang='en'>
@@ -72,12 +106,18 @@
     <emphasis>maximum undo memory</emphasis>, beyond which GIMP will
     begin to delete the oldest items from the Undo History.
   </para>
+  <para lang="zh_CN">
+    撤消是基于特定的一个图像操作的：“撤消历史”是一个图像的组成部分。GIMP 要给每个图像分配一定的内存来达到该目的。您能够定制您的首选项来增加或减少其数量，在首选项对话框中的<link linkend='gimp-prefs-environment'>环境</link>页有两个重要的参数：<emphasis>最小撤消次数</emphasis>--不管耗费多少内存都要保证，和<emphasis>最多撤消内存</emphasis>--超过这个值，GIMP 会从撤消历史中删除旧的记录。
+  </para>
 
   <note lang='en'>
     Even though the Undo History is a component of an image, it is not
     saved when you save the image using GIMP's native XCF format,
     which preserves every other image property.  When the image is
     reopened, it will have an empty Undo History.
+  </note>
+  <note lang="zh_CN">
+    虽然撤消历史是一个图像的组成部分，但是在用 GIMP 的内建 XCF 格式保存图像时不会保存该信息，而其它的图像属性都将保留。当图像被重新打开时，它的撤消历史为空。
   </note>
 
   <para lang='en'>
@@ -97,9 +137,13 @@
     perform a few such operations before they drop out of the Undo
     History. 
   </para>
+  <para lang="zh_CN">
+    GIMP 撤消的实现是相当复杂的。只需要很多的撤消内存来保留需要操作(比如改变一个图层的可见性)，因此在记录被从撤消历史中删除之前，可以保持一个很长的操作序列。许多操作(再次以改变图层可见性为例)被<emphasis>压缩</emphasis>了，所以连续多次地执行它们只在撤消历史中产生单独的一个点。尽管如此，还是有其它的操作可能耗费大量的撤消内存。比如说大部分的滤镜：它们由插件实现，GIMP 核心没有知道它们改变了什么的真正有效方法，因此它就不得不记住操作前后被影响图层的全部内容。您可能在记录被从撤消历史中删除之前只能执行很少的这种操作。
+  </para>
 
   <simplesect>
     <title lang='en'>Things that cannot be Undone</title>
+    <title lang="zh_CN">不能被撤消的东西</title>
 
     <para lang='en'>
       Most actions that alter an image can be undone.  Actions that do
@@ -112,10 +156,16 @@
       on or off can be undone, even though it does not alter the image
       data. 
     </para>
+    <para lang="zh_CN">
+      大部分修改一个图像的动作能被撤消，而那些没有修改图像的动作一般就不能。这些操作包括保存图像到一个文件，复制图像和拷贝图像部分等。它还包括大部分影响图像显示但没有修改其图像数据的动作。最重要的例子就是图像比例的缩放。不过也要例外：虽然切换快速蒙板开启或关闭没有修改图像数据，但它能被撤消。
+    </para>
 
     <para lang='en'>
       There are a few important actions that do alter an image but
       cannot be undone:
+    </para>
+    <para lang="zh_CN">
+      下面是一些最重要的动作，它们修改一个图像但不能被撤消：
     </para>
 
     <itemizedlist>
@@ -133,6 +183,10 @@
           the Preferences dialog; if you do, you are assuming
           responsibility for thinking about what you are doing.)
         </formalpara>
+        <formalpara lang="zh_CN">
+          <title>关闭图像</title>
+          撤消历史是图像的组成部分，因此当图像被关闭时，其所有资源都被释放，撤消历史也一样。正因为这样，GIMP 总是要您确认是否真想关闭图像，除非在最近一次保存图像后没有被修改。(您能够通过首选项对话框的<link linkend='gimp-prefs-environment'>环境</link>页来关闭该提示；您要这样做时请先想清楚。)
+        </formalpara>
       </listitem>
 
       <listitem>
@@ -143,6 +197,10 @@
           new image, so the Undo History is lost as a consequence.
           Because of this, if the image is unclean, GIMP always asks you
           to confirm that you really want to revert the image.
+        </formalpara>
+        <formalpara lang="zh_CN">
+          <title>恢复图像</title>
+          “恢复”表示从文件重新读取图像。GIMP 实际上是通过关闭图像并打开一个新图像来实现的，因此其撤消历史将丢失。所以，当图像“不干净”时，GIMP 总是要您确认是否真想恢复图像。
         </formalpara>
       </listitem>
 
@@ -161,6 +219,10 @@
           Text tool, you cannot undo individual letters, font changes,
           etc.:  undoing after you are finished removes the newly
           created text layer.
+        </formalpara>
+        <formalpara lang="zh_CN">
+          <title>动作的“片段”</title>
+          一些工具在它们起作用之前要求您做一系列复杂的处理，不过只能撤消全部而不是单个步凑。比如，智能剪刀要求您通过点击图像中的多个点产生一个闭合的路径，然后再通过在路径内部点击创建一个选区。您无法撤消单独的点击：在您完成后撤消将使全部回到起始点。再比如，当使用文字工具时，您无法撤消单独的文字，改变字体等：完成后撤消会删除新建的文字图像。
         </formalpara>
       </listitem>
 
@@ -181,6 +243,9 @@
       unless you have accidentally done something whose consequences
       are going to be very harmful.
     </para>
+    <para lang="zh_CN">
+      滤镜，和其它由插件或脚本执行的操作能像通过 GIMP 核心实现的动作一样地被撤消，不过这需要它们正确使用 GIMP 的撤消函数。如果代码不正确，一个插件有潜在破坏撤消历史的可能，到时不光是该插件而且以前的动作都不能被正确地撤消。所有由 GIMP 贡献的插件和脚本都可以认为是被正确设置的，而从其它地方得到的插件就显然没有保证。同时，即使代码正确，在运行一个插件时取消掉它有时也会破坏撤消历史，所以除非是不小心所做的其结果将非常严重，最好避免这样做。
+    </para> 
 
   </simplesect>
 

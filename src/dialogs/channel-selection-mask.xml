@@ -4,6 +4,7 @@
   <title lang="en">Selection masks</title>
   <title lang="de">Auswahlmasken</title>
   <title lang="fr">Masques de sélection</title>   
+  <title lang="zh_CN">选区蒙板</title>
 
     <mediaobject lang="en" >
       <imageobject>
@@ -16,6 +17,11 @@
       </imageobject>
     </mediaobject>
     <mediaobject lang="fr" >
+      <imageobject>
+        <imagedata fileref="../images/dialogs/dialogs-channel-masks.png" format="PNG" />
+      </imageobject>
+    </mediaobject>
+    <mediaobject lang="zh_CN" >
       <imageobject>
         <imagedata fileref="../images/dialogs/dialogs-channel-masks.png" format="PNG" />
       </imageobject>
@@ -55,10 +61,14 @@
       devant le canal. Cette fonctionnalité de Gimp est détaillée
       ci-dessous aux chapitres Masque Rapide et Masque de sélection.
     </para>
+    <para lang="zh_CN"> 
+      通道可以保存和恢复您的选区。点击<link linkend="gimp-image-window">图像窗口</link>的<guilabel>快速蒙板</guilabel>按键会自动新建一个叫作<guilabel>Qmask</guilabel>的通道，并将显示的当前选区保存为通道前的一个缩略图上。GIMP 中有很多像矩形选择或模糊选择这样的选择工具。选区蒙板是一种能将选区放入一个灰阶通道的方法，其中选中的为白色像素，未选中的为黑色像素，而灰色像素则表示部分选中。您可以把它们看作被羽化的选区，是选中和未选中之间的过渡。这对在您填充选区或在从背景中分离一个物体后删除其内容时，避免产生的丑陋的格删化现象非常重要。
+    </para>
 
     <variablelist>
       <title lang="en">Creating Selection Masks</title>
       <title lang="de">Erstellen von Auswahlmasken</title>
+       <title lang="zh_CN">创建选区蒙板</title>
     <varlistentry>    
       <listitem lang="en">
         <para>
@@ -123,12 +133,20 @@
             canal</guilabel> ou depuis le menu clic-droit sur un canal.
         </para>
       </listitem>
+      <listitem lang="zh_CN">
+        <para>
+          有多种方法初始化一个选区蒙板。如果有一个活动选区，可以在图像窗口菜单中
+          <guimenuitem>选择</guimenuitem>/
+          <guimenuitem>保存到通道</guimenuitem>。用图像菜单左下方按钮产生一个<link linkend="gimp-qmask">快速蒙板</link>，它将用活动选区初始化其内容。在通道对话框中，点击<guilabel>新建通道</guilabel>按钮或通过通道菜单。
+        </para>
+      </listitem>
     </varlistentry>
   </variablelist>
 
   <variablelist>
       <title lang="en">Using Selectionmasks</title>
       <title lang="de">Auswahlmasken benutzen</title>
+       <title lang="zh_CN">使用选区蒙板</title>
     <varlistentry>
       <listitem lang="en">
         <para>
@@ -219,6 +237,17 @@
           masques dans l'image en enlevant l'icone en forme d'oeil.
           Vérifiez aussi que vos canaux RVB et Alpha sont bien actifs et
           affichés dans l'image.
+        </caution>
+      </listitem>
+      <listitem lang="zh_CN">
+        <para>
+          一旦通道被初始化，选中(用蓝色高亮表示)可见(对话框中的眼睛图标)，让它如您所愿显示(颜色和不透明度属性)，然后您就能用任何涂画工具来使用它了。使用的颜色很重要，假如您用白，灰或黑以外的颜色涂画，颜色的亮度将被用来定义一个灰色(中等，明亮或阴暗)。当蒙板被涂画后，就可以通过点击通道菜单中<guilabel>通道到选区</guilabel>按钮将其转换为一个选区。
+        </para>
+        <tip>
+          您不光可以用涂画工具，而且可以用其它工具来在选区蒙板上进行处理。比如，可以用带渐变或图案的选择工具统一地填充区域。在列表中添加许多选区蒙板能很容易地生成非常复杂的选区。可以这么说，一个选区蒙板对一个选区就好比一个图层对一个图像。
+        </tip>
+        <caution>
+          当一个选区蒙板被激活后，您就对蒙板进行处理了，而不是对图像。如果要对图像处理就必须使所有选区蒙板不活动，另外不要忘记关闭眼睛图标使蒙板停止在图像中显示，然后还要检查所有的 RGB 和 Alpha 通道是否是活动和是否显示在图像上。
         </caution>
       </listitem>
     </varlistentry>
