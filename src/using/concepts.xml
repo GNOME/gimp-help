@@ -1,0 +1,182 @@
+<?xml version='1.0' encoding="UTF-8" ?>
+
+<sect1 id='gimp-using-concepts'>
+  <title lang="en">Gimp Concepts</title>
+  <indexterm>
+    <primary lang="en">The GIMP</primary>
+    <secondary lang="en">Concpets</secondary>
+  </indexterm>
+
+  <para>
+    This section is intended to give you a brief introduction to the
+    basic concepts and terminology you will need to understand in
+    order to make sense to the rest of the documentation.  Everything
+    here is explained in much greater depth elsewhere.  With a few
+    exceptions, we have avoided cluttering this section with a lot of
+    links and cross-references: everything mentioned here is so
+    high-level that you should easily be able to locate it in the
+    index. 
+  </para>
+
+
+
+  <sect2>
+    <title lang="en">Images</title>
+    <para lang="en">
+      Images are the basic entities that Gimp works with.  Roughly
+      speaking, an "image" corresponds to a single file, such as a TIFF
+      or JPEG file.  You can also think of an image as corresponding
+      to a single display window, but this is not quite correct:  it
+      is possible to have multiple windows all displaying the same
+      image.  It is not possible to have a single window display more
+      than one image, though, or for an image to have no window
+      displaying it.
+    </para>
+    <para>
+      A Gimp image may be quite a complicated thing.  Instead of
+      thinking of it as something like a sheet of paper with a picture
+      on it, you should think of it as more like a book, whose pages
+      are called "layers".  In addition to a stack of layers, a Gimp
+      image may contain a selection mask, a set of channels, and a set
+      of paths.  In fact, Gimp provides a mechanism for attaching
+      arbitrary pieces of data to an image, as what are called
+      "parasites". 
+    </para>
+    <para>
+      Images are divided into three basic types, depending on how
+      colors are represented: RGB, grayscale, and indexed.  RGB stands
+      for red-green-blue, and indicates that each point in the image
+      is represented by a "red" level, a "green" level, and a "blue"
+      level.  Because every humanly distinguishable color can be
+      represented as a combination of red, green, and blue, RGB images
+      are full-color.  Each color channel has 256 possible intensity
+      levels (8 bit color depth).  There are other programs that allow
+      images to have 16 bit color depth, but Gimp does not currently
+      support this.   
+    </para>
+    <para>
+      In a grayscale image, each point is represented by a brightness
+      value, ranging from 0 (black) to 256 (white), with intermediate
+      values representing different levels of gray.
+    </para>
+    <para>
+      Indexed images are a bit more complicated to understand.  In an
+      indexed image, only a limited set of discrete colors are used,
+      usually 256 or less.  These colors form the "colormap" of the
+      image, and each point in the image is assigned a color from the
+      colormap.  Indexed images have the advantage that they can be
+      represented inside a computer in a way that consumes relatively
+      little memory, and back in the dark ages (say, ten years ago),
+      they were very commmonly used.  As time goes on, they are used
+      less and less, but they are still important enough to be worth
+      supporting in Gimp.  (Also, there are a few important kinds of
+      image manipulation that are easier to implement with indexed
+      images than with continuous-color RGB images.)
+    </para>
+    <para>
+      Gimp makes it easy to convert from one image type to another,
+      using the <link linkend='gimp-image-mode'>Mode</link> command in
+      the Image menu.  Some types of conversions, of course (RGB to
+      grayscale or indexed, for example) lose information that cannot
+      be regained by converting back in the other direction.  
+    </para>
+    <para>
+      In Gimp, it is possible to have many images open at the same
+      time.  If they are large, each image may use many megabytes of
+      memory, but Gimp uses a sophisticated tile-based memory
+      management system that allows it to handle even very large
+      images gracefully.  There are, however, limits, and it is
+      usually beneficial when working with images to put as much
+      memory into your system as possible.
+    </para>
+  </sect2>
+
+  <sect2>
+    <title lang="en">Layers</title>
+    <para lang="en">
+      If an image is like a book, then a layer is like a page within
+      the book.  The simplest images only contain a single layer, and
+      can be treated like single sheets of paper, but sophisticated
+      Gimp users often deal with images containing many layers, even
+      dozens of them.  Layers need not be opaque, and they need not
+      cover the entire extent of an image, so when you look at an
+      image's display, you may see more than just the top layer:  you
+      may see elements of many layers.
+    </para>
+  </sect2>
+
+  <sect2>
+    <title lang="en">Channels</title>
+    <para lang="en">
+
+    </para>
+  </sect2>
+
+  <sect2>
+    <title lang="en">Selections</title>
+    <para lang="en">
+      Often when you do something to an image, you only want a part of
+      it to be affected.  The "selection" mechanism makes this
+      possible.  Each image has its own selection, which you normally
+      see as an moving dashed line separating the selected parts
+      from the unselected parts (the so-called "marching ants").
+      Actually this is a bit misleading:  selection in Gimp is really
+      graded, not all-or-nothing, and really the selection is
+      represented by a full-fledged grayscale channel.  The dashed
+      line that you normally see is simply a contour line at the
+      50%-selected level.  At any time, though, you can visualize the
+      selection channel in all its glorious detail by toggling the
+      <link linkend='gimp-image-window-qmask-button'>QuickMask</link>
+      button. 
+    </para>
+    <para>
+      A large component of learning how to use Gimp effectively is
+      acquiring the art of making good selections---selections that
+      contain exactly what you need and nothing more.  Because
+      selection-handling is so centrally important, Gimp gives you a
+      large number of tools for doing it:   an assortment of
+      selection-making tools, a menu of selection operations, and the
+      ability to switch to Quick Mask mode, in which you can treat the
+      selection channel as though it were a color channel, thereby
+      "painting the selection".   
+    </para>
+  </sect2>
+
+  <sect2>
+    <title lang="en">Plug-ins</title>
+    <para lang="en">
+      Many, probably most, of the things you do to an image in Gimp
+      are done by the Gimp application itself.  However, Gimp also
+      makes extensive use of "plug-ins", which are external programs
+      that interact very closely with Gimp, and are capable of
+      manipulating images and other Gimp objects in very sophisticated
+      ways.  Many important plug-ins come packaged together with Gimp,
+      but there are also many available by other means.  In fact, the
+      ability to write plug-ins (and scripts) is the easiest way for
+      people not on the Gimp development team to add new capabilities
+      to Gimp.
+    </para>
+    <para>
+      All of the commands in the Filters menu, and a substantial
+      number of commands in other menus, are actually implemented by
+      plug-ins. 
+    </para>
+  </sect2>
+
+  <sect2>
+    <title lang="en">Scripts</title>
+    <para lang="en">
+      In addition to plug-ins, which are programs written in the C
+      language, Gimp can also make use of scripts.  The largest number
+      of existing scripts are written in a language called Script-Fu,
+      which is special to Gimp (for those who care, it is a dialect of
+      the Lisp-like language called Scheme).  It is also possible to
+      write Gimp scripts in Python or Perl.  These languages are more
+      flexible and powerful than Script-Fu; their disadvantage is that
+      they depend on software that does not automatically come
+      packaged with Gimp, so they are not guaranteed to work correctly
+      in every Gimp installation.
+    </para>
+  </sect2>
+
+</sect1>
