@@ -19,6 +19,11 @@
   
   <xsl:template match="div|obj|ttl">
     <xsl:choose>
+      <!-- skip area elements, because the help browser cannot link to
+      them anyway and we don't want them in the statistics
+      //-->
+      <xsl:when test="@element='area'">
+      </xsl:when>
       <xsl:when test="@targetptr">
         <help-item>
           <xsl:attribute name="id"> 
