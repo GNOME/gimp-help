@@ -1,0 +1,364 @@
+<?xml version='1.0' encoding="UTF-8" ?>
+
+<sect1 id='gimp-using-script-fu'>
+  <title lang="en">Using Script-Fu Scripts</title>
+  <title lang="fr">Utiliser Gimp</title>
+  <title lang="sv">Använda GIMP</title>
+  <indexterm>
+    <primary lang="en">The GIMP</primary>
+    <primary lang="fr">GIMP</primary>
+    <primary lang="sv">GIMP</primary>
+    <secondary lang="en">Script-fu</secondary>
+  </indexterm>
+
+  <simplesect>
+    <title lang="en">Script-Fu?</title>
+    <para lang="en">
+      Script-Fu is what the Windows world would call "macros" But
+      Script-Fu is more powerful than that. Script-Fu is based on an
+      interpreting language called Scheme, and works by using querying
+      functions to the Gimp database. You can do all kinds of things
+      with Script-Fu, but an ordinary Gimp user will probably use it
+      for automating things that:  
+    </para>
+    <itemizedlist lang="en">
+      <listitem><para>
+        You want to do frequently.
+      </para></listitem>
+      <listitem><para>
+        Are really complicated to do, and hard to remember.
+      </para></listitem>
+    </itemizedlist>
+    <para>
+      Remember that you can do a whole lot with Script-Fu. The
+      scripts that come with Gimp can be quite useful, but they can
+      also serve as models for learning Script-Fu, or at least as a
+      framework and source of modification when you make your own
+      script. Read the Script-Fu Tutorial in the next section
+      if you want to learn more about how to make scripts. 
+    </para>
+    <para>
+      We will describe some of the most useful scripts in this
+      chapter, but we won't cover them all. There are simply too many
+      scripts. Some of the scripts are also very simple and you will
+      probably not need any documentation to be able to use them. 
+    </para>
+    <para>
+      Script-Fu (a dialect of Scheme) isn't the only scripting
+      language available for Gimp. But Script-Fu is the only scripting
+      language that is installed by default. Other available scripting
+      extensions are Perl and Tcl. You can download and install both
+      extensions at the <ulink url='http://registry.gimp.org'>Gimp
+      Plugin Registry</ulink>. 
+    </para>
+  </simplesect>
+
+  <simplesect>
+    <title lang="en">Installing Script-Fus</title>
+    <para lang="en">
+      One of the great things about Script-Fu is that you can share your
+      script with all your Gimp friends. There are many scripts
+      that come with Gimp by default, but there are also vast
+      quantities of scripts that
+      are available for download all around the Internet. 
+    </para>
+    <tip>
+      If you have downloaded a script, copy or move your new script to
+      your <filename>.gimp-2.0/scripts</filename> directory and do a
+      refresh. The script will now appear in one of your menus. If you
+      don't find it, look for it under the root file menu filters. If
+      it doesn't appear at all, something was wrong with the script. 
+    </tip>
+    <para>
+      Note that you can't use more than one Script-Fu dialog at a
+      time, so don't open a script and one more after that. The last
+      one will never be opened and displayed. 
+    </para>
+  </simplesect>
+
+  <simplesect>
+    <title lang="en">Do's and Don'ts</title>
+    <para lang="en">
+      A common error when you are dealing with Script-Fus is that you
+      simply bring them up and press the OK button. When nothing
+      happens, you probably think that the script is broken or buggy,
+      but there is most likely nothing wrong with it. 
+    </para>
+    <para>
+      Think again. Did you really read the information in the dialog,
+      or did you just press the button? If you forgot an input the
+      script needs, or if you gave it the wrong input, the script will
+      fail. One of the most common errors is that the font specified
+      in the script dialog hasn't been installed on your system. So
+      please check the information in the dialog before blaming the
+      script. 
+    </para>
+  </simplesect>
+
+  <simplesect>
+    <title lang="en">Different Kinds Of Script-Fus</title>
+    <para lang="en">
+      There are two kinds of Script-Fus -- standalone scripts and
+      image-dependent scripts. You will find the standalone variants
+      under 
+      <menuchoice>
+        <guimenu>Xtns</guimenu>
+        <guisubmenu>Script-Fu</guisubmenu>
+        <guimenuitem><replaceable>Type of Script</replaceable></guimenuitem>
+      </menuchoice> in the main toolbox menu, 
+      and the image-dependent scripts are placed under 
+      <menuchoice>
+        <guimenu>Script-Fu</guimenu>
+        <guimenuitem><replaceable>Type of Script</replaceable></guimenuitem>
+      </menuchoice> in the image menu.
+    </para>
+  </simplesect>
+
+  <simplesect>
+    <title lang="en">Standalone Scripts</title>
+    <para lang="en">
+      We will not try to describe every script in depth. Most
+      Script-Fus are very easy to understand and use. At the time of
+      this writing, the following types are installed by default:
+    </para>
+    <itemizedlist lang="en">
+      <listitem><para>
+        Patterns
+      </para></listitem>
+      <listitem><para>
+        Web page themes
+      </para></listitem>
+      <listitem><para>
+        Logos
+      </para></listitem>
+      <listitem><para>
+        Buttons
+      </para></listitem>
+      <listitem><para>
+        Utils
+      </para></listitem>
+      <listitem><para>
+        Make Brush
+      </para></listitem>
+      <listitem><para>
+        Misc.
+      </para></listitem>
+    </itemizedlist>
+  </simplesect>
+
+  <simplesect>
+    <variablelist lang="en">
+
+    <varlistentry><term>Patterns</term>
+      <listitem><para>
+        You will find all kinds of pattern-generating scripts
+        here. Generally, they are quite useful because you can add many
+        arguments to your own patterns.
+      </para>
+      <para>
+        We'll take a look at the Land script. In this script you have to
+        set the image/pattern size, and specify what levels of random to
+        use for your land creation. The colors used to generate the land
+        map are taken from the currently selected gradient in the
+        gradient editor. You must also supply values for the level of
+        detail, land and sea height/depth and the scale. Scale refers to
+        the scale of your map, just as in an ordinary road map, 1:10
+        will be typed as 10. 
+      </para></listitem>
+    </varlistentry>
+
+    <varlistentry><term>Web Page Themes</term>
+      <listitem><para>
+        Here is clearly a practical use for scripts. By creating a
+        script for making custom text, logos, buttons arrows, etc., for
+        your web site, you will give them all the same style and
+        shape. You will also be saving a lot of time, because you don't
+        have to create every logo, text or button by hand. 
+      </para>
+      <para>
+        You will find the Gimp.org theme under the Web page theme
+        submenu. If you want to create your own theme, this script
+        will serve as an excellent template that you can modify to
+        create a theme for your web site. 
+      </para>
+      <para>
+  	Most of the scripts are quite self-explanatory, but here are
+  	some hints: 
+      </para>
+      <itemizedlist>
+        <listitem><para>
+          Leave all strange characters like ' and " intact.
+        </para></listitem>
+        <listitem><para>
+          Make sure that the pattern specified in the script exists.
+        </para></listitem>
+        <listitem><para>
+          Padding refers to the amount of space around your text.
+        </para></listitem>
+        <listitem><para>
+          A high value for bevel width gives the illusion of a higher button.
+        </para></listitem>
+        <listitem><para>
+          If you type TRUE for "Press", the button will look pushed down.
+        </para></listitem>
+        <listitem><para>
+          Choose transparency if you don't want a solid background. If
+          you choose a solid background, make sure it is the same
+          color as the web page background. 
+        </para></listitem>
+      </itemizedlist>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry><term>Logos</term>
+      <listitem><para>
+        Here you will find all kinds of logo-generating scrips. This
+        is nice, but use it with care, as people might recognize your
+        logo as being made by a known Gimp script. You should rather
+        regard it as a base that you can modify to fit your needs. The
+        dialog for making a logo is more or less the same for all such
+        scripts:
+      </para>
+      <orderedlist>
+        <listitem><para>
+          In the Text String field, type your logo name, like Frozenriver.
+        </para></listitem>
+        <listitem><para>
+          In the Font Size text field, type the size of your logo in pixels.
+        </para></listitem>
+        <listitem><para>
+          In the Font text field, type the name of the font that you
+          want to use for your logo. 
+        </para></listitem>
+        <listitem><para>
+          To choose the color of your logo, just click on the color
+          button. This brings up a color dialog. 
+        </para></listitem>
+        <listitem><para>
+          If you look at the current command field, you can watch the
+          script run. 
+        </para></listitem>
+      </orderedlist>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry><term>Make Buttons</term>
+      <listitem><para>
+        Under this headline you'll find a script that makes beveled
+        buttons. The script has a dozen parameters or so, and most of
+        them are similar to those in the logo scripts. You can
+        experiment with different settings to come up with a button you
+        like. 
+      </para></listitem>
+    </varlistentry>
+
+    <varlistentry><term>Utils</term>
+      <listitem><para>
+        Under Utils you will find a small but nice script: the Fontmap
+        script, which makes an image of your fonts. You will have to
+        type the names of the fonts you want displayed in the Fonts text
+        field. 
+      </para>
+      <para>
+        The Custom gradient script creates an image of the current
+        custom gradient in the gradient editor. This can be useful if
+        you want to pick colors from a gradient as in a palette. 
+      </para></listitem>
+    </varlistentry>
+
+    <varlistentry><term>Misc.</term>
+      <listitem><para>
+        Under Misc. you'll find scripts that can be quite useful, but
+      aren't suitable for the other submenus. An example is the Sphere
+      script. You will have to set the radius in pixels to determine
+      the sphere size. The lighting angle is where at the sphere you
+      point the spotlight. This value also has an impact on the sphere
+      shadow. If you don't want a shadow, you will have to type
+      FALSE. The last thing you have to select is background color,
+      and the color of your sphere. 
+      </para></listitem>
+    </varlistentry>
+
+    <varlistentry><term>Make Brush</term>
+      <listitem><para>
+        This script lets you make your own custom rectangular/circular
+        brushes, with or without feathered (blurred) edges. The script
+        will automatically store your brush in your 
+        personal brush directory. You just have to press refresh in the
+        Brush Selection dialog to use your newly created brush. 
+      </para></listitem>
+    </varlistentry>
+  </variablelist>
+  </simplesect>
+
+  <simplesect>
+    <title lang="en">Image-Dependent Scripts</title>
+    <para lang="en">
+      These are scripts that perform operations on an existing
+      image. In many ways they are like the plug-ins in the Filters
+      menu. The following script groups are installed by default: 
+    </para>
+    <itemizedlist lang="en">
+      <listitem><para>
+        Decor
+      </para></listitem>
+      <listitem><para>
+        Modify
+      </para></listitem>
+      <listitem><para>
+        Animators
+      </para></listitem>
+      <listitem><para>
+        Stencil Ops
+      </para></listitem>
+      <listitem><para>
+        Alchemy
+      </para></listitem>
+      <listitem><para>
+        Shadow
+      </para></listitem>
+      <listitem><para>
+        Render
+      </para></listitem>
+      <listitem><para>
+        Utils
+      </para></listitem>
+      <listitem><para>
+        Selection
+      </para></listitem>
+    </itemizedlist>
+    <variablelist lang="en">
+      <varlistentry><term>Stencil Ops</term>
+        <listitem><para>
+          Here, you'll find two scripts: Carve-It and Chrome-It, which
+          can render some truly nice artistic effects on grayscale
+          images. 
+        </para></listitem>
+      </varlistentry>
+      <varlistentry><term>Drop Shadow</term>
+        <listitem><para>
+          Drop Shadow will cast a shadow behind your selected
+          object. It has three important parameters. X and Y offset
+          determine where the shadow will be placed in relation to the
+          selected object. Offset is measured in pixels. High values
+          make the shadow look like it's far away, and low values will
+          make it look closer to the object. The blur value is also
+          important, because a shadow that is cast far from the object
+          has a higher blur level. 
+        </para></listitem>
+      </varlistentry>
+      <varlistentry><term>Perspective Shadow</term>
+        <listitem><para>
+          Perspective Shadow has a very important parameter: the
+          perspective angle. If this angle is set to 0 or 180, there
+          will be no shadow, because the script assumes that the object
+          has no thickness. This also means that this script looks fine
+          in certain angles, but unnatural in others. The other
+          parameters are quite self-explanatory. You'll get more blur if
+          the horizon is far away, and the shadow length is the length
+          in relation to the selected object. 
+        </para></listitem>
+      </varlistentry>
+    </variablelist>  	
+  </simplesect>
+</sect1>
