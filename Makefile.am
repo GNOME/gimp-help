@@ -192,6 +192,8 @@ validate.stamp: profile.stamp $(XML_FILES) $(DTD_FILES)
 	  done; \
 	  echo 'Log files of the validation process have been generated in the xml directory.'; \
 	  echo 'Please correct any errors before writing new content.'; \
+	else \
+	  echo '*** xmllint is missing, skipping the validation step ***'; \
 	fi
 	touch validate.stamp
 
