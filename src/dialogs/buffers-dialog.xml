@@ -1,10 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<sect1 id='gimp-buffers-dialog'>
+<sect1 id='gimp-buffer-dialog'>
   <title lang="en">Buffers dialog</title>
+  <title lang="fr">Tampon</title>
   <indexterm>
     <primary lang="en">Dialog</primary>
     <secondary lang="en">Buffers</secondary>
+    <secondary lang="fr">Tampon</secondary>
   </indexterm>
 
   <informalfigure>
@@ -38,9 +40,31 @@
     <menuchoice>
       <guimenu>Edit</guimenu>
       <guisubmenu>Buffer</guisubmenu>
-      <guimenuitem></guimenuitem>
-    </menuchoice>.
-    
+      <guimenuitem>Copy Named</guimenuitem>
+    </menuchoice>
+    or
+    <menuchoice>
+      <guimenu>Edit</guimenu>
+      <guisubmenu>Buffer</guisubmenu>
+      <guimenuitem>Copy Named</guimenuitem>
+    </menuchoice>,
+    a dialog pops up asking you to name a buffer to store the data
+      in.  There is no hard limit on the number of named buffers you
+      can create, although, of course, each one consumes a share of
+      memory. 
+  </para>
+  <para lang='fr'>
+    Le Tampon est un presse-papier perfectionné qui permet de 
+    conserver plusieurs documents, en général des sélections ou des 
+    calques et de les récupérer ensuite. Il est commun à toutes les 
+    images ouvertes. Il disparaît quand Gimp est fermé.
+  </para>  
+
+  <para lang='en'>
+    The Buffers dialog shows you the contents of all existing named
+    buffers, and allows you to operate on them in several ways.  It
+    also shows you, at the top, the contents of the Global Buffer, but
+    this is merely a display:  you can't do anything with it.
   </para>
 
   <para lang='en'>
@@ -93,6 +117,11 @@
 
   </itemizedlist>
 
+  <caution lang='en'>
+    Named buffers are not saved across sessions.  The only way to save
+    their contents is to paste them into images.
+  </caution>
+
   <simplesect>
     <title lang="en">Grid/List modes</title>
 
@@ -115,32 +144,94 @@
       <guimenuitem>View as Grid</guimenuitem> and <guimenuitem>View as
       List</guimenuitem>.   In Grid mode, the buffers are laid out in a
       rectangular array.  In List mode, they are lined up vertically,
-      with each row showing an example of the appearance of the font
-      ("Aa"), followed by the name of the font.
+      with each row showing a preview of the contents of the buffer,
+      its name, and its pixel dimensions.
     </para>
   </simplesect>
 
   <simplesect>
     <title lang="en">Using the Buffers dialog</title>
 
+    <informalfigure>
+      <mediaobject lang="en">
+        <imageobject>
+          <imagedata fileref='../images/dialogs/dialogs-buffers-menu.png'
+          format="PNG"/> 
+        </imageobject>
+      </mediaobject>
+      <caption>
+        <para lang='en'>
+          The Buffers Menu
+        </para>
+      </caption>
+    </informalfigure>
+
     <para lang='en'>
-      The most basic thing you can do is to select a buffer by clicking
-      on it:  this font will then be used by the Text tool.  If
-      instead of clicking and releasing, you hold down the 
-      left mouse button with the pointer positioned over the font
-      example ("Aa"), a window showing a larger text example will
-      pop up ("Pack my box with five dozen liquor jugs.").
+      Clicking on a buffer in the display area makes it the active
+      buffer, i. e., the one that will be used for paste commands
+      executed with the Buffers Menu or the buttons at the bottom of
+      the dialog.  Double-clicking on a buffer causes its contents to
+      be pasted to the active image; this is a quick way of executing
+      the "Paste Buffer" command.
     </para>
 
     <para lang='en'>
-      Pressing the button at the bottom of the dialog causes the
-      system font list to be rescanned.  This may be useful if you add
-      new fonts while GIMP is running, and want to make them
-      accessible for the Text tool.  You can also cause the font list
-      to be rescanned by right-clicking in the font display, and
-      selecting "Rescan Font List" from the menu that pops up (it is
-      actually the only option in the menu).
+      At the bottom of the dialog are four buttons.  The operations
+      they perform can also be accessed from the Buffers Menu, and
+      from the 
+      <menuchoice>
+        <guimenu>Edit</guimenu>
+        <guisubmenu>Buffer</guisubmenu>
+      </menuchoice>
+      submenu in the image menu.
     </para>
+
+    <itemizedlist>
+      <listitem>
+        <anchor id='gimp-buffer-paste' />
+        <formalpara lang='en'>
+          <title>Paste Buffer</title>
+          This command pastes the contents of the selected buffer into
+          the active image, as a floating selection.  The only
+          difference between this and the ordinary <link
+          linkend='gimp-edit-paste'>Paste</link> command is
+          that it uses the selected buffer rather than the global
+          clipboard buffer.
+        </formalpara>
+      </listitem>
+      <listitem>
+        <anchor id='gimp-buffer-paste-into' />
+        <formalpara lang='en'>
+          <title>Paste Buffer Into</title>
+          This command pastes the contents of the selected buffer into
+          the active image's selection, as a floating selection.
+          The only difference between this and the ordinary <link
+          linkend='gimp-edit-paste-into'>Paste Into</link>
+          command is that it uses the selected buffer rather
+          than the global clipboard buffer.
+        </formalpara>
+      </listitem>
+      <listitem>
+       <anchor id='gimp-buffer-paste-as-new' />
+       <formalpara lang='en'>
+           <title>Paste Buffer as New</title>
+          This command creates a new single-layer image out of the
+          contents of the selected buffer. 
+          The only difference between this and the ordinary <link
+          linkend='gimp-edit-paste-as-new'>Paste as New</link>
+          command is that it uses the selected buffer rather
+          than the global clipboard buffer.
+        </formalpara>
+      </listitem>
+      <listitem>
+       <anchor id='gimp-buffer-delete' />
+        <formalpara lang='en'>
+          <title>Delete Buffer</title>
+          This command deletes the selected named buffer, no questions
+          asked.  You cannot delete the Global Buffer.
+        </formalpara>
+      </listitem>
+    </itemizedlist>
 
     <note lang='en'>
       You can change the size of the buffer previews in the dialog using
