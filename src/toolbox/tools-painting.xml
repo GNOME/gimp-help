@@ -1,0 +1,472 @@
+<?xml version='1.0' encoding="UTF-8" ?>
+
+<sect2 id='gimp-tool-painting'>
+  <title lang="en">Painting Tools (Pencil, Paintbrush, Airbrush)</title>
+  <title lang="de">Bleistift, Pinsel, Airbrush</title>
+  <title lang="fr">Crayon, Pinceau, Aérographe</title>
+  <indexterm>
+    <primary lang="en">Toolbox</primary>
+    <primary lang="de">Werkzeugfenster</primary>
+    <primary lang="fr">Boîte à Outils</primary>
+    <primary lang="zh_CN">工具栏</primary>
+    <secondary lang="en">Painting Tools</secondary>
+  </indexterm>
+  
+  <informalfigure>
+    <mediaobject>
+      <imageobject>
+        <imagedata
+        fileref='../images/toolbox/painting-examples.png'
+        format="PNG"/> 
+      </imageobject>
+    </mediaobject>
+    <caption>
+      <para lang='en'>
+        Three strokes painted with the same round fuzzy brush (outline
+        shown in upper left), using the Pencil (left), Paintbrush
+        (middle), and Airbrush (right).
+      </para>
+    </caption>
+  </informalfigure>
+
+  <para lang="en">
+    The tools in this group are GIMP's basic painting tools, and they
+    have enough features in common to be worth discussing together in
+    this section.  Features common to all brush tools are described in
+    the <link linkend='gimp-tool-brush'>Common Features</link>
+    section.  Features specific to an individual tool are described in
+    the section devoted to that tool.
+  </para>
+
+  <para lang='en'>
+    The Pencil is the crudest of the tools in this group:  it makes
+    hard, non-anti-aliased 
+    brushstrokes.  The Paintbrush is intermediate: it is probably the
+    most commonly used of the group.  The Airbrush is the most
+    flexible and controllable:  it is the only one for which the
+    amount of paint applied depends on the speed of brush movement.
+    This flexibility also makes it a bit more difficult to use than
+    the Paintbrush, however.
+  </para>
+
+  <para lang='en'>
+    All of these tools share the same brushes, and the same options
+    for choosing colors, either from the basic palette or from a
+    gradient. All are capable of painting in a wide variety of modes. 
+  </para>
+  
+  <simplesect>
+    <title lang="en">Key modifiers</title>
+    <title lang="de">Tastaturbindungen</title>
+    <title lang="fr">Touches de modification</title>
+    <title lang="zh_CN">相关按键</title>
+
+    <variablelist>
+      <varlistentry>
+        <term lang="en">
+          <keycap>Ctrl</keycap>
+        </term>
+        <term lang="de">
+          <keycap>Strg</keycap>
+        </term>
+        <term lang="fr">
+          <keycap>Ctrl</keycap>
+        </term>
+	<term lang="zh_CN">
+	  <keycap>Ctrl</keycap>
+	</term>
+        <listitem>
+          <para lang="en">
+            Holding down the Ctrl key changes each of these tools to a <link
+              linkend='gimp-tool-color-picker'>Color Picker</link>:
+              clicking on any pixel of any layer sets the foreground
+              color (as displayed in the Toolbox Color Area) to the
+              color of the pixel.
+          </para>
+          
+          <para lang="de">
+            Mit der <keycap>Strg</keycap> Taste wird die <link
+              linkend='gimp-tool-color-picker'>Pipette</link> aufgerufen.
+          </para>
+
+          <para lang="fr">
+            <keycap>Ctrl</keycap> transforme le crayon en <link
+              linkend='gimp-tool-color-picker'>Pipette à couleurs</link>.
+          </para>
+	  <para lang="zh_CN">
+	    <keycap>Ctrl</keycap> 使铅笔工具转为<link
+              linkend='gimp-tool-color-picker'>颜色拾取</link>。
+          </para>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+  </simplesect>
+  
+  <simplesect>
+    <title lang="en">Options</title>
+    <title lang="de">Optionen</title>
+    <title lang="fr">Options</title>
+    <title lang="zh_CN">选项</title>
+
+    <variablelist>
+
+    <varlistentry>
+      <term lang="en">Mode</term>
+      <term lang="de">Modus</term>
+      <term lang="fr">Mode</term>
+      <term lang="zh_CN">模式</term>
+      <listitem lang="en">
+        <para>                         <!--changed 040908--> 
+          The Mode dropdown list provides a selection of paint application
+          modes. This setting appears in the Tool Options for all
+          brush tools, but it is grayed out for all except the tools
+          in this group, the Ink tool, and the Clone tool.  A list of
+          possible modes can be found in the <link
+          linkend='glossary-modes'>Glossary</link>.  For the most part
+          these modes are the same as the layer combination modes
+          available in the Layers dialog, and you can understand their
+          effects by imagining that the paint is applied to a separate
+          layer above the target layer, with the mode for the layer
+          set as specified.  Three of the modes are special, though:
+        </para>
+        <formalpara>
+          <title>Color Erase</title>
+          This mode erases the foreground color, replacing it with
+          partial transparency.  It acts like the <link
+          linkend='plug-in-colortoalpha'>Color to Alpha</link>
+          filter, applied to the area under the brushstroke.  Note
+          that this only works on layers that possess an alpha
+          channel; otherwise, this mode is identical to Normal.
+        </formalpara>
+        <formalpara>
+          <title>Behind</title>
+          This mode applies paint only to non-opaque areas of the
+          layer:  the lower the opacity, the more paint is applied.
+          Thus, painting opaque areas has no effect; painting
+          transparent areas has the same effect as normal mode.  The
+          result is always an increase in opacity.  Of course none of
+          this is meaningful for layers that lack an alpha channel.
+        </formalpara>
+        <informalfigure>
+          <mediaobject>
+            <imageobject>
+              <imagedata
+                fileref='../images/toolbox/dissolve-mode-example.png'
+                format="PNG"/> 
+            </imageobject>
+          </mediaobject>
+          <caption>
+            <para>
+              Two brushstrokes made with the Airbrush, using the same
+              fuzzy circular brush.  Left: Normal mode.  Right:
+              Dissolve mode.
+            </para>
+          </caption>
+        </informalfigure>
+        <formalpara>
+          <title>Dissolve</title>
+          In this very useful mode, for fuzzy brushes the gray level
+          of the brush determines not the paint density, but rather
+          the probability of applying paint.  This gives a nice way of
+          creating rough-looking paintstrokes.
+        </formalpara>
+      </listitem>
+      <listitem lang="de">
+        <para>
+          Die verfügbaren Modi verändern die Art und Weise, wie
+          die Pixel auf die Ebene gezeichnet werden. Ähnlich den Modi
+          der Ebenen, repräsentieren die Zeichenmodi eine
+          Überblendung mit der ausgewählten Farbe
+          (-muster) und der Zeichenebene. Mehr über die
+          Modi, die <acronym>Gimp</acronym> zur Verfügung stellt,
+          befindet sich im <link linkend='glossary-modes'>Glossar</link>.
+        </para>
+      </listitem>
+      <listitem lang="fr">
+        <para>
+          La liste déroulante fournit une sélection des modes 
+          d'application de la peinture. La liste de ces modes se trouve dans 
+          le <link linkend='glossary-modes'>Glossaire</link>.
+        </para>
+      </listitem>
+      <listitem lang="zh_CN">
+	<para>
+	  模式下拉列表提供一系列涂画应用模式。术语表中右这些模式的列表。
+	</para>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term lang="en">Gradient</term>       <!--changed 040908-->
+      <term lang="de">Farbverlauf</term>
+      <term lang="fr">Dégradé</term>
+      <term lang="zh_CN">渐变</term>
+
+
+      <listitem>
+        <informalfigure>
+          <mediaobject lang="en">
+            <imageobject>
+              <imagedata
+              fileref='../images/toolbox/tool-options-paint-gradient.png'
+              format="PNG"/> 
+            </imageobject>
+          </mediaobject>
+          <caption>
+            <para lang='en'>
+              Gradient options for painting tools.
+            </para>
+          </caption>
+        </informalfigure>
+
+        <para lang='en'>   
+          Instead of using the foreground color (as shown in the Color
+          Area of the Toolbox), by checking the "Use color from
+          gradient" option you can choose to paint with a gradient,
+          giving colors that change gradually along the brush
+          trajectory.  For basic information on gradients, see the
+          <link linkend='gimp-gradients'>Gradients</link> section.
+        </para>
+        <para lang='en'>
+          You have several options to control what gradient is used
+          and how it is laid out:
+        </para>
+        <para lang='de'>
+          Bei aktiviertem Kontrollkästchen, wird keine Vorder- oder
+          Hintergrundfarbe zum Zeichnen verwendet, sondern der
+          ausgewählte Farbverlauf. Diese Option steht in Verbindung
+          mit der Auswahl des <guilabel>Farbverlaufs</guilabel>. Bei der
+          Benutzung kann die <guilabel>Länge </guilabel> in Pixeln und
+          die <guilabel>Wiederholungsart</guilabel> des Farbverlaufs
+          eingestellt werden.
+        </para>
+        <formalpara lang='fr'>
+          <title>Couleur à partir du Dégradé</title>
+          Avec cette option, ce n'est pas la couleur de premier-plan ou de 
+          fond qui sera utilisée pour dessiner, mais le dégradé actif. Vous 
+          pouvez choisir un dégradé en cliquant sur la boîte de sélection 
+          située juste à droite de "Dégradé". En cochant la case 
+          <guilabel>Inverser</guilabel> vous inversez le sens du dégradé.
+        </formalpara>
+        <para lang='zh_CN'>
+          可以从下拉列表中选择不同的渐变图案。该工具生成一个从前景色逐渐转为背景色的淡出图案，其方向由用户在图像上画线的方向决定。<guilabel>反向</guilabel>勾选框交换渐变中的前景和背景色。
+        </para>
+
+        <formalpara lang='en'>
+          <title>Gradient</title>
+          Here you see a display of the current gradient.
+          Clicking on it brings up a Gradient Selector, which will
+          allow you to choose a different gradient.
+        </formalpara>
+        <formalpara lang='en'>
+          <title>Reverse</title>
+          Normally a brushstroke starts with colors from the left
+          side of the gradient, and progresses rightward.  If
+          "Reverse" is checked, the stroke starts with colors from
+          the right side, and progresses leftward.
+        </formalpara>
+        <para lang='de'>
+          Über den Farbverlaufsbrowser lassen sich zwischen eigens
+          erstellten Farbverläufen auch die Standardfarbverläufe
+          auswählen. Diese können mit
+          <guilabel>Reverse</guilabel> invertiert werden.
+          Standardmässig wird ein linearer Farbverlauf zwischen
+          Vorder- und Hintergrundfarbe generiert.
+        </para>
+        <para lang='fr'>
+          Vous permet de choisir le dégradé qui sera utilisé si vous cochez 
+          l'option "Couleur à partir du dégradé". Ce dégradé peut être 
+          inversé en cochant l'option <guilabel>Inverser</guilabel>.
+        </para>
+        <para lang="zh_CN">
+          勾取勾选框时，将使用渐变中的颜色，而不是前景和背景色。
+        </para> 
+
+        <formalpara lang='en'>
+          <title>Length</title>
+          This option sets the distance corresponding to one
+          complete cycle through the gradient colors.  The default
+          units are pixels, but you can choose a different unit
+          from the adjoining Units menu.
+        </formalpara>
+        <para lang='fr'>
+          Le dégradé est peint vers l'avant (sens gauche-droite de la 
+          représentation du dégradé). Toute la séquence du dégradé sera 
+          utilisée sur la <guilabel>Longueur</guilabel> fixée.
+        </para>
+        <para lang="zh_CN">
+          渐变将被向前涂画。整个渐变的颜色顺序会在设定的长度内被渲染。
+        </para>
+
+      <informaltable frame='none'>
+        <tgroup cols='3'>
+        <colspec colwidth='1in' />
+        <colspec colwidth='1in' />
+        <colspec colwidth='1in' />
+        <tbody>
+          <row>
+            <entry />
+            <entry>
+              <mediaobject>
+                <imageobject> 
+                  <imagedata
+                      fileref='../images/tool-options/brush-gradient-normal.png'
+                    format='PNG' />
+                </imageobject>
+              </mediaobject>
+            </entry>
+            <entry />
+          </row>
+          <row>
+            <entry />
+            <entry>
+              <para lang='en'>
+                Abstract2 Gradient
+              </para>
+              <para lang='de'>
+                Farbverlauf
+              </para>
+              <para lang='fr'>
+                Dégradé
+              </para>
+              <para lang='zh_CN'>
+                渐变
+              </para>
+            </entry>
+            <entry />
+          </row>        
+          <row>
+            <entry>
+              <mediaobject>
+                <imageobject> <imagedata
+                  fileref='../images/tool-options/brush-gradient-none.png'
+                  format='PNG' />
+                </imageobject>
+              </mediaobject>
+            </entry>
+            <entry>
+              <mediaobject>
+                <imageobject> <imagedata
+                  fileref='../images/tool-options/brush-gradient-sawtooth.png'
+                  format='PNG' />
+                </imageobject>
+              </mediaobject>
+            </entry>
+            <entry>
+              <mediaobject>
+                <imageobject> <imagedata
+                  fileref='../images/tool-options/brush-gradient-triangular.png'
+                  format='PNG' />
+                </imageobject>
+              </mediaobject>
+            </entry>
+          </row>
+          <row>
+            <entry>
+              <para lang='en'>
+                None
+              </para>
+              <para lang='de'>
+                Keine
+              </para>
+              <para lang='fr'>
+                Aucun
+              </para>
+            </entry>
+            <entry>
+              <para lang='en'>
+                Sawtooth
+              </para>
+              <para lang='de'>
+                Sägezahn
+              </para>
+              <para lang='fr'>
+                En dents de scie
+              </para>
+            </entry>
+            <entry>
+              <para lang='en'>
+                Triangular
+              </para>
+              <para lang='de'>
+                Dreieckige
+              </para>
+              <para lang='fr'>
+                Triangulaire
+              </para>
+            </entry>
+          </row>
+        </tbody>
+        </tgroup>
+        <caption>
+          <para lang='en'>
+            Illustration of the effects of the three gradient-repeat
+            options, for the "Abstract 2" gradient. 
+          </para>
+        </caption>
+      </informaltable>
+
+
+        <formalpara lang='en'>
+          <title>Repeat</title>
+          This option determines what happens if a brushstroke
+          extends farther than the Length specified above.  There
+          are three possibilities:  "None" means that the color
+          from the end of the gradient will be used throughout the
+          remainder of the stroke; "Sawtooth wave" means that the
+          gradient will be restarted from the beginning, which
+          will often produce a color discontinuity; "Triangular
+          wave" means that the gradient will be traversed in
+          reverse, afterwards bouncing back and forth until the
+          end of the brushstroke.
+        </formalpara>
+        <para lang='de'>
+          Ist die Option <guilabel>Farbe aus Farbverlauf</guilabel> ohne
+          <guilabel>Wiederholung</guilabel> aktiviert, wird bei
+          längeren Strichen mit der Endfarbe des Gradienten
+          weitergezeichnet.
+        </para>
+        <para lang='de'>
+          <guilabel>Sägezahn Welle</guilabel>: Der Farbverlauf
+          wird hintereinander auf den Pinselstrich gezeichnet. In
+          Abhängigkeit von der eingestellten
+          <guilabel>Länge</guilabel> des Farbverlaufs, wird
+          dieser wiederholend vom Beginn an, dargestellt.
+        </para>
+        <para lang='de'>
+          <guilabel>Dreieckswelle</guilabel>: Ebenso wie bei der
+          Sägezahn Welle, wird der Farbverlauf hintereinander
+          auf den Pinselstrich gezeichnet. Der Unterschied besteht
+          hier, dass der Farbverlauf in Abhängigkeit von der
+          eingestellten Länge, seine Richtung beim Zeichnen
+          wechselt.
+        </para>
+      </listitem>
+      <listitem lang='fr'>
+        <para>
+          <guilabel>Onde en dents de scie</guilabel>: chaque fois que 
+          le dégradé est terminé, il reprend depuis le début. 
+        </para>
+        <para lang='fr'>
+          <guilabel>Onde Triangulaire</guilabel>: Chaque fois que le 
+          dégradé est terminé, il change de sens, et ce jusqu'à la fin 
+          du trait de pinceau.
+        </para>
+        <para lang='fr'>
+          <guilabel>Aucun</guilabel>: le dégradé ne sera appliqué 
+          qu'une fois lors du coup de pinceau, sur la longueur fixée.
+        </para>
+        <para lang="zh_CN">
+          <guilabel>锯齿波</guilabel>：反复渲染渐变。渐变从每个长度结束处重新开始渲染。	
+        </para>
+        <para lang="zh_CN">
+          <guilabel>三角波</guilabel>：重复渲染渐变。渐变在每个长度结束时都掉转方向继续渲染。
+        </para>
+      </listitem>
+    </varlistentry>
+
+   </variablelist>
+ </simplesect>
+ 
+</sect2>
