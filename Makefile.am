@@ -190,9 +190,10 @@ validate: profile.stamp $(XML_FILES) $(DTD_FILES)
 	@echo '*** Validating profiled XML ***'
 	@for lang in $(ALL_LINGUAS); do \
 	  echo '-- Validating XML for '$$lang;\
-	  xmllint --noout --valid xml/$$lang.xml >/dev/null 2>xml/$$lang-validity_errors.log; \
+	  xmllint --noout --valid xml/$$lang.xml >/dev/null 2>xml/$$lang-validity-errors.log; \
 	done; \
-	echo '!!! Please correct these errors before writing new content !!!'
+	echo 'Log files of the validation process have been generated in the xml directory.'; \
+	echo 'Please correct any errors before writing new content.'
 
 
 if GIMP_HELP_BUILD
