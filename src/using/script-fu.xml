@@ -2,7 +2,7 @@
 
 <sect1 id='gimp-using-script-fu' lang="en;fr;sv;zh_CN">
   <title lang="en">Using Script-Fu Scripts</title>
-  <title lang="fr">Utiliser Gimp</title>
+  <title lang="fr">Utiliser les Script-Fu</title>
   <title lang="sv">Använda GIMP</title>
   <title lang="zh_CN">使用 Script-Fu 脚本</title>
 
@@ -12,11 +12,13 @@
     <primary lang="sv">GIMP</primary>
     <primary lang="zh_CN">GIMP</primary>
     <secondary lang="en">Script-fu</secondary>
+    <secondary lang="fr">Script-fu</secondary>
     <secondary lang="zh_CN">Script-Fu</secondary>
   </indexterm>
 
   <simplesect>
     <title lang="en">Script-Fu?</title>
+    <title lang="fr">Script-Fu?</title>
     <title lang="zh_CN">Script-Fu？</title>
     <para lang="en">
       Script-Fu is what the Windows world would call "macros" But
@@ -26,7 +28,14 @@
       with Script-Fu, but an ordinary Gimp user will probably use it
       for automating things that:  
     </para>
-
+    <para lang="fr">
+      Script-Fu est ce que le monde Windows appellerait des "macros" mais Script-Fu
+      est bien plus puissant que cela. Script-Fu est basé sur un language interprêté
+      appelé le Scheme, et fonctionne en utilisant des fonctions de requêtes sur
+      la base de données de Gimp. Vous pouvez faire toutes sortes de choses avec
+      Script-Fu, mais l'utilisateur de base de Gimp l'utilisera pour automatiser
+      des choses :
+    </para>
     <para lang="zh_CN">
       Script-Fu 在 Windows 世界中叫做“宏”，不过 Script-Fu 比宏更强大。Script-Fu 是基于一个叫 Scheme 的解释语言，通过查询 GIMP 数据库的功能来工作。您可以使用 Script-Fu 干各种各样的事，不过一般的 GIMP 用户可能用它做些自动化的操作如：
     </para>
@@ -36,6 +45,15 @@
       </para></listitem>
       <listitem><para>
         Are really complicated to do, and hard to remember.
+      </para></listitem>
+    </itemizedlist>
+
+    <itemizedlist lang="fr">
+      <listitem><para>
+        qu'il fait fréquemment,
+      </para></listitem>
+      <listitem><para>
+        qui sont très compliquées et dures à retenir.
       </para></listitem>
     </itemizedlist>
 
@@ -56,6 +74,14 @@
       script. Read the Script-Fu Tutorial in the next section
       if you want to learn more about how to make scripts. 
     </para>
+    <para lang="fr">
+      Souvenez-vous que vous pouvez faire beaucoup avec Script-Fu. Les scripts 
+      qui sont fournis avec le Gimp peuvent être très utiles, mais ils peuvent
+      aussi servir de modèle pour comprendre Script-Fu, ou au moins de charpente
+      et de source lorsque vous faites vos propres scripts. Lisez le Tutoriel
+      Script-Fu dans la section suivante si vous soulez apprendre comment faire
+      écrire des scripts.
+    </para>
     <para lang="zh_CN">
       记住您可以用 Script-Fu 做大量的事。GIMP 自带的脚本十分有用，不过您也可以用它们了学习了解 Script-Fu，或是用它们作为您自己编写脚本的框架和参考。
     </para>
@@ -66,6 +92,12 @@
       scripts. Some of the scripts are also very simple and you will
       probably not need any documentation to be able to use them. 
     </para>
+    <para lang="fr">
+      Nous décrirons certains des scripts les plus utiles dans ce chapitre, mais
+      nous ne les couvrirons pas tous. Il sont tout simplement trop nombreux.
+      De plus, certain scripts sont très simples et vous n'aurez pas besoin de
+      documentation pour les utiliser.
+    </para>
     <para lang="en">
       Script-Fu (a dialect of Scheme) isn't the only scripting
       language available for Gimp. But Script-Fu is the only scripting
@@ -73,6 +105,13 @@
       extensions are Perl and Tcl. You can download and install both
       extensions at the <ulink url='http://registry.gimp.org'>Gimp
       Plugin Registry</ulink>. 
+    </para>
+    <para lang="fr">
+      Script-Fu (un dialecte du Scheme) n'est pas le seul language de script
+      disponible avec le Gimp. Mais Script-Fu est le seul qui soit installé par
+      défaut. Les autres languages disponibles en extension sont Perl et Tcl.
+      Vous pouvez télécharger et installer ces deux extensions dans
+      <ulink url='http://registry.gimp.org'>le registre de plugin du Gimp</ulink>.
     </para>
     <para lang="zh_CN">
       我们在这里要介绍一些最有用的脚本，不过不是全部。因为实在是有太多的脚本，有些也非常简单而不需要任何文档就能使用它们。
@@ -82,6 +121,7 @@
 
   <simplesect>
     <title lang="en">Installing Script-Fus</title>
+    <title lang="fr">Installer des Script-Fu</title>
     <title lang="zh_CN">安装脚本</title>
     <para lang="en">
       One of the great things about Script-Fu is that you can share your
@@ -90,17 +130,33 @@
       quantities of scripts that
       are available for download all around the Internet. 
     </para>
+    <para lang="fr">
+      Script-Fu (un dialecte du Scheme) n'est pas le seul language de script
+      disponible avec le Gimp. Mais Script-Fu est le seul qui soit installé par
+      défaut. Les autres languages disponibles en extension sont Perl et Tcl.
+      Vous pouvez télécharger et installer ces deux extensions dans
+      <ulink url='http://registry.gimp.org'>le registre de plugin du Gimp</ulink>.
+    </para>
     <para lang="zh_CN">
       Script-Fu 的一个优点就是您可以将它们共享给所有的 GIMP 朋友。虽然 GIMP 默认就安装了许多脚本，但是互联网上还有非常多可下载的脚本。
     </para>
 
     <tip lang="en">
       <para>
-	If you have downloaded a script, copy or move your new script to
-	your <filename>.gimp-2.0/scripts</filename> directory and do a
-	refresh. The script will now appear in one of your menus. If you
-	don't find it, look for it under the root file menu filters. If it
-	doesn't appear at all, something was wrong with the script. 
+        If you have downloaded a script, copy or move your new script to
+        your <filename>.gimp-2.0/scripts</filename> directory and do a
+        refresh. The script will now appear in one of your menus. If you
+        don't find it, look for it under the root file menu filters. If it
+        doesn't appear at all, something was wrong with the script. 
+      </para>
+    </tip>
+    <tip lang="fr">
+      <para>
+        Si vous avez téléchargé un script, copiez-le ou déplacez-le dans votre répertoire
+        <filename>.gimp-version/scripts</filename> et faites un rafraîchissement. Le script
+        apparait alors dans l'un des menus. Si vous ne le trouvez pas, cherchez-le
+        à la racine du menu filtres. S'il n'y est pas c'est que quelque chose n'a pas
+        marché avec ce script.
       </para>
     </tip>
     <tip lang="zh_CN">
@@ -114,6 +170,11 @@
       time, so don't open a script and one more after that. The last
       one will never be opened and displayed. 
     </para>
+    <para lang="fr">
+      Remarquez que vous ne pouvez pas utiliser plus d'un Script-Fu à la fois, aussi
+      n'ouvrez pas de script alors qu'il y en a un d'ouvert. Le dernier ne sera
+      jamais affiché.
+    </para>    
     <para lang="zh_CN">
       需要注意的是您不能同时使用一个以上的 Script-Fu 对话框，因此不要打开一个脚本后接着又打开一个。最后一个将不会打开和显示。
     </para>
@@ -121,12 +182,19 @@
 
   <simplesect>
     <title lang="en">Do's and Don'ts</title>
+    <title lang="fr">Ce qu'il faut faire et ce qu'il ne faut pas</title>
     <title lang="zh_CN">注意事项</title>
     <para lang="en">
       A common error when you are dealing with Script-Fus is that you
       simply bring them up and press the OK button. When nothing
       happens, you probably think that the script is broken or buggy,
       but there is most likely nothing wrong with it. 
+    </para>
+    <para lang="fr">
+      Une erreur classique lorsque vous utilisez un Script-Fu est de simplement
+      le lancer et appuyer sur le bouton OK. Lorsque rien ne se passe vous penserez
+      que le script s'est planté ou est occupé, mais il est plus probable qu'il
+      n'y a rien d'anormal là-dedans.
     </para>
     <para lang="zh_CN"> 
       使用 Script-Fu 最常见的错误就是打开它们然后直接按下“确定”按钮。当什么也没发生时，您可以认为该脚本坏了或有 bug，其实最可能是它什么问题都没有。
@@ -140,6 +208,15 @@
       please check the information in the dialog before blaming the
       script. 
     </para>
+    <para lang="fr">
+      Réfléchissez. Avez-vous lu les informations dans le dialogue, ou avez-vous
+      juste cliqué ? Si vous avez omis une entrée dont le script a
+      besoin, ou si vous avez fourni une fausse information, le script plantera.
+      L'une des erreurs les plus communes est que la police de caractère spécifiée
+      dans le dialogue du script n'a pas été installée sur votre système. Aussi,
+      s'il vous plaît, vérifiez les informations du dialogue avant de maudire le
+      script.
+    </para>
     <para lang="zh_CN">
       再想想您是不是仔细读了对话框中的信息，或只是简单地按了按钮？如果忘记输入脚本需要的东西或输入错误，它将运行失败。一个最常见的错误就是脚本对话框所需要的字体在您的系统中没被安装。因此请在责怪脚本之前仔细检查对话框中的信息。
     </para>
@@ -147,6 +224,7 @@
 
   <simplesect>
     <title lang="en">Different Kinds Of Script-Fus</title>
+    <title lang="fr">Différente sorte de Script-Fu</title>
     <title lang="zh_CN">Script-Fu 的不同类型</title>
     <para lang="en">
       There are two kinds of Script-Fus -- standalone scripts and
@@ -163,7 +241,21 @@
         <guimenuitem><replaceable>Type of Script</replaceable></guimenuitem>
       </menuchoice> in the image menu.
     </para>
-
+    <para lang="fr">
+      Il y a deux sortes de Script-Fu -- les scripts qui dépendent d'une image et
+      les autres (que nous appelerons "autonomes").
+      Vous trouverez ces derniers dans le menu principal de la boîte
+      à outil sous
+      <menuchoice>
+        <guimenu>Exts</guimenu>
+        <guisubmenu>Script-Fu</guisubmenu>
+        <guimenuitem><replaceable>Type de Script</replaceable></guimenuitem>
+      </menuchoice>, alors que les scripts qui dépendent d'une image sont sous 
+      <menuchoice>
+        <guimenu>Script-Fu</guimenu>
+        <guimenuitem><replaceable>Type de Script</replaceable></guimenuitem>
+      </menuchoice> du menu image.
+    </para>
     <para lang="zh_CN">
       有两种类型的 Script-Fu -- 独立脚本和依赖图像的脚本。独立脚本在工具箱菜单的
       <menuchoice>
@@ -178,15 +270,22 @@
 
   <simplesect>
     <title lang="en">Standalone Scripts</title>
+    <title lang="fr">Les scripts autonomes</title>
     <title lang="zh_CN">独立脚本</title>
     <para lang="en">
       We will not try to describe every script in depth. Most
       Script-Fus are very easy to understand and use. At the time of
       this writing, the following types are installed by default:
     </para>
+    <para lang="fr">
+      Nous n'essayerons pas de décrire à fond chaque script. La plupart des Script-Fu
+      sont très faciles à comprendre et à utiliser. Au moment de l'écriture de ce
+      manuel, les catégories suivantes sont installées par défaut :
+    </para>
     <para lang="zh_CN">
       我们不会深入介绍每个脚本，大多数 Script-Fu 都很容易使用。截至撰写该文档时，GIMP 默认安装了下列独立脚本：
     </para>
+
     <itemizedlist lang="en">
       <listitem><para>
         Patterns
@@ -208,6 +307,30 @@
       </para></listitem>
       <listitem><para>
         Misc.
+      </para></listitem>
+    </itemizedlist>
+
+    <itemizedlist lang="fr">
+      <listitem><para>
+        Boutons
+      </para></listitem>
+      <listitem><para>
+        Créer brosse
+      </para></listitem>
+      <listitem><para>
+        Divers
+      </para></listitem>
+      <listitem><para>
+        Logos
+      </para></listitem>
+      <listitem><para>
+        Motifs
+      </para></listitem>
+      <listitem><para>
+        Thèmes de page web
+      </para></listitem>
+      <listitem><para>
+        Utilitaires
       </para></listitem>
     </itemizedlist>
 
@@ -478,15 +601,23 @@
 
   <simplesect>
     <title lang="en">Image-Dependent Scripts</title>
+    <title lang="fr">Scripts lancés depuis une image</title>
     <title lang="zh_CN">依赖图像的脚本</title>
     <para lang="en">
       These are scripts that perform operations on an existing
       image. In many ways they are like the plug-ins in the Filters
       menu. The following script groups are installed by default: 
     </para>
+    <para lang="fr">
+      Il y a des scripts qui opérent des transformations à partir
+      d'une image existante. Souvent ils agissent ou ressemblent
+      à des greffons installés dans le menu Filtres.
+      Les scripts sont rangés par défaut selon les catégories suivantes :
+    </para>
     <para lang="zh_CN">
       这些脚本对现有图像进行操作。它们在很多方面就像是滤镜菜单中的插件。默认安装了下列组的脚本：
     </para>
+
     <itemizedlist lang="en">
       <listitem><para>
         Decor
@@ -514,6 +645,36 @@
       </para></listitem>
       <listitem><para>
         Selection
+      </para></listitem>
+    </itemizedlist>
+
+    <itemizedlist lang="fr">
+      <listitem><para>
+        Alchimie
+      </para></listitem>
+      <listitem><para>
+        Alpha vers Logo
+      </para></listitem>
+      <listitem><para>
+        Animateurs
+      </para></listitem>
+      <listitem><para>
+        Décor
+      </para></listitem>
+      <listitem><para>
+        Ombre
+      </para></listitem>
+      <listitem><para>
+        Pochoir
+      </para></listitem>
+      <listitem><para>
+        Rendu
+      </para></listitem>
+      <listitem><para>
+        Sélection
+      </para></listitem>
+      <listitem><para>
+        Utilitaires
       </para></listitem>
     </itemizedlist>
 
