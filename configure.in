@@ -2,16 +2,15 @@ dnl This the autoconf script for the gimp-help-2 project.
 dnl The GPL version 2 applies to it which you may get from
 dnl http://www.gnu.org
 
+AC_PREREQ(2.52)
+
 AC_INIT()
+
 AM_INIT_AUTOMAKE(gimp-help-2, 0.1)
 
 AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
-  
-dnl This is about to go away in the future as relying on users having installed
-dnl the correct version of the stylesheets and to guess where is just to errorprone.
-AC_ARG_WITH(xsl_stylesheets, [  --with-xsl-stylesheets=<basedir>   path to the base of the DocBook Modular Stylesheets])
 
 AC_PATH_PROG(XSLTPROC, xsltproc)
 if test -z "$XSLTPROC"; then
@@ -20,61 +19,28 @@ if test -z "$XSLTPROC"; then
   sources will have any benefit to you.])
 fi
 
-STYLEVERSION="1.62.0"
-dnl Check whether we distributed the currently used version of the
-dnl DocBook Modular Stylesheets in the tarball
-AC_CHECK_FILE(src/docbook-xsl-$STYLEVERSION.tar.gz,
-	      STYLETARBALL='docbook-xsl-$STYLEVERSION.tar.gz',
-	      AC_MSG_WARN([Searching for user installed stylesheets is deprecated.
-                    We'll do it for now but this WILL go away in the future.]))
+AC_ARG_ENABLE(network, [  --enable-network        try to fetch DTDs or entities over network])
 
-
-if test -z "$STYLETARBALL"; then
-  if test "x$with_xsl_stylesheets" = "x"; then
-    AC_CHECK_FILE(/usr/share/sgml/docbook/stylesheet/xsl/nwalsh/xhtml/docbook.xsl,STYLEBASE='/usr/share/sgml/docbook/stylesheet/xsl/nwalsh',
-      [AC_CHECK_FILE(/opt/sgml/share/xml/docbook/docbook-xsl/xhtml/docbook.xsl,STYLEBASE='/opt/sgml/share/xml/docbook/docbook-xsl')])
-  else
-    STYLEBASE=$with_xsl_stylesheets
-    AC_CHECK_FILE($STYLEBASE/xhtml/docbook.xsl,,
-      AC_MSG_ERROR([Couldn't find docbook.xsl in $STYLEBASE/xhtml]))
-  fi
+if test "x$enable_network" != "xyes"; then
+  XSLTFLAGS='--nonet'
 fi
 
-dnl We'll download the stylesheets from a sourceforge mirror if they're not
-dnl available locally.
-if test -z "$STYLETARBALL" -a -z "$STYLEBASE"; then
-  AC_MSG_WARN([Couldn't find locally installed DocBook Modular Stylesheets.
-                    If you really want to use locally installed stylesheets 
-		    specify their location using --with-xsl-stylesheets=<basedir>.
-                    This is *deprecated* and will go away in the future. I'll 
-		    now try to download the specific version we want to use.])
-  AC_PATH_PROG(WGET, wget, no)
-  
-  if test "$WGET"; then
-    mkdir -p src
-    pushd src
-    $WGET -c http://easynews.dl.sourceforge.net/sourceforge/docbook/docbook-xsl-$STYLEVERSION.tar.gz
-    popd
-    dnl FIXME: If anyone knows a better way to prune a cache entry, let me know!
-    rm config.cache
-  else
-    AC_MSG_ERROR([You don't have wget to download the stylesheets.
-		  Tell degger@fhm.edu which downloader your system
-		  has and he'll fix this problem.])
-  fi
-fi
+AC_SUBST(XSLTFLAGS)
 
-dnl Unpack the archive to a director and set the paths accordingly
-if test "$STYLETARBALL"; then
-  pushd src
-  tar -xzf docbook-xsl-$STYLEVERSION.tar.gz
-  STYLEBASE=`pwd`/docbook-xsl-$STYLEVERSION
-  popd
+AC_ARG_WITH(xsl_stylesheets, [  --with-xsl-stylesheets=<basedir>   path to the base of the DocBook Modular Stylesheets])
+
+if test "x$with_xsl_stylesheets" = "x"; then
+  AC_CHECK_FILE(/usr/share/sgml/docbook/stylesheet/xsl/nwalsh/xhtml/docbook.xsl,STYLEBASE='/usr/share/sgml/docbook/stylesheet/xsl/nwalsh',
+    [AC_CHECK_FILE(/opt/sgml/share/xml/docbook/docbook-xsl/xhtml/docbook.xsl,STYLEBASE='/opt/sgml/share/xml/docbook/docbook-xsl')])
+else
+  STYLEBASE=$with_xsl_stylesheets
+  AC_CHECK_FILE($STYLEBASE/xhtml/docbook.xsl,,
+    AC_MSG_ERROR([Couldn't find docbook.xsl in $STYLEBASE/xhtml]))
 fi
 
 AC_SUBST(STYLEBASE)
 
-AC_OUTPUT([
+AC_CONFIG_FILES([
 Makefile
 src/Makefile
 stylesheets/plainhtml.xsl
@@ -82,3 +48,5 @@ stylesheets/plainhtml.de.xsl
 stylesheets/plainhtml.fr.xsl
 stylesheets/plainhtml.sv.xsl
 ])
+
+AC_OUTPUT
