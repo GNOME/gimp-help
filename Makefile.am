@@ -9,6 +9,7 @@ IMAGE_DIRS = \
 	tool-options	\
 	toolbox		\
 	callouts	\
+	preferences \
 	using
 
 IMAGE_FILES = \

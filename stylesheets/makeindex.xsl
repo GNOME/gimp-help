@@ -17,7 +17,7 @@
     </help-missing>
   </xsl:template>
   
-  <xsl:template match="div|obj">
+  <xsl:template match="div|obj|ttl">
     <xsl:choose>
       <xsl:when test="@targetptr">
         <help-item>
@@ -26,6 +26,9 @@
           </xsl:attribute>
           <xsl:attribute name="ref"> 
             <xsl:value-of select="@href"/>
+          </xsl:attribute>
+          <xsl:attribute name="title">
+            <xsl:value-of select="ttl" />
           </xsl:attribute>
         </help-item>
       </xsl:when>
