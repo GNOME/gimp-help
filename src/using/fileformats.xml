@@ -20,7 +20,7 @@
     disadvantages of each type.
   </para>
 
-  <sect2>
+  <simplesect>
     <title lang="en">Overview</title>
     <para id="gimp-file-open-by-extension" lang="en">
       When you open a file, using the File menu or any other method,
@@ -35,319 +35,36 @@
       permit them to be recognized.  Only if the magic yields no
       result does Gimp resort to using the extension.
     </para>
-    <figure pgwide="0"><title>The Export dialog</title>
+    <informalfigure pgwide="0">
     <mediaobject lang="en">
       <imageobject>
         <imagedata fileref='../images/using/export-dialog-en.png'
-        align="center" format='png'/>
+        format='png'/>
       </imageobject>
+      <caption>
+        <para>The Export dialog</para>
+      </caption>
     </mediaobject>
-    </figure>
+    </informalfigure>
     <para>
-      There is no file format, with the exception of Gimp's native XCF
-      format, that is capable of storing all the data in a Gimp
-      image.  When you ask to save an image in a format that will not
-      completely represent it, Gimp notifies you of this, tells you
-      what kind of information will be lost, and asks you whether you
-      would like to "export" the image in a form that the file type
-      can handle.  Exporting an image does not modify the image
-      itself, so you do not lose anything by doing this.
+      There is no file format, with the exception of Gimp's native <link
+      linkend="gimp-xcf-save">XCF</link> format, that is capable of
+      storing all the data in a Gimp image.  When you ask to save an
+      image in a format that will not completely represent it, Gimp
+      notifies you of this, tells you what kind of information will be
+      lost, and asks you whether you would like to "export" the image in
+      a form that the file type can handle.  Exporting an image does not
+      modify the image itself, so you do not lose anything by doing
+      this.
     </para>
-    <caution>
+    <note>
       When you close an image (possibly by
       quitting Gimp), you are warned if the image is "dirty"; that is,
       if it has been changed without subsequently being saved.  Saving
       an image in any file format will cause the image to be
       considered "not dirty", even if the file format does not
       represent all of the information from the image.
-    </caution>
-  </sect2>
-
-  <sect2 id="gimp-file-save-xcf">
-    <title lang="en">XCF</title>
-    <anchor id="gimp-file-open-xcf" />
-    <para lang="en">
-      The XCF file type is special because it is Gimp's native file
-      type:  that is, it was designed specifically to store all of the
-      data that goes to make up a Gimp image.  Because of this,
-      XCF files may be quite complicated, and there are few programs
-      other than Gimp that can read them.  
-    </para>
-    <para>
-      When an image is stored as an XCF file, the file encodes nearly
-      everything there is to know about the image:  the pixel data for
-      each of the layers, the current selection, additional channels
-      if there are any, paths if there are any, and guides.  The most
-      important thing that is <emphasis>not</emphasis> saved in an XCF
-      file is the undo history.
-    </para>
-    <para>
-      The pixel data in an XCF file is represented in a raw,
-      uncompressed form: each byte of image data equals one byte in
-      the XCF file.  Thus, XCF files for even modestly sized images
-      can be quite large:  for example, a 1000x1000 RGB image with 3
-      layers will produce an XCF file of over 10 megabytes.  It is not
-      at all difficult to get XCF files of over 100 megabytes.
-      Fortunately, although XCF files do not intrinsically compress
-      their data, Gimp allows you to compress the files themselves,
-      using either the gzip or bzip2 compression methods, both of
-      which are fast, efficient, and freely available.  Compressing an
-      XCF file will often shrink it by a factor of 10 or more.
-    </para>
-    <para>
-      The Gimp developers have made a great effort to keep the XCF
-      file format compatible across versions.  If you create a file
-      using Gimp 2.0, it ought to be possible to open the file in Gimp
-      1.2.  However, some of the information in the file may not be
-      usable:  for example, Gimp 2.0 has a much more sophisticated way
-      of handling text than Gimp 1.2, so a text layer from a Gimp 2.0
-      XCF file will appear as an ordinary image layer if the file is
-      opened in Gimp 1.2.
-    </para>
-  </sect2>
-
-  <sect2 id="file-jpeg-save">
-    <title lang="en">JPEG</title>
-    <anchor id="file-jpeg-load" />
-    <para lang="en">
-      This format supports compression and works at all color
-      depths. The image compression is adjustable, but beware: Too
-      high a compression could severely reduce image quality, since
-      JPEG compression is lossy. Use JPEG to create TrueColor Web
-      graphics, or if you don't want your image to take up a lot of
-      space. JPEG is a good format for photographs. 
-    </para>
-    <para>
-      JPEG files usually have an extension .jpg, .JPG, or .jpeg.  It
-      is a very widely used format, because it compresses images very
-      efficiently, while minimizing the loss of image quality.  No
-      other format comes close to achieving the same level of
-      compression.  It does not, however, support transparency, or
-      multiple layers.  For this reason, saving images as JPEG often
-      requires them to be exported.
-    </para>
-    <informalfigure pgwide="0">
-    <mediaobject lang="en">
-      <imageobject>
-        <imagedata fileref='../images/using/jpeg-save-dialog-en.png' format='png'/>
-      </imageobject>
-      <caption>
-        <para>The JPEG Save dialog</para>
-      </caption>
-    </mediaobject>
-    </informalfigure>
-    <para>
-      When you save a file in JPEG format, you get a dialog that
-      allows you to set the Quality level, which ranges from 1 to
-      100.  Values above 95 are generally not useful, though.  The
-      default quality of 85 usually produces excellent results, but in
-      many cases it is possible to set the quality substantially
-      lower without noticably degrading the image.  You can test the 
-      effect of different quality settings by
-      checking "Show Preview in image window" in the JPEG dialog.
-      Checking this causes each change in quality (or any other JPEG
-      parameter) to be visualized in the image display.  (This does
-      not alter the image, though: it reverts back to its original
-      state when the JPEG dialog is closed.)
-    </para>
-    <para>
-      The JPEG algorithm is quite complex, and involves a bewildering
-      number of options, whose meaning is beyond the scope of this
-      documentation.  Unless you are a JPEG expert, the Quality
-      parameter is probably the only one you will benefit from
-      adjusting. 
-    </para>
-    <caution lang="en">
-      After you save an image as a JPEG file, the image will no longer
-      be considered "dirty" by Gimp, so unless you make further
-      changes to it, you will not receive any warning if you close
-      it.  Because JPEG is lossy and does not support transparency or
-      multiple layers, some of the information in the image might then
-      be lost.  If you want to save all of the information in an
-      image, use Gimp's native XCF format.
-    </caution>
-    <para>
-      JPEG files from many digital cameras contain extra information
-      called EXIF data, specifying camera settings and other
-      information concerning the circumstances under which the image
-      was created.  Gimp's ability to handle EXIF data depends on
-      whether the library "libexif" is available on your system; it is
-      not automatically packaged with Gimp.  If Gimp has been built
-      with libexif support, then EXIF data is preserved if you open an
-      JPEG file, work with the resulting image, and then save as
-      JPEG.  The EXIF data is not altered in any way when you do this
-      (which means that certain fields within it are no longer
-      valid).  If Gimp is not built with EXIF support, this does not
-      prevent files with EXIF data from being opened, but it means
-      that the EXIF data will not be present when the resulting image
-      is later saved.
-    </para>
-  </sect2>
-
-  <sect2 id="file-png-save">
-    <title lang="en">PNG</title>
-    <anchor id="file-png-load" />
-    <para lang="en">
-      The format that is supposed to replace the GIF format and thus
-      provide a solution to GIF's trademark and patent issues. Indexed
-      color, grayscale, and truecolor images are supported, plus an
-      optional alpha channel. PNG also uses compression, but unlike
-      JPEG it doesn't lose image information. 
-    </para>
-  </sect2>
-
-  <sect2 id="file-tiff-save">
-    <title lang="en">TIFF</title>
-    <anchor id="file-tiff-load" />
-    <para lang="en">
-      Designed to be a standard, TIFF files come in many different
-      flavors. Six different encoding routines are supported, each
-      with one of three different image modes: black and white,
-      grayscale and color. Uncompressed TIFF images may be 1, 4, 8 or
-      24 bits per pixel. TIFF images compressed using the LZW
-      algorithm may be 4, 8 or 24 bits per pixel. This is a high
-      quality file format, perfect for images you want to import to
-      other programs like FrameMaker or CorelDRAW. 
-    </para>
-  </sect2>
-
-  <sect2 id="file-gif-save">
-    <title lang="en">GIF</title>
-    <anchor id="file-gif-load" />
-    <para lang="en">
-      Trademarked by CompuServe, with LZW compression patented by
-      Unisys. GIF images are in 8 bit indexed color and support
-      transparency (but not semi-transparency). They can also be
-      loaded in interlaced form by some programs. The GIF format also
-      supports animations and comments. Use GIF for transparent Web
-      graphics and GIF animations.  For most purposes, though, PNG can
-      be used in place of GIF and is a better choice. 
-    </para>
-  </sect2>
-
-  <sect2 id="file-psd-save">
-    <title lang="en">PSD</title>
-    <anchor id="file-psd-load" />
-    <para lang="en">
-      PSD is Adobe Photoshop's native file format, and thus is
-      comparable to XCF in complexity.  Gimp's ability to handle PSD
-      files is sophisticated but limited:  some features of PSD files
-      are not loaded, and only PSD versions XX or less are supported.
-      Unfortunately, Adobe has now made the Photoshop Software
-      Development Kit---which includes their file format
-      specifications---proprietary, and only available to a limited
-      set of developers blessed by Adobe.  This does not include the
-      Gimp development team; and the lack of information makes it very
-      difficult to maintain up-to-date support for PSD files.
-    </para>
-  </sect2>
-
-  <sect2 id="file-ps-save">
-    <title lang="en">Postscript</title>
-    <anchor id="file-ps-load" />
-    <para lang="en">
-      Created by Adobe, PostScript is a page description language
-      mainly used by printers and other output devices. It's also an
-      excellent way to distribute documents.  Gimp does not support
-      Postscript directly:  it depends on a powerful free software
-      program called Ghostscript.
-    </para>
-    <para>
-      The great power of Postscript is its ability to represent vector
-      graphics---lines, curves, text, paths, etc---in a
-      resolution-independent way.  Postscript is not very efficient,
-      though, when it comes to representing pixel-based raster
-      graphics.  For this reason, postscript is not a good format to
-      use for saving images that are later going to be edited using
-      Gimp or another graphics program.  
-    </para>
-    <para>
-      Linux distributions almost always come with Ghostscript already
-      installed (not necessarily the most recent version).  For other
-      operating systems, you may have to install it yourself.  Here are
-      instructions for installing it on Windows:
-    </para>
-    <itemizedlist>
-      <listitem>
-        <para lang="en">
-          Go to  http://sourceforge.net/projects/ghostscript.
-        </para>
-      </listitem>
-      <listitem>
-        <para lang="en">
-          Look for package gnu-gs or ghostscript (non-commercial use
-          only) and go to the download section.
-        </para>
-      </listitem>
-      <listitem>
-        <para lang="en">
-          Download a prepared Windows distribution like gs650w32.exe
-          or gs700w32.exe.
-        </para>
-      </listitem>
-      <listitem>
-        <para lang="en">
-          Start the executable and follow the instructions of the
-          installation procedure.
-        </para>
-      </listitem>
-      <listitem>
-        <para lang="en">
-          Copy the executable gswin32c.exe from the directory bin of
-          the ghostscript installation to the Windows directory (or
-          any other directory that is contained in the PATH).  As an
-          alternative, advanced users can set an environment variable
-          GS_PROG to point to gswin32c.exe
-          (e.g. c:\gs\gsX.YY\bin\gswin32c.exe) 
-        </para>
-      </listitem>
-    </itemizedlist>
-    <para>
-      Now you should be able to read PostScript files with GIMP.
-      Please note that you must not move the directories of
-      ghostscript once the installation has finished. Registry entries
-      have been created that allow ghostscript to find
-      libraries. (These instructions courtesy of
-      http://www.kirchgessner.net.) 
-    </para>
-  </sect2>
-
-  <sect2 id="file-pdf-save">
-    <title lang="en">PDF</title>
-    <anchor id="file-pdf-load" />
-    <para lang="en">
-      The PDF format was developed by Adobe to address some of the
-      deficiencies of Postscript: most importantly, PDF files tend to
-      be much smaller than equivalent Postscript files.  As with
-      Postscript, Gimp's support of the PDF format is via
-      Ghostscript. 
-    </para>
-  </sect2>
-
-  <sect2 id="file-psp-save">
-    <title lang="en">PSP</title>
-    <anchor id="file-psp-load" />
-    <para lang="en">
-    </para>
-  </sect2>
-
-  <sect2 id="file-tga-save">
-    <title lang="en">TGA</title>
-    <anchor id="file-tga-load" />
-    <para lang="en">
-      The Targa file format supports compression to 8, 16, 24 or 32
-      bits per pixel. 
-    </para>
-  </sect2>
-
-  <sect2 id="file-bmp-save">
-    <title lang="en">BMP</title>
-    <anchor id="file-bmp-load" />
-    <para lang="en">
-      An uncompressed bitmap format used by Microsoft Windows for
-      displaying graphics. Color depth is typically 1, 4 or 8 bits,
-      although the format does support more. 
-    </para>
-  </sect2>
+    </note>
+  </simplesect>
 
 </sect1>
