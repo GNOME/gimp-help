@@ -1,0 +1,369 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<sect2 id='plug-in-newsprint'>
+  <title lang="en">Newsprint</title>
+  <title lang="fr">Trame d&apos;imprimerie</title>
+  <indexterm>
+    <primary lang="en">Newsprint</primary>
+    <primary lang="fr">Trame d&apos;imprimerie</primary>
+  </indexterm>
+
+  <mediaobject lang="en">
+    <imageobject>
+      <imagedata fileref='../images/filters/filters-distort-newsprint.png' format='png'/>
+    </imageobject>
+  </mediaobject>
+  <mediaobject lang="fr">
+    <imageobject>
+      <imagedata fileref='../images/filters/fr/filters-distort-newsprint.png' format='png'/>
+    </imageobject>
+  </mediaobject>
+
+  <simplesect>
+    <title lang="en">Overview</title>
+    <title lang="fr">Généralités</title>
+    <variablelist>
+      <varlistentry> 
+        <listitem lang="en">
+          <para>
+            This filter is found in
+            <guimenuitem>Image&gt;Filters/Distorts/Newsprin<accel>t</accel></guimenuitem>
+          </para>
+          <para>
+            This filter halftones the image using a clustered-dot
+            dither.  Halftoning is the process of rendering an image with 
+            multiple levels of grey or colour (i.e. a continuous tone image) 
+            on a device with fewer tones; often a bi-level device such as a 
+            printer or typesetter.
+          </para>
+          <para>
+            The basic premise is to trade off resolution for greater 
+            apparent tone depth (this is known as spatial dithering).
+          </para>
+          <para> 
+            There are many approaches to this, the simplest of which is to 
+            throw away the low-order bits of tone information; this is what 
+            the posterize filter does. Unfortunately, the results don't look 
+            too good. However, no spatial resolution is lost.
+          </para> 
+          <para>
+            This filter uses a clustered-dot ordered dither, which reduces 
+            the resolution of the image by converting cells into spots which 
+            grow or shrink according to the intensity that cell needs to 
+            represent.
+          </para>
+          <para> 
+            Imagine a grid super-imposed on the original image.  The image 
+            is divided into cells by the grid - each cell will ultimately 
+            hold a single spot made up of multiple output pixels in order to 
+            approximate the darkness of the original image in that cell.
+          </para>
+          <para>
+            Obviously, a large cell size results in a heavy loss in 
+            resolution! The spots in the cells typically start off as 
+            circles, and grow to be diamond shaped.  This change in shape is 
+            controlled by a <guilabel>spot function</guilabel>.  By using 
+            different spot functions, the evolution in the shape of the 
+            spots as the cell goes from fully black to fully white may be 
+            controlled.
+          </para>
+        </listitem>   
+     
+        <listitem lang="fr">
+          <para>
+            Ce filtre se trouve dans
+            <guimenuitem>Image&gt;Filtres/Distorsions/<accel>T</accel>rame d'imprimerie</guimenuitem>
+          </para>
+          <para>
+            Il fournit une image qui ressemble aux images en similigravure, 
+            en pointillés que l'on voit dans les journaux et qui deviennent 
+            plus précises quand on les regarde d'un peu loin. Il y a une 
+            trame de pointillés pour chacune des couleurs primaires RVB ou 
+            CMJ et il n'y a qu'un seul ton dans chaque trame (chaque trame 
+            subit un nivellement tonal en demi-teinte). 
+            Chaque trame est un peu décalée par rapport aux autres et c'est 
+            la fusion des couleurs vues à distance qui crée l'impression de 
+            nuances. La couleur sera plus ou moins foncée selon que la 
+            taille de chaque point sera plus ou moins grande.
+          </para>
+          <para> 
+            En dehors de ces questions d'impression, le filtre est surtout 
+            utilisé pour des effets artistiques.
+          </para>
+          <para>
+            Ce filtre utilise une méthode en pointillés groupés 
+            (clustered dots) qui réduit la résolution en transformant des 
+            cellules en points plus ou moins gros selon l'intensité (plus ou 
+            moins foncé) à représenter.
+          </para>
+          <para>    
+            Imaginez une grille superposée à l'image. Elle divise l'image en 
+            cellules. Le contenu de chaque cellule sera finalement 
+            transformé en un «point» plus ou moins gros selon l'intensité de 
+            la cellule. Ce processus est appliqué à chacun des canaux de 
+            couleur, constituant ainsi des trames de chacune des couleurs 
+            RVB ou CMJ.
+          </para>
+          <para>
+            Évidemment, des cellules de grande taille entraîneront une 
+            grosse perte de résolution! Les points ont d'abord une forme 
+            circulaire puis s'accroissent progressivement pour prendre une 
+            forme en losange. Ce changement de forme est contrôlé par la 
+            <guilabel>Fonction point</guilabel>. En utilisant différentes 
+            Fonctions point, on peut contrôler la forme des points selon 
+            l'évolution des cellules du noir au blanc.
+          </para> 
+        </listitem> 
+      </varlistentry>  
+    </variablelist> 
+  </simplesect>
+
+  <simplesect>
+    <title lang="en">Options</title>
+    <title lang="fr">Options</title>
+    <variablelist>
+      <varlistentry>
+        <term lang="en">Resolution</term>
+        <term lang="fr">Résolution</term>
+        <listitem lang="en">
+          <para>
+            This group controls the cell size, either by setting the
+            input and output resolutions, or directly.
+          </para>
+          <itemizedlist>
+            <listitem>
+              <guilabel>Input SPI</guilabel>: Resolution of the
+              original input image, in Samples Per Inch (SPI).  This
+              is automatically initialised to the input image's resolution.
+            </listitem>
+            <listitem>
+              <guilabel>Output LPI</guilabel>: Desired output
+              resolution, in Lines Per Inch (LPI).
+            </listitem>
+            <listitem>
+              <guilabel>Cell Size</guilabel>: Resulting cell size, in
+              pixels.  Most often you will want to set this directly.
+            </listitem>
+          </itemizedlist>
+        </listitem>
+
+        <listitem lang="fr">
+           <para>
+             Cette rubrique permet le contrôle de la taille des cellules 
+             soit en réglant les résolutions d'entrée et de sortie soit 
+             directement.
+           </para>
+           <itemizedlist>
+            <listitem>
+              <guilabel>D'entrée (EPP)</guilabel>: Résolution de l'image 
+              d'origine, en entrée (Echantillons Par Pouce). Cette valeur 
+              est initialisée automatiquement à la résolution que possède 
+              déjà l'image en entrée. 
+            </listitem>
+            <listitem>
+              <guilabel>De sortie (LPP)</guilabel>: Résolution de sortie 
+              souhaitée, en Lignes Par Pouce. C'est la linéature.
+            </listitem>
+            <listitem>
+              <guilabel>Taille des cellules</guilabel>: Il s'agit de 
+              cellules carrées, en pixels. C'est l'option que vous 
+              utiliserez le plus souvent. 
+            </listitem>
+          </itemizedlist>
+        </listitem>
+      </varlistentry>
+
+	    <varlistentry>
+        <term lang="en">Screen</term>
+        <term lang="fr">Trames</term>
+        <listitem lang="en">
+          <itemizedlist>
+            <listitem> 
+              <para>
+                <guilabel>Separate To RGB, CMYK,
+                Intensity</guilabel>: Select which colourspace you
+                wish to operate in.  In <emphasis>RGB</emphasis> mode, no 
+                colourspace conversion is performed. In 
+                <emphasis>CMYK</emphasis>, the image is first
+                internally converted to CMYK, then each colour channel is
+                separately halftoned, before finally being
+                recombined back to an RGB image.  
+                In <emphasis>Intensity</emphasis> mode, the
+                image is internally converted to greyscale,
+                halftoned, then the result used as the alpha channel
+                for the input image.  This is good for special
+                effects, but requires a little experimentation to
+                achieve best results.  Hint: try CMYK if you don't know
+                which to go for initially.
+              </para>
+            </listitem>
+            <listitem>  
+              <para>
+                <guilabel>Black Pullout (%)</guilabel> When doing
+              RGB->CMYK conversion, how much K (black) should be used?
+              </para> 
+            </listitem>
+            <listitem> 
+              <para>
+                <guilabel>Angle</guilabel>: Cell grid angle for this channel.
+              </para>
+            </listitem>
+            <listitem> 
+              <para>
+                <guilabel>Spot Function</guilabel>: Spot function to
+                be used for this angle (see preview in blue cell-boxes).
+              </para>
+            </listitem> 
+            <listitem> 
+              <para>
+                <guilabel>Lock Channels</guilabel>: Make channel
+                modifications apply to all channels.
+              </para>
+            </listitem> 
+            <listitem> 
+              <para>
+                <guilabel>Factory Defaults</guilabel>: Restore the
+                default settings which should give pleasing results.
+              </para>
+            </listitem> 
+          </itemizedlist>
+        </listitem> 
+         <listitem lang="fr">
+          <itemizedlist>
+            <listitem> 
+              <para>
+                <guilabel>Séparer en RVB, CMJN, Intensité</guilabel>:
+                Vous permet de choisir dans quel espace de couleur vous 
+                voulez opérer. En mode <emphasis>RVB</emphasis>, aucune 
+                conversion d'espace de couleur n'est effectuée. En mode 
+                <emphasis>CMJN</emphasis>, l'image est d'abord convertie 
+                en CMJN, puis chaque canal de couleur subit un nivellement 
+                tonal avant d'être finalement recombinés en une image RVB. 
+                En mode <emphasis>Intensité</emphasis>, l'image est 
+                convertie en niveaux de gris, subit un nivellement tonal 
+                et le résultat est utilisé comme canal Alpha pour l'image 
+                d'entrée. Cette option convient aux effets spéciaux, mais 
+                nécessite plusieurs essais vant d'obtenir le meilleur 
+                résultat. Un conseil: essayez CMJN si vous ne savez pas 
+                par quoi commencer.
+              </para>
+            </listitem>
+            <listitem>  
+              <para>
+                <guilabel>Retirer du noir (%)</guilabel>: Quand vous 
+                faites une conversion RGB/CMJN, indiquez ici quelle 
+                quantité de noir doit être utilisée (La synthèse 
+                soustractive CMJ ne permet pas d'obtenir une couleur 
+                vraiment noire ou bien foncée, d'où la nécessité d'ajouter 
+                du noir). 
+              </para> 
+            </listitem>
+            <listitem> 
+              <para>
+                <guilabel>Angle</guilabel>: angle de la grille de cellules 
+                pour le canal concerné.
+              </para>
+            </listitem>
+            <listitem> 
+              <para>
+                <guilabel>Fonction point</guilabel>: Les pixels de la 
+                couleur du canal concerné présents dans une cellule seront 
+                rassemblés en un «point» de forme et de taille variable, 
+                au choix.
+              </para>
+            </listitem> 
+            <listitem> 
+              <para>
+                <guilabel>Bloquer les canaux</guilabel>: les modifications 
+                s'appliqueront à tous les canaux.
+              </para>
+            </listitem> 
+            <listitem> 
+              <para>
+                <guilabel>Réglages par défaut</guilabel>: Restaure les 
+                paramètres par défaut. 
+              </para>
+            </listitem> 
+           </itemizedlist>
+        </listitem>   
+      </varlistentry>
+
+      <varlistentry>
+        <term lang="en">Antialiasing</term>
+        <term lang="fr">Lissage</term>      
+        <listitem lang="en">
+          <para>
+          Proper halftoning does not need antialiasing: the aim is to
+          reduce the colour depth after all!  However, since this
+          plugin is mainly for special effects, the results are
+          displayed on screen rather than by a black/white printer.
+          So it is often useful to apply a little anti-aliasing to
+          simulate ink smearing on paper.  If you do want to print the
+          resulting image then set the antialising to 1 (ie, off).
+          </para>
+          <para>
+            <guilabel>Oversample</guilabel>:Number of subpixels to
+            sample to produce each output pixel.  Set to 1 to disable
+            this feature.  Warning: large numbers here will lead to
+            very long filter runtimes!
+          </para>
+        </listitem>
+         <listitem lang="fr">
+          <para>
+          Le nivellement tonal ne nécessite pas par lui même de lissage. 
+          Toutefois, ce greffon étant utilisé surtout pour des effets 
+          spéciaux et comme le résultat sera affiché sur écran au lieu 
+          d'être imprimé avec une imprimante noir et blanc, il sera souvent 
+          utile d'appliquer un peu de lissage pour simuler l'encre s'étalant 
+          sur le papier. Et si vous voulez vraiment imprimer l'image, réglez 
+          le lissage à 1 (c-à-d sans).
+          </para>
+          <para>
+            <guilabel>Sur-échantillonnage</guilabel>: Nombre de sous-pixels 
+            à utiliser pour produire chaque pixel résultant. Réglez-le à 1 
+            pour désactiver cette fonction. Attention, un nombre élevé 
+            risque d'allonger considérablement le temps de traitement!
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <listitem lang="en">  
+          <tip>
+            More explanations, illustrative diagrams, a gallery and a
+            tutorial are to be found on the plug-in author site:
+            <olink targetdocend="Filters-Newsprint-link1">
+            <citetitle>http://www.cl.cam.ac.uk/~and1000/newsprint/</citetitle></olink>  
+            You are strongly encouraged to visit it, since halftoning
+            is a large and complex area.
+          </tip>
+        </listitem>
+        <listitem lang="fr">
+          <tip>
+            Vous trouverez plus d'explications, une galerie d'exposition 
+            et un cours sur le site de l'auteur du greffon (en anglais)    
+            <olink targetdocend="Filters-Newsprint-link1">
+            <citetitle>http://www.cl.cam.ac.uk/~and1000/newsprint/</citetitle></olink>                    
+          </tip>
+        </listitem>
+      </varlistentry>           
+
+      <varlistentry>
+        <listitem>
+          <para lang="en">
+            Here is an example, from the author's gallery:
+          </para>
+          <para lang="fr">
+            Voici un exemple, tiré de la galerie de l'auteur:
+          </para>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref='../images/filters/examples/newsprint.gif' format='gif'/>
+             </imageobject>
+          </mediaobject>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </simplesect>
+
+</sect2>
