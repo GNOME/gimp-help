@@ -91,12 +91,20 @@ images.stamp: mkdirs.stamp $(IMAGE_FILES)
 	@cp $(top_srcdir)/images/*.png html/images;
 	@for dir in $(IMAGE_DIRS); do \
 	  if test -d $(top_srcdir)/images/$$dir; then \
-	    $(mkinstalldirs) html/images/$$dir && \
-	    cp $(top_srcdir)/images/$$dir/*.png html/images/$$dir; \
+	    $(mkinstalldirs) html/images/$$dir; \
+	    $(mkinstalldirs) pdf/images/$$dir; \
+	    cp $(top_srcdir)/images/$$dir/*.png html/images/$$dir && \
+	    cp $(top_srcdir)/images/$$dir/*.png pdf/images/$$dir; \
 	    for lang in $(ALL_LINGUAS); do \
 	      if test -d $(top_srcdir)/images/$$dir/$$lang; then \
 	        $(mkinstalldirs) html/images/$$dir/$$lang && \
 	        cp $(top_srcdir)/images/$$dir/$$lang/*.png html/images/$$dir/$$lang; \
+	      fi \
+	    done; \
+	    for lang in $(ALL_LINGUAS); do \
+	      if test -d $(top_srcdir)/images/$$dir/$$lang; then \
+	        $(mkinstalldirs) pdf/images/$$dir/$$lang && \
+	        cp $(top_srcdir)/images/$$dir/$$lang/*.png pdf/images/$$dir/$$lang; \
 	      fi \
 	    done; \
 	  fi \
@@ -128,7 +136,6 @@ profile.stamp: mkdirs.stamp $(XML_FILES) $(DTD_FILES)
 
 latex.stamp: profile.stamp $(XML_FILES) $(DTD_FILES)
 	@echo '*** Building LaTeX files ***'
-	@cd $(top_srcdir)/pdf && ln -s ../images ./images;
 	@for lang in $(ALL_LINGUAS); do \
 	  echo '-- Building LaTeX for '$$lang;\
 	  (cd $(top_srcdir)/pdf/$$lang && \
@@ -145,7 +152,9 @@ pdf.stamp: latex.stamp $(XML_FILES) $(DTD_FILES)
 	@for lang in $(ALL_LINGUAS); do \
 	  echo '-- Building PDF for '$$lang; \
 	  (cd $(top_srcdir)/pdf/$$lang && \
-	    pdflatex  $$lang.tex); \
+	    pdflatex  $$lang.tex; \
+	    makeindex $$lang.idx && \
+	    pdflatex $$lang.tex); \
 	done;
 	touch pdf.stamp
 
