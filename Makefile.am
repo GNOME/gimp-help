@@ -44,7 +44,6 @@ HELP_STAMPS = \
 	mkdirs.stamp	\
 	profile.stamp
 
-
 EXTRA_DIST = \
 	TERMINOLOGY			\
 	stylesheets/plainhtml.xsl.in	\
@@ -180,22 +179,23 @@ index.stamp: html.stamp
 	done;
 	touch index.stamp
 
+validate: profile.stamp $(XML_FILES) $(DTD_FILES)
+	@echo '*** Validating profiled XML ***'
+	@for lang in $(ALL_LINGUAS); do \
+	  echo -n '-- Validating XML for '$$lang; \
+	  xmllint --noout --valid xml/$$lang.xml >/dev/null 2>xml/$$lang-validity-errors.log; \
+	  echo -n ' --	number of errors: '; \
+	  grep "validity error" xml/$$lang-validity-errors.log | wc -l; \
+	done; \
+	echo 'Log files of the validation process have been generated in the xml directory.'; \
+	echo 'Please correct any errors before writing new content.'; \
+	touch validate.stamp
+
 lint: profile.stamp $(XML_FILES) $(DTD_FILES)
 	@echo '*** Checking XML for well-formed-ness ***'
 	@for xml in $(XML_FILES); do \
 	  xmllint --noout $$xml || exit; \
 	done
-
-validate: profile.stamp $(XML_FILES) $(DTD_FILES)
-	@echo '*** Validating profiled XML ***'
-	@for lang in $(ALL_LINGUAS); do \
-	  echo -n '-- Validating XML for '$$lang' --	number of errors: ';\
-	  xmllint --noout --valid xml/$$lang.xml >/dev/null 2>xml/$$lang-validity-errors.log; \
-	  grep "validity error" xml/$$lang-validity-errors.log | wc -l; \
-	done; \
-	echo 'Log files of the validation process have been generated in the xml directory.'; \
-	echo 'Please correct any errors before writing new content.'
-
 
 if GIMP_HELP_BUILD
 
