@@ -2,20 +2,21 @@ SUBDIRS =
 
 XML_FILES =	*.xml
 
-BASE_FILE =	introduction.xml
+BASE_FILE =	gimp.xml
 
 EXTRA_DIST = \
 	$(XML_FILES)
 
-all: plainhtml
+all:	plainhtml
 
 plainhtml: $(XML_FILES) ../stylesheets/plainhtml.xsl
 	rm -rf plainhtml
 	mkdir plainhtml
-	$(XSLTPROC) --nonet ../stylesheets/plainhtml.xsl $(BASE_FILE) >plainhtml/index.html 
 	cp ../stylesheets/gimp-help-plain.css plainhtml/
+	cd plainhtml && $(XSLTPROC) --nonet ../../stylesheets/plainhtml.xsl ../$(BASE_FILE)
 
 clean:
+	rm -rf plainhtml
 	rm -rf gimp
 	rm -rf `find -name "*.orig"`
 	rm -rf `find -name "*~"`
