@@ -54,6 +54,31 @@
     linkend='gimp-tool-select'>Selection Tools</link>.
   </para>
 
+  <para lang="en">
+    This tool is also used for rendering a rectangle on an image.  To
+    render a filled rectangle, create a rectangular selection, and
+    then fill it using the <link
+    linkend='gimp-tool-bucket-fill'>Bucket Fill tool</link>.  To
+    create a rectangular outline, the simplest and most flexible
+    approach is to create a rectangular selection and then <link
+    linkend='gimp-stroke'>stroke</link> it.
+  </para>
+
+  <para lang='en'>
+    If you want to round the edges of a rectangular selection, the
+    easiest method is to shrink it with
+    <menuchoice>
+      <guimenu>Select</guimenu>
+      <guimenuitem>Shrink</guimenuitem>
+    </menuchoice>
+    from the image menu, and then grow it with
+    <menuchoice>
+      <guimenu>Select</guimenu>
+      <guimenuitem>Grow</guimenuitem>
+    </menuchoice>,
+    using the same radius both times.
+  </para>
+
   <para lang="de">
     Die rechteckige Auswahl ermöglicht eine rechteckige Selektierung
     des Bildes oder der aktuellen Ebene. Diese Auswahl kann benutzt werden
@@ -407,10 +432,17 @@
       <term lang="zh_CN">自动收缩选区</term>
       <listitem>
         <para lang="en">
-          The <guilabel>Auto Shrink Selection</guilabel> checkbox will make
-          the next selection automatically shrink to the nearest
-          rectangular shape available on the layer, if the selected
-          area has a solid-colored border.
+          The <guilabel>Auto Shrink Selection</guilabel> checkbox will
+          make your next selection automatically shrink to the nearest
+          rectangular shape available on the image layer.  The
+          algorithm for finding the best rectangle to shrink to is
+          "intelligent", which in this case means that it sometimes
+          does surprisingly sophisticated things, and sometimes does
+          surprisingly strange things.  In any case, if the region
+          that you want to select has a solid-colored surround,
+          auto-shrinking will always pick it out correctly.  Note that
+          the resulting selection does not need to have the
+          same shape as the one you sweep out.
         </para>
 
         <para lang="de">
