@@ -4,27 +4,29 @@ XML_FILES =	*.xml */*.xml */*/*.xml
 
 BASE_FILE =	gimp.xml
 
+HTML_FILES =    *.html
+
 EXTRA_DIST = \
 	$(XML_FILES)
 
-all:	plainhtml plainhtml-de
+all:  C de
 
-plainhtml: $(XML_FILES) ../stylesheets/plainhtml.xsl
-	rm -rf plainhtml
-	mkdir plainhtml
-	cp ../stylesheets/gimp-help-plain.css plainhtml/
-	cd plainhtml && $(XSLTPROC) --nonet ../../stylesheets/plainhtml.xsl ../$(BASE_FILE)
-	$(XSLTPROC) ../stylesheets/makeindex.xsl plainhtml/gimp-xrefs-en.xml >plainhtml/gimp-help.xml
+C: $(XML_FILES) ../stylesheets/plainhtml.xsl
+	rm -rf C 
+	mkdir C
+	cp ../stylesheets/gimp-help-plain.css C/
+	cd C && $(XSLTPROC) --nonet ../../stylesheets/plainhtml.xsl ../$(BASE_FILE)
+	$(XSLTPROC) ../stylesheets/makeindex.xsl C/gimp-xrefs-en.xml > C/gimp-help.xml
 
-plainhtml-de: $(XML_FILES) ../stylesheets/plainhtml.de.xsl
-	rm -rf plainhtml-de
-	mkdir plainhtml-de
-	cp ../stylesheets/gimp-help-plain.css plainhtml-de/
-	cd plainhtml-de && $(XSLTPROC) --nonet ../../stylesheets/plainhtml.de.xsl ../$(BASE_FILE)
-	$(XSLTPROC) ../stylesheets/makeindex.xsl plainhtml-de/gimp-xrefs-de.xml >plainhtml-de/gimp-help.xml
+de: $(XML_FILES) ../stylesheets/plainhtml.de.xsl
+	rm -rf de
+	mkdir de
+	cp ../stylesheets/gimp-help-plain.css de/
+	cd de && $(XSLTPROC) --nonet ../../stylesheets/plainhtml.de.xsl ../$(BASE_FILE)
+	$(XSLTPROC) ../stylesheets/makeindex.xsl de/gimp-xrefs-de.xml > de/gimp-help.xml
 
-clean:
-	rm -rf plainhtml*
+clean: rm -rf de
+	rm -rf C
 	rm -rf gimp
 	rm -rf `find -name "*.orig"`
 	rm -rf `find -name "*~"`

@@ -16,7 +16,7 @@
 	<xsl:attribute name="id"> 
 	  <xsl:value-of select="@targetptr"/>
 	</xsl:attribute>
-	<xsl:attribute name="target"> 
+	<xsl:attribute name="ref"> 
 	  <xsl:value-of select="@href"/>
 	</xsl:attribute>
       </help-item>
