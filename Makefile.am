@@ -124,6 +124,7 @@ profile.stamp: mkdirs.stamp $(XML_FILES) $(DTD_FILES)
 	     --stringparam profile.lang $$lang \
 	     ../stylesheets/profile.xsl \
              ../src/gimp.xml | \
+	     sed -e "s/xmlns[:a-z]*\=\"[^\"]*\" //" | \
 	     sed -e "s/lang=[\"'][A-Za-z_;]*[\"']/lang=\"$$lang\"/" >$$lang.xml; \
 	done;
 	touch profile.stamp
@@ -179,7 +180,7 @@ validate: profile.stamp $(XML_FILES) $(DTD_FILES)
 	@for lang in $(ALL_LINGUAS); do \
 	  echo -n '-- Validating XML for '$$lang; \
 	  xmllint --noout --valid xml/$$lang.xml >/dev/null 2>xml/$$lang-validity-errors.log; \
-	  echo -n ' --	number of errors: '; \
+	  echo -n '	number of errors: '; \
 	  grep "validity error" xml/$$lang-validity-errors.log | wc -l; \
 	done; \
 	echo 'Log files of the validation process have been generated in the xml directory.'; \
