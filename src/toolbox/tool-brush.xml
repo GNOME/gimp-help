@@ -55,6 +55,17 @@
     linkend='gimp-stroke'>Stroking</link> for more information.
   </para>
 
+  <para lang='en'>
+    Brush tools work not only on image layers, but on other types of
+    drawable objects as well:  layer masks, channels, and the
+    selection.  To apply a brush tool to a layer mask or channel,
+    simply make it the image's active drawable by clicking on it in
+    the Layers dialog or Channels dialog.  To apply a brush tool to
+    the selection, switch to <link
+    linkend='gimp-qmask'>QuickMask</link> mode.  "Painting the
+    selection" in this way is a very
+    powerful method for efficiently creating precise selections.
+  </para>
   
   <simplesect>
     <title lang="en">Key modifiers</title>
@@ -418,9 +429,14 @@
       <listitem>
         <para lang="en">
           Activating this option causes fuzzy brushes to be treated as
-          though they were black-and-white.  The consequence is that
-          all pixels affected by the tool are affected to the same
-          degree.  "Hard edge" is available for all brush tools except
+          though they were black-and-white, and inactivates sub-pixel
+          anti-aliasing.  The consequence is that all pixels affected
+          by the tool are affected to the same degree.  This is often
+          useful if you work at a very high zoom level, and want to
+          have precise control of every single pixel.
+        </para>
+        <para lang="en">
+          "Hard edge" is available for all brush tools except
           the painting tools (Pencil, Paintbrush, and Airbrush),
           where it would be redundant, because giving a hard edge to
           the Paintbrush or Airbrush would simply make them behave
@@ -445,7 +461,26 @@
       </listitem>
     </varlistentry>
 
-   </variablelist>
- </simplesect>
+    </variablelist>
+  </simplesect>
  
+  <simplesect>
+    <title lang='en'>Further Information</title>
+ 
+    <para lang='en'>
+      Advanced users may be interested to know that brush tools
+      actually operate at a sub-pixel level, in order to avoid
+      producing jagged-looking results.  One consequence of this is
+      that even if you work with a hard-edged brush, such as one of
+      the Circle brushes, pixels on the edge of the brushstroke will
+      only be partially affected.  If you need to have all-or-nothing
+      effects (which may be necessary for getting a good selection, or
+      for cutting and pasting, or for operating pixel-by-pixel at a
+      high zoom level), there are two things you can do:  (1)
+      for painting, use the Pencil tool, which makes all brushes
+      perfectly hard and disables sub-pixel anti-aliasing, or (2) for
+      other types of brush tools, check the "Hard edge"
+      box in the Tool Options.
+    </para>
+  </simplesect>
 </sect2>
