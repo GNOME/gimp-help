@@ -2,6 +2,7 @@
 
 IMAGE_DIRS = \
 	dialogs		\
+	dialogs/examples  \	
 	filters		\
 	filters/examples\
 	glossary	\
