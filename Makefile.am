@@ -18,11 +18,13 @@ IMAGE_FILES = \
 	$(wildcard $(top_srcdir)/images/*/*/*.png)
 
 XML_FILES = \
-	$(top_srcdir)/src/linkset.dtd		\
 	$(wildcard $(top_srcdir)/src/*.xml)	\
 	$(wildcard $(top_srcdir)/src/*/*.xml)	\
 	$(wildcard $(top_srcdir)/src/*/*/*.xml)	\
 	$(wildcard $(top_srcdir)/src/*/*/*/*.xml)
+
+DTD_FILES = \
+	$(top_srcdir)/src/linkset.dtd
 
 CSS_FILES = \
 	$(top_srcdir)/stylesheets/gimp-help-plain.css \
@@ -45,6 +47,7 @@ EXTRA_DIST = \
 	stylesheets/plainhtml.xsl.in	\
 	$(MAKEINDEX)			\
 	$(IMAGE_FILES)			\
+	$(DTD_FILES)			\
 	$(XML_FILES)			\
 	$(CSS_FILES)
 
@@ -89,7 +92,7 @@ images.stamp: mkdirs.stamp $(IMAGE_FILES)
 	done
 	touch images.stamp
 
-profile.stamp: mkdirs.stamp $(XML_FILES)
+profile.stamp: mkdirs.stamp $(XML_FILES) $(DTD_FILES)
 	@echo '*** Profiling XML files ***'
 	cd $(top_srcdir) && \
 	$(mkinstalldirs) xml && cd xml && \
@@ -102,7 +105,7 @@ profile.stamp: mkdirs.stamp $(XML_FILES)
 	done;
 	touch profile.stamp
 
-html.stamp: profile.stamp $(XML_FILES)
+html.stamp: profile.stamp $(XML_FILES) $(DTD_FILES)
 	@echo '*** Building HTML ***'
 	for lang in $(ALL_LINGUAS); do \
 	  echo '-- Building HTML for '$$lang; \
@@ -123,6 +126,12 @@ index.stamp: html.stamp
 	       html/$$lang/gimp-xrefs.xml > html/$$lang/gimp-help.xml; \
 	done;
 	touch index.stamp
+
+lint:
+	@echo '*** Checking XML for well-formed-ness ***'
+	@for xml in $(XML_FILES); do \
+	  xmllint --noout $$xml || exit; \
+	done
 
 if GIMP_HELP_BUILD
 
