@@ -119,14 +119,9 @@ all-local: css.stamp images.stamp
 endif
 
 
-if GIMP_HELP_INSTALL
-
 install-data-local:
 	$(mkinstalldirs) $(DESTDIR)$(GIMP_DATADIR)/help
 	-cp -r html/* $(DESTDIR)$(GIMP_DATADIR)/help
-
-endif
-
 
 maintainer-clean-local:
 	rm -rf html
