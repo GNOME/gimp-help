@@ -9,7 +9,7 @@
   </gimp-help>
 </xsl:template>
 
-<xsl:template match="div">
+<xsl:template match="div|obj">
   <xsl:choose>
     <xsl:when test="@targetptr">
       <help-item>
