@@ -1,10 +1,7 @@
 SUBDIRS =
 
 XML_FILES =	*.xml */*.xml */*/*.xml
-
 BASE_FILE =	gimp.xml
-
-HTML_FILES =    *.html
 
 EXTRA_DIST = \
 	$(XML_FILES)
