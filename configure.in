@@ -21,9 +21,19 @@ AC_PROG_LN_S
 AC_PROG_MAKE_SET
 
 
+dnl  You can set the ALL_LINGUAS environment variable to
+dnl  control what languages are build.
+
+ALL_LINGUAS="de fr sv"
+
+AC_SUBST(ALL_LINGUAS)
+
+
 dnl  The build of the HTML files is optional
 
-AC_ARG_ENABLE(build, [  --enable-build         build the help files from XML (needs xsltproc)])
+enable_build=no
+AC_ARG_ENABLE(build,
+              [  --enable-build         build the help files from XML (needs xsltproc)])
 
 AM_CONDITIONAL(GIMP_HELP_BUILD, test "x$enable_build" = "xyes")
 
@@ -34,8 +44,7 @@ AC_PATH_PROG(XSLTPROC, xsltproc)
 if test -z "$XSLTPROC" && test "x$enable_build" = "xyes"; then
   AC_MSG_ERROR([
 ** I'm sorry but I couldn't find xsltproc.
-** You will need it to build the help files.
-])
+** You will need it to build the help files.])
 fi
 
 
@@ -58,7 +67,8 @@ STYLEBASE='http://docbook.sourceforge.net/release/xsl/current'
 dnl  Allow to explicitely specify the stylesheet location
 dnl  in case the XML catalog doesn't exist or is broken.
 
-AC_ARG_WITH(xsl, [  --with-xsl=<basedir>    path to the base of the DocBook Modular Stylesheets])
+AC_ARG_WITH(xsl,
+            [  --with-xsl=<basedir>    path to the base of the DocBook Modular Stylesheets])
 
 if test "x$with_xsl" != "x"; then
   STYLEBASE=$with_xsl
@@ -69,9 +79,21 @@ fi
 AC_SUBST(STYLEBASE)
 
 
-ALL_LINGUAS="de fr sv"
+dnl  We need the GIMP data directory to install the help files
 
-AC_SUBST(ALL_LINGUAS)
+AC_ARG_ENABLE(install,
+              [  --enable-install         install the help files for GIMP],,
+	      enable_install=yes)
+
+if test "x$enable_install" = "xyes"; then
+  PKG_CHECK_MODULES(GIMP, gimp-2.0)
+  GIMP_DATADIR=`$PKG_CONFIG --variable=gimpdatadir gimp-2.0`
+fi
+
+AC_SUBST(GIMP_DATADIR)
+
+
+AM_CONDITIONAL(GIMP_HELP_INSTALL, test "x$enable_install" = "xyes")
 
 
 AC_CONFIG_FILES([
@@ -80,3 +102,8 @@ stylesheets/plainhtml.xsl
 ])
 
 AC_OUTPUT
+
+AC_MSG_RESULT([
+ Rebuild the help files:  $enable_build
+ Install the help files:  $enable_install
+])
