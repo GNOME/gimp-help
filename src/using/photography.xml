@@ -1,0 +1,706 @@
+<?xml version='1.0' encoding="UTF-8" ?>
+
+<sect1 id='gimp-using-photography'>
+  <title lang="en">Working with Digital Camera Photos</title>
+  <title lang="fr">Utiliser Gimp</title>
+  <title lang="sv">Använda GIMP</title>
+  <indexterm>
+    <primary lang="en">The GIMP</primary>
+    <primary lang="fr">GIMP</primary>
+    <primary lang="sv">GIMP</primary>
+    <secondary lang="en">Photography</secondary>
+    <secondary lang="fr">Usage</secondary>
+    <secondary lang="sv">Använda</secondary>
+  </indexterm>
+
+
+<sect2>
+  <title lang="en">Introduction</title>
+  <para lang="en">  
+    One of the most common uses of the Gimp is to fix digital camera
+    images that for some reason are less than perfect.  Maybe the
+    image is overexposed or underexposed; maybe rotated a bit; maybe
+    out of focus: these are all common problems for which Gimp has
+    good tools.  The purpose of this chapter is to give you an
+    overview of those tools and the situations in which they are
+    useful.  You will not find detailed tutorials here: in most cases
+    it is easier to learn how to use the tools by experimenting with
+    them than by reading about them.  (Also, each tool is described
+    more thoroughly in the Help section devoted to it.)  You will also
+    not find anything in this chapter about the multitude of "special
+    effects" that you can apply to an image using Gimp.  You should be
+    familiar with basic Gimp concepts before reading this chapter, but
+    you certainly don't need to be an expert---if you are, you
+    probably know most of this anyway.  And don't hesitate to
+    experiment: Gimp's powerful "undo" system allows you to recover
+    from almost any mistake with a simple Ctrl-Z.
+  </para>  
+  <para lang="en">  
+    Most commonly the things that you want to do to clean up an
+    imperfect photo are of four types:  improving the composition;
+    improving the colors; improving the sharpness; and removing
+    artifacts or other undesirable elements of the image.
+  </para>  
+</sect2>
+
+<sect2>
+  <title lang="en">Improving Composition</title>
+
+  <simplesect>
+    <title lang="en">Rotating an Image</title>
+    <para lang="en">
+      It is easy, when taking a picture, to hold the camera not quite
+      perfectly vertical, resulting in a picture where things are
+      tilted at an angle.  In Gimp, the way to fix this is to use the
+      <link linkend='gimp-tool-transform-rotate'>Rotate</link> tool.
+      Activate this by clicking its icon in the Toolbox, or by
+      pressing the "R" key capitalized) while inside the image.  Make
+      sure the Tool Options are visible, and at the top, make sure for
+      "Affect:" that the left button ("Transform Layer") is selected.
+      If you then click the mouse inside the image and drag it, you
+      will see a grid appear that rotates as you drag.  When the grid
+      looks right, click "okay" and the image will be rotated. 
+    </para>
+    <para>
+      Now as a matter of fact, it isn't so easy to get things right by
+      this method:  you often find that things are better but not
+      quite perfect.  One solution is to rotate a bit more, but there
+      is a disadvantage to that approach.  Each time you rotate an
+      image, because the rotated pixels don't line up precisely with
+      the original pixels, the image inevitably gets blurred a little
+      bit.  For a single rotation, the amount of blurring is quite
+      small, but two rotations cause twice as much blurring as one,
+      and there is no reason to blur things more than you have to.  A
+      better alternative is to undo the rotation and then do another,
+      adjusting the angle. 
+    </para>
+    <para>
+      Fortunately, Gimp provides another way of doing it that is
+      considerably easier to use: in the Rotate Tool Options, for the
+      Transform Direction you can select "Backward (Corrective)".
+      When you do this, instead of rotating the grid to compensate for
+      the error, you can rotate it to <emphasis>line up</emphasis>
+      with the error. If this seems confusing, try it and you will see
+      that it is quite straightforward.
+    </para>
+    <note lang="en">
+      Note: New in Gimp 2.2 is the option to preview the results of
+      transformations, instead of just seeing a grid.  This makes it
+      easier to get things right on the first try.)
+    </note>
+    <para>
+      After you have rotated an image, there will be unpleasant
+      triangular "holes" at the corners.  One way to fix them is to
+      create a background that fills the holes with some unobtrusive
+      or neutral color, but usually a better solution is to crop the
+      image.  The greater the rotation, the more cropping is required,
+      so it is best to get the camera aligned as well as possible when
+      you take the picture in the first place.
+    </para>
+  </simplesect>
+  
+  <simplesect>
+    <title lang="en">Cropping</title>
+    <para lang="en">
+      When you take a picture with a digital camera, you have some
+      control over what gets included in the image but often not as
+      much as you would like:  the result is images that could benefit
+      from trimming. Beyond this, it is often possible to enhance the
+      impact of an image by trimming it so that the most important
+      elements are placed at key points.  A rule of thumb, not always
+      to be followed but good to keep in mind, is the "rule of
+      thirds", which says that maximum impact is obtained by placing
+      the center of interest one-third of the way across the image,
+      both widthwise and heightwise.   
+    </para>
+    <para>
+      To crop an image, activate the <link
+      linkend='gimp-tool-crop'>Crop</link> tool in the Toolbox, or by
+      pressing the "C" key (capitalized) while inside the image.  With
+      the tool active, clicking and dragging in the image will sweep
+      out a crop rectangle.  It will also pop up a dialog that allows
+      you to adjust the dimensions of the crop region if they aren't
+      quite right.  When everything is perfect, hit the "Crop" button
+      in the dialog. 
+    </para>
+  </simplesect>
+</sect2>
+
+<sect2>
+  <title lang="en">Improving Colors</title>
+  <simplesect>
+    <title lang="en">Automated Tools</title>
+    <para ang="en">
+      In spite of sophisticated exposure-control systems, pictures
+      taken with digital cameras often come out over- or
+      under-exposed, or with color casts due to imperfections in
+      lighting.  Gimp gives you a variety of tools to correct colors
+      in an image, ranging to automated tools that run with a simple
+      button-click to highly sophisticated tools that give you many
+      parameters of control.  We will start with the simplest first.
+    </para>
+    <para>
+      Gimp gives you five automated color correction tools.
+      Unfortunately they don't usually give you quite the results you
+      are looking for, but  they only take a moment to try out, and if
+      nothing else they often give you an idea of some of the
+      possibilities inherent in the image.  Except for "Auto Levels",
+      you can find them in the Layer menu, by following the menu path
+      <emphasis>Layer->Colors->Auto</emphasis> in the image menu. 
+    </para>
+    <para>
+      Here they are, with a few words about each:
+    </para>
+    <variablelist>
+
+    <varlistentry>
+      <term lang="en">Normalize</term>
+      <listitem>
+        <para lang="en">
+          This tool (it is really a plug-in) is useful for
+          underexposed images:  it adjusts the whole image uniformly
+          until the brightest point is right at the saturation limit,
+          and the darkest point is black.  The downside is that the
+          amount of brightening is determined entirely by the lightest
+          and darkest points in the image, so even one single white
+          pixel and/or one single black pixel will make normalization
+          ineffective. 
+        </para>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term lang="en">Equalize</term>
+      <listitem>
+        <para lang="en">
+          This is a very powerful adjustment that tries to spread the
+          colors in the image evenly across the range of possible
+          intensities.  In some cases the effect is amazing, bringing
+          out contrasts that are very difficult to get in any other
+          way; but more commonly, it just makes the image look weird.
+          Oh well, it only takes a moment to try. 
+        </para>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term lang="en">Color Enhance</term>
+      <listitem>
+        <para lang="en">
+          Help me, what exactly does this do?  Obviously it makes some
+          things more saturated.
+        </para>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term lang="en">Stretch Contrast</term>
+      <listitem>
+        <para lang="en">
+          This is like "Normalize", except that it operates on the
+          red, green, and blue channels independently.  It often has
+          the useful effect of reducing color casts.
+        </para>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term lang="en">Auto Levels</term>
+      <listitem>
+        <para lang="en">
+          This is done by activating the Levels tool (Tools->Color
+          Tools->Levels in the image menu), clicking on the image to
+          bring up the tool dialog, and then pressing the "Auto"
+          button near the center of the dialog.  You will see a
+          preview of the result; you must press "Okay" for it to take
+          effect.  Pressing "Cancel" instead will cause your image to
+          revert to its previous state. 
+        </para>
+        <para>
+          If you can find a point in the image that ought to be
+          perfect white, and a second point that ought to be perfect
+          black, then you can use the Levels tool to do a
+          semi-automatic adjustment that will often do a good job of
+          fixing both brightness and colors throughout the
+          image. First, bring up the Levels tool as previously
+          described.  Now, look down near the bottom of the Layers
+          dialog for three buttons with symbols on them that look like
+          eye-droppers (at least, that is what they are supposed to
+          look like).  The one on the left, if you mouse over it,
+          shows its function to be "Pick Black Point".  Click on this,
+          then click on a point in the image that ought to be
+          black---really truly perfectly black, not just sort of
+          dark---and watch the image change.  Next, click on the
+          rightmost of the three buttons ("Pick White Point"), and
+          then click a point in the image that ought to be white, and
+          once more watch the image change.  If you are happy with the
+          result, click the "Okay" button; otherwise "Cancel".   
+        </para>
+      </listitem>
+    </varlistentry>
+
+    </variablelist>
+    <para lang="en">
+      Those are the automated color adjustments:  if you find
+      that none of them quite does the job for you, it is time to try
+      one of the interactive color tools. All of these, except one,
+      can be accessed via Tools->Color Tools in the image menu.  After
+      you select a color tool, click on the image (anywhere) to
+      activate it and bring up its dialog. 
+    </para>
+  </simplesect>
+
+  <simplesect>
+    <title lang="en">Exposure Problems</title>
+    <para lang="en">
+      The simplest tool to use is the <link
+      linkend='gimp-tool-brightness-contrast'>Brightness/Contrast</link>
+      tool.  It 
+      is also the least powerful, but in many cases it does
+      everything you need. This tool is often useful for images that
+      are overexposed or underexposed; it is not useful for
+      correcting color casts.  The tool gives you two sliders to
+      adjust, for "Brightness" and "Contrast".  If you have the
+      option "Preview" checked (and almost certainly you should),
+      you will see any adjustments you make reflected in the
+      image. When you are happy with the results, press "Okay" and
+      they will take effect.  If you can't get results that you are
+      happy with, press "Cancel" and the image will revert to its
+      previous state. 
+    </para>
+    <para lang="en">
+      A more sophisticated, and only slightly more difficult, way of
+      correcting exposure problems is to use the Levels tool.  The
+      dialog for this tool looks very complicated, but for the basic
+      usage we have in mind here, the only part you need to deal
+      with is the "Input Levels" area, specifically the three
+      triangular sliders that appear below the histogram.  We refer
+      you to the <link linkend='gimp-tool-levels'>Levels Tool Help</link>
+      for instructions; 
+      but actually the easiest way to learn how to use it is to
+      experiment by moving the three sliders around, and watching
+      how the image is affected.  (Make sure that "Preview" is
+      checked at the bottom of the dialog.) 
+    </para>
+    <para lang="en">
+      A very powerful way of correcting exposure problems is to use
+      the Curves tool.  This tool allows you to click and drag
+      control points on a curve, in order to create a function
+      mapping input brightness levels to output brightness levels.
+      The Curves tool can replicate any effect you can achieve with
+      Brightness/Contrast or the Levels tool, so it is more powerful
+      than either of them.  Once again, we refer you to the
+      <link linkend='gimp-tool-curves'>Curves Tool Help</link>for
+      detailed instructions, but the 
+      easiest way to learn how to use it is by experimenting.  
+    </para>
+    <para lang="en">
+      The most powerful approach to adjusting brightness and
+      contrast across an image, for more expert Gimp users, is to
+      create a new layer above the one you are working on, and then
+      in the Layers dialog set the Mode for the upper layer to
+      "Multiply".  The new layer then serves as a "gain control"
+      layer for the layer below it, with white yielding maximum gain
+      and black yielding a gain of zero.  Thus, by painting on the
+      new layer, you can selectively adjust the gain for each area
+      of the image, giving you very fine control.  You should try to
+      paint only with smooth gradients, because sudden changes in
+      gain will give rise to spurious edges in the result.  Paint
+      only using shades of gray, not colors, unless you want to
+      produce color shifts in the image.
+    </para>
+    <para lang="en">
+      Actually, "Multiply" is not the only mode that is useful for
+      gain control.  In fact, "Multiply" mode can only darken parts
+      of an image, never lighten them, so it is only useful where
+      some parts of an image are overexposed.  Using "Divide" mode
+      has the opposite effect:  it can brighten areas of an image
+      but not darken them.  Here is a trick that is often useful for
+      bringing out the maximum amount of detail across all areas of
+      an image:
+    </para>
+    <procedure lang="en">
+    <step>
+      Duplicate the layer (producing a new layer above it).
+    </step>
+    <step>
+      Desaturate the new layer.
+    </step>
+    <step>
+      Apply a Gaussian blur to the result, with a large radius
+      (100 or more).
+    </step>
+    <step>
+      Set Mode in the Layers dialog to Divide.
+    </step>
+    <step>
+      Control the amount of correction by adjusting opacity in the
+      Layers dialog, or by using Brightness/Contrast, Levels, or
+      Curves tools on the new layer.
+    </step>
+    <step>
+      When you are happy with the result, you can use "Merge Down"
+      to combine the control layer and the original layer into a
+      single layer.
+    </step>
+    </procedure>
+    <para>
+      In addition to "Multiply" and "Divide", you may every so often
+      get useful effects with other layer combination modes, such as
+      "Dodge", "Burn", or "Soft Light".  It is all too easy, though,
+      once you start playing with these things, to look away from
+      the computer for a moment and suddenly find that you have just
+      spent an hour twiddling parameters.  Be warned: the more
+      options you have, the harder it is to make a decision.
+    </para>
+  </simplesect>
+
+  <simplesect>
+    <title lang="en">Adjusting Hue and Saturation</title>
+    <para lang="en">
+      In our experience, if your image has a color cast---too much
+      red, too much blue, etc---the easiest way to correct it is to
+      use the Levels tool, adjusting levels individually on the red,
+      green, and blue channels.  If this doesn't work for you, it
+      might be worth your while to try the Color Balance tool or the
+      Curves tool, but these are much more difficult to use
+      effectively.  (They are very good for creating certain types
+      of special effects, though.) 
+    </para>
+    <para lang="en">
+      Sometimes it is hard to tell whether you have adjusted colors
+      adequately.  A good, objective technique is to find a point in
+      the image that you know should be either white or a shade of
+      gray. Activate the <link
+      linkend='gimp-tool-color-picker'>Color Picker</link> tool (the
+      eyedropper symbol in the Toolbox), and click on the aforesaid
+      point: this brings up the Color Picker dialog.  If the colors
+      are correctly adjusted, then the red, green, and blue
+      components of the reported color should all be equal; if not,
+      then you should see what sort of adjustment you need to make.
+      This technique, when well used, allows even color-blind people
+      to color-correct an image.
+    </para>
+    <para lang="en">
+      If your image is washed out---which can easily happen when you
+      take pictures in bright light---try the Hue/Saturation tool,
+      which gives you three sliders to manipulate, for Hue,
+      Lightness, and Saturation. Raising the saturation will
+      probably make the image look better.  In same cases it is
+      useful to adjust the lightness at the same time. ("Lightness"
+      here is similar to "Brightness" in the Brightness/Contrast
+      tool, except that they are formed from different combinations
+      of the red, green, and blue channels.)  The Hue/Saturation
+      tool gives you the option of adjusting restricted subranges of
+      colors (using the buttons at the top of the dialog), but if
+      you want to get natural-looking colors, in most cases you
+      should avoid doing this.
+    </para>
+    <tip lang="en">
+      Even if an image does not seemed washed out, often you can
+      increase its impact by pushing up the saturation a bit.
+      Veterans of the film era sometimes call this trick
+      "Fujifying", after Fujichrome film, which is notorious for
+      producing highly saturated prints.
+    </tip>
+    <para lang="en">
+      When you take pictures in low light conditions, in some cases
+      you have the opposite problem: too much saturation.  In this
+      case too the Hue/Saturation tool is a good one to use, only by
+      reducing the saturation instead of increasing it.  
+    </para>
+  </simplesect>
+</sect2>
+
+<sect2>
+  <title lang="en">Adjusting Sharpness</title>
+  <simplesect>
+    <title lang="en">Unblurring</title>
+    <para lang="en">
+      If the focus on the camera is not set perfectly, or the camera
+      is moving when the picture is taken, the result is a blurred
+      image.  If there is a lot of blurring, you probably won't be
+      able to do much about it with any technique, but if there is
+      only a moderate amount, you should be able to improve the image.
+    </para>
+    <para lang="en">
+      The most generally useful technique for sharpening a fuzzy image
+      is called the <link linkend='plug-in-unsharp-mask'>Unsharp
+      Mask</link>.  In spite of the rather confusing name, which
+      derives from its origins as a technique used by film developers,
+      its result is to make the image sharper, not "unsharp".  It is a
+      plug-in, and you can access it as Filters->Enhance->Unsharp Mask
+      in the image menu.  There are two parameters, "Radius" and
+      "Amount".  The default values often work pretty well, so you
+      should try them first.  Increasing either the radius or the
+      amount increases the strength of the effect.  Don't get carried
+      away, though: if you make the unsharp mask too strong, it will
+      amplify noise in the image and also give rise to visible
+      artifacts where there are sharp edges. 
+    </para>
+    <para lang="en">
+      Next to "Unsharp Mask" in the Filters menu is another filter
+      called <link linkend='plug-in-sharpen'>Sharpen</link>, which
+      does similar things.  It is a little easier to use but not
+      nearly as effective:  our recommendation is that you ignore it
+      and go straight to Unsharp Mask.
+    </para>
+    <para lang="en">
+      In some situations, you may be able to get useful results by
+      selectively sharpening specific parts of an image using the
+      <link linkend='gimp-tool-convolve'>Blur or Sharpen</link> tool
+      from the Toolbox, in "Sharpen" mode.  This allows you to
+      increase the sharpness in areas by painting over them with any
+      paintbrush.  You should be restrained about this, though, or the
+      results will not look very natural:  sharpening increases the
+      apparent sharpness of edges in the image, but also amplifies noise.
+    </para>
+  </simplesect>
+
+  <simplesect>
+    <title lang="en">Softening</title>
+    <para lang="en">
+      Every so often you have the opposite problem:  an image is
+      <emphasis>too</emphasis> crisp.  The solution is to blur it a
+      bit:  fortunately blurring an image is much easier than
+      sharpening it.  Since you probably don't want to blur it very
+      much, the simplest method is to use the "Blur" plug-in, accessed
+      via Filters->Blur from the image menu.  With the default
+      settings and a repeat count of 1, this will soften the focus of
+      the image a little bit.  If you want more softening, just repeat
+      until you get the result you desire. 
+    </para>
+  </simplesect>
+</sect2>
+
+<sect2>
+  <title lang="en">Removing Unwanted Objects from an Image</title>
+  <para lang="en">
+    There are two kinds of objects you might want to remove from an
+    image: first, artifacts caused by junk such as dust or hair on the
+    lens; second, things that were really present but impair the
+    quality of the image, such as a telephone wire running across the
+    edge of a beautiful mountain landscape.
+  </para>
+
+  <simplesect>
+    <title lang="en">Despeckling</title>
+    <para lang="en">
+      A good tool for removing dust and other types of lens grunge
+      is the <link linkend='plug-in-despeckle'>Despeckle</link>
+      filter, accessed as Filters->Enhance->Despeckle from the image
+      menu.  Very important: to use this filter effectively, you
+      must begin by making a small selection containing the artifact
+      and a small area around it.  The selection must be small
+      enough so that the artifact pixels are statistically
+      distinguishable from the other pixels inside the selection.
+      If you try to run despeckle on the whole image, you will
+      hardly ever get anything useful.  Once you have created a
+      reasonable selection, activate Despeckle, and watch the
+      preview as you adjust the parameters.  If you are lucky, you
+      will be able to find a setting that removes the junk while
+      minimally affecting the area around it.  The more the junk
+      stands out from the area around it, the better your results
+      are likely to be.  If it isn't working for you, it might be
+      worthwhile to cancel the filter, create a different selection,
+      and then try again. 
+    </para>
+    <para lang="en">
+      If you have more than one artifact in the image, it is
+      necessary to use Despeckle on each individually.  
+    </para>
+  </simplesect>
+
+  <simplesect>
+    <title lang="en">Garbage Removal</title>
+    <para lang="en">
+      The most useful method for removing unwanted "clutter" from an
+      image is the <link linkend='gimp-tool-clone'>Clone</link>
+      tool, which allows you to paint over one part of an image
+      using pixel data taken from another part (or even from a
+      different image).  The trick to using the clone tool
+      effectively is to be able to find a different part of the
+      image that can be used to "copy over" the unwanted part:  if
+      the area surrounding the unwanted object is very different
+      from the rest of the image, you won't have much luck.  For
+      example, if you have a lovely beach scene, with a nasty human
+      walking across the beach who you would like to teleport away,
+      you will probably be able to find an empty part of the beach
+      that looks similar to the part he is walking across, and use
+      it to clone over him.  It is quite astonishing how natural the
+      results can look when this technique works well.
+    </para>
+    <para lang="en">
+      Consult the <link linkend='gimp-tool-clone'>Clone Tool
+      Help</link>  for more detailed instructions.  Cloning is as
+      much an art as a science, and the more you practice at it, the
+      better you will get.  At first it may seem impossible to
+      produce anything except ugly blotches, but persistence will
+      pay off.  
+    </para>
+    <para lang="en">
+      In some cases you may be able to get good results by simply
+      cutting out the offending object from the image, and then
+      using a plug-in called "Resynthesizer" to fill in the void.
+      This plug-in is not included with the main Gimp distribution,
+      but it can be obtained from the author's <ulink
+      url="http://www.logarithmic.net/pfh/resynthesizer">Resynthesizer</ulink>
+      web site.  As with many things, your mileage may vary. 
+    </para>
+  </simplesect>
+
+  <simplesect>
+    <title lang="en">Removing Red-eye</title>
+    <para lang="en">
+      When you take a flash picture of somebody who is looking
+      directly toward the camera, the iris of the eye can bounce the
+      light of the flash back toward the camera in such a way as to
+      make the eye appear bright red:  this effect is called "red
+      eye", and looks very bizarre. Many modern cameras have special
+      flash modes that minimize red-eye, but they only work if you
+      use them, and even then they don't always work perfectly.
+      Interestingly, the same effect occurs with animals, but the
+      eyes may show up as other colors, such as green.   
+    </para>
+    <para lang="en">
+      Gimp does not include a special tool for removing red-eye, but it
+      isn't all that hard to do.  Basically the idea is to zoom the
+      area around the eye so that it is nice and large and easy to
+      work with; then make a selection of the red part of the eye
+      and a bit of the area around it; feather the selection so that
+      you don't create sharp-looking edges; and finally desaturate
+      the red channel inside the selection using one of the color
+      tools---Levels, Curves, or Hue/Saturation.  It takes a little
+      practice the first few times, but once you have the technique
+      mastered, you should be able to quickly and easily create
+      quite a natural looking eye color. 
+    </para>
+    <para lang="en">
+      If you would like a more automated approach, you can try
+      downloading a recently created <ulink
+      url="http://registry.gimp.org/plugin?id=4212">redeye</ulink>
+      plug-in from the Gimp Plug-in Registry.  We have not received
+      any feedback so far about how well it works.  It comes in
+      source code form, so you will need to be able compile it in
+      order to use it.  (See <link
+      linkend='gimp-using-plugins-install'>Installing New
+      Plug-ins</link> for information on how to do this.)
+    </para>
+  </simplesect>
+</sect2>  
+
+<sect2>
+  <title lang="en">Saving Your Results</title>
+  <simplesect>
+    <title lang="en">Files</title>
+    <para lang="en">
+      What file format should you use to save the results of your
+      work, and should you resize it?  The answers depend on what you
+      intend to use the image for.
+    </para>
+    <itemizedlist lang="en">
+    <listitem>
+      <para>
+        If you intend to open the image in Gimp again for further
+        work, you should save it in Gimp's native XCF format (i. e.,
+        name it something.xcf), because this is the only format that
+        guarantees that none of the information in the image is lost.
+      </para>
+    </listitem>
+
+    <listitem>
+      <para>
+        If you intend to print the image on paper, you should avoid 
+        shrinking the image, except by cropping it.  The reason is
+        that printers are capable of achieving much higher dot
+        resolutions than video monitors---600 to 1400 dots per inch
+        for typical printers, as compared to 72 to 100 dots per inch
+        for monitors.  A 3000 x 5000 image looks huge on a monitor,
+        but it only comes to about 5 inches by 8 inches on paper at
+        600 dpi.  There is usually no good reason to
+        <emphasis>expand</emphasis> the image either:  you can't
+        increase the true resolution that way, and it can always be
+        scaled up at the time it is printed.  As for the file format,
+        it will usually be fine to use JPEG at a quality level of 75
+        to 85.  In rare cases, where there are large swaths of nearly
+        uniform color, you may need to set the quality level even
+        higher or use a lossless format such as TIFF instead. 
+      </para>
+    </listitem>
+
+    <listitem>
+      <para>
+        If you intend to display the image on screen or project it
+        with a video projector, bear in mind that the highest screen
+        resolution for most commonly available systems is 1600 x 1200,
+        so there is nothing to gain by keeping the image larger than
+        that.  For this purpose, the JPEG format is almost always a
+        good choice. 
+      </para>
+    </listitem>
+
+    <listitem>
+      <para>
+        If you want to put the image on a web page or send it by
+        email, it is a good idea to make every effort to keep the file
+        size as small as possible.  First, scale the image down to the
+        smallest size that makes it possible to see the relevant
+        details (bear in mind that other people may be using different
+        sized monitors and/or different monitor resolution settings).
+        Second, save the image as a JPEG file.  In the JPEG save
+        dialog, check the option to "Preview in image window", and
+        then adjust the Quality slider to the lowest level that gives
+        you acceptable image quality.  (You will see in the image the
+        effects of each change.)  Make sure that the image is zoomed
+        at 1:1 while you do this, so you are not misled by the effects
+        of zooming. 
+      </para>
+    </listitem>
+    </itemizedlist>
+
+    <para lang="en">
+      See the <link linkend='gimp-using-fileformats'>File
+      Formats</link> section for more information.
+    </para>
+  </simplesect>
+
+  <simplesect>
+    <title lang="en">Printing Your Photos</title>
+    <para>
+      [This needs to be written.]
+    </para>
+  </simplesect>
+
+  <simplesect>
+    <title lang="en">EXIF Data</title> 
+    <para lang="en">
+      Modern digital cameras, when you take a picture, add information
+      to the data file about the camera settings and the circumstances
+      under which the picture was taken.  This data is included in
+      JPEG or TIFF files in a structured format called EXIF.  For JPEG
+      files, Gimp is capable of maintaining EXIF data, if it is built
+      appropriately:  it depends on a library called "libexif", which
+      may not be available on all systems.  If Gimp is built with EXIF
+      support enabled, then loading a JPEG file with EXIF data, and
+      resaving the resulting image in JPEG format, will cause the EXIF
+      data to be preserved unchanged.  This is not, strictly speaking,
+      the right way for an image editor to handle EXIF data, but it is
+      better than simply removing it, which is what earlier versions
+      of Gimp did.
+    </para>
+    <para lang="en">
+      If you would like to see the contents of the EXIF data, you can
+      download from the registry an <ulink
+      url="http://registry.gimp.org/plugin?id=4153">Exif Browser
+      plug-in</ulink>.  If you are able to build and install it on
+      your system, you can access it as Filters->Generic->Exif Browser
+      from the image menu.  (See <link
+      linkend='gimp-using-plugins-install'>Installing New
+      Plug-ins</link> for help.)
+    </para>
+  </simplesect>
+
+</sect2>
+
+</sect1>
+
