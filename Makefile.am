@@ -115,7 +115,7 @@ convert.stamp: mkdirs.stamp images.stamp $(IMAGE_FILES)
 	done; \
 	touch convert.stamp
 
-profile.stamp: mkdirs.stamp $(XML_FILES) $(DTD_FILES)
+profile.stamp: images.stamp $(XML_FILES) $(DTD_FILES)
 	@echo '*** Profiling XML files ***'
 	@cd $(top_srcdir) && \
 	$(mkinstalldirs) xml && cd xml && \
@@ -147,7 +147,7 @@ latex.stamp: profile.stamp $(XML_FILES) $(DTD_FILES)
 	done;
 	touch latex.stamp
 
-pdf.stamp: latex.stamp images.stamp $(XML_FILES) $(DTD_FILES)
+pdf.stamp: latex.stamp $(XML_FILES) $(DTD_FILES)
 	@echo '*** Building PDF files ***'
 	@cd $(top_srcdir)/pdf;
 	@for lang in $(ALL_LINGUAS); do \
