@@ -7,6 +7,7 @@ IMAGE_DIRS = \
 	glossary	\
 	tool-options	\
 	toolbox	\
+	callouts \
 	using
 
 IMAGE_FILES = \
@@ -51,6 +52,7 @@ mkdirs.stamp:
 	  $(mkinstalldirs) html/$$lang; \
 	  cp $(CSS_FILES) html/$$lang; \
 	done;
+	$(mkinstalldirs) html/xml; \
 	$(mkinstalldirs) html/images; \
 	touch mkdirs.stamp
 
@@ -78,7 +80,19 @@ images.stamp: mkdirs.stamp $(IMAGE_FILES)
 	done
 	touch images.stamp
 
-html.stamp: mkdirs.stamp $(XML_FILES)
+profile.stamp: mkdirs.stamp $(XML_FILES)
+	@echo '*** Profiling XML files ***'
+	cd html/xml && \
+	for lang in $(ALL_LINGUAS); do \
+		echo '-- Profiling XML for '$$lang;\
+			$(XSLTPROC) $(XSLTFLAGS) --xinclude \
+			--stringparam profile.lang $$lang -o $$lang.xml\
+			/usr/share/xml/docbook/stylesheet/nwalsh/profiling/profile.xsl ../../src/gimp.xml; \
+	done;
+	touch profile.stamp
+		
+
+html.stamp: mkdirs.stamp profile.stamp $(XML_FILES)
 	@echo '*** Building HTML ***'
 	for lang in $(ALL_LINGUAS); do \
 	  echo '-- Building HTML for '$$lang; \
@@ -86,7 +100,7 @@ html.stamp: mkdirs.stamp $(XML_FILES)
 	    $(XSLTPROC) $(XSLTFLAGS) --xinclude \
 	       --stringparam l10n.gentext.default.language $$lang \
 	       --stringparam profile.lang $$lang \
-	       ../../stylesheets/plainhtml.xsl ../../src/gimp.xml); \
+	       ../../stylesheets/plainhtml.xsl ../xml/$$lang.xml); \
 	done;
 	touch html.stamp
 
@@ -104,7 +118,7 @@ if GIMP_HELP_BUILD
 
 dist-check-build:
 
-all-local: clean.stamp css.stamp images.stamp html.stamp index.stamp
+all-local: clean.stamp css.stamp images.stamp profile.stamp html.stamp index.stamp
 
 CLEANFILES = $(HELP_STAMPS)
 

@@ -1,10 +1,10 @@
-<?xml version = '1.0' encoding = 'utf-8'?>
+<?xml version='1.0' encoding='utf-8'?>
 
 <sect2 id="dialogs-selection-masks">
   <title lang="en">Selection masks</title>
   <title lang="de">Auswahlmasken</title>
-  <title lang="fr">Masques de sélection</title>    
-  <variablelist>
+  <title lang="fr">Masques de sélection</title>   
+
     <mediaobject lang="en" >
       <imageobject>
         <imagedata fileref="../images/dialogs/dialogs-channel-masks.png" format="png" />
@@ -26,13 +26,24 @@
       on the <guilabel>Quick mask</guilabel> button on the <link
         linkend="gimp-image-window">Image window</link> automatically
       creates a new channel called <guilabel>Qmask</guilabel> and saves the
-      displayed active selection to a thumbail in front of the channel.
-      There is more information for this feature below in this text at
-      Quick Mask and Selection Masks chapters.
+      displayed active selection to a thumbail in front of the
+      channel.There are many selection tools in the Gimp like rectangular
+      selection tool or fuzzy selection for continuous selections.
+      Selection Masks are a graphical way to build selections into a gray
+      level channel where white pixels are selected and black pixels are
+      not selected. Therefore gray pixels are partially selected. You can
+      think of them as feathering the selection, a smooth transition
+      between selected and not selected. This is important to avoid the
+      ugly pixelization effect when you fill the selection or when you
+      erase its content after isolating a subject from background.
     </para>
     <para lang="de">
       Kanäle können benutzt werden um Auswahlen zu speichern und wieder
-      herzustellen.
+      herzustellen. Es gibt zahlreiche <link
+        linkend='gimp-tools-selection'>Auswahlwerkzeuge</link> im
+      <acronym>Gimp</acronym>, mit denen neue Auswahlen erstellt werden
+      können. Auch <link linkend='gimp-qmask'>QuickMasks</link> können in
+      einen Kanal gespeichert werden.
     </para>
     <para lang="fr">     
       Les canaux peuvent être utilisés pour sauvegarder et restituer vos
@@ -44,60 +55,46 @@
       détaillée ci-dessous aux chapitres Masque Rapide et Masque de
       sélection.
     </para>
-    
+
+    <variablelist>
+      <title lang="en">Creating Selection Masks</title>
+      <title lang="de">Erstellen von Auswahlmasken</title>
     <varlistentry>    
       <listitem lang="en">
         <para>
-          There are many selection tools in the Gimp like rectangular
-          selection tool or fuzzy selection for continuous selections.
-          Selection Masks are a graphical way to build selections into a
-          gray level channel where white pixels are selected and black
-          pixels are not selected. Therefore gray pixels are partially
-          selected. You can think of them as feathering the selection, a
-          smooth transition between selected and not selected. This is
-          important to avoid the ugly pixelization effect when you fill the
-          selection or when you erase its content after isolating a subject
-          from background.
-        </para>
-        <para>
           There are several ways to initialize a selection mask.  From the
-          image window menu <guilabel>Select/Save to channel</guilabel> is
+          image window menu
+          <guimenuitem><accel>S</accel>elect</guimenuitem>/
+          <guimenuitem>Save to <accel>C</accel>hannel</guimenuitem> is
           available if there is an active selection.  From the image window
           the bottom-left button creates a <link linkend="gimp-qmask">Quick
             Mask</link>; the content will be initialized with the active
           selection.  From the channel dialog, when you click on the
           <guilabel>New channel</guilabel> button or from the context menu.
         </para>
-        <para>
-          Once the channel is initialized, selected (highlighted in blue),
-          visible (eye-icon in the dialog), and displayed as you want
-          (color and opacity attributes), you can start to work with all
-          the paint tools.  The colors used are important. If you paint
-          with some color other than white, grey, or black, the color Value
-          (luminosity) will be used to define a gray (medium, light, or
-          dark).  When your mask is painted, you can transform it to a
-          selection by clicking on the <guilabel>Channel to
-            selection</guilabel> button or from the context menu.
-        </para>
-        <tip>
-          You can work in selection masks not only with the paint tool but
-          also with other tools. For instance, you can use the selection
-          tools to fill areas uniformly with gradients or patterns.  By
-          adding many selection masks in your list you can easily compose
-          very complex selections. One can say that a selection mask is to
-          a selection as a layer is to an image.
-        </tip>
-        <caution>
-          As long as a selection mask is activated you are working in the
-          mask and not in the image. To work in the image you have to
-          deactivate all selection masks. Don't forget also to stop
-          displaying masks in the image by removing the eye icon. Check
-          also that all RGB and Alpha channels are activated and displayed
-          in the image.
-        </caution>
-         
       </listitem>
-      <listitem lang="de" />       
+      <listitem lang="de">
+        <para>
+          Erstellen Sie eine Auswahl mit einen <link
+            linkend='gimp-tools-selection'>Auswahlwerkzeug</link>.  Danach
+          überführen Sie die erstellte Auswahl in ein Kanal.
+        </para>
+        <para>
+          Benutzen Sie dafür über das Bildmenü
+          <guimenuitem><accel>A</accel>uswahl</guimenuitem>/<guimenuitem>In
+            <accel>K</accel>anal speichern</guimenuitem>. Danach erscheint
+          ein neuer Kanal mit einem Miniaturbild im Kanaldialog.
+          Standardmässig ist die erstellte Auswahlmaske nicht sichtbar; dem
+          Kanal fehlt das gesetzte <link
+            linkend='channel-attributes'>Augensymbol</link>.
+        </para>
+        <para>
+          Möchten Sie die abgespeicherte Auswahl aus dem Kanal wieder
+          herstellen, benutzen Sie dazu die <link
+            linkend='gimp-channel-selection-add'>Auswahl aus Kanal</link>
+          Schaltfläche.
+        </para>
+      </listitem>
       <listitem lang="fr">       
         <para>
           Il existe de nombreux outils de sélection dans Gimp tels que
@@ -125,6 +122,72 @@
           canaux en cliquant sur le bouton <guilabel>Nouveau
             canal</guilabel> ou depuis le menu clic-droit sur un canal.
         </para>
+      </listitem>
+    </varlistentry>
+  </variablelist>
+
+  <variablelist>
+      <title lang="en">Using Selectionmasks</title>
+      <title lang="de">Auswahlmasken benutzen</title>
+    <varlistentry>
+      <listitem lang="en">
+        <para>
+          Once the channel is initialized, selected (highlighted in blue),
+          visible (eye-icon in the dialog), and displayed as you want
+          (color and opacity attributes), you can start to work with all
+          the paint tools.  The colors used are important. If you paint
+          with some color other than white, grey, or black, the color Value
+          (luminosity) will be used to define a gray (medium, light, or
+          dark).  When your mask is painted, you can transform it to a
+          selection by clicking on the <guilabel>Channel to
+            selection</guilabel> button or from the context menu.
+        </para>
+        <tip>
+          You can work in selection masks not only with the paint tool but
+          also with other tools. For instance, you can use the selection
+          tools to fill areas uniformly with gradients or patterns.  By
+          adding many selection masks in your list you can easily compose
+          very complex selections. One can say that a selection mask is to
+          a selection as a layer is to an image.
+        </tip>
+        <caution>
+          As long as a selection mask is activated you are working in the
+          mask and not in the image. To work in the image you have to
+          deactivate all selection masks. Don't forget also to stop
+          displaying masks in the image by removing the eye icon. Check
+          also that all RGB and Alpha channels are activated and displayed
+          in the image.
+        </caution>
+      </listitem>
+      <listitem lang="de">
+        <para>
+          Sobald Sie eine Auswahl in einen Kanal gespeichert haben, können
+          Sie diese Auswahl bearbeiten. Die Bearbeitung des Kanals erfolgt
+          vorranging mit <link
+            linkend='gimp-paint-tools'>Malwerkzeugen</link>. Die
+          ausgewählten Farben spielen hier eine besondere Rolle.
+        </para>
+        <para>
+          Benutzen Sie die Farbe Weiss um die erstellte Auswahl zu
+          vergrössern und die Farbe Schwarz um die Auswahl zu verkleinern.
+          Nur durch die Benutzung der beiden Farbarten, können erzeugen Sie
+          eine Auswahl mit harten Kanten, d.h. das Ende der Auswahl wird
+          durch die Schwarze Farbe bzw. der laufenden Ameisen
+          gekennzeichnet.
+        </para>
+        <para>
+          Möchten Sie die Auswahl langsam ausblenden, benutzen Sie Farben
+          die sich zwischen Schwarz und Weiss befinden, also Grautöne. Je
+          höher der Anteil von Weiss im Grau ist, desto durchsichtiger ist
+          die Auswahl.
+        </para>
+        <caution>
+          Solang die Auswahlmaske aktiviert ist (gekennzeichnet durch das
+          gesetzte Augensymbol des Kanals), haben die eingesetzten
+          Werkzeuge nur auf die Auswahlmaske einen Effekt.
+        </caution>
+      </listitem>
+      <listitem lang="fr">
         <para>
           Une fois le canal initialisé, activé (surligné en bleu), visible
           (l'icone en forme d'oeil dans le dialogue) et affiché à votre
@@ -158,9 +221,7 @@
           affichés dans l'image.
         </caution>
       </listitem>
-       
     </varlistentry>
-     
   </variablelist>
    
 </sect2>
