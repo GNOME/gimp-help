@@ -32,7 +32,7 @@ AC_SUBST(ALL_LINGUAS)
 dnl  The build of the HTML files is optional
 
 AC_ARG_ENABLE(build,
-              [  --enable-build          build the help files from XML (needs xsltproc)],,enable_build=no)
+              [  --enable-build          build the help files from XML (needs xsltproc)],, enable_build=no)
 
 AM_CONDITIONAL(GIMP_HELP_BUILD, test "x$enable_build" = "xyes")
 
@@ -42,14 +42,16 @@ dnl  Search the XSLT processor
 AC_PATH_PROG(XSLTPROC, xsltproc)
 if test -z "$XSLTPROC" && test "x$enable_build" = "xyes"; then
   AC_MSG_ERROR([
-** I'm sorry but I couldn't find xsltproc.
-** You will need it to build the help files.])
+** Couldn't find xsltproc. You will need it to build the help files.
+** If you want to install the prebuilt help files only, use --disable-build.
+** See the file 'INSTALL' for more help.])
 fi
 
 
 dnl  Optionally allow xsltproc to access DTDs over the network
 
-AC_ARG_ENABLE(network, [  --enable-network        allow to fetch DTDs or entities over the network])
+AC_ARG_ENABLE(network,
+              [  --enable-network        allow to fetch DTDs or entities over the network])
 
 if test "x$enable_network" != "xyes"; then
   XSLTFLAGS='--nonet'
@@ -72,7 +74,7 @@ AC_ARG_WITH(xsl,
 if test "x$with_xsl" != "x"; then
   STYLEBASE=$with_xsl
   AC_CHECK_FILE($STYLEBASE/xhtml/docbook.xsl,,
-    AC_MSG_ERROR([Couldn't find docbook.xsl in $STYLEBASE/xhtml]))
+    AC_MSG_ERROR([** Couldn't find docbook.xsl in $STYLEBASE/xhtml]))
 fi
 
 AC_SUBST(STYLEBASE)
@@ -81,10 +83,16 @@ AC_SUBST(STYLEBASE)
 dnl  We need the GIMP data directory to install the help files
 
 AC_ARG_ENABLE(install,
-              [  --enable-install        install the help files for GIMP (default=yes)],,enable_install=yes)
+              [  --enable-install        install the help files for GIMP (default=yes)],, enable_install=yes)
 
 if test "x$enable_install" = "xyes"; then
-  PKG_CHECK_MODULES(GIMP, gimp-2.0)
+  PKG_CHECK_MODULES(GIMP, gimp-2.0,, [
+AC_MSG_ERROR([
+** Couldn't find a GIMP-2.0 installation. If you don't want to install
+** the help files, you won't need GIMP-2.0 and can use --disable-install.
+** See the file 'INSTALL' for more help.])
+])
+
   GIMP_DATADIR=`$PKG_CONFIG --variable=gimpdatadir gimp-2.0`
 fi
 
@@ -104,4 +112,5 @@ AC_OUTPUT
 AC_MSG_RESULT([
  Rebuild the help files:  $enable_build
  Install the help files:  $enable_install
+ Installation prefix:     $GIMP_DATADIR
 ])
