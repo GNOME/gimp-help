@@ -1027,7 +1027,7 @@
   	the script. 
       </para>
       <programlisting>
-        (define (script-fu-text-box inTest inFont inFontSize inTextColor)
+        (define (script-fu-text-box inText inFont inFontSize inTextColor)
         (let*
               (
                  ; define our local variables
@@ -1081,7 +1081,7 @@
                            theImage
                            theImageWidth
                            theImageHeight
-                           RGB_IMAGE
+                           RGB-IMAGE
                            "layer 1"
                            100
                            NORMAL
@@ -1139,7 +1139,7 @@
       </para>
       <programlisting>
         (gimp-selection-all theImage)
-        (gimp-edit-clear theImage theLayer)
+        (gimp-edit-clear theLayer)
         (gimp-selection-none theImage)
       </programlisting>
       <para>
@@ -1157,7 +1157,7 @@
                             TRUE
                             inFontSize
                             PIXELS
-                            "*" "*" "*"
+                            "*" "*" "*" "*" "*" "*" "*" "*"
                            )
                        )
         )  
@@ -1293,7 +1293,7 @@
         parameter to our function and the registration function: 
       </para>
       <programlisting>
-        (define (script-fu-text-box inTest inFont inFontSize inTextColor)
+        (define (script-fu-text-box inTest inFont inFontSize inTextColor inBuferAmount)
         (let*
               (
                  ; define our local variables
@@ -1368,7 +1368,7 @@
         as the percent of buffer to add. 
       </para>
       <programlisting>
-        (set! theBuffer (* theImageHeight (inBufferAmount 100) ) )
+        (set! theBuffer (* theImageHeight (/ inBufferAmount 100) ) )
 
         (set! theImageHeight (+ theImageHeight theBuffer theBuffer) )
         (set! theImageWidth  (+ theImageWidth  theBuffer theBuffer) ) 	
