@@ -19,21 +19,9 @@
   <xsl:param name="chunk.section.depth" select="3" />
   <xsl:param name="chunker.output.indent" select="'yes'" />
 
-  <!-- Prevent falling back to simplesect content when creating a ToC
-       entry for a simplesect within a chapter or appendix. This cries for
-       a better fix but will at least cure the "FDL-in-ToC"-issue for
-       now. -->
-  <xsl:template match="preface|chapter|appendix|article" mode="toc">
-    <xsl:param name="toc-context" select="."/>
-
-    <xsl:call-template name="subtoc">
-      <xsl:with-param name="toc-context" select="$toc-context"/>
-      <xsl:with-param name="nodes" select="section|sect1|refentry
-                                         |glossary|bibliography|index
-                                         |bridgehead[$bridgehead.in.toc != 0]"/>
-
-    </xsl:call-template>
-  </xsl:template>
+  <!-- Add NotInToc role to simplesect, which is using in fdl.xml to
+       deal with FDL-In-TOC issue.-->
+  <xsl:template match="simplesect[@role = 'NotInToc']" mode="toc"/>
 
   <xsl:template name="header.navigation">
     <xsl:param name="prev" select="/foo"/>
