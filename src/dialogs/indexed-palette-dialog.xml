@@ -1,13 +1,16 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<sect1 id='gimp-indexed-palette-dialog' lang="en;zh_CN">
+<sect1 id='gimp-indexed-palette-dialog' lang="en;fr;zh_CN">
   <title lang="en">Indexed Palette dialog</title>
+  <title lang="fr">Le dialogue Palette indexée</title>
   <title lang="zh_CN">索引色板对话框</title>
 
   <indexterm>
     <primary lang="en">Dialog</primary>
+    <primary lang="fr">Dialogue</primary>
     <primary lang="zh_CN">对话框</primary>
     <secondary lang="en">Indexed Palette</secondary>
+    <secondary lang="fr">Palette indexée</secondary>
     <secondary lang="zh_CN">索引色板</secondary>
   </indexterm>
 
@@ -22,6 +25,20 @@
       <caption>
 	<para>
 	  The Indexed Palette dialog
+	</para>
+      </caption>
+    </mediaobject>
+
+    <mediaobject lang="fr">
+      <imageobject>
+        <imagedata
+        fileref='../images/dialogs/dialogs-indexed-palette.png'
+        format="PNG"/>  
+      </imageobject>
+
+      <caption>
+	<para>
+	  Le dialogue Palette Indexexée
 	</para>
       </caption>
     </mediaobject>
@@ -50,6 +67,15 @@
     manipulating it.  It can be activated in two ways:
   </para>
 
+  <para lang="fr">
+    Le dialogue Palette indexée vous permet d'éditer la carte des 
+    couleurs d'une image indexée (de type GIF par exemple). Si le mode 
+    d'image est RVB ou Niveaux de gris, cette fenêtre de dialogue est 
+    vide et inutilisable. C'est un dialogue attachable: voir la 
+    section <link linkend='gimp-docks'>Dialogues et attachements
+    </link>. On y accède de deux façons:
+  </para>
+
   <para lang="zh_CN">
     通过索引对话框可以编辑索引图像的颜色表。(当活动图像模式为 RGB 或灰度时，该对话框是空的并且不可用。)它是一个可停靠的对话框；请看<link linkend='gimp-docks'>对话框和停靠栏</link>。有两种方法开启它：
   </para>
@@ -62,6 +88,15 @@
           <guimenu>File</guimenu>
           <guisubmenu>Dialogs</guisubmenu>
           <guimenuitem>Indexed Palette</guimenuitem>
+        </menuchoice>
+      </para>
+
+      <para lang='fr'>   
+        A partir du menu de la Boîte à outils:
+        <menuchoice>
+          <guimenu>Fichier</guimenu>
+          <guisubmenu>Dialogues</guisubmenu>
+          <guimenuitem>Palette indexée</guimenuitem>
         </menuchoice>
       </para>
 
@@ -84,6 +119,14 @@
         </menuchoice>
       </para>
 
+      <para lang='fr'>   
+        A partir du menu de l'image:
+        <menuchoice>
+          <guimenu>Dialoguess</guimenu>
+          <guimenuitem>Palette indexée</guimenuitem>
+        </menuchoice>
+      </para>
+
       <para lang="zh_CN">   
         从图像菜单中：
         <menuchoice>
@@ -96,6 +139,7 @@
 
   <simplesect>
     <title lang='en'>Colormaps and Indexed Images</title>
+    <title lang='fr'>Carte de couleurs et images indexées</title>
     <title lang="zh_CN">颜色表和索引图像</title>
     
     <para lang='en'>
@@ -107,6 +151,17 @@
       There are no rules restricting the colors that can be assigned
       to an index or the order they appear in:  any index can be
       assigned any color.  
+    </para>
+
+    <para lang="fr">
+      Dans une image indexée, les couleurs sont assignées aux pixels 
+      de façon indirecte, à travers une table de référence appelée 
+      <emphasis>Carte de couleurs</emphasis>. Dans Gimp, le maximum 
+      d'entrées dans une carte de couleurs est de 256: à chaque indice 
+      de 0 à 255 est ainsi affectée une couleur particulière. Il n'y a 
+      aucune règle restreignant les couleurs pouvant être affectées à 
+      un indice ou l'ordre dans lequel elles apparaissent: n'importe 
+      quelle couleur peut-être affectée à n'importe quel indice.   
     </para>
 
     <para lang="zh_CN">
@@ -121,20 +176,40 @@
       indexed image has its own private colormap.
     </para>
 
+    <para lang="fr">
+      Dans une image indexée, au lieu de recevoir directement une 
+      couleur (comme dans les images RVB ou en niveaux de gris), 
+      chaque pixel reçoit un indice correspondant dans la Carte des 
+      couleurs.
+    </para>
+
     <para lang="zh_CN">
       在索引图像中，每个像素不是直接被赋予一种颜色(RGB 和 灰度图像则是这样)，而是给它们指定一个颜色表，通过它来决定该像素该显示为哪种颜色。GIMP 在图像的颜色表中查找索引，每个索引图像都有自己的颜色表。
     </para>
 
-    <para lang='en'>
+    <para lang='en'>       <!--changed 041120-->
       It is important to realize that the colors in the colormap are
       the <emphasis>only colors available</emphasis> for an indexed
       image (that is, unless you add new colors to the colormap).
       This has a major effect on many gimp operations:  for example,
       in a pattern fill, GIMP will usually not be
       able to find exactly the right colors in the colormap, so it
-      will approximate them by "dithering".  If the colormap is too
-      limited or poorly chosen, this can easily produce very poor
-      image quality.
+      will approximate them by 
+      <link linkend='glossary-dithering'>Dithering</link>.  If the 
+      colormap is too limited or poorly chosen, this can easily 
+      produce very poor image quality.
+    </para>
+
+    <para lang="fr">
+      Il est important de réaliser que, pour une images indexée, les 
+      couleurs disponibles sont celles de la Carte des couleurs et 
+      aucune autre (jusqu'à ce que vous en ajoutiez). Cela a un effet 
+      majeur sur de nombreuses opérations de Gimp: par exemple, lors 
+      du remplissage par un motif, il risque de ne pas trouver toutes 
+      les couleurs nécessaires et créera une couleur approchée par 
+      <link linkend='glossary-dithering-fr'>Tramage</link>. Si la 
+      carte des couleurs est pauvre en couleurs, le résultat sera de 
+      piètre qualité. 
     </para>
 
     <para lang="zh_CN">
@@ -151,6 +226,15 @@
       upper left corner, 1 to its right, etc.
     </para>
       
+    <para lang="fr">
+      Le dialogue Palette Indexée vous permet de modifier la Carte des 
+      couleurs d'une image, en changeant les couleurs existantes ou en 
+      ajoutant de nouvelles. Si vous changez la couleur d'un indice 
+      donné, vous verrez se modifier tous les pixels correspondant à 
+      cet indice dans l'image. Les indices sont numérotés avec le 0 
+      dans le coin en haut à gauche, le 1 à sa droite...etc.
+    </para>
+
     <para lang="zh_CN">
       通过索引色板对话框可以在图像的颜色表中添加颜色项，或改变现有颜色项。当改变一个给定索引的颜色时，您就能看到它对图像产生的影响，即被指定为该索引的所有像素其颜色都将改变。值为 0 的项在最左上角，1 则在它右边，依此类推。
     </para>
@@ -159,22 +243,35 @@
       Here are the operations you can perform using this dialog:
     </para>
 
+    <para lang="fr">
+      Voici les opérations que vous pouvez réaliser avec ce dialogue:
+    </para>
+
     <para lang="zh_CN">
       用该对话框可以进行下列操作：
     </para>
 
     <variablelist>
       <title lang='en'>Using the Indexed Palette dialog</title>
+      <title lang='fr'>Utilisation du dialogue Palette indexée</title>
       <title lang="zh_CN">使用索引色板对话框</title>
 
       <varlistentry>
         <term lang='en'>Click on a color entry</term>
+        <term lang='fr'>Clic sur une case de couleur</term>
         <term lang="zh_CN">点击一个颜色项</term>
         <listitem lang='en'>
           <para>
             This sets GIMP's foreground color to the color you click
             on, as shown in the Toolbox color area.  As a result, this
             color will be used for the next painting operation you do.
+          </para>
+        </listitem>
+
+        <listitem lang='fr'>
+          <para>
+            Le fait de cliquer sur une case de couleur place cette 
+            couleur en couleur de Premier-plan dans la Boîte à outils.
           </para>
         </listitem>
 
@@ -187,11 +284,12 @@
     
       <varlistentry>
         <term lang='en'>Ctrl-click on a color entry</term>
-         <term lang="zh_CN">Ctrl-点击一个颜色项</term>
+        <term lang='fr'>Ctrl-clic sur une case de couleur</term>
+        <term lang="zh_CN">Ctrl-点击一个颜色项</term>
         <listitem lang='en'>
           <para>
-            This sets GIMP's background color to the color you click
-            on, as shown in the Toolbox color area.
+            Le Ctrl-clic sur une case de couleur place cette couleur 
+            en couleur d'Arrière-plan dans la Boîte à outils.
           </para>
         </listitem>
 
@@ -204,7 +302,8 @@
     
       <varlistentry>
         <term lang='en'>Double-click on a color entry</term>
-         <term lang="zh_CN">双击一个颜色项</term>
+        <term lang='fr'>Double-clic sur une case de couleur</term>
+        <term lang="zh_CN">双击一个颜色项</term>
         <listitem lang='en'>
           <para>
             This sets GIMP's foreground color to the color you click
@@ -213,6 +312,14 @@
           </para>
         </listitem>
     
+        <listitem lang='fr'>
+          <para>
+            Cela place la couleur en Premier-plan, mais aussi ouvre un 
+            Éditeur de couleurs qui vous permet de modifier cette 
+            couleur dans la Carte des couleurs.
+          </para>
+        </listitem>
+
         <listitem lang="zh_CN">
           <para>
             它将把您点击的颜色设为 GIMP 的前景色，同时打开一个颜色编辑器，在其中可以改变该颜色表项为一个新颜色。
@@ -222,11 +329,19 @@
     
       <varlistentry>
         <term lang='en'>Color index</term>
-         <term lang="zh_CN">颜色索引</term>
+        <term lang='fr'>Indice de couleur</term>
+        <term lang="zh_CN">颜色索引</term>
         <listitem lang='en'>
           <para>
             You can select a different colormap entry by typing its
             index here, or clicking the spinbutton to the right.
+          </para>
+        </listitem>
+
+        <listitem lang='fr'>
+          <para>
+            Vous pouvez entrer là l'indice d'une couleur soit en la 
+            tapant soit en utilisant les boutons molette.
           </para>
         </listitem>
 
@@ -239,13 +354,23 @@
     
       <varlistentry>
         <term lang='en'>Hex triplet</term>
+        <term lang='fr'>Triplet Hexa</term>
         <term lang="zh_CN">十六进制值</term>
-        <listitem lang='en'>
+        <listitem lang='en'>               <!--changed 041121-->
           <para>
             This area shows a hex-code representation (such as is used
             in HTML) for the color assigned to the currently selected
             colormap entry.  You can edit the color here, instead of
-            using a Color Editor, if you want to.
+            using a Color Editor, if you want to. See
+            <link linkend='glossary-hextriplet'>HexTriplet</link>
+          </para>
+        </listitem>
+
+        <listitem lang='fr'>
+          <para>
+            Cette aire donne le code hexadécimal de la couleur. Vous 
+            pouvez entrer un triplet hexa pour obtenir une couleur. Voir 
+            <link linkend='glossary-hextriplet'>HexTriplet</link>
           </para>
         </listitem>
 
@@ -260,7 +385,8 @@
 
       <varlistentry>
         <term lang='en'>Edit color</term>
-         <term lang="zh_CN">编辑颜色</term>
+        <term lang='fr'>Édition</term>
+        <term lang="zh_CN">编辑颜色</term>
         <listitem lang='en'>
           <para>
             This button (in the lower left corner of the dialog)
@@ -268,6 +394,16 @@
             color for the currently selected colormap entry.  The
             effect is similar to double-clicking on the entry, except
             that it does not set GIMP's foreground color.
+          </para>
+        </listitem>
+
+        <listitem lang='fr'>
+          <para>
+            Ce bouton (en bas à gauche de la fenêtre) fait venir un 
+            Éditeur de couleur qui vous permet de modifier la couleur 
+            de la case sélectionnée dans la Carte de couleurs. C'est 
+            la même chose qu'en double-cliquant sur la case, sauf que 
+            la couleur de Premier-plan n'est pas mise à jour. 
           </para>
         </listitem>
 
@@ -282,6 +418,7 @@
 
       <varlistentry>
         <term lang='en'>Add color</term>
+        <term lang='fr'>Ajouter</term>
          <term lang="zh_CN">添加颜色</term>
         <listitem lang='en'>
           <para>
@@ -293,6 +430,17 @@
             and click, the background color from the Toolbox will be
             added.  (If the colormap contains 256 entries, it is full,
             and trying to add more will have no effect.)
+          </para>
+        </listitem>
+
+        <listitem lang='fr'>
+          <para>
+            Ce bouton (en bas à droite de la fenêtre) vous permet 
+            d'ajouter de nouvelles couleurs à la Carte des couleurs. 
+            En cliquant dessus, la couleur de Premier-plan de la Boîte 
+            à outils vient se placer en fin de Carte. Avec Ctrl-clic, 
+            ce sera la couleur d'Arrière-plan (Notez que vous ne 
+            pouvez pas dépasser 256 couleurs).
           </para>
         </listitem>
 
@@ -316,6 +464,17 @@
       in the image menu.
     </tip>
 
+    <tip lang='fr'>    
+      Si vous faites une erreur, vous pouver l'annuler en plaçant le 
+      focus sur l'image dont vous avez changé la palette et en tapant 
+      <keycap>Ctrl-Z</keycap> ou en choisissant
+      <menuchoice>
+        <guimenu>Édition</guimenu>
+        <guimenuitem>Annuler</guimenuitem>
+      </menuchoice> 
+      dans le menu de l'image.
+    </tip>
+
     <tip lang="zh_CN">
       当操作错误时，可以撤消它：将光标放在在颜色表被改变的图像中，然后按下 <keycap>Ctrl-Z</keycap> 或在图像菜单中选取
       <menuchoice>
@@ -328,6 +487,12 @@
       This dialog is not the only way of altering the colormap for an
       indexed image.  The color tools, such as Brightness/Contrast,
       Hue/Saturation, etc, also change the colors in the colormap.
+    </note>
+
+    <note lang='fr'> 
+      Ce dialogue n'est pas la seule façon de modifier la carte des 
+      couleurs d'une image indexée. Les outils de couleur, comme 
+      Luminosité/Contraste, Teinte/Saturation le permettent aussi. 
     </note>
 
     <note lang="zh_CN">

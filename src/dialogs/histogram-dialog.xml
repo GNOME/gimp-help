@@ -1,13 +1,16 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<sect1 id='gimp-histogram-dialog' lang="en;zh_CN">
+<sect1 id='gimp-histogram-dialog' lang="en;fr;zh_CN">
   <title lang="en">Histogram dialog</title>
+  <title lang="fr">Le dialogue Histogramme</title>
   <title lang="zh_CN">柱状图对话框</title>
 
   <indexterm>
     <primary lang="en">Dialog</primary>
+    <primary lang="fr">Dialogue</primary>
     <primary lang="zh_CN">对话框</primary>
     <secondary lang="en">Histogram</secondary>
+    <secondary lang="fr">Histogramme</secondary>
     <secondary lang="zh_CN">柱状图</secondary>
   </indexterm>
 
@@ -21,6 +24,19 @@
       <caption>
 	<para lang='en'>
 	  The Histogram dialog
+	</para>
+      </caption>
+    </mediaobject>
+
+    <mediaobject>
+      <imageobject lang="fr">
+        <imagedata
+        fileref='../images/dialogs/dialogs-histogram-basic.png'
+        format="PNG"/>  
+      </imageobject>
+      <caption>
+	<para lang='fr'>
+	  Le dialogue Histogramme
 	</para>
       </caption>
     </mediaobject>
@@ -50,6 +66,16 @@
     linkend='gimp-tool-levels'>Levels</link> tool.
   </para>
 
+  <para lang="fr">
+    La fenêtre de dialogue Histogramme vous fournit des renseignements 
+    sur la distribution statistique des valeurs de couleurs dans 
+    l'image active. Cette information est souvent utile quand vous 
+    cherchez à équilibrer les couleurs d'une image. Mais elle ne fait 
+    que vous renseigner, sans vous donner la possibilité de modifier 
+    les couleurs. Pour cela, utilisez l'outil <link
+    linkend='gimp-tool-levels'>Niveaux</link>
+  </para>
+
   <para lang="zh_CN">
     柱状图对话框显示当前活动图像的色彩值的统计分布信息，该信息在当您要对一个图像进行<emphasis>色彩平衡</emphasis>时通常很有用。不过，柱状图对话框只是提供信息的：使用它不能对图像有任何改变。如果要对一个图像进行基于柱状图的色彩修正，请使用<link linkend='gimp-tool-levels'>色阶</link>工具。
   </para>
@@ -58,6 +84,13 @@
     This is a dockable dialog; see the section on <link
     linkend='gimp-docks'>Dialogs and Docking</link> for help on
     manipulating it.  It can be activated in two ways:
+  </para>
+
+  <para lang="fr">
+    Le Dialogue Histogramme est un dialogue attachable; voyez la 
+    section <link linkend='gimp-docks'>Dialogues et attachements</link>
+    pour plus d'informations. Il peut être appelé de différentes 
+    façons:
   </para>
 
   <para lang="zh_CN">
@@ -72,6 +105,15 @@
           <guimenu>File</guimenu>
           <guisubmenu>Dialogs</guisubmenu>
           <guimenuitem>Histogram</guimenuitem>
+        </menuchoice>
+      </para>
+
+      <para lang='fr'>   
+        A partir du menu de la Boîte à outils:
+        <menuchoice>
+          <guimenu>Fichier</guimenu>
+          <guisubmenu>Dialogues</guisubmenu>
+          <guimenuitem>Histogramme</guimenuitem>
         </menuchoice>
       </para>
 
@@ -94,6 +136,14 @@
         </menuchoice>
       </para>
 
+      <para lang='fr'>   
+        A partir du menu de l'image:
+        <menuchoice>
+          <guimenu>Dialogues</guimenu>
+          <guimenuitem>Histogramme</guimenuitem>
+        </menuchoice>
+      </para>
+
       <para lang="zh_CN">   
         从图像菜单中：
         <menuchoice>
@@ -106,6 +156,7 @@
 
   <simplesect>
     <title lang='en'>About Histograms</title>
+    <title lang='fr'>A propos d'histogrammes</title>
     <title lang="zh_CN">关于柱状图</title>
     
     <para lang='en'>
@@ -118,6 +169,19 @@
       encoded by 0 on all color channels; a white pixel by 255 on all
       color channels.  A transparent pixel is encoded by 0 on the
       alpha channel; an opaque pixel by 255.
+    </para>
+
+    <para lang="fr">
+      Dans Gimp, chaque calque d'une image peut être décomposé en un 
+      ou plusieurs canaux: pour une image RVB, il s'agit des canaux 
+      Rouge, Vert et Bleu; pour une image en nuances de gris, il n'y a 
+      qu'un seul canal de Valeur. Les calques utilisant la 
+      transparence disposent d'un canal supplémentaire: le canal Alpha.
+      Chaque canal possède un intervalle de niveaux d'intensité de 0 à 
+      255 (valeurs entières). Ainsi, un pixel noir est codé 0 dans 
+      tous les canaux de couleur; un pixel blanc est codé 255 dans tous 
+      les canaux de couleur. Un pixel transparent est codé 0 dans le 
+      canal Alpha et un pixel opaque 255.
     </para>
 
     <para lang="zh_CN">
@@ -137,6 +201,20 @@
       Grayscale mode.
     </para>
 
+    <para lang="fr">
+      Pour les images RVB, il est pratique de définir une Valeur 
+      «pseudocanal». Ce n'est pas un vrai canal: il ne reflète aucune 
+      information de l'image. La Valeur d'un pixel est donnée par la 
+      formule  
+      <inlineequation>
+        V = (R + V + B)/3
+      </inlineequation>,
+      arrondie à l'entier le plus proche. En gros, la Valeur est celle 
+      que vous donneriez à ce pixel si l'image était convertie en 
+      niveaux de gris.
+
+    </para>
+
     <para lang="zh_CN">
       对于 RGB 图像，为方便起见，我们定义了“亮度”这个“伪通道”，它不是一个真正的颜色通道：并不反映直接保存在图像上的任何信息，相反，一个像素的亮度可以表示成
       <inlineequation>
@@ -150,16 +228,23 @@
       linkend='gimp-using-images'>Working with Images</link> section.
     </para>
 
+    <para lang="fr">
+      Pour de plus amples renseignements sur les canaux, voyez <link
+      linkend='gimp-using-images'>Travailler sur les images</link>
+    </para>
+
     <para lang="zh_CN">
       关于通道的更多信息，请看<link linkend='gimp-using-images'>了解图像</link>这章。
     </para>
 
     <variablelist>
       <title lang='en'>Using the Histogram dialog</title>
+      <title lang='fr'>Utilisation du dialogue Histogramme</title>
       <title lang="zh_CN">使用柱状图对话框</title>
 
       <varlistentry>
         <term lang='en'>Channel</term>
+        <term lang='fr'>Canal</term>
         <term lang="zh_CN">通道</term>
         <listitem lang='en'>
           <informalfigure>
@@ -254,6 +339,100 @@
            </variablelist>
         </listitem>
 
+        <listitem lang='fr'>
+          <informalfigure>
+            <mediaobject>
+              <imageobject>
+                <imagedata
+                  fileref='../images/dialogs/dialogs-histogram-menu.png'
+                  format="PNG"/>  
+              </imageobject>
+
+	      <caption>
+		<para>
+      Options des canaux pour un calque RVB avec canal Alpha.
+		</para>
+	      </caption>
+            </mediaobject>
+          </informalfigure>
+
+          <para>
+            Vous permet de choisir le canal à utiliser. Les 
+            possibilités dépendent du type du calque actif. Voici 
+            les entrées que vous verrez et ce qu'elles signifient:
+          </para>
+          <variablelist>
+            <varlistentry>
+              <term>Valeur</term>
+              <listitem>
+                <para>
+                  Pour les images RVB et en niveaux de gris, la Valeur 
+                  indique la distribution des luminosités dans le 
+                  calque. Pour les images en niveaux de gris, elle est 
+                  tirée directement des données de l'image. Pour les 
+                  images RVB, elle est tirée du pseudocanal Valeur.
+                </para>
+                <para>
+                  Pour les images indexées, le canal «Valeur» donne en 
+                  fait la distribution des fréquences de chaque index 
+                  de la carte des couleurs: on a donc un 
+                  histogramme en «pseudocouleurs» plutôt qu'un 
+                  véritable histogramme des couleurs.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Rouge, Vert, Bleu</term>
+              <listitem>
+                <para>
+                  Ces mentions n'apparaissent que pour les calques des 
+                  images RVB. Elles donnent la distribution des 
+                  niveaux d'intensité pour chacun des canaux Rouge, 
+                  Vert et Bleu.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Alpha</term>
+              <listitem>
+                <para>
+                  Donne la distribution des niveaux d'opacité. Si le 
+                  calque est complètement opaque ou complètement 
+                  transparent, l'histogramme consistera en une simple 
+                  barre verticale à gauche ou à droite.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>RVB</term>
+              <listitem>
+                <informalfigure>
+                  <mediaobject>
+                    <imageobject>
+                      <imagedata
+                        fileref='../images/dialogs/dialogs-histogram-rgb.png'
+                        format="PNG"/>  
+            		    </imageobject>
+
+            		    <caption>
+            		      <para>
+                        Histogrammes combinés des canaux R, V, B.
+            		      </para>
+            		    </caption>
+            		  </mediaobject>
+                </informalfigure>
+
+                <para>
+                  Cette entrée, disponible seulement pour les calques 
+                  RVB, donne les histogrammes R, V, B superposés, de 
+                  telle sorte que vous voyez d'un seul coup d'œil 
+                  l'ensemble de la distribution des couleurs.
+                </para>
+              </listitem>
+            </varlistentry>
+           </variablelist>
+        </listitem>
+
         <listitem lang="zh_CN">
           <informalfigure>
             <mediaobject>
@@ -332,6 +511,7 @@
     
       <varlistentry>
         <term lang='en'>Linear/Logarithmic buttons</term>
+        <term lang='fr'>Les boutons Linéaire/Logarithmique</term>
         <term lang="zh_CN">线性/对数按钮</term>
         <listitem lang='en'>
           <informalfigure>
@@ -362,6 +542,35 @@
           </para>
         </listitem>
 
+        <listitem lang='fr'>
+          <informalfigure>
+            <mediaobject>
+              <imageobject>
+                <imagedata
+                  fileref='../images/dialogs/dialogs-histogram-log.png'
+                  format="PNG"/>  
+              </imageobject>
+
+              <caption>
+              	<para lang='en'>
+                  L'histogramme vu plus haut, transformé en mode 
+                  logarithmique.
+            		</para>
+              </caption>
+            </mediaobject>
+          </informalfigure>
+
+          <para>
+            Ces boutons déterminent si l'histogramme sera affiché avec 
+            un axe y linéaire ou logarithmique. En ce qui concerne les 
+            photographies, le mode linéaire est le plus utile. Pour 
+            les images qui possèdent de larges aplats de couleur 
+            uniforme , l'histogramme linéaire rique de se réduire à 
+            quelques barres verticales, et le mode logarithmique sera 
+            plus approprié.
+          </para>
+        </listitem>
+
         <listitem lang="zh_CN">
           <informalfigure>
             <mediaobject>
@@ -387,6 +596,7 @@
     
       <varlistentry>
         <term lang='en'>Range Setting</term>
+        <term lang='fr'>Fixer un intervalle</term>
         <term lang="zh_CN">强度范围</term>
         <listitem lang='en'>
           <informalfigure>
@@ -397,11 +607,11 @@
                   format="PNG"/>  
               </imageobject>
 
-	      <caption>
-		<para>
-		  Appearance of the dialog after setting a range.
-		</para>
-	      </caption>
+      	      <caption>
+            		<para>
+                  Dialog aspect after range fixing.
+            		</para>
+      	      </caption>
             </mediaobject>
           </informalfigure>
 
@@ -428,6 +638,51 @@
               <para>
                 Use the spinbutton entries below the slider (left
                 entry: bottom of range; right entry: top of range).
+              </para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+
+        <listitem lang='fr'>
+          <informalfigure>
+            <mediaobject>
+              <imageobject>
+                <imagedata
+                  fileref='../images/dialogs/dialogs-histogram-range.png'
+                  format="PNG"/>  
+              </imageobject>
+
+      	      <caption>
+            		<para>
+                  Aspect du dialogue après avoir fixé un intervalle.
+            		</para>
+      	      </caption>
+            </mediaobject>
+          </informalfigure>
+
+          <para>
+            Vous pouvez réduire l'analyse à un intervalle limité de 
+            valeurs, et ce, de trois façons:
+          </para>
+          <itemizedlist>
+            <listitem>
+              <para>
+                Cliquer-glisser le pointeur sur l'aire d'affichage de 
+                l'histogramme, du niveau le plus bas au niveau le 
+                plus haut souhaités. 
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                Cliquer-glisser les triangles noir ou blanc du 
+                curseur situé sous l'histogramme.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                Utiliser les boutons molette sous le curseur (entrée 
+                gauche pour le niveau bas, entrée droite pour le 
+                niveau haut).
               </para>
             </listitem>
           </itemizedlist>
@@ -475,6 +730,7 @@
     
       <varlistentry>
         <term lang='en'>Statistics</term>
+        <term lang='fr'>Statistiques</term>
         <term lang="zh_CN">统计数字</term>
         <listitem lang='en'>
           <para>
@@ -485,6 +741,18 @@
             portion; the number of pixels in the image; the number
             whose values fall within the selected range; and the
             percentage whose values fall within the selected range.
+          </para>
+        </listitem>
+
+        <listitem lang='fr'>
+          <para>
+            En bas de la fenêtre, on trouve quelques indications 
+            statistiques sur la distribution des valeurs des canaux 
+            limitées à l'intervalle choisi. Ce sont la moyenne, la 
+            déviation standard et la médiane de la portion 
+            d'histogramme sélectionnée; le nombre de valeurs à 
+            l'intérieur de l'intervalle; et le pourcentage de valeurs 
+            situé dans l'intervalle.
           </para>
         </listitem>
 
