@@ -56,6 +56,9 @@ if (automake-1.7 --version) < /dev/null > /dev/null 2>&1; then
 elif (automake-1.8 --version) < /dev/null > /dev/null 2>&1; then
    AUTOMAKE=automake-1.8
    ACLOCAL=aclocal-1.8
+elif (automake-1.9 --version) < /dev/null > /dev/null 2>&1; then
+   AUTOMAKE=automake-1.9
+   ACLOCAL=aclocal-1.9
 elif (automake-1.6 --version) < /dev/null > /dev/null 2>&1; then
    AUTOMAKE=automake-1.6
    ACLOCAL=aclocal-1.6
@@ -89,10 +92,16 @@ test $TEST_TYPE $FILE || {
 }
 
 
+echo
+echo "I am going to run ./configure with the following arguments:"
+echo
+echo "  --enable-maintainer-mode --enable-build $AUTOGEN_CONFIGURE_ARGS $@"
+echo
+
 if test -z "$*"; then
-    echo
-    echo "I am going to run ./configure with no arguments - if you wish "
-    echo "to pass any to it, please specify them on the $0 command line."
+    echo "If you wish to pass additional arguments, please specify them "
+    echo "on the $0 command line or set the AUTOGEN_CONFIGURE_ARGS "
+    echo "environment variable."
     echo
 fi
 
