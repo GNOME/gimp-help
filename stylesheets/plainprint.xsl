@@ -9,5 +9,8 @@
   <xsl:param name="admon.graphics.path">../images/</xsl:param>
   <xsl:param name="callout.graphics.path">../images/callouts/</xsl:param>
   <xsl:param name="section.autolabel" select="1" />
-  <!--<xsl:param name='latex.inputenc'>utf8</xsl:param> -->
+  <xsl:output encoding="UTF-8" />
+  <xsl:variable name='latex.inputenc'>utf8</xsl:variable>
+  <xsl:variable name="latex.use.ucs">1</xsl:variable>                     
+  <xsl:variable name="latex.ucs.options">postscript</xsl:variable>
 </xsl:stylesheet>
