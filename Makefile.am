@@ -134,11 +134,19 @@ latex.stamp: profile.stamp $(XML_FILES) $(DTD_FILES)
 	@echo '*** Building LaTeX files ***'
 	@for lang in $(ALL_LINGUAS); do \
 	  echo '-- Building LaTeX for '$$lang;\
+	  if test $$lang != "zh_CN"; then \
 	  (cd $(top_srcdir)/pdf/$$lang && \
 	    $(XSLTPROC) $(XSLTFLAGS) --noout -o $$lang.tex --xinclude \
 		--stringparam l10n.gentext.default.language $$lang \
 		--stringparam profile.lang $$lang \
 		../../stylesheets/plainprint.xsl ../../xml/$$lang.xml); \
+	  else \
+	  (cd $(top_srcdir)/pdf/$$lang && \
+	    $(XSLTPROC) $(XSLTFLAGS) --noout -o $$lang.tex --xinclude \
+		--stringparam l10n.gentext.default.language $$lang \
+		--stringparam profile.lang $$lang \
+		../../stylesheets/cjkprint.xsl ../../xml/$$lang.xml); \
+	  fi \
 	done;
 	touch latex.stamp
 
