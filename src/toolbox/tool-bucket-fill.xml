@@ -84,6 +84,22 @@
     rencontrer des pixels dont la couleur dépasse un seuil donné. 
   </para>
 
+  <para lang="fr">
+    Quand vous remplissez des objets dans un calque transparent (par exemple 
+    des lettres dans un calque de texte) avec une couleur différente de la 
+    couleur d'origine des objets, vous pouvez avoir une bordure de la 
+    couleur ancienne qui entoure les objets. C'est dû au choix d'un seuil 
+    trop bas dans le dialogue des options de l'outil Remplissage. Avec un 
+    seuil bas, l'outil ne remplira pas les pixels semi-transparents d'une 
+    bordure adoucie. Si vous voulez remplir des surfaces complètement 
+    transparentes, vous devez sélectionner tous les calques par un clic 
+    droit sur le dialogue des calques et vous assurer que l'option «Garder 
+    la transparence» de ce dialogue n'est pas cochée. Si l'option Garder la 
+    transparence n'est pas activée, seules les parties opaques du calque 
+    seront remplies et si vous n'utilisez pas la commande Tout Sélectionner, 
+    seuls les «îlots" opaques sur lesquels vous avez cliqué seront remplis.
+  </para>
+
   <para lang="zh_CN">
     该工具用当前前景色填充一个选区。按住 Shift 并点击油漆桶工具，则会用背景色填充。油漆桶填充工具根据选项设置，决定是填充整个选区还是仅仅是和您点击处颜色相近的区域。工具选项也能控制其透明度。
   </para>
@@ -96,6 +112,7 @@
   <simplesect>
     <title lang="en">Activate Tool</title>
     <title lang="de">Werkzeugaufruf</title>
+    <title lang="fr">Activer l'outil</title>
     <title lang="zh_CN">启动工具</title>
     <itemizedlist lang="en">
       <listitem>
@@ -139,6 +156,28 @@
         </para>
       </listitem>
     </itemizedlist>
+
+    <itemizedlist lang="fr">
+      <listitem>
+        <para>
+          L'outil Remplissage peut être appelé à partir du menu-image et 
+          de la barre de menus de la fenêtre d'image:
+          <guimenuitem><accel>O</accel>utils</guimenuitem>/
+          <guimenuitem>Outils de d<accel>e</accel>ssin</guimenuitem>
+          /<guimenuitem><accel>R</accel>emplissage</guimenuitem> 
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          L'outil peut aussi être appelé en cliquant sur l'icône 
+          <guiicon>
+            <inlinegraphic
+              fileref='../images/toolbox/fill.png'></inlinegraphic>
+          </guiicon>
+          dans la Boîte à outils. 
+        </para>
+      </listitem>
+    </itemizedlist>
     <itemizedlist lang="zh_CN">
       <listitem>
         <para>
@@ -160,7 +199,7 @@
   <simplesect>
     <title lang="en">Key modifiers (Defaults)</title>
     <title lang="de">Tastaturbindungen (Standardeinstellungen)</title>
-    <title lang="fr">Touches de modification (Par défaut)</title>
+    <title lang="fr">Touches de contrôle (Par défaut)</title>
     <title lang="zh_CN">相关按键(默认值)</title>
     <variablelist>
       <varlistentry>
@@ -221,12 +260,28 @@
 
           <para lang="fr">
             <keycap>Ctrl</keycap> bascule de la couleur de remplissage premier plan 
-            à la couleur d'arrière-plan.
+            à la couleur d'arrière-plan et inversement.
           </para>
 	  
 	  <para lang="zh_CN">
 	    <keycap>Ctrl</keycap> 快速切换前景色填充和背景色填充。
 	  </para>
+        <listitem>
+          <para lang="en">
+            <keycap>Ctrl</keycap> toggles the use of Fill Similar Color or 
+            Fill Whole Selection on the fly.
+          </para>          
+          <para lang="de">
+            FIXME
+          </para>
+          <para lang="fr">
+            <keycap>Maj</keycap> bascule de l'option Remplir la couleur similaire 
+            à Remplir toute la Sélection et inversement.
+          </para>	  
+	        <para lang="zh_CN">
+	          FIXME
+	        </para>
+        </listitem>
         </listitem>
       </varlistentry>
     </variablelist>
@@ -319,7 +374,8 @@
       <listitem lang="en">
         <para>
           The Mode dropdown list provides a selection of paint application
-          modes. A list of these modes can be found in the glossary. 
+          modes. A list of these modes can be found in the 
+          <link linkend='glossary-modes'>Glossary</link>. 
         </para>
       </listitem>
       <listitem lang="de">
@@ -335,9 +391,9 @@
       </listitem>
       <listitem lang="fr">
         <para>
-          La liste déroulante Mode fournit une sélection 
-          des modes d'application de la peinture. Une liste de 
-          ces modes se trouve dans le Glossaire.
+          La liste déroulante Mode fournit une sélection des modes 
+          d'application de la peinture. Une liste de ces modes se trouve 
+          dans le <link linkend='glossary-modes'>Glossaire</link>.
         </para>
       </listitem>
       <listitem lang="zh_CN">
@@ -369,6 +425,8 @@
           Vous indique le motif courant. En cliquant dans la fenêtre 
           de présentation des motifs adjacente, vous développez 
           la liste des motifs et vous pouvez en choisir un autre.
+          Les boutons situés en bas de cette liste permettent d'afficher 
+          différemment cette liste: les bulles d'aide sont claires.
         </para>
 
         <para lang="zh_CN">
@@ -455,6 +513,44 @@
       </listitem>
 
     </varlistentry>
+
+    <varlistentry>
+      <term lang="en">Affected Area</term>
+      <term lang="de"></term> 
+      <term lang="fr">Aire affectée</term>
+      <term lang="zh_CN"></term>
+      <listitem lang="en">
+        <!--FIXME-->
+      </listitem>
+      <listitem lang="de">
+        <!--FIXME-->
+      </listitem>
+      <listitem lang="fr">
+        <itemizedlist mark='opencircle'>
+          <listitem>
+            <para>
+              <guilabel>Remplir les couleurs similaires</guilabel>: C'est 
+            l'option par défaut: l'outil remplit l'aire ayant une couleur 
+            similaire à celle du pixel cliqué
+            </para>
+            <para>
+            En pressant la touche <keycap>Maj</keycap> on bascule sur 
+            l'option Remplir toute la sélection.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <guilabel>Remplir toute la sélection</guilabel>: Avec cette 
+            option, la sélection active (ou l'ensemble de l'image si pas de 
+            sélection) est complètement remplie par la couleur.
+            </para> 
+          </listitem>
+        </itemizedlist>
+      </listitem>
+      <listitem lang="zh_CN">
+        <!--FIXME-->
+      </listitem>  
+    </varlistentry>  
     
     <varlistentry>
       <term lang="en">Finding Similar Colors</term>
@@ -510,7 +606,9 @@
       </listitem>
       <listitem lang="fr">
         <para>
-          Cette option permet de remplir les régions transparentes.
+          <guilabel>Remplir les régions transparentes</guilabel>: Cette 
+          option permet de remplir aussi les régions plus ou moins 
+          transparentes.
         </para>
         <para>
           Avec l'option <guilabel>Echantillonner sur tous les calques</guilabel>,
