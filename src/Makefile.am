@@ -6,7 +6,7 @@ BASE_FILE =	gimp.xml
 EXTRA_DIST = \
 	$(XML_FILES)
 
-all:  C de fr 
+all:  C de fr sv 
 
 
 C: $(XML_FILES) ../stylesheets/plainhtml.xsl
