@@ -86,10 +86,9 @@ mkdirs.stamp:
 css.stamp: mkdirs.stamp $(CSS_FILES)
 	@echo '*** Copying stylesheets ***'
 	@for lang in $(ALL_LINGUAS); do \
+	  cp $(CSS_FILES) $(srcdir)/html/$$lang; \
 	  if test $$lang = "zh_CN"; then \
-	    cp $(CSS_DIRS)/$$lang/*.css $(srcdir)/html/$$lang; \
-	  else \
-	    cp $(CSS_FILES) $(srcdir)/html/$$lang; \
+	    cp $(CSS_DIRS)/$$lang/gimp-help-custom.css $(srcdir)/html/$$lang; \
           fi; \
 	done;
 	touch css.stamp
