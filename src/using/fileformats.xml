@@ -1,0 +1,160 @@
+<?xml version='1.0' encoding="UTF-8" ?>
+
+<sect1 id='gimp-using-fileformats'>
+  <title lang="en">Files</title>
+  <indexterm>
+    <primary lang="en">The GIMP</primary>
+    <secondary lang="en">Files</secondary>
+  </indexterm>
+
+  <para>
+    The Gimp is capable of reading and writing a large variety of
+    graphics file formats.   With the exception of Gimp's native XCF
+    file type, file handling is done by plug-ins.  Thus, it is
+    relatively easy to extend Gimp to new file types when the need
+    arises. 
+  </para>
+  <para>
+    Not all file types are equally good for all purposes.  This part
+    of the documentation should help you understand the advantages and
+    disadvantages of each type.
+  </para>
+
+  <sect2>
+    <title lang="en">Overview</title>
+    <para lang="en">
+      When you open a file, using the File menu or any other method,
+      Gimp needs to determine what type of file it is.  Unless there
+      is no alternative, Gimp does not simply rely on the extension
+      (such as ".jpg") to determine the file type, because extensions
+      are not reliable:  they vary from system to system; any file can
+      be renamed to have any extension; and there are many reasons why
+      a file name might lack an extension.  Instead, Gimp first tries
+      to recognize a file by examining its contents:  most of the
+      commonly used graphics file formats have "magic headers" that
+      permit them to be recognized.  Only if the magic yields no
+      result does Gimp resort to using the extension.
+    </para>
+    <para>
+      There is no file format, with the exception of Gimp's native XCF
+      format, that is capable of storing all the data in a Gimp
+      image.  When you ask to save an image in a format that will not
+      completely represent it, Gimp notifies you of this, tells you
+      what kind of information will be lost, and asks you whether you
+      would like to "export" the image in a form that the file type
+      can handle.  Exporting an image does not modify the image
+      itself, so you do not lose anything by doing this.
+    </para>
+    <tip>
+      A caution, though:  when you close an image (possibly by
+      quitting Gimp), you are warned if the image is "dirty"; that is,
+      if it has been changed without subsequently being saved.  Saving
+      an image in any file format will cause the image to be
+      considered "not dirty", even if the file format does not
+      represent all of the information from the image.
+    </tip>
+  </sect2>
+
+  <sect2>
+    <title lang="en">XCF</title>
+    <para lang="en">
+      The XCF file type is special because it is Gimp's native file
+      type:  that is, it was designed specifically to store all of the
+      data that goes to make up a Gimp image.  Because of this,
+      XCF files may be quite complicated, and there are few programs
+      other than Gimp that can read them.  
+    </para>
+    <para>
+      When an image is stored as an XCF file, the file encodes nearly
+      everything there is to know about the image:  the pixel data for
+      each of the layers, the current selection, additional channels
+      if there are any, paths if there are any, and guides.  The most
+      important thing that is <emphasis>not</emphasis> saved in an XCF
+      file is the undo history.
+    </para>
+    <para>
+      The pixel data in an XCF file is represented in a raw,
+      uncompressed form: each byte of image data equals one byte in
+      the XCF file.  Thus, XCF files for even modestly sized images
+      can be quite large:  for example, a 1000x1000 RGB image with 3
+      layers will produce an XCF file of over 10 megabytes.  It is not
+      at all difficult to get XCF files of over 100 megabytes.
+      Fortunately, although XCF files do not intrinsically compress
+      their data, Gimp allows you to compress the files themselves,
+      using either the gzip or bzip2 compression methods, both of
+      which are fast, efficient, and freely available.  Compressing an
+      XCF file will often shrink it by a factor of 10 or more.
+    </para>
+    <para>
+      The Gimp developers have made a great effort to keep the XCF
+      file format compatible across versions.  If you create a file
+      using Gimp 2.0, it ought to be possible to open the file in Gimp
+      1.2.  However, some of the information in the file may not be
+      usable:  for example, Gimp 2.0 has a much more sophisticated way
+      of handling text than Gimp 1.2, so a text layer from a Gimp 2.0
+      XCF file will appear as an ordinary image layer if the file is
+      opened in Gimp 1.2.
+    </para>
+  </sect2>
+
+  <sect2>
+    <title lang="en">JPEG</title>
+    <para lang="en">
+    </para>
+  </sect2>
+
+  <sect2>
+    <title lang="en">PNG</title>
+    <para lang="en">
+    </para>
+  </sect2>
+
+  <sect2>
+    <title lang="en">TIFF</title>
+    <para lang="en">
+    </para>
+  </sect2>
+
+  <sect2>
+    <title lang="en">GIF</title>
+    <para lang="en">
+    </para>
+  </sect2>
+
+  <sect2>
+    <title lang="en">PSD</title>
+    <para lang="en">
+    </para>
+  </sect2>
+
+  <sect2>
+    <title lang="en">Postscript</title>
+    <para lang="en">
+    </para>
+  </sect2>
+
+  <sect2>
+    <title lang="en">PDF</title>
+    <para lang="en">
+    </para>
+  </sect2>
+
+  <sect2>
+    <title lang="en">PSP</title>
+    <para lang="en">
+    </para>
+  </sect2>
+
+  <sect2>
+    <title lang="en">TGA</title>
+    <para lang="en">
+    </para>
+  </sect2>
+
+  <sect2>
+    <title lang="en">BMP</title>
+    <para lang="en">
+    </para>
+  </sect2>
+
+</sect1>
