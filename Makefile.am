@@ -12,7 +12,10 @@ HELP_STAMPS = html-build.stamp
 
 all-local: html-build.stamp
 
-html-build.stamp:
+html-build.stamp: html index images
+	touch html-build.stamp
+
+html:
 	@echo '*** Building HTML ***'
 	rm -rf $(srcdir)/html 
 	mkdir $(srcdir)/html
@@ -24,20 +27,24 @@ html-build.stamp:
 	@echo '-- Building HTML for C';
 	(cd $(srcdir)/html/C && $(XSLTPROC) $(XSLTFLAGS) --xinclude ../../stylesheets/plainhtml.xsl ../../src/gimp.xml)
 
-	@echo '-- Generating index for C';	
-	$(XSLTPROC) $(XSLTFLAGS) $(top_srcdir)/stylesheets/makeindex.xsl $(srcdir)/html/C/gimp-xrefs-en.xml > $(srcdir)/html/C/gimp-help.xml;
-
 	for lang in $(ALL_LINGUAS); do \
-	  echo '-- Building HTML for $lang'; \
+	  echo '-- Building HTML for '$$lang; \
 	  (cd $(srcdir)/html/$$lang && $(XSLTPROC) $(XSLTFLAGS) --xinclude ../../stylesheets/plainhtml.$$lang.xsl ../../src/gimp.xml); \
 	done;
 
-	for lang in $(ALL_LINGUAS); do \
-	  echo '-- Generating index for $lang'; \
-          $(XSLTPROC) $(XSLTFLAGS) $(top_srcdir)/stylesheets/makeindex.xsl $(srcdir)/html/$$lang/gimp-xrefs-$$lang.xml > $(srcdir)/html/$$lang/gimp-help.xml; \
-        done;
+index:
+	@echo '*** Generating index ***';
 
-	@echo '-- Copying images'
+	@echo '-- Generating index for C';
+	$(XSLTPROC) $(XSLTFLAGS) $(top_srcdir)/stylesheets/makeindex.xsl $(srcdir)/html/C/gimp-xrefs.xml > $(srcdir)/html/gimp-help.xml;
+
+	for lang in $(ALL_LINGUAS); do \
+	  echo '-- Generating index for '$$lang; \
+	  $(XSLTPROC) $(XSLTFLAGS) $(top_srcdir)/stylesheets/makeindex.xsl $(srcdir)/html/$$lang/gimp-xrefs.xml > $(srcdir)/html/gimp-help.$$lang.xml; \
+	done;
+
+images:
+	@echo '*** Copying images ***'
 	mkdir $(srcdir)/html/images
 	for dir in $(IMAGES_DIRS); do \
 	  if test -d $(IMAGES_BASE)/$$dir; then \
@@ -52,7 +59,8 @@ html-build.stamp:
 	  fi \
 	done
 
-	touch html-build.stamp
-
 clean-local:
 	rm -rf $(srcdir)/html $(HELP_STAMPS)
+
+
+.PHONY: html images
