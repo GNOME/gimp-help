@@ -121,26 +121,258 @@
   </glossentry>
 
   <glossentry id="glossary-colormodel">
-    <glossterm lang="en">Color model</glossterm>
+    <glossterm lang="en">Color modes</glossterm>
     <glossdef>
-      <para lang="en">
-        RGB : Red Green Blue
-        <mediaobject>
-          <imageobject>
-            <imagedata
-              fileref='../images/glossary/color-model-additive.png' format='PNG'
-          />
-          </imageobject>
-        </mediaobject>
-        CMYKB : Cyan Magenta Yellow blacK
-        <mediaobject>
-          <imageobject>
-            <imagedata
-              fileref='../images/glossary/color-model-subtractive.png' format='PNG'
-          />
-          </imageobject>
-        </mediaobject>
-      </para>
+      <variablelist>
+        <varlistentry>
+          <term lang="en">RGB : Red Green Blue</term>
+          <listitem lang="en">
+            <mediaobject>
+              <imageobject>
+                <imagedata
+                 fileref='../images/glossary/color-model-additive.png' format='PNG'
+                />
+              </imageobject>
+            </mediaobject>
+            <para>
+              This model is used to represent colors on computers and television
+              monitors. These colors are emitted by screen phosphors and not
+              reflected as they are on paints. The resulting color is a
+              combination of the three primary RGB colors, with different degrees
+              of lightness. If you look at your television screen closely,
+              whose pitch is less than that of a computer screen, you
+              can see the red, green and blue phosphors differently enlighted. It
+              is said that this color model is <emphasis>additive</emphasis>
+            </para>
+            <para>
+              GIMP uses an eight bits (8-bit) channel for each primary color
+              and so 256 intensities (Values) are available resulting in
+              256x256x256 = 16,777,216 colors (called True Color).
+            </para>
+            <para>
+              It is not evident why these combinations produce rather unexpected
+              colors. Why, for instance, 229R+205G+229B gives a kind of pink? This
+              depends on our eye and our brain. There is no color in Nature, only
+              a continuous variation of the light wavelength. In retina are three
+              kinds of cones. The same wavelength acting on the three types of
+              cones stimulates them differently and mind has learned after several
+              millions of years of Evolution how to recognize a color in these
+              differences.
+            </para>
+            <para>
+              You can easily understand that no light (0R+0G+0B) gives complete
+              darkness, black, and full light (255R+255G+255B) gives white. Equal
+              intensity in all channels gives a gray level. So you can have only
+              256 gray levels.
+            </para>
+            <para>
+              Mixing two <emphasis>primary colors</emphasis> in RGB mode gives a
+              <emphasis>Secondary color</emphasis> that is a color of the CMY
+              mode. So combining Red and Green gives Yellow, Green and Blue give
+              Cyan, Blue and Red give Magenta. Don't mistake secondary colors for
+              <emphasis>Complementary colors</emphasis> which are diametrically
+              opposed to a primary color in the chromatic circle:
+              <mediaobject>
+                <imageobject>
+                  <imagedata
+                    fileref='../images/glossary/colorcircle.png' format='PNG'
+                  />
+                </imageobject>
+              </mediaobject>
+              Mixing a primary color with its complementary color gives gray
+              (neutral color).
+            </para>
+            <para>
+              It is important to know what happens when you handle colors. The
+              rule to remember is that decreasing a primary color results in
+              increasing the saturation of the complementary color (and
+              conversely). Here is the explanation: When you decrease a channel
+              value, for instance the Green one, you increase the relative
+              importance of other both, here Red and Blue. Now combination of
+              these two channels gives the secondary color, Magenta, that is quite
+              the complementary color of Green.
+            </para>
+            <para>
+              <emphasis>Exercise</emphasis>:
+              You can check this. Create a new image with only a white background
+              (255R+255G+255B). Open the Tools/Color Tools/Levels dialog and
+              select the the Red channel. If necessary, check the preview box.
+              Move the white slider to the left to decrease the Red value. You
+              will notice that the background of you image turns more and more to
+              Cyan. Now, decrease the Blue channel: only the Green will persist.
+              As a training go backwards, add color and try to guess what hue will
+              appear.
+            </para>
+            <para>
+              The <link linkend='gimp-tool-color-picker'>Color Picker</link> tool
+              allows you to know the RGB values of a pixel and the HTML
+              <link linkend='glossary-hextriplet'>hextriplet</link> for the color.
+            </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+
+      <variablelist>
+        <varlistentry>
+          <term lang="en">HSV: Hue Saturation Value</term>
+          <listitem lang="en">
+            <mediaobject>
+              <imageobject>
+                <imagedata
+                  fileref='../images/glossary/colorcircle-en.png' format='PNG'
+                />
+              </imageobject>
+            </mediaobject>
+            <para>
+              The RGB mode is well adapted to computer screens but it doesn't
+              allow to describe what we see in every day life: a light green, a
+              pale pink, a dazzling red... The HSV mode accounts for these
+              features. HSV and RGB are not independant. You can see that with
+              the color-picker: when you change one the other is also modified.
+              Brave can read Grokking the Gimp which explains their relations.
+            </para>
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <guilabel>Hue</guilabel>: It's the color itself, 
+                  resulting from the combination of primary colors. All color shades
+                  (except greylevels) are represented in a <emphasis>chromatic
+                  circle</emphasis>: Yellow, Blue, and also purple, orange...
+                  It goes from 0° to 360°. ("Color" term is often used instead of
+                  "Hue". RGB colors are "Primary colors").
+                  <mediaobject>
+                    <imageobject>
+                      <imagedata fileref="../images/glossary/colorcircle.png" format="png" />
+                    </imageobject>
+                  </mediaobject>
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <guilabel>Saturation</guilabel>: This parameter describes
+                  how pale the color is, as when you add white in a can of paint: a
+                  completely saturated hue will be pure. If less saturated, it will
+                  be pastel. Very saturated is almost white. Saturation ranges from
+                  0 to 100, from white to the purest color.
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <guilabel>Value</guilabel>: It is merely Luminosity, the 
+                  luminous intensity. It's the amount of light emitted by a color.
+                  You notice this change of luminosity when a color goes from shadow
+                  to sun or when you increase the luminosity of your screen. It
+                  ranges from 0 to 100. Pixels values in the three channels are also
+                  luminosities: "Value" is the vectorial sum of these elementary
+                  values in the RGB space.
+                </para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+
+      <variablelist>
+        <varlistentry>
+          <term lang="en">CMYK: Cyan Magenta Yellow blacK</term>
+          <listitem lang="en">
+            <mediaobject>
+              <imageobject>
+                <imagedata
+                  fileref='../images/glossary/color-model-subtractive.png' format='PNG'
+                />
+              </imageobject>
+            </mediaobject>
+            <para>
+              Let us say first that Gimp doesn't support the CMYK mode.
+              (An experimental plugin providing rudimentary CMYK support can
+              be found at www.blackfiveservices.co.uk/separate.shtml.)
+            </para>
+            <para>
+              This mode is that of printing, that of your printer whose
+              cartridges contain these colors. It's the mode of painting and
+              of all the objects around us, where light is not emitted but
+              reflected. Objects absorb apart of the light wave and we see
+              only the reflected part. Notice that our eye with its cones sees
+              this reflected light in RGB mode. An object is red because Green
+              and Blue have been absorbed. Now, Green and Blue combination is
+              Cyan. So, Cyan is absorbed when you add Red. Conversely, if you
+              add Cyan the complementary Red is absorbed: this system is
+              <emphasis>substractive</emphasis>. If you add Yellow, you
+              decrease Blue and if you add Magenta, you decrease Green.
+            </para>
+            <para>
+              You could logically think that by mixing Cyan, Magenta and
+              Yellow you substract Red, Green and Blue, and so that the eye
+              sees no light at all, that's to say Black. The question is more
+              complex. In fact you will see a dark brown. That's why this mode
+              has also the Black color and why your printer has a Black
+              cartridge. That's finally cheaper: the printer has not to mix
+              the three other colors to create an imperfect black. It has only
+              to add some Black.
+            </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+
+      <variablelist>
+        <varlistentry>
+          <term lang="en">Graylevel</term>
+          <listitem lang="en">
+            <para>
+              When you create a new image you can choose the graylevel mode
+              (that you can colorize later by transforming it to the RGB mode).
+              You can also transform an existing image to graylevel (but all
+              formats do not accept this transformation) thanks to the command
+              <link linkend='gimp-image-mode'>Graylevel</link>.
+            </para>
+            <para>
+              As we have explained in RGB mode, Gimp 24-bit images cann't have
+              more than 256 gray levels, coded on 8-bit. If you switch from
+              graylevel to RGB mode you give your image a RGB structure with
+              three color channels but of course your image remains gray.
+            </para>
+            <para>
+              Graylevel image files (8-bit) are smaller than RGB files.
+            </para>
+            <para>
+              You can also transform a RGB image to graylevel by desaturating it
+              thanks to the HSV option of the
+              <link linkend='plugin-decompose'>Decompose</link> filter, the
+              <link linkend='plugin-colorize'>Colorize</link> filter, or the
+              <link linkend='gimp-tool-hue-saturation'>Hue-Saturation</link>
+              filter.
+            </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+
+      <variablelist>
+        <varlistentry>
+          <term lang="en">Indexed colors</term>
+          <listitem lang="en">
+            <para>
+              The indexed mode has been invented by Compuserve at the
+              beginning of the Web to create small color image files, that
+              could be easily transmitted. GIF (Graphic Interchange Format)
+              was the first indexed format.
+            </para>
+            <para>
+              The principle is to code each pixel color in a table attached
+              to the image, all pixels with the same color have the same code.
+            </para>
+            <para>
+              You can see this palette when you have opened a GIF image thanks
+              to the Dialogs / Indexed Palette <!--link to be done-->.
+              It allows you to edit and modify each color.
+            </para>
+            <para>
+              In a GIF image, transparency is coded on one bit: transparent or
+              not.
+            </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
     </glossdef>
   </glossentry>
 </glossdiv>
