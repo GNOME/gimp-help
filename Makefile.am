@@ -104,9 +104,10 @@ profile.stamp: mkdirs.stamp $(XML_FILES) $(DTD_FILES)
 	for lang in $(ALL_LINGUAS); do \
 	  echo '-- Profiling XML for '$$lang;\
 	  $(XSLTPROC) $(XSLTFLAGS) --xinclude \
-	     --stringparam profile.lang $$lang -o $$lang.xml \
+	     --stringparam profile.lang $$lang \
 	     ../stylesheets/profile.xsl \
-             ../src/gimp.xml; \
+             ../src/gimp.xml | \
+	     sed -e "s/lang=[\"'][A-z;]*[\"']/lang=\"$$lang\"/" >$$lang.xml; \
 	done;
 	touch profile.stamp
 
