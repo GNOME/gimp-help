@@ -94,7 +94,7 @@ class Statistics:
         """ returns a dictionary with languages as keys and paths to the
             xml documents as values 
         """
-        linguas = ['de', 'fr', 'sv', 'en']
+        linguas = ['de', 'fr', 'sv', 'en', 'zh_CN']
         result = {}
         for lang in linguas:
             # puzzling the path to the gimp-help.xml file together
@@ -251,7 +251,7 @@ class Statistics:
 
         print "\n\nInvalid filenames:"
         print "======================"
-        print "Found %i ids which are not part of gimphelp-ids.h" %len(invalid_files)
+        print "Found %i filenames which are not part of gimphelp-ids.h" %len(invalid_files)
         
         if print_invalid:
             keys = invalid_files.keys()

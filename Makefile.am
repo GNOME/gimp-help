@@ -165,7 +165,8 @@ lint: profile.stamp $(XML_FILES) $(DTD_FILES)
 validate: profile.stamp $(XML_FILES) $(DTD_FILES)
 	@echo '*** Validating profiled XML ***'
 	@for lang in $(ALL_LINGUAS); do \
-	  xmllint --noout --valid xml/$$lang.xml || exit; \
+	  echo '-- Validating XML for '$$lang;\
+	  xmllint --noout --valid xml/$$lang.xml >/dev/null 2>xml/$$lang-validity_errors.log; \
 	done
 
 
