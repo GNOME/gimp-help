@@ -120,7 +120,7 @@ print.stamp: profile.stamp $(XML_FILES) $(DTD_FILES)
 		../../stylesheets/plainprint.xsl ../../xml/$$lang.xml); \
 	done;
 	touch print.stamp
-	
+
 html.stamp: profile.stamp $(XML_FILES) $(DTD_FILES)
 	@echo '*** Building HTML ***'
 	for lang in $(ALL_LINGUAS); do \
