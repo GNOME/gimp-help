@@ -48,9 +48,8 @@ class GIMPHelpXMLParser:
             finally: xml_file.close()
 
     def handleStartElement(self, name, attrs):
-        if attrs.has_key('id') and attrs.has_key('title'):
-            if len(attrs['title']) >= 1:
-                self.ids.append(attrs['id'])
+        if attrs.has_key('id'):
+            self.ids.append(attrs['id'])
 
     def handleCharData(self, data): pass
     def handleEndElement(self, name): pass
@@ -88,13 +87,13 @@ class Statistics:
         self.totals = len(self.hp.ids)
         
         self.docs = self.getDocumentPaths()
-        self.linguas = self._generateStatistics()
+        self.statistics = self._generateStatistics()
    
     def getDocumentPaths(self):
         """ returns a dictionary with languages as keys and paths to the
             xml documents as values 
         """
-        linguas = ['de', 'fr', 'sv', 'en', 'zh_CN']
+        linguas = get_linguas(self.helproot) 
         result = {}
         for lang in linguas:
             # puzzling the path to the gimp-help.xml file together
@@ -111,54 +110,68 @@ class Statistics:
                 language}
         """
         result = []
-        
+        helpids = self.hp.ids
         
         for lang in self.docs.keys():
+            other_ids = []
             xp = GIMPHelpXMLParser(self.docs[lang])
             xp.parse()
+            for id in xp.ids:
+                if id not in helpids:
+                    xp.ids.remove(id)
+                else:
+                    other_ids.append(id)
+                    
             done = len(xp.ids)
-            todo = self.totals - done
-            prc_done = done*100/self.totals
-            lang = self.makedict(done=done, todo=todo,\
-                prc_done=prc_done, lang=lang)
+            add = len(other_ids)
+            if done < self.totals:
+                todo = self.totals - done
+                prc_done = done*100/self.totals
+            else:
+                todo = 0
+                prc_done = 100
+                
+            lang = self.makedict(done=done,\
+                                 todo=todo,\
+                                 others=add,\
+                                 prc_done=prc_done,\
+                                 lang=lang)
             result.append(lang)
         
         return result
-       
+    
     def getInvalidIds(self):
         """ parses one gimp-help.xml file and compare the id's found
             with help ids. If the id from the xml file is not in help
             ids, append it to invalid.
             returns list with invalid ids (str)
         """
-        # XXX i think, parsing one xml file should do the trick
-        lang = 'en'
-        
         assert self.docs != {}
-            
-        xp = GIMPHelpXMLParser(self.docs[lang])
-        xp.parse()
-        invalid = []
-        skip = ['faq', 'using', 'fdl', 'glossary',
-            'introduction', 'gimp-main', 'legal', 'tools-color',
-            'tools-paint', 'tools-selection', 'tools-transform',
-            'tools-menu', 'plug-in']
         
-        for id in xp.ids:
-            not_invalid = None
-            if id in skip:
-                continue
-        
-            not_invalid = filter(lambda k, y=0:\
-                y + self.isSubstring(id, k), skip)
+        for lang in self.docs.keys():
+            xp = GIMPHelpXMLParser(self.docs[lang])
+            xp.parse()
+            invalid = []
+            skip = ['faq', 'using', 'fdl', 'glossary',
+                'introduction', 'gimp-main', 'legal', 'tools-color',
+                'tools-paint', 'tools-selection', 'tools-transform',
+                'tools-menu', 'plug-in']
             
-            if not_invalid:
-                continue
+            for id in xp.ids:
+                not_invalid = None
+                if id in skip:
+                    continue
+            
+                not_invalid = filter(lambda k, y=0:\
+                    y + self.isSubstring(id, k), skip)
+                
+                if not_invalid:
+                    continue
 
-            if not self.is_helpid(id):
-                invalid.append(id)
+                if not self.is_helpid(id):
+                    invalid.append(id)
 
-        invalid.sort()
+            invalid.sort()
         return invalid
 
         
@@ -229,12 +242,12 @@ class Statistics:
         print "General statistics:"
         print "==================="
         
-        for dict in self.linguas:
+        for dict in self.statistics:
             done = '#'*int(dict['prc_done']/10)
             todo = ' '*(10-(dict['prc_done']/10))
             print "\nLanguage: %s" %dict['lang']
-            print "Found titles for: %i ids - Todo: %s ids"\
-                %(dict['done'], dict['todo'])
+            print "Found titles for: %i ids - Todo: %s ids - other ids: %s"\
+                %(dict['done'], dict['todo'], dict['others'])
             print "Percent done: |%s%s| %s%%" %(done,todo, dict['prc_done'])
         
         print "\n\nInvalid ids:"
@@ -264,7 +277,31 @@ class Statistics:
         
     def makedict(self, **kwargs):
         return kwargs
+
+def get_linguas(gimphelppath):
+    """ returns the linguas set in configure.in in gimp-help-2 dir """
+    defaultlinguas = ['en', 'de', 'fr', 'sv', 'zh_CN']
+    gimphelppath = "%sconfigure.in" % gimphelppath
+    if os.environ.has_key('ALL_LINGUAS'):
+        linguas = os.environ.get('ALL_LINGUAS')
+        linguas = linguas.split(' ')
+        return linguas 
         
+    try:
+        f = open(gimphelppath, 'r')
+    except IOError:
+        return defaultlinguas
+    
+    for line in f.readlines():
+        try:
+            linguas = re.search('ALL_LINGUAS="(\w.+)"', line).groups()
+            linguas = linguas[0].split(' ')
+            return linguas
+        except AttributeError:
+            pass
+
+    return defaultlinguas 
+            
 def main():
     header = None
     xml = None
