@@ -126,8 +126,8 @@ endif
 if GIMP_HELP_INSTALL
 
 install-data-local: html/gimp-help.xml
-	$(mkinstalldirs) $(GIMP_DATADIR)/help
-	-cp -r html/* $(GIMP_DATADIR)/help
+	$(mkinstalldirs) $(DESTDIR)$(GIMP_DATADIR)/help
+	-cp -r html/* $(DESTDIR)$(GIMP_DATADIR)/help
 
 endif
 
