@@ -16,18 +16,25 @@
   <indexterm lang='fr'>
     <primary></primary>
   </indexterm>
-  
-  <mediaobject>
-    <imageobject lang='en'>
-      <imagedata fileref='../images/preferences/prefs-environment.png' format="PNG"/>
-    </imageobject>
-    <imageobject lang='de'>
-      <imagedata fileref='../images/preferences/de/prefs-environment.png' format="PNG"/>
-    </imageobject>
-    <imageobject lang='fr'>
-      <imagedata fileref='../images/preferences/fr/prefs-environment.png' format="PNG"/>
-    </imageobject>
-  </mediaobject>
+
+  <informalfigure>  
+    <mediaobject>
+      <imageobject lang='en'>
+        <imagedata fileref='../images/preferences/prefs-environment.png' format="PNG"/>
+      </imageobject>
+      <imageobject lang='de'>
+        <imagedata fileref='../images/preferences/de/prefs-environment.png' format="PNG"/>
+      </imageobject>
+      <imageobject lang='fr'>
+        <imagedata fileref='../images/preferences/fr/prefs-environment.png' format="PNG"/>
+      </imageobject>
+    </mediaobject>
+    <caption>
+      <para lang='en'>
+        Environment Preferences
+      </para>
+    </caption>
+  </informalfigure>
 
   <para lang='de'>
     Beeinflussen Sie den Ressourcenverbrauch, sowie das Verhalten beim
@@ -35,7 +42,10 @@
     Einstellungsansicht.
   </para>
   <para lang='en'>
-    This view lets you fine tune the memory consumption of GIMP.
+    This page lets you customize the amount of system memory allocated
+    for various purposes.  It also allows you to disable the
+    confirmation dialogs that appear when you close unsaved images,
+    and to set the size of thumbnail files that GIMP produces.
   </para>
 
   
@@ -44,13 +54,23 @@
     <title lang="de">Optionen</title>
     <title lang="fr">Options</title>
   <variablelist>
+    <title lang="en">Resource Consumption</title>
     <title lang="de">Ressourcenverbrauch</title>
-
+ 
     <varlistentry>
-      <term lang="en"/>
+      <term lang="en">Minimal number of undo levels</term>
       <term lang="de">Minimale Anzahl an Schritten</term>
       <term lang="fr"/>
       <listitem>
+        <para lang="en">
+          GIMP allows you to undo most actions by maintaining an "Undo
+          History" for each image, for which a certain amount of
+          memory is allocated.  Regardless of memory usage, however,
+          GIMP always permits some minimal number of the most recent
+          actions to be undone:  this is the number specified here.
+          See <link linkend='gimp-undo'>Undoing</link> for more
+          information about GIMP's Undo mechanism.
+        </para>
         <para lang="de">
           Verändern sie wie oft sie Operationen rückgängig machen
           möchten.
@@ -58,8 +78,15 @@
       </listitem>
     </varlistentry>
     <varlistentry>
+      <term lang='en'>Maximum undo memory</term>
       <term lang='de'>Maximaler Speicher für Rückgängigmachung</term>
       <listitem>
+        <para lang="en">
+          This is the amount of undo memory allocated for each image.
+          If the Undo History size exceeds this, the oldest points are
+          deleted, unless this would result in fewer points being
+          present than the minimal number specified above.
+        </para>
         <para lang="de">
           Beeinflussen sie die Bereitstellung von Speicher, um die
           <guilabel>Minimale Anzahl an Schritten</guilabel> rückgängig
@@ -68,8 +95,18 @@
       </listitem>
     </varlistentry>
     <varlistentry>
+      <term lang='en'>Tile cache size</term>
       <term lang='de'>Größe des Datenspeichers</term>
       <listitem>
+        <para lang="en">
+          This is the amount of system RAM allocated for GIMP image
+          data.  If GIMP requires more memory than this, it begins to
+          swap to disk, which may in some circumstances cause a
+          dramatic slowdown.  You are given an opportunity to set this
+          number when you install GIMP, but you can alter it here. See
+          <link linkend='gimp-using-setup-tile-cache'>How to Set Your
+          Tile Cache</link> for more information. 
+        </para>
         <para lang="de">
           Beeinflussen sie die Größe des Speichers, welcher für ein
           geladenes Bild zur Verfügung steht.
@@ -77,20 +114,36 @@
       </listitem>
     </varlistentry>
     <varlistentry>
+      <term lang='en'>Maximum new image size</term>
       <term lang='de'>Zurückhaltende Speichernutzung</term>
       <listitem>
-        <para>
-        <!-- XXX -->
+        <para lang='en'>
+          This is not a hard contraint:  if you try to create a new
+          image larger than the specified size, you are asked to
+          confirm that you really want to do it.  This is to prevent
+          you from accidentally creating images much larger than you
+          intend, which can either crash GIMP or cause it to respond
+          verrrrrrrry slowwwwwwwwly.
         </para>
       </listitem>
     </varlistentry>
     </variablelist>
     
     <variablelist>
+      <title lang='en'>File Saving</title>
       <title lang='de'>Dateien speichern</title>
       <varlistentry>
+        <term lang='en'>Confirm closing of unsaved images</term>
         <term lang='de'>Schließen ungespeicherter Bilder bestätigen</term>
         <listitem>
+          <para lang="en">
+            Closing an image is not undoable, so by default GIMP asks
+            you to confirm that you really want to do it, whenever it
+            would lead to a loss of unsaved changes.  You can disable
+            this if you find it annoying; but then of course you are
+            responsible for remembering what you have and have not
+            saved. 
+          </para>
           <para lang="de">
             Aktivieren sie dieses Kontrollkästchen, damit
             <acronym>Gimp</acronym> sie nochmal vor dem Beenden des
@@ -121,8 +174,15 @@
         </listitem>
       </varlistentry>
       <varlistentry>
+        <term lang='en'>Size of thumbnail files</term>
         <term lang='de'>Größe der Vorschaudateien</term>
         <listitem>
+          <para lang="en">
+            Here you can set the size of thumbnail files that GIMP
+            generates.  Regardless of this value, GIMP will still be
+            capable of <emphasis>reading</emphasis> thumbnail files of
+            any size.
+          </para>
           <para lang="de">
             Bestimmen Sie die Größe der Vorschaubilder, die in den <link
             linkend='gimp-file-open'>Öffnen</link> und <link
