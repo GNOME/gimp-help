@@ -107,7 +107,7 @@ profile.stamp: mkdirs.stamp $(XML_FILES) $(DTD_FILES)
 	     --stringparam profile.lang $$lang \
 	     ../stylesheets/profile.xsl \
              ../src/gimp.xml | \
-	     sed -e "s/lang=[\"'][A-z;]*[\"']/lang=\"$$lang\"/" >$$lang.xml; \
+	     sed -e "s/lang=[\"'][A-Za-z_;]*[\"']/lang=\"$$lang\"/" >$$lang.xml; \
 	done;
 	touch profile.stamp
 
