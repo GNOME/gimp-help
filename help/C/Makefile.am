@@ -1,6 +1,6 @@
 SUBDIRS =
 
-XML_FILES =	*.xml
+XML_FILES =	*.xml */*.xml */*/*.xml
 
 BASE_FILE =	gimp.xml
 
