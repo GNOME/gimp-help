@@ -10,7 +10,8 @@ IMAGE_DIRS = \
 	toolbox		\
 	callouts	\
 	preferences	\
-	using
+	using           \
+	menus
 
 IMAGE_FILES = \
 	$(wildcard $(top_srcdir)/images/*.png)	\
