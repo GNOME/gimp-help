@@ -64,7 +64,7 @@ clean.stamp:
 
 mkdirs.stamp:
 	@echo '*** Creating directories ***'
-	for lang in $(ALL_LINGUAS); do \
+	@for lang in $(ALL_LINGUAS); do \
 	  $(mkinstalldirs) html/$$lang; \
 	  cp $(CSS_FILES) html/$$lang; \
 	  $(mkinstalldirs) print/$$lang; \
@@ -75,15 +75,15 @@ mkdirs.stamp:
 
 css.stamp: mkdirs.stamp $(CSS_FILES)
 	@echo '*** Copying stylesheets ***'
-	for lang in $(ALL_LINGUAS); do \
+	@for lang in $(ALL_LINGUAS); do \
 	  cp $(CSS_FILES) $(srcdir)/html/$$lang; \
 	done;
 	touch css.stamp
 
 images.stamp: mkdirs.stamp $(IMAGE_FILES)
 	@echo '*** Copying images ***'
-	cp $(top_srcdir)/images/*.png html/images;
-	for dir in $(IMAGE_DIRS); do \
+	@cp $(top_srcdir)/images/*.png html/images;
+	@for dir in $(IMAGE_DIRS); do \
 	  if test -d $(top_srcdir)/images/$$dir; then \
 	    $(mkinstalldirs) html/images/$$dir && \
 	    cp $(top_srcdir)/images/$$dir/*.png html/images/$$dir; \
@@ -99,7 +99,7 @@ images.stamp: mkdirs.stamp $(IMAGE_FILES)
 
 profile.stamp: mkdirs.stamp $(XML_FILES) $(DTD_FILES)
 	@echo '*** Profiling XML files ***'
-	cd $(top_srcdir) && \
+	@cd $(top_srcdir) && \
 	$(mkinstalldirs) xml && cd xml && \
 	for lang in $(ALL_LINGUAS); do \
 	  echo '-- Profiling XML for '$$lang;\
@@ -113,8 +113,8 @@ profile.stamp: mkdirs.stamp $(XML_FILES) $(DTD_FILES)
 
 latex.stamp: profile.stamp $(XML_FILES) $(DTD_FILES)
 	@echo '*** Building LaTeX files ***'
-	cd $(top_srcdir)/print && ln -s ../images ./images;
-	for lang in $(ALL_LINGUAS); do \
+	@cd $(top_srcdir)/print && ln -s ../images ./images;
+	@for lang in $(ALL_LINGUAS); do \
 	  echo '-- Building LaTeX for '$$lang;\
 	  (cd $(top_srcdir)/print/$$lang && \
 	    $(XSLTPROC) $(XSLTFLAGS) --noout -o $$lang.tex --xinclude \
@@ -126,8 +126,8 @@ latex.stamp: profile.stamp $(XML_FILES) $(DTD_FILES)
 
 pdf.stamp: latex.stamp $(XML_FILES) $(DTD_FILES)
 	@echo '*** Building PDF files ***'
-	cd $(top_srcdir)/print;
-	for lang in $(ALL_LINGUAS); do \
+	@cd $(top_srcdir)/print;
+	@for lang in $(ALL_LINGUAS); do \
 	  echo '-- Building PDF for '$$lang; \
 	  (cd $(top_srcdir)/print/$$lang && \
 	    pdflatex  $$lang.tex); \
@@ -136,7 +136,7 @@ pdf.stamp: latex.stamp $(XML_FILES) $(DTD_FILES)
 
 html.stamp: profile.stamp $(XML_FILES) $(DTD_FILES)
 	@echo '*** Building HTML ***'
-	for lang in $(ALL_LINGUAS); do \
+	@for lang in $(ALL_LINGUAS); do \
 	  echo '-- Building HTML for '$$lang;\
 	  (cd $(top_srcdir)/html/$$lang && \
 	    $(XSLTPROC) $(XSLTFLAGS) --xinclude \
@@ -148,7 +148,7 @@ html.stamp: profile.stamp $(XML_FILES) $(DTD_FILES)
 
 index.stamp: html.stamp
 	@echo '*** Generating index files ***';
-	for lang in $(ALL_LINGUAS); do \
+	@for lang in $(ALL_LINGUAS); do \
 	  echo '-- Generating index for '$$lang; \
 	  $(XSLTPROC) $(XSLTFLAGS) \
 	     $(MAKEINDEX) \
@@ -162,9 +162,12 @@ lint: profile.stamp $(XML_FILES) $(DTD_FILES)
 	  xmllint --noout $$xml || exit; \
 	done
 
-#valid: profile.stamp $(XML_FILES) $(DTD_FILES)
-#	@echo '*** Checking XML for validity ***'
-#	cd xml && xmllint --noout --valid ${LANG}.xml || exit; 
+validate: profile.stamp $(XML_FILES) $(DTD_FILES)
+	@echo '*** Validating profiled XML ***'
+	@for lang in $(ALL_LINGUAS); do \
+	  xmllint --noout --valid xml/$$lang.xml || exit; \
+	done
+
 
 if GIMP_HELP_BUILD
 
