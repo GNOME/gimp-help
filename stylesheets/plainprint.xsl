@@ -13,4 +13,9 @@
   <xsl:variable name='latex.inputenc'>utf8</xsl:variable>
   <xsl:variable name="latex.use.ucs">1</xsl:variable>                     
   <xsl:variable name="latex.ucs.options">postscript</xsl:variable>
+
+
+  <!-- suppress any element with a html role -->
+  <xsl:template match="*[@role='html']" />
+
 </xsl:stylesheet>
