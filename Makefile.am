@@ -177,23 +177,26 @@ index.stamp: html.stamp
 	touch index.stamp
 
 validate.stamp: profile.stamp $(XML_FILES) $(DTD_FILES)
-	@echo '*** Validating profiled XML ***'
-	@for lang in $(ALL_LINGUAS); do \
-	  echo -n '-- Validating XML for '$$lang; \
-	  xmllint --noout --valid xml/$$lang.xml >/dev/null 2>xml/$$lang-validity-errors.log; \
-	  echo -n '	number of errors: '; \
-	  grep "validity error" xml/$$lang-validity-errors.log | wc -l; \
-	done; \
-	echo 'Log files of the validation process have been generated in the xml directory.'; \
-	echo 'Please correct any errors before writing new content.';
+	@if test "x$(XMLLINT)" != "x"; then \
+	  echo '*** Validating profiled XML ***'; \
+	  for lang in $(ALL_LINGUAS); do \
+	    echo -n '-- Validating XML for '$$lang; \
+	    $(XMLLINT) --noout --valid xml/$$lang.xml >/dev/null 2>xml/$$lang-validity-errors.log; \
+	    echo -n '	number of errors: '; \
+	    grep "validity error" xml/$$lang-validity-errors.log | wc -l; \
+	  done; \
+	  echo 'Log files of the validation process have been generated in the xml directory.'; \
+	  echo 'Please correct any errors before writing new content.'; \
+	fi
 	touch validate.stamp
 
 lint: profile.stamp $(XML_FILES) $(DTD_FILES)
-	@echo '*** Checking XML for well-formed-ness ***'
-	@for xml in $(XML_FILES); do \
-	  xmllint --noout $$xml || exit; \
-	done
-
+	@if test "x$(XMLLINT)" != "x"; then \
+	  echo '*** Checking XML for well-formed-ness ***'; \
+	  for xml in $(XML_FILES); do \
+	    $(XMLLINT) --noout $$xml || exit; \
+	  done \
+	fi
 
 if GIMP_HELP_BUILD
 
