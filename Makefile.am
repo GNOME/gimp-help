@@ -13,7 +13,7 @@ IMAGE_FILES = \
 	$(wildcard $(top_srcdir)/images/*/*/*.png)
 
 XML_FILES = \
-	$(top_srcdir)/src/gimp-help.xml		\
+	$(top_srcdir)/src/linkset.dtd		\
 	$(wildcard $(top_srcdir)/src/*.xml)	\
 	$(wildcard $(top_srcdir)/src/*/*.xml)	\
 	$(wildcard $(top_srcdir)/src/*/*/*.xml)	\
