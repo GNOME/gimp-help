@@ -35,6 +35,7 @@ MAKEINDEX = $(top_srcdir)/stylesheets/makeindex.xsl
 HELP_STAMPS = \
 	clean.stamp	\
 	css.stamp	\
+	print.stamp	\
 	html.stamp	\
 	images.stamp	\
 	index.stamp	\
@@ -55,6 +56,7 @@ EXTRA_DIST = \
 clean.stamp:
 	@echo '*** Removing the built help files ***'
 	rm -rf html
+	rm -rf print
 	rm -rf xml
 	touch clean.stamp
 
@@ -63,6 +65,7 @@ mkdirs.stamp:
 	for lang in $(ALL_LINGUAS); do \
 	  $(mkinstalldirs) html/$$lang; \
 	  cp $(CSS_FILES) html/$$lang; \
+	  $(mkinstalldirs) print/$$lang; \
 	done;
 	$(mkinstalldirs) xml; \
 	$(mkinstalldirs) html/images; \
@@ -105,10 +108,23 @@ profile.stamp: mkdirs.stamp $(XML_FILES) $(DTD_FILES)
 	done;
 	touch profile.stamp
 
+print.stamp: profile.stamp $(XML_FILES) $(DTD_FILES)
+	@echo '*** Building PDF ***'
+	cd $(top_srcdir)/print && ln -s ../images ./images;
+	for lang in $(ALL_LINGUAS); do \
+	  echo '-- Building PDF for '$$lang;\
+	  (cd $(top_srcdir)/print/$$lang && \
+	    $(XSLTPROC) $(XSLTFLAGS) -o $$lang.tex --xinclude \
+		--stringparam l10n.gentext.default.language $$lang \
+		--stringparam profile.lang $$lang \
+		../../stylesheets/plainprint.xsl ../../xml/$$lang.xml); \
+	done;
+	touch print.stamp
+	
 html.stamp: profile.stamp $(XML_FILES) $(DTD_FILES)
 	@echo '*** Building HTML ***'
 	for lang in $(ALL_LINGUAS); do \
-	  echo '-- Building HTML for '$$lang; \
+	  echo '-- Building HTML for '$$lang;\
 	  (cd $(top_srcdir)/html/$$lang && \
 	    $(XSLTPROC) $(XSLTFLAGS) --xinclude \
 	       --stringparam l10n.gentext.default.language $$lang \
@@ -137,7 +153,7 @@ if GIMP_HELP_BUILD
 
 dist-check-build:
 
-all-local: clean.stamp css.stamp images.stamp html.stamp index.stamp
+all-local: clean.stamp css.stamp images.stamp index.stamp
 
 CLEANFILES = $(HELP_STAMPS)
 
