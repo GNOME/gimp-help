@@ -7,15 +7,18 @@ IMAGES_DIRS = \
 	tool-options	\
 	toolbox
 
+XML_FILES = \
+	$(top_srcdir)/src/gimp-help.xml		\
+	$(wildcard $(top_srcdir)/src/*.xml)	\
+	$(wildcard $(top_srcdir)/src/*/*.xml)
+
 HELP_STAMPS = html-build.stamp
 
 
 all-local: html-build.stamp
 
-html-build.stamp: html index images
-	touch html-build.stamp
 
-html:
+html-build.stamp:  $(XML_FILES)
 	@echo '*** Building HTML ***'
 	rm -rf $(srcdir)/html 
 	mkdir $(srcdir)/html
@@ -32,7 +35,6 @@ html:
 	  (cd $(srcdir)/html/$$lang && $(XSLTPROC) $(XSLTFLAGS) --xinclude ../../stylesheets/plainhtml.$$lang.xsl ../../src/gimp.xml); \
 	done;
 
-index:
 	@echo '*** Generating index ***';
 
 	@echo '-- Generating index for C';
@@ -43,7 +45,6 @@ index:
 	  $(XSLTPROC) $(XSLTFLAGS) $(top_srcdir)/stylesheets/makeindex.xsl $(srcdir)/html/$$lang/gimp-xrefs.xml > $(srcdir)/html/gimp-help.$$lang.xml; \
 	done;
 
-images:
 	@echo '*** Copying images ***'
 	mkdir $(srcdir)/html/images
 	for dir in $(IMAGES_DIRS); do \
@@ -59,8 +60,12 @@ images:
 	  fi \
 	done
 
-clean-local:
-	rm -rf $(srcdir)/html $(HELP_STAMPS)
+	touch html-build.stamp
 
 
-.PHONY: html images
+CLEANFILES = $(HELP_STAMPS)
+
+maintainer-clean-local: rm -rf $(srcdir)/html
+
+
+.PHONY: html images index
