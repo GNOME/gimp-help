@@ -95,7 +95,7 @@ profile.stamp: mkdirs.stamp $(XML_FILES)
 	  echo '-- Profiling XML for '$$lang;\
 	  $(XSLTPROC) $(XSLTFLAGS) --xinclude \
 	     --stringparam profile.lang $$lang -o $$lang.xml \
-	     /usr/share/xml/docbook/stylesheet/nwalsh/profiling/profile.xsl \
+	     $(STYLEBASE)/profiling/profile.xsl \
              ../src/gimp.xml; \
 	done;
 	touch profile.stamp
