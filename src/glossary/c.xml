@@ -2,6 +2,35 @@
 
 <glossdiv lang="de;en;fr;zh_CN">
   <title>C</title>
+
+  <glossentry id='layer-fr'>
+    <glossterm lang='fr'>Calque</glossterm>
+      <glossdef>
+      <para>
+        Représentez-vous les calques comme une pile de diapositives plus 
+        ou moins transparentes. Chaque calque représente un aspect de 
+        l'image et l'image est la somme de tous ces aspects. Le calque le 
+        plus bas est le calque d'Arrière-plan. Les calques situés au-dessus 
+        du calque d'arrière-plan sont des composants du Premier-plan.
+      </para> 
+      <para>
+        Représentation d'une image avec calques:
+      </para>
+      <para>  
+        <imageobject>
+          <imagedata fileref='../images/dialogs/layers_overview.png' format="PNG"/>
+        </imageobject>
+      </para>
+      <para>
+        L'image finale:
+      </para> 
+      <para>  
+        <imageobject>
+          <imagedata fileref='../images/dialogs/layers_example.png' format="PNG"/>
+        </imageobject>       
+      </para>
+      </glossdef>
+  </glossentry>
   
   <glossentry id='glossary-channels-fr'>
     <glossterm lang="fr">Canaux</glossterm>
@@ -99,6 +128,22 @@
     </glossdef>
   </glossentry>
   
+  <glossentry id='glossar-path-fr'>
+    <glossterm lang='fr'>Chemins</glossterm>
+    <glossdef lang="fr">
+      <para>
+       Un <emphasis>Chemin</emphasis> est un tracé uni-dimensionnel, 
+       polygonal ou en forme de courbe, ou un mélange de segments des deux 
+       types. Le dessin vectoriel en fait grand usage, mais, dans GIMP, leur 
+       utilisation se limite à marquer les bords d'une sélection ou à tracer 
+       des dessins géométriques. Voyez <link linkend='gimp-paths'>Chemins
+       </link> pour une information de base sur les chemins et l'
+       <link linkend='gimp-tool-path'>Outil Chemin</link> pour savoir comment 
+       créer et éditer les chemins.
+      </para>
+    </glossdef>   
+  </glossentry>
+
   <glossentry id="glossary-clipboard">
     <glossterm lang="en">Clipboard</glossterm>
     <glossterm lang="zh_CN">Clipboard(剪切板)</glossterm>
@@ -108,7 +153,7 @@
         Clipboard is the term used to describe a temporary area of
         memory that is used to transfer data between applications or
         documents.  The GIMP uses slightly different clipboard
-        approaches when used under differnt operating systems. Under
+        approaches when used under different operating systems. Under
         Linux/XFree, the XFree clipboard is used for text and The
         GIMP internal image clipboard is used for images that are
         being transferred between image documents.  When The GIMP is
@@ -144,11 +189,12 @@
   <glossentry id="glossary-colormodel">
     <glossterm lang="en">Color modes</glossterm>
     <glossterm lang="zh_CN">Color modes(色彩模式)</glossterm>
-
+    <glossterm lang="fr">Couleur: modèles</glossterm>
     <glossdef>
       <variablelist>
         <varlistentry>
           <term lang="en">RGB : Red Green Blue</term>
+          <term lang="fr">RVB : Rouge Vert Bleu</term>
 	        <term lang="zh_CN">RGB：红绿蓝</term>
           <listitem lang="en">
             <mediaobject>
@@ -227,7 +273,7 @@
               <emphasis>Exercise</emphasis>:
               You can check this. Create a new image with only a white background
               (255R+255G+255B). Open the Tools/Color Tools/Levels dialog and
-              select the the Red channel. If necessary, check the preview box.
+              select the Red channel. If necessary, check the preview box.
               Move the white slider to the left to decrease the Red value. You
               will notice that the background of you image turns more and more to
               Cyan. Now, decrease the Blue channel: only the Green will persist.
@@ -239,6 +285,103 @@
               The <link linkend='gimp-tool-color-picker'>Color Picker</link> tool
               allows you to know the RGB values of a pixel and the HTML
               <link linkend='glossary-hextriplet'>hextriplet</link> for the color.
+            </para>
+          </listitem>
+
+          <listitem lang="fr">
+            <mediaobject>
+              <imageobject>
+                <imagedata
+                  fileref='../images/glossary/color-model-additive.png' format='PNG'
+                />
+              </imageobject>
+            </mediaobject>
+            <para>
+              RVB : Rouge Vert Bleu
+              Ce modèle est utilisé pour représenter les couleurs sur les écrans
+              d'ordinateur ou de télévision. Ces couleurs sont émises par les
+              phosphores de l'écran stimulés par le faisceau d'électrons à la
+              différence des couleurs réfléchies de la peinture, des images
+              imprimées et de tous les objets éclairés qui nous entourent. La
+              couleur résultante est une combinaison des trois couleurs primaires
+              RVB, chacune ayant une intensité lumineuse différente. Si vous
+              regardez de près votre écran de télévision, dont le piqué est
+              grossier par rapport à un écran d'ordinateur, vous verrez les
+              phosphores rouges, verts et bleus plus ou moins lumineux. On dit que
+              ce modèle de couleurs est <emphasis>additif</emphasis>.
+            </para>
+            <para>
+              GIMP utilise un canal de 8 bits pour chacune des trois couleurs
+              primaires. 256 couleurs sont donc disponibles dans chaque canal et
+              la combinaison des trois canaux fournit 256x256x256 = 16.777.216
+              couleurs («Couleurs Vraies»).
+            </para>
+            <para>
+              La raison pour laquelle ces combinaisons produisent des couleurs
+              plutôt inattendues n'est pas évidente. Pourquoi par exemple la
+              combinaison 229R+205V+229B donne-t-elle une sorte de rose. Cela
+              dépend en fait de notre oeil et de notre cerveau. Il n'y a pas de
+              couleurs dans la Nature, seulement une variation continue de la
+              longueur d'onde lumineuse. Dans la rétine, on trouve trois types de
+              cônes. Une même longueur d'onde agissant sur les trois types de
+              cônes les stimule de façon différente et le cerveau a appris, après
+              des millions d'années d'Évolution, à reconnaître des couleurs dans
+              ces variations.
+            </para>
+            <para>
+              Vous comprendrez facilement que l'absence de lumière (0R+0V+0B)
+              donne une obscurité totale, le noir, et que la pleine lumière
+              255R+255V+255B donne le blanc. Des intensités égales dans les trois
+              canaux donnent un niveau de gris. Il n'y a donc que 256 niveaux de
+              gris.
+            </para>
+            <para>
+              Le mélange des <emphasis>couleurs primaires</emphasis> deux à deux
+              en mode RVB donne les <emphasis>couleurs secondaires</emphasis> qui
+              sont les couleurs du mode CMJ: la combinaison du rouge et du vert
+              donne du jaune, le vert et le bleu donnent du cyan (bleu clair), le
+              bleu et le rouge donnent du magenta (violet). Ne pas confondre les
+              couleurs secondaires avec les
+              <emphasis>couleurs complémentaires</emphasis> qui sont
+              diamétralement opposées aux couleurs primaires dans le cercle
+              chromatique:
+              <mediaobject>
+                <imageobject>
+                  <imagedata
+                    fileref='../images/glossary/colorcircle-fr.png' format='PNG'
+                  />
+                </imageobject>
+              </mediaobject>
+              Le mélange d'une couleur primaire et de sa complémentaire donne du
+              gris (couleur neutre).
+            </para>
+            <para>
+              Il est important de savoir ce qui se passe quand on manipule les
+              couleurs. La règle à retenir est que lorsqu'on diminue une couleur
+              primaire cela aboutit à augmenter la saturation de la couleur
+              complémentaire (et inversement). Voici l'explication: quand on
+              diminue l'intensité d'un canal, par exemple le Vert, l'importance
+              relative des deux autres canaux, ici le Rouge et le Bleu, augmente.
+              Or, la combinaison de ces deux canaux est la couleur secondaire
+              Magenta qui se trouve justement être la complémentaire du Vert.
+            </para>
+            <para>
+              <emphasis>Exercice</emphasis>:
+              Vous pouvez vérifier cela. Créez une nouvelle image avec seulement
+              un fond blanc (255R+255V+255B). Ouvrez le dialogue
+              Outils/Outils de couleur/Niveaux et choisissez le canal Rouge.
+              Cochez si nécessaire la case Aperçu et faites glisser le curseur
+              blanc Niveaux de sortie vers la gauche pour diminuer le rouge.
+              Vous verrez le fond de votre image devenir de plus en plus Cyan.
+              Maintenant diminuez le canal bleu: seul le vert va persister. Pour
+              vous entraîner, repartez en arrière, ajoutez des couleurs et
+              essayez de deviner quelle teinte va sortir.
+            </para>
+            <para>
+              L'outil <link linkend='gimp-tool-color-picker'>Pipette à couleurs</link>
+              Vous permet de connaître les valeurs RVB d'un pixel ainsi que son code
+              HTML hexadécimal (Voir le
+              <link linkend='glossary-hextriplet'>Glossaire</link>).
             </para>
           </listitem>
 
@@ -297,6 +440,7 @@
       <variablelist>
         <varlistentry>
           <term lang="en">HSV: Hue Saturation Value</term>
+          <term lang="fr">TSV : Teinte Saturation Valeur</term>
           <term lang="zh_CN">HSV：色调 饱和度 亮度</term>
           <listitem lang="en">
             <para>
@@ -344,6 +488,54 @@
             </itemizedlist>
           </listitem>
 
+          <listitem lang="fr">
+            <para>
+              Le mode RVB est bien adapté à l'écran d'ordinateur, mais il ne
+              permet pas de décrire ce que nous voyons dans la vie courante:
+              un vert clair, un rose pâle, un rouge éclatant... Le mode TSV
+              permet d'en rendre compte. TSV et RVB ne sont pas indépendants.
+              Vous pouvez le voir avec la Pipette à couleurs: quand vous
+              modifiez l'un, l'autre se modifie automatiquement. Pour les
+              courageux, Grokking the Gimp explique bien leurs relations.
+            </para>
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <guilabel>La Teinte</guilabel>: c'est la couleur
+                  elle-même, résultat de la combinaison des couleurs primaires.
+                  Toutes les nuances de couleurs (sauf les niveaux de
+                  gris) sont représentées dans un cercle chromatique, le jaune, le
+                  bleu, mais aussi le violet, l'orange... Elle va de 0° à 360°.
+                  (On emploie souvent «couleur» à la place de «teinte», les trois
+                  couleurs RVB étant les «couleurs primaires»).
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <guilabel>La Saturation</guilabel>: ce paramètre décrit le 
+                  degré de pâleur de la teinte, comme lorsque vous
+                  ajoutez du blanc dans un pôt de peinture: un teinte saturée au
+                  maximum sera pure, moins saturée elle sera pastel, et, très
+                  peu saturée sera presque blanche. La Saturation varie du blanc à
+                  la couleur la plus pure, de 0 à 100.
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <guilabel>La Valeur</guilabel>: c'est tout simplement la
+                  luminosité, l'intensité lumineuse d'une couleur. On peut dire
+                  aussi que c'est la quantité de lumière émise par une couleur.
+                  Elle rend compte de l'éclat d'une couleur. Vous notez cette
+                  variation de luminosité quand une couleur passe de l'ombre au
+                  soleil ou quand vous augmentez la luminosité de votre moniteur.
+                  Elle varie de 0 à 100. Les valeurs des pixels dans les trois
+                  canaux sont aussi des intensités lumineuses: la Valeur est la
+                  somme vectorielle de ces valeurs élémentaires dans l'espace RVB.
+                </para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+
           <listitem lang="zh_CN">
             <para>
               RGB 模式非常适合电脑屏幕，但无法描述日常生活中我们所见到的：浅绿色，淡粉色，鲜红色... HSV 模式用来描述这些特征。HSV 和 RGB 并不是独立的。您可以在颜色拾取中看到：改变其中一个同时另一个也被改变。勇敢者可以看 《Grokking the Gimp》，其中解释了它们的关系。
@@ -375,6 +567,7 @@
       <variablelist>
         <varlistentry>
           <term lang="en">CMYK: Cyan Magenta Yellow blacK</term>
+          <term lang="fr">CMJN : Cyan Magenta Jaune Noir</term>
           <term lang="zh_CN">CMYK：青 洋红 黄 黑</term>
           <listitem lang="en">
             <mediaobject>
@@ -417,6 +610,49 @@
             </para>
           </listitem>
 
+          <listitem lang="fr">
+            <mediaobject>
+              <imageobject>
+                <imagedata
+                  fileref='../images/glossary/color-model-subtractive.png' format='PNG'
+                />
+              </imageobject>
+            </mediaobject>
+            <para>
+              Disons tout d'abord que Gimp ne gère pas le mode CMJN.
+              (Un greffon expérimental fournissant un gestionnaire
+              rudimentaire du CMJN peut être trouvé à
+              www.blackfiveservices.co.uk/separate.shtml.)
+            </para>
+            <para>
+              Ce mode est celui de l'impression, celui de votre imprimante où
+              les cartouches d'encre contiennent ces quatre couleurs. C'est le
+              mode de la peinture et de tous les objets qui nous entourent, où
+              la lumière n'est pas émise mais réfléchie. Les objets absorbent
+              une partie de l'onde lumineuse et nous ne voyons que
+              la partie réfléchie. Notre oeil, lui, avec ses
+              cônes, voit cette lumière réfléchie en mode RGB. Si un objet
+              est rouge, c'est parce que le Vert et le Bleu ont été absorbés.
+              Or, la combinaison du Vert et du Bleu est le Cyan. C'est donc le
+              Cyan qui est absorbé quand vous ajoutez du Rouge. Inversement,
+              si vous ajoutez du Cyan, c'est la complémentaire Rouge qui sera
+              absorbée. Ce système est <emphasis>soustractif</emphasis>. Si
+              vous ajoutez du Jaune, vous soustrayez du Bleu et si vous
+              ajoutez du Magenta, vous soustrayez du Vert.
+            </para>
+            <para>
+              Vous pourriez logiquement penser qu'en mélangeant du Cyan, du
+              Magenta et du Jaune, vous allez soustraire du Rouge, du Vert et
+              du Bleu si bien que l'oeil ne verra que du noir. C'est plus
+              complexe. En fait, vous ne verrez qu'un marron très foncé.
+              C'est pourquoi ce système comporte du noir en plus, et que votre
+              imprimante a aussi une cartouche d'encre noire. Ce qui
+              finalement est plus économique car pour créer ce marron foncé
+              imparfait, l'imprimante devrait puiser dans les trois autres
+              cartouches alors qu'il lui suffit d'ajouter un peu de noir.
+            </para>
+          </listitem>
+
           <listitem lang="zh_CN">
             <mediaobject>
               <imageobject>
@@ -444,6 +680,7 @@
       <variablelist>
         <varlistentry>
           <term lang="en">Graylevel</term>
+          <term lang="fr">Niveaux de gris</term>
           <term lang="zh_CN">灰阶</term>
           <listitem lang="en">
             <para>
@@ -475,6 +712,73 @@
             </para>
           </listitem>
 
+          <listitem lang="fr">
+            <para>
+              Quand vous créez une nouvelle image, vous pouvez choisir qu'elle
+              soit en niveaux de gris (que vous pourrez colorier ensuite en
+              passant en mode RVB). Vous pouvez aussi transformer une image
+              existante en niveaux de gris (mais tous les formats ne
+              supportent pas cette transformation) grâce à la commande
+              <link linkend='gimp-image-mode'>Niveaux de gris</link>.
+            </para>
+            <para>
+              Comme nous l'avons expliqué à propos du mode RVB, les images
+              24-bits de Gimp ne peuvent avoir que 256 niveaux de gris, codés
+              sur 8 bits. Si vous passez du mode Niveaux de gris au mode RVB,
+              vous donnez à votre image une structure RVB avec 3 canaux de
+              couleurs mais bien entendu l'image reste grise.
+            </para>
+            <para>
+              Les fichiers d'images en niveaux de gris, en 8-bits, sont plus
+              petits que les fichiers RVB.
+            </para>
+            <note>
+	      <para>
+		Vous pouvez aussi transformer en niveaux de gris une image
+		existante en la désaturant, en utilisant l'option TSV du
+		filtre <link
+		linkend='plug-in-decompose'>Décomposer</link>, le filtre
+		<link linkend='gimp-tool-colorize'>Coloriser</link>, ou
+		encore l'outil <link
+		linkend='gimp-tool-hue-saturation'>Teinte-Saturation</link>
+		en réduisant la saturation à -100 sur l'ensemble des
+		teintes.  Mais il ne s'agit pas de véritable Niveau de
+		gris puisque l'image conserve trois canaux de couleurs et
+		reste donc en 24-bits. Vous perdez donc l'avantage de la
+		réduction de fichier, mais vous gardez la possibilité de
+		modifier les canaux.
+	      </para>
+            </note>
+            <para>
+              Les <emphasis>images en noir et blanc</emphasis>, uniquement du
+              noir et du blanc sans les demi-teintes des niveaux de gris, sont
+              un cas particulier.
+              On les appelle aussi «dessin au trait» (line-art en anglais),
+              comme un trait que l'on trace avec un crayon noir sur une
+              feuille blanche. Elles sont codées sur 1 bit et outre leur
+              taille de fichier très réduite, elles offrent souvent un aspect
+              artistique intéressant.
+            </para>
+            <para>
+              Vous obtenez ce type d'image avec l'option «Trait» des
+              scanneurs. Vous pouvez aussi les créer dans GIMP de
+              différentes façons:
+              <itemizedlist mark='opencircle'>
+                <listitem>
+                  <para>
+                    Avec l'option «Utiliser la palette noir et blanc (1-bit)» du
+                    dialogue Image/Image/Mode/Indexé.
+                  </para>
+                </listitem>
+                <listitem>
+                  <para>
+                    Avec l'outil Image/Outils/outils de couleurs/Seuils.
+                  </para>
+                </listitem>
+              </itemizedlist>
+            </para>
+          </listitem>
+
           <listitem lang="zh_CN">
             <para>
               当您新建一个图像时可以选择灰阶模式(以后可以通过将它转换为 RGB 模式使它变成彩色)。也能够通过<link linkend='gimp-image-mode'>灰阶</link>命令来将一个原有图像转换为灰阶。
@@ -501,6 +805,7 @@
       <variablelist>
         <varlistentry>
           <term lang="en">Indexed colors</term>
+          <term lang="fr">Couleurs indexées</term>
           <term lang="zh_CN">索引色</term>
           <listitem lang="en">
             <para>
@@ -509,21 +814,47 @@
               could be easily transmitted. GIF (Graphic Interchange Format)
               was the first indexed format.
             </para>
-
             <para>
               The principle is to code each pixel color in a table attached
               to the image, all pixels with the same color have the same code.
             </para>
-
             <para>
-              You can see this palette when you have opened a GIF image thanks
-              to the Dialogs / Indexed Palette <!--link to be done-->.
-              It allows you to edit and modify each color.
+              You can see this palette when you have opened a GIF image 
+              thanks to the Dialogs / Indexed Palette. It allows you to edit 
+              and modify each color.
             </para>
-
+            <para>
+              See also  
+              <link linkend= 'gimp-indexed-palette-dialog'>Indexed Palette</link>.
+            </para>
             <para>
               In a GIF image, transparency is coded on one bit: transparent or
               not.
+            </para>
+          </listitem>
+
+          <listitem lang="fr">
+            <para>
+              Le modèle Indexé a été inventé par Compuserve au début du Web
+              pour créer des fichiers d'images en couleurs de petite taille
+              faciles à transmettre avec l'espoir que les couleurs seraient
+              vues de manière identique quel que soit l'ordinateur. Le premier
+              format utilisé a été le format GIF (Graphic Interchange Format).
+            </para>
+            <para>
+              Le principe consiste à coder, dans une table jointe à l'image,
+              la couleur de chaque pixel, les pixels de même couleur ayant le
+              même code.
+            </para>
+            <para>
+              Vous pouvez voir cette palette après avoir ouvert une image GIF
+              grâce à la boîte de dialogue Dialogues/Palette Indexée qui vous 
+              donnera la possibilité d'éditer et de modifier chacune des 
+              couleurs. 
+            </para>
+            <para>
+              Voir aussi 
+              <link linkend='gimp-indexed-palette-dialog'>Palette indexée</link>
             </para>
           </listitem>
 
