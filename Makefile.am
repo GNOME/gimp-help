@@ -3,9 +3,11 @@
 IMAGE_DIRS = \
 	dialogs		\
 	filters		\
+	filters/examples		\
 	glossary	\
 	tool-options	\
-	toolbox
+	toolbox	\
+	using
 
 IMAGE_FILES = \
 	$(wildcard $(top_srcdir)/images/*.png)	\
