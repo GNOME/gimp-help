@@ -1,0 +1,361 @@
+<?xml version='1.0' encoding="UTF-8" ?>
+
+<sect1 id='gimp-using-setup'>
+  <title lang="en">Starting Gimp the first time</title>
+  <indexterm>
+    <primary lang="en">The GIMP</primary>
+    <secondary lang="en">Setup</secondary>
+  </indexterm>
+
+  <para lang="en">
+    The first time you run Gimp, it goes through a series of steps to
+    set up options and directories.  This process creates a
+    subdirectory of your home directory called ".gimp-2.0".  All of
+    the information about the choices you make here goes into that
+    directory.  If you later remove that directory, or rename it as
+    something like ".gimp-2.0.bak", then the next time you start Gimp,
+    it will go through the whole setup sequence again, creating a new
+    .gimp-2.0 directory.  You can exploit this if you want to explore
+    the effect of different choices without destroying your existing
+    installation, or if you have screwed things up so badly that your
+    existing installation needs to be nuked.
+  </para>
+  <para>
+    For the most part, setting up Gimp is very easy, and you can just
+    accept the defaults at each step, and possibly adjust things later
+    using the <link
+    linkend='gimp-prefs-dialog'>Preferences</link> dialog.   The
+    main thing you might want to give a little thought to at the start
+    is the amount of memory to allocate for Gimp's tile cache.
+  </para>
+  <para>
+    Here is a walk-through of the setup process:
+  </para>
+
+  <variablelist>
+
+  <varlistentry>
+    <term lang="en">Welcome</term>
+    <listitem>
+    <mediaobject lang="en">
+      <imageobject>
+        <imagedata fileref='../images/using/ui-welcome.png' format='png'/>
+      </imageobject>
+    </mediaobject>
+    <para lang="en">
+      Since this window mentions the GNU General Public License you
+      know it is truly a Welcome dialog you are entering into.  Also,
+      note the "Continue" button. The Gimp does not even ask that you
+      agree to it, merely whether you want to continue. Feel free to
+      press the continue button.
+    </para>
+    </listitem>
+  </varlistentry>
+
+  <varlistentry>
+    <term lang="en">Personal Gimp Directory</term>
+    <listitem>
+    <mediaobject lang="en">
+      <imageobject>
+        <imagedata fileref='../images/using/ui-personal.png' format='png'/>
+      </imageobject>
+    </mediaobject>
+    <para lang="en">
+       I have always left this as is.
+    </para>
+    </listitem>
+  </varlistentry>
+
+  <varlistentry>
+    <term lang="en">User Installation Log</term>
+    <listitem>
+    <mediaobject lang="en">
+      <imageobject>
+        <imagedata fileref='../images/using/ui-log.png' format='png'/>
+      </imageobject>
+    </mediaobject>
+    <para lang="en">
+      This window shows you the files that Gimp will make. It will
+      have some complaints if you told it to install some place that
+      it didn't have permission to be. There is a scroll bar to see
+      all the things Gimp has created for you. 
+    </para>
+    </listitem>
+  </varlistentry>
+
+  <varlistentry>
+    <term lang="en">Gimp Performance Tuning</term>
+    <listitem>
+    <mediaobject lang="en">
+      <imageobject>
+        <imagedata fileref='../images/using/ui-performance.png' format='png'/>
+      </imageobject>
+    </mediaobject>
+    <para lang="en">
+      Setting your memory usage is not an easy thing. So much depends
+      on what your needs are for the gimp and what hardware you have
+      to work with. You have two options at this point. Go with the
+      default value the developers have set here, or determine the
+      best value. A brief <link
+      linkend='gimp-using-setup-tile-cache'>tile-cache</link>
+      explanation. might help you 
+      determine this value. The tile-cache information might also be
+      helpful to you if you are encountering memory problems when
+      using the gimp. 
+    </para>
+    <para>
+      On a Unix system, /tmp might be a good place for the swap. 
+    </para>
+    </listitem>
+  </varlistentry>
+
+  <varlistentry>
+    <term lang="en">Monitor Resolution</term>
+    <listitem>
+    <mediaobject lang="en">
+      <imageobject>
+        <imagedata fileref='../images/using/ui-monitor.png' format='png'/>
+      </imageobject>
+    </mediaobject>
+    <para lang="en">
+      Monitor Resolution is the ratio of pixels, horizontally and
+      vertically, to inches.  You have three ways to proceed here: 
+      <itemizedlist>
+      <listitem>
+        <para lang="en">
+          Get Resolution from windowing system. (easiest, probably
+          inaccurate).  
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Set Manually
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Push the Calibrate Button.
+        </para>
+      </listitem>
+      </itemizedlist>
+    </para>
+    </listitem>
+  </varlistentry>
+
+  <varlistentry>
+    <term lang="en">The Calibrate Dialog</term>
+    <listitem>
+    <mediaobject lang="en">
+      <imageobject>
+        <imagedata fileref='../images/using/ui-calibrate.png' format='png'/>
+      </imageobject>
+    </mediaobject>
+    <para lang="en">
+      My monitor was impressively off when I tried the Calibrate
+      Dialog.   The "Calibrate Game" is fun to play. You will need a soft
+      ruler. 
+    </para>
+    </listitem>
+  </varlistentry>
+
+  </variablelist>
+
+  <sect2 id='gimp-using-setup-tile-cache'>
+  <title lang="en">How to Set Your Tile Cache</title>
+  <para lang="en">
+    Image processing can require a lot of memory. Gimp uses the
+    operating system services to handle memory, up to a given point,
+    past which it uses its own system so that it does not eat all system
+    memory resources. This system consists in sending old data to files
+    in the disk. The decision point is what the Tile Cache size
+    determines---the maximum amount of operating system resources to
+    use---and is measured in Bytes 
+    (or multiples, like MegaBytes). It does not include Gimp's own memory,
+    just the space required for the image data.
+  </para> 
+
+  <para>
+    A low value means that Gimp sends data vey quickly to disk, not 
+    making real use of the available RAM, and making the disks work
+    without any real reason. Too high a value, and other applications
+    start to have less system resources, forcing them to use swap space,
+    which also makes the disks work; or maybe some will even get
+    killed or start to malfunction due lack of RAM. 
+  </para>
+
+  <para>
+    How to choose a number for the Tile Cache size?  Here are some
+    ways you could decide what value to use, as well as a few tricks:
+  </para>
+
+  <itemizedlist>
+  
+  <listitem>
+  <para lang="en">
+    The easiest method is to just forget about this and hope the
+    default works. This was a usable method when 
+    computers had little RAM, and most people just tried to make small
+    images with Gimp while running one or two other applications at
+    the same time. If you 
+    want something easy and only use Gimp to make screenshots and
+    logos, this is probably the best solution. 
+  </para>
+  </listitem>
+
+  <listitem>
+  <para lang="en">
+    If you have a modern computer with plenty of memory---say, 512 MB
+    or more---setting the Tile Cache to half of your RAM will probably
+    give good performance for Gimp in most situations without
+    depriving other applications.  Probably even 3/4 of your RAM would
+    be fine.
+  </para>
+  </listitem>
+
+  <listitem>
+  <para lang="en">
+    Ask someone to do it for you, which in the case of a computer
+    serving multiple users at the same time can be a good idea: that
+    way the administrator and other users do not get mad at you for
+    abusing the machine, nor do you get a badly underperfoming Gimp. If
+    it is your machine and only serves a single user at a given time,
+    this could mean money, or drinks, as price for the service. 
+  </para>
+  </listitem>
+
+  <listitem>
+  <para lang="en">
+    Start changing the value a bit each time and check that it goes
+    faster and faster with each increase, but the system does not
+    complain about lack of memory. Be forewarned that sometimes lack
+    of memory shows up suddenly with some applications being killed to
+    make space for the others. 
+  </para>
+  </listitem>
+
+  <listitem>
+  <para lang="en">
+    Do some simple math and calculate a viable value. Maybe you will
+    have to tune it later, but maybe you have to tune it anyway with
+    the other previous methods. At least you know what is happening
+    and can get the best from your computer. 
+  </para>
+  </listitem>
+
+  </itemizedlist>
+
+  <para lang="en">  
+    Let's suppose you prefer the last option, and want to get a good value to
+    start with. First, you need to get some data about your
+    computer. This data is the amount of RAM installed in your system,
+    the operating system's 
+    swap space available, and a general idea about the speed of the
+    disks that store the operating system's swap and the directory
+    used for Gimp's swap. You do not need to do disk tests, nor check
+    the RPM of the disks, the thing is to see which one seems clearly
+    faster or slower, or whether all are similar. You can
+    change Gimp's swap directory in the <link
+    linkend='gimp-prefs-folders'>Folders</link> page of the
+    Preferences dialog. 
+  </para>
+
+  <para>
+    The next thing to do is to see how much resources you require for
+    other apps you want to run at the same time than Gimp. So start
+    all your tools and do some work with them, except Gimp of course,
+    and check the usage. You can use applications like free or top,
+    depending in what OS and what environment you use. The numbers you
+    want is the memory left, including file cache. Modern Unix keeps a
+    very small area free, in order to be able to keep large file and buffer
+    caches. Linux's <emphasis>free</emphasis> command does the maths
+    for you: check the column that 
+    says "free", and the line "-/+ buffers/cache". Note down also the
+    free swap
+  </para>
+
+  <para>
+    Now time for decisions and a bit of simple math. Basically the
+    concept is to decide if you want to base all Tile Cache in RAM, or
+    RAM plus operating system swap: 
+  </para>
+
+  <procedure lang="en">
+    <step>
+      Do you change applications a lot? Or keep working in Gimp for a
+      long time? If you spend a lot of time in Gimp, you can consider free
+      RAM plus free swap as available; if not, you need to go to the
+      following steps. (If you're feeling unsure about it,
+      check the following steps.) If you are sure you switch apps
+      every few minutes, only count the free RAM and just go to the
+      final decision; no more things to check.
+   </step>
+   <step>
+     Does the operating system swap live in the same physical disk as
+     Gimp swap? If so, add RAM and swap. Otherwise go to the next
+     step. 
+   </step>
+   <step>
+     Is the disk that holds the OS swap faster or the same speed as the
+     disk that holds the Gimp swap? If slower, take only the free RAM; if
+     faster or similar, add free RAM and swap.
+   </step>
+   <step>
+     You now have a number, be it just the free RAM or the free RAM plus
+     the free OS swap. Reduce it a bit, to be on the safe side, and
+     that is the Tile Cache you could use as a good start.
+   </step>
+  </procedure>
+
+  <para lang="en">
+    As you can see, all is about checking the free resources, and
+    decide if the OS swap is worth using or will cause more problems
+    than help.
+  </para>
+
+  <para>
+    There are some reasons you want to adjust this value, though. The
+    basic one is changes in your computer usage pattern, or
+    changing hardware. That could mean your assumptions about how you
+    use your computer, or the speed of it, are no longer valid. That
+    would require a reevaluation of the previous steps, which can
+    drive you to a similar value or a completly new value.
+  </para> 
+
+  <para>
+    Another reason to change the value is because it seems that Gimp
+    runs too slowly, while changing to other applications is fast:
+    this means that Gimp could use more memory without impairing the
+    other applications. On the other hand, if you get complaints from
+    other applications about not having enough memory, then it may
+    benefit you to not let Gimp hog so much of it.
+  </para> 
+
+  <para>
+    If you decided to use only RAM and Gimp runs slowly, you could try
+    increasing the value a bit, but never to use also all the free
+    swap. If the case is the contrary, using both RAM and swap, and
+    you have problems about lack of resources, then you should
+    decrease the amount of RAM available to Gimp.
+  </para> 
+
+  <para>
+    Another tricks is to put the Swap Dir in a very fast disk, or in a
+    different disk than the one where most of your files
+    reside. Spreading the operating 
+    system swap over multiple disks is also a good way to speed up
+    things, in general. And of course, maybe you have to buy more RAM
+    or stop using lots of programs at the same time: you can not
+    expect to edit a poster in a computer with 16MB and be fast.
+  </para>
+
+  <para>
+    You can also check what memory requirements your images have. The
+    larger the images, and the number of undos, the more resources you
+    need. This is another way to choose a number, but it is only good
+    if you always work with the same kind of images, and thus the real
+    requirements do not vary. It is also helpful to know if you will
+    require more RAM and/or disk space. 
+  </para>
+
+  </sect2>
+</sect1>
