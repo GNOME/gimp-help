@@ -1,0 +1,596 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<sect1 id='gimp-paths-dialog'>
+  <title lang="en">Paths</title>
+  <indexterm>
+    <primary lang="en">Dialog</primary>
+    <secondary lang="en">Paths</secondary>
+  </indexterm>
+
+<sect2>
+  <title lang='en'>Dialog</title>
+
+  <informalfigure>
+    <mediaobject lang="en">
+      <imageobject>
+        <imagedata fileref='../images/dialogs/dialogs-paths.png'
+        format="PNG"/> 
+      </imageobject>
+    </mediaobject>
+    <caption>
+      <para lang='en'>
+        The Paths dialog
+      </para>
+    </caption>
+  </informalfigure>
+
+  <para lang='en'>
+    A <emphasis>path</emphasis> is a one-dimensional tracing, either
+    polygonal, or curved, or a mixture of segments of both types.  In
+    GIMP, the main uses of paths are either to form the boundaries of
+    selections, or to be <emphasis>stroked</emphasis> to create
+    visible curves on an image.  See the <link
+    linkend='gimp-paths'>Paths</link> section for basic
+    information on paths, and the <link linkend='gimp-tool-path'>Path
+    Tool</link> section for information on how paths can be created
+    and edited.
+  </para>
+  <para lang='en'>
+    The Paths dialog is used to manage paths, allowing you to create
+    or delete them, save them, convert them to and from selections,
+    etc.  
+  </para>
+
+  <para lang='en'>
+    The Paths dialog is a dockable dialog; see the section on <link
+    linkend='gimp-docks'>Dialogs and Docking</link> for help on
+    manipulating it.  It can be activated in several ways:
+  </para>
+
+  <itemizedlist>
+
+    <listitem lang='en'>
+      <para>    
+        From the Toolbox menu:
+        <menuchoice>
+          <guimenu>File</guimenu>
+          <guisubmenu>Dialogs</guisubmenu>
+          <guimenuitem><accel>P</accel>aths</guimenuitem>
+        </menuchoice>.
+      </para>
+    </listitem>
+
+    <listitem lang='en'>
+      <para>    
+        From the Toolbox menu:
+        <menuchoice>
+          <guimenu>File</guimenu>
+          <guisubmenu>Dialogs</guisubmenu>
+          <guisubmenu>Create New Dock</guisubmenu>
+          <guimenuitem>Layers, Channels, and Paths</guimenuitem>
+        </menuchoice>.
+        This gives you a dock containing three dialogs, with the
+        Paths dialog one of them.
+      </para>
+    </listitem>
+
+    <listitem lang='en'>      
+      <para>    
+        From an image menu:
+        <menuchoice>
+           <guimenu>Dialogs</guimenu>
+          <guimenuitem><accel>P</accel>aths</guimenuitem>
+        </menuchoice>.
+      </para>
+    </listitem>
+
+    <listitem lang='en'>      
+      <para>    
+        From the Tab menu in any dockable dialog:
+        <menuchoice>
+           <guimenu>Add Tab</guimenu>
+          <guimenuitem><accel>P</accel>aths</guimenuitem>
+        </menuchoice>.
+      </para>
+    </listitem>
+
+ </itemizedlist>
+
+  <simplesect>
+    <title lang="en">Using the Paths dialog</title>
+
+    <para lang='en'>
+      Each path belongs to one image:  paths are components of images
+      just like layers.  The Paths dialog shows you a list of all
+      paths belonging to the currently active image:  switching images
+      causes the dialog to show a different list of paths.  If the
+      Paths dialog is embedded in a "Layers, Channels, and Paths"
+      dock, you can see the name of the active image in the Image Menu
+      at the top of the dock.  (Otherwise, you can add an Image Menu
+      to the dock by choosing "Show Image Menu" from the Tab menu.)  
+    </para>
+
+    <para lang='en'>
+      If you are familiar with the Layers dialog, you have a head
+      start, because the Paths dialog is in several ways similar.  It
+      shows a list of all paths that exist in the image, with four
+      items for each path:
+    </para>
+
+    <itemizedlist land='en'>
+      <listitem>
+        <para>
+          An "open eye" icon if the path is visible, or a blank space
+          if it is not.  "Visible" means that a trace of the path is
+          drawn on the image display.  The path is not actually shown
+          in the image pixel data unless it has been stroked or
+          otherwise rendered.  Clicking in the eye-symbol-space
+          toggles the visibility of the path.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          A "chain" symbol is shown to the right of the
+          eye-symbol-space if the path is transform-locked, or a blank
+          space if it is not.  "Transform-locked" means that it forms
+          part of a set of elements (layers, channels, etc) that are
+          all affected in the same way by transformations (scaling,
+          rotation, etc) applied to any one of them.  Clicking in the
+          chain-symbol-space toggles the transform-lock status of the
+          path. 
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          A small preview-icon showing a sketch of the path.  If you
+          click on the icon and drag it into an image, this will
+          create a copy of the path in that image.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The name of the path, which must be unique within the
+          image.  Double-clicking on the name will allow you to edit
+          it.  If the name you create already exists, a number will be
+          appended (e.g., "#1") to make it unique.
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <para lang='en'>
+      If the list is non-empty, at any given moment one of the
+      members is the image's <emphasis>active path</emphasis>, which
+      will be the subject of any operations you perform using the
+      dialog menu or the buttons at the bottom:  the active path is
+      shown highlighted in the list.  Clicking on any of the entries
+      will make it the active path.
+    </para>
+
+    <para lang='en'>
+      Right-clicking on any entry in the list brings up the <link
+      linkend='gimp-paths-menu'>Paths Menu</link>.  You can also
+      access the Paths Menu from the dialog Tab menu.
+    </para>
+
+  </simplesect>
+
+  <simplesect>
+    <title lang='en'>Buttons</title>
+
+    <para lang='en'>
+      The buttons at the bottom of the Paths dialog all correspond to
+      entries in the Paths menu (accessed by right-clicking on a path
+      list entry), but some of them have extra options obtainable by
+      holding down modifier keys while you press the button.
+    </para>
+
+    <itemizedlist lang='en'>
+      <listitem>
+        <formalpara>
+          <title>New Path</title>
+          See <link linkend='gimp-path-raise'>New Path</link>.
+          Holding down the Shift key brings up a dialog that allows
+          you to assign a name to the new (empty) path.
+        </formalpara>
+      </listitem>
+      <listitem>
+        <formalpara>
+          <title>Raise Path</title>
+          See <link linkend='gimp-path-raise'>Raise Path</link>.
+        </formalpara>
+      </listitem>
+      <listitem>
+        <formalpara>
+          <title>Lower Path</title>
+          See <link linkend='gimp-path-lower'>Lower Path</link>.
+          </formalpara>
+      </listitem>
+      <listitem>
+        <formalpara>
+          <title>Duplicate Path</title>
+          See <link linkend='gimp-path-duplicate'>Duplicate Path</link>.
+        </formalpara>
+      </listitem>
+      <listitem>
+        <formalpara>
+          <title>Path to Selection</title>
+          Converts the path into a selection; see <link
+          linkend='gimp-path-selection-replace'>Path to 
+          Selection</link> for a full explanation. You can use
+          modifier keys to set the way the new selection interacts
+          with the existing selection:      
+        </formalpara>
+        <segmentedlist>
+          <?dbhtml list-presentation="table"?>
+          <segtitle>Modifiers</segtitle>
+          <segtitle>Action</segtitle>
+          <seglistitem>
+            <seg>None</seg>
+            <seg>Replace existing selection</seg>
+          </seglistitem>
+          <seglistitem>
+           <seg><keycap>Shift</keycap></seg>
+           <seg>Add to selection</seg>
+          </seglistitem>
+          <seglistitem>
+            <seg><keycap>Ctrl</keycap></seg>
+            <seg>Subtract from selection</seg>
+          </seglistitem>
+          <seglistitem>
+            <seg>
+              <keycombo>
+                <keycap>Shift</keycap>
+                <keycap>Ctrl</keycap>
+              </keycombo>
+            </seg>
+            <seg>Intersect with selection</seg>
+          </seglistitem>
+        </segmentedlist>        
+      </listitem>
+      <listitem>
+        <formalpara>
+          <title>Selection to Path</title>
+          See <link linkend='gimp-path-stroke'>Selection to
+          Path</link>.  Holding down the Shift key brings up the
+          "Advanced Options" dialog, which probably is only useful
+          to GIMP developers.
+        </formalpara>
+      </listitem>
+      <listitem>
+        <formalpara>
+          <title>Stroke Path</title>
+          See <link linkend='gimp-path-stroke'>Stroke Path</link>. 
+        </formalpara>
+      </listitem>
+      <listitem>
+        <formalpara>
+          <title>Delete Path</title>
+          As it says, deletes the path. 
+        </formalpara>
+      </listitem>
+    </itemizedlist>
+  </simplesect>
+
+</sect2>
+
+
+
+
+
+<sect2 id='gimp-paths-menu'>
+  <title lang='en'>Paths Menu</title>
+
+  <informalfigure>
+    <mediaobject lang="en">
+      <imageobject>
+        <imagedata fileref='../images/dialogs/dialogs-paths-menu.png'
+        format="PNG"/> 
+      </imageobject>
+    </mediaobject>
+    <caption>
+      <para lang='en'>
+        The Paths dialog menu
+      </para>
+    </caption>
+  </informalfigure>
+
+  <para lang='en'>
+    The Paths menu can be brought up by right-clicking on a path entry
+    in the list in the Paths dialog, or by choosing the top entry
+    ("Paths Menu") from the Paths dialog Tab menu.  This menu gives
+    you access to most of the operations that affect paths.
+  </para>
+
+
+  <simplesect>
+    <title lang='en'>Path Tool</title>
+
+    <para lang='en'>
+      "Path Tool" is an alternative way to activate the <link
+      linkend='gimp-tool-path'>Path tool</link>, 
+      used for creating and manipulating paths.  It can also be
+      activated from the Toolbox, or by using the keyboard shortcut
+      <keycap>B</keycap> (for <emphasis>Bezier</emphasis>).
+    </para>
+  </simplesect>
+
+  <simplesect id='gimp-path-edit'>
+    <title lang='en'>Edit Path Attributes</title>
+
+    <para lang='en'>
+      "Edit Path Attributes" brings up a small dialog that allows you
+      to change the name of the path.  You can also do this by
+      double-clicking on the name in the list in the Paths dialog.
+    </para>
+
+  </simplesect>
+
+
+  <simplesect id='gimp-path-new'>
+    <title lang='en'>New Path</title>
+
+    <para lang='en'>
+      "New Path" creates a new path, adds it to the list in the Paths
+      dialog, and makes it the active path for the image.  It brings
+      up a dialog that allows you to give a name to the path.  The new
+      path is created with no anchor points, so you will need to use
+      the Path tool to give it some before you can use it for
+      anything.
+    </para>
+
+  </simplesect>
+
+
+  <simplesect id='gimp-path-raise'>
+    <title lang='en'>Raise Path</title>
+
+    <para lang='en'>
+      "Raise Path" moves the path one slot higher in the list in the
+      Paths dialog.  The position of a path in the list has no
+      functional significance, so this is simply a convenience to help
+      you keep things organized.
+    </para>
+
+  </simplesect>
+
+
+  <simplesect id='gimp-path-lower'>
+    <title lang='en'>Lower Path</title>
+
+    <para lang='en'>
+      "Lower Path" moves the path one slot lower in the list in the
+      Paths dialog.  The position of a path in the list has no
+      functional significance, so this is simply a convenience to help
+      you keep things organized.
+    </para>
+
+  </simplesect>
+
+
+  <simplesect id='gimp-path-duplicate'>
+    <title lang='en'>Duplicate Path</title>
+
+    <para lang='en'>
+      "Duplicate Path" creates a copy of the active path, assigns it a
+      unique name, adds it to the list in the Paths dialog, and makes
+      it the active path for the image.  The copy will be visible only
+      if the original path was visible.  Note that copying a visible
+      path will make the path "disappear" from the image display:
+      this happens because paths are drawn in XOR mode, which has the
+      curious property that drawing an item twice "undraws" it.  The
+      paths are still there even though you don't see anything:  if
+      you move one of them, you will be able to see both.
+    </para>
+
+  </simplesect>
+
+
+  <simplesect id='gimp-path-delete'>
+    <title lang='en'>Delete Path</title>
+
+    <para lang='en'>
+      "Delete Path" does what it says.
+    </para>
+
+  </simplesect>
+
+
+  <simplesect id='gimp-path-merge-visible'>
+    <title lang='en'>Merge Visible Paths</title>
+
+    <para lang='en'>
+      "Merge Visible Paths" takes all the paths in the image that are
+      visible (that is, all that show "open eye" symbols in the Paths
+      dialog), and turns them into components of a single path.  This
+      may be convenient if you want to stroke them all in the same
+      way, etc.
+    </para>
+
+  </simplesect>
+
+
+  <simplesect id='gimp-path-selection-replace'>
+    <anchor id='gimp-path-selection-add' />
+    <anchor id='gimp-path-selection-subtract' />
+    <anchor id='gimp-path-selection-intersect' />
+    <title lang='en'>Path to Selection; Add to Selection; Subtract
+    from Selection;  Intersect with Selection</title>
+
+    <para lang='en'>
+      These commands all convert the active path into a selection, and
+      then combine it with the existing selection in the specified
+      ways.  ("Path to Selection" discards the existing selection and
+      replaces it with one formed from the path.)  If necessary, any
+      unclosed components of the path are closed by connecting the
+      last anchor point to the first anchor point with a straight
+      line.  The "marching ants" for the resulting selection should
+      closely follow the path, but don't expect the correspondence to
+      be perfect.
+    </para>
+
+  </simplesect>
+
+
+  <simplesect id='gimp-selection-to-path'>
+    <title lang='en'>Selection to Path</title>
+
+    <para lang='en'>
+      This operation can be accesssed in several ways:
+    </para>
+    <itemizedlist lang='en'>
+      <listitem>
+        <para>
+          From an image menubar, as
+          <menuchoice>
+            <guimenu>Select</guimenu>
+            <guimenuitem>To Path</guimenuitem>
+          </menuchoice>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          From the Paths dialog menu, as <guimenuitem>Selection to 
+          Path</guimenuitem>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          From the "Selection to Path" button at the bottom of the
+          Paths dialog.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          From the "Selection to Path" button in the Tool Options for
+          the Path tool.
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <para lang='en'>
+      "Selection to Path" creates a new path from the image's
+      selection. In most cases the resulting path will closely follow
+      the "marching ants" of the selection, but the correspondence
+      will not usually be perfect.  Converting a two-dimensional
+      selection mask into a one-dimensional path involves some rather
+      tricky algorithms:  you can alter the way it is done using the
+      "Advanced Options", which are accessed by holding down the Shift
+      key while pressing the "Selection to Path" button at the bottom
+      of the Paths dialog.  This brings up the Advanced Options
+      dialog, which allows you to set 20 different options and
+      variables, all with cryptic names.  The Advanced Options are
+      really intended for developers only, and help with them goes
+      beyond the scope of this documentation.  Generally speaking,
+      "Selection to Path" will do what you expect it to, and you don't
+      need to worry about how it is done (unless you want to).
+    </para>
+
+  </simplesect>
+
+
+  <simplesect id='gimp-path-stroke'>
+    <title lang='en'>Stroke Path</title>
+
+    <para lang='en'>
+      This operation can be accesssed in several ways:
+    </para>
+    <itemizedlist lang='en'>
+      <listitem>
+        <para>
+          From an image menubar, as
+          <menuchoice>
+            <guimenu>Edit</guimenu>
+            <guimenuitem>Stroke Path</guimenuitem>
+          </menuchoice>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          From the Paths dialog menu, as <guimenuitem>Stroke
+          Path</guimenuitem>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          From the "Stroke Path" button at the bottom of the
+          Paths dialog.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          From the "Stroke Path" button in the Tool Options for the
+          Path tool.
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <para lang='en'>
+      "Stroke Path" renders the active path on the active layer of the
+      image, permitting a wide variety of line styles and stroking
+      options.  See the section on <link
+      linkend='gimp-stroke'>Stroking</link> for more information.
+    </para>
+
+  </simplesect>
+
+
+  <simplesect id='gimp-path-copy'>
+    <title lang='en'>Copy Path</title>
+
+    <para lang='en'>
+      "Copy Path" copies the active path to the Paths Clipboard,
+      enabling you to paste it into a different image.  (You can also
+      copy and paste a path by dragging its icon from the Paths dialog
+      into the target image's display.
+    </para>
+
+  </simplesect>
+
+
+  <simplesect id='gimp-path-paste'>
+    <title lang='en'>Paste Path</title>
+
+    <para lang='en'>
+      "Paste Path" creates a new path from the contents of the Path
+      Clipboard, adds it to the list in the Paths dialog, and makes it
+      the active path for the image.  If no path has previously been
+      copied into the clipboard, the menu entry will be insensitive.
+    </para>
+
+  </simplesect>
+
+
+  <simplesect id='gimp-path-import'>
+    <title lang='en'>Import Path</title>
+
+    <para lang='en'>
+      "Import Path" creates a new path from an SVG file:  it pops up a
+      file chooser dialog that allows you to navigate to the file.
+      See the <link linkend='gimp-paths'>Paths</link> section for
+      information on SVG files and how they relate to GIMP paths.
+    </para>
+
+  </simplesect>
+
+
+  <simplesect id='gimp-path-export'>
+    <title lang='en'>Export Path</title>
+
+    <para lang='en'>
+      "Export Path" allows you to save a path to a file:  it pops up a
+      file save dialog that allows you to specify the file name and
+      location.  You can later add this path to any GIMP image using
+      the "Import Path" command.  The format used for saving paths is
+      SVG:  this means that vector-graphics programs such as
+      <application>Sodipodi</application> or
+      <application>Inkscape</application> will also be able to import
+      the paths you save.  See the <link
+      linkend='gimp-paths'>Paths</link> section for 
+      more information on SVG files and how they relate to GIMP paths.
+    </para>
+
+  </simplesect>
+
+</sect2>
+
+</sect1>
