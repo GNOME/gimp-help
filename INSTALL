@@ -1,3 +1,39 @@
-Don't.
+At the moment there is no install target but this is going to change soon.
+For now this document gives you some hints on how to build the help files.
+
+
+The GIMP help documents are written in Docbook XML. Since the GIMP
+help browser wants HTML files, the documents need to be converted.
+This is done as an XSLT [1] using xsltproc [2].
+
+To build the GIMP help files, execute the following commands:
+
+ ./configure
+ make
+
+If you encounter any problems, these are likely caused by the XSLT
+processor not being able to locate stylesheets it needs to do the
+transformation. You should have an XML catalog file that helps the
+XSLT processor to locate your locally installed stylesheets. In case
+you are missing such a catalog file or it is incomplete, you can
+specify the location of the stylesheets explicitely, for example:
+
+ ./configure --with-xsl=/usr/share/sgml/docbook/stylesheet/xsl/nwalsh
+
+By default we do not allow the XSLT processor to attempt to download
+external resources. If you have a fast internet connection, it may be
+useful to allow xsltproc to fetch DTDs or entities over the network:
+
+ ./configure --enable-network
+
+
+If you want to test the built help files, you can create a symlink
+from $prefix/share/gimp/1.3/help to the html directory.  Very soon
+an install target will be added so that you can 'make install'.
+
 
 -- The GIMP-Help team.
+
+
+[1] http://www.w3.org/TR/xslt
+[2] http://xmlsoft.org/XSLT/xsltproc.html
