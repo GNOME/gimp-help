@@ -701,10 +701,10 @@
         separate from the factory-installed scripts. 
       </para>
       <para>
-        In the <filename>.gimp-2.0</filename> directory that Gimp made
+        In the <filename>.gimp-2.2</filename> directory that Gimp made
         off of your home directory, you should find a directory called
         <filename>scripts</filename>. Gimp will automatically look in
-        your <filename>.gimp-2.0</filename> directory for a scripts
+        your <filename>.gimp-2.2</filename> directory for a scripts
         directory, and add the 
         scripts in this directory to the Script-Fu database. You
         should place your personal scripts here. 
@@ -775,20 +775,22 @@
       <programlisting>
 <![CDATA[
         (script-fu-register
-          "script-fu-text-box"                      ;func name
-          "<Toolbox>/Xtns/Script-Fu/Text/Text Box"  ;menu pos  
+          "script-fu-text-box"                        ;func name
+          "Text Box"                                  ;menu label
           "Creates a simple text box, sized to fit\
             around the user's choice of text,\
-            font, font size, and color."            ;description
-          "Michael Terry"                           ;author
-          "copyright 1997, Michael Terry"           ;copyright notice
-          "October 27, 1997"                        ;date created
-          ""                  ;image type that the script works on
-          SF-VALUE "Text:"       "\"Text Box\""     ;a text variable
-          SF-VALUE "Font:"       "\"Charter\""      ;a text variable
-          SF-VALUE "Font size:"	 "45"               ;a text variable
-          SF-COLOR "Color:"      '(0 0 0)           ;color variable
+            font, font size, and color."              ;description
+          "Michael Terry"                             ;author
+          "copyright 1997, Michael Terry"             ;copyright notice
+          "October 27, 1997"                          ;date created
+          ""                     ;image type that the script works on
+          SF-STRING      "Text:"         "Text Box"   ;a string variable
+          SF-FONT        "Font:"         "Charter"    ;a font variable
+          SF-ADJUSTMENT  "Font size"     '(50 1 1000 1 10 0 1)
+                                                      ;a spin-button
+          SF-COLOR       "Color:"        '(0 0 0)     ;color variable
         )
+        (script-fu-menu-register "script-fu-text-box" "<Toolbox>/Xtns/Script-Fu/Text")
 ]]>
       </programlisting>
       <para>
@@ -815,11 +817,10 @@
         covered next). 
       </para>
       <para>
-        Finally, if you invoke the DB Browser (the procedural database
-        browser -- 
+        Finally, if you invoke the Procedure Browser -- 
         <menuchoice>
           <guimenu> Xtns</guimenu>
-          <guimenuitem>DB Browser</guimenuitem>
+          <guimenuitem>Procedure Browser</guimenuitem>
         </menuchoice>), 
         you'll notice that our script now
         appears in the database. 
@@ -885,7 +886,7 @@
 
         <listitem><para>
           A <emphasis role='bold'>description</emphasis> of your
-          script, to be displayed in the DB Browser.
+          script, to be displayed in the Procedure Browser.
         </para></listitem>
 
         <listitem><para>
@@ -942,18 +943,26 @@
             <entry><para>SF-VALUE</para></entry>
             <entry><para>
               Accepts numbers and strings. Note that quotes must be
-              escaped for default text. 
+              escaped for default text, so better use SF-STRING.
             </para></entry>
-            <entry><para>"\"Some text\""</para></entry>
-           </row>
+            <entry><para>42</para></entry>
+          </row>
          
+          <row>
+            <entry><para>SF-STRING</para></entry>
+            <entry><para>
+              Accepts strings.
+            </para></entry>
+            <entry><para>"Some text"</para></entry>
+          </row>
+
           <row>
             <entry><para>SF-COLOR</para></entry>
             <entry><para>
               Indicates that a color is requested in this parameter
             </para></entry>
             <entry><para>'(0 102 255)</para></entry>
-           </row>
+          </row>
 
           <row>
             <entry><para>SF-TOGGLE</para></entry>
@@ -961,7 +970,7 @@
               A checkbox is displayed, to get a Boolean value.
             </para></entry>
             <entry><para>TRUE or FALSE</para></entry>
-           </row>
+          </row>
 
           <row>
             <entry><para>SF-IMAGE</para></entry>
@@ -971,7 +980,7 @@
               will pass in a reference to the image in this parameter. 
             </para></entry>
             <entry><para>3</para></entry>
-           </row>
+          </row>
 
           <row>
             <entry><para>SF-DRAWABLE</para></entry>
@@ -982,7 +991,8 @@
               active layer in this parameter. 
             </para></entry>
             <entry><para>17</para></entry>
-           </row>
+          </row>
+
         </tbody>
         </tgroup>
       </informaltable>
@@ -1126,21 +1136,19 @@
         Before we add text to the image, we need to set the background
         and foreground colors so that the text appears in the color
         the user specified. We'll use the
-        gimp-palette-set-back/foreground functions: 
+        gimp-context-set-back/foreground functions: 
       </para>
       <programlisting>
-        (gimp-palette-set-background '(255 255 255) )
-        (gimp-palette-set-foreground inTextColor)
+        (gimp-context-set-background '(255 255 255) )
+        (gimp-context-set-foreground inTextColor)
       </programlisting>
       <para>
         With the colors properly set, let's now clean out the garbage
-        currently in the image. We'll select everything in the image,
-        and call clear: 
+        currently in the image by filling the drawable with the background
+        color:
       </para>
       <programlisting>
-        (gimp-selection-all theImage)
-        (gimp-edit-clear theLayer)
-        (gimp-selection-none theImage)
+        (gimp-drawable-fill theLayer BACKGROUND-FILL) 
       </programlisting>
       <para>
         With the image cleared, we're ready to add some text:
@@ -1148,17 +1156,14 @@
       <programlisting>
         (set! theText
                       (car
-                           (gimp-text
-                            theImage
-                            theLayer
+                           (gimp-text-fontname
+                            theImage theLayer
                             0 0
                             inText
                             0
                             TRUE
-                            inFontSize
-                            PIXELS
-                            "*" "*" "*" "*" "*" "*" "*" "*"
-                           )
+                            inFontSize PIXELS
+                            "Sans")
                        )
         )  
       </programlisting>
@@ -1293,7 +1298,7 @@
         parameter to our function and the registration function: 
       </para>
       <programlisting>
-        (define (script-fu-text-box inTest inFont inFontSize inTextColor inBuferAmount)
+        (define (script-fu-text-box inTest inFont inFontSize inTextColor inBufferAmount)
         (let*
               (
                  ; define our local variables
@@ -1318,7 +1323,7 @@
                                 theImage
                                 theImageWidth
                                 theImageHeight
-                                RGB_IMAGE
+                                RGB-IMAGE
                                 "layer 1"
                                 100
                                 NORMAL
@@ -1334,7 +1339,7 @@
 <![CDATA[
         (script-fu-register
           "script-fu-text-box"                        ;func name
-          "<Toolbox>/Xtns/Script-Fu/Text/Text Box"    ;menu pos  
+          "Text Box"                                  ;menu label
           "Creates a simple text box, sized to fit\
             around the user's choice of text,\
             font, font size, and color."              ;description
@@ -1342,12 +1347,15 @@
           "copyright 1997, Michael Terry"             ;copyright notice
           "October 27, 1997"                          ;date created
           ""                     ;image type that the script works on
-          SF-VALUE "Text:"         "\"Text Box\""     ;a text variable
-          SF-VALUE "Font:"         "\"Charter\""      ;a text variable
-          SF-VALUE "Font size:"	   "45"               ;a text variable
-          SF-COLOR "Color:"        '(0 0 0)           ;color variable
-          SF-VALUE "Buffer amount" "35"               ; 0-100 % of text  
+          SF-STRING      "Text:"         "Text Box"   ;a string variable
+          SF-FONT        "Font:"         "Charter"    ;a font variable
+          SF-ADJUSTMENT  "Font size"     '(50 1 1000 1 10 0 1)
+                                                      ;a spin-button
+          SF-COLOR       "Color:"        '(0 0 0)     ;color variable
+          SF-ADJUSTMENT  "Buffer amount" '(35 0 100 1 10 1 0)
+                                                      ;a slider
         )
+        (script-fu-menu-register "script-fu-text-box" "<Toolbox>/Xtns/Script-Fu/Text")
 ]]>
       </programlisting>
     </simplesect>
