@@ -91,7 +91,8 @@ images.stamp: mkdirs.stamp $(IMAGE_FILES)
 
 profile.stamp: mkdirs.stamp $(XML_FILES)
 	@echo '*** Profiling XML files ***'
-	cd $(top_srcdir)/xml && \
+	cd $(top_srcdir) && \
+	$(mkinstalldirs) xml && cd xml && \
 	for lang in $(ALL_LINGUAS); do \
 	  echo '-- Profiling XML for '$$lang;\
 	  $(XSLTPROC) $(XSLTFLAGS) --xinclude \
