@@ -189,8 +189,9 @@ lint: profile.stamp $(XML_FILES) $(DTD_FILES)
 validate: profile.stamp $(XML_FILES) $(DTD_FILES)
 	@echo '*** Validating profiled XML ***'
 	@for lang in $(ALL_LINGUAS); do \
-	  echo '-- Validating XML for '$$lang;\
+	  echo -n '-- Validating XML for '$$lang' --	number of errors: ';\
 	  xmllint --noout --valid xml/$$lang.xml >/dev/null 2>xml/$$lang-validity-errors.log; \
+	  grep "validity error" xml/$$lang-validity-errors.log | wc -l; \
 	done; \
 	echo 'Log files of the validation process have been generated in the xml directory.'; \
 	echo 'Please correct any errors before writing new content.'
