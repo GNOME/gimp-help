@@ -1,12 +1,15 @@
 <?xml version='1.0' encoding="UTF-8" ?>
 
-<sect1 id='gimp-using-fileformats' lang="en;zh_CN">
+<sect1 id='gimp-using-fileformats' lang="en;fr;zh_CN">
   <title lang="en">Files</title>
+  <title lang="fr">Fichiers</title>
   <title lang="zh_CN">文件</title>
   <indexterm>
     <primary lang="en">The GIMP</primary>
+    <primary lang="fr">GIMP</primary>
     <primary lang="zh_CN">GIMP</primary>
     <secondary lang="en">Files</secondary>
+    <secondary lang="fr">Fichiers</secondary>
     <secondary lang="zh_CN">文件</secondary>
   </indexterm>
 
@@ -16,6 +19,13 @@
     file type, file handling is done by plug-ins.  Thus, it is
     relatively easy to extend GIMP to new file types when the need
     arises. 
+  </para>
+
+  <para lang="fr">
+    Gimp sait lire et écrire une palette importante de formats de fichiers graphiques.
+    Hormis pour le format XCF natif du Gimp, la gestion des fichiers est faite par des
+    plugins. Aussi est-il relativement simple d'ajouter un nouveau type de fichier
+    quand le besoin s'en fait sentir.
   </para>
 
   <para lang="zh_CN">
@@ -28,6 +38,12 @@
     disadvantages of each type.
   </para>
 
+  <para lang="fr">
+    En fonction du but, tous les types de fichier ne sont pas équivalents. Cette partie
+    de la documentation devrait vous aider à comprendre les avantages et les inconvénients
+    de chacun.
+  </para>
+
   <para lang="zh_CN">
     并不是所有的文件格式在各种情况下都一样。这部分将帮助您了解各种格式的优点和缺点。
   </para>  
@@ -36,6 +52,7 @@
 
   <simplesect>
     <title lang="en">Opening Files</title>
+    <title lang="fr">Généralités</title>
     <title lang="zh_CN">打开文件</title>
     <para lang="en">
       There are several ways of opening an existing image in GIMP:
@@ -199,6 +216,18 @@
       permit them to be recognized.  Only if the magic yields no
       result does GIMP resort to using the extension.
     </para>
+    <para id="gimp-file-open-by-extension" lang="fr">
+      Lorsque vous ouvrez un fichier, en utilisant le menu fichier ou par une autre
+      méthode, Gimp a besoin de savoir de quel type de fichier il s'agit. A moins
+      qu'il n'y ait pas d'alternative, Gimp ne se contente pas de l'extension (comme
+      ".jpg") pour déterminer ce type. En effet, les extensions ne sont pas dignes
+      de confiance : elles varient selon les systèmes ; un fichier peut-être renommé
+      avec une fausse extension ; et il y a plein de raisons pour qu'un fichier n'ait
+      pas d'extension du tout. Gimp essaye d'abord de reconnaître le type en examinant
+      le contenu du fichier : la plupart des formats de fichiers graphiques couramment
+      utilisés ont un "en-tête magique" qui leur permet d'être reconnu. C'est seulement
+      si cet en-tête n'est d'aucun secours que Gimp se contentera d'utiliser l'extension.
+    </para>
     
     <para id="gimp-file-open-by-extension" lang="zh_CN">
       当您打开文件，使用文件菜单或其它方式，GIMP 需要知道这个文件是什么格式。除非实在没有选择，不然 GIMP 并不是简单的靠文件扩展名(如“.jpg”)来决定文件格式，因为扩展名并不可靠：它们在各个系统中不同来;任何文件都可以改为其它的扩展名;由于很多原因一个文件会没有扩展名。而 GIMP 首先尝试检查其内容来了解是什么文件：大部分常用的图形文件格式都可以通过“magic headers”来被识别。只有那些无法识别的才会用到扩展名。
@@ -212,25 +241,35 @@
     <anchor id='gimp-export-confirm-dialog' />
 
     <informalfigure pgwide="0">
-    <mediaobject lang="en">
-      <imageobject>
-        <imagedata fileref='../images/using/export-dialog-en.png'
-        format="PNG"/>
-      </imageobject>
-      <caption>
-        <para>The Export dialog</para>
-      </caption>
-    </mediaobject>
+      <mediaobject lang="en">
+        <imageobject>
+          <imagedata fileref='../images/using/export-dialog-en.png'
+          format="PNG"/>
+        </imageobject>
+        <caption>
+          <para>The Export dialog</para>
+        </caption>
+      </mediaobject>
 
-    <mediaobject lang="zh_CN">
-      <imageobject>
-        <imagedata fileref='../images/using/export-dialog-en.png'
-	format="PNG"/>
-      </imageobject>
-      <caption>
-        <para>导出对话框</para>
-      </caption>
-    </mediaobject>  
+      <mediaobject lang="fr">
+        <imageobject>
+          <imagedata fileref='../images/using/export-dialog-en.png'
+          format='png'/>
+        </imageobject>
+        <caption>
+          <para>Le dialogue d'export</para>
+        </caption>
+      </mediaobject>
+ 
+      <mediaobject lang="zh_CN">
+        <imageobject>
+          <imagedata fileref='../images/using/export-dialog-en.png'
+          format="PNG"/>
+        </imageobject>
+        <caption>
+          <para>导出对话框</para>
+        </caption>
+      </mediaobject>  
     </informalfigure>
     <para lang='en'>
       There is no file format, with the exception of GIMP's native <link
@@ -243,21 +282,45 @@
       modify the image itself, so you do not lose anything by doing
       this.
     </para>
+    <para lang='en'>
+      Aucun format de fichier, hormis le format natif du Gimp 
+      <link linkend="gimp-xcf-save">XCF</link>,
+      n'est capable de contenir toutes les données d'une image Gimp. Lorsque vous
+      demandez d'enregistrer une image dans un format qui ne la représentera pas
+      intégralement, Gimp vous le signale, en vous informant des informations qui
+      seront perdues et en vous demandant si vous voulez "exporter" l'image dans
+      une structure que le format de fichier supportera. Exporter une image ne modifie
+      pas l'image elle-même, aussi ne perdez-vous rien en faisant cela. 
+    </para>
 
     <para lang="zh_CN">
       除了 GIMP 专用的 <link linkend="gimp-xcf-save">XCF</link> 格式，没有其它一种格式可以保存 GIMP 图像中的所有信息。当您要将图像保存为一种无法完全表现其内容的格式时，GIMP 就会提醒您，并告诉您那些信息会丢失，是否愿意“输出”图像到该文件格式能处理的形式。输出一个图像并不修改图像本身，所以您不会因为这么做而丢失什么。
     </para> 
     <note lang='en'>
-      When you close an image (possibly by
-      quitting GIMP), you are warned if the image is "dirty"; that is,
-      if it has been changed without subsequently being saved.  Saving
-      an image in any file format will cause the image to be
-      considered "not dirty", even if the file format does not
-      represent all of the information from the image.
+      <para>
+        When you close an image (possibly by
+        quitting GIMP), you are warned if the image is "dirty"; that is,
+        if it has been changed without subsequently being saved.  Saving
+        an image in any file format will cause the image to be
+        considered "not dirty", even if the file format does not
+        represent all of the information from the image.
+      </para>
+    </note>
+    
+    <note lang='fr'>
+      <para>
+        Lorsque vous fermez une image (par exemple en quittant Gimp), vous êtes
+        prévenu si l'image est "souillée", c'est à dire si elle a été modifiée sans 
+        être enregistrée. Une image n'est plus considérée comme "souillée" dès qu'elle 
+        est enregistrée, quel que soit le format, même s'il ne supporte pas toutes
+        les informations de l'image.
+      </para>
     </note>
 
     <note lang="zh_CN">
+      <para>
       当您关闭一个图像时(也许时退出 GIMP),如果该图像被改动后而未保存，即所谓的“脏”文件,这时您将被警告。当您将图像保存为某种格式后，这个文件就是"干净"的,即使该文件格式不能无法显示图像中的所有信息。
+      </para>
     </note>  
   </simplesect>
 
