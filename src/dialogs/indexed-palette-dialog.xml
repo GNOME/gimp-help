@@ -1,0 +1,210 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<sect1 id='gimp-indexed-palette-dialog'>
+  <title lang="en">Indexed Palette dialog</title>
+
+  <indexterm>
+    <primary lang="en">Dialog</primary>
+    <secondary lang="en">Indexed Palette</secondary>
+  </indexterm>
+
+  <informalfigure>
+    <mediaobject>
+      <imageobject lang="en">
+        <imagedata
+        fileref='../images/dialogs/dialogs-indexed-palette.png'
+        format="PNG"/>  
+      </imageobject>
+    </mediaobject>
+    <caption>
+      <para lang='en'>
+        The Indexed Palette dialog
+      </para>
+    </caption>
+  </informalfigure>
+  
+
+  <para lang="en">
+    The Indexed Palette dialog allows you to edit the colormap of an
+    indexed image.  (If the mode of the active image is RGB or
+    Grayscale instead of Indexed, the dialog is empty and unusable.)
+    This is a dockable dialog; see the section on <link
+    linkend='gimp-docks'>Dialogs and Docking</link> for help on
+    manipulating it.  It can be activated in two ways:
+  </para>
+
+  <itemizedlist>
+    <listitem>
+      <para lang='en'>   
+        From the Toolbox menu:
+        <menuchoice>
+          <guimenu>File</guimenu>
+          <guisubmenu>Dialogs</guisubmenu>
+          <guimenuitem>Indexed Palette</guimenuitem>
+        </menuchoice>
+      </para>
+    </listitem>
+
+    <listitem>
+      <para lang='en'>   
+        From the image menu:
+        <menuchoice>
+          <guimenu>Dialogs</guimenu>
+          <guimenuitem>Indexed Palette</guimenuitem>
+        </menuchoice>
+      </para>
+    </listitem>
+  </itemizedlist>
+
+  <simplesect>
+    <title lang='en'>Colormaps and Indexed Images</title>
+    
+    <para lang='en'>
+      In an Indexed image, colors are assigned to pixels by an
+      indirect method, using a lookup table called a
+      <emphasis>colormap</emphasis>.  In GIMP, the maximum number of
+      entries in a colormap is 256.  For a maximum-sized colormap,
+      each index from 0 to 255 is assigned an arbitrary RGB color.
+      There are no rules restricting the colors that can be assigned
+      to an index or the order they appear in:  any index can be
+      assigned any color.  
+    </para>
+    <para lang='en'>
+      In an Indexed image, instead of being assigned a color directly
+      (as happens in RGB and Grayscale images), each pixel is assigned
+      an index.  To determine the color that should be shown for that
+      pixel, GIMP looks up the index in the image's colormap.  Each
+      indexed image has its own private colormap.
+    </para>
+    <para lang='en'>
+      It is important to realize that the colors in the colormap are
+      the <emphasis>only colors available</emphasis> for an indexed
+      image (that is, unless you add new colors to the colormap).
+      This has a major effect on many gimp operations:  for example,
+      in a gradient fill or pattern fill, GIMP will usually not be
+      able to find exactly the right colors in the colormap, so it
+      will approximate them by "dithering".  If the colormap is too
+      limited or poorly chosen, this can easily produce very poor
+      image quality.
+    </para>
+    <para lang='en'>
+      The Indexed Palette dialog allows you to alter the colormap for an
+      image, either by creating new entries, or by changing the colors
+      for the existing entries.  If you change the color associated
+      with a given index, you will see the changes reflected
+      throughout the image, as a color shift for all pixels that are
+      assigned that index.  The entries are numbered with 0 in the
+      upper left corner, 1 to its right, etc.
+    </para>
+    <para lang='en'>
+      Here are the operations you can perform using this dialog:
+    </para>
+
+    <variablelist>
+      <title lang='en'>Using the Indexed Palette dialog</title>
+
+      <varlistentry>
+        <term lang='en'>Click on a color entry</term>
+        <listitem lang='en'>
+          <para>
+            This sets GIMP's foreground color to the color you click
+            on, as shown in the Toolbox color area.  As a result, this
+            color will be used for the next painting operation you do.
+          </para>
+        </listitem>
+      </varlistentry>
+    
+      <varlistentry>
+        <term lang='en'>Ctrl-click on a color entry</term>
+        <listitem lang='en'>
+          <para>
+            This sets GIMP's background color to the color you click
+            on, as shown in the Toolbox color area.
+          </para>
+        </listitem>
+      </varlistentry>
+    
+      <varlistentry>
+        <term lang='en'>Double-click on a color entry</term>
+        <listitem lang='en'>
+          <para>
+            This sets GIMP's foreground color to the color you click
+            on, and also brings up a Color Editor that allows you to
+            change that colormap entry to a new color.
+          </para>
+        </listitem>
+      </varlistentry>
+    
+      <varlistentry>
+        <term lang='en'>Color index</term>
+        <listitem lang='en'>
+          <para>
+            You can select a different colormap entry by typing its
+            index here, or clicking the spinbutton to the right.
+          </para>
+        </listitem>
+      </varlistentry>
+    
+      <varlistentry>
+        <term lang='en'>Hex triplet</term>
+        <listitem lang='en'>
+          <para>
+            This area shows a hex-code representation (such as is used
+            in HTML) for the color assigned to the currently selected
+            colormap entry.  You can edit the color here, instead of
+            using a Color Editor, if you want to.
+          </para>
+        </listitem>
+      </varlistentry>
+    
+      <varlistentry>
+        <term lang='en'>Edit color</term>
+        <listitem lang='en'>
+          <para>
+            This button (in the lower left corner of the dialog)
+            brings up a Color Editor that allows you to change the
+            color for the currently selected colormap entry.  The
+            effect is similar to double-clicking on the entry, except
+            that it does not set GIMP's foreground color.
+          </para>
+        </listitem>
+      </varlistentry>
+    
+      <varlistentry>
+        <term lang='en'>Add color</term>
+        <listitem lang='en'>
+          <para>
+            This button (in the lower right corner of the dialog)
+            allows you to add new colors to the colormap.  If you
+            click on the button, the current foreground color, as
+            shown in the Toolbox, will be tacked on to the end of the
+            colormap.  If instead you hold down <keycap>Ctrl</keycap>
+            and click, the background color from the Toolbox will be
+            added.  (If the colormap contains 256 entries, it is full,
+            and trying to add more will have no effect.)
+          </para>
+        </listitem>
+      </varlistentry>
+    
+   </variablelist>
+
+    <tip lang='en'>    
+      If you make a mistake, you can undo it by focusing the pointer in
+      the image whose colormap you have changed, and then pressing
+      <keycap>Ctrl-Z</keycap> or choosing
+      <menuchoice>
+        <guimenu>Edit</guimenu>
+        <guimenuitem>Undo</guimenuitem>
+      </menuchoice> 
+      in the image menu.
+    </tip>
+
+    <note lang='en'> 
+      This dialog is not the only way of altering the colormap for an
+      indexed image.  The color tools, such as Brightness/Contrast,
+      Hue/Saturation, etc, also change the colors in the colormap.
+    </note>
+   
+  </simplesect>
+
+</sect1>
