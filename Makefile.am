@@ -2,14 +2,14 @@
 
 IMAGE_DIRS = \
 	dialogs		\
-	dialogs/examples  \
+	dialogs/examples\
 	filters		\
 	filters/examples\
 	glossary	\
 	tool-options	\
 	toolbox		\
 	callouts	\
-	preferences \
+	preferences	\
 	using
 
 IMAGE_FILES = \
@@ -151,7 +151,7 @@ maintainer-clean-local:
 
 dist-hook:
 	$(mkinstalldirs) $(distdir)/html
-	-cp html/*.xml $(distdir)/html
+	-cp -r html/images $(distdir)/html
 	for lang in $(ALL_LINGUAS); do \
 	  cp -r html/$$lang $(distdir)/html; \
 	done
