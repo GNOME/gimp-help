@@ -1,16 +1,25 @@
-dnl This the autoconf script for the gimp-help-2 project.
-dnl The GPL version 2 applies to it which you may get from
-dnl http://www.gnu.org
+dnl  This the autoconf script for the gimp-help-2 project.
+dnl  The GPL version 2 applies to it which you may get from
+dnl  http://www.gnu.org/.
 
-AC_PREREQ(2.52)
+AC_PREREQ(2.54)
 
-AC_INIT()
+m4_define([help_major_version], [0])
+m4_define([help_minor_version], [1])
 
-AM_INIT_AUTOMAKE(gimp-help-2, 0.1)
+m4_define([help_version], [help_major_version.help_minor_version])
+
+AC_INIT(gimp-help-2, [help_version])
+
+AC_CONFIG_SRCDIR([src/gimp.xml])
+
+AM_INIT_AUTOMAKE(no-define)
+
 
 AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
+
 
 AC_PATH_PROG(XSLTPROC, xsltproc)
 if test -z "$XSLTPROC"; then
@@ -27,12 +36,18 @@ fi
 
 AC_SUBST(XSLTFLAGS)
 
+
+dnl  Default to the correct way of identifying stylesheets.
+dnl  People need an XML catalog to resolve this to a local file.
+
+STYLEBASE='http://docbook.sourceforge.net/release/xsl/current'
+
+dnl  Allow to explicitely specify the stylesheet location
+dnl  in case the XML catalog doesn't exist or is broken.
+
 AC_ARG_WITH(xsl_stylesheets, [  --with-xsl-stylesheets=<basedir>   path to the base of the DocBook Modular Stylesheets])
 
-if test "x$with_xsl_stylesheets" = "x"; then
-  AC_CHECK_FILE(/usr/share/sgml/docbook/stylesheet/xsl/nwalsh/xhtml/docbook.xsl,STYLEBASE='/usr/share/sgml/docbook/stylesheet/xsl/nwalsh',
-    [AC_CHECK_FILE(/opt/sgml/share/xml/docbook/docbook-xsl/xhtml/docbook.xsl,STYLEBASE='/opt/sgml/share/xml/docbook/docbook-xsl')])
-else
+if test "x$with_xsl_stylesheets" != "x"; then
   STYLEBASE=$with_xsl_stylesheets
   AC_CHECK_FILE($STYLEBASE/xhtml/docbook.xsl,,
     AC_MSG_ERROR([Couldn't find docbook.xsl in $STYLEBASE/xhtml]))

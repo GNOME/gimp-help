@@ -1,97 +1,118 @@
 #!/bin/sh
-# Run this to generate all the initial makefiles, etc.
+
+# This script does all the magic calls to automake/autoconf and
+# friends that are needed to configure a cvs checkout.  You need a
+# couple of extra tools to run this script successfully.
+#
+# If you are compiling from a released tarball you don't need these
+# tools and you shouldn't use this script.  Just call ./configure
+# directly.
+
+PROJECT="gimp-help-2"
+TEST_TYPE=-f
+FILE=src/gimp.xml
+
+AUTOCONF_REQUIRED_VERSION=2.54
+AUTOMAKE_REQUIRED_VERSION=1.6
 
 srcdir=`dirname $0`
 test -z "$srcdir" && srcdir=.
+ORIGDIR=`pwd`
+cd $srcdir
 
-PKG_NAME="gimp-help"
+check_version ()
+{
+    if expr $1 \>= $2 > /dev/null; then
+	echo "yes (version $1)"
+    else
+	echo "Too old (found version $1)!"
+	DIE=1
+    fi
+}
+
+echo
+echo "I am testing that you have the required versions of autoconf and automake ..."
+echo
 
 DIE=0
 
-(autoconf --version) < /dev/null > /dev/null 2>&1 || {
-  echo
-  echo "**Error**: You must have \`autoconf' installed to compile GIMP Documentation."
-  echo "Download the appropriate package for your distribution,"
-  echo "or get the source tarball at ftp://ftp.gnu.org/pub/gnu/autoconf/"
-  DIE=1
-}
-
-(grep "^AM_PROG_LIBTOOL" $srcdir/configure.in >/dev/null) && {
-  (libtool --version) < /dev/null > /dev/null 2>&1 || {
+echo -n "checking for autoconf >= $AUTOCONF_REQUIRED_VERSION ... "
+if (autoconf --version) < /dev/null > /dev/null 2>&1; then
+    VER=`autoconf --version \
+         | grep -iw autoconf | sed "s/.* \([0-9.]*\)[-a-z0-9]*$/\1/"`
+    check_version $VER $AUTOCONF_REQUIRED_VERSION
+else
     echo
-    echo "**Error**: You must have \`libtool' installed to compile GIMP Documentation."
-    echo "Download the appropriate package for your distribution,"
-    echo "or get the source tarball at ftp://ftp.gnu.org/pub/gnu/libtool/"
+    echo "  You must have autoconf installed to compile $PROJECT."
+    echo "  Download the appropriate package for your distribution,"
+    echo "  or get the source tarball at ftp://ftp.gnu.org/pub/gnu/"
+    DIE=1;
+fi
+
+echo -n "checking for automake >= $AUTOMAKE_REQUIRED_VERSION ... "
+if (automake-1.7 --version) < /dev/null > /dev/null 2>&1; then
+   AUTOMAKE=automake-1.7
+   ACLOCAL=aclocal-1.7
+elif (automake-1.8 --version) < /dev/null > /dev/null 2>&1; then
+   AUTOMAKE=automake-1.8
+   ACLOCAL=aclocal-1.8
+elif (automake-1.6 --version) < /dev/null > /dev/null 2>&1; then
+   AUTOMAKE=automake-1.6
+   ACLOCAL=aclocal-1.6
+else
+    echo
+    echo "  You must have automake 1.6 or newer installed to compile $PROJECT."
+    echo "  Download the appropriate package for your distribution,"
+    echo "  or get the source tarball at ftp://ftp.gnu.org/pub/gnu/automake/"
     DIE=1
-  }
-}
+fi
 
-(automake --version) < /dev/null > /dev/null 2>&1 || {
-  echo
-  echo "**Error**: You must have \`automake' installed to compile GIMP Documentation"
-  echo "Download the appropriate package for your distribution,"
-  echo "or get the source tarball at ftp://ftp.gnu.org/pub/gnu/automake/"
-  DIE=1
-  NO_AUTOMAKE=yes
-}
-
-# if no automake, don't bother testing for aclocal
-test -n "$NO_AUTOMAKE" || (aclocal --version) < /dev/null > /dev/null 2>&1 || {
-  echo
-  echo "**Error**: Missing \`aclocal'.  The version of \`automake'"
-  echo "installed doesn't appear to be recent enough." 
-  echo "The latest version of \`automake' is available at"
-  echo "ftp://ftp.gnu.org/pub/gnu/automake/"
-  DIE=1
-}
+if test x$AUTOMAKE != x; then
+    VER=`$AUTOMAKE --version \
+         | grep automake | sed "s/.* \([0-9.]*\)[-a-z0-9]*$/\1/"`
+    check_version $VER $AUTOMAKE_REQUIRED_VERSION
+fi
 
 if test "$DIE" -eq 1; then
-  exit 1
+    echo
+    echo "Please install/upgrade the missing tools and call me again."
+    echo	
+    exit 1
 fi
+
+
+test $TEST_TYPE $FILE || {
+    echo
+    echo "You must run this script in the top-level $PROJECT directory."
+    echo
+    exit 1
+}
+
 
 if test -z "$*"; then
-  echo
-  echo "I am going to run \`configure' with no arguments."
-  echo "If you wish to pass any to it, please specify them on the"
-  echo \`$0\'" command line."
-  echo
+    echo
+    echo "I am going to run ./configure with no arguments - if you wish "
+    echo "to pass any to it, please specify them on the $0 command line."
+    echo
 fi
 
-case $CC in
-xlc )
-  am_opt=--include-deps;;
-esac
-
-if grep "^AM_PROG_LIBTOOL" configure.in >/dev/null; then
-  if test -z "$NO_LIBTOOLIZE" ; then 
-    echo "Running libtoolize..."
-    libtoolize --force --copy
-  fi
+$ACLOCAL $ACLOCAL_FLAGS
+RC=$?
+if test $RC -ne 0; then
+   echo "$ACLOCAL gave errors. Please fix the error conditions and try again."
+   exit 1
 fi
 
-echo "Running aclocal $aclocalinclude ..."
-aclocal $aclocalinclude || {
+$AUTOMAKE --add-missing || exit 1
+autoconf || exit 1
+
+cd $ORIGDIR
+
+if $srcdir/configure --enable-maintainer-mode "$@"; then
   echo
-  echo "**Error**: aclocal failed. This may mean that you have not"
-  echo "installed all of the packages you need, or you may need to"
-  echo "set ACLOCAL_FLAGS to include \"-I \$prefix/share/aclocal\""
-  echo "for the prefix where you installed the packages whose"
-  echo "macros were not found."
+  echo "Now type 'make' to compile $PROJECT."
+else
+  echo
+  echo "Configure failed or did not finish!"
   exit 1
-  }
-
-if grep "^AM_CONFIG_HEADER" configure.in >/dev/null; then
-  echo "Running autoheader..."
-  autoheader || { echo "**Error**: autoheader failed."; exit 1; }
 fi
-
-echo "Running automake --gnu $am_opt ..."
-automake --add-missing --gnu $am_opt ||
-  { echo "**Error**: automake failed."; exit 1; }
-
-echo "Running autoconf ..."
- autoconf || { echo "**Error**: autoconf failed."; exit 1; }
-
-echo Running $srcdir/configure $conf_flags "$@" ...
-$srcdir/configure $conf_flags "$@" \
-  && echo Now type \`make\' to compile $PKG_NAME || exit 1
