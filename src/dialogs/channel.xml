@@ -1,0 +1,916 @@
+<?xml version = '1.0' encoding = 'utf-8'?>
+<sect1 id="dialogs-channel" >
+  <title lang="en" >Channel dialog</title>
+  <title lang="de" />
+  <title lang="fr" >Dialogue des canaux</title>
+  <indexterm lang="en" >
+    <primary>Dialog</primary>
+    <secondary>Channel</secondary>
+    <tertiary>Managing channels</tertiary>
+  </indexterm>
+  <indexterm lang="de" >
+    <primary/>
+    <secondary/>
+    <tertiary/>
+  </indexterm>
+  <indexterm lang="fr" >
+    <primary>Dialogue</primary>
+    <secondary>Canal</secondary>
+    <tertiary>Gestion des canaux</tertiary>
+  </indexterm>
+  <mediaobject lang="en" >
+    <imageobject>
+      <imagedata fileref="../images/dialogs/dialogs-channel.png" format="png" />
+    </imageobject>
+  </mediaobject>
+  <mediaobject lang="de" >
+    <imageobject>
+      <imagedata fileref="../images/dialogs/dialogs-channel.png" format="png" />
+    </imageobject>
+  </mediaobject>
+  <mediaobject lang="fr" >
+    <imageobject>
+      <imagedata fileref="../images/dialogs/fr/dialogs-channel.png" format="png" />
+    </imageobject>
+  </mediaobject>
+  <para lang="en">
+    The Channel dialog is the main interface to edit, modify and manage your channels.
+    Channels have a double usage it's why the dialog is divided in two parts, the first part
+    is for color channels and the second part for selection masks.
+  </para>
+  <para lang="en"> 
+    Color channels :
+    Color channels applies to the image and not to a specific layer.
+    Basically three primary colors are necessary to render all the wide range of natural colors.
+    As other digital software Gimp uses Red, Green and Blue as primary colors.    
+    The first and primary channels display the <guilabel>Red</guilabel>, <guilabel>Green</guilabel>,
+    <guilabel>Blue</guilabel> values of each pixel in your image. In front of each channel is a 
+    thumbnail displaying a grayscale representation of each channel where white is 100% and black is 0% 
+    of the primary color.
+    Alternatively, if you image is not a colored but a Grayscale image, there is only one primary channel
+    called <guilabel>Gray</guilabel>. For Inxeded image with a fixed number of known colors there is
+    also only one primary channel called <guilabel>Indexed</guilabel>.
+    Then there is a secondary optionnal channel called <guilabel>Alpha</guilabel>. This channel displays
+    Transparency values of each pixel in your image.  In front of this channel is a thumbnail 
+    displaying a grayscale representation of the transparency where white is opaque and visible, and black 
+    is transparent and invisible. If you create your image without transparency then the Alpha channel is
+    not present but you can add it from the <link linkend="dialogs-layer">Layers dialog menu</link>. 
+    Also, if you have more than one layer in your image, Gimp automatically creates an Alpha channel.
+    <warning>
+      Gimp doesn't support 8 bits channels (values 0-255) nor CMYK or YUV color models.
+    </warning>
+  </para>
+  <para lang="en"> 
+    <link linkend="dialogs-selection-masks">Selection masks</link> :
+    Channels can be used to save and restore your selections. Clicking on the 
+    <guilabel>Quick mask</guilabel> button on the <link linkend="image-window">Image window</link>
+    automatically creates a new channel called <guilabel>Qmask</guilabel> and saves the displayed active 
+    selection to a thumbail in front of the channel. There is more information for this feature
+    below in this text at Quick Mask and Selection Masks chapters.
+  </para>
+  
+  <para lang="de">
+  </para> 
+  <para lang="fr">
+    Le dialogue des Canaux est l'interface principale pour éditer, modifier et gérer vos canaux.
+    Les canaux ont un double usage, c'est pourquoi le dialogue est divisé en 2 parties, la première partie 
+    contient les canaux chromatiques et la deuxième partie les masques de sélection.
+  </para>
+  
+  <para lang="fr">     
+    Les canaux chromatiques :
+    Les canaux chromatiques s'appliquent à l'ensemble de l'image et pas à un calque particulier. 
+    Fondamentalement il y a besoin de trois couleurs primaires pour rendre l'ensemble complet des
+    couleurs naturelles. Comme les autres logiciels numériques, Gimp utilise le Rouge, le Vert et
+    le Bleu comme couleurs primaires.
+    Les premiers canaux primaires affichent les valeurs <guilabel>Rouge</guilabel>, <guilabel>Vert</guilabel>
+    et <guilabel>Bleu</guilabel> de chaque pixel contenu dans votre image. Devant chaque canal se trouve 
+    une vignette qui montre une représentation en noir et blanc de celui-ci où le blanc est 100% et le 
+    noir 0% de la couleur primaire.
+    Alternativement si votre image n'est pas composée de couleurs mais une image en Niveaux de gris il n'y
+    a plus qu'un canal appelé <guilabel>Gris</guilabel>. Pour les images Indexées avec un nombre fixe de
+    couleurs connues il n'y a plus qu'un canal primaire appellé <guilabel>Couleurs indexées</guilabel>. 
+    Ensuite il y a un canal secondaire optionnel appellé canal <guilabel>Alpha</guilabel>. Ce canal
+    affiche les valeurs de Transparence pour chaque pixel contenu dans l'image. Devant ce canal il y 
+    une vignette qui montre une représentation en noir et blanc de celui-ci où le blanc est opaque et 
+    visible et le noir transparent et invisible. Au cas où vous créez votre image sans transparence alors 
+    le canal Alpha ne sera pas présent, vous pouvez l'ajouter depuis le menu du
+    <link linkend="dialogs-layer">dialogue des calques</link>.
+    Également si vous avez plus d'un calque dans votre image automatiquement Gimp créé un canal Alpha.
+    <warning>
+      Gimp ne peut pas manipuler des canaux avec plus de 8 bits (valeurs 0-255) ni 
+      utiliser un modèle de couleur de type CMJN ou YUV différent du RGB.
+    </warning>
+  </para>
+  <para lang="fr">     
+    Les <link linkend="dialogs-selection-masks">masques de sélections</link> :
+    Les canaux peuvent être utilisés pour sauvegarder et restituer vos sélections. Cliquer sur le
+    bouton du <guilabel>Masque rapide</guilabel> dans la <link linkend="image-window">Fenêtre d'image</link>
+    créé automatiquement un nouveau canal appelé <guilabel>Qmask</guilabel> et sauvegarde la
+    sélection active affichée dans une vignette devant le canal. Cette fonctionnalité de
+    Gimp est détaillée ci-dessous aux chapitres Masque Rapide et Masque de sélection.
+  </para>
+  
+  <para lang="en" >
+    Representation of an image with channels:
+    <imageobject>
+      <imagedata fileref="../images/dialogs/dialogs-channels-example.png" format="png" />
+    </imageobject>
+    The right image is decomposed in three color channels red green and blue and the
+    Alpha channel for transparency. On the right image the transparency is displayed
+    as a gray checkerboard. In the color channel white is always white because all
+    the colors are present and black is black. The red hat is visible in the red channel
+    but quite invisible in the other channels. This is the same for plain green and blue
+    which are visible only in their own channels and invisible in others.
+  </para>
+  <para lang="de">
+    <imageobject>
+      <imagedata fileref="../images/dialogs/dialogs-channels-example.png" format="png" />
+    </imageobject>
+  </para>  
+  <para lang="fr" >
+    Représentation d'une image avec les canaux :
+  </para>
+  <para lang="fr">
+    <imageobject>
+      <imagedata fileref="../images/dialogs/fr/dialogs-channels-example.png" format="png" />
+    </imageobject>
+    L'image de droite est décomposée en troix canaux chromatiques rouge, vert et bleu
+    auxquels s'ajoute le canal Alpha pour la transparence. Sur l'image de droite la
+    transparence est artificiellement représentée par un damier gris.
+    Dans les canaux chromatiques le blanc est toujours blanc car toutes les couleurs
+    sont présentes alors que le noir est noir. Le chapeau rouge apparaît dans
+    la canal rouge mais est presque invisible dans les autres canaux. Il en est de
+    même pour le vert et le bleu purs qui apparaitront respectivement dans le canal 
+    vert et le canal bleu et seront absents dans les autres.
+  </para>
+
+  <simplesect>
+    <title lang="en" >Dialog call</title>
+    <title lang="de"> </title>
+    <title lang="fr" >Lancement du dialogue</title>
+    <para lang="en" >
+      The Channel dialog can be called in many ways :
+      <itemizedlist>
+        <listitem>      
+          from the toolbox-menu:
+          <guimenuitem>File/Dialog/<accel>C</accel>hannels</guimenuitem>
+        </listitem>
+        <listitem>
+          from the image-menu:
+          <guimenuitem>Dialog/Channels</guimenuitem>
+        </listitem>
+        <listitem>
+          from an other dialog-menu:
+          <guimenuitem>Add Tab/Channels</guimenuitem>
+        </listitem>
+      </itemizedlist>
+    </para>
+    <para lang="de" >
+      <itemizedlist>
+        <listitem/>
+        <listitem/>
+        <listitem/>
+      </itemizedlist>
+    </para>
+    <para lang="fr" >
+      Le dialogue des canaux peut être appelé de plusieurs façons :
+      <itemizedlist>
+        <listitem>
+          <para>
+            depuis le menu de la boîte à outils :
+            <guimenuitem>Fichier/Dialogues/Canau<accel>x</accel></guimenuitem>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            depuis le menu de la fenêtre d'image :
+            <guimenuitem>Dialogues/Canau<accel>x</accel></guimenuitem>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            depuis le menu d'un autre dialogue :
+            <guimenuitem>Ajouter un onglet/Canau<accel>x</accel></guimenuitem>
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+  </simplesect> <!-- end Dialog call -->
+
+  <simplesect>
+    <variablelist>
+      <title lang="en" >Using</title>
+      <title lang="de"></title>
+      <title lang="fr" >Usage</title>
+      <varlistentry>
+        <term lang="en" >Overview</term>
+        <term lang="de" >Übersicht</term>
+        <term lang="fr" >Généralités</term>
+        <listitem lang="en" >
+          <para>
+            The top channels are the color channels and the optionnal Alpha channel. They are always
+            organized in the same order and they cannot be erased. Selection masks
+            are below and displayed as a list in the dialog. 
+            Every channel appears in the list in form of a thumbnail.  
+            A right-click in a channel thumbnail opens the channel menu (see Menu chapter).
+          </para>
+        </listitem>
+        <listitem lang="de" />
+        <listitem lang="fr" >
+          <para>
+            Les canaux supérieurs sont les canaux chromatiques et le canal Alpha optionnel. Ils sont toujours
+            présents dans le même ordre et ils ne peuvent pas être effacés.
+            Les masques de sélection apparaissent en-dessous sous la forme d'une liste dans le dialogue.
+            Chaque canal apparait dans la liste sous la forme d'une vignette. 
+            En cliquant-droit sur la vignette d'un canal on fait apparaitre le menu des canaux (voir au chapitre Menu).
+          </para>
+        </listitem>
+      </varlistentry> <!-- end Overview -->
+      
+      <varlistentry>
+        <term lang="en" >Channel attributs</term>
+        <term lang="de" />
+        <term lang="fr" >Attributs d'un canal</term>
+        <listitem lang="en" >
+          <para>
+            Every channel is shown in the list with its own attributs. The main attribut is
+            the name of the channel itself. You can edit selection masks by double-clicking 
+            on their name. A double_click on the thumbnail opens a full dialog where you can also
+            set the visual aspect of the canal in the image window. 
+            In front of the thumbnail there is an eye icon 
+            <guiicon>
+              <inlinegraphic fileref="../images/dialogs/dialogs-icon-eye.png" />
+            </guiicon>
+            by clicking on it you define whether the channel is visible or not. 
+            The view of the image changes consequently in the image window and a
+            white image becomes yellow if you remove the view of the blue because
+            yellow is the complementary color for blue. 
+            If you remove the view of the Alpha channel, everything  becomes transparent and nothing
+            else than a grey checkerboard is visible. The aspect of this virtual background
+            can be changed in the 
+            <link linked="dialogs-preference">Preferences</link>.
+            The chain icon           
+            <guiicon>
+              <inlinegraphic fileref="../images/dialogs/dialogs-icon-vchain.png" />
+            </guiicon>
+            enables to group channels for operations on multiple channels.
+          </para>
+          <caution>
+            Activated channels appear highlighted in blue in dialog. If you click
+            on a channel in the list you switch activation of the corresponding channel.
+            Disabling a color channel red, blue or green has severe
+            consequencies. For instance if you disable the blue channel, all pixels from 
+            now added to the image will not have blue component, and so a white pixel will
+            have the yellow complementary color.
+          </caution>
+        </listitem>
+        <listitem lang="de" />
+        <listitem lang="fr" >
+          <para>
+            Chaque canal apparait dans la liste accompagné de ses attributs. Le principal
+            attribut est bien entendu le nom dudit canal. Pour les masques de sélection
+            on peut facilement l'éditer en double-cliquant sur son nom. Un double-clic sur 
+            la vignette ouvre un dialogue plus complet qui permet aussi de régler l'apparence 
+            visuelle du canal dans la fenêtre d'image. 
+            Devant la vignette il y a une icone en forme d'oeil
+            <guiicon>
+              <inlinegraphic fileref="../images/dialogs/dialogs-icon-eye.png" />
+            </guiicon>
+            , en cliquant dessus on définit si le canal est visible ou non. 
+            L'affichage de l'image change en conséquence dans la fenêtre d'image et
+            une image blanche deviendra jaune si vous enlevez l'affichage du bleu
+            car le jaune est le complémentaire du bleu.
+            Si vous enlevez l'affichage du canal Alpha tout devient transparent et plus rien 
+            d'autre qu'un damier gris n'apparait. L'apparence de ce fond fictif représentatif de
+            la transparence peut être modifié dans les 
+            <link linked="dialogs-preference">Préferences</link>.
+            Une autre icone en forme de chaîne
+            <guiicon>
+              <inlinegraphic fileref="../images/dialogs/dialogs-icon-vchain.png" />
+            </guiicon>
+            permet de grouper des canaux des masques de sélection pour effectuer une opération
+            simultanément sur plusieurs masques.
+          </para>
+          <caution>
+            Les canaux actifs apparaissent surlignés en bleu dans le dialogue. Si vous cliquez
+            sur un canal dans la liste vous (dés)activez le canal correspondant.
+            Désactiver un canal chromatique rouge, vert ou bleu n'est pas sans
+            conséquence. Par exemple si vous désactivez le canal bleu tous les
+            pixels qui seront ultérieurements ajoutés n'auront pas de composante
+            bleue, c'est à dire qu'un pixel blanc prendra la couleur complémentaire
+            jaune.
+          </caution>
+        </listitem>
+      </varlistentry> <!-- end Attributs -->
+      
+      <varlistentry> 
+        <term lang="en" >Managing channels</term>
+        <term lang="de" />
+        <term lang="fr" >Gestion des canaux</term>
+        <listitem lang="en">
+          <para>
+            Under channel list a set of buttons allows you to perform some basic operations
+            on channel list.
+          </para>  
+          <para>
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <imageobject>
+                    <imagedata fileref='../images/dialogs/dialogs-icon-edit.png' format='png'/>
+                  </imageobject>                   
+                  <guilabel>Edit channel attributs</guilabel>, only available for
+                  selection masks. You can change here the <guilabel>Channel name</guilabel>.
+                  The two other parameters affect how channel is visible in image window, they 
+                  allow to controle <guilabel>Opacity</guilabel> and color used for the mask in the
+                  image window.
+                  A click on the color button displays the Gimp color selector and then you
+                  can change the mask color.
+                </para>
+                
+              </listitem>
+              <listitem>
+                <para>
+                  <imageobject>
+                    <imagedata fileref='../images/dialogs/dialogs-icon-new.png' format='png'/>
+                  </imageobject>                   
+                  <guilabel>New channel</guilabel> :
+                  you can create here a new channel available to save a selection. 
+                  Displayed dialog lets you change <guilabel>Opacity</guilabel>
+                  and mask color used in the image to represent the selection.
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <imageobject>
+                    <imagedata fileref='../images/dialogs/dialogs-icon-raise.png' format='png'/>
+                  </imageobject>                   
+                  <guilabel>Raise channel</guilabel>, only available for
+                  selection masks : you can here put the channel up a level in the list.
+                  Press <keycap>Shift</keycap> key to move channel to top of
+                  the list.
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <imageobject>
+                    <imagedata fileref='../images/dialogs/dialogs-icon-lower.png' format='png'/>
+                  </imageobject>                   
+                  <guilabel>Lower channel</guilabel>:
+                  You can here put the channel down a level in the list. Press the
+                  <keycap>Shift</keycap> key to move the channel to bottom of
+                  the list.
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <imageobject>
+                    <imagedata fileref='../images/dialogs/dialogs-icon-duplicate.png' format='png'/>
+                  </imageobject>                   
+                  <guilabel>Duplicate channel</guilabel>:
+                  You can create here a copy of the active channel. Name of new
+                  channel is suffixed with a number.
+                </para>
+                <tip>
+                  You can also duplicate a color channel or the Alpha channel.
+                  It's an easy way to keep a copy of them and to use them later as a
+                  selection in an image.
+                </tip>
+              </listitem>
+              <listitem>
+                <para>
+                  <imageobject>
+                    <imagedata fileref='../images/dialogs/dialogs-icon-delete.png' format='png'/>
+                  </imageobject>   
+                
+                  <guilabel>Delete channel</guilabel>,only available for
+                  selection masks: you can here delete the active channel.
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <imageobject>
+                    <imagedata fileref='../images/dialogs/dialogs-icon-selection.png' format='png'/>
+                  </imageobject>                   
+                  <guilabel>Channel to selection</guilabel>:
+                  you can change here the channel to selection. By defaults the selection
+                  coming from channel replaces any previous active selection. It's possible to
+                  change this by clicking on control keys.
+                  <itemizedlist>
+                    <listitem>
+                      <keycap>Shift</keycap>: the selection coming from channel is added
+                      to the previous active selection. The final selection is merging
+                      of both.
+                    </listitem>
+                    <listitem>
+                      <keycap>Ctrl</keycap>: the final selection is the substraction of
+                      selection coming from channel away from previous active one.
+                    </listitem>
+                    <listitem>
+                      <keycap>Shift Ctrl</keycap>: the final selection is the intersection
+                      of selection coming from channel with previous active one. Only common 
+                      parts are kept. 
+                    </listitem>
+                  </itemizedlist>
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>              
+        </listitem>  
+        <listitem lang="de" />
+        <listitem lang="fr">
+          <para>
+            En dessous de la liste des canaux une série de boutons permet d'effectuer
+            quelques opérations sur la liste des canaux.
+          </para>  
+          <para>
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <imageobject>
+                    <imagedata fileref='../images/dialogs/dialogs-icon-edit.png' format='png'/>
+                  </imageobject>                   
+                  <guilabel>Éditer les attributs du canal</guilabel>, ce dialogue n'est 
+                  disponible que pour les Masques de sélection. Vous pouvez changer le
+                  <guilabel>Nom du canal</guilabel>. Les deux autres paramètres concernent 
+                  la façon dont le canal est visible dans la fenêtre d'image, ils permettent 
+                  de contrôler l'<guilabel>Opacité</guilabel> et la couleur du masque affiché 
+                  dans l'image.
+                  Un clic dans la couleur représentée dans le dialogue ouvre le sélecteur de 
+                  couleur de Gimp et vous pouvez alors changer la couleur du masque. 
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <imageobject>
+                    <imagedata fileref='../images/dialogs/dialogs-icon-new.png' format='png'/>
+                  </imageobject>                   
+                  <guilabel>Nouveau canal</guilabel> :
+                  permet de créer un nouveau canal qui sera utilisable pour stocker une
+                  sélection. La boite de dialogue qui s'ouvre vous permet de donner un
+                  <guilabel>Nom au canal</guilabel> et de régler l'<guilabel>Opacité</guilabel>
+                  et la couleur du masque qui sera affichée dans l'image pour représenter la
+                  sélection.
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <imageobject>
+                    <imagedata fileref='../images/dialogs/dialogs-icon-raise.png' format='png'/>
+                  </imageobject>                   
+                  <guilabel>Remonter le canal</guilabel>, uniquement 
+                  disponible que pour les Masques de sélection :  
+                  permet de remonter le canal d'un rang dans la liste.
+                  Appuyez sur <keycap>Maj</keycap> pour monter le canal tout en haut de
+                  la liste. 
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <imageobject>
+                    <imagedata fileref='../images/dialogs/dialogs-icon-lower.png' format='png'/>
+                  </imageobject>                   
+                  <guilabel>Descendre le canal</guilabel>, uniquement 
+                  disponible pour les Masques de sélection :  
+                  permet de descendre le canal d'un rang dans la liste.
+                  Appuyez sur <keycap>Maj</keycap> pour descendre le canal tout en bas de
+                  la liste. 
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <imageobject>
+                    <imagedata fileref='../images/dialogs/dialogs-icon-duplicate.png' format='png'/>
+                  </imageobject>                   
+                  <guilabel>Dupliquer le canal</guilabel> :  
+                  permet de créer une copie du canal actif. 
+                  Le nom du nouveau canal est suffixé par un chiffre.
+                </para>
+                <tip>
+                  Vous pouvez aussi Dupliquer un canal primaire de couleur ou le canal Alpha.
+                  C'est une façon simple de les mémoriser pour pouvoir les réutiliser 
+                  ultérieurement en tant que sélection dans une image.
+                </tip>
+              </listitem>
+              <listitem>
+                <para>
+                  <imageobject>
+                    <imagedata fileref='../images/dialogs/dialogs-icon-delete.png' format='png'/>
+                  </imageobject>                   
+                  <guilabel>Effacer le canal</guilabel>, uniquement 
+                  disponible que pour les Masques de sélection :  
+                  permet de supprimer le canal.
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <imageobject>
+                    <imagedata fileref='../images/dialogs/dialogs-icon-selection.png' format='png'/>
+                  </imageobject>                   
+                  <guilabel>Canal vers sélection</guilabel> :  
+                  permet de transformer le canal en sélection. Par défaut la sélection issue
+                  du canal remplace toute sélection précédemment active. Il est possible de
+                  changer ceci en appuyant sur des touches de contrôle.
+                  <itemizedlist>
+                    <listitem>
+                      <keycap>Maj</keycap> : La sélection issue du
+                      canal s'ajoute à la sélection précédemment active. La sélection 
+                      finalement obtenue est donc la fusion des deux.
+                    </listitem>
+                    <listitem>
+                      <keycap>Ctrl</keycap> : La sélection finalement
+                      obtenue est la soustraction de la sélection issue du canal à celle
+                      précédemment active.     
+                    </listitem>
+                    <listitem>
+                      <keycap>Maj Ctrl</keycap> : La sélection finalement obtenue
+                      est l'intersection de la sélection issue du canal avec la sélection 
+                      précédemment active. Seules les parties communes sont conservées. 
+                    </listitem>
+                  </itemizedlist>
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>    
+        </listitem>
+      </varlistentry>  <!-- end Managing -->  
+   
+    </variablelist>
+  </simplesect> <!-- end Using -->
+
+  <simplesect>
+    <title lang="en">Menu</title>
+    <title lang="de"></title>
+    <title lang="fr">Menu</title>    
+    <variablelist>
+      <mediaobject lang="en" >
+        <imageobject>
+          <imagedata fileref="../images/dialogs/dialogs-channel-menu.png" format="png" />
+        </imageobject>
+      </mediaobject>
+      <mediaobject lang="de" >
+        <imageobject>
+          <imagedata fileref="../images/dialogs/dialogs-channel-menu.png" format="png" />
+        </imageobject>
+      </mediaobject>
+      <mediaobject lang="fr" >
+        <imageobject>
+          <imagedata fileref="../images/dialogs/fr/dialogs-channel-menu.png" format="png" />
+        </imageobject>
+      </mediaobject>
+      <varlistentry>
+        <listitem lang="en" >
+          <para>
+            You can get the channel context menu by right clicking on  
+            channel thumbnail. This menu gives the same operations on channels
+            as those available from dialog buttons. The only difference concerns
+            transformation to selection operations, each of them having its own
+            entry in menu.
+          </para>
+          <para>
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <guilabel>Edit channel attributs</guilabel>, 
+                  <guilabel>New chanel</guilabel>,
+                  <guilabel>Raise channel</guilabel>,
+                  <guilabel>Lower channel</guilabel>,
+                  <guilabel>Duplicate channel</guilabel>, 
+                  <guilabel>Delete channel</guilabel> :
+                  see Managing channels.
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <guilabel>Channel to selection</guilabel>:
+                  Selection coming from channel replaces any previous active selection. 
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <guilabel>Add to selection</guilabel>:  
+                  Selection coming from channel is added to previous active 
+                  selection. Final selection is merging of both.
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <guilabel>Substract to selection</guilabel>:  
+                  Final selection is substraction of selection coming from 
+                  channel away from previous active one. 
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <guilabel>Intersect with selection</guilabel> :  
+                  Final selection is intersection of selection coming from 
+                  channel with previous active one. Only common parts are kept.
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+        </listitem>
+        <listitem lang="de" />
+        <listitem lang="fr" >
+          <para>
+            Le menu contextuel des canaux est accessible via un clic-droit sur
+            la vignette d'un canal. Ce menu offre les mêmes opérations que celles
+            déjà accessibles par les boutons du dialogue. La seule différence
+            concerne les quatre opérations de transformation d'un canal en sélection 
+            chacune ayant une entrée dans le menu.
+          </para>
+          <para>
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <guilabel>Éditer les attributs du canal</guilabel>, 
+                  <guilabel>Nouveau canal</guilabel>,
+                  <guilabel>Remonter le canal</guilabel>,
+                  <guilabel>Descendre le canal</guilabel>,
+                  <guilabel>Dupliquer le canal</guilabel>, 
+                  <guilabel>Effacer le canal</guilabel> :
+                  voir Gestion des canaux.
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <guilabel>Canal vers sélection</guilabel> :  
+                  permet de transformer le canal en sélection. La sélection issue du
+                  canal remplace toute sélection précédemment active.
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <guilabel>Ajouter à la sélection</guilabel> :  
+                  permet de transformer le canal en sélection. La sélection issue du
+                  canal s'ajoute à la sélection précédemment active. La sélection 
+                  finalement obtenue est donc la fusion des deux.
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <guilabel>Soustraire de la sélection</guilabel> :  
+                  permet de transformer le canal en sélection. La sélection finalement
+                  obtenue est la soustraction de la sélection issue du canal à celle
+                  précédemment active.
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <guilabel>Intersection avec la sélection</guilabel> :  
+                  permet de transformer le canal en sélection. La sélection finalement
+                  obtenue est l'intersection de la sélection issue du canal avec la sélection 
+                  précédemment active. Seules les parties communes sont conservées.
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </simplesect> <!-- end Menu -->
+
+  <simplesect>
+    <para lang="en">
+      Continue to <link linkend="dialogs-selection-masks">Selections masks and Quick mask</link>
+    </para>
+    <para lang="fr">
+      Continuer par <link linkend="dialogs-selection-masks">Les masques de sélection et le masque rapide</link>
+    </para>
+  </simplesect>
+
+  <!--page separation-->
+
+  <sect2 id="dialogs-selection-masks">
+      <title lang="en">Selections masks</title>
+      <title lang="de" />
+      <title lang="fr">Masques de sélection</title>    
+      <variablelist>
+      <mediaobject lang="en" >
+        <imageobject>
+          <imagedata fileref="../images/dialogs/dialogs-channel-masks.png" format="png" />
+        </imageobject>
+      </mediaobject>
+      <mediaobject lang="de" >
+        <imageobject>
+          <imagedata fileref="../images/dialogs/dialogs-channel-masks.png" format="png" />
+        </imageobject>
+      </mediaobject>
+      <mediaobject lang="fr" >
+        <imageobject>
+          <imagedata fileref="../images/dialogs/dialogs-channel-masks.png" format="png" />
+        </imageobject>
+      </mediaobject>
+      <varlistentry>    
+        <listitem lang="en">
+          <para>
+            There are many selection tools in Gimp like rectangular selection tool
+            or fuzzy selection for continuous selections. Selection Masks are
+            a graphical way to build selections into a gray level channel where white pixels 
+            are selected ones and black pixels are not selected. Therefore gray pixels are 
+            partially selected. You can think of them as feathering the selection, a smooth
+            transition between selected and not selected. This is important to avoid
+            the ugly pixelisation effect when you fill the selection or when you erase
+            its content after isolating a subject from background.
+          </para>
+          <para>
+            There are several ways to initialize a selection mask.
+            From the image window menu <guilabel>Select/Save to channel</guilabel>
+            available if there is an active selection. 
+            From the image window the left-bottom button creates a
+            <link linkend="dialogs-quick-mask">Quick Mask</link>,the content will be 
+            initialized with the active selection. 
+            From the channel dialog when you click on the <guilabel>New channel</guilabel>
+            button or from the context menu.
+          </para>
+          <para>
+            Once the channel is initialized, selected (highlighted in blue), visible (
+            eye-icon in the dialog) and displayed as you want (color and opacity
+            attributs) you can start to work in with all the paint tools.
+            The colors used are important. If you paint with some color else than white
+            grey or black then the color Value (luminosity) will be used to define a
+            gray medium light or dark. 
+            When your mask is painted, you can transform it to selection by clicking on
+            <guilabel>Channel to selection</guilabel> button or from the context menu.
+         </para>
+         <tip>
+           You can work in selection masks not only with paint tool but also
+           with other tools. For instance you can use the selection tools to fill
+           areas uniformly with gradients or patterns.
+           By adding many selection masks in your list you can compose very
+           complex selections with flexibility. One can say that a selection
+           mask is for selection the same as a layer for an image.
+         </tip>
+         <caution>
+           As long as a selection mask is activated you are working in the mask and not
+           in the image. To work back in the image you have to desactivate all
+           selection masks. Don't forget also to stop displaying
+           masks in the image by removing the eye-icon. Check also that all
+           RGB and Alpha channels are activated and displayed in the image.
+         </caution> 
+        </listitem>
+        <listitem lang="de" />       
+        <listitem lang="fr">       
+          <para>
+            Il existe de nombreux outils de sélection dans Gimp tels que l'outil de
+            sélection rectangulaire ou la baguette magique pour les sélections contiguës.
+            Les Masques de sélection sont une façon graphique de construire les sélections dans
+            un canal en niveaux de gris où les pixels blancs sont les sélectionnés et les pixels
+            noirs ne le sont pas. Les pixels gris sont donc partiellement sélectionnés, il
+            faut entendre pas là l'équivalent d'un adoucissement de sélection, une transition
+            entre ce qui est pleinement sélectionné et ce qui ne l'est pas. Cette notion
+            de transition dans une sélection est très importante pour éviter les effets de
+            pixelisation lorsqu'on va remplir la sélection ou bien lorsqu'on va effacer son
+            contenu après un détourage.
+         </para>
+         <para>
+            Il existe plusieurs méthodes pour initialiser un masque de sélection. 
+            Depuis le menu d'image <guilabel>Sélection/Enregistrer dans un canal</guilabel>
+            disponible si vous avez une sélection active. Depuis le bouton au bas à gauche
+            de la fenêtre d'image qui va créer un
+            <link linkend="dialogs-quick-mask">Masque rapide</link> dont le contenu sera initialisé
+            avec la sélection active. Depuis le dialogue des canaux en cliquant sur le bouton
+            <guilabel>Nouveau canal</guilabel> ou depuis le menu clic-droit sur un canal.
+         </para>
+         <para>
+           Une fois le canal initialisé, activé (surligné en bleu), visible (l'icone
+           en forme d'oeil dans le dialogue) et affiché à votre convenance (attributs de
+           couleur et d'opacité) il devient possible de travailler dedans avec tous les 
+           outils de dessin classiques. Les couleurs utilisées sont évidemment importantes,
+           si vous utilisez autre chose que du blanc, du noir ou du gris ce sera la valeur
+           (luminosité) de la couleur qui sera utilisée pour définir un gris plus ou moins
+           clair. Une fois votre masque dessiné vous pouvez le transformer en sélection
+           depuis le bouton <guilabel>Canal vers sélection</guilabel> ou depuis le menu
+           contextuel.
+         </para>
+         <tip>
+           Il est tout à fait possible de travailler avec d'autres outils que les
+           outils de dessin dans les masques de sélection. Par exemple vous pouvez
+           utiliser les outils de sélection pour remplir des zones uniformément,
+           avec des motifs ou avec des dégradés. 
+           En cumulant ainsi plusieurs masques de sélection dans votre liste vous 
+           pouvez arriver à composer des sélections vraiment complexes avec 
+           beaucoup de souplesse, on peut dire qu'un masque de sélection est à une 
+           sélection ce qu'un calque est à une image.
+         </tip>
+         <caution>
+           Tant qu'un masque de sélection est activé vous travaillez dans le masque et
+           non pas dans l'image. Pour travailler à nouveau dans l'image vous devez
+           impérativement désactiver tous les masques de sélection. N'oubliez pas aussi
+           de désactiver l'affichage des masques dans l'image en enlevant l'icone en
+           forme d'oeil. Vérifiez aussi que vos canaux RVB et Alpha sont bien actifs et 
+           affichés dans l'image.
+         </caution>
+        </listitem> 
+      </varlistentry>    
+    </variablelist>    
+  </sect2>
+
+  <simplesect id="dialogs-quick-mask">
+      <title lang="en">Quick Mask</title>
+      <title lang="de" />
+      <title lang="fr">Masque rapide</title>    
+      <variablelist>
+      <mediaobject lang="en" >
+        <imageobject>
+          <imagedata fileref="../images/dialogs/dialogs-channel-quickmask.png" format="png" />
+        </imageobject>
+      </mediaobject>
+      <mediaobject lang="de" >
+        <imageobject>
+          <imagedata fileref="../images/dialogs/dialogs-channel-quickmask.png" format="png" />
+        </imageobject>
+      </mediaobject>
+      <mediaobject lang="fr" >
+        <imageobject>
+          <imagedata fileref="../images/dialogs/dialogs-channel-quickmask.png" format="png" />
+        </imageobject>
+      </mediaobject>      
+      <varlistentry>
+        <listitem lang="en">
+          <para>    
+            A <guilabel>Quick Mask</guilabel> is a Selection Mask (see above)
+            intended to be used temporarily to paint a selection.
+            Temporarily means that it will not be saved in the list after it's
+            transformation to selection unlike a normal selection mask.  
+          </para>
+          <para>
+            To initialize a <guilabel>Quick Mask</guilabel> click the left-bottom button
+            in the image window. If a selection was active in your image, then its content
+            appears unchanged while the outer is covered by a tranlucent red color.
+            If no selection was active then all the image is covered by a tranlucent 
+            red color. At every moment you can hide the mask by clicking on
+            <guiicon>
+              <inlinegraphic fileref="../images/dialogs/dialogs-icon-eye.png" />
+            </guiicon>            
+            icon in front of the <guilabel>QMask</guilabel>.
+            From the channel dialog you can double click on the name or the thumbnail
+            to edit the <guilabel>QMask</guilabel> attributs. Then you can change the
+            <guilabel>Opacity</guilabel> and its filling color.
+            Once a quick mask is initialized click on it to be sure it is selected
+            and blue highlighted in the list, and start to paint on it with any Gimp paint
+            tool. The mask is coded in gray tones, so you must use white or gray
+            to decrease the area limited by the mask and black to increase it.
+            The area painted in light or dark gray will be transition areas for the
+            selection like a feathering. When your mask is ready, click again on  
+            left-bottom button in the image window and quick mask will be removed
+            from channel list and converted to selection.             
+            Quick mask purpose is then to paint a selection and its 
+            transitions with the paint tools without worrying about managing 
+            selection masks. It's a good way to isolate a subject in a picture because
+            once the selection made you only have to remove its content (or inverse
+            if the subject is in the selection).
+          </para>              
+        </listitem>
+        <listitem lang="de" />       
+        <listitem lang="fr">   
+          <para>    
+            Un <guilabel>Masque Rapide</guilabel> est un Masque de sélection (voir
+            ci-dessus) destiné
+            à être utilisé temporairement pour créer graphiquement une sélection.
+            On entend par temporairement qu'il ne sera pas sauvegardé dans la liste
+            après avoir été transformé en sélection contrairement à un masque de 
+            sélection conventionnel.
+          </para>
+          <para>
+            Pour initialiser un <guilabel>Masque Rapide</guilabel> cliquez depuis la
+            fenêtre d'image dans le bouton en bas à gauche. Si dans votre image une
+            sélection était active alors le contenu de votre sélection apparait
+            inchangé tandis que ce qui entoure votre sélection est masqué par une
+            couleur rouge semi-transparente. Si aucune sélection n'était active, alors
+            tout est recouvert d'une couleur rouge semi-transparente. Vous pouvez à 
+            tout moment (dés)activer la visibilité du Masque en cliquant sur l'icone
+            <guiicon>
+              <inlinegraphic fileref="../images/dialogs/dialogs-icon-eye.png" />
+            </guiicon>
+            devant le <guilabel>QMask</guilabel>.
+            Depuis le dialogue des Canaux les paramètres du <guilabel>QMask</guilabel>
+            sont accessibles via un double-clic sur son nom ou sa vignette 
+            <guiicon>
+               <inlinegraphic fileref='../images/dialogs/dialogs-icon-edit.png' format='png'/>
+            </guiicon>                   
+            vous pouvez dès lors changer l'<guilabel>Opacité</guilabel> et la
+            Couleur de remplissage.
+            Une fois qu'un Masque rapide est initialisé, cliquez dessus pour être sûr
+            qu'il soit activé et surligné en bleu dans la liste, vous pouvez dessiner
+            dedans avec tous les outils de dessin de Gimp. Attention le masque est
+            codé en niveaux de gris, il faut donc utiliser du blanc ou du gris
+            pour diminuer la zone délimitée par la masque et du noir pour l'augmenter.
+            Les zones dessinées en gris clair ou foncé seront des zones de transitions pour
+            la sélection, l'équivalent d'un adoucissement.
+            Une fois votre Masque rapide terminé cliquez à nouveau dans la fenêtre d'image
+            dans le bouton en bas à gauche. Le Masque rapide est supprimé dans la liste
+            des canaux et transformé en sélection. Le Masque rapide sert donc
+            à dessiner une sélection, y compris les transitions, avec les outils de dessin
+            de Gimp sans se soucier d'une quelconque gestion des masques de sélection. 
+            Il est parfaitement adapté pour détourer un sujet dans une photographie car une
+            fois la sélection obtenue il suffit d'effacer son contenu (ou l'inverse si le sujet
+            est dans la sélection).
+          </para>
+        </listitem> 
+      </varlistentry>    
+    </variablelist>    
+  </simplesect>
+  
+</sect1>
