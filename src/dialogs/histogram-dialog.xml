@@ -2,10 +2,13 @@
 
 <sect1 id='gimp-histogram-dialog'>
   <title lang="en">Histogram dialog</title>
+  <title lang="zh_CN">柱状图对话框</title>
 
   <indexterm>
     <primary lang="en">Dialog</primary>
+    <primary lang="zh_CN">对话框</primary>
     <secondary lang="en">Histogram</secondary>
+    <secondary lang="zh_CN">柱状图</secondary>
   </indexterm>
 
   <informalfigure>
@@ -16,9 +19,19 @@
         format="PNG"/>  
       </imageobject>
     </mediaobject>
+    <mediaobject>
+      <imageobject lang="zh_CN">
+        <imagedata
+        fileref='../images/dialogs/dialogs-histogram-basic.png'
+        format="PNG"/>  
+      </imageobject>
+    </mediaobject>
     <caption>
       <para lang='en'>
         The Histogram dialog
+      </para>
+      <para lang="zh_CN">
+        柱状图对话框
       </para>
     </caption>
   </informalfigure>
@@ -34,10 +47,19 @@
     histogram-based color correction, use the <link
     linkend='gimp-tool-levels'>Levels</link> tool.
   </para>
+
+  <para lang="zh_CN">
+    柱状图对话框显示当前活动图像的色彩值的统计分布信息，该信息在当您要对一个图像进行<emphasis>色彩平衡</emphasis>时通常很有用。不过，柱状图对话框只是提供信息的：使用它不能对图像有任何改变。如果要对一个图像进行基于柱状图的色彩修正，请使用<link linkend='gimp-tool-levels'>色阶</link>工具。
+  </para>
+
   <para lang='en'>
     This is a dockable dialog; see the section on <link
     linkend='gimp-docks'>Dialogs and Docking</link> for help on
     manipulating it.  It can be activated in two ways:
+  </para>
+
+  <para lang="zh_CN">
+    这是一个可停靠对话框；请看<link linkend='gimp-docks'>对话框和停靠栏</link>。有两种方法开启它：
   </para>
 
   <itemizedlist>
@@ -50,6 +72,15 @@
           <guimenuitem>Histogram</guimenuitem>
         </menuchoice>
       </para>
+
+      <para lang="zh_CN">
+        从工具栏菜单中：
+        <menuchoice>
+          <guimenu>文件</guimenu>
+          <guisubmenu>对话框</guisubmenu>
+          <guimenuitem>柱状图</guimenuitem>
+        </menuchoice>
+      </para>
     </listitem>
 
     <listitem>
@@ -60,11 +91,20 @@
           <guimenuitem>Histogram</guimenuitem>
         </menuchoice>
       </para>
+
+      <para lang="zh_CN">   
+        从图像菜单中：
+        <menuchoice>
+          <guimenu>对话框</guimenu>
+          <guimenuitem>柱状图</guimenuitem>
+        </menuchoice>
+      </para>
     </listitem>
   </itemizedlist>
 
   <simplesect>
     <title lang='en'>About Histograms</title>
+    <title lang="zh_CN">关于柱状图</title>
     
     <para lang='en'>
       In GIMP, each layer of an image can be decomposed into one or
@@ -77,6 +117,11 @@
       color channels.  A transparent pixel is encoded by 0 on the
       alpha channel; an opaque pixel by 255.
     </para>
+
+    <para lang="zh_CN">
+      GIMP 中，一个图像的每个图层都可以分解成一个或多个颜色通道：对 RGB 图像而言，是红色，绿色和蓝色通道；对于灰度图像而言，则是单独的一个亮度通道。支持透明的图层会有一个附加通道-- alpha 通道。每个通道其强度值取值为 0 到 255 (整数值)，因此，一个黑色像素在所有颜色通道其值为 0，而一个白色像素其值为 255。一个透明像素在 alpha 通道取值为 0，反之，一个不透明像素为 255。
+    </para>
+
     <para lang='en'>
       For RGB images, it is convenient to define a Value "pseudochannel".
       This is not a real color channel:  it does not reflect
@@ -89,16 +134,31 @@
       you would get at that pixel if you converted the image to
       Grayscale mode.
     </para>
+
+    <para lang="zh_CN">
+      对于 RGB 图像，为方便起见，我们定义了“亮度”这个“伪通道”，它不是一个真正的颜色通道：并不反映直接保存在图像上的任何信息，相反，一个像素的亮度可以表示成
+      <inlineequation>
+        亮度 = (红 + 绿 + 蓝)/3
+      </inlineequation>，
+      并四舍五入为整数。一般来说，在某点像素的“亮度”就是当把图像转换为灰度模式时那点的亮度值。
+    </para>
+
     <para lang='en'>
       For more information on channels, please consult the <link
       linkend='gimp-using-images'>Working with Images</link> section.
     </para>
 
+    <para lang="zh_CN">
+      关于通道的更多信息，请看<link linkend='gimp-using-images'>了解图像</link>这章。
+    </para>
+
     <variablelist>
       <title lang='en'>Using the Histogram dialog</title>
+      <title lang="zh_CN">使用柱状图对话框</title>
 
       <varlistentry>
         <term lang='en'>Channel</term>
+        <term lang="zh_CN">通道</term>
         <listitem lang='en'>
           <informalfigure>
             <mediaobject>
@@ -187,10 +247,82 @@
             </varlistentry>
            </variablelist>
         </listitem>
+
+        <listitem lang="zh_CN">
+          <informalfigure>
+            <mediaobject>
+              <imageobject>
+                <imagedata
+                  fileref='../images/dialogs/dialogs-histogram-menu.png'
+                  format="PNG"/>  
+              </imageobject>
+            </mediaobject>
+            <caption>
+              <para lang="zh_CN">
+                一个带 alpha 通道的图层的通道选项。
+              </para>
+            </caption>
+          </informalfigure>
+          <para>
+            通过它可以选择将使用的通道，其可选范围有当前图层的图层类型决定。下面是您可能遇到的选择及其所表示的意思：
+          </para>
+          <variablelist>
+            <varlistentry>
+              <term>亮度</term>
+              <listitem>
+                <para>
+                  对于 RGB 和 灰度图像，它表示图层上不同明亮度的分布情况。如果是个灰度图像，将直接从图像数据中读取，而如果是个 RGB 图像，就从“亮度”这个伪通道中获取。
+                </para>
+                <para>
+                  对于索引图像，其“亮度”通道实际上是表示每个颜色表索引的频率分布情况：因此，它是一个“伪色彩”柱状图。
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>红色, 绿色, 蓝色</term>
+              <listitem>
+                <para>
+                  它们只在 RGB 图像中的图层出现，分别显示红色，绿色和蓝色通道不同强度的分布。
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Alpha</term>
+              <listitem>
+                <para>
+                  它表示不透明程度的分布情况。假如图层是完全不透明或透明，其将在柱状图上显示为一个在左边界或右边界处的竖条。
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>RGB</term>
+              <listitem>
+                <informalfigure>
+                  <mediaobject>
+                    <imageobject>
+                      <imagedata
+                        fileref='../images/dialogs/dialogs-histogram-rgb.png'
+                        format="PNG"/>  
+                      </imageobject>
+                    </mediaobject>
+                    <caption>
+                    <para>
+                      将红色，绿色和蓝色通道结合。
+                    </para>
+                  </caption>
+                </informalfigure>
+                <para>
+                  它只出现在 RGB 图层中，它将红色，绿色和蓝色柱状图重叠在一起，这样可以在同时看到所有的颜色分布情况。
+                </para>
+              </listitem>
+            </varlistentry>
+           </variablelist>
+        </listitem>
       </varlistentry>
     
       <varlistentry>
         <term lang='en'>Linear/Logarithmic buttons</term>
+        <term lang="zh_CN">线性/对数按钮</term>
         <listitem lang='en'>
           <informalfigure>
             <mediaobject>
@@ -217,10 +349,34 @@
             histogram will often be more useful.  
           </para>
         </listitem>
+
+        <listitem lang="zh_CN">
+          <informalfigure>
+            <mediaobject>
+              <imageobject>
+                <imagedata
+                  fileref='../images/dialogs/dialogs-histogram-log.png'
+                  format="PNG"/>  
+              </imageobject>
+            </mediaobject>
+
+            <caption>
+              <para>
+                上面的柱状图用对数模式显示。
+                mode. 
+              </para>
+            </caption>
+          </informalfigure>
+
+          <para>
+            这些按钮决定柱状图是用一个线性的还是一个对数的 Y 轴显示。对于基于照片的图像，线性模式更有用，而对于那些包含大量连续颜色区域的图像，线性柱状图常常都是些单个的竖条，这时对数柱状图就更为有用。
+          </para>
+        </listitem>
       </varlistentry>
     
       <varlistentry>
         <term lang='en'>Range Setting</term>
+        <term lang="zh_CN">强度范围</term>
         <listitem lang='en'>
           <informalfigure>
             <mediaobject>
@@ -263,10 +419,50 @@
             </listitem>
           </itemizedlist>
         </listitem>
+
+        <listitem lang="zh_CN">
+          <informalfigure>
+            <mediaobject>
+              <imageobject>
+                <imagedata
+                  fileref='../images/dialogs/dialogs-histogram-range.png'
+                  format="PNG"/>  
+              </imageobject>
+            </mediaobject>
+
+            <caption>
+              <para>
+                在设定一个范围后的显示。
+              </para>
+            </caption>
+          </informalfigure>
+
+          <para>
+            通过它您可以缩小分析范围，对话框底部是统计数字。有三种方法来设定范围：
+          </para>
+          <itemizedlist>
+            <listitem>
+              <para>
+                在柱状图显示区域您所要范围的左边界处点击左键，并拖动到所要范围的右边界处。
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                点击柱状图下面滑条上的黑色或白色三角并拖动它们。
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                用滑条下的上下箭头(左边的：范围的左边界；右边的：范围的右边界)。
+              </para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
       </varlistentry>
     
       <varlistentry>
         <term lang='en'>Statistics</term>
+        <term lang="zh_CN">统计数字</term>
         <listitem lang='en'>
           <para>
             At the bottom of the dialog are shown some basic
@@ -276,6 +472,12 @@
             portion; the number of pixels in the image; the number
             whose values fall within the selected range; and the
             percentage whose values fall within the selected range.
+          </para>
+        </listitem>
+
+        <listitem lang="zh_CN">
+          <para>
+            对话框下面显示的是在选定范围内通道值分布情况的一些基本统计数字。其中包括选中柱状图范围的平均值，标准偏差和中值，以及选中范围在整个柱状图中所占的百分比。
           </para>
         </listitem>
       </varlistentry>

@@ -2,10 +2,13 @@
 
 <sect1 id='gimp-indexed-palette-dialog'>
   <title lang="en">Indexed Palette dialog</title>
+  <title lang="zh_CN">索引色板对话框</title>
 
   <indexterm>
     <primary lang="en">Dialog</primary>
+    <primary lang="zh_CN">对话框</primary>
     <secondary lang="en">Indexed Palette</secondary>
+    <secondary lang="zh_CN">索引色板</secondary>
   </indexterm>
 
   <informalfigure>
@@ -15,10 +18,20 @@
         fileref='../images/dialogs/dialogs-indexed-palette.png'
         format="PNG"/>  
       </imageobject>
+
+      <imageobject lang="zh_CN">
+        <imagedata
+        fileref='../images/dialogs/dialogs-indexed-palette.png'
+        format="PNG"/>  
+      </imageobject>
     </mediaobject>
     <caption>
       <para lang='en'>
         The Indexed Palette dialog
+      </para>
+
+      <para lang="zh_CN">
+        索引色板对话框
       </para>
     </caption>
   </informalfigure>
@@ -33,6 +46,10 @@
     manipulating it.  It can be activated in two ways:
   </para>
 
+  <para lang="zh_CN">
+    通过索引对话框可以编辑索引图像的颜色表。(当活动图像模式为 RGB 或灰度时，该对话框是空的并且不可用。)它是一个可停靠的对话框；请看<link linkend='gimp-docks'>对话框和停靠栏</link>。有两种方法开启它：
+  </para>
+
   <itemizedlist>
     <listitem>
       <para lang='en'>   
@@ -41,6 +58,15 @@
           <guimenu>File</guimenu>
           <guisubmenu>Dialogs</guisubmenu>
           <guimenuitem>Indexed Palette</guimenuitem>
+        </menuchoice>
+      </para>
+
+      <para lang="zh_CN">   
+        从工具栏菜单中：
+        <menuchoice>
+          <guimenu>文件</guimenu>
+          <guisubmenu>对话框</guisubmenu>
+          <guimenuitem>索引色板</guimenuitem>
         </menuchoice>
       </para>
     </listitem>
@@ -53,11 +79,20 @@
           <guimenuitem>Indexed Palette</guimenuitem>
         </menuchoice>
       </para>
+
+      <para lang="zh_CN">   
+        从图像菜单中：
+        <menuchoice>
+          <guimenu>对话框</guimenu>
+          <guimenuitem>索引色板</guimenuitem>
+        </menuchoice>
+      </para>
     </listitem>
   </itemizedlist>
 
   <simplesect>
     <title lang='en'>Colormaps and Indexed Images</title>
+    <title lang="zh_CN">颜色表和索引图像</title>
     
     <para lang='en'>
       In an Indexed image, colors are assigned to pixels by an
@@ -69,6 +104,11 @@
       to an index or the order they appear in:  any index can be
       assigned any color.  
     </para>
+
+    <para lang="zh_CN">
+      在索引图像中，颜色通过间接地方式指定给像素，即从<emphasis>颜色表</emphasis>中进行查找。GIMP 中，颜色表最多只能有 256 个项，其中从 0 到 255 的每个索引都被指定为任意的一种 RGB 颜色。对于每个索引的颜色或它们的顺序都没有约束：任何索引可以被指定为任何颜色。
+    </para>
+
     <para lang='en'>
       In an Indexed image, instead of being assigned a color directly
       (as happens in RGB and Grayscale images), each pixel is assigned
@@ -76,6 +116,11 @@
       pixel, GIMP looks up the index in the image's colormap.  Each
       indexed image has its own private colormap.
     </para>
+
+    <para lang="zh_CN">
+      在索引图像中，每个像素不是直接被赋予一种颜色(RGB 和 灰度图像则是这样)，而是给它们指定一个颜色表，通过它来决定该像素该显示为哪种颜色。GIMP 在图像的颜色表中查找索引，每个索引图像都有自己的颜色表。
+    </para>
+
     <para lang='en'>
       It is important to realize that the colors in the colormap are
       the <emphasis>only colors available</emphasis> for an indexed
@@ -87,6 +132,11 @@
       limited or poorly chosen, this can easily produce very poor
       image quality.
     </para>
+
+    <para lang="zh_CN">
+      需要注意的是，一个索引图像颜色表中的颜色是它<emphasis>唯一可使用</emphasis>的颜色(除非您在颜色表中添加新颜色)，这对很多 GIMP 操作都有影响：比如在进行一个图像填充时，GIMP 就常常在颜色表中无法找到正确的颜色，因此只能通过“抖动”来估计。当颜色表中颜色很有限或选得很差时，很容易产生很差的图像质量。
+    </para>
+
     <para lang='en'>
       The Indexed Palette dialog allows you to alter the colormap for an
       image, either by creating new entries, or by changing the colors
@@ -96,15 +146,26 @@
       assigned that index.  The entries are numbered with 0 in the
       upper left corner, 1 to its right, etc.
     </para>
+      
+    <para lang="zh_CN">
+      通过索引色板对话框可以在图像的颜色表中添加颜色项，或改变现有颜色项。当改变一个给定索引的颜色时，您就能看到它对图像产生的影响，即被指定为该索引的所有像素其颜色都将改变。值为 0 的项在最左上角，1 则在它右边，依此类推。
+    </para>
+
     <para lang='en'>
       Here are the operations you can perform using this dialog:
     </para>
 
+    <para lang="zh_CN">
+      用该对话框可以进行下列操作：
+    </para>
+
     <variablelist>
       <title lang='en'>Using the Indexed Palette dialog</title>
+      <title lang="zh_CN">使用索引色板对话框</title>
 
       <varlistentry>
         <term lang='en'>Click on a color entry</term>
+        <term lang="zh_CN">点击一个颜色项</term>
         <listitem lang='en'>
           <para>
             This sets GIMP's foreground color to the color you click
@@ -112,20 +173,34 @@
             color will be used for the next painting operation you do.
           </para>
         </listitem>
+
+        <listitem lang="zh_CN">
+          <para>
+            它将把您点击的颜色设为 GIMP 的前景色，这样可以在下次绘画操作中使用。
+          </para>
+        </listitem>
       </varlistentry>
     
       <varlistentry>
         <term lang='en'>Ctrl-click on a color entry</term>
+         <term lang="zh_CN">Ctrl-点击一个颜色项</term>
         <listitem lang='en'>
           <para>
             This sets GIMP's background color to the color you click
             on, as shown in the Toolbox color area.
           </para>
         </listitem>
+
+        <listitem lang="zh_CN">
+          <para>
+            它将把您点击的颜色设为 GIMP 的背景色。
+          </para>
+        </listitem>
       </varlistentry>
     
       <varlistentry>
         <term lang='en'>Double-click on a color entry</term>
+         <term lang="zh_CN">双击一个颜色项</term>
         <listitem lang='en'>
           <para>
             This sets GIMP's foreground color to the color you click
@@ -133,20 +208,34 @@
             change that colormap entry to a new color.
           </para>
         </listitem>
+    
+        <listitem lang="zh_CN">
+          <para>
+            它将把您点击的颜色设为 GIMP 的前景色，同时打开一个颜色编辑器，在其中可以改变该颜色表项为一个新颜色。
+          </para>
+        </listitem>
       </varlistentry>
     
       <varlistentry>
         <term lang='en'>Color index</term>
+         <term lang="zh_CN">颜色索引</term>
         <listitem lang='en'>
           <para>
             You can select a different colormap entry by typing its
             index here, or clicking the spinbutton to the right.
           </para>
         </listitem>
+
+        <listitem lang="zh_CN">
+          <para>
+            您可以通过在其中输入索引值或点击右边的上下箭头来选取一个不同的颜色表项。
+          </para>
+        </listitem>
       </varlistentry>
     
       <varlistentry>
         <term lang='en'>Hex triplet</term>
+        <term lang="zh_CN">十六进制值</term>
         <listitem lang='en'>
           <para>
             This area shows a hex-code representation (such as is used
@@ -155,11 +244,18 @@
             using a Color Editor, if you want to.
           </para>
         </listitem>
+
+        <listitem lang="zh_CN">
+          <para>
+            该区域显示当前选取颜色表项的十六进制代码(如 HTML 中所使用的)。如果您愿意，可以在这里编辑颜色，而不用使用颜色编辑器。
+          </para>
+        </listitem>
       </varlistentry>
     
       <varlistentry>
         <anchor id='gimp-indexed-palette-edit' />
         <term lang='en'>Edit color</term>
+         <term lang="zh_CN">编辑颜色</term>
         <listitem lang='en'>
           <para>
             This button (in the lower left corner of the dialog)
@@ -169,11 +265,18 @@
             that it does not set GIMP's foreground color.
           </para>
         </listitem>
+
+        <listitem lang="zh_CN">
+          <para>
+            该按钮(在对话框的左下角)可以弹出一个颜色编辑器，让您改变当前选取的颜色表项的颜色。其效果和双击一个项几乎相同，除了不设定 GIMP 的前景色。
+          </para>
+        </listitem>
       </varlistentry>
     
       <varlistentry>
         <anchor id='gimp-indexed-palette-add' />
         <term lang='en'>Add color</term>
+         <term lang="zh_CN">添加颜色</term>
         <listitem lang='en'>
           <para>
             This button (in the lower right corner of the dialog)
@@ -185,6 +288,12 @@
             added.  (If the colormap contains 256 entries, it is full,
             and trying to add more will have no effect.)
           </para>
+        </listitem>
+
+        <listitem lang="zh_CN">
+          <para>
+            该按钮(在对话框右下角)让您在颜色表中添加一种新颜色。点击该按钮时，显示在工具箱的当前前景色将添加在颜色表的尾部。而<keycap>Ctrl</keycap>-点击按钮时，将添加背景色。(如果颜色表已经有 256 个项，表示它已经满了，就无法再添加了。)
+         </para>
         </listitem>
       </varlistentry>
     
@@ -201,10 +310,22 @@
       in the image menu.
     </tip>
 
+    <tip lang="zh_CN">
+      当操作错误时，可以撤消它：将光标放在在颜色表被改变的图像中，然后按下 <keycap>Ctrl-Z</keycap> 或在图像菜单中选取
+      <menuchoice>
+        <guimenu>编辑</guimenu>
+        <guimenuitem>撤消</guimenuitem>
+      </menuchoice>。
+    </tip>
+
     <note lang='en'> 
       This dialog is not the only way of altering the colormap for an
       indexed image.  The color tools, such as Brightness/Contrast,
       Hue/Saturation, etc, also change the colors in the colormap.
+    </note>
+
+    <note lang="zh_CN">
+      该对话框不是改变一个索引图像颜色变的唯一方法，也可以通过颜色工具，如亮度/对比度，色调/饱和度等。
     </note>
    
   </simplesect>
