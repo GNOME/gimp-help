@@ -12,6 +12,11 @@ commands to install the prebuilt help:
  make
  make install  (you need root priviledges for this last step)
 
+In order for configure to locate the GIMP installation, pkg-config
+needs to find gimp-2.0.pc. This file is installed with GIMP. If you
+installed GIMP by means of binary package, you may have to install
+the GIMP development package that provides gimp-2.0.pc.
+
 
 If you want to work on the help content, you should enable the build
 of the help files by using the --enable-build configure option:
@@ -21,6 +26,7 @@ of the help files by using the --enable-build configure option:
 The GIMP help documents are written in Docbook XML. Since the GIMP
 help browser wants HTML files, the documents need to be converted.
 This is done as an XSLT [1] using xsltproc [2].
+
 
 If you encounter any problems during the build, these are likely
 caused by the XSLT processor not being able to locate stylesheets it
@@ -32,15 +38,18 @@ explicitely, for example:
 
  ./configure --with-xsl=/usr/share/sgml/docbook/stylesheet/xsl/nwalsh
 
+
 By default we do not allow the XSLT processor to attempt to download
 external resources. If you have a fast internet connection, it may be
 useful to allow xsltproc to fetch DTDs or entities over the network:
 
  ./configure --enable-network
 
+
 If you want to test the built help files without installing them, you
 can create a symlink from $prefix/share/gimp/2.0/help to the html
 directory or set the environment variable GIMP2_HELP_URI.
+
 
 In case you just want to play with the help files without having GIMP
 installed, you can disable the check for gimp-2.0 like this:
