@@ -29,25 +29,96 @@
     specific part of the image.
   </para>
 
+  <simplesect id='gimp-image-crop'>
+    <title lang='en'>Crop Image</title>
+
+    <para lang='en'>
+      This command can be accessed from an image menubar as 
+      <menuchoice>
+        <guimenu>Image</guimenu>
+        <guimenuitem>Crop Image</guimenuitem>
+      </menuchoice>.
+    </para>
+    <para lang='en'>   
+      "Crop Image" crops the image to the selection bounds, by
+      removing any strips at the edges whose contents are all
+      completely unselected.  Areas that are partially selected (for
+      example, by feathering) are not cropped away.  If no selection
+      exists for the image, the menu entry will be insensitive.
+    </para>
+  </simplesect>
+
+  <simplesect id='plug-in-autocrop'>
+    <title lang='en'>Autocrop Image</title>
+    <title lang="fr">Découpage automatique</title> 
+
+    <para lang='en'>
+      This command can be accessed from an image menubar as 
+      <menuchoice>
+        <guimenu>Image</guimenu>
+        <guimenuitem>Autocrop Image</guimenuitem>
+      </menuchoice>.
+    </para>
+    <para lang='en'>   
+      "Autocrop Image" removes borders from an image.  It searches the
+      active layer for the largest possible border area that all has
+      the same color, and then crops this area from the image, just as
+      though you had used the Crop tool.
+    </para>
+    <caution lang='en'>
+      Note carefully that this command only uses the <emphasis>active
+      layer</emphasis> of the image to find borders.  If other layers
+      have color variations extending into the border zone of the
+      active layer, they will be cropped away.
+    </caution>
+
+    <para lang='fr'>
+      Cette fonction automatise le Découpage de l'image, à la différence 
+      de <link linkend='gimp-tool-crop'>l'outil Découpage</link> qui
+      vous permet de définir manuellement la zone à découper.  
+    </para> 
+    <para lang='fr'> 
+      Elle est en fait à réserver au cas où vous avez un sujet perdu 
+      dans un fond uni trop grand: la nouvelle image sera recadrée aux 
+      dimensions du sujet. 
+    </para>
+    <para lang='fr'>
+      Dans les autres cas, le résultat risque d'être aléatoire. En 
+      particulier, si votre image a plusieurs calques, le découpage se 
+      basera sur le calque actif et appliquera les mêmes dimensions aux 
+      autres calques, ce qui peut occasionner d'importantes pertes 
+      d'informations. 
+    </para>
+  </simplesect>
+
+
   <simplesect>
     <title lang='en'>Merge Visible Layers</title>
     <title lang='fr'>Fusionner les calques visibles</title>
     <title lang='de'>Sichtbare Ebenen vereinen</title>
 
+    <para lang='en'>
+      This command can be accessed from an image menubar as 
+      <menuchoice>
+        <guimenu>Image</guimenu>
+        <guimenuitem>Merge Visible Layers</guimenuitem>
+      </menuchoice>.
+    </para>
     <para lang='en'>   
-      This item merges all visible layers of the image (that is, all
-      layers for which an "eye" symbol is shown in the Layers dialog)
+      "Merge Visible Layers" merges all layers of the image for which
+      an "eye" symbol is shown in the Layers dialog
       into a single layer, leaving non-visible layers untouched.  It
       is useful for merging a set of layers that may be scattered
       around the layer list.  Selecting it brings up a dialog that
       asks you to choose between three options for the size of the
-      final, merged layer:  "Expanded as necessary", meaning that it
+      final, merged layer:  "Expanded as necessary" means that it
       will be made as small as possible without losing any of the
-      contents of the merged layers; "Clipped to image", meaning it
+      contents of the merged layers; "Clipped to image" means it
       will be set to the size of the image and any layer contents
-      outside the image bounds will be lost; or "Clipped to bottom
-      layer", whose meaning should be clear.
+      outside the image bounds will be lost; and "Clipped to bottom
+      layer" means what it says.
     </para>
+
     <para lang='fr'>
       <guilabel>Fusionner les calques visibles</guilabel> :
       permet de fusionner les calques visibles, ceux qui sont
@@ -69,13 +140,21 @@
     </para>
   </simplesect>
 
+
   <simplesect>
-    <title lang='en'>Flatten image</title>
+    <title lang='en'>Flatten Image</title>
     <title lang='fr'>Aplatir l'image</title>
     <title lang='de'>Bild zusammefügen</title>
 
+    <para lang='en'>
+      This command can be accessed from an image menubar as 
+      <menuchoice>
+        <guimenu>Image</guimenu>
+        <guimenuitem>Flatten Image</guimenuitem>
+      </menuchoice>.
+    </para>
     <para lang='en'>   
-      This item causes all of the layers of the image to be merged
+      "Flatten Image" causes all of the layers of the image to be merged
       into a single layer with no alpha channel, with the same
       appearance as the full image viewed from the top.  If there are
       any areas with transparency all the way through to the bottom of
@@ -84,6 +163,7 @@
       exporting an image, if you save it in a format that does not
       support layers.
     </para>
+
     <para lang='fr'>
       <guilabel>Aplatir l'image</guilabel> :
       permet de fusionner l'ensemble des calques dans un
