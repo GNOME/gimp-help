@@ -16,9 +16,11 @@
   </mediaobject>
   <para lang="en">
     The <link linkend="gimp-tools-selection">selection tools</link> 
-		sometimes show their limits when they have to be used for doing 
-		complex drawing selection, as progressive. In this case, 
-		using the QuickMask is a good idea which can give very good results.
+	sometimes show their limits when they have to be used for creating 
+	a complex selection. In these cases, 
+	using the QuickMask can make things much easier.  Simply put,
+	the QuickMask allows you to paint a selection instead of just
+	tracing its outline.                             
   </para>
   <para lang="fr">
 	  Les <link linkend="gimp-tools-selection">outils de sélection</link> 
@@ -32,6 +34,7 @@
     Om detta är fallet, då är snabbmask en god idé att använda vilket
     kan ge goda resultat.
   </para>
+
   <simplesect>
     <title lang="en">Overview</title>
     <title lang="fr">Généralités</title>
@@ -39,27 +42,65 @@
     <variablelist>
       <varlistentry>
         <listitem lang="en">
+	  <para>
+	    Normally when you create a selection in Gimp, you see it
+	    represented by the "marching ants" that trace along its
+	    outline.  But really there may be a lot more to a
+	    selection than the marching ants show you: in Gimp a
+	    selection is actually a full-fledged grayscale channel,
+	    covering the image, with pixel values ranging from 0
+	    (unselected) to 256 (fully selected).  The marching ants
+	    are drawn along a contour of half-selected pixels.  Thus,
+	    what the marching ants show you as either-or---inside or
+	    outside the boundary---is really just a slice through a
+	    continuum. 
+	  </para>
           <para>
-            To activate the QuickMask click on the left-bottom button 
-						showed in red on the screeshot above or select in the image window menu 
-						<guimenuitem><accel>S</accel>elect/Toggle <accel>Q</accel>uickMask</guimenuitem>. 
-						It can also be activated by using <keycap>Shift+Q</keycap> shortcut.
+	    The QuickMask is Gimp's way of showing you the full
+            structure of the selection.  Activating it also gives you
+            the ability to interact with the selection in new, and
+            substantially more powerful, ways.  To activate the
+            QuickMask,  click on the small red-outlined button at the
+            lower left of the image window.  The button is a toggle,
+            so clicking it again will return you to normal
+            marching-ant mode.  You can also activate the QuickMask by
+            selecting in the image
+            window menu  <guimenuitem><accel>S</accel>elect/Toggle
+            <accel>Q</accel>uickMask</guimenuitem>, or by using
+            the <keycap>Shift+Q</keycap> shortcut. 
           </para>
           <para>
-            This command generate a temporary 8-bit (0-255) channel, on which the 
-						progressive selection work is stored. If a selection is already present 
-						the mask is initialized with the content of the selection. 
-						Once QuickMask has been activated, the image is covered by a 
-						red semi-transparent veil. This one representes the non-selected pixels. 
-						Any <link linkend="gimp-tools-paint">paint tool</link> can be used 
-						to create the selection on the QuickMask. They should use only greyscale color, 
-						conforming the channel properties, white enabling to define the future selected place. 
-						The selection will be displayed as soon as the QuickMask will be toggled 
-						but its temporary channel will not be available anymore.
-          </para>
+	    Activating the QuickMask shows you the selection as though
+            it were a translucent screen overlying the image, whose
+            transparency at each pixel indicates the degree to which
+            that pixel is selected.  By default the mask is shown in
+            red, but you can change this if another mask color would
+            be more convenient.  The less a pixel is selected, the
+            more it is obscured by the mask.  Fully selected pixels
+            are shown completely clear.
+           </para>
+	  <para>
+	    When you are in QuickMask mode, many image manipulations
+	    act on the selection channel rather than the image
+	    itself.  This includes, in particular, paint tools.
+	    Painting with white causes the painted pixels to be
+	    selected; painting with black causes them to be
+	    unselected.  You can use any of the paint tools, as well
+	    as the bucket fill and gradient fill tools, in this way.
+	    Advanced users of the Gimp learn that "painting the
+	    selection" is the easiest and most effective way to
+	    delicately manipulate it.
+	  </para>
           <tip>
-            To save in a channel the selection done with the Quickmask select in the image menu
+            To save in a channel the selection done with the Quickmask
+            select in the image menu 
             <guimenuitem>Select/Save to Channel</guimenuitem>
+          </tip>
+          <tip>
+	    When QuickMask is active, Cut and Paste act on the
+	    selection rather than the image.  You can sometimes make
+	    use of this as the most convenient way of transferring a
+	    selection from one image to another.
           </tip>
           <para>
             You can learn more on <link linkend="gimp-qmask">Quickmask</link> 
@@ -137,46 +178,76 @@
     </variablelist>
   </simplesect>
 
-	<simplesect>
+  <simplesect>
+    <title lang="en">Properties</title>
+    <para lang="en">
+	There are two QuickMask properties you can change by
+	right-clicking on the QuickMask button.
+    </para>
+    <itemizedlist>
+      <listitem lang="en">
+	  <para>
+	    Normally the QuickMask shows unselected areas "fogged
+	    over" and selected areas "in clear", but you can reverse
+	    this by choosing "Mask Selected Areas" instead of the
+	    default "Mask Unselected Areas".
+	  </para>
+      </listitem>
+      <listitem lang="en">
+	  <para>
+	    By choosing "Configure Color and Opacity", you can bring
+	    up a dialog that allows you to set these to values other
+	    than the defaults, which are red at 50% opacity.
+	  </para>
+      </listitem>
+    </itemizedlist>
+  </simplesect>
+
+  <simplesect>
     <title lang="en">Usage</title>
     <title lang="fr">Utilisation</title>
     <title lang="sv">Hantering</title>
-		<para lang="en"></para>
-		<para lang="fr"></para>
+    <para lang="en"></para>
+    <para lang="fr"></para>
     <para lang="sv"></para>
-		<procedure lang="en">
-			<step>
-			  Open an image or begin a new document;
-			</step>
-			<step>
-			  Activate the Quickmask using the left-bottom button in the image window. 
-				If a selection is present the mask is initialized with the content of the selection;
-      </step>
-      <step>
-			  Choose a drawing tool and use it with greyscale colors on the QuickMask;
-      </step>
-      <step>
-			  Deactivate the Quickmask using the left-bottom button in the image window;
-      </step>
-		</procedure>
-		<procedure lang="fr">
-			<step>
-			  Ouvrir une image ou commencer un nouveau document;
-			</step>
-			<step>
-			  Activer le Masque Rapide en utilisant le bouton Masque rapide 
-				en bas à gauche de la fenêtre d'image. Si une sélection est présente, 
-				le masque est initialisé avec le contenu de la sélection;    
-      </step>
-      <step>
-			  Choisissez et paramétrez un outil de dessin dans la boite à 
-				outils puis utilisez cet outil pour dessiner sur le masque en niveaux de gris;
-      </step>
-      <step>
-			  Désactiver le Masque Rapide en utilisant le bouton Masque 
-				rapide en bas à gauche de la fenêtre d'image;    .
-      </step>
-		</procedure>
+    <procedure lang="en">	
+	<step>
+	    Open an image or begin a new document;
+	</step>
+	<step>
+	    Activate the Quickmask using the left-bottom button in the
+	    image window.  If a selection is present the mask is
+	    initialized with the content of the selection; 
+	</step>
+	<step>
+	    Choose any drawing tool and use it with greyscale colors on
+	    the QuickMask; 
+	</step>
+	<step>
+	    Toggle off the Quickmask using the left-bottom button in
+	    the image window; 
+	</step>
+    </procedure>
+    <procedure lang="fr">
+	<step>
+	    Ouvrir une image ou commencer un nouveau document;
+	</step>
+	<step>
+	    Activer le Masque Rapide en utilisant le bouton Masque
+	    rapide en bas à gauche de la fenêtre d'image. Si une
+	    sélection est présente, le masque est initialisé avec le
+	    contenu de la sélection;     
+	</step>
+	<step>
+	    Choisissez et paramétrez un outil de dessin dans la boite
+	    à outils puis utilisez cet outil pour dessiner sur le
+	    masque en niveaux de gris; 
+	</step>
+	<step>
+	    Désactiver le Masque Rapide en utilisant le bouton Masque 
+	    rapide en bas à gauche de la fenêtre d'image;    .
+	</step>
+    </procedure>
     <procedure lang="sv">
       <step>
         Öppna en bild eller skapa en ny;
@@ -193,6 +264,6 @@
         Inaktivera snabbmask genom att klicka på samma ikon i bildfönstret.
       </step>
     </procedure>
-	</simplesect>
+  </simplesect>
 
 </sect2>
