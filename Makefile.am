@@ -27,9 +27,13 @@ XML_FILES = \
 DTD_FILES = \
 	$(top_srcdir)/src/linkset.dtd
 
+CSS_DIRS = \
+	$(top_srcdir)/stylesheets
+
 CSS_FILES = \
-	$(top_srcdir)/stylesheets/gimp-help-plain.css \
-	$(top_srcdir)/stylesheets/gimp-help-screen.css
+        $(top_srcdir)/stylesheets/gimp-help-plain.css \
+        $(top_srcdir)/stylesheets/gimp-help-screen.css
+
 
 MAKEINDEX = $(top_srcdir)/stylesheets/makeindex.xsl
 
@@ -82,7 +86,11 @@ mkdirs.stamp:
 css.stamp: mkdirs.stamp $(CSS_FILES)
 	@echo '*** Copying stylesheets ***'
 	@for lang in $(ALL_LINGUAS); do \
-	  cp $(CSS_FILES) $(srcdir)/html/$$lang; \
+	  if test $$lang = "zh_CN"; then \
+	    cp $(CSS_DIRS)/$$lang/*.css $(srcdir)/html/$$lang; \
+	  else \
+	    cp $(CSS_FILES) $(srcdir)/html/$$lang; \
+          fi; \
 	done;
 	touch css.stamp
 
@@ -134,10 +142,10 @@ latex.stamp: profile.stamp $(XML_FILES) $(DTD_FILES)
 	@echo '*** Building LaTeX files ***'
 	@for lang in $(ALL_LINGUAS); do \
 	  echo '-- Building LaTeX for '$$lang; \
-	  if test $$lang != "zh_CN"; then \
-	    stylesheet=plainprint.xsl; \
+	  if test $$lang = "zh_CN"; then \
+	    stylesheet=$$lang/plainprint.xsl; \stylesheet=plainprint.xsl; \
 	  else \
-	    stylesheet=cjkprint.xsl; \
+	    stylesheet=plainprint.xsl; \
 	  fi; \
 	  (cd $(top_srcdir)/pdf/$$lang && \
 	    $(XSLTPROC) $(XSLTFLAGS) --noout -o $$lang.tex --xinclude \
