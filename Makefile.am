@@ -28,10 +28,11 @@ HELP_STAMPS = \
 
 
 EXTRA_DIST = \
+	TERMINOLOGY			\
 	stylesheets/plainhtml.xsl.in	\
-	$(MAKEINDEX)	\
-	$(IMAGE_FILES)	\
-	$(XML_FILES)	\
+	$(MAKEINDEX)			\
+	$(IMAGE_FILES)			\
+	$(XML_FILES)			\
 	$(CSS_FILE)
 
 
