@@ -6,7 +6,7 @@
 
   <sect2>
     <title lang='en'>Image types</title>
-    <title lang="zh_CN">图形格式</title>
+    <title lang="zh_CN">图像格式</title>
 
     <para lang='en'>
       It is tempting to think of an <emphasis>image</emphasis> as
@@ -17,6 +17,9 @@
       channels, a set of paths, an "undo" history, etc.  In this
       section we are going to take a detailed look at all of the
       components of an image, and the things you can do with them.
+    </para>
+    <para lang="zh_CN">
+      <emphasis>图像</emphasis>常让人联想到和一个单独显示窗口相关的东西，或一个单独的文件如一个 JPEG 文件，不过一个真正的 Gimp 图像一个相当复杂的结构，包括一堆图层和许多其它类型的对象：一个选区蒙板，一系列通道和路径，一个“撤消”历史等。我们将在这一节对一个图像的所有元素和能用它们干什么来一个仔细的了解。
     </para>
 
     <para lang='en'>
@@ -30,11 +33,17 @@
       are full-color.  Each color channel has 256 possible intensity
       levels.
     </para>
+		<para lang="zh_CN">
+      一个图像最基本的属性就是它的<emphasis>模式</emphasis>。这有三种模式：RGB，灰度和索引。RGB 代表红-绿-蓝，代表图像上的每个点用一个“红色”色阶，一个“绿色”色阶和一个“蓝色”色阶表示。人类能辨别的每种颜色都能用红，绿和蓝组合来表现，每一个颜色通道都有 256 种可能的亮度程度。
+    </para>
 
     <para lang='en'>
       In a grayscale image, each point is represented by a brightness
       value, ranging from 0 (black) to 255 (white), with intermediate
       values representing different levels of gray.
+    </para>
+    <para lang="zh_CN">
+      对一个灰度的图像，每个点由从 0 (黑色)到 255 (白色)的亮度值来表现，其中间的值来表现不同程度的灰。
     </para>
 
     <para lang='en'>
@@ -43,6 +52,9 @@
       one; an RGB image has three.  An RGB image can be thought of as
       three superimposed grayscale images, one colored red, one green,
       and one blue.
+    </para>
+    <para lang="zh_CN">
+      一个灰度图像和一个 RGB 图像最本质的区别就是它们“颜色通道”的数量：一个灰度图像只有一个；一个 RGB 图像有三个。一个 RGB 图像可以认为是三个灰度图像的叠加，一个为红色，一个为绿色，另一个为蓝色。
     </para>
 
     <para lang='en'>
@@ -57,6 +69,9 @@
       color at the location is a proportionl mixture of color from the
       layer and color from underneath.
     </para>
+    <para lang="zh_CN">
+      准确的说，RGB 和灰度图像都有一个附加的颜色通道，叫做 <emphasis>alpha</emphasis> 通道，它代表不透明度。当选定的图层其上位置的不透明度为零，图层就完全是透明的，这样那个位置的颜色由它下面是什么决定。当 alpha 为最大值，图层就是不透明的，该位置的颜色有图层颜色决定。其中间的 alpha 值用来区分不同的透明程度：该位置的颜色就由一定比例的图层颜色和图层下面的颜色决定。
+   </para>
 
     <para lang='en'>
       In Gimp, every color channel, including the alpha channel, has a
@@ -68,6 +83,9 @@
       eye, but in some cases, mainly where there are large areas with
       slowly varying color gradients, the difference may be
       perceptible. 
+    </para>
+    <para lang="zh_CN">
+      Gimp 中，每个颜色通道包括 alpha 通道其可能的值都在 0 到 255 之间；用计算机术语说就是 8 位深度。一些数码相机能产生每个颜色通道 16 位深度的图像文件。Gimp 无法读取这种文件而不丢失分辨率。大部分情况下，那样的效果太细微以至人眼无法查觉，但在一些情况中，主要是缓慢颜色渐变的大片区域，还是能够查觉到其差别。
     </para>
 
     <para lang='en'>
@@ -85,6 +103,9 @@
       image manipulation that are easier to implement with indexed
       images than with continuous-color RGB images.)
     </para>
+    <para lang="zh_CN">
+      第三种类型，<emphasis>索引</emphasis>图像，要了解它有点复杂。在一个索引图像种，只使用有限的一部分不连续的色彩，常常是 256 色或更少。这些颜色来之图像的“颜色表”，并且图像中的每个点都从颜色表中获取颜色。索引图像的优点在于能在计算机内部表现，这种方法消耗相对少的内存。索引图像在十年前使用很普遍。随着时间的前进，它们被使用得越来越少，不过仍然足够重要让 Gimp 支持它。(而且，还有一些重要的图像处理方式在索引图像上比在连续颜色的 RGB 图像上更容易实现。)
+    </para>
 
     <para lang='en'>
       Some very commonly used types of files (including GIF) produce
@@ -95,6 +116,9 @@
       image to RGB mode before working on it.  If necessary, you can
       convert it back to indexed mode when you are ready of save it
     </para>
+		<para lang="zh_CN">
+      一些非常常见的文件类型(包括 GIF)在 Gimp 中打开时都是作为索引图像。许多 Gimp 工具对索引图像工作地不好--而且许多滤镜完全无法使用--因为它只有有限数量的可用颜色。因此，最好在进行这些操作之前，将图像转换为 RGB 图像。如果有必要，您也能在准备保存它时转换回来成索引模式。
+    </para>
 
     <para lang='en'>
       Gimp makes it easy to convert from one image type to another,
@@ -102,6 +126,9 @@
       the Image menu.  Some types of conversions, of course (RGB to
       grayscale or indexed, for example) lose information that cannot
       be regained by converting back in the other direction.  
+    </para>
+    <para lang="zh_CN">
+      Gimp 是从一种图像类型转换为另一种类型变得容易，使用图像菜单中的<link linkend='gimp-image-mode'>模式</link>命令。一些类型转换，比如 RGB 到灰度或索引会丢失信息，而且当转换回来时也无法恢复。
     </para>
 
     <tip lang='en'>
@@ -113,6 +140,9 @@
       also require the presence or absence of an alpha channel.
       Usually the fix is to convert the image to a different type,
       most commonly RGB
+    </tip>
+    <tip lang="zh_CN">
+      如果您尝试对一个图像使用滤镜，而在菜单上却是灰色的，常常是因为您操作的图像(或更明确的，是图层)是错误的模式。许多滤镜无法对索引图像使用。一些只能对 RGB 或灰度图像使用。一些却需要有或没有一个 alpha 通道。一般的解决方法就是转换图像到另一个模式，最通常是 RGB。
     </tip>
 
   </sect2>
