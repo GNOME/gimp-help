@@ -47,7 +47,7 @@ clean.stamp:
 
 mkdirs.stamp:
 	@echo '*** Creating directories ***'
-	for lang in C $(ALL_LINGUAS); do \
+	for lang in $(ALL_LINGUAS); do \
 	  $(mkinstalldirs) html/$$lang; \
 	  cp $(CSS_FILES) html/$$lang; \
 	done;
@@ -56,7 +56,7 @@ mkdirs.stamp:
 
 css.stamp: mkdirs.stamp $(CSS_FILES)
 	@echo '*** Copying stylesheets ***'
-	for lang in C $(ALL_LINGUAS); do \
+	for lang in $(ALL_LINGUAS); do \
 	  cp $(CSS_FILES) $(srcdir)/html/$$lang; \
 	done;
 	touch css.stamp
@@ -80,12 +80,6 @@ images.stamp: mkdirs.stamp $(IMAGE_FILES)
 
 html.stamp: mkdirs.stamp $(XML_FILES)
 	@echo '*** Building HTML ***'
-	@echo '-- Building HTML for C';
-	(cd html/C && \
-	  $(XSLTPROC) $(XSLTFLAGS) --xinclude \
-	     --stringparam l10n.gentext.default.language en \
-	     --stringparam profile.lang en \
-	     ../../stylesheets/plainhtml.xsl ../../src/gimp.xml)
 	for lang in $(ALL_LINGUAS); do \
 	  echo '-- Building HTML for '$$lang; \
 	  (cd html/$$lang && \
@@ -98,14 +92,11 @@ html.stamp: mkdirs.stamp $(XML_FILES)
 
 index.stamp: html.stamp
 	@echo '*** Generating index files ***';
-	@echo '-- Generating index for C';
-	$(XSLTPROC) $(XSLTFLAGS) \
-	   $(MAKEINDEX) html/C/gimp-xrefs.xml > html/gimp-help.xml;
-
 	for lang in $(ALL_LINGUAS); do \
 	  echo '-- Generating index for '$$lang; \
 	  $(XSLTPROC) $(XSLTFLAGS) \
-	     $(MAKEINDEX) html/$$lang/gimp-xrefs.xml > html/gimp-help.$$lang.xml; \
+	     $(MAKEINDEX) \
+	       html/$$lang/gimp-xrefs.xml > html/$$lang/gimp-help.xml; \
 	done;
 	touch index.stamp
 
@@ -130,7 +121,7 @@ endif
 
 if GIMP_HELP_INSTALL
 
-install-data-local: html/gimp-help.xml
+install-data-local:
 	$(mkinstalldirs) $(DESTDIR)$(GIMP_DATADIR)/help
 	-cp -r html/* $(DESTDIR)$(GIMP_DATADIR)/help
 
@@ -143,7 +134,7 @@ maintainer-clean-local:
 dist-hook:
 	$(mkinstalldirs) $(distdir)/html
 	-cp html/*.xml $(distdir)/html
-	for lang in C $(ALL_LINGUAS); do \
+	for lang in $(ALL_LINGUAS); do \
 	  cp -r html/$$lang $(distdir)/html; \
 	done
 
