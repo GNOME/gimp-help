@@ -1,12 +1,14 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<sect2 id='gimp-image-scale' lang="en;fr">
+<sect2 id='gimp-image-scale' lang="en;fr;zh_CN">
   <title lang="en">Scale Image</title>
   <title lang="fr">Taille de l&apos;image</title>
+  <title lang="zh_CN">缩放图像</title>
   
   <indexterm>
     <primary lang="en">Scale Image</primary>
     <primary lang="fr">Taille de l&apos;image</primary>
+    <primary lang="zh_CN">缩放图像</primary>
   </indexterm>
 
   <mediaobject lang="en">
@@ -21,9 +23,16 @@
     </imageobject>
   </mediaobject>
 
+  <mediaobject lang="zh_CN">
+    <imageobject>
+      <imagedata fileref='../images/dialogs/dialogs-image-scale-image.png' format="PNG"/>
+    </imageobject>
+  </mediaobject>
+
   <simplesect>
     <title lang="en">Overview</title>
     <title lang="fr">Généralités</title>
+    <title lang="zh_CN">概述</title>
     <variablelist>
       <varlistentry>
         <listitem lang="en">
@@ -65,6 +74,18 @@
             Taille de calque <!--LIEN A CREER-->
           </para>
         </listitem>
+
+        <listitem lang="zh_CN">
+          <para>
+            缩放图像功能用来扩大或缩小图像。为了让图像可见，这个功能缩放图像同时也改变画布大小。它也给出图像打印时的大小和分辨率。
+          </para>
+          <para>
+            它是将整个图像一起操作的。如果图像包含不同尺寸的图层，它很可能让图像变得更小使得图层缩小。如果是这样，操作前，系统会警告您。
+          </para>
+          <para>
+            如果想缩放特定的图层，可以使用缩放图层功能。<!--link to do--> 
+          </para>
+        </listitem>
       </varlistentry> 
     </variablelist>
   </simplesect>
@@ -73,6 +94,7 @@
     <variablelist>
       <title lang="en">Pixel Dimensions</title>
       <title lang="fr">Dimensions en pixels</title>
+      <title lang="zh_CN">像素尺寸</title>
       <varlistentry>
         <listitem lang="en">
           <para>
@@ -206,12 +228,40 @@
             rétrécir) des pixels s'appelle <emphasis>Rééchantillonnage</emphasis>. 
           </para>
         </listitem>
+
+        <listitem lang="zh_CN">
+          <para>
+            您一定记得图像的所在的四个位置：保存在图像文件里，载入后在 RAM 里，显示的时候在屏幕上，打印后在纸上。
+          </para>
+          <para>
+            这部分就是处理图像在 RAM 中和保存到文件后的大小。
+          </para>
+          <para>
+            当您打开对话框时，显示的是初始图像的参数。选中<link linkend='gimp-view-dot-for-dot'>点对点</link>选项，屏幕上将显示所有的像素，大小依赖于屏幕分辨率。
+          </para> 
+          <para>
+            您可以设置<emphasis>宽度</emphasis>和<emphasis>高度</emphasis>来给图像加入或删除像素。结果就是图像的尺寸发生变化。点击文本框的箭头改变数值。如果您点在框里，也可以用上下箭头来精确调整。您可以直接用想要的单位作用在线性空间上，来增加或删除像素。这些内存中的线性空间没什么用：只有像素是重要的。
+          </para> 
+          <para>
+            <emphasis>比例</emphasis>就是初始图像和新图像间 X、Y 轴间的比例。默认比例是 1，您可以修改它。如果旁边的锁链是完整的，那么两个轴一起变化。如果您点击锁链断开它，您就可以分别对两轴进行变化：这会导致图像变形。
+          </para>
+          <para>
+            如果初始图像分辨率很高，像素多到可以不用增加新像素的话，您可以安全的扩大图像。否则，通过插值放大的图像会丢失细节，而且放的越大杂点越多，图像会变得乱糟糟的。您可以用<link linkend='plug-in-sharpen'>锐化</link>(缩放比例之后)。但是最好的办法是扫描您计划放大的图像时，采用一个高分辨率。
+          </para>  
+          <para>
+            如果您想要将图片放入网页时，最好给图片减减肥。要知道那些使用 15 寸显示器的互联网用户可能没法完整显示这些图片。大多数屏幕分辨率是 800x600 和 1024x768。
+          </para>
+          <para> 
+            加入或删除像素被称作“重采样”。
+          </para>
+        </listitem>
       </varlistentry>
     </variablelist>
 
     <variablelist>
       <title lang="en">Print Size &amp; Display Unit</title>
       <title lang="fr">Taille d'impression et Résolution</title>
+      <title lang="zh_CN">打印大小和显示单位</title>
       <varlistentry>
         <listitem lang="en">
           <para>
@@ -308,12 +358,37 @@
             d'une utilisation sur le Web.
           </para>
         </listitem>
+
+        <listitem lang="zh_CN">
+          <para>
+            这部分是处理图像在打印时候的大小和分辨率。记住，图像所有的像素都会没有分割的打印出来。
+          </para> 
+          <para>
+            当您启用缩放功能时，GIMP 显示图像未变形情况下的打印参数对话框。
+          </para>
+          <para>
+            和屏幕显示图像一样，放大或缩小打印图像也有一样的风险。
+          </para>
+          <para>
+            分辨率是指输出分辨率，就是打印图像上每英寸的像素数。不要把输出分辨率和打印分辨率混淆起来，打印分辨率用 dpi 表示（点每英寸）：也就是打印一个像素需要多个点。
+          </para> 
+          <para>
+            GIMP 采用的分辨率是初始图像的分辨率。因为总的像素数没变，如果您增大输出分辨率，打印的图像将变小，也就是每英寸打印的像素数增大。正因为如此，有时要重新设置修改过图像的大小。
+          </para>
+          <para>
+            增大分辨率会让图像打印出来更锐利。这与单单减少图像尺寸不同。因为修改输出分辨率时没有删除像素。
+          </para> 
+          <para>
+            修改分辨率也会影响图像文件大小。这种修改因为总的像素数没变所以在像素级看不出来，但是尺寸级（例如英寸）可以看出来。减小输出分辨率就减小了图像文件大小。在使用 PNG 压缩后图像还不够小时，可以通过结合降低分辨率和减小像素并重建图像原始尺寸的方法来减小图像文件大小。
+          </para>
+        </listitem>
       </varlistentry>
     </variablelist>
   
     <variablelist>
       <title lang="en">Interpolation Type</title>
       <title lang="fr">Type d'interpolation</title>
+      <title lang="zh_CN">插值类型</title>
       <varlistentry>
         <listitem lang="en">
           There you can select the method used to interpolate the color of 
@@ -367,6 +442,27 @@
             </listitem>
           </itemizedlist>          
         </listitem>
+
+        <listitem lang="zh_CN">
+          这里您可以选择添加像素的颜色插入的方法，这对屏幕显示和打印都有影响。
+          <itemizedlist>
+            <listitem>
+              <para>
+                <emphasis>无</emphasis>：就是不采用插值法。像素就是简单的扩大，就象放大时一样。
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <emphasis>线性</emphasis>：
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <emphasis>立方</emphasis>：最好的插值方法，但是需要的更多计算。
+              </para>
+            </listitem>
+          </itemizedlist>          
+        </listitem>
       </varlistentry>
     </variablelist>
 
@@ -385,6 +481,10 @@
         <link linkend='gimp-tool-crop'>Découper et Redimensionner</link> en 
         choisissant les cm comme unité de mesure: la taille affichée est la 
         taille d'impression.
+      </para>
+
+      <para lang="zh_CN">
+        准备打印图像时，用<link linkend='gimp-tool-crop'>剪裁</link>工具将要打印的图像变为一种特殊格式，用英寸作单位：这时显示的尺寸就是打印尺寸。 
       </para>   
     </note>
     </varlistentry>
@@ -403,6 +503,12 @@
 	very large images consume a lot of resources, and outrageously
 	large images may consume more resources than you have, causing GIMP
 	to crash or otherwise behave unpleasantly.
+      </para>
+    </note>
+
+    <note lang='zh_CN'>
+      <para>
+	如果缩放产生的新图层比首选项对话框的<link linkend='gimp-prefs-environment'>环境</link>里设置的“最大新建图像大小”还大。系统将询问您是否确定这样做。选“是”并不一定会有糟糕的后果，但您确实应该慎重考虑，因为大图像需要消耗许多系统资源，甚至比已有的资源还多。这将导致 GIMP 死机或产生其它不可预料的结果。
       </para>
     </note>
   </simplesect>
