@@ -24,6 +24,8 @@ XML_FILES = \
 	$(wildcard $(top_srcdir)/src/*/*/*.xml)	\
 	$(wildcard $(top_srcdir)/src/*/*/*/*.xml)
 
+FORMATS = html pdf
+
 DTD_FILES = \
 	$(top_srcdir)/src/linkset.dtd
 
@@ -68,14 +70,12 @@ clean.stamp:
 
 mkdirs.stamp:
 	@echo '*** Creating directories ***'
-	$(mkinstalldirs) pdf/;
-	@for lang in $(ALL_LINGUAS); do \
-	  $(mkinstalldirs) html/$$lang; \
-	  cp $(CSS_FILES) html/$$lang; \
-	  $(mkinstalldirs) pdf/$$lang; \
-	done;
-	$(mkinstalldirs) xml; \
-	$(mkinstalldirs) html/images; \
+	@for format in $(FORMATS); do \
+	  for lang in $(ALL_LINGUAS); do \
+	    $(mkinstalldirs) $$format/$$lang; \
+	  done; \
+	done; \
+	$(mkinstalldirs) xml
 	touch mkdirs.stamp
 
 css.stamp: mkdirs.stamp $(CSS_FILES)
@@ -87,26 +87,21 @@ css.stamp: mkdirs.stamp $(CSS_FILES)
 
 images.stamp: mkdirs.stamp $(IMAGE_FILES)
 	@echo '*** Copying images ***'
-	@cp $(top_srcdir)/images/*.png html/images;
-	@for dir in $(IMAGE_DIRS); do \
-	  if test -d $(top_srcdir)/images/$$dir; then \
-	    $(mkinstalldirs) html/images/$$dir; \
-	    $(mkinstalldirs) pdf/images/$$dir; \
-	    cp $(top_srcdir)/images/$$dir/*.png html/images/$$dir && \
-	    cp $(top_srcdir)/images/$$dir/*.png pdf/images/$$dir; \
-	    for lang in $(ALL_LINGUAS); do \
-	      if test -d $(top_srcdir)/images/$$dir/$$lang; then \
-	        $(mkinstalldirs) html/images/$$dir/$$lang && \
-	        cp $(top_srcdir)/images/$$dir/$$lang/*.png html/images/$$dir/$$lang; \
-	      fi \
-	    done; \
-	    for lang in $(ALL_LINGUAS); do \
-	      if test -d $(top_srcdir)/images/$$dir/$$lang; then \
-	        $(mkinstalldirs) pdf/images/$$dir/$$lang && \
-	        cp $(top_srcdir)/images/$$dir/$$lang/*.png pdf/images/$$dir/$$lang; \
-	      fi \
-	    done; \
-	  fi \
+	@for format in $(FORMATS); do \
+	  $(mkinstalldirs) $$format/images; \
+	  cp $(top_srcdir)/images/*.png $$format/images; \
+	  for dir in $(IMAGE_DIRS); do \
+	    if test -d $(top_srcdir)/images/$$dir; then \
+	      $(mkinstalldirs) $$format/images/$$dir; \
+	      cp $(top_srcdir)/images/$$dir/*.png $$format/images/$$dir && \
+	      for lang in $(ALL_LINGUAS); do \
+	        if test -d $(top_srcdir)/images/$$dir/$$lang; then \
+	          $(mkinstalldirs) $$format/images/$$dir/$$lang && \
+	          cp $(top_srcdir)/images/$$dir/$$lang/*.png $$format/images/$$dir/$$lang; \
+	        fi \
+	      done; \
+	    fi \
+	  done; \
 	done
 	touch images.stamp
 
@@ -188,8 +183,7 @@ validate: profile.stamp $(XML_FILES) $(DTD_FILES)
 	  grep "validity error" xml/$$lang-validity-errors.log | wc -l; \
 	done; \
 	echo 'Log files of the validation process have been generated in the xml directory.'; \
-	echo 'Please correct any errors before writing new content.'; \
-	touch validate.stamp
+	echo 'Please correct any errors before writing new content.'
 
 lint: profile.stamp $(XML_FILES) $(DTD_FILES)
 	@echo '*** Checking XML for well-formed-ness ***'
