@@ -1,22 +1,32 @@
-At the moment there is no install target but this is going to change soon.
-For now this document gives you some hints on how to build the help files.
+This package includes prebuilt help files for The GIMP 2.0 as well as
+the XML sources that are needed to rebuild the HTML files.
 
+If you downloaded this tarball to install the help files, you don't
+need to worry about how to build the files, you can use the prebuilt
+HTML files. Just run the usual commands to install the help:
+
+ ./configure
+ make
+ make install  (you need root priviledges for this last step)
+
+
+If you want to work on the help content, you should enable the build
+of the help files by using --enable-build configure option:
+
+ ./configure --enable-build
+ make
 
 The GIMP help documents are written in Docbook XML. Since the GIMP
 help browser wants HTML files, the documents need to be converted.
 This is done as an XSLT [1] using xsltproc [2].
 
-To build the GIMP help files, execute the following commands:
-
- ./configure
- make
-
-If you encounter any problems, these are likely caused by the XSLT
-processor not being able to locate stylesheets it needs to do the
-transformation. You should have an XML catalog file that helps the
-XSLT processor to locate your locally installed stylesheets. In case
-you are missing such a catalog file or it is incomplete, you can
-specify the location of the stylesheets explicitely, for example:
+If you encounter any problems during the build, these are likely
+caused by the XSLT processor not being able to locate stylesheets it
+needs to do the transformation. You should have an XML catalog file
+that helps the XSLT processor to locate your locally installed
+stylesheets. In case you are missing such a catalog file or it is
+incomplete, you can specify the location of the stylesheets
+explicitely, for example:
 
  ./configure --with-xsl=/usr/share/sgml/docbook/stylesheet/xsl/nwalsh
 
@@ -26,10 +36,9 @@ useful to allow xsltproc to fetch DTDs or entities over the network:
 
  ./configure --enable-network
 
-
-If you want to test the built help files, you can create a symlink
-from $prefix/share/gimp/1.3/help to the html directory.  Very soon
-an install target will be added so that you can 'make install'.
+If you want to test the built help files without installing them, you
+can create a symlink from $prefix/share/gimp/1.3/help to the html
+directory.
 
 
 -- The GIMP-Help team.

@@ -96,6 +96,24 @@ if test -z "$*"; then
     echo
 fi
 
+if test -z "$ACLOCAL_FLAGS"; then
+    acdir=`$ACLOCAL --print-ac-dir`
+    m4list="pkg.m4"
+ 
+    for file in $m4list
+    do
+        if [ ! -f "$acdir/$file" ]; then
+            echo
+            echo "WARNING: aclocal's directory is $acdir, but..."
+            echo "         no file $acdir/$file"
+            echo "         You may see fatal macro warnings below."
+            echo "         If these files are installed in /some/dir, set the ACLOCAL_FLAGS "
+            echo "         environment variable to \"-I /some/dir\", or install"            echo "         $acdir/$file."
+            echo
+        fi
+    done
+fi
+
 $ACLOCAL $ACLOCAL_FLAGS
 RC=$?
 if test $RC -ne 0; then

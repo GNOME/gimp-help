@@ -100,5 +100,14 @@ CLEANFILES = $(HELP_STAMPS)
 endif
 
 
+if GIMP_HELP_INSTALL
+
+install-data-local: html/gimp-help.xml
+	$(mkinstalldirs) $(GIMP_DATADIR)/help
+	cp -r html/* $(GIMP_DATADIR)/help
+
+endif
+
+
 maintainer-clean-local:
 	rm -rf html
