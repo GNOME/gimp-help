@@ -1,13 +1,16 @@
 <?xml version='1.0' encoding="UTF-8" ?>
 
-<sect2 id='gimp-undo' xmlns:xi="http://www.w3.org/2001/XInclude" lang="en;zh_CN">
+<sect2 id='gimp-undo' xmlns:xi="http://www.w3.org/2001/XInclude" lang="en;de;fr;zh_CN">
   <title lang="en">Undoing</title>
+  <title lang="fr">Annuler</title>
   <title lang="zh_CN">撤消</title>
 
   <indexterm>
     <primary lang="en">Image</primary>
+    <primary lang="fr">Image</primary>
     <primary lang="zh_CN">图像</primary>
     <secondary lang="en">Undo</secondary>
+    <secondary lang="fr">Annuler</secondary>
     <secondary lang="zh_CN">撤消</secondary>
   </indexterm>
 
@@ -20,6 +23,20 @@
     </menuchoice>
     from the image menu, but this is done so frequently that you
     really should memorize the keyboard shortcut,
+    <keycombo>
+      <keycode>Ctrl</keycode>
+      <keycode>Z</keycode>
+    </keycombo>.
+  </para>
+  <para lang='fr'>
+    Presque tout ce que vous pouvez faire sur une image dans Gimp peut être 
+    annulé. Vous pouvez annuler la dernière opération en choisissant 
+    <menuchoice>
+      <guimenu>Éditer</guimenu>
+      <guimenuitem>Annuler</guimenuitem>
+    </menuchoice>
+    dans le menu image, mais vous aurez à le faire si souvent qu'il vous 
+    faut mémoriser le raccourci clavier 
     <keycombo>
       <keycode>Ctrl</keycode>
       <keycode>Z</keycode>
@@ -55,6 +72,23 @@
     consume any extra resources or alter the undo history, so there is
     never any harm in it.
   </para>
+  <para lang='fr'>
+    Annuler peut lui-même être annulé. Après avoir annulé une action, vous 
+    pouvez en effet la <emphasis>Refaire</emphasis> en choisissant
+    <menuchoice>
+      <guimenu>Éditer</guimenu>
+      <guimenuitem>Refaire</guimenuitem>
+    </menuchoice>
+    dans le menu image, ou en utilisant le raccourci
+    <keycombo>
+      <keycode>Ctrl</keycode>
+      <keycode>Y</keycode>
+    </keycombo>.
+    Il est souvent utile de juger de l'effet d'une action en l'annulant et 
+    en la refaisant plusieurs fois. C'est habituellement très vite fait et 
+    cela ne consomme pas de mémoire ni ne modifie l'historique. Vous pouvez 
+    donc l'utiliser sans danger.
+  </para>
   <para lang="zh_CN">
     撤消本身也能被撤消。在撤消一个动作后，您也能<emphasis>重做</emphasis>它，选择在图像菜单中的
     <menuchoice>
@@ -70,6 +104,7 @@
     </para>
 
   <caution lang='en'>
+    <para>
     If you undo one or more actions and then operate on the image in
     any way except by using Undo or Redo, it will no longer be possible
     to redo those actions:  they are lost forever.  The solution to
@@ -77,9 +112,23 @@
     and then operate on the copy.  (<emphasis>Not</emphasis> the
     original, because the undo/redo history is not copied when you
     duplicate an image.)
+    </para>
+  </caution>
+  <caution lang='fr'>
+    <para>
+    Si vous avez annulé une ou plusieurs actions et qu'ensuite vous 
+    faites autre chose qu'Annuler ou Refaire, il ne sera plus possible 
+    de Refaire vos actions annulées: elles sont à jamais perdues. La 
+    solution, si cela vous pose problème, est de dupliquer l'image et 
+    de travailler sur la copie. <emphasis>Pas</emphasis> sur 
+    l'original, car l'historique Annuler/Refaire n'est pas copié quand 
+    vous dupliquez l'image.
+    </para>
   </caution>
   <caution lang="zh_CN">
+    <para> 
     当您撤消一个或多个命令后，又对图像进行了除撤消或重做以外的操作，那么您就不可能再重做这些操作了：它们永远地丢失了。如果您觉得这样不妥，解决方法就是先复制图像，然后在其拷贝上进行操作。(<emphasis>不是</emphasis>原图像，因为在复制图像时，重做/撤消历史不会被拷贝。)
+    </para>
   </caution>
  
   <para lang='en'>
@@ -89,6 +138,11 @@
     dockable dialog that shows you a small sketch of each point in the
     Undo History, allowing you to go back or forward to that point by
     clicking. 
+  </para>
+  <para lang="fr">
+    Si vous devez revenir plusieurs pas en arrière dans vos 
+    annulations, au lieu de répéter Ctrl-Z utilisez plutôt l'
+    <link linkend='gimp-undo-dialog'>Historique d'Annulation</link>.
   </para>
   <para lang="zh_CN">
     假如您每次常常重做或撤消很多步，这时也许使用<link linkend='gimp-undo-dialog'>撤消历史对话框</link>更加方便。它是一个显示撤消历史中各点的概要的可停靠对话框，允许您通过点击来后退或前进到某点。
@@ -107,6 +161,19 @@
     <emphasis>maximum undo memory</emphasis>, beyond which GIMP will
     begin to delete the oldest items from the Undo History.
   </para>
+  <para lang="fr">
+    L'Historique d'annulation est spécifique de chaque image. Gimp 
+    alloue une certaine quantité de mémoire à chaque image dans ce 
+    but. Vous pouvez personnaliser vos Préférences pour changer ce 
+    montant en utilisant la page <link 
+    linkend='gimp-prefs-environment'>Environnement</link> du 
+    dialogue Préférences. Il y a là deux variables importantes: le 
+    <emphasis>Nombre de niveaux d'annulations</emphasis>, que Gimp 
+    assurera quelle que soit la quantité de mémoire consommée et la 
+    <emphasis>Mémoire maxima d'annulation</emphasis>, marquant la 
+    limite au-delà de laquelle Gimp commencera à supprimer les 
+    éléments les plus anciens de l'historique.
+  </para>
   <para lang="zh_CN">
     撤消是基于特定的一个图像操作的：“撤消历史”是一个图像的组成部分。GIMP 要给每个图像分配一定的内存来达到该目的。您能够定制您的首选项来增加或减少其数量，在首选项对话框中的<link linkend='gimp-prefs-environment'>环境</link>页有两个重要的参数：<emphasis>最小撤消次数</emphasis>--不管耗费多少内存都要保证，和<emphasis>最大撤消内存</emphasis>--超过这个值，GIMP 会从撤消历史中删除旧的记录。
   </para>
@@ -117,6 +184,14 @@
     which preserves every other image property.  When the image is
     reopened, it will have an empty Undo History.
   </note>
+  <para lang="fr">
+    Même si l'Historique d'annulation est un composant de l'image, il 
+    n'est pas sauvegardé quand vous enregistrez une image au format 
+    XCF, qui pourtant préserve toutes les autres propriétés de 
+    l'image. Quand l'image est réouverte, l'historique d'annulation 
+    est vide.
+  </para>
+
   <note lang="zh_CN">
     虽然撤消历史是一个图像的组成部分，但是在用 GIMP 的内建 XCF 格式保存图像时不会保存该信息，而其它的图像属性都将保留。当图像被重新打开时，它的撤消历史为空。
   </note>
@@ -138,12 +213,27 @@
     perform a few such operations before they drop out of the Undo
     History. 
   </para>
+  <para lang="fr">
+    La mise en œuvre d'Annuler par Gimp est assez perfectionnée. 
+    Beaucoup d'opérations ne requièrent que peu de mémoire (p.e 
+    changer la visibilité d'un calque). Certaines sont comprimées, si 
+    bien qu'en les répétant plusieurs fois de suite, leur 
+    représentation dans le dialogue de l'historique peut se réduire à 
+    un point. Mais d'autres opérations peuvent consommer beaucoup de 
+    mémoire. C'est le cas des greffons: étant externes, le cœur de 
+    Gimp ne peut pas savoir ce qui a changé en eux et doit mémoriser 
+    l'ensemble du calque affecté avant et après l'opération. 
+    Avec eux vous ne pourrez effectuer qu'un nombre réduits 
+    d'annulations avant qu'elles ne soient rejetées de l'Historique 
+    d'annulation.
+  </para>
   <para lang="zh_CN">
     GIMP 撤消的实现是相当复杂的。只需要很多的撤消内存来保留需要操作(比如改变一个图层的可见性)，因此在记录被从撤消历史中删除之前，可以保持一个很长的操作序列。许多操作(再次以改变图层可见性为例)被<emphasis>压缩</emphasis>了，所以连续多次地执行它们只在撤消历史中产生单独的一个点。尽管如此，还是有其它的操作可能耗费大量的撤消内存。比如说大部分的滤镜：它们由插件实现，GIMP 核心没有知道它们改变了什么的真正有效方法，因此它就不得不记住操作前后被影响图层的全部内容。您可能在记录被从撤消历史中删除之前只能执行很少的这种操作。
   </para>
 
   <simplesect>
     <title lang='en'>Things that cannot be Undone</title>
+    <title lang='fr'>Ce qui ne peut pas être annulé</title>
     <title lang="zh_CN">不能被撤消的东西</title>
 
     <para lang='en'>
@@ -157,6 +247,16 @@
       on or off can be undone, even though it does not alter the image
       data. 
     </para>
+    <para lang="fr">
+      Toutes les actions qui modifient une image peuvent être Annulées. 
+      Celles qui ne la modifient pas ne le peuvent pas. Cela concerne 
+      les des opérations telles que enregistrer, dupliquer une image, 
+      copier une partie de l'image dans le presse-papier...etc. Cela 
+      concerne aussi la plupart des actions qui affectent l'affichage 
+      sans modifier l'image elle-même. L'exemple le plus important en 
+      est le zoom. Mais il y a des exceptions: la bascule du Masque 
+      Rapide peut être Annulée, bien qu'elle ne modifie pas l'image.
+    </para>
     <para lang="zh_CN">
       大部分修改一个图像的动作能被撤消，而那些没有修改图像的动作一般就不能。这些操作包括保存图像到一个文件，复制图像和拷贝图像部分等。它还包括大部分影响图像显示但没有修改其图像数据的动作。最重要的例子就是图像比例的缩放。不过也要例外：虽然切换快速蒙板开启或关闭没有修改图像数据，但它能被撤消。
     </para>
@@ -164,6 +264,10 @@
     <para lang='en'>
       There are a few important actions that do alter an image but
       cannot be undone:
+    </para>
+    <para lang="fr">
+      Inversement, il y a des opérations qui modifient l'image et qui 
+      pourtant ne peuvent pas être Annulées:
     </para>
     <para lang="zh_CN">
       下面是一些最重要的动作，它们修改一个图像但不能被撤消：
@@ -198,6 +302,14 @@
           Because of this, if the image is unclean, GIMP always asks you
           to confirm that you really want to revert the image.
         </formalpara>
+        <formalpara lang='fr'>
+          <title>Revenir à l'image</title>
+          Cela veut dire recharger l'image depuis le fichier. Gimp 
+          réalise cela en fermant l'image et en créant une nouvelle 
+          image. L'Historique d'Annulation est donc perdu. C'est 
+          pourquoi Gimp vous demande toujours de confirmer si vous 
+          tenez vraiment à revenir à l'image.
+        </formalpara>
         <formalpara lang="zh_CN">
           <title>恢复图像</title>
           “恢复”表示从文件重新读取图像。GIMP 实际上是通过关闭图像并打开一个新图像来实现的，因此其撤消历史将丢失。所以，当图像“不干净”时，GIMP 总是要您确认是否真想恢复图像。
@@ -219,6 +331,21 @@
           Text tool, you cannot undo individual letters, font changes,
           etc.:  undoing after you are finished removes the newly
           created text layer.
+        </formalpara>
+        <formalpara lang='en'>
+          <title>"Parties" d'actions</title>
+          Certains outils vous obligent à réaliser une série complexe 
+          de manipulations avant de prendre effet, mais ne vous 
+          autorisent à annuler que l'ensemble de l'action et non ses 
+          éléments individuels. 
+          Par exemple, les Ciseaux Intelligents vous demandent de 
+          créer un chemin fermé en cliquant en plusieurs points de 
+          l'image. Vous ne pouvez pas annuler les clics individuels, 
+          mais seulement l'ensemble de la sélection une fois réalisée. 
+          Un autre exemple concerne l'outil Texte: vous ne pouvez pas 
+          annuler les lettres individuelles, les changements de 
+          police...etc, mais seulement le calque de Texte une fois 
+          créé. 
         </formalpara>
         <formalpara lang="zh_CN">
           <title>动作的“片段”</title>
@@ -242,6 +369,16 @@
       leave the Undo History corrupted, so it is best to avoid this
       unless you have accidentally done something whose consequences
       are going to be very harmful.
+    </para>
+    <para lang="fr">
+      Les actions réalisées à l'aide de filtres, de greffons ou de 
+      scripts peuvent être annulées comme celles du cœur de Gimp, à 
+      condition que leur code soit correct, et qu'ils sachent utiliser 
+      les fonctions d'annulation de Gimp. C'est généralement le cas 
+      pour les greffons et les scripts fournis avec Gimp, mais aucune 
+      garantie ne peut être assurée pour ceux d'autres origine. Le 
+      risque est alors une corruption de l'Historique d'annulation. 
+      C'est également le cas si vous interrompez un greffon en cours.  
     </para>
     <para lang="zh_CN">
       滤镜，和其它由插件或脚本执行的操作能像通过 GIMP 核心实现的动作一样地被撤消，不过这需要它们正确使用 GIMP 的撤消函数。如果代码不正确，一个插件有潜在破坏撤消历史的可能，到时不光是该插件而且以前的动作都不能被正确地撤消。所有由 GIMP 贡献的插件和脚本都可以认为是被正确设置的，而从其它地方得到的插件就显然没有保证。同时，即使代码正确，在运行一个插件时取消掉它有时也会破坏撤消历史，所以除非是不小心所做的其结果将非常严重，最好避免这样做。
