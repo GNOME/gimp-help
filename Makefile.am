@@ -21,7 +21,9 @@ XML_FILES = \
 	$(wildcard $(top_srcdir)/src/*/*/*.xml)	\
 	$(wildcard $(top_srcdir)/src/*/*/*/*.xml)
 
-CSS_FILE = $(top_srcdir)/stylesheets/gimp-help-plain.css
+CSS_FILES = \
+	$(top_srcdir)/stylesheets/gimp-help-plain.css \
+	$(top_srcdir)/stylesheets/gimp-help-screen.css
 
 MAKEINDEX = $(top_srcdir)/stylesheets/makeindex.xsl
 
@@ -35,7 +37,7 @@ EXTRA_DIST = \
 	$(MAKEINDEX)			\
 	$(IMAGE_FILES)			\
 	$(XML_FILES)			\
-	$(CSS_FILE)
+	$(CSS_FILES)
 
 
 clean.stamp:
@@ -47,15 +49,15 @@ mkdirs.stamp:
 	@echo '*** Creating directories ***'
 	for lang in C $(ALL_LINGUAS); do \
 	  $(mkinstalldirs) html/$$lang; \
-	  cp $(CSS_FILE) html/$$lang; \
+	  cp $(CSS_FILES) html/$$lang; \
 	done;
 	$(mkinstalldirs) html/images; \
 	touch mkdirs.stamp
 
-css.stamp: mkdirs.stamp $(CSS_FILE)
+css.stamp: mkdirs.stamp $(CSS_FILES)
 	@echo '*** Copying stylesheets ***'
 	for lang in C $(ALL_LINGUAS); do \
-	  cp $(CSS_FILE) $(srcdir)/html/$$lang; \
+	  cp $(CSS_FILES) $(srcdir)/html/$$lang; \
 	done;
 	touch css.stamp
 
