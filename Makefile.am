@@ -204,6 +204,9 @@ validate.stamp: profile.stamp $(XML_FILES) $(DTD_FILES)
 	fi
 	touch validate.stamp
 
+validate:
+	@rm -f validate.stamp; make validate.stamp
+
 lint: profile.stamp $(XML_FILES) $(DTD_FILES)
 	@if test "x$(XMLLINT)" != "x"; then \
 	  echo '*** Checking XML for well-formed-ness ***'; \
