@@ -1,17 +1,24 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<sect2 id='plug-in-dog' lang="en;fr">
+<sect2 id='plug-in-dog' lang="en;cs;fr">
   <title lang="en">Difference of Gaussians</title>
+  <title lang="cs">Difference of Gaussians</title>
   <title lang="fr">Différence gaussienne</title>
 
   <indexterm>
     <primary lang="en">Difference of Gaussians</primary>
+    <primary lang="cs">Difference of Gaussians</primary>
     <primary lang="fr">Filtres</primary>
     <secondary lang="fr">Détection de bord</secondary>
     <tertiary lang="fr">Différence gaussienne</tertiary>
   </indexterm>
 
   <mediaobject lang="en">
+    <imageobject>
+      <imagedata fileref='../images/filters/filters-edgedetect-dog.png' format="PNG"/>
+    </imageobject>
+  </mediaobject>
+  <mediaobject lang="cs">
     <imageobject>
       <imagedata fileref='../images/filters/filters-edgedetect-dog.png' format="PNG"/>
     </imageobject>
@@ -24,6 +31,7 @@
 
   <simplesect>
     <title lang="en">Overview</title>
+    <title lang="cs">Přehled</title>   
     <title lang="fr">Généralités</title>   
     <para lang="en">
       This filter is located at
@@ -33,7 +41,15 @@
         <guimenuitem>Difference of Gaussians</guimenuitem>
       </menuchoice>
     </para>
-    <para lang="en">
+    <para lang="cs">
+      Tento filtr naleznete v nabídce
+      <menuchoice>
+        <guimenu>Filtry</guimenu>
+        <guisubmenu>Detekce hran</guisubmenu>
+        <guimenuitem>Difference of Gaussians</guimenuitem>
+      </menuchoice>.
+    </para>
+    <para lang="fr">
       Le filtre se trouve à
       <menuchoice>
         <guimenu>Filtres</guimenu>
@@ -60,6 +76,20 @@
       situations where you have a light figure on the dark background,
       reversing them may actually improve the result. 
     </para>
+    <para lang="cs">
+      Tento filtr je v Gimpu 2.2 nový. Provádí detekci hran pomocí algoritmu
+      zvaného „rozdíly v Gaussových rozostřeních“. Ten spočívá v provedení
+      dvou různých Gaussových rozostření obrázku s různým poloměrem rozostření
+      a jejich následným odečtením. Tento algoritmus se velmi často používá
+      při konstrukci umělého zraku (a možná hraje roli i v biologickém
+      zraku!) a je velmi rychlý, protože pro Gaussovo rozostření existují
+      velmi efektivní algoritmy. Nejdůležitější parametry jsou poloměry
+      rozostření obou Gaussových rozostření. Nejsnazší je pravděpodobně
+      nastavit je s pomocí náhledu, ale může být také užitečné vědět, že
+      zvětšení menšího poloměru většinou znamená silnější hrany, zatímco
+      zmenšení většího poloměru obvykle znamená zvýšení prahu pro rozpoznání
+      hran.
+    </para>
     <para lang="fr">
       Ce filtre est apparu dans Gimp 2.2. Il fait une détection
       de bords en utilisant un algorihme appelé « Différence 
@@ -84,10 +114,12 @@
 
   <simplesect>
     <title lang="en">Options</title>
+    <title lang="cs">Volby</title>
     <title lang="fr">Options</title>
     <variablelist>
       <varlistentry>
         <term lang="en">Smoothing parameters</term>
+        <term lang="cs">Parametry vyhlazování</term>
         <term lang="fr">Paramètres d'adoucissement</term>
         <listitem lang="en">
           <para>
@@ -97,6 +129,14 @@
             image.  If you want to produce something that looks like a
             sketch, in most cases setting Radius 2 smaller than
             Radius 1 will give better results.
+          </para>
+        </listitem>
+        <listitem lang="cs">
+          <para>
+            Poloměr 1 a 2 jsou poloměry pro dvě Gaussova rozostření.
+            Jediným omezením je, že nesmí být shodná, protože to by vedlo k
+            prázdnému obrázku. Chcete-li vytvořit něco jako skicu, je obvykle
+            lepší nastavit Poloměr 2 menší než Poloměr 1.
           </para>
         </listitem>
         <listitem lang="fr">
@@ -112,6 +152,7 @@
       </varlistentry>
       <varlistentry>
         <term lang="en">Normalize</term>
+        <term lang="cs">Normalizovat</term>
         <term lang="fr">Normaliser</term>
         <listitem lang="en">
           <para>
@@ -121,6 +162,14 @@
             taken into account, so with "Normalize" checked the
             preview is not completely accurate.  (It is accurate
             except in terms of global contrast, though.)  
+          </para>
+        </listitem>
+        <listitem lang="cs">
+          <para>
+            Zaškrtnutí této volby způsobuje roztažení rozsahu jasu ve
+            výsledném obrázku, jak je to jen možné. V náhledu je však v potaz
+            brána jen část obrázku, takže při povolení této volby není náhled
+            zcela přesný (ohledně globálního kontrastu).
           </para>
         </listitem>
         <listitem lang="fr">
@@ -135,12 +184,19 @@
       </varlistentry>
       <varlistentry>
         <term lang="en">Invert</term>
+        <term lang="cs">Invertovat</term>
         <term lang="fr">Inverser</term>
         <listitem lang="en">
           <para>
             Checking this box inverts the result, so that you see dark
             edges on a white background, giving something that looks
             more like a drawing.  
+          </para>
+        </listitem>
+        <listitem lang="cs">
+          <para>
+            Zaškrtnutí této volby invertuje výsledná obrázek, takže vidíte
+            tmavé hrany na bílém pozadí, tedy jakoby kresbu na bílém papíře.
           </para>
         </listitem>
         <listitem lang="fr">

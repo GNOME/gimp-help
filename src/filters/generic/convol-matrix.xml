@@ -1,7 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<sect2 id='plug-in-convmatrix' lang="en;fr">
+<sect2 id='plug-in-convmatrix' lang="en;cs;fr">
   <title lang="en">Convolution matrix</title>
+  <title lang="cs">Konvoluční matice</title>
   <title lang="fr">Matrice de convolution</title>
 
   <indexterm>
@@ -9,6 +10,10 @@
     <secondary lang="en">Generic</secondary>
     <tertiary lang="en">Convolution</tertiary>    
     
+    <primary lang="cs">filtry</primary>
+    <secondary lang="cs">obecné</secondary>
+    <tertiary lang="cs">konvoluce</tertiary>    
+ 
     <primary lang="fr">Filtre</primary>
     <secondary lang="fr">Générique</secondary>
     <tertiary lang="fr">Convolution</tertiary>      
@@ -19,6 +24,11 @@
       <imagedata fileref='../images/filters/filters-generic-convolution.png' format="PNG"/>
     </imageobject>
   </mediaobject>
+  <mediaobject lang="cs">
+    <imageobject>
+      <imagedata fileref='../images/filters/cs/filters-generic-convolution.png' format="PNG"/>
+    </imageobject>
+  </mediaobject>
   <mediaobject lang="fr">
     <imageobject>
       <imagedata fileref='../images/filters/fr/filters-generic-convolution.png' format="PNG"/>
@@ -27,6 +37,7 @@
 
   <simplesect>
     <title lang="en">Overview</title>
+    <title lang="cs">Přehled</title>
     <title lang="fr">Généralités</title>
 
           <para lang='en'>
@@ -86,6 +97,58 @@
             pixels. As a graphical result, the initial pixel moved a pixel downwards. 
           </para>
  
+          <para lang='cs'>
+            Tento filtr naleznete v nabídce
+            <guimenuitem>Obrázek&gt;Filtry/Obecné/Konvoluční matice</guimenuitem>  
+          </para>
+          <para lang='cs'>
+            Tento filtr je rájem matematiků. Mnoho filtrů interně používá konvoluční
+            matici. S filtrem Konvoluční matice si ale můžete vytvořit filtr vlastní.
+          </para>
+          <para lang='cs'>
+            Co je konvoluční matice? Konvoluce je operace s maticí pomocí jiné
+            matice zvané „jádro“. Jako první matice se používá obrázek určený
+            k úpravě. Obrázek je vlastně dvojrozměrná pravoúhlá souřadnicová
+            síť pixelů. Použité jádro závisí na požadovaném efektu.
+          </para>
+          <para lang='cs'>
+            GIMP používá matice 5×5 nebo 3×3. Zde budeme uvažovat pouze o
+            maticích 3×3, jsou nejpoužívanější a obvykle dostačující pro
+            všechny požadované efekty. Pokud jsou všechny krajní hodnoty jádra
+            nastaveny na nulu, bude systém považovat jádro za matici typu 3×3.
+          </para>
+          <para lang='cs'>
+            Filtr postupně zpracovává všechny pixely obrázku. Pro každý z nich
+            vynásobí hodnotu aktuálního pixelu a jeho osmi sousedních pixelů
+            odpovídajícími hodnotami jádra. Výseldné hodnoty pak sečte a
+            výsledek je pak hodnotou přiřazenou aktuálnímu pixelu.
+          </para>
+          <para lang='cs'>
+            Jednoduchý příklad:
+          </para>
+          <mediaobject lang='cs'>
+            <imageobject>
+              <imagedata fileref="../images/filters/examples/convolution-example1.png" 
+              format="PNG" />
+            </imageobject>
+          </mediaobject>
+          <para lang='cs'>
+            Vlevo je matice obrázku: každý pixel je popsán svou hodnotou.
+            Aktuální pixel je vyznačen červeně. Oblast, se kterou jádro
+            pracuje, je označena zeleně. Uprostřed obrázku je jádro a vpravo
+            je výsledek konvoluce.
+          </para>
+          <para lang='cs'>
+            Stalo se následující: filtr úpostupně zleva doprava a shora dolů
+            načte všechny pixely z oblasti, se kterou jádro pracuje. Hodnotu
+            každého takového pixelu vynásobí příslušnou hodnotou jádra a
+            výsledky sečte:
+            (100*0)+(50*1)+(50*0)*(100*0)+(100*0)+(100*0)+(100*0)+(100*0)+(100*0)+(100*0) = 50.
+            Aktuální pixel tk získá hodnotu 50. Filtr nepracuje přímo s
+            obrázkem, ale s jeho kopií. Výsledkem tohoto filtru bude proto
+            posun o pixelů o jeden pixel dolů.
+          </para>
+
           <para lang='fr'>
             Ce filtre se trouve à 
             <guimenuitem>Image&gt;Filtres/Générique/Matrice de <accel>c</accel>onvolution</guimenuitem>
@@ -144,11 +207,13 @@
 
   <simplesect>
     <title lang="en">Options</title>
+    <title lang="cs">Volby</title>
     <title lang="fr">Options</title>
     <variablelist>
     
       <varlistentry>
         <term lang="en">Matrix</term>
+        <term lang="cs">Matice</term>
         <term lang="fr">Matrice</term>
         <listitem lang="en">
           <para>
@@ -162,6 +227,21 @@
           <para>
             <guilabel>Offset</guilabel>: this value is added to the division result. This is 
             useful if result may be negative. This offset may be negative.
+          </para>
+        </listitem>  
+        <listitem lang="cs">
+          <para>
+            Jaderná matice 5×5: hodnoty zapisujte přímo do jednotlivých polí.
+          </para>
+          <para>
+            <guilabel>Dělitel</guilabel>: Výsledek předchozího výpočtu bude
+            vydělen tímto číslem. Většinou nebudete používat 1. která ponechá
+            výzledek beze změny, ale 9 nebo 25, podle velikosti matice.
+          </para>
+          <para>
+            <guilabel>Posun</guilabel>: Tato hodnota je k výsledku přičtena.
+            Je užitečná v případě záporných výsledků. Posun ale může být také
+            záporný.
           </para>
         </listitem>  
         <listitem lang="fr">
@@ -183,6 +263,7 @@
 
       <varlistentry>
         <term lang="en">Border</term>
+        <term lang="cs">Obvod</term>
         <term lang="fr">Bordure</term>
         <listitem lang="en">
           <para>
@@ -219,6 +300,52 @@
             <listitem>
               <para>
                 <guilabel>Crop</guilabel>: Pixels on borders are not modified, but they are cropped.
+              </para>
+              <mediaobject>
+                <imageobject>
+                  <imagedata fileref="../images/filters/filters-convolution-crop.png" format="PNG"/>
+                </imageobject>
+              </mediaobject>
+            </listitem>  
+          </itemizedlist>
+        </listitem>
+        <listitem lang="cs">
+          <para>
+            Když je aktuální pixel na okraji, je část jádra mimo obrázek.
+            Je třeba se rozhodnout, co má v takovém případě filtr dělat:
+          </para> 
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="../images/filters/filters-convolution-milord.png" format="PNG"/>
+            </imageobject>
+          </mediaobject>
+          <itemizedlist>
+            <listitem>
+              <para>
+                <guilabel>Rozšířit</guilabel>: tato část jádra se nebere v potaz.
+              </para>
+                <mediaobject>
+                <imageobject>
+                  <imagedata fileref="../images/filters/filters-convolution-extend.png" format="PNG"/>
+                </imageobject>
+              </mediaobject>
+            </listitem>
+            <listitem>
+              <para>
+                <guilabel>Ohýbání</guilabel>: tato část jádra použije pixely z
+                druhé strany obrázku, takže pixely z jedné strany se objeví na
+                druhé straně.
+              </para>
+              <mediaobject>
+                <imageobject>
+                  <imagedata fileref="../images/filters/filters-convolution-wrap.png" format="PNG"/>
+                </imageobject>
+              </mediaobject>
+            </listitem>
+            <listitem>
+              <para>
+                <guilabel>Ořez</guilabel>: Pixely na krajích nejsou
+                modifikovány, ale ořezány.
               </para>
               <mediaobject>
                 <imageobject>
@@ -283,12 +410,19 @@
 
       <varlistentry>
         <term lang="en">Channels</term>
+        <term lang="cs">Kanály</term>
         <term lang="fr">Canaux</term>
         <listitem lang="en">
           <para>
             You can select there one or several channels the filter will work with.
-          </para> 
-        </listitem>  
+          </para>
+        </listitem>
+        <listitem lang="cs">
+          <para>
+            Zde můžete zvolit jeden nebo více kanálů, s ekterými bude filtr
+            pracovat.
+          </para>
+        </listitem>
         <listitem lang="fr">
           <para>
             Vous pouvez choisir là le ou les canaux sur lesquels agira le filtre.
@@ -298,6 +432,7 @@
 
       <varlistentry>
         <term lang="en">Automatic</term>
+        <term lang="cs">Automatické</term>
         <term lang="fr">Automatique</term>
         <listitem lang="en">
           <para>
@@ -305,6 +440,14 @@
             this result is equal to zero (it's not possible to divide by zero), then a 128 
             offset is applied. If it is negative ( a negative color is not possible), a 
             255 offset is applied (inverts result).
+          </para> 
+        </listitem> 
+        <listitem lang="cs">
+          <para>
+            Pokud je tato volba aktivní, je dělitel výsledkem konvoluce.
+            Pokud je tento výsledek nulový (nulou nelze dělit), je použit
+            posun o velikosti 128. Pokud je záporný (záporná barva není
+            možná), je použit posun o velikosti 255 (invertuje výsledek).
           </para> 
         </listitem> 
         <listitem lang="fr">
@@ -319,11 +462,18 @@
  
       <varlistentry>
         <term lang="en">Alpha weighting</term>
+        <term lang="cs">Vážená alfa</term>
         <term lang="fr">Poids alpha</term>
          <listitem lang="en">
           <para>
             If this option is not checked, the filter doesn't take in account transparency and this 
             may be cause of some artefacts when blurring. 
+          </para> 
+        </listitem> 
+         <listitem lang="cs">
+          <para>
+            Pokud není tato volba zvolena, nebere filtr v úvahu průhlednost,
+            což může vést k artefaktům při rozmazávání.
           </para> 
         </listitem> 
         <listitem lang="fr">
@@ -340,11 +490,17 @@
 
   <simplesect>
     <title lang="en">Examples</title>
-    <title lang="fr">Exemples</title>  
+    <title lang="cs">Příklady</title>
+    <title lang="fr">Exemples</title>
 
     <para lang="en">
       Design of kernels is based on high levels mathematics. You can find ready-made 
       kernels on the Web. Here are a few examples:
+    </para>
+
+    <para lang="cs">
+      Návrh jader je založen na složité matematice. Hotová jádra ale můžete
+      nalézt na webu. Zde je několik příkladů:
     </para>
 
     <para lang="fr">
@@ -356,6 +512,7 @@
       
       <varlistentry>
         <term lang="en">Sharpen</term>
+        <term lang="cs">Zaostření</term>
         <term lang="fr">Augmenter le contraste</term>
         <listitem>
           <mediaobject>
@@ -368,6 +525,7 @@
      
       <varlistentry>
         <term lang="en">Blur</term>
+        <term lang="cs">Rozmazání</term>
         <term lang="fr">Flou</term>
         <listitem>
           <mediaobject>
@@ -380,6 +538,7 @@
   
       <varlistentry>
         <term lang="en">Edge enhance</term>
+        <term lang="cs">Vylepšení hran</term>
         <term lang="fr">Amélioration des bords</term>
         <listitem>
           <mediaobject>
@@ -392,6 +551,7 @@
   
       <varlistentry>
         <term lang="en">Edge detect</term>
+        <term lang="cs">Detekce hran</term>
         <term lang="fr">Détection des bords</term>
         <listitem>
           <mediaobject>
@@ -404,6 +564,7 @@
   
       <varlistentry>
         <term lang="en">Emboss</term>
+        <term lang="cs">Reliéf</term>
         <term lang="fr">Repoussage</term>
         <listitem>
           <mediaobject>
