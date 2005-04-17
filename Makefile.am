@@ -73,7 +73,11 @@ clean.stamp:
 	rm -rf `find . -name "*.rej"`
 	touch clean.stamp
 
-mkdirs.stamp:
+
+clean: clean.stamp
+
+
+mkdirs.stamp: Makefile
 	@echo '*** Creating directories ***'
 	@for format in $(FORMATS); do \
 	  for lang in $(ALL_LINGUAS); do \
@@ -113,7 +117,7 @@ images.stamp: mkdirs.stamp $(IMAGE_FILES)
 	done
 	touch images.stamp
 
-convert.stamp: mkdirs.stamp images.stamp $(IMAGE_FILES)
+convert.stamp: images.stamp
 	@echo '*** Converting Images to 8bit depth ***'
 	cd $(top_srcdir)/html/images/; \
 	for i in `find ./ -name '*.png' -type f`; do \
@@ -122,7 +126,7 @@ convert.stamp: mkdirs.stamp images.stamp $(IMAGE_FILES)
 	done; \
 	touch convert.stamp
 
-profile.stamp: images.stamp $(XML_FILES) $(DTD_FILES)
+profile.stamp: mkdirs.stamp $(XML_FILES) $(DTD_FILES)
 	@echo '*** Profiling XML files ***'
 	@cd $(top_srcdir) && \
 	$(mkinstalldirs) xml && cd xml && \
@@ -137,7 +141,7 @@ profile.stamp: images.stamp $(XML_FILES) $(DTD_FILES)
 	done;
 	touch profile.stamp
 
-latex.stamp: profile.stamp $(XML_FILES) $(DTD_FILES)
+latex.stamp: profile.stamp
 	@echo '*** Building LaTeX files ***'
 	@for lang in $(ALL_LINGUAS); do \
 	  echo '-- Building LaTeX for '$$lang; \
@@ -154,7 +158,7 @@ latex.stamp: profile.stamp $(XML_FILES) $(DTD_FILES)
 	done;
 	touch latex.stamp
 
-pdf.stamp: latex.stamp $(XML_FILES) $(DTD_FILES)
+pdf.stamp: latex.stamp convert.stamp
 	@echo '*** Building PDF files ***'
 	@cd $(top_srcdir)/pdf;
 	@for lang in $(ALL_LINGUAS); do \
@@ -166,7 +170,7 @@ pdf.stamp: latex.stamp $(XML_FILES) $(DTD_FILES)
 	done;
 	touch pdf.stamp
 
-html.stamp: profile.stamp $(XML_FILES) $(DTD_FILES)
+html.stamp: profile.stamp images.stamp css.stamp
 	@echo '*** Building HTML ***'
 	@for lang in $(ALL_LINGUAS); do \
 	  echo '-- Building HTML for '$$lang;\
@@ -188,7 +192,7 @@ index.stamp: html.stamp
 	done;
 	touch index.stamp
 
-validate.stamp: profile.stamp $(XML_FILES) $(DTD_FILES)
+validate.stamp: profile.stamp
 	@if test "x$(XMLLINT)" != "x"; then \
 	  echo '*** Validating profiled XML ***'; \
 	  for lang in $(ALL_LINGUAS); do \
@@ -207,7 +211,7 @@ validate.stamp: profile.stamp $(XML_FILES) $(DTD_FILES)
 validate:
 	@rm -f validate.stamp; make validate.stamp
 
-lint: profile.stamp $(XML_FILES) $(DTD_FILES)
+lint: profile.stamp
 	@if test "x$(XMLLINT)" != "x"; then \
 	  echo '*** Checking XML for well-formed-ness ***'; \
 	  for xml in $(XML_FILES); do \
