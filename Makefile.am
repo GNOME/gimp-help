@@ -140,8 +140,11 @@ $(STAMP_DIR)/convert.stamp: $(STAMP_DIR)/images.stamp
 	for i in `find ./ -name '*.png' -type f`; do \
 	  echo "Converting" $$i && \
 	  $(CONVERT) $$i $$i; \
-	done; \
-	touch $(STAMP_DIR)/convert.stamp
+	done
+
+	touch $@
+
+convert: $(STAMP_DIR)/convert.stamp
 
 
 $(STAMP_DIR)/profile.stamp: $(patsubst %,$(STAMP_DIR)/profile.%.stamp,$(ALL_LINGUAS))
@@ -180,6 +183,9 @@ $(STAMP_DIR)/latex.stamp: $(STAMP_DIR)/profile.stamp
 		../../stylesheets/$$stylesheet ../../xml/$$lang.xml); \
 	done;
 	touch $(STAMP_DIR)/latex.stamp
+
+latex: $(STAMP_DIR)/latex.stamp
+
 
 $(STAMP_DIR)/pdf.stamp: $(STAMP_DIR)/latex.stamp $(STAMP_DIR)/convert.stamp
 	@echo '*** Building PDF files ***'
