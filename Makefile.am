@@ -193,6 +193,8 @@ $(STAMP_DIR)/pdf.stamp: $(STAMP_DIR)/latex.stamp $(STAMP_DIR)/convert.stamp
 	done;
 	touch $(STAMP_DIR)/pdf.stamp
 
+pdf: $(STAMP_DIR)/pdf.stamp
+
 
 $(STAMP_DIR)/html.stamp: $(patsubst %,$(STAMP_DIR)/html.%.stamp,$(ALL_LINGUAS))
 	@echo '*** Building HTML ***'
