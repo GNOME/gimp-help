@@ -206,7 +206,7 @@ $(STAMP_DIR)/html.stamp: $(patsubst %,$(STAMP_DIR)/html.%.stamp,$(ALL_LINGUAS))
 	@echo '*** Building HTML ***'
 	touch $@
 
-$(patsubst %,$(STAMP_DIR)/html.%.stamp,$(ALL_LINGUAS)): $(STAMP_DIR)/html.%.stamp : $(STAMP_DIR)/profile.%.stamp
+$(patsubst %,$(STAMP_DIR)/html.%.stamp,$(ALL_LINGUAS)): $(STAMP_DIR)/html.%.stamp : $(STAMP_DIR)/profile.%.stamp $(STAMP_DIR)/css.%.stamp $(STAMP_DIR)/images.%.stamp
 	echo '-- Building HTML for '$*;\
 	(cd $(top_srcdir)/html/$* && \
 	  $(XSLTPROC) $(XSLTFLAGS) --xinclude \
@@ -268,7 +268,7 @@ if GIMP_HELP_BUILD
 
 dist-check-build:
 
-all-local: mkdirs images validate index
+all-local: mkdirs images html css validate index
 
 CLEANFILES = $(HELP_STAMPS)
 
