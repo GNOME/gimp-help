@@ -75,28 +75,28 @@ $(STAMP_DIR)/clean.stamp: Makefile
 	rm -rf `find . -name "*.bak"`
 	rm -rf `find . -name "*.rej"`
 
-	touch $@
+	@touch $@
 
 clean: $(STAMP_DIR)/clean.stamp
 
 
 $(STAMP_DIR)/mkdirs.stamp: $(STAMP_DIR)/clean.stamp $(patsubst %,$(STAMP_DIR)/mkdirs.%.stamp,$(ALL_LINGUAS)) 
 	@echo '*** Creating directories ***'
-	touch $@
+	@touch $@
 
 $(patsubst %,$(STAMP_DIR)/mkdirs.%.stamp,$(ALL_LINGUAS)) : $(STAMP_DIR)/mkdirs.%.stamp : $(STAMP_DIR)/clean.stamp
 	@for format in $(FORMATS); do \
 	  $(mkinstalldirs) $$format/$*; \
 	done;
 
-	touch $@
+	@touch $@
 
 mkdirs: $(STAMP_DIR)/mkdirs.stamp
 
 
 $(STAMP_DIR)/css.stamp : $(patsubst %,$(STAMP_DIR)/css.%.stamp,$(ALL_LINGUAS))
 	@echo '*** Copying stylesheets ***'
-	touch $@
+	@touch $@
 
 $(patsubst %,$(STAMP_DIR)/css.%.stamp,$(ALL_LINGUAS)) : $(STAMP_DIR)/css.%.stamp : $(STAMP_DIR)/mkdirs.%.stamp $(CSS_FILES)
 	cp $(CSS_FILES) $(srcdir)/html/$*; \
@@ -104,14 +104,14 @@ $(patsubst %,$(STAMP_DIR)/css.%.stamp,$(ALL_LINGUAS)) : $(STAMP_DIR)/css.%.stamp
 	  cp $(CSS_DIRS)/$*/gimp-help-custom.css $(srcdir)/html/$*; \
 	fi
 
-	touch $@
+	@touch $@
 
 css:	$(STAMP_DIR)/css.stamp
 
 
 $(STAMP_DIR)/images.stamp : $(patsubst %,$(STAMP_DIR)/images.%.stamp,$(ALL_LINGUAS))
 	@echo '*** Copying images ***'
-	touch $@
+	@touch $@
 
 $(patsubst %,$(STAMP_DIR)/images.%.stamp,$(ALL_LINGUAS)) : $(STAMP_DIR)/images.%.stamp : $(STAMP_DIR)/mkdirs.%.stamp $(IMAGE_FILES)
 	@for format in $(FORMATS); do \
@@ -129,7 +129,7 @@ $(patsubst %,$(STAMP_DIR)/images.%.stamp,$(ALL_LINGUAS)) : $(STAMP_DIR)/images.%
 	  done; \
 	done
 
-	touch $@
+	@touch $@
 
 images: $(STAMP_DIR)/images.stamp
 
@@ -142,14 +142,14 @@ $(STAMP_DIR)/convert.stamp: $(STAMP_DIR)/images.stamp
 	  $(CONVERT) $$i $$i; \
 	done
 
-	touch $@
+	@touch $@
 
 convert: $(STAMP_DIR)/convert.stamp
 
 
 $(STAMP_DIR)/profile.stamp: $(patsubst %,$(STAMP_DIR)/profile.%.stamp,$(ALL_LINGUAS))
 	@echo '*** Profiling XML files ***'
-	touch $@
+	@touch $@
 
 $(patsubst %,$(STAMP_DIR)/profile.%.stamp,$(ALL_LINGUAS)): $(STAMP_DIR)/profile.%.stamp : $(STAMP_DIR)/mkdirs.%.stamp $(XML_FILES)
 	@cd $(top_srcdir) && \
@@ -162,7 +162,7 @@ $(patsubst %,$(STAMP_DIR)/profile.%.stamp,$(ALL_LINGUAS)): $(STAMP_DIR)/profile.
 	   sed -e "s/xmlns[:a-z]*\=\"[^\"]*\" //" | \
 	   sed -e "s/lang=[\"'][A-Za-z_;]*[\"']/lang=\"$*\"/" >$*.xml
 
-	touch $@
+	@touch $@
 
 profile: $(STAMP_DIR)/profile.stamp 
 
@@ -181,8 +181,9 @@ $(STAMP_DIR)/latex.stamp: $(STAMP_DIR)/profile.stamp
 		--stringparam l10n.gentext.default.language $$lang \
 		--stringparam profile.lang $$lang \
 		../../stylesheets/$$stylesheet ../../xml/$$lang.xml); \
-	done;
-	touch $(STAMP_DIR)/latex.stamp
+	done
+
+	@touch $@
 
 latex: $(STAMP_DIR)/latex.stamp
 
@@ -196,15 +197,16 @@ $(STAMP_DIR)/pdf.stamp: $(STAMP_DIR)/latex.stamp $(STAMP_DIR)/convert.stamp
 	    pdflatex  $$lang.tex; \
 	    makeindex $$lang.idx && \
 	    pdflatex $$lang.tex); \
-	done;
-	touch $(STAMP_DIR)/pdf.stamp
+	done
+
+	@touch $@
 
 pdf: $(STAMP_DIR)/pdf.stamp
 
 
 $(STAMP_DIR)/html.stamp: $(patsubst %,$(STAMP_DIR)/html.%.stamp,$(ALL_LINGUAS))
 	@echo '*** Building HTML ***'
-	touch $@
+	@touch $@
 
 $(patsubst %,$(STAMP_DIR)/html.%.stamp,$(ALL_LINGUAS)): $(STAMP_DIR)/html.%.stamp : $(STAMP_DIR)/profile.%.stamp $(STAMP_DIR)/css.%.stamp $(STAMP_DIR)/images.%.stamp
 	echo '-- Building HTML for '$*;\
@@ -214,14 +216,14 @@ $(patsubst %,$(STAMP_DIR)/html.%.stamp,$(ALL_LINGUAS)): $(STAMP_DIR)/html.%.stam
 	     --stringparam profile.lang $* \
 	     ../../stylesheets/plainhtml.xsl ../../xml/$*.xml);
 
-	touch $@
+	@touch $@
 
 html: $(STAMP_DIR)/html.stamp 
 
 
 $(STAMP_DIR)/index.stamp: $(patsubst %,$(STAMP_DIR)/index.%.stamp,$(ALL_LINGUAS))
 	@echo '*** Generating index files ***';
-	touch $@
+	@touch $@
 
 $(patsubst %,$(STAMP_DIR)/index.%.stamp,$(ALL_LINGUAS)): $(STAMP_DIR)/index.%.stamp : $(STAMP_DIR)/html.%.stamp
 	echo '-- Generating index for '$*; \
@@ -229,7 +231,7 @@ $(patsubst %,$(STAMP_DIR)/index.%.stamp,$(ALL_LINGUAS)): $(STAMP_DIR)/index.%.st
 	     $(MAKEINDEX) \
 	       html/$*/gimp-xrefs.xml > html/$*/gimp-help.xml;
 
-	touch $@
+	@touch $@
 
 index: $(STAMP_DIR)/index.stamp 
 
@@ -243,7 +245,7 @@ $(STAMP_DIR)/validate.stamp: $(patsubst %,$(STAMP_DIR)/validate.%.stamp,$(ALL_LI
 	  echo '*** xmllint is missing, skipping the validation step ***'; \
 	fi
 
-	touch $@
+	@touch $@
 
 $(patsubst %,$(STAMP_DIR)/validate.%.stamp,$(ALL_LINGUAS)): $(STAMP_DIR)/validate.%.stamp : $(STAMP_DIR)/profile.%.stamp
 	@echo -n '-- Validating XML for '$*; \
@@ -251,7 +253,7 @@ $(patsubst %,$(STAMP_DIR)/validate.%.stamp,$(ALL_LINGUAS)): $(STAMP_DIR)/validat
 	echo -n '	number of errors: '; \
 	grep "validity error" xml/$*-validity-errors.log | wc -l
 
-	touch $@
+	@touch $@
 
 validate: $(STAMP_DIR)/validate.stamp
 
@@ -268,7 +270,7 @@ if GIMP_HELP_BUILD
 
 dist-check-build:
 
-all-local: mkdirs images html css validate index
+all-local: mkdirs validate images css html index
 
 CLEANFILES = $(HELP_STAMPS)
 
@@ -278,7 +280,7 @@ dist-check-build:
 	@echo "*** --enable-build must be specified in order to make dist"
 	@false
 
-all-local: css images
+all-local: images css
 
 endif
 
