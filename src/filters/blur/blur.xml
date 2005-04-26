@@ -19,21 +19,6 @@
     <primary lang="it">Filtro</primary>
     <secondary lang="it">Sfocatura</secondary>
   </indexterm>
-  
-  <mediaobject>
-    <imageobject lang="en">
-      <imagedata fileref='../images/filters/filters-blur-blur.png' format="PNG"/>
-    </imageobject>
-    <imageobject lang="de">
-      <imagedata fileref='../images/filters/filters-blur-blur.png' format="PNG"/>
-    </imageobject>
-    <imageobject lang="fr">
-      <imagedata fileref='../images/filters/fr/filters-blur-blur.png' format="PNG"/>
-    </imageobject>
-    <imageobject lang="it">
-      <imagedata fileref='../images/filters/filters-blur-blur.png' format="PNG"/>
-    </imageobject>
-  </mediaobject>
 
   <simplesect>
     <title lang="en">Overview</title>
@@ -42,17 +27,22 @@
     <title lang="it">Panoramica</title>
   
     <para lang="en">
-      The Blur filter produces an effect similar to that of an out of
-      focus camera shot. To produce this blur effect, the filter takes
+      The simple Blur filter produces an effect similar to that of an out
+      of focus camera shot. To produce this blur effect, the filter takes
       the average of the present pixel value and the value of adjacent
-      pixels and sets the present pixel to that average value. All
-      pixels of the active layer or selection are not concerned by
+      pixels and sets the present pixel to that average value. Not all
+      pixels of the active layer or selection are concerned by
       blurring. For each pixel, a random number is generated based on
       the seed value and compared against the randomization percentage.
       If the random value is less than the randomization percentage,
-      then the pixel is blurred. A 100% randomization, blurs all the
-      pixels and blurred pixel number is at the most equal to
-      randomization percentage.
+      then the pixel is blurred. <!-- is this still true? and what is the
+      fixed percentage amount? --> As said in the introduction, the effect
+      is subtle enough that you might not even notice it, but you can get
+      a stronger effect by repeating it. In Gimp 2.0 the filter shows a
+      dialog that allows you to set a "repeat count". In Gimp 2.2 this runs
+      automatically, without creating a dialog. If you want a strong 
+      blurring effect, this filter is too slow to be a good choice: use a
+      Gaussian blur instead.
     </para>
     <para lang="de">
       Der Weichzeichnen Filter erzeugt den Effekt eines unscharfen
@@ -79,16 +69,22 @@
       maximum égal à l'Aléa%.
     </para>
     <para lang="it">
-      Il filtro sfocatura produce un effetto simile a quello di una foto
-      fuori fuoco. Per produrre questo effetto sfocato, il filtro esegue
-      la media del valore del punto considerato e del valore dei punti
-      adiacenti e imposta questo valore al punto in questione. 
+      Il filtro di sfocatura semplice produce un effetto simile a quello 
+      di una foto fuori fuoco. Per produrre questo effetto sfocato, il
+      filtro esegue la media del valore del punto considerato e del valore
+      dei punti adiacenti e imposta questo valore al punto in questione. 
       La sfocatura non coinvolge tutti i punti del livello attivo o della
       selezione. Per ogni punto viene generato un numero casuale in base
       al valore del seme e confrontato la percentuale di casualità.
       Se il valore casuale è inferiore alla percentuale di casualità
-      allora il punto viene sfocato. Con una percentuale del 100% vengono
-      sfocati tutti i punti.
+      allora il punto viene sfocato.Come detto nell'introduzione, l'effetto
+      è così delicato che potreste non accorgervi di averlo eseguito ma è
+      possibile ottenere un effetto più forte ripetendone l'applicazione.In
+      Gimp 2.0 il filtro mostrava una finestra di dialogo che permetteva di
+      impostare un "conteggio ripetizioni". In Gimp 2.2 invece il filtro
+      viene chiamato direttamente, senza creare una finestra di dialogo. Se
+      si vuole un effetto di sfocatura più forte, questo filtro è troppo
+      lento per essere una buona scelta: usate la sfocatura Gaussiana.
     </para>
   </simplesect>
   
@@ -126,102 +122,17 @@
     <title lang="fr">Options</title>
     <title lang="de">Optionen</title>
     <title lang="it">Ozioni</title>
-    <variablelist>
-       <varlistentry>
-        <term lang="en">Random Seed</term>
-        <term lang="de">Zufallssaat</term>
-        <term lang="fr">Germe aléatoire</term>
-        <term lang="it">Random Seed</term>
-        <listitem>
-          <para lang="en">
-            <guilabel>Random Seed</guilabel> controls the randomization
-            element of the blur. The <guibutton>Time</guibutton> button will
-            set the seed using the hardware clock of the computer. Using
-            <guibutton>Time</guibutton> is the preferred method for
-            initializing Blur as it will provide a higher chance of differing
-            values over many uses.
-          </para>
-          <para lang="de">
-            Die <guilabel>Zufallssaat</guilabel> bestimmt den
-            Zufallswert des Weichzeichners. Durch einen Klick auf die
-            <guibutton>Neu Würfeln</guibutton> Schaltfläche wird ein
-            neuer Zufallswert berechnet.
-          </para>
-          <para lang="fr">
-            <guibutton>Graine aléatoire</guibutton> contrôle le
-            caractère aléatoire du déplacement des pixels. Le bouton
-            <guibutton>Aléatoire </guibutton> permet d'ensemencer le
-            générateur avec un nombre tiré de l'horloge et qui sera donc
-            bien différent à chaque utilisation.
-          </para>   
-          <para lang="it">
-            <!-- non tradotto perché queste opzioni e la finestra non ci 
-            sono più nella nuova versione di Gimp -->
-            <guilabel>Random Seed</guilabel> controls the randomization
-            element of the blur. The <guibutton>Time</guibutton> button will
-            set the seed using the hardware clock of the computer. Using
-            <guibutton>Time</guibutton> is the preferred method for
-            initializing Blur as it will provide a higher chance of differing
-            values over many uses.
-          </para>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term lang="en">Randomization %</term>
-        <term lang="de">Zufallsanteil in %</term>
-        <term lang="fr">Aléa %</term>
-        <term lang="it">Randomization %</term>
-        <listitem>
-          <para lang="en">
-            The <guilabel>Randomization</guilabel> slider represents
-            the percentage of pixels of the active layer or selection
-            which may be blurred. Higher value result in more blurring.
-          </para>
-          <para lang="de">
-            Der <guilabel>Zufallsanteil in %</guilabel>-Schieberegler
-            beeinflußt den Anteil des Bildes der weichgezeichnet wird.
-            Je größer der Wert, desto mehr wird weichgezeichnet.
-          </para>
-          <para lang="fr">
-            Le curseur <guilabel>Aléa</guilabel> représente le
-            pourcentage de pixels de la sélection ou du calque actif qui
-            peuvent être affectés par le filtre.
-          </para>
-          <para lang="it">
-            The <guilabel>Randomization</guilabel> slider represents
-            the percentage of pixels of the active layer or selection
-            which may be blurred. Higher value result in more blurring.
-          </para>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term lang="en">Repeat</term>
-        <term lang="de">Wiederholen</term>
-        <term lang="fr">Répétition</term>
-        <term lang="it">Repeat</term>
-        <listitem>
-          <para lang="en">
-            The <guilabel>Repeat</guilabel> slider represents the
-            number of times the active layer will be blurred. Higher
-            values result in more blurring.
-          </para>
-          <para lang="de">
-            Der <guilabel>Wiederholen</guilabel> Schieberegler bestimmt
-            wie oft die aktive Ebene weichgezeichnet wird. Je höher der
-            Wert, desto mehr wird weichgezeichnet.
-          </para>
-          <para lang="fr">
-            Le curseur <guilabel>Répétition</guilabel> représente le
-            nombre de fois où le filtre sera appliqué.
-          </para>
-          <para lang="it">
-            The <guilabel>Repeat</guilabel> slider represents the
-            number of times the active layer will be blurred. Higher
-            values result in more blurring.
-          </para>
-        </listitem>
-      </varlistentry>
-    </variablelist>
+      <para lang="en">
+        This filter has no option.
+      </para>
+      <para lang="de">
+        This filter has no option.
+      </para>
+      <para lang="fr">
+        Ce filtre n'a pas d'option.
+      </para>   
+      <para lang="it">
+        Questo filtro non ha opzioni.
+      </para>
   </simplesect>
-  
 </sect2>
