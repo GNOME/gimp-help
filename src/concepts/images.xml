@@ -1,18 +1,30 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
 <sect1 id='gimp-concepts-images' xmlns:xi="http://www.w3.org/2001/XInclude"
-  lang="en;de;fr;zh_CN">
+  lang="cs;en;de;fr;zh_CN">
+  <title lang="cs">Práce s obrázky</title>
   <title lang="en">Working with Images</title>
   <title lang='de'>Mit Bildern arbeiten</title>
   <title lang="fr">Travailler avec des Images</title>
   <title lang="zh_CN">了解图像</title>
 
   <sect2>
+    <title lang='cs'>Typy obrázků</title>
     <title lang='en'>Image types</title>
     <title lang='de'>Bildtypen</title>
-   <title lang='fr'>Types d'images</title>
+    <title lang='fr'>Types d'images</title>
     <title lang="zh_CN">图像格式</title>
 
+    <para lang='cs'>
+      Je svůdné přemýšlet o <emphasis>obrázku</emphasis> jako o něčem, co
+      odpovídá jednomu oknu s obrázkem nebo jednomu soboru, například
+      <!-- FIXCS<link linkend='file-jpeg-load'>-->JPEG<!--</link>--> souboru.
+      Obrázek v Gimpu je ale poměrně komplikovaná struktura, která může
+      obsahovat řadu na sobě položených vrstev a další objekty, jako masky
+      výběru, kanály, cesty, historii změn a další. V této části jsou
+      jednotlivé součásti obrázku popsány, a to včetně operací, které s nimi
+      lze provádět.
+    </para>
     <para lang='en'>
       It is tempting to think of an <emphasis>image</emphasis> as
       something that corresponds a single display window, or to a single
@@ -46,6 +58,17 @@
       <emphasis>图像</emphasis>常让人联想到和一个单独显示窗口相关的东西，或一个单独的文件如一个 JPEG 文件，不过一个真正的 Gimp 图像一个相当复杂的结构，包括一堆图层和许多其它类型的对象：一个选区蒙板，一系列通道和路径，一个“撤消”历史等。我们将在这一节对一个图像的所有元素和能用它们干什么来一个仔细的了解。
     </para>
 
+    <para lang='cs'>
+      Základní vlastností obrázku je jeho <emphasis>režim</emphasis>.
+      V Gimpu jsou tři možné režimy obrázku: RGB, odstíny šedi a indexovaný.
+      RGB je anglická zkratka pro Červená-Zelená-Modrá. V režimu RGB je barva
+      každého obrazového bodu, neboli pixelu, určena kombinací hodnoty
+      červené, zelené a modré barvy. Protože kombinací těchto tří barev lze
+      získat všechny lidským okem rozeznatelné barvy, je obrázek plně barevný.
+      Každá barevná hodnota, kanál, má v Gimpu 256 možných úrovní. Více se
+      dozvíte v části <!--FIXCS<link linkend='glossary-colormodel'>-->Barevné
+      modely<!--</link>-->.
+    </para>
     <para lang='en'>               <!--changed 041006-->
       The most basic property of an image is its
       <emphasis>mode</emphasis>.  There are three possible modes: RGB,
@@ -75,10 +98,15 @@
       Grün und Blau beschrieben werden kann, spricht man auch von
       Echtfarben. Jeder Farbkanal hat 256 mögliche Intensitätsstufen.
     </para>
-		<para lang="zh_CN">
+    <para lang="zh_CN">
       一个图像最基本的属性就是它的<emphasis>模式</emphasis>。这有三种模式：RGB，灰度和索引。RGB 代表红-绿-蓝，代表图像上的每个点用一个“红色”色阶，一个“绿色”色阶和一个“蓝色”色阶表示。人类能辨别的每种颜色都能用红，绿和蓝组合来表现，每一个颜色通道都有 256 种可能的亮度程度。
     </para>
 
+    <para lang='cs'>
+      V režimu odstíny šedi je každý obrazový bod reprezentován jedinou
+      hodnotou, jasem, který může v Gimpu nabývat 256 hodnot, od 0 (černá)
+      po 255 (bílá). Mezilehlé hodnoty představují odstíny šedi.
+    </para>
     <para lang='en'>
       In a grayscale image, each point is represented by a brightness
       value, ranging from 0 (black) to 255 (white), with intermediate
@@ -99,6 +127,13 @@
       对一个灰度的图像，每个点由从 0 (黑色)到 255 (白色)的亮度值来表现，其中间的值来表现不同程度的灰。
     </para>
 
+    <para lang='cs'>
+      Rozdíl mezi obrázkem v odstínech šedi a barevným RGB obrázkem je
+      v počtu barevných kanálů. Obrázek v odstínech šedi má kanál jediný,
+      RGB obrázek tři. RGB obrázek si můžete představit jako tři na sobě
+      položené obrázky v odstínech šedi, jeden zbarvený do červené, druhý
+      do zelené a třetí do modré barvy.
+    </para>
     <para lang='en'>
       Essentially the difference between a grayscale image and an RGB
       image is the number of "color channels":  a grayscale image has
@@ -122,6 +157,16 @@
       一个灰度图像和一个 RGB 图像最本质的区别就是它们“颜色通道”的数量：一个灰度图像只有一个；一个 RGB 图像有三个。一个 RGB 图像可以认为是三个灰度图像的叠加，一个为红色，一个为绿色，另一个为蓝色。
     </para>
 
+    <para lang='cs'>
+      Ve skutečnosti mají RGB obrázky i obrázky v odstínech šedi ještě jeden
+      další kanál, tzv. <emphasis>alfa</emphasis> kanál, který představuje
+      průhlednost. Pokud je alfa hodnota na určitém místě určité vrstvy
+      nulová, je tam vrstva zcela průhledná. Pozorovatelnou barvu pak určuje
+      to, co leží pod vrstvou. Pokud je alfa maximální, je vrstva zcela
+      neprůhledná a barva je určena pouze barvou této vrstvy. Mezilehlé alfa
+      hodnoty představují různé stupně částečné průsvitnosti: barva na daném
+      místě je směsí barvy průsvitné vrstvy a podkladu, který prosvítá.
+    </para>
     <para lang='en'>
       Actually, both RGB and grayscale images have one additional
       color channel, called the <emphasis>alpha</emphasis> channel,
@@ -164,6 +209,16 @@
       准确的说，RGB 和灰度图像都有一个附加的颜色通道，叫做 <emphasis>alpha</emphasis> 通道，它代表不透明度。当选定的图层其上位置的不透明度为零，图层就完全是透明的，这样那个位置的颜色由它下面是什么决定。当 alpha 为最大值，图层就是不透明的，该位置的颜色有图层颜色决定。其中间的 alpha 值用来区分不同的透明程度：该位置的颜色就由一定比例的图层颜色和图层下面的颜色决定。
    </para>
 
+    <para lang='cs'>
+      V Gimpu mají hodnoty v každém kanálu, včetně barevného kanálu,
+      rozsah od 0 do 255, tj. 256 možných hodnot. V počítačové grafice
+      se pro takové kanály používá termín 8bitová barevná hloubka.
+      Některé digitální fotoaparáty však umí vytvořit obrázky s 16bitovou
+      barevnou hloubkou, tedy 16 bity na kanál. Gimp takový obrázek umí
+      otevřít pouze za cenu ztráty jeho barevné hloubky. V mnoha případech si
+      lidské oko ničeho nevšimne, ale v některých situacích, zvláště v
+      oblastech s pozvolným barevným přechodem, může být ztráta viditelná.
+    </para>
     <para lang='en'>
       In Gimp, every color channel, including the alpha channel, has a
       range of possible values from 0 to 255; in computing
@@ -202,6 +257,19 @@
       Gimp 中，每个颜色通道包括 alpha 通道其可能的值都在 0 到 255 之间；用计算机术语说就是 8 位深度。一些数码相机能产生每个颜色通道 16 位深度的图像文件。Gimp 无法读取这种文件而不丢失分辨率。大部分情况下，那样的效果太细微以至人眼无法查觉，但在一些情况中，主要是缓慢颜色渐变的大片区域，还是能够查觉到其差别。
     </para>
 
+    <para lang='cs'>
+      Třetí typ, <emphasis>indexované obrázky</emphasis>, je trochu náročnější
+      k pochopení. V ibnexovaném obázku je použita pouze omezená paleta barev,
+      obvykle 256 nebo méně. Tyto barvy tvoří paleti obrázku a každému pixelu
+      je přiřazena některá z barev v paletě. Výhodou indexovaných obrázků je,
+      že spotřebovávají méně paměti, a v časech temného středověku (řekněme
+      v první polovině devadesátých let minulého století) se používaly velmi
+      často. Dnes se používají méně a méně, ale jsou stále důležité například
+      při tvorbě webové grafiky, kde je třeba co nejvíce šetřit množstvím
+      přenášených dat.
+      (Existuje také několik způsobů úprav obrázku, které se snadněji provádí
+      s indexovanými obrázky, než obrázky ve spojitém RGB režimu.)
+    </para>
     <para lang='en'>
       The third type, <emphasis>indexed</emphasis> images, is a bit
       more complicated to understand.  In an 
@@ -245,6 +313,16 @@
       第三种类型，<emphasis>索引</emphasis>图像，要了解它有点复杂。在一个索引图像种，只使用有限的一部分不连续的色彩，常常是 256 色或更少。这些颜色来之图像的“颜色表”，并且图像中的每个点都从颜色表中获取颜色。索引图像的优点在于能在计算机内部表现，这种方法消耗相对少的内存。索引图像在十年前使用很普遍。随着时间的前进，它们被使用得越来越少，不过仍然足够重要让 Gimp 支持它。(而且，还有一些重要的图像处理方式在索引图像上比在连续颜色的 RGB 图像上更容易实现。)
     </para>
 
+    <para lang='cs'>
+      Některé běžně užívané grafické formáty souborů (včetně formátu
+      <!--FIXCS<link linkend='file-gif-load'>-->GIF<!--</link>-->)
+      uchovávají indexované obrázky. Pokud takový soubor otevřete,
+      bude obázek v indexovaném režimu. Mnoho nástrojů Gimpu však s
+      indexovanými obrázky nepracuje příliš dobře, protože jim vadí
+      omezená paleta barev. Proto bývá nejlepší převést před začátkem úprav
+      obrázek do RGB režimu a pracovat v něm. V případě potřeby obrázek můžete
+      před uložením převést zpět do indexovaných barev.
+    </para>
     <para lang='en'>
       Some very commonly used types of files (including <link
       linkend='file-gif-load'>GIF</link>) produce
@@ -274,10 +352,17 @@
       convertir au format RVB, quitte à les convertir ensuite à nouveau en 
       indexées.
     </para>
-		<para lang="zh_CN">
+    <para lang="zh_CN">
       一些非常常见的文件类型(包括 GIF)在 Gimp 中打开时都是作为索引图像。许多 Gimp 工具对索引图像工作地不好--而且许多滤镜完全无法使用--因为它只有有限数量的可用颜色。因此，最好在进行这些操作之前，将图像转换为 RGB 图像。如果有必要，您也能在准备保存它时转换回来成索引模式。
     </para>
 
+    <para lang='cs'>
+      Převádění mezi jednotlivými režimy je v gimpu snadné. Slouží k tomu
+      podnabídka <link linkend='gimp-image-mode'>Režim</link> v nabídce
+      Obrázek v okně obrázku. Některé převody (například RGB do stupňů šedi
+      nebo indexovaných barev) však způsobují ztrátu barevné informace,
+      kterou nelze obnovit zpětným převodem do původního režimu.
+    </para>
     <para lang='en'>
       Gimp makes it easy to convert from one image type to another,
       using the <link linkend='gimp-image-mode'>Mode</link> command in
@@ -304,6 +389,14 @@
     </para>
 
     <note>
+      <para lang='cs'>
+        Pokud se nsažíte na obrázek aplikovat filtr,ale ten je v nabídce
+        zašedlý, bývá často důvodem špatný režim obrázku (nebo vrstvy).
+        Mnoho filtrů například nelze použít na indexované obrázky. Některé
+        fungují pouze na RGB obrázcích, jiné na obrázcích ve stupních šedi.
+        Některé také vyžadují přítomnost alfa kanálu. Řešením je převedení
+        obrázku do správného režimu, obvykle RGB.
+      </para>
       <para lang='en'>
         If you are trying to use a filter on an image, and it appears
         grayed out in the menu, usually the cause is that the image (or,
@@ -337,7 +430,7 @@
       </para>
     </note>
   </sect2>
-  
+
   <xi:include href="qmask.xml" />
   <xi:include href="layers.xml" />
   <xi:include href="selection.xml" />

@@ -33,7 +33,7 @@
   </para>
   <para lang='cs'>
     Téměř vše, co s obrázkem v Gimpu provedete, lze vrátit zpět.
-    Poѕlední akci vrátíte zpět volbou
+    Poslední akci vrátíte zpět volbou
     <menuchoice>
       <guimenu>Upravit</guimenu>
       <guimenuitem>Zpět</guimenuitem>
@@ -103,7 +103,7 @@
     </keycombo>.
     Občas je výhodné posoudit vliv nějaké akce jejím opakovaným vracením a
     znovuprováděním. Je to obvykle velmi rychlé a nespotřebovává zvláštní
-    zdroje ani paměť příkazu Zpět, takže se není čeho obávat.
+    zdroje ani paměť historie změn, takže se není čeho obávat.
   </para>
   <para lang='fr'>
     Annuler peut lui-même être annulé. Après avoir annulé une action, vous 
@@ -151,14 +151,10 @@
     <para>
     Pokud vrátíte zpět jednu nebo více operací a a pak s obrázkem provedete
     další operaci s výjimkou Zpět/Znovu, jsou operace nenávratně ztraceny;
-    již je nebude možné obnovit pomocí funkce Znovu. 
-    If you undo one or more actions and then operate on the image in
-    any way except by using Undo or Redo, it will no longer be possible
-    to redo those actions:  they are lost forever.  The solution to
-    this, if it creates a problem for you, is to duplicate the image
-    and then operate on the copy.  (<emphasis>Not</emphasis> the
-    original, because the undo/redo history is not copied when you
-    duplicate an image.)
+    již je nebude možné obnovit pomocí funkce Znovu. Řešením může být
+    duplikování obrázku a práce s jeho kopií. (<emphasis>Nikoliv</emphasis>
+    originálem, protože historie změn se při duplikování obrázku
+    nekopíruje.)
     </para>
   </caution>
   <caution lang='fr'>
@@ -177,7 +173,14 @@
     当您撤消一个或多个命令后，又对图像进行了除撤消或重做以外的操作，那么您就不可能再重做这些操作了：它们永远地丢失了。如果您觉得这样不妥，解决方法就是先复制图像，然后在其拷贝上进行操作。(<emphasis>不是</emphasis>原图像，因为在复制图像时，重做/撤消历史不会被拷贝。)
     </para>
   </caution>
- 
+
+  <para lang='cs'>
+    Pokud často vracíte a či obnovujete mnoho změn najednou, bude se vám lépe
+    pracovat s dialogem <link linkend='gimp-undo-dialog'>Historie změn</link>.
+    Jedná se o dokovatelný dialog zobrazující náhled všech změn v historii a
+    umožňující mezi jednotlivými body histrorie přecházet jednoduchým
+    klikáním.
+  </para>
   <para lang='en'>
     If you often find yourself undoing and redoing many steps at a
     time, it may be more convenient to work with the <link
@@ -195,6 +198,16 @@
     假如您每次常常重做或撤消很多步，这时也许使用<link linkend='gimp-undo-dialog'>撤消历史对话框</link>更加方便。它是一个显示撤消历史中各点的概要的可停靠对话框，允许您通过点击来后退或前进到某点。
   </para>
 
+  <para lang='cs'>
+    Historie změn je součástí obrázku, proto je udržována pro každý obrázek
+    zvlášť. Gimp každému obrázku pro tento účel vyhradí určité množství
+    paměti. Na stránce Předvoleb <link
+    linkend='gimp-prefs-environment'>Prostředí</link> můžete toto množství
+    paměti nastavit. Existují dvě důležité volby: <emphasis>minimální počet
+    kroků zpět</emphasis>, které Gimp dodrží bez ohledu na množství paměti,
+    a <emphasis>maximální paměť vracení</emphasis>, po jejímž naplnění začne
+    Gimp zapomínat nejstarší bodu z historie.
+  </para>
   <para lang='en'>
     Undo is performed on an image-specific basis:  the "Undo History"
     is one of the components of an image.  GIMP allocates a certain
@@ -233,6 +246,13 @@
       reopened, it will have an empty Undo History.
     </para>
   </note>
+  <note lang='cs'>
+    <para>
+      Přestože je historie změn součástí obrázku, není s ním ukládána ani do
+      nativního XCF formátu, který zachovává všechny ostatní vlastnosti
+      obrázku. Znovuotevřený orbázek má historii prázdnou.
+    </para>
+  </note>
   <note lang="fr">
     <para>
     Même si l'Historique d'annulation est un composant de l'image, il 
@@ -249,6 +269,20 @@
     </para>
   </note>
 
+  <para lang='cs'>
+    Implementace historie změn je v Gimpu poměrně složitá. Mnoho operací
+    vyžaduje velmi málo paměti v historii změn (např. změna viditelnosti
+    vrstvy), takže jich můžete provádět velmi mnoho, než je začne Gimp
+    zapomínat. Některé operace (příkladem je opět změna viditelnosti vrstvy)
+    se <emphasis>komprimují</emphasis>, takže pokud je učiníte několikrát
+    přímo za sebou, budou reprezentovány pouze jedním bodem v historii změn.
+    Některé jiné operace však mohou zpotřebovat velké množství paměti v
+    historii změn. Příkladem je většina filtrů: prtože jsou implementovány
+    jako zásuvné moduly, nemá Gimp možnost zjistit, co skutečně s obrázkem
+    udělaly. Proto se v historii změn ukládá celý obsah vrstvy před i po
+    použití filtru. Takových operací lze proto v historri změn uložit jen
+    relativně málo.
+  </para>
   <para lang='en'>
     The implementation of Undo by GIMP is rather sophisticated.  Many
     operations require very little Undo memory (e.g., changing
@@ -285,10 +319,20 @@
   </para>
 
   <simplesect>
+    <title lang='cs'>Nevratné operace</title>
     <title lang='en'>Things that cannot be Undone</title>
     <title lang='fr'>Ce qui ne peut pas être annulé</title>
     <title lang="zh_CN">不能被撤消的东西</title>
 
+    <para lang='cs'>
+      Většina operací měnících obrázek lze vrátit zpět. Operace, které
+      obrázek nemění, ale většinou vrátit nejdou. Patří mezi ně uložení
+      obrázku do souboru, duplikování obrázku, zkopiírování jeho části do
+      schránky atd. Patří mezi ně také většina operací, které mění zobrazení
+      obrázku,a le nikoliv obrazová data. Nejdůležitějším příkladem je
+      přibližování (zoom). Existují ovšem i výjimky: lze vrátit přepínání
+      rychlé masky, i když to nijak neovlivňuje obrazová data.
+    </para>
     <para lang='en'>
       Most actions that alter an image can be undone.  Actions that do
       not alter the image generally cannot be.  This includes
@@ -314,6 +358,10 @@
       大部分修改一个图像的动作能被撤消，而那些没有修改图像的动作一般就不能。这些操作包括保存图像到一个文件，复制图像和拷贝图像部分等。它还包括大部分影响图像显示但没有修改其图像数据的动作。最重要的例子就是图像比例的缩放。不过也要例外：虽然切换快速蒙板开启或关闭没有修改图像数据，但它能被撤消。
     </para>
 
+    <para lang='cs'>
+      Existuje několik důležitých operací, které mění obrazová data,
+      ale přesto je nelze vrátit zpět:
+    </para>
     <para lang='en'>
       There are a few important actions that do alter an image but
       cannot be undone:
@@ -328,10 +376,20 @@
 
     <variablelist>
       <varlistentry>
+        <term lang='cs'>Zavření obrázku</term>
         <term lang='en'>Closing the image</term>
         <term lang='fr'>Fermeture d'une image</term>
         <term lang='zh_CN'>关闭图像</term>
         <listitem>
+          <para lang='cs'>
+            Historie změn je součástí obrázku, proto, pokud je obrázek uzavřen
+            a jím používané zdroje uvolněny, historie změn se ztratí. Proto se,
+            pokud nebyl obrázek od poslední změny uložen, Gimp zeptá, zda
+            zavření obrázku myslíte skutečně vážně. (Toto chování lze změnit
+            na stánce <link linkend='gimp-prefs-environment'>Prostředí</link>
+            dialogu Předvolby; pokud tak učiníte, berete na sebe zodpovědnost
+            za případné nechtěné zavření neuloženého obrázku.)
+          </para>
           <para lang='en'>
             The Undo History is a component of the image, so when the
             image is closed and all of its resources are freed, the Undo
@@ -361,10 +419,18 @@
       </varlistentry>
 
       <varlistentry>
+        <term lang='cs'>Navrácení obrázku</term>
         <term lang='en'>Reverting the image</term>
         <term lang='fr'>Revenir à l'image</term>
         <term lang='zh_CN'>恢复图像</term>
         <listitem>
+          <para lang='cs'>
+            <emphasis>Navrácení</emphasis> znamená obnovení obrázku starší
+            uloženou verzí ze souboru. Gimp tak ve skutečnosti činmí zavřením
+            stávajícího obrázku a jeho novým otevřením, proto je historie změn
+            ztracena. Proto, pokud jsou v obrázku neuložené změny, požádá Gimp
+            o potvrzení.
+          </para>
           <para lang='en'>
             "Reverting" means reloading the image from file.  GIMP
             actually implements this by closing the image and creating a
@@ -386,10 +452,22 @@
       </varlistentry>
 
       <varlistentry>
+        <term lang='cs'>Části operací</term>
         <term lang='en'>"Pieces" of actions</term>
         <term lang='fr'>"Parties" d'actions</term>
         <term lang='zh_CN'>动作的“片段”</term>
         <listitem>
+          <para lang='cs'>
+            Některé nástroje vyžadují pro své použití celou komplexní řadu
+            akcí, ale umožňují vrátit jen celou tuto řadu jako celek, nikoliv
+            její jednotlivé části. Například inteligentní nůžky vyžadují
+            vytvoření uzavřené křivky klikáním na více bodů v obrázku a
+            následné kliknutí do vymezené oblasti pro vytvoření výběru. Nelze
+            však vracet jednotlivá kliknutí, příkaz Zpět vás vrátí na začátek,
+            před použití nůžek. Jiným příkladem je textový nástroj, který
+            neumožňuje vracet jednotlivá písmeny či změny formátování. Příkaz
+            Zpět v vás opět vrátí na začátek, před použití textového nástroje.
+          </para>
           <para lang='en'>
             Some tools require you to perform a complex series of
             manipulations before they take effect, but only allow you to
@@ -425,6 +503,18 @@
        </varlistentry>
     </variablelist>
 
+    <para lang='cs'>
+      Filtry a další operace prováděné skripty či zásuvnými moduly lze vracet
+      stejně jako operace prováděné jádrem Gimpu, ale pouze v případě, že jsou
+      správně napsány a správně používají funkce Gimpu pro historii změn.
+      Pokud nejsou napsány správně, mohou poškodit historii změn tak, že nelze
+      vrátit ani operaci provedenou filtrem, ani operace předchozí. Zásuvné
+      moduly i skripty dodávané přímo s Gimpem pracují spolehlivě, nicméně to
+      samozřejmě nelze zaručit u zásuvvných modulů a skriptů z jiných zdrojů.
+      I v případě, že je zásuvný modul napsán správně, může jeho zrušení během
+      práce znamenat poškození historie změn. Proto je lépe běžící zásuvné
+      moduly nepřerušovat, není-li to skutečně nezbytné.
+    </para>
     <para lang='en'>
       Filters, and other actions performed by plugins or scripts, can
       be undone just like actions implemented by the GIMP core, but

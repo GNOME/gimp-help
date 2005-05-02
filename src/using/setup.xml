@@ -1,19 +1,20 @@
 <?xml version='1.0' encoding="UTF-8" ?>
 
-<sect1 id='gimp-using-setup-tile-cache' lang="en;de;fr;zh_CN">
+<sect1 id='gimp-using-setup-tile-cache' lang="cs;en;de;fr;zh_CN">
+  <title lang="cs">Jak nastavit vyrovnávací paměť dlaždic</title>
   <title lang="en">How to Set Your Tile Cache</title>
   <title lang='de'>Einstellen des Datenspeichers</title>
   <title lang="fr">Comment ajuster le cache d'image</title>
   <title lang="zh_CN">如何设置平铺缓存</title>
-  <para lang="en">
-    Image processing can require a lot of memory. Gimp uses the
-    operating system services to handle memory, up to a given point,
-    past which it uses its own system so that it does not eat all system
-    memory resources. This system consists in sending old data to files
-    in the disk. The decision point is what the Tile Cache size
-    determines–the maximum amount of operating system resources to
-    use–and is measured in Bytes (or multiples, like MegaBytes). It does
-    not include Gimp's own memory, just the space required for the image
+  <para lang="cs">
+    Zpracování obrázků může vyžadovat obrovské množství paměti. Gimp, do
+    určitého okamžiku, používá ke správě paměti služby operačního systému.
+    Pokud ho překročí, začne používat svůj vlastní systém, aby nespotřeboval
+    všechny systémové paměťové zdroje. Stará data přitom odkládá na disk.
+    Bod, kdy dochází k této změně chování, je dán právě velikostí vyrovnávací
+    paměti dlaždic, což je maximální množství operační paměti použité pro
+    obrazová data (měřeno v bajtech nebo jejich násobcích). Vlastní paměť
+    Gimpu se do tohoto množství nezapočítává, pouze paměť určená pro obrazová
     data.
   </para>
   <para lang='de'>
@@ -43,6 +44,12 @@
     图像处理需要大量的内存。GIMP 依赖操作系统来处理内存，直到超过一定数量时，它就使用自己的系统，这样就不会用光所有系统内存资源。该系统发送旧数据到磁盘文件上。该临界数量就由平铺缓存决定---能使用操作系统资源的最大值---用字节(或其倍数，象兆字节)。它不包括 GIMP 自身的内存，只是图像数据需求的空间。
   </para>
 
+  <para lang="cs">
+    Příliš nízká hodnota znamená, že Gimp data zbytečně brzy ukládá na disk
+    a plně nevyužívá dostupnou operační paměť. Příliš vysoká hodnota naopak
+    znamená, že o paměť přchází ostatní aplikace, což je nutí odkládat na disk
+    a v extrémním případě může vést i k jejich poruše.
+  </para>
   <para lang="en">
     A low value means that Gimp sends data vey quickly to disk, not
     making real use of the available RAM, and making the disks work
@@ -51,7 +58,6 @@
     which also makes the disks work; or maybe some will even get
     killed or start to malfunction due lack of RAM.
   </para>
-
   <para lang="fr">
     Une faible valeur fera que, très rapidement, Gimp enverra les données
     sur le disque, sans utiliser la ressource en mémoire vive et obligeant
@@ -76,6 +82,10 @@
     一个低值意味着 GIMP 很快地发送数据到文件，并不真正使用可用到的 RAM，也不需要任何真正理由就使磁盘工作。太高的值意味着其它程序启动时使用更少的内存，使它们使用交换空间，而这也要使磁盘工作；或许一些会被杀掉或由于缺乏内存而发生故障。
   </para>
 
+  <para lang="cs">
+    Jak tedy zvolit správnou velikost vyrovnávací paměti dlaždic?
+    Pomoci vám mohou následující tipy a triky:
+  </para>
   <para lang="en">
     How to choose a number for the Tile Cache size?  Here are some
     ways you could decide what value to use, as well as a few tricks:
@@ -95,6 +105,14 @@
   <itemizedlist>
 
   <listitem>
+  <para lang="cs">
+    Nejjednodušším způsobem je nelámat si hlavu a doufat, že výchozí hodnoty
+    budou fungovat dobře. To je vyhovující v případě počítačů s malým
+    množstvím operační paměti a uživatelů používajících Gimp k tvorbě malých
+    obrázků a spouštějících vedle Gimpu jen málo dalších aplikací. Pokud
+    používáte Gimp jen k jednoduché práci, například snímání obrazovky, bude
+    vám toto řešení vyhovovat.
+  </para>
   <para lang="en">
     The easiest method is to just forget about this and hope the
     default works. This was a usable method when
@@ -126,6 +144,12 @@
   </listitem>
 
   <listitem>
+    <para lang="cs">
+      Pokud máte moderní počítač s dostatkem paměti, alespoň 512 MB, bude
+      pravděpodobně vyhovující nastavení velikosti vyrovnávací paměti dlaždic
+      na polovinu nebo dokonce tři čtvrtiny operační paměti počítače. V
+      případě počítače s 512 MB paměti tedy na 256-384 MB.
+    </para>
     <para lang="en">
       If you have a modern computer with plenty of memory–say, 512 MB
       or more–setting the Tile Cache to half of your RAM will probably
@@ -150,7 +174,15 @@
     </para>
   </listitem>
 
-  <listitem lang="en;fr;zh_CN">
+  <listitem lang="cs;en;fr;zh_CN">
+    <para lang="cs">
+      Můžete také požádat někoho zkušenějšího, aby vám Gimp nastavil. V
+      případě, že počítač sdílíte s dalšími uživateli je to velmi dobrý nápad;
+      vyhnete se tak hádkám a nařčení z toho, že počítač zneužíváte, ale
+      zároveň nebudete mít zbytečně přiškrcený Gimp. Pokud je počítač jen váš,
+      možná bude vhodné jako odměnu za nastavení nabídnout nějaké peníze,
+      večeři nebo alespoň dobré pivo či víno.
+    </para>
     <para lang="en">
       Ask someone to do it for you, which in the case of a computer
       serving multiple users at the same time can be a good idea: that
@@ -171,7 +203,13 @@
     </para>
   </listitem>
 
-  <listitem lang="en;fr;zh_CN">
+  <listitem lang="cs;en;fr;zh_CN">
+    <para lang="cs">
+      Můžete také vyrovnávací paměť dlaždic při každém spuštění Gimpu opatrně
+      zvyšovat a dávat pozor, zda sy operační systém nestěžuje na nedostatek
+      paměti nebo se tento nedostatek neprojevuje poruchami jiných aplikací,
+      například jejich nečekaným ukončováním.
+    </para>
     <para lang="en">
       Start changing the value a bit each time and check that it goes
       faster and faster with each increase, but the system does not
@@ -190,7 +228,13 @@
     </para>
   </listitem>
 
-  <listitem lang="en;fr;zh_CN">
+  <listitem lang="cs;en;fr;zh_CN">
+    <para lang="cs">
+      Další možností je vhodnou hodnotu vypočítat. Možná ji bude později nutné
+      doladit, ale to se může stát i u předešlých metod. Výhodou výpočtu je,
+      že lépe poznáte funkci svého počítače a možná dostanete z Gimpu i více
+      výkonu.
+    </para>
     <para lang="en">
       Do some simple math and calculate a viable value. Maybe you will
       have to tune it later, but maybe you have to tune it anyway with
@@ -208,6 +252,17 @@
 
   </itemizedlist>
 
+  <para lang="cs">
+    Pokud se rozhodnete pro poslední možnost, potřebuejte nějaké údaje o vašem
+    počítači. Je třeba znát množství nainstalované operační paměti (RAM),
+    velikost systémového odkládacího prostoru (swap) a mít představu o
+    rychlosti disků používaných pro odkládací prostor operačního systému
+    a odkládací adresář Gimpu. Nemusíte disky složitě testovat nebo zjišťovat
+    jejich přesné parametry. Podstatné je jen, pokud pro odkládací prostory
+    používáte různé disky, zda je některý z nich výrazně rychlejší než druhý
+    (a případně který). Umístění odkládacího adrsáře Gimpu můžete změnit na
+    stránce předvoleb Adresáře.
+  </para>
   <para lang="en">
     Let's suppose you prefer the last option, and want to get a good value to
     start with. First, you need to get some data about your
@@ -237,6 +292,19 @@
     我们假设您喜欢最后一种方式，并想用一个好的值来启动。首先，您需要从您的电脑知道一些数据。您系统安装的内存大小，操作系统可用的交换空间，和存储操作系统交换区和 GIMP 交换目录的磁盘大致速度。您并不需要进行磁盘测试，或检查磁盘的转速，只需知道哪一个看起来要明显得快或慢，或完全相同。您可以在首选项对话框的文件夹页来改变 GIMP 的交换目录。
   </para>
 
+  <para lang='cs'>
+    Další důležitou informací je množství operační paměti vyžadované pro
+    aplikace, které chcete používat současně s Gimpem. Spusťte je tedy takovou
+    typickou skupinu aplikací (bez Gimpu) a chvíli s ní pracujte. Pak zjistěte
+    využití operační paměti, například pomocí aplikací jako je free nebo top,
+    podle vašeho operačního systému. Číslo, které vás zajímá, je zbývající
+    volná paměť včetně souborové vyrovnávací paměti. Moderní unixové systémy
+    ponechávají volnou část paměti velmi malou, aby mohly maximalizovat
+    vyrovnávací paměti. Linuxový příkaz <emphasis>free</emphasis> provede vše
+    potřebné za vás – požadované číslo najdete ve sloupci „free“ a řádku „-/+
+    buffers/cache“. Poznamenejte si i systémový odkládací prostor (řádek
+    „swap“).
+  </para>
   <para lang='en'>
     The next thing to do is to see how much resources you require for
     other apps you want to run at the same time than Gimp. So start
@@ -262,6 +330,11 @@
     下一件事就是看和 GIMP 一起运行的其它程序需要多少资源。因此启动您的所有工具并在上干些事，当然除了 GIMP，并检查使用率。您可使用 free 或 top 等程序，这和您使用何种 OS 和环境有关。您想知道的是剩余多少内存，包括文件缓冲。现代 Unix 只保留一小部分空闲，而为了保持大量的文件和缓存区缓存。Linux 的 <emphasis>free</emphasis> 命令帮您计算：查看“free”列，“-/+ buffers/cache”行。下面则是 free swap。
   </para>
 
+  <para lang='cs'>
+    Nyní je nutno se rozhodnout, zda chcete veškerou vyrovnávací paměť dlaždic
+    uchovávat v operační paměti (RAM), nebo v operační paměti (RAM) a
+    systémovém odkládacím prostoru (swap):
+  </para>
   <para lang='en'>
     Now time for decisions and a bit of simple math. Basically the
     concept is to decide if you want to base all Tile Cache in RAM, or
@@ -275,6 +348,34 @@
   <para lang="zh_CN">
     现在是决定和进行一点简单数学计算的时候了，主要是决定是否想要基于 RAM 所有平铺缓存，或 RAM 加上操作系统交换区：
   </para>
+
+  <procedure lang="cs">
+    <step><para>
+      Přecházíte hodně mezi jednotlivými aplikacemi? Nebo pracujete v Gimpu
+      bez přerušení dlouhou dobu? Pokud dlouho bez přerušení setrváváte v
+      Gimpu, můžete za volnou paměť považovat volnou operační paměť (RAM) plus
+      volný systémový odkládací prostor (swap). Pokud nikoliv nebo si nejste
+      jistí, projděte si následující kroky. Pokud naopak víte, že mezi
+      jednotlivými aplikacemi přecházíte neustále, berte v úvahu pouze volnou
+      operační paměť (RAM) a rovnou přejděte ke konečnému rozhodnutí.
+   </para></step>
+   <step><para>
+     Je systémový odkládací prostor (swap) umístěn na stejném fyzickém disku
+     jako odkládací adresář Gimpu? Pokud ano, sečtěte operační paměť (RAM) a
+     systémový odkládací prostor (swap). Jinak pokračujte dalším krokem.
+   </para></step>
+   <step><para>
+     Je disk se systémovým odkládacím prostorem (swap) rychlejší nebo stejně
+     rychlý jako disk s odkládacím adresářem Gimpu? Pokud ano, sečtěte
+     operační paměť (RAM) a systémový odkládací prostor (swap). Pokud je
+     pomalejší, berte v úvahu pouze volnou operační paměť (RAM).
+   </para></step>
+   <step><para>
+     Číslo, které jste získali (množství volné operační paměti nebo volné
+     operační paměti včetně systémového odkládacího prostoru) o něco málo
+     zmenšete a použijte jako velikost vyrovnávací paměti dlaždic v Gimpu.
+   </para></step>
+  </procedure>
 
   <procedure lang="en">
     <step><para>
@@ -346,6 +447,10 @@
   </procedure>
 
 
+  <para lang="cs">
+    Jak vidíte, jde hlavně o zjištění volných systémových zdrojů a rozhodnutí,
+    zda se vyplatí používat systémový odkládací prostor (swap).
+  </para>
   <para lang="en">
     As you can see, all is about checking the free resources, and
     decide if the OS swap is worth using or will cause more problems
@@ -360,6 +465,14 @@
     正如您看到的，所有这些都是关于检查空闲资源，并决定OS 交换区是否值得使用，是否比它的所带来的帮助产生更多问题。
   </para>
 
+  <para lang='cs'>
+    V některých případech ale bude nutné takto nastavenou hodnotu upravit.
+    Například tehdy, pokud se změní způsob využívání vašeho počítače nebo jeho
+    hardwarová konfigurace. Takové změny mohou znamenat, že dříve provedená
+    rozhodnutí již neodpovídají skutečnosti. Pak je nejlepší rozhodovací
+    proces zopakovat.
+  </para>
+
   <para lang='en'>
     There are some reasons you want to adjust this value, though. The
     basic one is changes in your computer usage pattern, or
@@ -367,13 +480,21 @@
     use your computer, or the speed of it, are no longer valid. That
     would require a reevaluation of the previous steps, which can
     drive you to a similar value or a completly new value.
-  </para> 
+  </para>
 
   <para lang='fr'>
     Il y a néanmoins de bonnes raisons d'ajuster cetle valeur. La principale 
     est une modification des capacités de votre ordinateur qui peuvent vous 
     permettre d'améliorer la vitesse de Gimp en multi-tâches.
-  </para> 
+  </para>
+
+  <para lang='cs'>
+    Dalším důvodem ke změně může být příliš pomalý běh Gimpu, zatímco
+    přepínání do jiných aplikací je rychlé. Taková situace znamená, že Gimp
+    může využít více paměti, aniž by ohrozil ostatní aplikace. Na druhou
+    stranu, pokud si ostatní aplikace stěžují na nedostatek paměti, může být
+    lepší vyrovnávací paměť dlaždic Gimpu snížit.
+  </para>
 
   <para lang='en'>
     Another reason to change the value is because it seems that Gimp
@@ -393,6 +514,14 @@
 
   <para lang="zh_CN"> 
    另一个改变其值的原因是 GIMP 好像运行得太慢，而改给别的程序却快：这意味着 GIMP 能使用更多内存而不会损害其它程序。另一方面，如果其它程序报怨没有足够内存，这就让您知道不该让 GIMP 浪费这么多了。
+  </para>
+
+  <para lang='cs'>
+    Pokud jste se rozhodli používat pouze operační paměť (RAM) a Gimp běží
+    pomalu, můžete velikost vyrovnávací paměti dlaždic opatrně zvýšit, ale
+    nikoliv použít celý systémový odkládací prostor (swap). Pokud je situace
+    opačná, používáte RAM + swap, a máte problémy s nedostatkem systémových
+    zdrojů, velikost vyrovnávací paměti dlaždic snižte.
   </para>
 
   <para lang='en'>
@@ -415,7 +544,15 @@
     如果您决定只用 RAM，却发现 GIMP 运行得很慢，您能尝试稍微增加点该值，而不要使用任何空想交换区。如果情况刚好相反，使用 RAM 和交换区，并减少 GIMP 可用的 RAM 的数量。
   </para>
 
-  <para lang='en'>
+  <para lang='cs'>
+    Dobrým řešením je umístit odkládací adresář Gimpu na velmi rychlý disk
+    nebo na jiný disk, než na kterém je většina vašich často používaných
+    souborů. Rozložení systémového odkládacího prostoru (swap) na několik
+    fyzických disků je také dobrý trik pro zvýšení výkonu. No a konečně si
+    můžete přikoupit další operační paměť (RAM) nebo nespouštět najednou tolik
+    programů.
+  </para>
+   <para lang='en'>
     Another tricks is to put the Swap Dir in a very fast disk, or in a
     different disk than the one where most of your files
     reside. Spreading the operating 
@@ -436,6 +573,13 @@
     另一个技巧就是将交换目录设在一个非常快的磁盘，或与您大部分文件所在磁盘不同的磁盘。将操作系统交换区放置在多个磁盘上也是一种加速的好方式。当然，也许您可以买更多的 RAM 或不要同时运行这么多程序：您不能指望在 16 MB 的电脑上编辑招贴画而运行迅速。
   </para>
 
+  <para lang='cs'>
+    Je také dobré udržovat si přehled o pamě'tových nárocích obrázků, se
+    kterými parcujete. Čím větší obrázky, čím více dostupných kroků zpět, tím
+    více zdrojů je potřeba. Velikost vyrovnávací paměti dlaždic můžete určit i
+    podle editovaných obrázků, ale pouze v případě, že vždy pracujete s
+    podobnými obrázky.
+  </para>
   <para lang='en'>
     You can also check what memory requirements your images have. The
     larger the images, and the number of undos, the more resources you
