@@ -1,20 +1,35 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<sect1 id='gimp-histogram-dialog' lang="en;fr;zh_CN">
+<sect1 id='gimp-histogram-dialog' lang="cs;en;fr;zh_CN">
+  <title lang="cs">Dialog Histogram</title>
   <title lang="en">Histogram dialog</title>
   <title lang="fr">Dialogue Histogramme</title>
   <title lang="zh_CN">柱状图对话框</title>
 
   <indexterm>
+    <primary lang="cs">Dialog</primary>
     <primary lang="en">Dialog</primary>
     <primary lang="fr">Dialogue</primary>
     <primary lang="zh_CN">对话框</primary>
+    <secondary lang="cs">Histogram</secondary>
     <secondary lang="en">Histogram</secondary>
     <secondary lang="fr">Histogramme</secondary>
     <secondary lang="zh_CN">柱状图</secondary>
   </indexterm>
 
   <informalfigure>
+    <mediaobject lang='cs'>
+      <imageobject>
+        <imagedata
+        fileref='../images/dialogs/dialogs-histogram-basic.png'
+        format="PNG"/>  
+      </imageobject>
+      <caption>
+        <para>
+          Dialog Histogram
+        </para>
+      </caption>
+    </mediaobject>
     <mediaobject lang='en'>
       <imageobject>
         <imagedata
@@ -22,12 +37,11 @@
         format="PNG"/>  
       </imageobject>
       <caption>
-	<para>
-	  The Histogram dialog
-	</para>
+        <para>
+          The Histogram dialog
+        </para>
       </caption>
     </mediaobject>
-
     <mediaobject lang='fr'>
       <imageobject>
         <imagedata
@@ -35,12 +49,11 @@
         format="PNG"/>  
       </imageobject>
       <caption>
-	<para>
-	  Le dialogue Histogramme
-	</para>
+        <para>
+          Le dialogue Histogramme
+        </para>
       </caption>
     </mediaobject>
-
     <mediaobject lang="zh_CN">
       <imageobject>
         <imagedata
@@ -48,13 +61,23 @@
         format="PNG"/>  
       </imageobject>
       <caption>
-	<para>
-	  柱状图对话框
-	</para>
+        <para>
+          柱状图对话框
+        </para>
       </caption>
     </mediaobject>
   </informalfigure>
-  
+
+  <para lang="cs">
+    Dialog Histogram zobrazuje informace o statistickém rozložení barevných
+    hodnot v aktivním obrázku. Takové informace jsou neocenitelné například
+    tehdy, když se snažíte obrázek <emphasis>barevně vyvážit</emphasis>.
+    Histogram je ovšem skutečně pouze informační dialog, manipulace s ním
+    nemůže obrázek nijak ovlivnit. Pokud chcete provést korekci barev na
+    základě histogramu, použijte nástroj <link
+    linkend='gimp-tool-levels'>Úrovně</link>.
+  </para>
+
   <para lang="en">
     The Histogram dialog shows you information about the statistical
     distribution of color values in the image that is currently
@@ -80,6 +103,12 @@
     柱状图对话框显示当前活动图像的色彩值的统计分布信息，该信息在当您要对一个图像进行<emphasis>色彩平衡</emphasis>时通常很有用。不过，柱状图对话框只是提供信息的：使用它不能对图像有任何改变。如果要对一个图像进行基于柱状图的色彩修正，请使用<link linkend='gimp-tool-levels'>色阶</link>工具。
   </para>
 
+  <para lang='cs'>
+    Tento dialog je dokovatelný. Více informací o této vlastnosti se dozvíte
+    v části <link linkend='gimp-concepts-docks'>Dokování dialogů</link>.
+    Dialog Histogram lze vyvolat několika způsoby:
+  </para>
+
   <para lang='en'>
     This is a dockable dialog; see the section on <link
     linkend='gimp-concepts-docks'>Dialogs and Docking</link> for help on
@@ -99,7 +128,16 @@
 
   <itemizedlist>
     <listitem>
-      <para lang='en'>   
+      <para lang='cs'>
+        Z nabídky panelu nástrojů volbou
+        <menuchoice>
+          <guimenu>Soubor</guimenu>
+          <guisubmenu>Dialogy</guisubmenu>
+          <guimenuitem>Histogram</guimenuitem>
+        </menuchoice>
+      </para>
+
+      <para lang='en'>
         From the Toolbox menu:
         <menuchoice>
           <guimenu>File</guimenu>
@@ -128,6 +166,14 @@
     </listitem>
 
     <listitem>
+      <para lang='cs'>
+        Z nabídky obrázku volbou
+        <menuchoice>
+          <guimenu>Dialogy</guimenu>
+          <guimenuitem>Histogram</guimenuitem>
+        </menuchoice>
+      </para>
+
       <para lang='en'>   
         From the image menu:
         <menuchoice>
@@ -155,10 +201,22 @@
   </itemizedlist>
 
   <simplesect>
+    <title lang='cs'>Co je to histogram?</title>
     <title lang='en'>About Histograms</title>
     <title lang='fr'>A propos d'histogrammes</title>
     <title lang="zh_CN">关于柱状图</title>
-    
+
+    <para lang='cs'>
+      V Gimpu lze každou obrazovou vrstvu roložit do jednoho nebo více kanálů:
+      v případě RGB obrázku je to červený, zelený a modrý kanál, v případě
+      obrázku ve stupních šedi je jediný kanál jasu. Vrstvy podporující
+      průhlednost mají navíc tzv. alfa kanál. Každý kanál může obsahovat
+      hodnoty v rozsahu od 0 do 255 (celá čísla). Černý pixel je proto
+      reprezentován nulou ve všech barevných kanálech, bílý pixel číslem 255
+      ve všech barevných kanálech. Průhledný pixel nese hodnotu 0 v alfa
+      kanálu, zcela neprůhledný pixel má naopak alfa hodnotu 255.
+    </para>
+
     <para lang='en'>
       In GIMP, each layer of an image can be decomposed into one or
       more color channels:  for an RGB image, into R, G, and B
@@ -186,6 +244,18 @@
 
     <para lang="zh_CN">
       GIMP 中，一个图像的每个图层都可以分解成一个或多个颜色通道：对 RGB 图像而言，是红色，绿色和蓝色通道；对于灰度图像而言，则是单独的一个亮度通道。支持透明的图层会有一个附加通道-- alpha 通道。每个通道其强度值取值为 0 到 255 (整数值)，因此，一个黑色像素在所有颜色通道其值为 0，而一个白色像素其值为 255。一个透明像素在 alpha 通道取值为 0，反之，一个不透明像素为 255。
+    </para>
+
+    <para lang='cs'>
+      V případě RGB obrázků je někdy výhodné definovat „pseudokanál“ jasu.
+      Není to skutečný barevný kanál protože nereprezentuje žádnou informaci
+      přímo uloženou v obrázku. Jas je místotoho vypočítáván podle rovnice:
+      <!--FIXME-->
+      <code>
+        V = (R + G + B)/3
+      </code>,
+      zaokrouhlené na nejbližší celé číslo. Jas odpovídá hodnotě, kterou byste
+      získali převedením obrázku do stupňů šedi.
     </para>
 
     <para lang='en'>
@@ -223,6 +293,11 @@
       并四舍五入为整数。一般来说，在某点像素的“亮度”就是当把图像转换为灰度模式时那点的亮度值。
     </para>
 
+    <para lang='cs'>
+      Více informací o kanálech lze nalézt v části <link
+      linkend='gimp-concepts-images'>Práce s obrázky</link>.
+    </para>
+
     <para lang='en'>
       For more information on channels, please consult the <link
       linkend='gimp-concepts-images'>Working with Images</link> section.
@@ -238,14 +313,104 @@
     </para>
 
     <variablelist>
+      <title lang='cs'>Používání dialogu Histogram</title>
       <title lang='en'>Using the Histogram dialog</title>
       <title lang='fr'>Utilisation du dialogue Histogramme</title>
       <title lang="zh_CN">使用柱状图对话框</title>
 
       <varlistentry>
+        <term lang='cs'>Kanál</term>
         <term lang='en'>Channel</term>
         <term lang='fr'>Canal</term>
         <term lang="zh_CN">通道</term>
+        <listitem lang='cs'>
+          <informalfigure>
+            <mediaobject>
+              <imageobject>
+                <imagedata
+                  fileref='../images/dialogs/dialogs-histogram-menu.png'
+                  format="PNG"/>  
+              </imageobject>
+              <caption>
+                <para>
+                  Kanály RGB vrstvy s průhledností
+                </para>
+              </caption>
+            </mediaobject>
+          </informalfigure>
+
+          <para>
+            Tato nabídka umožňuje zvolit kanál, jehož histogram má být
+            zobrazen. Nabízené kanály závisí na typu aktivní vrstvy.
+            Moožnosti jsou následující:
+          </para>
+          <variablelist>
+            <varlistentry>
+              <term>Jas</term>
+              <listitem>
+                <para>
+                  V případě RGB obrázků a obrázků v odstínech šedi.
+                  Představuje distribuci hodnot jasu ve vrstvě.
+                  V případě RGB obrázku jsou tyto hodnoty zíískány z
+                  pseudokanálu.
+                </para>
+                <para>
+                  V případě indexovaného obrázku se jedná o četnost
+                  jednotlivých indexů z palety. Jedná se tedy o tzv.
+                  pseudobarevný histogram.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Červená, Zelená, Modrá</term>
+              <listitem>
+                <para>
+                  Tyto možnosti jsou dostupné pouze v případě RGB obrázků.
+                  Zobrazují rozložení intenzit v červeném, zeleném a modrém
+                  kanálu.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Alfa</term>
+              <listitem>
+                <para>
+                  Distribuce úrovní krytí. Pokuid je vrstva zcela neprůhledná
+                  nebo naopak zcela průhledná, je histogram tvořen jediným
+                  sloupečkem zcela vpravo nebo vlevo hiistogramu.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>RGB</term>
+              <listitem>
+                <informalfigure>
+                  <mediaobject>
+                    <imageobject>
+                      <imagedata
+                        fileref='../images/dialogs/dialogs-histogram-rgb.png'
+                        format="PNG"/>  
+                    </imageobject>
+
+                    <caption>
+                      <para>
+                        Kombinovaný histogram pro červený, zelený a modrý
+                        kanál.
+                      </para>
+                    </caption>
+                  </mediaobject>
+                </informalfigure>
+
+                <para>
+                  Tato možnost, dostupná pouze pro RGB obrázky, zobrazuje
+                  červený, zelený a modrý histogram polžený na sobě. Lze
+                  tak v jednom pohledu posuzovat rozložení veškeré barevné
+                  informace.
+                </para>
+              </listitem>
+            </varlistentry>
+           </variablelist>
+        </listitem>
         <listitem lang='en'>
           <informalfigure>
             <mediaobject>
@@ -255,11 +420,11 @@
                   format="PNG"/>  
               </imageobject>
 
-	      <caption>
-		<para>
-		  Channel options for an RGB layer with alpha channel.
-		</para>
-	      </caption>
+              <caption>
+                <para>
+                  Channel options for an RGB layer with alpha channel.
+                </para>
+              </caption>
             </mediaobject>
           </informalfigure>
 
@@ -318,14 +483,14 @@
                       <imagedata
                         fileref='../images/dialogs/dialogs-histogram-rgb.png'
                         format="PNG"/>  
-		    </imageobject>
+                    </imageobject>
 
-		    <caption>
-		      <para>
-			Combined histograms of R, G, and B channels.
-		      </para>
-		    </caption>
-		  </mediaobject>
+                    <caption>
+                      <para>
+                        Combined histograms of R, G, and B channels.
+                      </para>
+                    </caption>
+                  </mediaobject>
                 </informalfigure>
 
                 <para>
@@ -411,14 +576,14 @@
                       <imagedata
                         fileref='../images/dialogs/fr/dialogs-histogram-rgb.png'
                         format="PNG"/>  
-            		    </imageobject>
+                            </imageobject>
 
-            		    <caption>
-            		      <para>
+                            <caption>
+                              <para>
                         Histogrammes combinés des canaux R, V, B.
-            		      </para>
-            		    </caption>
-            		  </mediaobject>
+                              </para>
+                            </caption>
+                          </mediaobject>
                 </informalfigure>
 
                 <para>
@@ -441,11 +606,11 @@
                   format="PNG"/>  
               </imageobject>
 
-	      <caption>
-		<para>
-		  一个带 Alpha 通道的图层的通道选项。
-		</para>
-	      </caption>
+              <caption>
+                <para>
+                  一个带 Alpha 通道的图层的通道选项。
+                </para>
+              </caption>
             </mediaobject>
           </informalfigure>
 
@@ -489,14 +654,14 @@
                       <imagedata
                         fileref='../images/dialogs/dialogs-histogram-rgb.png'
                         format="PNG"/>  
-		    </imageobject>
+                    </imageobject>
 
                     <caption>
-		      <para>
-			将红色，绿色和蓝色通道结合。
-		      </para>
-		    </caption>
-		  </mediaobject>
+                      <para>
+                        将红色，绿色和蓝色通道结合。
+                      </para>
+                    </caption>
+                  </mediaobject>
                 </informalfigure>
 
                 <para>
@@ -509,9 +674,36 @@
       </varlistentry>
     
       <varlistentry>
+        <term lang='cs'>Tlačítka Lineární/Logaritmický</term>
         <term lang='en'>Linear/Logarithmic buttons</term>
         <term lang='fr'>Les boutons Linéaire/Logarithmique</term>
         <term lang="zh_CN">线性/对数按钮</term>
+        <listitem lang='cs'>
+          <informalfigure>
+            <mediaobject>
+              <imageobject>
+                <imagedata
+                  fileref='../images/dialogs/dialogs-histogram-log.png'
+                  format="PNG"/>  
+              </imageobject>
+
+              <caption>
+                <para lang='cs'>
+                  Histogram nahoře je v logaritmickém režimu
+                </para>
+              </caption>
+            </mediaobject>
+          </informalfigure>
+
+          <para>
+            Tato tlačítka určují, zda je histogram zobrazen s lineárním nebo
+            logaritmickým měřítkem osy Y. Pro fotografie je obvykle lepší
+            lineární režim. V případě obrázků obsahujících velké plochy
+            jednolité barvy však často dominuje jeden sloupeček a ostatní
+            zanikají. V takovém případě je užitečné logaritmické měřítko.
+          </para>
+        </listitem>
+
         <listitem lang='en'>
           <informalfigure>
             <mediaobject>
@@ -521,12 +713,12 @@
                   format="PNG"/>  
               </imageobject>
 
-	      <caption>
-		<para lang='en'>
-		  The histogram shown at the top, changed to logarithmic
-		  mode. 
-		</para>
-	      </caption>
+              <caption>
+                <para lang='en'>
+                  The histogram shown at the top, changed to logarithmic
+                  mode. 
+                </para>
+              </caption>
             </mediaobject>
           </informalfigure>
 
@@ -561,11 +753,11 @@
                   fileref='../images/dialogs/dialogs-histogram-log.png'
                   format="PNG"/>  
               </imageobject>
-	      <caption>
-		<para>
-		  上面的柱状图用对数模式显示。
-		</para>
-	      </caption>
+              <caption>
+                <para>
+                  上面的柱状图用对数模式显示。
+                </para>
+              </caption>
 
             </mediaobject>
           </informalfigure>
@@ -577,9 +769,52 @@
       </varlistentry>
     
       <varlistentry>
+        <term lang='cs'>Nastavení rozsahu</term>
         <term lang='en'>Range Setting</term>
         <term lang='fr'>Fixer un intervalle</term>
         <term lang="zh_CN">强度范围</term>
+        <listitem lang='cs'>
+          <informalfigure>
+            <mediaobject>
+              <imageobject>
+                <imagedata
+                  fileref='../images/dialogs/dialogs-histogram-range.png'
+                  format="PNG"/>  
+              </imageobject>
+
+              <caption>
+                        <para>
+                  Dialog s nastaveným rozsahem
+                        </para>
+              </caption>
+            </mediaobject>
+          </informalfigure>
+
+          <para>
+            Statistickou analýzu zobrazenou v dolní části dialogu lze omezit
+            na určitý rozsah hodnot. Rozsah hodnot lze omezit třemi způsoby:
+          </para>
+          <itemizedlist>
+            <listitem>
+              <para>
+                Kliknutím a tažením kurzoru přes histogram, od nejnižší po
+                nejvyšší hodnotu požadovaného rozsahu.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                Přetažením bílého a černého trojúhelníku pod histogramem.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                Pomocí přírůstkových polí pod posuivníkem (levé pole pro dolní
+                mez rozsahu, pravé pole pro horní mez rozsahu).
+              </para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+
         <listitem lang='en'>
           <informalfigure>
             <mediaobject>
@@ -589,11 +824,11 @@
                   format="PNG"/>  
               </imageobject>
 
-      	      <caption>
-            		<para>
+              <caption>
+                        <para>
                   Dialog aspect after range fixing.
-            		</para>
-      	      </caption>
+                        </para>
+              </caption>
             </mediaobject>
           </informalfigure>
 
@@ -634,11 +869,11 @@
                   format="PNG"/>  
               </imageobject>
 
-      	      <caption>
-            		<para>
+              <caption>
+                        <para>
                   Aspect du dialogue après avoir fixé un intervalle.
-            		</para>
-      	      </caption>
+                        </para>
+              </caption>
             </mediaobject>
           </informalfigure>
 
@@ -679,11 +914,11 @@
                   format="PNG"/>  
               </imageobject>
 
-	      <caption>
-		<para>
-		  在设定一个范围后的显示。
-		</para>
-	      </caption>
+              <caption>
+                <para>
+                  在设定一个范围后的显示。
+                </para>
+              </caption>
             </mediaobject>
           </informalfigure>
 
@@ -711,9 +946,20 @@
       </varlistentry>
     
       <varlistentry>
+        <term lang='cs'>Statistiky</term>
         <term lang='en'>Statistics</term>
         <term lang='fr'>Statistiques</term>
         <term lang="zh_CN">统计数字</term>
+        <listitem lang='cs'>
+          <para>
+            V dolní části dialogu jsou zobrazeny základní statistické údaje
+            popisující distribuci hodnot ve vybraném rozsahu. Jedná se o
+            průměr, standardní odchylku, medián vybrané části histogramu,
+            počet pixelů v obrázku, počet pixelů, jejichž hodnoty spadají do
+            vybraného rozsahu aprocento těchto pixelů.
+          </para>
+        </listitem>
+
         <listitem lang='en'>
           <para>
             At the bottom of the dialog are shown some basic
