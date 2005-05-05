@@ -7,57 +7,74 @@
   body {
     font-size: small;
     font-family: Verdana, sans-serif;
-    margin: 0;
+    margin: 0 auto;
     padding: 0;
+    max-width: 40em;
+    min-width: 34em;
+  }
+  
+  div.book,
+  div.chapter,
+  div.sect1, 
+  div.sect2,
+  div.sect3,
+  div.appendix, 
+  div.section, 
+  div.glossary,
+  div.bibliography
+  div.index {
+    margin: 5em 0;
   }
 
-  h1, h2 {
-    font-size: x-large;
+  /* no big margin for cascaded sections */
+  div.sect1>div.sect2 {
+    margin-top: 0;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  p.title,
+  dt,
+  li,
+  .term {
+    clear: both;
+  }
+ 
+  h1,
+  h2,
+  h3,
+  div.navheader table th,
+  div.navheader table th#chaptername {
     font-family: Georgia, Times, serif;
-    clear: both;
   }
 
-  h3, h4, h5, p.title {
-    font-size: medium;
-    font-weight: bold;
-    width: 70%;
-    border-bottom: 1px solid black;
-    letter-spacing: 2px;
+  h1, 
+  div.navheader table th {
+    font-size: x-large;
+  }
+
+  h2,
+  h3 {
+    font-size: 140%;
+  }
+  
+
+  h4,
+  h5,
+  p.title {
     margin-top: 30px;
-    clear: both;
-  }
-  
-  h3, h4 {
-    text-decoration: underline;
-    border: 0;
-    letter-spacing: normal;
-  }
-
-  dt {
-    clear: both;
-  }
-  
-  li {
-    clear: both;
-  }
-
-  div.itemizedlist li {
-    clear: none;
+    font-size: 110%;
   }
   
   .term { 
     border-bottom: 1px dotted black; 
-    clear: both;
   }
-
-  title { margin: 0px; }
 
   p {
     display: block;
-    margin: 5px 0;
-    margin-bottom: 15px;
-    width: 70%;
-    min-width: 40em;
   }
   
   .filename {
@@ -73,7 +90,9 @@
     background-image: none;
   }
   
-  p a, p a:hover, .mousebutton {
+  p a,
+  p a:hover,
+  .mousebutton {
     margin-left: 5px;
     padding-left: 10px;
     background-image: url("../images/link.png");
@@ -83,7 +102,7 @@
 
   p .guiicon {
     position: relative;
-    top: 12px;
+    margin-bottom: 1em;
   }
   
   dd {
@@ -95,8 +114,8 @@
     border: 0px;
     border-top: 1px solid black;
     width: 70%;
-    margin-top: 20px;
-    padding-bottom: 10px;
+    margin-top: 2em;
+    padding-bottom: 1em;
   }
 
   a {
@@ -109,20 +128,31 @@
     color: black;
   }
 
+/*
+   navigation header and footer definitions
+ */
+
   div.navheader, 
   div.navfooter {
     background-color: #d6ba00;
     color: black;
-    clear: both;
   }
 
-  div.navheader table th {
-    font-family: Georgia, Times, serif;
-    font-size: x-large;
+  div.navheader, div.heading {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+
+  div.navfooter, div.footing {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
   }
 
   div.navheader table th#chaptername {
-    font-family: Georgia, Times, serif;
     font-size: large;
   }
 
@@ -160,18 +190,6 @@
     display: none;
   }
  
-  div.book,
-  div.chapter,
-  div.sect1, 
-  div.sect2,
-  div.sect3,
-  div.appendix, 
-  div.section, 
-  div.glossary,
-  div.bibliography
-  div.index {
-    margin: 3em;
-  }
 
   /* titlepage */
   div.book .titlepage {
@@ -215,12 +233,20 @@
     width: 90%;
   }
 
-  .warning, .caution, .tip, .note {
-    min-width: 60%;
-    max-width: 70%;
-    padding: 0 0 0 10px;
-    margin: 10px 0;
-    clear: right;
+  .warning, 
+  .caution, 
+  .tip, 
+  .note {
+    width: 100%;
+    padding: 0;
+    margin: 1em 0;
+  }
+  
+  .warning p,
+  .caution p,
+  .tip p,
+  .note p {
+    display: inline;
   }
   
   .warning {
@@ -243,69 +269,50 @@
     background-color: #b0e1a9;
   }
 
-  .warning p {
-    min-width: 90%;
-  }
 
-  .caution p {
-    min-width: 90%;
-  }
-
-  .tip p {
-    min-width: 90%;
-  }
-
-  .note p {
-    min-width: 90%;
-  }
-
-  .warning table, .caution table , .tip table , .note table { width: 100%; }
-
-  div.sect1 .title { margin-left: -20px; }
-
-  div.sect2 .title { margin-left: -10px; }
-
-  
-  .guilabel, .guimenu, .guisubmenu, .guimenuitem {
+  .guilabel,
+  .guimenu,
+  .guisubmenu,
+  .guimenuitem {
     background-color: #eeeee6;
-    padding: 2px 5px;
+    padding: 0 0.5em;
   }
 
-  b.keycap, .keycap {
+  b.keycap,
+  .keycap {
     background-color: #eeeee6;
-    padding: 1px 5px;
+    padding: 0 0.5em;
     border: 1px solid #999999;
-    margin: 0 2px;
+    margin: 0 0.2em;
   }
 
-  .acronym { text-transform: uppercase; }
-
-  /* temporary disabled
-  .informalfigure { 
-    margin-left: 1.5em;
-    margin-bottom: 1.5em;
-    float: right;
-    clear: right;
-    }
-  */
-
-  .informaltable { 
-    width: 70%;
-    min-width: 50%;
-    margin: 5em 0;
-    }
-
-  .mousebutton {
-    background-image: url("../images/mousebutton.png");
+  .acronym { 
+    text-transform: uppercase;
   }
 
- 
-  .title {
-    clear: both;
-    }
- 
+  .informalfigure,
+  .informaltable,
+  .figure,
+  .table {
+      padding: 1em;
+      padding-bottom: 0.5em;
+      border-top: 1px solid #ccc;
+      border-bottom: 1px solid #ccc;
+      margin: 1em;
+  }
+  .informalfigure .mediaobject img {
+      display: block;
+      margin: 0 auto;
+  }
+  .informalfigure .mediaobject .caption {
+      margin-top: 1em;
+  }
+  
+  div.table p.title {
+    letter-spacing: 0;
+    margin-top: 0;
+  }
   div.caption {
     font-weight: bold;
   }
-
 }
