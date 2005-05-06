@@ -63,17 +63,16 @@ EXTRA_DIST = \
 
 $(STAMP_DIR)/clean.stamp: Makefile
 	@echo '*** Creating fresh stamps directory ***'
-	rm -rf $(STAMP_DIR)
-	mkdir -p $(STAMP_DIR)
+	@rm -rf $(STAMP_DIR); $(mkinstalldirs) $(STAMP_DIR)
 	@echo '*** Removing the built help files ***'
 	rm -rf html
 	rm -rf pdf 
 	rm -rf xml
 	@echo '*** Removing temporary files ***'
-	rm -rf `find . -name "*~"`
-	rm -rf `find . -name "*.orig"`
-	rm -rf `find . -name "*.bak"`
-	rm -rf `find . -name "*.rej"`
+	@rm -rf `find . -name "*~"`
+	@rm -rf `find . -name "*.orig"`
+	@rm -rf `find . -name "*.bak"`
+	@rm -rf `find . -name "*.rej"`
 
 	@touch $@
 
@@ -99,7 +98,7 @@ $(STAMP_DIR)/css.stamp : $(patsubst %,$(STAMP_DIR)/css.%.stamp,$(ALL_LINGUAS))
 	@touch $@
 
 $(patsubst %,$(STAMP_DIR)/css.%.stamp,$(ALL_LINGUAS)) : $(STAMP_DIR)/css.%.stamp : $(STAMP_DIR)/mkdirs.%.stamp $(CSS_FILES)
-	cp $(CSS_FILES) $(srcdir)/html/$*; \
+	@cp $(CSS_FILES) $(srcdir)/html/$*; \
 	if test $* = "zh_CN"; then \
 	  cp $(CSS_DIRS)/$*/gimp-help-custom.css $(srcdir)/html/$*; \
 	fi
