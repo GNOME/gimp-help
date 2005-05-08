@@ -187,7 +187,7 @@ $(STAMP_DIR)/latex.stamp: $(STAMP_DIR)/profile.stamp
 latex: $(STAMP_DIR)/latex.stamp
 
 
-$(STAMP_DIR)/pdf.stamp: $(STAMP_DIR)/latex.stamp $(STAMP_DIR)/convert.stamp
+$(STAMP_DIR)/pdf.stamp: $(STAMP_DIR)/latex.stamp 
 	@echo '*** Building PDF files ***'
 	@cd $(top_srcdir)/pdf;
 	@for lang in $(ALL_LINGUAS); do \
@@ -207,7 +207,7 @@ $(STAMP_DIR)/html.stamp: $(patsubst %,$(STAMP_DIR)/html.%.stamp,$(ALL_LINGUAS))
 	@echo '*** Building HTML ***'
 	@touch $@
 
-$(patsubst %,$(STAMP_DIR)/html.%.stamp,$(ALL_LINGUAS)): $(STAMP_DIR)/html.%.stamp : $(STAMP_DIR)/profile.%.stamp $(STAMP_DIR)/css.%.stamp $(STAMP_DIR)/images.%.stamp
+$(patsubst %,$(STAMP_DIR)/html.%.stamp,$(ALL_LINGUAS)): $(STAMP_DIR)/html.%.stamp : $(STAMP_DIR)/profile.%.stamp $(STAMP_DIR)/css.%.stamp $(STAMP_DIR)/images.%.stamp $(STAMP_DIR)/convert.stamp
 	echo '-- Building HTML for '$*;\
 	(cd $(top_srcdir)/html/$* && \
 	  $(XSLTPROC) $(XSLTFLAGS) --xinclude \
