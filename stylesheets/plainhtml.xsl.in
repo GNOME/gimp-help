@@ -27,6 +27,11 @@
     -->
   <xsl:template match="simplesect[@role = 'NotInToc']" mode="toc"/>
 
+  <!-- suppress all elements which have the 'tex' role, because we don't
+       want to process elements which are obviously for PDF generation
+    -->
+  <xsl:template match="*[@role='tex']" />
+
   <xsl:template name="header.navigation">
     <xsl:param name="prev" select="/foo"/>
     <xsl:param name="next" select="/foo"/>

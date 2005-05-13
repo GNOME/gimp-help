@@ -1,304 +1,788 @@
 /* This file is part of gimp-help-2. It is copyrighted under the GNU
    Free Documentation License Version 1.1 which you can get from
-   http://www.gnu.org */
+   http://www.gnu.org 
+   
+   Browser wrangling and typographic design by
+     Oyvind Kolas / pippin@gimp.org
+
+   Thanks to:
+     Liam R. E. Quin
+     William Skaggs
+     Jakub Steiner
+   
+   */
 
 @media screen {
-  /* globals */
-  body,
-  html{
-    font-size: small;
-    font-family: Verdana, sans-serif;
-    margin: 0 auto;
-    padding: 0;
-  }
-  
-  .book,
-  .section,
-  .sect1,
-  .sect2,
-  .sect3,
-  .chapter {
-    max-width: 45em;
-    min-width: 34em;
-    width: 45em;
-    margin: 0 auto;
-    margin-bottom: 2em;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  p.title,
-  dt,
-  li,
-  .term {
-    clear: both;
-  }
- 
-  h1,
-  h2,
-  h3,
-  div.navheader table th,
-  div.navheader table th#chaptername {
-    font-family: Georgia, Times, serif;
-  }
-
-  h1, 
-  div.navheader table th {
-    font-size: x-large;
-  }
-
-  h2,
-  h3 {
-    font-size: 140%;
-  }
-  
-
-  h4,
-  h5,
-  p.title {
-    margin-top: 2em;
-    font-size: 110%;
-  }
-  
-  .term { 
-    border-bottom: 1px dotted black; 
-  }
-
-  p {
-    display: block;
-  }
-  
-  .filename {
-    font-size: medium;
-    font-family: Courier, monospace;
-  }
-
-  /* don't display anchor tags with only an id attribute */
-  p a[id] {
-    margin: 0;
-    padding: 0;
-    display: inline;
-    background-image: none;
-  }
-  
-  p a,
-  p a:hover,
-  .mousebutton {
-    margin-left: 5px;
-    padding-left: 10px;
-    background-image: url("../images/link.png");
-    background-repeat: no-repeat;
-    background-position: center left;
-  }
-
-  p .guiicon {
-    position: relative;
-    margin-bottom: 1em;
-  }
-  
-  dd {
-    margin: 5px 40px;
-    margin-right: 0;
-  }
-
-  hr {
-    border: 0px;
-    border-top: 1px solid black;
-    width: 70%;
-    margin-top: 2em;
-    padding-bottom: 1em;
-  }
-
-  a {
-    color: blue;
-    text-decoration: none;
-  }
-
-  a:hover {
-    text-decoration: underline;
-    color: black;
-  }
-
-/*
-   navigation header and footer definitions
- */
-
-  div.navheader, 
-  div.navfooter {
-    background-color: #d6ba00;
-    color: black;
-  }
-  
-  div.navheader table th#chaptername {
-    font-size: large;
-  }
-
-  div.navheader table, 
-  div.navfooter table {
-    border: 1px solid black;
-  }
-
-  div.navheader table td a,
-  div.navfooter table td a {
-    color: #fff5b0;
-    text-decoration: none;
-  }
-
-  /* normal text in the footer */
-  div.navfooter table td {
-    color: black;
-  }
+    body {
+      font-family: FreeSans, Verdana, sans-serif;
+      font-size: 100%;
+      padding: 0;
+      margin: 0;
+    }
     
-  /* links in header and footer */
-  div.navheader table td a:hover,
-  div.navfooter table td a:hover {
-    text-decoration: underline;
-    background-color: transparent;
-  }
+    .book,
+    .section,
+    div.sect1,
+    div.sect2,
+    div.sect3,
+    .simplesect,
+    .chapter {
+        max-width: 45em;
+        min-width: 34em;
+        width: 45em;
+        margin: 0 auto;
+        margin-bottom: 2em;
+    }
 
-  div.navheader table td a:visited,
-  div.navfooter table td a:visited {
-    color: #686868;
-  }
+    h1,h2,h3,h4,h5,h6,h7 {
+      clear: both;
+    }
 
-  div.navheader hr, div.navfooter hr{
-    display: none;
-  }
- 
+    h1 {
+      font-weight: bold;
+      font-size: 166%;
+      text-align: left;
+      clear: both;
+      padding: 0em 0em 0em 0em;
+      margin: 2em 0em 0em 0em;
+    }
 
-  /* titlepage */
-  div.book .titlepage {
-    padding-top: 300px; /* height of the splash image */
-    background-image: url("../images/gimp-splash.png");
-    background-repeat: no-repeat;
-  }
+    h2.subtitle {
+      margin: 0.10em 0 3.0em 0;
+      padding: 0 0 0 0;
+      width: 80%;
+      padding-left: 20%;
+      font-weight: normal;
+      font-style: italic;
+      text-align: right;
+    }
 
-  /* table of contents */
-  div.toc {
-    border: 1px solid black;
-    padding: 0px 10px;
-    background-color: #fff9cd;
-    color: black;
-    margin-bottom: 1cm;
-    width: 80%;
-  }
+    h2 {
+      margin: 2em 0em 0.66em 0em;
+      padding: 0.5em 0em 0em 0em;
+      font-size: 142.14%;
+      font-weight: normal;
+    }
 
-  div.toc b { font-size: 140%; }
+    h3.subtitle {
+      margin: 0em 0em 1em 0em;
+      padding: 0em 0em 0em 0em;
+      font-size: 142.14%;
+      font-weight: normal;
+      text-align : right;
+    }
 
-  div.toc a {
-    margin-left: 5px;
-    margin-bottom: 5px;
-  }
+    h3 {
+      margin: 1em 0em 0.5em 0em;
+      padding: 1em 0em 0em 0em;
+      font-size: 140%;
+      font-weight: normal;
+    }
 
-  /* toc definitions for different sections and chapters */
+    h4 {
+      margin: 1em 0em 0.5em 0em;
+      padding: 1em 0em 0em 0em;
+      font-size: 120%;
+      font-weight: normal;
+    }
 
-  div.book div.toc {
-    background-color: transparent;
-    border: 0;
-    padding: 0;
-    font-size: medium;
-  }
+    h5 {
+      margin: 1em 0em 0.5em 0em;
+      padding: 1em 0em 0em 0em;
+      font-size: 110.000%;
+      border-bottom: 1px solid black;
+    }
 
-  div.book div.toc .chapter a {
-    display: block;
-    border-bottom: 1px dotted black;
-  }
+    h6 {
+      margin: 1em 0em 0em 0em;
+      padding: 1em 0em 0em 0em;
+      font-size: 80%;
+      font-weight: normal;
+    }
 
-  .procedure {
-    width: 90%;
-  }
+    .authorgroup {
+      float: right;
+    }
 
-  .warning, 
-  .caution, 
-  .tip, 
-  .note {
-    padding: 0.5em;
-    margin: 1em 0;
-  }
-  
-  .warning p,
-  .caution p,
-  .tip p,
-  .note p {
-    display: inline;
-  }
-  
-  .warning {
-    border: 1px solid darkred;
-    background-color: #ff9999;
-  }
+    h3.author {
+      margin: 0 0 0 0;
+      padding: 0 0 0 0;
+      font-weight: normal;
+    }
 
-  .caution {
-    border: 1px solid #827206;
-    background-color: #ffdd00;
-  }
+    .author tt.email {
+      font-size: 66%;
+    }
 
-  .tip {
-    border: 1px solid darkblue;
-    background-color: #c3d4de;
-  }
-  
-  .note {
-    border: 1px solid darkgreen;
-    background-color: #b0e1a9;
-  }
+    .titlepage hr {
+      width: 0;
+      clear: both;
+    }
 
+    .toc,
+    .list-of-tables,
+    .list-of-examples,
+    .list-of-figures {
+      padding: 1.33em 0em 2.5em 0em;
+    }
 
-  .guilabel,
-  .guimenu,
-  .guisubmenu,
-  .guimenuitem {
-    background-color: #eeeee6;
-    padding: 0 0.5em;
-  }
+    .toc p,
+    .list-of-tables p,
+    .list-of-figures p,
+    .list-of-examples p {
+      padding: 0 0 0 0;
+      padding: 0em 0em 0.3em;
+      margin: 1.5em 0 0 0;
+    }
 
-  b.keycap,
-  .keycap {
-    background-color: #eeeee6;
-    padding: 0 0.5em;
-    border: 1px solid #999999;
-    margin: 0 0.2em;
-  }
+    .toc p b,
+    .list-of-tables p b,
+    .list-of-figures p b,
+    .list-of-examples p b{
+      font-weight: bold;
+    }
 
-  .acronym { 
-    text-transform: uppercase;
-  }
+    .toc dl,
+    .list-of-tables dl,
+    .list-of-figures dl,
+    .list-of-examples dl {
+      margin: 0 0 0.5em 0;
+      padding: 0 0 0 0;
+    }
 
-  .informalfigure,
-  .informaltable,
-  .figure,
-  .table {
-      padding: 1em;
-      padding-bottom: 0.5em;
-      border-top: 1px solid #ccc;
-      border-bottom: 1px solid #ccc;
-      margin: 1em;
-  }
-  .informalfigure .mediaobject img,
-  .figure .mediaobject img {
-      display: block;
-      margin: 0 auto;
-  }
-  .informalfigure .mediaobject .caption {
+    .toc dt {
+      margin: 0 0 0 0;
+      padding: 0 0 0 0;
+    }
+
+    .toc dd {
+      margin: 0em 0em 0em 2.6em;
+      padding: 0 0 0 0;
+    }
+
+    div.glossary dl,
+    div.variablelist dl {
+    }
+
+    .glossary dl dt,
+    .variablelist dl dt span.term {
+      font-weight: normal;
+    }
+
+    .glossary dl dd,
+    .variablelist dl dd {
+      margin-left: 2.6em;
+    }
+
+    .glossary dd p,
+    .variablelist dd p {
+      margin-top: 0em;
+      margin-bottom: 1em;
+    }
+
+    div.calloutlist table {
       margin-top: 1em;
-  }
-  
-  div.table p.title,
-  div.figure p.title {
-    letter-spacing: 0;
-    margin-top: 0;
-  }
-  
-  div.caption {
-    font-weight: bold;
-  }
+    }
 
-  div.figure p.title {
-    border-bottom: 0;
-    margin: 0;
-    margin-bottom: 0.5em;
-  }
+    div.calloutlist table td {
+      padding: 0;
+      margin: 0;
+    }
+
+    div.calloutlist table td p {
+      margin-top: 0em;
+      margin-bottom: 1em;
+    }
+
+    div.calloutlist table td img {
+      margin-left: 2em;
+    }
+
+    div p.copyright {
+      text-align: left;
+    }
+
+    div.legalnotice p.legalnotice-title {
+      margin-bottom: 0;
+    }
+
+    p {
+      text-align : justify;
+      line-height: 142%;
+      margin-top: 0;
+    }
+
+    dl {
+      padding-top: 0em;
+    }
+
+    hr {
+      border: solid 1px;
+    }
+
+
+    .mediaobject,
+    .mediaobjectco,
+    div.navheader table th#chaptername,
+    div.navheader table th#sectionname {
+      text-align: center;
+    }
+
+    img {
+      border: none;
+    }
+
+    .mediaobject img,
+    .mediaobjectco img{
+      max-width: 36em;
+    }
+
+    ul {
+      padding: 0 0 0 1.5em;
+    }
+
+    ul li {
+      padding: 0 0 0 0;
+    }
+
+    ul li p {
+      text-align: left;
+    }
+
+    table {
+      width :100%;
+    }
+
+    th {
+      padding: 0.25em;
+      text-align: left;
+      font-weight: normal;
+      vertical-align: top;
+    }
+
+    td {
+      padding: 0.25em;
+      vertical-align: top;
+    }
+
+    p a[id] {
+      margin: 0;
+      padding: 0;
+      display: inline;
+      background-image: none;
+    } 
+
+    p a,
+    p a:hover,
+    p a:visited {
+       margin-left: 5px;
+       padding-left: 10px;
+       background-image: url("../images/link.png");
+       background-repeat: no-repeat;
+       background-position: center left;
+    }
+
+    pre {
+        overflow : auto;
+    }
+
+    div.informalfigure,
+    div.informalexample,
+    div.informaltable,
+    div.figure,
+    div.table,
+    div.example {
+      margin: 1em 0em;
+      padding: 1em;
+      page-break-inside: avoid;
+    }
+
+
+    div.informalfigure p.title b,
+    div.informalexample p.title b,
+    div.informaltable p.title b,
+    div.figure p.title b,
+    div.example p.title b,
+    div.table p.title b{
+        padding-top: 0;
+        margin-top: 0;
+        font-weight: normal;
+    }
+
+    .mediaobject .caption, 
+    .mediaobject .caption p  {
+      text-align: left;
+      padding-top: 0.5em;
+      padding-bottom: 0.5em;
+    }
+
+    .epigraph {
+      padding-left: 55%;
+      margin-bottom: 1em;
+    }
+
+    .epigraph p {
+      text-align: left;
+    }
+
+    .epigraph .quote {
+      font-style: italic;
+    }
+    .epigraph .attribution {
+      font-style: normal;
+      text-align: right;
+    }
+
+    span.application {
+      font-style: italic;
+    }
+
+    .programlisting {
+      font-family: monospace;
+      font-size: 80%;
+      white-space: pre;
+      margin: 1.33em 0em;
+      padding: 1.33em;
+    }
+
+    .tip,
+    .warning,
+    .caution,
+    .note {
+      margin-top: 1em;
+      margin-bottom: 1em;
+
+    }
+
+    /* force full width of table within div */
+    .tip table,
+    .warning table,
+    .caution table,
+    .note table {
+      border: none;
+      width: 100%;
+    }
+
+
+    .tip table th,
+    .warning table th,
+    .caution table th,
+    .note table th {
+      padding: 0.8em 0.0em 0.0em 0.0em;
+      margin : 0 0 0 0;
+    }
+
+    .tip p,
+    .warning p,
+    .caution p,
+    .note p {
+      margin-top: 0.5em;
+      margin-bottom: 0.5em;
+      padding-right: 1em;
+      text-align: left;
+    }
+
+    .acronym {
+      text-transform: uppercase;
+    }
+
+    b.keycap,
+    .keycap {
+      padding: 0.09em 0.3em;
+      margin: 0;
+    }
+
+    .itemizedlist li {
+      clear: none;
+    }
+
+    .filename {
+      font-size: medium;
+      font-family: Courier, monospace;
+    }
+
+
+    div.navheader, div.heading{
+      background-color: #d6ba00;
+      width: 100%;
+    }
+
+    div.navfooter, div.footing{
+      background-color: #d6ba00;
+      width: 100%;
+    }
+
+
+    div.navheader td,
+    div.navfooter td {
+      font-size: 66%;
+    }
+
+    div.navheader table th {
+      /*font-family: Georgia, Times, serif;*/
+      /*font-size: x-large;*/
+      font-size: 80%;
+    }
+
+    div.navheader table {
+      border-left: 0;
+      border-right: 0;
+      border-top: 0;
+      width: 100%;
+    }
+
+    div.navfooter table {
+      border-left: 0;
+      border-right: 0;
+      border-bottom: 0;
+      width: 100%;
+    }
+
+    div.navheader table td a,
+    div.navfooter table td a {
+      color: #777;
+      text-decoration: none;
+    }
+
+    /* normal text in the footer */
+    div.navfooter table td {
+      color: black;
+    }
+
+    div.navheader table td a:visited,
+    div.navfooter table td a:visited {
+      color: #444;
+    }
+
+
+    /* links in header and footer */
+    div.navheader table td a:hover,
+    div.navfooter table td a:hover {
+      text-decoration: underline;
+      background-color: transparent;
+      color: #33a;
+    }
+
+    div.navheader hr,
+    div.navfooter hr {
+      display: none;
+    }
+
+
+    .qandaset tr.question td p {
+      margin: 0 0 1em 0;
+      padding: 0 0 0 0;
+    }
+
+    .qandaset tr.answer td p {
+      margin: 0 0 1em 0;
+      padding: 0 0 0 0;
+    }
+    .answer td {
+      padding-bottom: 1.5em;
+    }
+
+    .emphasis {
+      text-weight: bold;
+    }
+
+
+      /************* /
+     / decorations  /
+    / *************/
+
+    .titlepage {
+    }
+
+    .part .title {
+    }
+
+    .subtitle {
+        border: none;
+    }
+
+    h1 {
+      border: none;
+    }
+
+    h2 {
+      border-top: solid 0.2em;
+      border-bottom: solid 0.06em;
+    }
+
+    h3 {
+      border-top: 0em;
+      border-bottom: solid 0.06em;
+    }
+
+    h4 {
+      border: 0em;
+      border-bottom: solid 0.06em;
+    }
+
+    h5 {
+      border: 0em;
+    }
+
+    .programlisting {
+      border: solid 1px;
+    }
+
+    div.figure,
+    div.table,
+    div.informalfigure,
+    div.informaltable,
+    div.informalexample,
+    div.example {
+      border         : 1px solid;
+    }
+
+
+
+    .tip,
+    .warning,
+    .caution,
+    .note {
+      border    : 1px solid;
+    }
+
+    .tip table th,
+    .warning table th,
+    .caution table th,
+    .note table th {
+      border-bottom  : 1px solid;
+    }
+
+    .question td {
+      border-top: 1px solid black;
+    }
+
+    .answer {
+    }
+
+
+    b.keycap,
+    .keycap {
+      border: 1px solid;
+    }
+      
+
+    div.navheader, div.heading{
+      border-bottom: 1px solid;
+    }
+
+
+    div.navfooter, div.footing{
+      border-top: 1px solid;
+    }
+
+      /********* /
+     /  colors  /
+    / *********/
+
+    body {
+      color: #222;
+      background: #fdfdfd;
+    }
+
+    a {
+      color: #026;
+      text-decoration: underline;
+    }
+
+    a:hover,
+    a:visited {
+      background: transparent;
+      color: darkviolet;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    h7,
+    h8 {
+      background-color   : transparent;
+    }
+
+    hr {
+      border-color: #aaa;
+    }
+
+
+    .tip, .warning, .caution, .note {
+      border-color    : #aaa;
+    }
+
+
+    .tip table th,
+    .warning table th,
+    .caution table th,
+    .note table th {
+      border-bottom-color: #aaa;
+    }
+
+
+    .warning {
+      background-color: #fea;
+    }
+
+    .caution {
+      background-color: #fea;
+    }
+
+    .tip {
+      background-color: #eff;
+    }
+
+    .note {
+      background-color: #dfc;
+    }
+
+    .glossary dl dt, 
+    .variablelist dl dt,
+    .variablelist dl dt span.term {
+      color: #044;
+    }
+
+    div.figure,
+    div.table,
+    div.example,
+    div.informalfigure,
+    div.informaltable,
+    div.informalexample {
+      border-color: #aaa;
+    }
+
+    pre.programlisting {
+      color: black;
+      background-color: #fff;
+      border-color: #aaa;
+    }
+
+    .guimenu,
+    .guilabel,
+    .guimenuitem {
+      background-color: #eee;
+    }
+
+
+    b.keycap,
+    .keycap {
+      background-color: #eee;
+      border-color: #999;
+    }
+
+
+    div.navheader {
+      border-color: black;
+    }
+
+
+    div.navfooter {
+      border-color: black;
+    }
+
+
+      /*********** /
+     /  graphics  /
+    / ***********/
+
+    /*
+    body {
+      background-image: url("images/body_bg.jpg");
+      background-attachment: fixed;
+    }
+
+    .navheader,
+    .note,
+    .tip {
+      background-image: url("images/note_bg.jpg");
+      background-attachment: fixed;
+    }
+
+    .warning,
+    .caution {
+      background-image: url("images/warning_bg.jpg");
+      background-attachment: fixed;
+    }
+
+    .figure,
+    .informalfigure,
+    .example,
+    .informalexample,
+    .table,
+    .informaltable {
+      background-image: url("images/figure_bg.jpg");
+      background-attachment: fixed;
+    }
+
+    */
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    h7{
+    }
+
+    div.preface .titlepage .title, 
+    div.colophon .title, 
+    div.chapter .titlepage .title {
+      background-image: url("images/title-bg.png");
+      background-position: bottom;
+      background-repeat: repeat-x;
+    }
+
+    div.section div.section .titlepage .title,
+    div.sect2 .titlepage .title {
+        background: none;
+    }
+
+
+    h1.title {
+      background-color: transparent;
+      background-image: none;
+    }
+
+    h2.subtitle {
+      background-color: transparent;
+      background-image: none;
+    }
+
+      /*************************************** /
+     /  gimp-help-2 specific alterations      /
+    / ***************************************/
+
+    /* titlepage */
+    div.book .titlepage {
+      padding-top: 300px; /* height of the splash image */
+      background-image: url("../images/gimp-splash.png");
+      background-repeat: no-repeat;
+    }
+
+      /**************************************** /
+     / mozilla vendor specific css extensions  /
+    / ****************************************/
+
+    div.figure,
+    div.table,
+    div.informalfigure,
+    div.informaltable,
+    div.informalexample,
+    div.example,
+    .tip,
+    .warning,
+    .caution,
+    .note {
+      -moz-border-radius: 0.5em;
+    }
+
+    b.keycap,
+    .keycap {
+      -moz-border-radius: 0.3em;
+    }
 }
