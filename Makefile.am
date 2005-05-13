@@ -52,6 +52,8 @@ HELP_STAMPS = \
 FORMATS = html pdf
 
 EXTRA_DIST = \
+	HACKING				\
+	INSTALL				\
 	TERMINOLOGY			\
 	stylesheets/plainhtml.xsl.in	\
 	$(MAKEINDEX)			\
