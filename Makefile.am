@@ -282,7 +282,7 @@ dist-check-build:
 	@echo "*** --enable-build must be specified in order to make dist"
 	@false
 
-all-local: images css
+all-local: mkdirs images css
 
 endif
 
