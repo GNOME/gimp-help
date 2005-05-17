@@ -57,7 +57,6 @@ EXTRA_DIST = \
 	INSTALL				\
 	TERMINOLOGY			\
 	stylesheets/plainhtml.xsl.in	\
-	$(STAMP_DIR)			\
 	$(MAKEINDEX)			\
 	$(IMAGE_FILES)			\
 	$(DTD_FILES)			\
@@ -86,6 +85,7 @@ $(STAMP_DIR)/mkdirs.stamp: $(patsubst %,$(STAMP_DIR)/mkdirs.%.stamp,$(ALL_LINGUA
 	@touch $@
 
 $(patsubst %,$(STAMP_DIR)/mkdirs.%.stamp,$(ALL_LINGUAS)) : $(STAMP_DIR)/mkdirs.%.stamp :
+	@$(mkinstalldirs) $(STAMP_DIR)
 	@for format in $(FORMATS); do \
 	  $(mkinstalldirs) $$format/$*; \
 	done;
