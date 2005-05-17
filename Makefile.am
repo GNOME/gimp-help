@@ -80,8 +80,6 @@ $(STAMP_DIR)/clean.stamp: Makefile
 
 	@touch $@
 
-clean: $(STAMP_DIR)/clean.stamp
-
 
 $(STAMP_DIR)/mkdirs.stamp: $(patsubst %,$(STAMP_DIR)/mkdirs.%.stamp,$(ALL_LINGUAS)) 
 	@echo '*** Creating directories ***'
@@ -109,7 +107,7 @@ $(patsubst %,$(STAMP_DIR)/css.%.stamp,$(ALL_LINGUAS)) : $(STAMP_DIR)/css.%.stamp
 
 	@touch $@
 
-css:	$(STAMP_DIR)/css.stamp
+css: $(STAMP_DIR)/css.stamp
 
 
 $(STAMP_DIR)/images.stamp : $(patsubst %,$(STAMP_DIR)/images.%.stamp,$(ALL_LINGUAS))
@@ -274,6 +272,8 @@ if GIMP_HELP_BUILD
 dist-check-build:
 
 all-local: mkdirs validate images css html index
+
+clean: $(STAMP_DIR)/clean.stamp
 
 CLEANFILES = $(HELP_STAMPS)
 
