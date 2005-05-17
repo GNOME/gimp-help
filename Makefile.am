@@ -37,6 +37,10 @@ CSS_FILES = \
         $(top_srcdir)/stylesheets/gimp-help-screen.css	\
 	$(top_srcdir)/stylesheets/zh_CN/gimp-help-custom.css
 
+XSL_FILES = \
+        $(top_srcdir)/stylesheets/plainprint.xsl	\
+        $(top_srcdir)/stylesheets/profile.xsl
+
 MAKEINDEX = $(top_srcdir)/stylesheets/makeindex.xsl
 
 HELP_STAMPS = \
@@ -57,6 +61,7 @@ EXTRA_DIST = \
 	INSTALL				\
 	TERMINOLOGY			\
 	stylesheets/plainhtml.xsl.in	\
+	$(XSL_FILES)			\
 	$(MAKEINDEX)			\
 	$(IMAGE_FILES)			\
 	$(DTD_FILES)			\
