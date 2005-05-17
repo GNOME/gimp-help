@@ -57,6 +57,7 @@ EXTRA_DIST = \
 	INSTALL				\
 	TERMINOLOGY			\
 	stylesheets/plainhtml.xsl.in	\
+	$(STAMP_DIR)			\
 	$(MAKEINDEX)			\
 	$(IMAGE_FILES)			\
 	$(DTD_FILES)			\
