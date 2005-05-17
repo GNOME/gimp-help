@@ -82,11 +82,11 @@ $(STAMP_DIR)/clean.stamp: Makefile
 clean: $(STAMP_DIR)/clean.stamp
 
 
-$(STAMP_DIR)/mkdirs.stamp: $(STAMP_DIR)/clean.stamp $(patsubst %,$(STAMP_DIR)/mkdirs.%.stamp,$(ALL_LINGUAS)) 
+$(STAMP_DIR)/mkdirs.stamp: $(patsubst %,$(STAMP_DIR)/mkdirs.%.stamp,$(ALL_LINGUAS)) 
 	@echo '*** Creating directories ***'
 	@touch $@
 
-$(patsubst %,$(STAMP_DIR)/mkdirs.%.stamp,$(ALL_LINGUAS)) : $(STAMP_DIR)/mkdirs.%.stamp : $(STAMP_DIR)/clean.stamp
+$(patsubst %,$(STAMP_DIR)/mkdirs.%.stamp,$(ALL_LINGUAS)) : $(STAMP_DIR)/mkdirs.%.stamp :
 	@for format in $(FORMATS); do \
 	  $(mkinstalldirs) $$format/$*; \
 	done;
@@ -272,7 +272,7 @@ if GIMP_HELP_BUILD
 
 dist-check-build:
 
-all-local: mkdirs validate images css html index
+all-local: clean mkdirs validate images css html index
 
 CLEANFILES = $(HELP_STAMPS)
 
