@@ -272,7 +272,7 @@ if GIMP_HELP_BUILD
 
 dist-check-build:
 
-all-local: clean mkdirs validate images css html index
+all-local: mkdirs validate images css html index
 
 CLEANFILES = $(HELP_STAMPS)
 
