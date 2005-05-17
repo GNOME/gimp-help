@@ -33,16 +33,17 @@ CSS_DIRS = \
 	$(top_srcdir)/stylesheets
 
 CSS_FILES = \
-        $(top_srcdir)/stylesheets/gimp-help-plain.css \
-        $(top_srcdir)/stylesheets/gimp-help-screen.css
+        $(top_srcdir)/stylesheets/gimp-help-plain.css	\
+        $(top_srcdir)/stylesheets/gimp-help-screen.css	\
+	$(top_srcdir)/stylesheets/zh_CN/gimp-help-custom.css
 
 MAKEINDEX = $(top_srcdir)/stylesheets/makeindex.xsl
 
 HELP_STAMPS = \
-	$(STAMP_DIR)/css.stamp	\
+	$(STAMP_DIR)/css.stamp		\
 	$(STAMP_DIR)/latex.stamp	\
-	$(STAMP_DIR)/pdf.stamp	\
-	$(STAMP_DIR)/html.stamp	\
+	$(STAMP_DIR)/pdf.stamp		\
+	$(STAMP_DIR)/html.stamp		\
 	$(STAMP_DIR)/images.stamp	\
 	$(STAMP_DIR)/index.stamp	\
 	$(STAMP_DIR)/mkdirs.stamp	\
