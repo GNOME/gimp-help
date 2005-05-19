@@ -34,8 +34,7 @@ CSS_DIRS = \
 
 CSS_FILES = \
         $(top_srcdir)/stylesheets/gimp-help-plain.css	\
-        $(top_srcdir)/stylesheets/gimp-help-screen.css	\
-	$(top_srcdir)/stylesheets/zh_CN/gimp-help-custom.css
+        $(top_srcdir)/stylesheets/gimp-help-screen.css	
 
 XSL_FILES = \
         $(top_srcdir)/stylesheets/plainprint.xsl	\
