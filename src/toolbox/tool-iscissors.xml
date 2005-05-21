@@ -1,9 +1,15 @@
 <?xml version='1.0'  encoding="UTF-8" ?>
 
+<!DOCTYPE sect2
+  PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+  "http://www.docbook.org/xml/4.3/docbookx.dtd">
+
+<!-- section history: -->
+<!-- 050519 de reviewed by axel.wernicke -->
 <sect2 id='gimp-tool-iscissors' lang="en;cs;de;fr;zh_CN">
   <title lang="en">Scissors Tool</title>
   <title lang="cs">Nástroj Inteligentní nůžky</title>
-  <title lang="de">Magnetische Auswahl</title>
+  <title lang="de">Intelligente Schere (Magnetische Auswahl)</title>
   <title lang="fr">Outil Ciseaux Intelligents</title>  <!--050506-->
   <title lang="zh_CN">剪刀工具</title>
 
@@ -27,7 +33,7 @@
 
   <informalfigure>
     <mediaobject>
-      <imageobject lang='en;de'>
+      <imageobject lang='en'>
         <imagedata
           fileref='../images/toolbox/toolbox-scissor.png'
           format='PNG' />
@@ -35,6 +41,11 @@
       <imageobject lang='cs'>
         <imagedata
           fileref='../images/toolbox/cs/toolbox-scissor.png'
+          format='PNG' />
+      </imageobject>
+      <imageobject lang="de">
+        <imagedata
+          fileref='../images/toolbox/de/toolbox-scissor.png'
           format='PNG' />
       </imageobject>
       <imageobject lang='fr'>
@@ -55,7 +66,7 @@
            Ikona nástroje Inteligentní nůžky v Panelu nástrojů.
         </para>
         <para lang='de'>
-          Die magnetische Auswahl im Werkzeugfenster. 
+          Die Intelligente Schere im Werkzeugfenster. 
         </para>
         <para lang='fr'>
           L'icône des ciseaux magnétiques dans la Boîte à outils.
@@ -152,11 +163,56 @@
   </para>
 
   <para lang="de">
-    Mit der magnetischen Auswahl ist es möglich, Auswahlen entlang von
-    Konturen oder Farbbereichen zu erstellen. Das Werkzeug führt man
-    entlang der Kontur und kann somit grössere Bereiche besser
-    selektieren, die mit den anderen Auswahlwerkzeugen nur schwer
-    möglich sind.
+		Das Werkzeug <quote>Intelligente Schere</quote> ist ein sehr interessantes
+		Element der <acronym>GIMP</acronym> Werkzeugkiste. Einige seiner
+		Eigenschaften hat es mit dem
+		<link linkend="gimp-tool-free-select">Lassowerkzeug</link> gemein, einige
+		mit dem <link linkend="gimp-tool-path">Pfadwerkzeug</link> und die
+		restlichen machen es einzigartig. Die Intelligente Schere ist sehr
+		nützlich, wenn Sie eine Auswahl aus enem Bildbereich erstellen wollen, der
+		farblich deutlich abgegrenzt ist. Um die Intelligente Schere zu verwenden,
+		erzeugen Sie mit einzelnen Mausklicks Kontrollpunkte um die auszuwählende
+		Region herum. Das Werkzeug erstellt aus diesen eine Kurve, welche die
+		Kontrollpunkte verbindet und an der Farbkante entlangführt. Mit ein
+		bisschen Glück stimmt diese Kurve mit der Kontur überein, die Sie
+		auswählen wollten.
+  </para>
+  <para lang='de'>
+		Jedesmal wenn Sie mit der Maus klicken, erzeugt die Intelligente Schere
+		einen neuen Kontrollpunkt. Dieser wird automatisch mit dem vorherigen
+		Kontrollpunkt verbunden. Um die Auswahl abzuschliessen, klicken Sie auf
+		den allerersten Kontrollpunkt. Beobachten Sie den Mauszeiger, er ändert
+		seine Form, wenn er sich über dem entsprechenden Kontrollpunkt befindet.
+		Sie können die Kurve korrigieren, indem Sie die Kontrollpunkte
+		verschieben und neue Kontrollpunkte durch Mausklicks einfügen. Sobald Sie
+		mit dem Ergebnis zufrieden sind, klicken Sie mit der Maus in die umrandete
+		Region hinein, um die Kurve in eine Auswahl umzuwandeln.
+  </para>
+  <warning lang='de'>
+    <para>
+			Achten Sie darauf nicht in die durch die Kurve umrandete Region
+			hineinzuklicken, bevor Sie alle Kontrollpunkte erzeugt und korrigiert
+			haben. Wenn die Kurve ersteinmal in eine Auswahl umgewandelt ist, können
+			Sie die Kurve nicht mehr korrigieren und müssten von vorn beginne.
+			Ausserdem sollten Sie darauf achten, dass Sie während der Erstellung
+			einer Kurve mit der Intelligenten Schere nicht das Werkzeug wechseln,
+			denn auch dabei wird die Kurve in eine Auswahl umgewandelt und Sie
+			verlieren alle Kontrollpunkte.
+    </para>
+  </warning>
+  <para lang='de'>
+		Unglücklicherweise scheint es einige Problem mit der Logik zu geben, die
+		benutzt wird, um die Farbkanten zu bestimmen, an denen die Kurve
+		entlanggeführt wird. Das Ergebnis ist gelegentlich eine Auswahl, die sehr
+		unsauber an der gewünschten Kante entlangführt. Ein guter Weg dies dann zu
+		korrigieren ist in den Modus
+		<link linkend='gimp-qmask'>Schnelle Maske</link> zu wechseln und mit Hilfe
+		der Malwerkzeuge die problematischen Stellen auszubessern.
+		Alles in Allem sollte man bei Problemen mit der Intelligenten Schere einen
+		Blick auf das <link linkend="gimp-tool-path">Pfadwerkzeug</link> werfen.
+		Dieses ist zwar nicht in der Lage die Kurve automatisch an Farbkanten
+		entlangzuführen, dafür bleiben aber die Kontrollpunkte der Kurve erhalten
+		und können beliebig lange korrigiert werden.
   </para>
 
   <para lang="fr">
@@ -256,28 +312,42 @@
       nebo klávesnicí zkratkou <keycap>i</keycap>.
     </para>
 
-    <para lang='de'>
-      Die Magnetische Auswahl lässt sich über das
-      Bildmenü aufrufen: <guimenuitem><accel>W</accel>erkzeuge
-      </guimenuitem>/<guimenuitem><accel>A</accel>uswahlwerkzeuge
-      </guimenuitem>/<guimenuitem><accel>I</accel>ntelligente
-      Schere</guimenuitem>.
-    </para>
-    <para lang='de'>
-      Ebenfalls kann das Werkzeug über einen Mausklick auf das
-      Werkzeugicon aufgerufen werden:
-      <guiicon>
-	<inlinemediaobject>
-	  <imageobject>
-	    <imagedata fileref='../images/toolbox/scissor.png' />
-	  </imageobject>
-	</inlinemediaobject>
-      </guiicon>
-    </para>
-    <para lang="de">
-      Die <keycap>z</keycap> Taste ruft die magnetische Auswahl auf.
-    </para>
-
+		<para lang="de">
+			Sie haben verschiedene Möglichkeiten das Werkzeug
+			<quote>Intelligente Schere</quote> zu akivieren:
+		</para>
+    <itemizedlist lang="de">
+      <listitem>
+				<para>
+					Über das Menü
+					<menuchoice>
+						<guimenu><accel>W</accel>erkzeuge</guimenu>
+			      <guisubmenu><accel>A</accel>uswahlwerkzeuge</guisubmenu>
+				    <guimenuitem><accel>I</accel>ntelligente Schere</guimenuitem>
+					</menuchoice>
+					im Bildfenster,
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Mit einen Mausklick auf das Symbol
+		      <guiicon>
+						<inlinemediaobject>
+							<imageobject>
+								<imagedata fileref="../images/toolbox/scissor.png"></imagedata>
+							</imageobject>
+						</inlinemediaobject>
+					</guiicon>
+					im Werkzeugfenster, sowie
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Über das Tastenkürzel <keycap>I</keycap>.
+				</para>
+			</listitem>
+		</itemizedlist>
+		
     <para lang='fr'>
       L'outil Ciseaux Intelligents peut être appelé à partir de la 
       barre de menus de l'image par 
@@ -327,11 +397,11 @@
       najdete v kapitole <link linkend='gimp-tool-select'>Nástroje pro
       výběr</link>.
     </para>
-    <para lang='de'>
-      Die magnetische Auswahl hat keine speziellen Tastaturbindungen.
-      Jedoch können Sie die gleichen Tastaturbindungen für Auswahlen,
-      der <link linkend='gimp-tool-select'>Auswahlwerkzeuge</link>
-      entnehmen.
+		<para lang='de'>
+      Das Werkzeug <quote>Intelligente Schere</quote> hat keine speziellen
+			Tastaturbindungen. Die allgemeinen Tastaturbindungen für
+			<link linkend='gimp-tool-select'>Auswahlwerkzeuge</link> stehen Ihnen
+			jedoch zur Verfügung.
     </para>
     <para lang='fr'>
       L'outil Ciseaux Intelligents ne possède pas de touches de 
@@ -354,9 +424,14 @@
 
     <informalfigure>
       <mediaobject>
-        <imageobject lang="en;cs;de">
+        <imageobject lang="en;cs">
           <imagedata
             fileref='../images/toolbox/tool-options-scissor.png'
+            format="PNG"/> 
+        </imageobject>
+        <imageobject lang="de">
+          <imagedata
+            fileref='../images/toolbox/de/tool-options-scissor.png'
             format="PNG"/> 
         </imageobject>
         <imageobject lang="fr">
@@ -378,7 +453,7 @@
             Volby nástrojů pro Inteligentní nůžky
           </para>
           <para lang='de'>
-            Die Werkzeugoptionen der magnetischen Auswahl.
+            Die Werkzeugeinstellungen der Intelligenten Schere.
           </para>
           <para lang='fr'>
             Option des outils pour les ciseaux intelligents
@@ -403,9 +478,11 @@
         Zde jou popsány jen zvláštní volby Inteligentních nůžek.
       </para>
       <para lang='de'>
-        Schauen sie bitte unter <link
-        linkend='gimp-tool-select'>Auswahlwerkzeuge</link> nach, um
-        Hilfe für Optionen zu finden, die diese Werkzeuge gemein haben.
+				In diesem Abschnitt werden nur die speziellen Eigenschaften der
+				Intelligenten Schere beschrieben. Schauen Sie bitte unter
+				<link linkend='gimp-tool-select'>Auswahlwerkzeuge</link> nach, falls
+				Sie Hilfe zu den allgemeinen Eigenschaften der Auswahlwerkzeuge
+				benötigen.
       </para>
       <para lang='fr'>
         Voyez <link linkend='gimp-tool-select'>Outils de sélection
@@ -420,14 +497,16 @@
     </note>
 
     <para lang="de">
-      Die Werkzeugeinstellungen für die magentische Auswahl lassen sich
-      durch ein Doppelklick auf das Icon<guiicon>
+      Die Werkzeugeinstellungen für die Intelligente Schere lassen
+      sich durch ein Doppelklick auf das Symbol
+			<guiicon>
         <inlinemediaobject>
           <imageobject>
             <imagedata fileref='../images/toolbox/scissor.png' />
           </imageobject>
         </inlinemediaobject>
-      </guiicon> anzeigen.
+      </guiicon>
+			anzeigen.
     </para>
 
     <para lang="fr">
@@ -471,9 +550,14 @@
             existujících kontrolních bodů.)
           </para>
           <para lang="de">
-            Bei aktivierter Option wird der Auswahlpfad angezeigt,
-            während der nächste Knoten mit der Maus entlang der
-            Kontur geführt wird.
+						Wenn diese Eigenschaft aktiviert ist, wird bei der Erstellung
+						eines Kontrollpunktes bereits die Kurve zum vorherigen
+						Kontrollpunkt an der Farbkante entlanggeführt. Ist die Eigenschaft
+						ausgeschaltet wird hingegen die Verbindung zum vorherigen
+						Kontrollpunkt durch eine gerade Linie symbolisiert. Wenn Ihr
+						Computer nicht zu den leistungsstärksten gehört oder die
+						Kontrollpunkte sehr weit auseinander liegen kann dies die
+						Arbeitsgeschwindigkeit erhöhen. 
           </para>
           <para lang="fr">
             (Cette option s'appellera «Adaptation interactive au contour»)
