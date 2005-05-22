@@ -144,7 +144,7 @@ $(STAMP_DIR)/convert.stamp: $(STAMP_DIR)/images.stamp
 	cd $(top_srcdir)/html/images/; \
 	for i in `find ./ -name '*.png' -type f`; do \
 	  echo "Converting" $$i && \
-	  $(CONVERT) $$i $$i; \
+	  $(CONVERT) -colors 128 $$i $$i; \
 	done
 
 	@touch $@
