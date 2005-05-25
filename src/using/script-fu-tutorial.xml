@@ -1,7 +1,18 @@
 <?xml version='1.0' encoding="UTF-8" ?>
 
-<sect1 id='gimp-using-script-fu-tutorial' lang="en">
+<sect1 id='gimp-using-script-fu-tutorial' lang="cs;en">
+  <title lang="cs">Zasvěcení do Script-Fu</title>
   <title lang="en">A Script-Fu Tutorial</title>
+
+  <para lang="cs">
+    V této části vás provedeme základy jazyka Scheme, potřebnými pro zvládnutí
+    umění Script-Fu, a napíšeme společně šikovný skript, který se může stát
+    vaším platným pomocníkem při práci s Gimpem. Náš skript si vyžádá zadání
+    textu a vytvoří nový obrázek s tímto textem, o rozměrech, které textu
+    přesně odpovídají. Pak skript vylepšíme o možnost nastavení prázdných
+    okrajů okolo textu. Nakonec vám poradíme, jak své znalosti Script-Fu
+    nadále prohlubovat.
+  </para>
 
   <para lang="en">
     In this training course, we'll introduce you to the fundamentals
@@ -13,7 +24,13 @@
     suggestions for ways to ramp up your knowledge of Script-Fu. 
   </para>
 
-  <note>
+  <note lang="cs">
+    <para>
+      Tato část vychází z průvodce, který pro Gimp 1 napsal Mike Terry.
+    </para>
+  </note>
+
+  <note lang="en">
     <para>
       This section as adapted from a tutorial written for the Gimp 1 User
       Manual by Mike Terry.
@@ -21,24 +38,47 @@
   </note>
 
   <sect2>
+    <title lang='cs'>První krůčky s jazykem Scheme</title>
     <title lang='en'>Getting Acquainted With Scheme</title>
     <simplesect>
+      <title lang='cs'>Základy Scheme</title>
       <title lang='en'>Let's Start Scheme'ing</title>
-      <para lang='en'>	
+      <para lang='cs'>
+        Jako první je nutno pochopit, že:
+      </para>
+      <para lang='en'>
         The first thing to learn is that:
       </para>
-      <para><emphasis role='bold'>
+      <para lang='cs'><emphasis role='bold'>
+        Všechny výroky jsou ve scheme uzavřeny v kulatých závorkách ().
+      </emphasis></para>
+      <para lang='en'><emphasis role='bold'>
         Every statement in Scheme is surrounded by parentheses ().
       </emphasis></para>
-      <para>
+      <para lang='cs'>
+        Druhým důležitým pravidlem je:
+      </para>
+      <para lang='en'>
         The second thing you need to know is that:
       </para>
-      <para><emphasis role='bold'>
+      <para lang='cs'><emphasis role='bold'>
+        Jméno funkce či operátor je v závorkách vždy na prvním místě,
+        zbylé položky jsou parametry funkce. 
+      </emphasis></para>
+      <para lang='en'><emphasis role='bold'>
         The function name/operator is always the first item in the
         parentheses, and the rest of the items are parameters to the
         function. 
       </emphasis></para>
-      <para>
+      <para lang='cs'>
+        Nicméně, ne vše uzavřené v závorkách je funkce; závorky mohou
+        obsahovat také seznam položek – k tomu se dostaneme později.
+        Tomuto typu zápisu se říká <emphasis>prefixová notace</emphasis>,
+        protože funkce předchází všemu ostatnímu. Pokud jste zvyklí na
+        postfixovou notaci (například obrácenou polskou notaci kalkulaček
+        HP), neměl by vám způsob zápisu ve Scheme činit potíže.
+      </para>
+      <para lang='en'>
         However, not everything enclosed in parentheses is a function --
         they can also be items in a list -- but we'll get to that
         later. This notation is referred to as prefix notation, because
@@ -47,28 +87,59 @@
         Notation (such as most HP calculators), you should have no
         problem adapting to formulating expressions in Scheme. 
       </para>
-      <para>
+      <para lang='cs'>
+        Třetí důležitá věc je:
+      </para>
+      <para lang='en'>
         The third thing to understand is that:
       </para>
-      <para><emphasis role='bold'>
-        Mathematical operators are also considered functions, and thus
-        are listed first when writing mathematical expressions. 
+      <para lang='cs'><emphasis role='bold'>
+        Matematické operátory jsou rovněž považovány za funkce, a proto
+        jsou v matematických výrazech uváděny na začátku.
       </emphasis></para>
-      <para>
-        This follows logically from the prefix notation that we just
-        mentioned. 
+      <para lang='en'><emphasis role='bold'>
+        Mathematical operators are also considered functions, and thus
+        are listed first when writing mathematical expressions.
+      </emphasis></para>
+      <para lang='cs'>
+        Je to logický důsledek zmíněné prefixové notace. 
       </para>
+      <para lang='en'>
+        This follows logically from the prefix notation that we just
+        mentioned.
+      </para>
+     </simplesect>
+
+    <simplesect lang='cs'>
+      <title>Příklad prefixové, infixové a postfixové notace</title>
+      <para>
+        Sčítání jedničky a trojky v <emphasis>prefixové</emphasis>,
+        <emphasis>infixové</emphasis> a <emphasis>postfixové</emphasis>
+        notaci:
+      </para>
+      <itemizedlist>
+        <listitem><para>
+          Prefixová notace: + 1 3 (tento způsob zápisu vyžaduje Scheme)
+        </para></listitem>
+        <listitem><para>
+          Infixová notace: 1 + 3 (tento způsob zápisu běžně používají lidé)
+        </para></listitem>
+        <listitem><para>
+          Postfixová notace: 1 3 + (tento způsob zápisu používají kalkulačky
+          HP)
+        </para></listitem>
+      </itemizedlist>
     </simplesect>
 
-    <simplesect>
-      <title lang='en'>Examples Of Prefix, Infix, And Postfix Notations</title>
-      <para lang='en'>
+    <simplesect lang='en'>
+      <title>Examples Of Prefix, Infix, And Postfix Notations</title>
+      <para>
         Here are some quick examples illustrating the differences
         between <emphasis>prefix</emphasis>,
         <emphasis>infix</emphasis>, and <emphasis>postfix</emphasis>
         notations. We'll add a 1 and 3 together: 
       </para>
-      <itemizedlist lang='en'>
+      <itemizedlist>
         <listitem><para>
           Prefix notation: + 1 3 (the way Scheme will want it)
         </para></listitem>
@@ -82,31 +153,74 @@
       </itemizedlist>
     </simplesect>
 
-    <simplesect>
-      <title lang='en'>Practicing In Scheme</title>
-      <para lang='en'>
+    <simplesect lang='cs'>
+      <title>Procvičování Scheme</title>
+      <para>
+        Nyní si procvičte, co jste se naučili. Spusťte Gimp, pokud jste tak
+        již neučinili, a z nabídky panelu nástrojů zvolte <menuchoice>
+        <guimenu>Rozš.</guimenu> <guisubmenu>Skript-fu</guisubmenu>
+        <guimenuitem>Konzola skript-fu</guimenuitem> </menuchoice>. Otevře
+        se okno Konzole skript-fu, která umožňuje interaktivní práci ve
+        Scheme.
+      </para>
+    </simplesect>
+    <simplesect lang='en'>
+      <title>Practicing In Scheme</title>
+      <para>
         Now, let's practice what we have just learned. Start up Gimp,
-        if you have not already done so, and choose
-        Xtns/Script-Fu/Console. This will start up the Script-Fu
-        Console window, which allows us to work interactively in
-        Scheme. In a matter of moments, the Script-Fu Console will
-        appear: 
+        if you have not already done so, and choose <menuchoice>
+        <guimenu>Xtns</guimenu> <guisubmenu>Script-Fu</guisubmenu>
+        <guimenuitem>Console</guimenuitem> </menuchoice>. This will start
+        up the Script-Fu Console window, which allows us to work
+        interactively in Scheme. In a matter of moments, the Script-Fu
+        Console will appear: 
       </para>
     </simplesect>
 
-    <simplesect>
-      <title lang='en'>The Script-Fu Console Window</title>
-      <para lang='en'>
-        At the bottom of this window is an entry-field entitled
-        Current Command. Here, we can test out simple Scheme commands
-        interactively. Let's start out easy, and add some numbers: 
+    <simplesect lang='cs'>
+      <title>Okno Script-Fu konzole</title>
+      <para>
+        V dolní části je vstupní pole označené jako <guilabel>Aktuální
+        příkaz</guilabel>. Lze využít k interaktivnímu testování příkazů.
+        Začněme jednoduše, sčítáním:
       </para>
       <programlisting>
         (+ 3 5)
       </programlisting>
       <para>
-        Typing this in and hitting Return yields the expected answer
-        of 8 in the center window. 
+        Zapsáním tohoto příkazu a stisknutím klávesy <keycap>Enter</keycap>
+        získáte v hlavním poli konzoly očekávaný výsledek 8.
+      </para>
+      <para>
+        Co když chcete sečíst více než jedno číslo? Funkce „+“ může mít dva
+        nebo více argumentů, takže není nic snazšího:
+      </para>
+      <programlisting>
+        (+ 3 5 6)
+      </programlisting>
+      <para>
+        Tak získáme očekávaný výsledek 14.
+      </para>
+      <para>
+        Zatím to bylo snadné. Zapíšeme výraz ve Scheme, a ten je v konzoli
+        okamžitě vyhodnocen. Ale pozor…
+      </para>
+    </simplesect>
+
+    <simplesect lang='en'>
+      <title>The Script-Fu Console Window</title>
+      <para>
+        At the bottom of this window is an entry-field entitled
+        <guilabel>Current Command</guilabel>. Here, we can test out
+        simple Scheme commands interactively. Let's start out easy,
+        and add some numbers: 
+      </para>
+      <programlisting>
+        (+ 3 5)
+      </programlisting>
+      <para>
+        Typing this in and hitting <keycap>Enter</keycap> yields the
+        expected answer of 8 in the center window. 
       </para>
       <para>
         Now, what if we wanted to add more than one number? The "+"
@@ -126,9 +240,41 @@
       </para>
     </simplesect>
 
-    <simplesect>
-      <title lang='en'>Watch Out For Extra Parens</title>
-      <para lang='en'>
+    <simplesect lang='cs'>
+      <title>Dávejte pozor na nadbytečné závorky</title>
+      <para>
+        Pokud jste jako já, jste zvyklí, že můžete kdykoliv používat
+        závorky pro zpřehlednění zápisu, např. při zápisu složité matematické
+        rovnice. Ve Scheme si však na závorky musíte dávat pozor. Pokud chcete
+        například sečíst 3; součet 5 + 6; a 7:
+      </para>
+      <programlisting>
+        3 + (5 + 6) + 7= ?
+      </programlisting>
+      <para>
+        Protože operátor + může sčítat seznam čísel, můžete vás
+        napadnout zkusit následující:
+      </para>
+      <programlisting>
+        (+ 3 (5 6) 7)
+      </programlisting>
+      <para>
+        To je ovšem špatně, protože každý výrok ve Scheme začíná a končí
+        kulatou závorkou. Interpretr Scheme se tak domnívá, že se ve vnořených
+        závorkách snažíte volat funkci „5“ s argumentem „6“, nikoliv sečíst
+        tato dvě čísla před jejich sečtením s číslem 3 a 7.
+      </para>
+      <para>
+        Správný zápis výroku by měl proto vypadat takto:
+      </para>
+      <programlisting>
+        (+ 3 (+ 5 6) 7)
+      </programlisting>
+    </simplesect>
+
+    <simplesect lang='en'>
+      <title>Watch Out For Extra Parens</title>
+      <para>
         If you're like me, you're used to being able to use extra
         parentheses whenever you want to -- like when you're typing a
         complex mathematical equation and you want to separate the
@@ -162,9 +308,31 @@
       </programlisting>
     </simplesect>
 
-    <simplesect>
-      <title lang='en'>Make Sure You Have The Proper Spacing, Too</title>
-      <para lang='en'>
+    <simplesect lang='cs'>
+      <title>Ujistěte se, že používáte správně mezery</title>
+      <para>
+        Pokud znáte jiné programovací jazyky, jako C/C++, Perl nebo Javu,
+        víte, že okolo operátorů nemusíte psát tzv. bílé znaky (mezery),
+        aby byl výraz správně zapsán:
+      </para>
+      <programlisting>
+        <literal>3+5, 3 +5, 3+ 5</literal>
+      </programlisting>
+      <para>
+        Tyto zápisy jsou v případě C/C++, Perlu i Javy zcela správné. Nikoli
+        však ve Scheme. Ve Scheme musí být za matematickým operátorem (nebo
+        za jakýmkoliv jiným jménem funkce či operátorem) mezera, jinak by
+        došlo k nesprávné interpretaci.
+      </para>
+      <para>
+        Zkoušejte si ve Script-Fu konzoli jednoduché matematické výrazy,
+        dokud výše popsaná pravidla nebudete mít dokonale v krvi.
+      </para>
+    </simplesect>
+
+    <simplesect lang='en'>
+      <title>Make Sure You Have The Proper Spacing, Too</title>
+      <para>
         If you are familiar with other programming languages, like
         C/C++, Perl or Java, you know that you don't need white space
         around mathematical operators to properly form an expression: 
@@ -188,6 +356,14 @@
   </sect2>
 
   <sect2>
+    <title lang='cs'>Proměnné a funkce</title>
+    <para lang='cs'>
+      Nyní, když víte, že každý výrok ve Scheme je uzavřen v kulatých
+      závorkách a že jméno funkce či operátor je v závorkách uveden na prvním
+      místě, je třeba se naučit a vytvářet proměnné a funkce. Začneme
+      proměnnými.
+    </para>
+
     <title lang='en'>Variables And Functions</title>
     <para lang='en'>
       Now that we know that every Scheme statement is enclosed in
@@ -196,9 +372,48 @@
       and use functions. We'll start with the variables. 
     </para>
 
-    <simplesect>
-      <title lang='en'>Declaring Variables</title>
-      <para lang='en'>
+    <simplesect lang='cs'>
+      <title>Deklarace proměnných</title>
+      <para>
+        I když existuje více způsobů, jak promenné vytvářet, je preferována
+        metoda pomocí konstrukce <code>let*</code>. Pokud znáte jiné
+        programovací jazyky, je tato metoda ekvivalentní definici seznamu
+        lokálních proměnných a rozsahu jejich platnosti. Jako příklad
+        deklarujeme dvě proměnné, <varname>a</varname> a <varname>b</varname>,
+        inicializované na hodnoty 1 a 2:
+      </para>
+      <programlisting>
+         (let*  (
+                   (a 1)
+                   (b 2)
+                )
+                (+ a b)
+         )
+      </programlisting>
+      <para>
+        nebo na jedné řádce:
+      </para>
+      <programlisting>
+        (let* ( (a 1) (b 2) ) (+ a b) )
+      </programlisting>
+      <note>
+        <para>
+          Používáte-li Script-Fu konzoli, je třeba zadat vše na jednom řádku.
+          V ostatních případech je však dobré používat přehledné odsazování pro
+          zvýšeni čitelnosti kódu. Více si o tom povíme v části věnované bílým
+          znakům.
+        </para>
+      </note>
+      <para>
+        Takto jsou deklarovány dvě lokální proměnné,
+        <varname>a</varname> a <varname>b</varname>,
+        inicializovány a je vypsán jejich součet.
+      </para>
+    </simplesect>
+
+    <simplesect lang='en'>
+      <title>Declaring Variables</title>
+      <para>
         Although there are a couple of different methods for declaring
         variables, the preferred method is to use the let*
         construct. If you're familiar with other programming
@@ -222,13 +437,13 @@
         (let* ( (a 1) (b 2) ) (+ a b) )
       </programlisting>
       <note>
-	<para>
-	  You'll have to put all of this on one line if you're using the
-	  console window. In general, however, you'll want to adopt a
-	  similar practice of indentation to help make your scripts more
-	  readable. We'll talk a bit more about this in the section on
-	  White Space. 
-	</para>
+        <para>
+          You'll have to put all of this on one line if you're using the
+          console window. In general, however, you'll want to adopt a
+          similar practice of indentation to help make your scripts more
+          readable. We'll talk a bit more about this in the section on
+          White Space. 
+        </para>
       </note>
       <para>
         This declares two local variables, a and b, initializes them,
@@ -236,9 +451,24 @@
       </para>
     </simplesect>
 
-    <simplesect>
-      <title lang='en'>What Is A Local Variable?</title>
-      <para lang='en'>
+    <simplesect lang='cs'>
+      <title>Co je lokální proměnná?</title>
+      <para>
+        Jistě jste si všimli, že součet <code>(+ a b)</code> byl zapsán
+        uvnitř závorek výrazu <code>let*</code>, nikoliv za nimi. 
+      </para>
+      <para>
+        Je to tak, protože výrok <code>let*</code> definuje oblast skriptu, ve
+        které jsou deklarované proměnné použitelné. Pokud by byl výraz
+        <code>(+ a b)</code> až za výrazem <code>(let* ...)</code>, vznikla by
+        chyba, protože deklarované proměnné jsou platné pouze uvnitř výroku
+        <code>let*</code>; jedná se o tzv. lokální proměnné.
+      </para>
+    </simplesect>
+
+    <simplesect lang='en'>
+      <title>What Is A Local Variable?</title>
+      <para>
         You'll notice that we wrote the summation <code>(+ a b)</code>
         within the parens of the <code>let*</code> expression, not after it. 
       </para>
@@ -252,9 +482,25 @@
       </para>
     </simplesect>
 
-    <simplesect>
-      <title lang='en'>The General Syntax Of <code>let*</code></title>
-      <para lang='en'>
+    <simplesect lang='cs'>
+      <title>Obecná syntaxe <code>let*</code></title>
+      <para>
+        Zápis výroku <code>let*</code> je obecně následující:
+      </para>
+      <programlisting>
+        (let* ( <replaceable>proměnné</replaceable> ) <replaceable>výrazy</replaceable> )
+      </programlisting>
+      <para>
+        Proměnné jsou deklarovány v závorkách, např. <code>(a 2)</code>,
+        a výrazy jsou jakékoliv platné Scheme výrazy. Nezapomeňte, že takto
+        deklarované proměnné jsou platné pouze uvnitř výroku
+        <code>let*</code> – jsou to lokální proměnné.
+      </para>
+    </simplesect>
+
+    <simplesect lang='en'>
+      <title>The General Syntax Of <code>let*</code></title>
+      <para>
         The general form of a <code>let*</code> statement is:
       </para>
       <programlisting>
@@ -268,9 +514,23 @@
       </para>
     </simplesect>
 
-    <simplesect>
-      <title lang='en'>White Space</title>
-      <para lang='en'>
+    <simplesect lang='cs'>
+      <title>Bílé znaky</title>
+      <para>
+        Již dříve jsme poznamenali, že je dobré kód skriptů zpřehlednit
+        použitím odsazování. Skutečně se to vyplatí. Ve Scheme není
+        s odsazováním žádný problém; protože interpretr bílé znaky
+        (tj. mezery, tabulátory, nové řádky a podobné) zcela ignoruje,
+        je proto možné je pro formátování a zpřehlednění skriptu libovolně
+        používat. Ve Script-Fu konzoli ale musíte psát vždy celý výraz
+        na jeden řádek; vše mezi otevírací a uzavírací závorkou výrazu
+        musí být ve Script-Fu konzoli na jednom řádku.
+      </para>
+    </simplesect>
+
+    <simplesect lang='en'>
+      <title>White Space</title>
+      <para>
         Previously, we mentioned the fact that you'll probably want to
         use indentation to help clarify and organize your
         scripts. This is a good policy to adopt, and is not a problem
@@ -284,35 +544,111 @@
       </para>
     </simplesect>
 
-    <simplesect>
-      <title lang='en'>Assigning A New Value To A Variable</title>
-      <para lang='en'>
+    <simplesect lang='cs'>
+      <title>Přiřazení nové hodnoty proměnné</title>
+      <para>
+        Často je třeba změnit hodnotu již inicializované proměnné.
+        Ke změně hodnoty proměnné se používá výrok <code>set!</code>:
+      </para>
+      <programlisting>
+        (let* ( (theNum 10) ) (set! theNum (+ theNum \
+        theNum)) )
+      </programlisting>
+      <para>
+        Pokuste se odhadnout, co výše uvedený výrok dělá, a pak
+        ho zadejte do Script-Fu konzole.
+      </para>
+      <note>
+        <para>
+          Znak <literal>\</literal> značí pouze, že na jeho místě není
+          konec řádky. Nezadávejte ho do konzoly, netiskněte na jeho místě
+          <keycap>Enter</keycap>, prostě pokračujte další řádkou.
+        </para>
+      </note>
+    </simplesect>
+
+    <simplesect lang='en'>
+      <title>Assigning A New Value To A Variable</title>
+      <para>
         Once you've initialized a variable, you might need to change
         its value later on in the script. Use the set! statement to
         change the variable's value: 
       </para>
       <programlisting>
-        (let* ( (theNum 10) ) (set! theNum (+ theNum \ theNum)) )
+        (let* ( (theNum 10) ) (set! theNum (+ theNum \
+        theNum)) )
       </programlisting>
       <para>
         Try to guess what the above statement will do, then go ahead
         and enter it in the Script-Fu Console window. 
       </para>
       <note>
-	<para>
-	  The "\" indicates that there is no line break. Ignore it (don't
-	  type it in your Script-Fu console and don't hit Enter), just
-	  continue with the next line. 
-	</para>
+        <para>
+          The "\" indicates that there is no line break. Ignore it (don't
+          type it in your Script-Fu console and don't hit Enter), just
+          continue with the next line.
+        </para>
       </note>
     </simplesect>
 
-    <simplesect>
-      <title lang='en'>Functions</title>
-      <para lang='en'>
+    <simplesect lang='cs'>
+      <title>Funkce</title>
+      <para>
+        Nyní, když umíte pracovat s proměnnými, se podíváme na funkce.
+        K deklaraci funkce slouží následující syntaxe:
+      </para>
+      <programlisting>
+        (define (<replaceable>jmeno</replaceable>
+        <replaceable>seznam-parametru</replaceable>)
+        <replaceable>vyrazy</replaceable>)
+      </programlisting>
+      <para>
+        kde <replaceable>jmeno</replaceable> je jméno funkce,
+        <replaceable>seznam-parametru</replaceable> je mezerami
+        oddělený seznam jmen parametrů funkce a
+        <replaceable>vyrazy</replaceable> je řada výrazů, které
+        funkce při svém zavolání vykoná. Například:
+      </para>
+      <programlisting>
+        (define (AddXY inX inY) (+ inX inY) )
+      </programlisting>
+      <para>
+        Tato funkce se jmenuje <varname>AddXY</varname> a má dva parametry,
+        proměnné <varname>inX</varname> a <varname>inY</varname>. Funkce
+        oba své parametry sečte.
+      </para>
+      <para>
+        Pokud jste programovali v jiných imperativních jazycích (např.
+        v C/C++, Javě, Pascalu atd.), možná jste si všimli, že definice
+        funkce neobsahuje ve srovnání s jinými jazyky řadu položek.
+      </para>
+      <itemizedlist>
+        <listitem><para>
+          Parametry nemají žádné typy (nejsou deklarované jako řetězce,
+          celá čísla apod.). Scheme je jazyk <emphasis>bez typové
+          kontroly</emphasis>. To je velmi praktické a usnadňuje rychlé
+          psaní skriptů.
+        </para></listitem>
+        <listitem>
+          <para>
+            Navíc se také ve Scheme nemusíme zabývat vracením výsledku funkce,
+            vrácenou hodnotou při zavolání funkce je poslední výrok. Zadejte
+            výše uvedenou funkci do Script-Fu konzole a pak zkuste
+            následující:
+          </para>
+          <programlisting>
+            (AddXY (AddXY 5 6) 4)
+          </programlisting>
+        </listitem>
+      </itemizedlist>
+    </simplesect>
+
+    <simplesect lang='en'>
+      <title>Functions</title>
+      <para>
         Now that you've got the hang of variables, let's get to work
         with some functions. You declare a function with the following
-        syntax: 
+        syntax:
       </para>
       <programlisting>
         (define (<replaceable>name</replaceable> <replaceable>param-list</replaceable>) <replaceable>expressions</replaceable>)
@@ -362,15 +698,121 @@
   </sect2>
 
   <sect2>
+    <title lang='cs'>Seznamy, seznamy a zase seznamy</title>
     <title lang='en'>Lists, Lists And More Lists</title>
+    <para lang='cs'>
+      Již umíte pracovat s proměnnými a funkcemi, je na
+      čase vydat se za tajemstvím seznamů (anglicky
+      <foreignphrase>lists</foreignphrase>, které tvoří
+      důležitou součást Scheme.
+    </para>
     <para lang='en'>
       We've trained you in variables and functions, and now enter the
       murky swamps of Scheme's lists. 
     </para>
 
-    <simplesect>
-      <title lang='en'>Defining A List</title>
-      <para lang='en'>
+    <simplesect lang='cs'>
+      <title>Definování seznamu</title>
+      <para>
+        Dříve, než si o seznamech povíme více, musíte pochopit rozdíl mezi
+        atomickými hodnotami a seznamy.
+      </para>
+      <para>
+        Atomické hodnoty jsme viděli již při inicializaci proměnných
+        v předchozí lekci. Atomická hodnota je jedna jediná hodnota.
+        Následujícím výrokem přiřadíme proměnné <varname>x</varname>
+        (atomickou) hodnotu 8:
+      </para>
+      <programlisting>
+        (let* ( (x 8) ) x)
+      </programlisting>
+      <para>
+        (Výraz <code>x</code> je na konci uveden jen proto, aby hodnotu
+        proměnné <varname>x</varname> z ilustrativních důvodů vypsal, při
+        běžném skriptování není nutný. Všimněte si, že <code>let*</code>
+        pracuje podobně jako funkce – vrací hodnotu posledního výroku.)
+      </para>
+      <para>
+        Proměnná může také odkazovat na seznam hodnot, ne na hodnotu jedinou.
+        Přiřadit proměnné <varname>x</varname> seznam hodnot 1, 3, 5 lze
+        takto:
+      </para>
+      <programlisting>
+        (let* ( (x '(1 3 5))) x)
+      </programlisting>
+      <para>
+        Zkuste oba výroky ve Script-Fu konzoli a sledujte reakci. První
+        výrok vrátí výsledek:
+      </para>
+      <programlisting>
+        8
+      </programlisting>
+      <para>
+        Druhý výrok však vrátí následující výsledek:
+      </para>
+      <programlisting>
+        (1 3 5)
+      </programlisting>
+      <para>
+        Odpoveď 8 značí, že proměnná <varname>x</varname> obsahuje atomickou
+        hodnotu 8. Odpověď  (1 3 5) však říká, že proměnná
+        <varname>x</varname> neobsahuje jednu hodnotu, nýbrž seznam hodnot.
+        Všimněte si, že v deklaraci, přiřazení seznamu, ani ve vypsaném
+        výsledku nejsou žádné čárky.
+      </para>
+      <para>
+        Syntaxe definice seznamu je následující:
+      </para>
+      <programlisting>
+        '(a b c)
+      </programlisting>
+      <para>
+        kde <varname>a</varname>, <varname>b</varname> a
+        <varname>c</varname> jsou literály. Apostrof (') značí,
+        že v následujících závorkách je seznam literálů, nikoliv
+        funkce či výraz.
+      </para>
+      <para>
+        Prázdný seznam lze definovat následujícím způsobem:
+      </para>
+      <programlisting>
+        '()
+      </programlisting>
+      <para>
+        nebo jednodušeji:
+      </para>
+      <programlisting>
+        ()
+      </programlisting>
+      <para>
+        Seznamy mohou obsahovat atomické hodnoty i další seznamy:
+      </para>
+      <programlisting>
+        (let*
+           (
+               (x
+                  '("The Gimp" (1 2 3) ("is" ("great" () ) ) )
+               )
+           )
+
+           x
+        )
+      </programlisting>
+      <para>
+        Všimněte si, že za prvním apostrofem již není, pro vnitřní seznamy,
+        apostrofy používat. Přepiště výrok do jedné řádky, vložte do Script-Fu
+        konzole, vyzkoušejte a prohlédněte si výsledek.
+      </para>
+      <para>
+        Vrácený výsledek není seznam jednotlivých atomických hodnot, ale
+        obsahuje literál <code>("The Gimp")</code>, seznam
+        <code>(1 2 3)</code> atd.
+      </para>
+    </simplesect>
+
+    <simplesect lang='en'>
+      <title>Defining A List</title>
+      <para>
         Before we talk more about lists, it is necessary that you know
         the difference between atomic values and lists.  
       </para>
@@ -450,11 +892,11 @@
       <programlisting>
         (let*
            (
-                (x 
+                (x
                    '("The Gimp" (1 2 3) ("is" ("great" () ) ) )
                 )
-            )       
-                
+            )
+
             x
          )
       </programlisting>
@@ -462,7 +904,7 @@
         Notice that after the first apostrophe, you no longer need to
         use an apostrophe when defining the inner lists. Go ahead and
         copy the statement into the Script-Fu Console and see what it
-        returns. 
+        returns.
       </para>
       <para>
         You should notice that the result returned is not a list of
@@ -471,20 +913,60 @@
       </para>
     </simplesect>
 
-    <simplesect>
-      <title lang='en'>How To Think Of Lists</title>
-      <para lang='en'>
+    <simplesect lang='cs'>
+      <title>Kterak přemýšlet o seznamech</title>
+      <para>
+        O seznamech je často užitečné přemýšlet jako o útvarech složených z
+        hlavičky a ocásku (anglicky <foreignphrase>head</foreignphrase> a
+        <foreignphrase>tail</foreignphrase>). Hlavička je první položka
+        seznamu, zbývající položky tvoří ocásek. Bude to užitečné, až budeme
+        mluvit o spojování seznamů a přístupu k jednotlivým prvkům seznamu.
+      </para>
+    </simplesect>
+
+    <simplesect lang='en'>
+      <title>How To Think Of Lists</title>
+      <para>
         It's useful to think of lists as composed of a "head" and a
         "tail." The head is the first element of the list, the tail
         the rest of the list. You'll see why this is important when we
         discuss how to add to lists and how to access elements in the
-        list. 
+        list.
       </para>
     </simplesect>
 
-    <simplesect>
-      <title lang='en'>Creating Lists Through Concatenation (The Cons Function)</title>
-      <para lang='en'>
+    <simplesect lang='cs'>
+      <title>Vytváření seznamů spojováním (funkce cons)</title>
+      <para>
+        Jedna z funkcí, se kterými se budete setkávat nejčastěji, je
+        funkce <code>cons</code> (z anglického
+        <foreignphrase>concatenation</foreignphrase>). Tato funkce vezme
+        hodnotu a připojí ji <emphasis>před</emphasis> svůj druhý argument,
+        seznam. V předchozím odstavci jsme navrhli představu seznamu jako
+        útvaru složeného z hlavičky a ocásku. Funkce <code>cons</code>
+        přidává seznamu nový prvek na místo jeho hlavičky. Například takto:
+      </para>
+      <programlisting>
+        (cons 1 '(2 3 4) )
+      </programlisting>
+      <para>
+        Výsledkem je seznam <code>(1 2 3 4)</code>.
+      </para>
+      <para>
+        Lze takto vytvořit i seznam s jedním prvkem:
+      </para>
+      <programlisting>
+        (cons 1 () )
+      </programlisting>
+      <para>
+        Místo kteréhokoliv literálu můžete samozřejmě použít dříve
+        deklarovanou proměnnou.
+      </para>
+    </simplesect>
+
+    <simplesect lang='en'>
+      <title>Creating Lists Through Concatenation (The Cons Function)</title>
+      <para>
         One of the more common functions you'll encounter is the cons
         function. It takes a value and prepends it to its second
         argument, a list. From the previous section, I suggested that
@@ -511,9 +993,37 @@
       </para>
     </simplesect>
 
-    <simplesect>
-      <title lang='en'>Defining A List Using The list Function</title>
-      <para lang='en'>
+    <simplesect lang='cs'>
+      <title>Definice seznamu pomocí funkce list</title>
+      <para>
+        Pro definici seznamu složeného z literálů a dříve deklarovaných
+        proměnných můžete použít funkci <code>list</code>:
+      </para>
+      <programlisting>
+        (list 5 4 3 a b c)
+      </programlisting>
+      <para>
+        Tak se vytvoří a vrátí seznam obsahující hodnoty proměnných
+        <varname>a</varname>, <varname>b</varname> a <varname>c</varname>.
+        Například:
+      </para>
+      <programlisting>
+        (let*  (
+                  (a 1)
+                  (b 2)
+                  (c 3)
+               )
+               (list 5 4 3 a b c)
+        )
+      </programlisting>         
+      <para>
+        Tento kód vytvoří seznam <code>(5 4 3 1 2 3)</code>.
+      </para>
+    </simplesect>
+
+    <simplesect lang='en'>
+      <title>Defining A List Using The list Function</title>
+      <para>
         To define a list composed of literals or previously declared
         variables, use the list function: 
       </para>
@@ -533,15 +1043,24 @@
                )
                (list 5 4 3 a b c)
         )
-      </programlisting>  	
+      </programlisting>         
       <para>
         This code creates the list <code>(5 4 3 1 2 3)</code>.
       </para>
     </simplesect>
 
-    <simplesect>
-      <title lang='en'>Accessing Values In A List</title>
-      <para lang='en'>
+    <simplesect lang='cs'>
+      <title>Přístupování k hodnotám v seznamu</title>
+      <para>
+        K přistupování k hodnotám v seznamu slouží funkce <code>car</code>
+        a <code>cdr</code>. První vrací první prvek v seznamu (hlavičku),
+        druhá vrací zbytek seznamu (ocásek).
+      </para>
+    </simplesect>
+
+    <simplesect lang='en'>
+      <title>Accessing Values In A List</title>
+      <para>
         To access the values in a list, use the functions <code>car</code> and <code>cdr</code>,
         which return the first element of the list and the rest of the
         list, respectively. These functions break the list down into
@@ -549,57 +1068,158 @@
       </para>
     </simplesect>
 
-    <simplesect>
-      <title lang='en'>The <code>car</code> Function</title>
-      <para lang='en'>
+    <simplesect lang='cs'>
+      <title>Funkce <code>car</code></title>
+      <para>
+        Funkce <code>car</code> vrací první prvek seznamu (hlavičku).
+        Seznam musí být nenulový. Například:
+      </para>
+      <programlisting>
+        (car '("prvni" 2 "treti"))
+      </programlisting>
+      <para>
+        vrátí:
+      </para>
+      <programlisting>
+        "prvni"
+      </programlisting>
+    </simplesect>
+
+    <simplesect lang='en'>
+      <title>The <code>car</code> Function</title>
+      <para>
         <code>car</code> returns the first element of the list (the
         head of the list). The list needs to be non-null. Thus, the
         following returns the first element of the list: 
       </para>
       <programlisting>
         (car '("first" 2 "third"))
-      </programlisting>  	
+      </programlisting>
       <para>
         which is:
       </para>
       <programlisting>
         "first"
-      </programlisting>  	
+      </programlisting>
     </simplesect>
 
-    <simplesect>
-      <title lang='en'>The <code>cdr</code> function</title>
-      <para lang='en'>
+    <simplesect lang='cs'>
+      <title>Funkce <code>cdr</code></title>
+      <para>
+        Funkce <code>cdr</code> vrací celý seznam kromě jeho prvního prvku,
+        tedy ocásek seznamu. Pokud seznam obsahuje jediný prvek, vrací
+        prázdný seznam.
+      </para>
+      <programlisting>
+        (cdr '("prvni" 2 "treti"))
+      </programlisting>
+      <para>
+        vrací:
+      </para>
+      <programlisting>
+        (2 "treti")
+      </programlisting>
+      <para>
+        zatímco následující:
+      </para>
+      <programlisting>
+        (cdr '("one and only"))
+      </programlisting>
+      <para>
+        vrací:
+      </para>
+      <programlisting>
+        ()
+      </programlisting>
+    </simplesect>
+
+    <simplesect lang='en'>
+      <title>The <code>cdr</code> function</title>
+      <para>
         <code>cdr</code> returns the rest of the list after the first
         element (the tail of the list). If there is only one element
         in the list, it returns an empty list. 
       </para>
       <programlisting>
         (cdr '("first" 2 "third"))
-      </programlisting>  	
+      </programlisting>
       <para>
         returns:
       </para>
       <programlisting>
         (2 "third")
-      </programlisting>  	
+      </programlisting>
       <para>
         whereas the following:
       </para>
       <programlisting>
         (cdr '("one and only"))
-      </programlisting>  	
+      </programlisting>
       <para>
         returns:
       </para>
       <programlisting>
         ()
-      </programlisting>  	
+      </programlisting>
     </simplesect>
 
-    <simplesect>
-      <title lang='en'>Accessing Other Elements In A List</title>
-      <para lang='en'>
+    <simplesect lang='cs'>
+      <title>Přístup k dalším prvkům v seznamu</title>
+      <para>
+        Výborně, již umíme získat první prvek ze seznamu i zbytek seznamu.
+        Jak ale přistupovat ke druhému, třetímu nebo jinému prvku seznamu?
+        K tomuto účelu existuje řada praktických funkcí, např. hlavička
+        hlavičky ocásku seznamu (<code>caadr</code>), ocásek ocásku seznamu
+        (<code>cddr</code>) atd.
+      </para>
+      <para>
+        Konvence pro pojemnovávání takových to funkcí je velmi jednoduchá.
+        Písmena <literal>a</literal> představují hlavičky, písmena
+        <literal>d</literal> představují ocásky. Například:
+      </para>
+      <programlisting>
+        (car (cdr (car x) ) )
+      </programlisting>
+      <para>
+        lze jednodušeji zapsat jako:
+      </para>
+      <programlisting>
+        (cadar x)
+      </programlisting>
+      <para>
+        Úplný seznam funkcí pro práci se seznamy ve Script-Fu naleznete
+        v příloze. <!-- FIXCS link -->
+      </para>
+      <para>
+        Abyste si funkce pro přístup k prvkům seznamu procvičili, zadejte
+        následující (ovšem, pokud používáte konzoli, na jednom řádku) a
+        zkoušejte si různé kombinace <code>car</code> a <code>cdr</code>
+        pro přístup k různým prvkům seznamu:
+      </para>
+      <programlisting>
+        (let* (
+                 (x  '( (1 2 (3 4 5) 6)  7  8  (9 10) )
+                 )
+              )
+              ; sem zapište svou car/cdr funkci
+        )
+      </programlisting>
+      <para>
+        Pokuste se získat číslo tři pouze dvěma voláními funkce.
+        Pokud se vám to podaří, možná se z vás stane Mistr Script-Fu!
+      </para>
+      <note>
+        <para>
+          Ve Scheme uvádí středník (";") komentář. Středník, a vše co za ním
+          následuje, až do konce řádky, interpretr ignoruje. Do komentářů si
+          můžete psát různé vysvětlující poznámky k funkci skriptu.
+        </para>
+      </note>
+    </simplesect>
+
+    <simplesect lang='en'>
+      <title>Accessing Other Elements In A List</title>
+      <para>
         OK, great, we can get the first element in a list, as well as
         the rest of the list, but how do we access the second, third
         or other elements of a list? There exist several "convenience"
@@ -613,13 +1233,13 @@
       </para>
       <programlisting>
         (car (cdr (car x) ) )
-      </programlisting>  	
+      </programlisting>
       <para>
         could be written as:
       </para>
       <programlisting>
         (cadar x)
-      </programlisting>  	
+      </programlisting>
       <para>
         To view a full list of the list functions, refer to the
         Appendix, which lists the available functions for the version
@@ -645,33 +1265,58 @@
         Script-Fu Master! 
       </para>
       <note>
-	<para>
-	  In Scheme, a semicolon (";") marks a comment.  It, and
-	  anything that follows it on the same line, are ignored by the
-	  script interpreter, so you can use this to add comments to jog
-	  your memory when you look at the script later.
-	</para>
+        <para>
+          In Scheme, a semicolon (";") marks a comment.  It, and
+          anything that follows it on the same line, are ignored by the
+          script interpreter, so you can use this to add comments to jog
+          your memory when you look at the script later.
+        </para>
       </note>
     </simplesect>
-  </sect2>  	
+  </sect2>
 
   <sect2>
+    <title lang='cs'>Váš první Script-Fu skript</title>
     <title lang='en'>Your First Script-Fu Script</title>
+    <para lang='cs'>
+      Nepotřebujete se na chvíli zastavit a popadnout dech? Ne? Pak tedy
+      vzhůru na čtvrtou lekci – váš první Script-Fu skript!
+    </para>
     <para lang='en'>
       Do you not need to stop and catch your breath? No? Well then,
       let's proceed with your fourth lesson -- your first Script-Fu
-      Script. 
+      Script.
     </para>
 
-    <simplesect>
-      <title lang='en'>Creating A Text Box Script</title>
-      <para lang='en'>
+    <simplesect lang='cs'>
+      <title>Vytvoření skriptu Text Box</title>
+      <para>
+        Jedna z nejčatějších operací, kterou v Gimpu provádím, je vytvoření
+        textu pro webovou stránku, logo nebo něco takového. V takovém případě
+        ale nikdy nevím, jak velký obrázek mám vytvořit, protože nevím přesně,
+        kolik místa text v požadovaném řezu písma a velikosti zabere.
+      </para>
+      <para>
+        Mistr Script-Fu (ale i nadaný student) si brzy uvědomí, že lze takový
+        problém snadno a automaticky řešit pomocí Script-Fu.
+      </para>
+      <para>
+        Proto vytvoříme skript, který pojmenujeme <foreignphrase>Text
+        Box</foreignphrase> a který vytvoří obrázek o velikosti přesně
+        odpovídající zadanému textu. Uživatel bude mít možnost zvolit
+        i řez písma, jeho velikost a barvu.
+      </para>
+    </simplesect>
+
+    <simplesect lang='en'>
+      <title>Creating A Text Box Script</title>
+      <para>
         One of the most common operations I perform in Gimp is
         creating a box with some text in it for a web page, a logo or
         whatever. However, you never quite know how big to make the
         initial image when you start out. You don't know how much
         space the text will fill with the font and font size you
-        want. 
+        want.
       </para>
       <para>
         The Script-Fu Master (and student) will quickly realize that
@@ -686,9 +1331,30 @@
       </para>
     </simplesect>
 
-    <simplesect>
-      <title lang='en'>Editing And Storing Your Scripts</title>
-      <para lang='en'>
+    <simplesect lang='cs'>
+      <title>Editace a ukládání skriptů</title>
+      <para>
+        Do této cvíle jsme pracovali se Script-Fu konzolí. Od této chvíle však
+        budeme pracovat s textovými soubory.
+      </para>
+      <para>
+        Kam skripty uložíte záleží jen na vás. Pokud máte přístup do výchozího
+        adresáře Gimpu pro skripty, můžete uložit své skripty tam. Já nicméně
+        raději ukládám své vlastní skripty do vlastního adresáře, abych je měl
+        oddělené od skriptů dodávaných přímo s Gimpem.
+      </para>
+      <para>
+        V adresáři <filename>.gimp-2.2</filename>, který Gimp vytvořil ve
+        vašem domovském adresáři, byste měli najít podadresář jménem
+        <filename>scripts</filename>. Gimp tento adresář automaticky
+        prohledává a skripty, které v něm nalezne, přidává do Script-Fu
+        databáze. Nejjednodušší bude, pokud své skripty uložíte právě sem.
+      </para>
+    </simplesect>
+
+    <simplesect lang='en'>
+      <title>Editing And Storing Your Scripts</title>
+      <para>
         Up until now, we've been working in the Script-Fu
         Console. Now, however, we're going to switch to editing script
         text files. 
@@ -711,9 +1377,33 @@
       </para>
     </simplesect>
 
-    <simplesect>
-      <title lang='en'>The Bare Essentials</title>
-      <para lang='en'>
+    <simplesect lang='cs'>
+      <title>Úplné základy</title>
+      <para>
+        Každý Script-Fu skript definuje alespoň jednu funkci, hlavní funkci
+        skriptu. Ta je zodpovědná za činnost skriptu.
+      </para>
+      <para>
+        Každý skript musí být navíc zaregistrován v databázi procedur, aby
+        k němu mohlo být přistupováno z Gimpu.
+      </para>
+      <para>
+        Nejprve definujeme hlavní funkci:
+      </para>
+      <programlisting>
+        (define (script-fu-text-box inText inFont inFontSize inTextColor))
+      </programlisting>
+      <para>
+        Takto jsme definovali funkci jménem <code>script-fu-text-box</code>
+        se čtyřmi parametry, které se vztahují k textu, písmu, velikosti písma
+        a jeho barvě. Funkce je zatím prázdná a proto nic nedělá. Zatím nic
+        zajímavého ani složitého.
+      </para>
+    </simplesect>
+
+    <simplesect lang='en'>
+      <title>The Bare Essentials</title>
+      <para>
         Every Script-Fu script defines at least one function, which is
         the script's main function. This is where you do the work. 
       </para>
@@ -726,7 +1416,7 @@
       </para>
       <programlisting>
         (define (script-fu-text-box inText inFont inFontSize inTextColor))
-      </programlisting>  	
+      </programlisting>
       <para>
         Here, we've defined a new function called script-fu-text-box
         that takes four parameters, which will later correspond to
@@ -736,9 +1426,28 @@
       </para>
     </simplesect>
 
-    <simplesect>
-      <title lang='en'>Naming Conventions</title>
-      <para lang='en'>
+    <simplesect lang='cs'>
+      <title>Jmenné konvence</title>
+      <para>
+        Konvence jazyka Scheme pro vytváření jmen upřednostňují malá písmena a
+        pomlčky, tak jako jsme učinili při výběru jména funkce. Při
+        pojmenovávání jejích parametrů jsme se však od konvence odchýlili.
+        Mám rád jména popisná, která o funkci nebo parametru hodně říkají,
+        proto jsme pro parametry použili předponu <literal>in</literal>,
+        která naznačuje, že parametry obsahují hodnoty předávané skriptu,
+        nikoliv skriptem vytvořené. Pro proměnné vytvořené uvnitř skriptu
+        používám předponu <literal>the</literal>.
+      </para>
+      <para>
+        V Gimpu je zvykem pojmenovávat všechny Script-Fu funkce podle vzoru
+        script-fu-jmeno-funkce, protože v databázi procedur jsou pak všechny
+        pěkně pohromadě a jsou snadno odlišitelné od zásuvných modulů.
+      </para>
+    </simplesect>
+
+    <simplesect lang='en'>
+      <title>Naming Conventions</title>
+      <para>
         Scheme's naming conventions seem to prefer lowercase letters
         with hyphens, which I've followed in the naming of the
         function. However, I've departed from the convention with the
@@ -757,9 +1466,76 @@
       </para>
     </simplesect>
 
-    <simplesect>
-      <title lang='en'>Registering The Function</title>
-      <para lang='en'>
+    <simplesect lang='cs'>
+      <title>Registrace funkce</title>
+      <para>
+        Nyní je třeba funkci v Gimpu zaregistrovat. To se dělá voláním funkce
+        <code>script-fu-register</code>. Při načítání skriptu Gimp tuto funkci
+        spustí, a tak je skript zaregistrován v databázi procedur. Tuto funkci
+        můžete ve skriptu umístit kamkoliv, ale obvykle se nachází úplně na
+        konci.
+      </para>
+      <para>
+        Zde je výpis naší registrační funkce (její parametry v zápětí
+        vysvětlím):
+      </para>
+      <programlisting>
+<![CDATA[
+        (script-fu-register
+          "script-fu-text-box"                        ;func name
+          "Text Box"                                  ;menu label
+          "Creates a simple text box, sized to fit\
+            around the user's choice of text,\
+            font, font size, and color."              ;description
+          "Michael Terry"                             ;author
+          "copyright 1997, Michael Terry"             ;copyright notice
+          "October 27, 1997"                          ;date created
+          ""                     ;image type that the script works on
+          SF-STRING      "Text:"         "Text Box"   ;a string variable
+          SF-FONT        "Font:"         "Charter"    ;a font variable
+          SF-ADJUSTMENT  "Font size"     '(50 1 1000 1 10 0 1)
+                                                      ;a spin-button
+          SF-COLOR       "Color:"        '(0 0 0)     ;color variable
+        )
+        (script-fu-menu-register "script-fu-text-box" "<Toolbox>/Xtns/Script-Fu/Text")
+]]>
+      </programlisting>
+      <para>
+        Pokud tyto funkce zapíšete do souboru s příponou
+        <filename>.scm</filename>, který uložíte do vašeho adresáře
+        pro skripty, a pak zvolíte z nabídky Panelu nástrojů
+        <menuchoice>
+          <guimenu>Rozš.</guimenu>
+          <guisubmenu>Script-Fu</guisubmenu>
+          <guimenuitem>Obnovit skripty</guimenuitem>
+        </menuchoice>,
+        objeví se nový skript jako
+        <menuchoice>
+          <guimenu>Rozš.</guimenu>
+          <guisubmenu>Script-Fu</guisubmenu>
+          <guisubmenu>Text</guisubmenu>
+          <guimenuitem>Text Box</guimenuitem>
+        </menuchoice>.
+      </para>
+      <para>
+        Pokud ale skript spustíte, neudělá samozřejmě nic užitečného,
+        ale uvidíte výzvy vytvořené při registraci skriptu (podrobnosti
+        dále).
+      </para>
+      <para>
+        Pokud otevřete Prohlížeč procedur, volbou
+        <menuchoice>
+          <guimenu>Rozš.</guimenu>
+          <guimenuitem>Prohlížeč procedur</guimenuitem>
+        </menuchoice>),
+        zjistíte, že náš nový skript je skutečně uveden
+        v databázi.
+      </para>
+    </simplesect>
+
+    <simplesect lang='en'>
+      <title>Registering The Function</title>
+      <para>
         Now, let's register the function with Gimp. This is done by
         calling the function <code>script-fu-register</code>. When
         Gimp reads in a 
@@ -800,7 +1576,7 @@
         <menuchoice>
           <guimenu>Xtns</guimenu>
           <guisubmenu>Script-Fu</guisubmenu>
-          <guimenuitem>Refresh</guimenuitem>
+          <guimenuitem>Refresh Scripts</guimenuitem>
         </menuchoice>,
         this new script will appear as
         <menuchoice>
@@ -823,47 +1599,90 @@
           <guimenuitem>Procedure Browser</guimenuitem>
         </menuchoice>), 
         you'll notice that our script now
-        appears in the database. 
+        appears in the database.
       </para>
     </simplesect>
 
     <simplesect>
+      <title lang='cs'>Jednotlivé kroky registrace skriptu</title>
       <title lang='en'>Steps For Registering The Script</title>
+      <para lang='cs'>
+        Aby byl náš skript v Gimpu zaregistrován, voláme funkci
+        <code>script-fu-register</code>, zadáme sedm povinných parametrů,
+        parametry specifické pro náš skript, popis a implicitní hodnotu
+        každého parametru.
+      </para>
       <para lang='en'>
         To register our script with Gimp, we call the function
         script-fu-register, fill in the seven required parameters and
         add our script's own parameters, along with a description and
         default value for each parameter.
       </para>
-      <itemizedlist lang='en'>
-        <title>The Required Parameters</title>
+      <itemizedlist>
+        <title lang='cs'>Povinné parametry</title>
+        <title lang='en'>The Required Parameters</title>
+        <listitem>
+         <para lang='cs'>
+           <emphasis role='bold'>Jméno</emphasis> funkce, která se volá
+           při spuštění skriptu (vstupní bod skriptu). Je to nutné, neboť
+           v souboru skriptu může být definováno funkcí více. Gimpu musí být
+           jasné, kterou z nich má zavolat. V našem příkladu jsme definovali
+           funkci jedinou, text-box, kterou jsme také zaregistrovali.
+         </para>
+         <para lang='en'>
+           The <emphasis role='bold'>name</emphasis> of the function we
+           defined. This is the function called when our script is invoked
+           (the entry-point into our script). This is necessary because we may
+           define additional functions within the same file, and Gimp needs to
+           know which of these functions to call. In our example, we only
+           defined one function, text-box, which we registered.
+          </para>
+        </listitem>
 
-        <listitem><para>
-          The <emphasis role='bold'>name</emphasis> of the function we
-          defined. This is the function 
-          called when our script is invoked (the entry-point into our
-          script). This is necessary because we may define additional
-          functions within the same file, and Gimp needs to know which
-          of these functions to call. In our example, we only defined
-          one function, text-box, which we registered. 
-        </para></listitem>
+        <listitem>
+          <para lang='cs'>
+            <emphasis role='bold'>Umístění</emphasis> v nabídce, kam bude
+            skript vložen. Přesné umístění se určuje stejně jako cesta k
+            souboru v unixovém systému; kořenovým adresářem je buď Panel
+            nástrojů nebo kliknutí prain the menu wherlačítkem myši.
+          </para>
+          <para lang='en'>
+            The <emphasis role='bold'>location</emphasis> in the menu where
+            the script will be inserted. The exact location of the script is
+            specified like a path in Unix, with the root of the path being
+            either toolbox or right-click. 
+          </para>
 
-        <listitem><para>
-          The <emphasis role='bold'>location</emphasis> in the menu
-          where the script will be 
-          inserted. The exact location of the script is specified like a
-          path in Unix, with the root of the path being either toolbox
-          or right-click. 
-        </para></listitem>
-
-        <listitem><para>
+          <para lang='cs'>
+            Pokud skript nepracuje s již existujícím obrázkem (a vytváří tedy
+            obrázek nový, tak jako náš skript Text Box), je třeba jej umístit
+            do nabídky Panelu nástrojů, což je hlavní, vždy otevřené, okno
+            Gimpu.
+          </para>
+          <para lang='en'>
             If your script does not operate on an existing image (and
             thus creates a new image, like our Text Box script will),
             you'll want to insert it in the toolbox menu -- this is the
             menu in Gimp's main window (where all the tools are located:
-            the selection tools, magnifying glass, etc.). 
+            the selection tools, magnifying glass, etc.).
           </para>
-          <para>
+          <para lang='cs'>
+            Pokud skript naopak pracuje s již existujícím otevřeným obrázkem,
+            je třeba jej vložit do nabídky obrázku, která se zobrazuje po
+            kliknutí pravým tlačítkem myši do obrázku, případně v horní liště
+            okna obrázku. Zbytek cesty ukazuje na jednotlivé nabídky a
+            podnabídky v cestě. Náš skript jsme zaregistrovali v podnabídce
+            Text podnabídky Script-Fu nabídky Rozš. Panelu nástrojů (
+            (
+            <menuchoice>
+              <guimenu>Rozš.</guimenu>
+              <guisubmenu>Script-Fu</guisubmenu>
+              <guisubmenu>Text</guisubmenu>
+              <guimenuitem>Text Box</guimenuitem>
+            </menuchoice>
+            ).
+          </para>
+          <para lang='en'><!--FIXME need a review-->
             If your script is intended to work on an image being edited,
             you'll want to insert it in the menu that appears when you
             right-click on an open image. The rest of the path points to
@@ -875,124 +1694,227 @@
               <guisubmenu>Script-Fu</guisubmenu>
               <guisubmenu>Text</guisubmenu>
               <guimenuitem>Text Box</guimenuitem>
-            </menuchoice> 
-            ). 
+            </menuchoice>
+            ).
           </para>
-          <para>
+          <para lang='cs'>
+            Možná jstge si všimli, že podnabídka Text před registrací skriptu
+            vůbec neexistovala. Gimp automatikcy vytvoří všechny chybějící
+            nabídky.
+          </para>
+          <para lang='en'>
             If you notice, the Text sub-menu in the Script-Fu menu
             wasn't there when we began -- Gimp automatically creates any
             menus not already existing. 
-        </para></listitem>
+          </para>
+        </listitem>
 
-        <listitem><para>
-          A <emphasis role='bold'>description</emphasis> of your
-          script, to be displayed in the Procedure Browser.
-        </para></listitem>
+        <listitem lang='cs'>
+          <para>
+            <emphasis role='bold'>Popis</emphasis> skriptu, který se zobrazuje
+            v Prohlížeči procedur.
+          </para>
+        </listitem>
+        <listitem lang='en'>
+          <para>
+            A <emphasis role='bold'>description</emphasis> of your
+            script, to be displayed in the Procedure Browser.
+          </para>
+        </listitem>
 
-        <listitem><para>
-          <emphasis role='bold'>Your name</emphasis> (the author of
-          the script). 
-        </para></listitem>
+        <listitem lang='cs'>
+          <para>
+            <emphasis role='bold'>Vaše jméno</emphasis> (jméno autora
+            skriptu).
+          </para>
+        </listitem>
+        <listitem lang='en'>
+          <para>
+            <emphasis role='bold'>Your name</emphasis> (the author of
+            the script).
+          </para>
+        </listitem>
 
-        <listitem><para>
-          <emphasis role='bold'>Copyright</emphasis> information.
-        </para></listitem>
+        <listitem lang='cs'>
+          <para>
+            <emphasis role='bold'>Copyright</emphasis>, informace o autorských
+            právech.
+          </para>
+        </listitem>
+        <listitem lang='en'>
+          <para>
+            <emphasis role='bold'>Copyright</emphasis> information.
+          </para>
+        </listitem>
 
-        <listitem><para>
-           The <emphasis role='bold'>date</emphasis> the script was
-           made, or the last revision of the script. 
-        </para></listitem>
+        <listitem lang='cs'>
+          <para>
+            <emphasis role='bold'>Datum</emphasis>, kdy byl skript napsán
+            nebo naposledy revidován.
+          </para>
+        </listitem>
+        <listitem lang='en'>
+          <para>
+            The <emphasis role='bold'>date</emphasis> the script was
+            made, or the last revision of the script. 
+          </para>
+        </listitem>
 
-        <listitem><para>
-          The <emphasis role='bold'>types</emphasis> of images the
-          script works on. This may be any of the following: RGB,
-          RGBA, GRAY, GRAYA, INDEXED, INDEXEDA. Or it may be none at
-          all -- in our case, we're creating an image, and thus don't
-          need to define the type of image on which we work. 
-        </para></listitem>
+        <listitem>
+          <para lang='cs'>
+            <emphasis role='bold'>Typy</emphasis> obrázků, se kterými umí
+            skript pracovat. Může to být kterýkoliv z následujících:
+            RGB, RGBA, GRAY, GRAYA, INDEXED, INDEXEDA. Nemusí to však být typ
+            žádný, jako v případě našeho skriptu, který vytváří nový obrázek
+            a tudíž nepracuje s žádným stávajícím obrázkem.
+          </para>
+          <para lang='en'>
+            The <emphasis role='bold'>types</emphasis> of images the script
+            works on. This may be any of the following: RGB, RGBA, GRAY,
+            GRAYA, INDEXED, INDEXEDA. Or it may be none at all -- in our case,
+            we're creating an image, and thus don't need to define the type of
+            image on which we work. 
+          </para>
+        </listitem>
       </itemizedlist>
     </simplesect>
 
     <simplesect>
+      <title lang='cs'>Registrace parametrů skriptu</title>
       <title lang='en'>Registering The Script's Parameters</title>
+      <para lang='cs'>
+        Po uvedení obecných, povinných parametrů je třeba uvést parametry,
+        které vyžaduje náš skript. V seznamu těchto parametrů je také třeba
+        uvést jejich typ, což umožní správně zobrazit dialog, ve kterém
+        uživatel parametry nastavuje. Také zadáme výchozí hodnoty těchto
+        parametrů.
+      </para>
       <para lang='en'>
         Once we have listed the required parameters, we then need to
         list the parameters that correspond to the parameters our
         script needs. When we list these params, we give hints as to
         what their types are. This is for the dialog which pops up
         when the user selects our script. We also provide a default
-        value. 
+        value.
       </para>
-      <para>
+      <para lang='cs'>
+        Tato část registračního procesu používá následující formát:
+      </para>
+      <para lang='en'>
         This section of the registration process has the following format:
       </para>
-      <informaltable lang='en' rowsep='1' colsep='1' frame='all'>
+      <informaltable rowsep='1' colsep='1' frame='all'>
         <tgroup cols='3'>
         <colspec colwidth='1in' />
         <colspec colwidth='3in' />
         <colspec colwidth='2in' />
         <thead>
           <row>
-            <entry><para>Param Type</para></entry>
-            <entry><para>Description</para></entry>
-            <entry><para>Example</para></entry>
-           </row>
+            <entry>
+              <para lang='cs'>Typ parametru</para>
+              <para lang='en'>Param Type</para>
+            </entry>
+            <entry>
+              <para lang='cs'>Popis</para>
+              <para lang='en'>Description</para>
+            </entry>
+            <entry>
+              <para lang='cs'>Příklad</para>
+              <para lang='cs'>Example</para>
+            </entry>
+          </row>
         </thead>
         <tbody>
           <row>
             <entry><para>SF-VALUE</para></entry>
-            <entry><para>
-              Accepts numbers and strings. Note that quotes must be
-              escaped for default text, so better use SF-STRING.
-            </para></entry>
+            <entry>
+              <para lang='cs'><!-- FIXME-->
+                Přijímá čísla a řetězce. Uvozovky ve výchozím textu
+                je třeba eskapovat, je proto lepší použít SF-STRING.
+              </para>
+              <para lang='en'>
+                Accepts numbers and strings. Note that quotes must be
+                escaped for default text, so better use SF-STRING.
+              </para>
+            </entry>
             <entry><para>42</para></entry>
           </row>
-         
           <row>
             <entry><para>SF-STRING</para></entry>
-            <entry><para>
-              Accepts strings.
-            </para></entry>
-            <entry><para>"Some text"</para></entry>
+            <entry>
+              <para lang='cs'>
+                Přijímá řetězce.
+              </para>
+              <para lang='en'>
+                Accepts strings.
+              </para>
+            </entry>
+            <entry>
+              <para lang='cs'>"Nějaký text"</para>
+              <para lang='en'>"Some text"</para>
+            </entry>
           </row>
-
           <row>
             <entry><para>SF-COLOR</para></entry>
-            <entry><para>
-              Indicates that a color is requested in this parameter
-            </para></entry>
+            <entry>
+              <para lang='cs'>
+                Označuje parametr vyžadující barvu.
+              </para>
+              <para lang='en'>
+                Indicates that a color is requested in this parameter.
+              </para>
+            </entry>
             <entry><para>'(0 102 255)</para></entry>
           </row>
-
           <row>
             <entry><para>SF-TOGGLE</para></entry>
-            <entry><para>
-              A checkbox is displayed, to get a Boolean value.
-            </para></entry>
-            <entry><para>TRUE or FALSE</para></entry>
+            <entry>
+              <para lang='cs'>
+                Přijímá booleovskou hodnotu (pravda či nepravda).
+                V dialogu se zobrazuje jako zaškrtávací políčko, přepínač.
+              </para>
+              <para lang='en'>
+                A checkbox is displayed, to get a Boolean value.
+              </para>
+            </entry>
+            <entry>
+              <para lang='cs'>TRUE nebo FALSE</para>
+              <para lang='en'>TRUE or FALSE</para>
+            </entry>
           </row>
-
           <row>
             <entry><para>SF-IMAGE</para></entry>
-            <entry><para>
-              If your script operates on an open image, this should be
-              the first parameter after the required parameters. Gimp
-              will pass in a reference to the image in this parameter. 
-            </para></entry>
+            <entry>
+              <para lang='cs'>
+                Pokud skript pracuje s otevřeným obrázkem, měl by toto být
+                první parametr uvedený po povinných parametrech. Gimp v tomto
+                parametru předá odkaz na obrázek.
+              </para>
+              <para lang='en'>
+                If your script operates on an open image, this should be
+                the first parameter after the required parameters. Gimp
+                will pass in a reference to the image in this parameter.
+              </para>
+            </entry>
             <entry><para>3</para></entry>
           </row>
-
           <row>
             <entry><para>SF-DRAWABLE</para></entry>
-            <entry><para>
-              If your script operates on an open image, this should be
-              the second parameter after the SF-IMAGE param. It refers
-              to the active layer. Gimp will pass in a reference to the
-              active layer in this parameter. 
-            </para></entry>
+            <entry>
+              <para lang='cs'>
+                Pokud skjripty pracuje s otevřeným obrázkem, měl by tento
+                parametr následovat ihned za parametrem SF-IMAGE. Odkazuje
+                na aktivní vrstvu. Gimp na ni přes tento parametr předá odkaz.
+              </para>
+              <para lang='en'>
+                If your script operates on an open image, this should be
+                the second parameter after the SF-IMAGE param. It refers
+                to the active layer. Gimp will pass in a reference to the
+                active layer in this parameter.
+              </para>
+            </entry>
             <entry><para>17</para></entry>
           </row>
-
         </tbody>
         </tgroup>
       </informaltable>
@@ -1000,43 +1922,93 @@
   </sect2>
 
   <sect2>
+    <title lang='cs'>Vytvoření střev skriptu</title>
     <title lang='en'>Giving Our Script Some Guts</title>
+    <para lang='cs'>
+      Pokračujme ve výcviku a naučme náš skript vykonávat
+      požadovanou činnost.
+    </para>
     <para lang='en'>
       Let us continue with our training and add some functionality to
-      our script. 
+      our script.
     </para>
 
     <simplesect>
+      <title lang='cs'>Vytvoření nového obrázku</title>
       <title lang='en'>Creating A New Image</title>
-      <para>
+      <para lang='cs'>
+        V předchozí lekci jsme vytvořili prázdnou funkci a zaregistrovali ji
+        v Gimpu. V této lekci dodáme skriptu požadovanou funkcionalitu –
+        chceme, aby vytvořil nový obrázek, přidal do něj uživatelem zadaný
+        text a změnil velikost obrázku tak, aby textu přesně vyhovoval.
+      </para>
+      <para lang='en'>
         In the previous lesson, we created an empty function and
         registered it with Gimp. In this lesson, we want to provide
         functionality to our script -- we want to create a new image,
         add the user's text to it and resize the image to fit the text
-        exactly. 
+        exactly.
       </para>
-      <para>
+      <para lang='cs'>
+        Jakmile umíte nastavit proměnné, definovat funkce a přistupovat k
+        prvkům seznamů, je zbytek snadný – vše co potřebujete, je seznámit
+        se s funkcemi dostupnými v databázi procedur Gimpu a pak tyto funkce
+        přímo volat. Takže spusťme Prohlížeč procedur a začněme čarovat!
+      </para>
+      <para lang='en'>
         Once you know how to set variables, define functions and
         access list members, the rest is all downhill -- all you need
         to do is familiarize yourself with the functions available in
         Gimp's procedural database and call those functions
-        directly. So fire up the DB Browser and let's get cookin'! 
+        directly. So fire up the DB Browser and let's get cookin'!
       </para>
-      <para>
+      <para lang='cs'>
+        Začneme vytvořením nového obrázku. Vytvoříme proměnnou
+        <varname>theImage</varname> nastavenou na výsledek volání
+        vestavěné funkce Gimpu <code>gimp-image-new</code>.
+      </para>
+      <para lang='en'>
         Let's begin by making a new image. We'll create a new
         variable, <varname>theImage</varname>, set to the result of calling Gimp's
         built-in function <code>gimp-image-new</code>. 
       </para>
-      <para>
-  	As you can see from the DB Browser, the function
-  	<code>gimp-image-new</code> takes three parameters -- the
-  	image's width, height and the type of image. Because we'll
-  	later resize the image to fit the text, we'll make a 10x10 RGB
-  	image. We'll store the image's width and sizes in some
-  	variables, too, as we'll refer to and manipulate them later in
-  	the script. 
+      <para lang='cs'>
+        Jak vidíte v prohlížeči procedur, funkce
+        <code>gimp-image-new</code> vyžaduje tři parametry – šířku obrázku,
+        výšku a jeho typ. Protože budeme velikost obrázku později měnit tak,
+        aby odpovídala textu, vytvoříme například obrázek o velikosti 1O×10
+        pixelů, typu RGB. Šířku a výšku obrázku uložíme do proměnných, protože
+        s nimi později budeme ve skriptu pracovat.
       </para>
-      <programlisting>
+      <para lang='en'>
+        As you can see from the DB Browser, the function
+        <code>gimp-image-new</code> takes three parameters -- the
+        image's width, height and the type of image. Because we'll
+        later resize the image to fit the text, we'll make a 10x10 RGB
+        image. We'll store the image's width and sizes in some
+        variables, too, as we'll refer to and manipulate them later in
+        the script.
+      </para>
+      <programlisting lang='cs'>
+        (define (script-fu-text-box inText inFont inFontSize inTextColor)
+        (let*
+              (
+                 ; definovat lokální proměnné
+                 ; vytvořit nový obrázek:
+                 (theImageWidth  10)
+                 (theImageHeight 10)
+                 (theImage (car
+                                (gimp-image-new
+                                 theImageWidth
+                                 theImageHeight
+                                 RGB
+                                )
+                           )
+                 )
+                 (theText)     ;deklarace pro text
+                               ;který vytvoříme později
+      </programlisting>
+      <programlisting lang='en'>
         (define (script-fu-text-box inText inFont inFontSize inTextColor)
         (let*
               (
@@ -1055,23 +2027,44 @@
                  (theText)     ;a declaration for the text
                                ;we create later
       </programlisting>
-      <para>
+      <para lang='cs'>
+        Poznámka: typ obrázku jsme nastavili hodnotou RGB. Stejného výsledku
+        bychom dosáhli hodnotou 0, ale použití popisnějšího RGB činí kód
+        čitelnějším.
+      </para>
+      <para lang='en'>
         Note: We used the value RGB to specify that the image is an
         RGB image. We could have also used 0, but RGB is more
-        descriptive when we glance at the code. 
+        descriptive when we glance at the code.
       </para>
-      <para>
+      <para lang='cs'>
+        Všimněte si také, že pracujeme s hlavičkou výsledku volání funkce.
+        Může se to zdát podivné, neboť databáze jasně říká, že funkce vrací
+        jedinou hodnotu – ID nově vytvořeného obrázku. Nicméně všechny funkce
+        Gimpu vrací seznam, i když obsahuje jediný prvek. Proto je potřeba
+        pracovat s halvičkou seznamu.
+      </para>
+      <para lang='en'>
         You should also notice that we took the head of the result of
         the function call. This may seem strange, because the database
         explicitly tells us that it returns only one value -- the ID
         of the newly created image. However, all Gimp functions return
         a list, even if there is only one element in the list, so we
-        need to get the head of the list. 
+        need to get the head of the list.
       </para>
     </simplesect>
 
     <simplesect>
+      <title lang='cs'>přidání nové vrstvy do obrázku</title>
       <title lang='en'>Adding A New Layer To The Image</title>
+      <para lang='cs'>
+        Nyní, když máme obrázek, musíkme do něj přidat vrstvu. Zavoláme proto
+        funkci <code>gimp-layer-new</code>, které předáme ID našeho obrázku.
+        (Od této chvíle zde nebude vypisována kompletní funkce, ale pouze
+        řádky, které do ní přidáme. Celý skript si můžete prohlédnout zde.
+        <!--FIXME ???-->) Protože jsme již deklarovali všechny potřebné
+        lokální proměnné, uzavřeme závorky označující deklarace proměnných:
+      </para>
       <para lang='en'>
         Now that we have an image, we need to add a layer to it. We'll
         call the <code>gimp-layer-new</code> function to create the
@@ -1081,11 +2074,28 @@
         we're adding to it. You can see the complete script here.)
         Because we've declared all of the local variables we'll use,
         we'll also close the parentheses marking the end of our
-        variable declarations: 
+        variable declarations:
       </para>
-      <programlisting>
+      <programlisting lang='cs'>
+        ;vytvoření nové vrstvy v obrázku:
+           (theLayer
+                     (car
+                          (gimp-layer-new
+                           theImage
+                           theImageWidth
+                           theImageHeight
+                           RGB-IMAGE
+                           "layer 1"
+                           100
+                           NORMAL
+                          )
+                      )
+            )
+         ) ;konec deklarací lokálních proměnných
+      </programlisting>
+      <programlisting lang='en'>
         ;create a new layer for the image:
-           (theLayer 
+           (theLayer
                      (car
                           (gimp-layer-new
                            theImage
@@ -1100,39 +2110,68 @@
             )
          ) ;end of our local variables
       </programlisting>
-      <para>
+      <para lang='cs'>
+        Jakmile máme novou vrstvu, je třeba ji přidat k obrázku:
+      </para>
+      <para lang='en'>
         Once we have the new layer, we need to add it to the image:
       </para>
-     <programlisting>
+      <programlisting>
        (gimp-image-add-layer theImage theLayer 0)
       </programlisting>
-      <para>
+      <para lang='cs'>
+        Nyní, jen z legrace, si prohlédneme plody naší dosavadní práce
+        a přidáme proto následující řádku pro zobrazení nového, prázdného
+        obrázku:
+      </para>
+      <para lang='en'>
         Now, just for fun, let's see the fruits of our labors up until
         this point, and add this line to show the new, empty image: 
       </para>
       <programlisting>
         (gimp-display-new theImage)
       </programlisting>
-      <para>
-       Save your work, select 
-       <menuchoice>
-         <guimenu>Xtns</guimenu>
-         <guisubmenu>Script-Fu</guisubmenu>
-         <guimenuitem>Refresh</guimenuitem>
-       </menuchoice>, 
-       run the script and a new image should pop up. It will probably
-       contain garbage (random colors), because we haven't erased
-       it. We'll get to that in a second. 
+      <para lang='cs'>
+        Uložte práci a zvolte
+        <menuchoice>
+          <guimenu>Rozš.</guimenu>
+          <guisubmenu>Script-Fu</guisubmenu>
+          <guimenuitem>Obnovit skripty</guimenuitem>
+        </menuchoice>,
+        a spusťte skript. Měl by se objevit nový obrázek. Pravděpodobně bude
+        obsahovat plno smetí (náhodných barev), neboť jsme obrázek nevymazali.
+        Uděláme to za okamžik.
+      </para>
+      <para lang='en'>
+        Save your work, select
+        <menuchoice>
+          <guimenu>Xtns</guimenu>
+          <guisubmenu>Script-Fu</guisubmenu>
+          <guimenuitem>Refresh Scripts</guimenuitem>
+        </menuchoice>,
+        run the script and a new image should pop up. It will probably
+        contain garbage (random colors), because we haven't erased
+        it. We'll get to that in a second. 
       </para>
     </simplesect>
 
     <simplesect>
+      <title lang='cs'>Přidání textu</title>
       <title lang='en'>Adding The Text</title>
+      <para lang='cs'>
+        Nyní opět odstraňte řádek sloužící k zobrazení obrázku (nebo ho
+        zakomentujte přidáním znaku <literal>;</literal> na začátek řádky).
+      </para>
       <para lang='en'>
         Go ahead and remove the line to display the image (or comment
         it out with a ; as the first character of the line). 
       </para>
-      <para>
+      <para lang='cs'>
+        Než text do obrázku přidáme, musíme nastavit barvu popředí a pozadí
+        tak, aby se text objevil v uživatelem zadané barvě. použijeme k
+        tomu funkce gimp-context-set-background/foreground:
+      </para>
+      <para lang='en'>
         Before we add text to the image, we need to set the background
         and foreground colors so that the text appears in the color
         the user specified. We'll use the
@@ -1142,7 +2181,11 @@
         (gimp-context-set-background '(255 255 255) )
         (gimp-context-set-foreground inTextColor)
       </programlisting>
-      <para>
+      <para lang='cs'>
+        Barvy máme správně nastavedny, proto teď můžeme vyčistit
+        nepořádek v obrázku vyplněním barvou pozadí:
+      </para>
+      <para lang='en'>
         With the colors properly set, let's now clean out the garbage
         currently in the image by filling the drawable with the background
         color:
@@ -1150,7 +2193,10 @@
       <programlisting>
         (gimp-drawable-fill theLayer BACKGROUND-FILL) 
       </programlisting>
-      <para>
+      <para lang='cs'>
+        Do vyčištěného obrázku lze přidat text:
+      </para>
+      <para lang='en'>
         With the image cleared, we're ready to add some text:
       </para>
       <programlisting>
@@ -1167,48 +2213,81 @@
                        )
         )  
       </programlisting>
-      <para>
+      <para lang='cs'>
+        Ačkoliv je volání funkce poměrně dlouhé, pokud se podíváte na popis
+        funkce v prohlížeči procedur, je vše poměrně jasné. Tvoříme novou
+        textovou vrstvu a přiřazujeme ji proměnné <varname>theText</varname>.
+      </para>
+      <para lang='en'>
         Although a long function call, it's fairly straightforward if
         you go over the parameters while looking at the function's
         entry in the DB Browser. Basically, we're creating a new text
         layer and assigning it to the variable
-        <varname>theText</varname>.  
+        <varname>theText</varname>.
       </para>
-      <para>
+      <para lang='cs'>
+        Nyní, když máme v obrázku text, můžeme zjistit jeho výšku a šířku a
+        změnit podle něj velikost obrázku a vrstvy obrázku:
+      </para>
+      <para lang='en'>
         Now that we have the text, we can grab its width and height
-        and resize the image and the image's layer to the text's size: 
+        and resize the image and the image's layer to the text's size:
       </para>
       <programlisting>
-        (set! theImageWidth   (car (gimp-drawable-width  theText) ) )  	
+        (set! theImageWidth   (car (gimp-drawable-width  theText) ) )
         (set! theImageHeight  (car (gimp-drawable-height theText) ) )
 
-        (gimp-image-resize theImage theImageWidth theImageHeight 0 0)	
-  	
+        (gimp-image-resize theImage theImageWidth theImageHeight 0 0)
+
         (gimp-layer-resize theLayer theImageWidth theImageHeight 0 0)
       </programlisting>
-      <para>
+      <para lang='cs'>
+        Možná vám není jasný rozdíl mezi vrstvou a tímk, čemu se v Gimpu říká
+        <foreignphrase>drawable</foreignphrase>. Pojem
+        <foreignphrase>drawable</foreignphrase> se vztahuje na vše, na co lze
+        kreslit, včetně vrstev, ale kromě nich také zahrnuje kanály, masky
+        vrstev, výběry atd. Vrstva je specifickým typem objektu
+        <foreignphrase>drawable</foreignphrase>. Ve většině případů se ale
+        nemmusíte rozdíly zabývat.
+      </para>
+      <para lang='en'>
         If you're like me, you're probably wondering what a drawable
         is when compared to a layer. The difference between the two is
         that a drawable is anything that can be drawn into, including
         layers but also channels, layer masks, the selection, etc; a
-        layer is 
-        a more specific version of a drawable. In most cases, the
-        distinction is not important. 
+        layer is a more specific version of a drawable. In most cases,
+        the distinction is not important.
       </para>
-      <para>
-       With the image ready to go, we can now re-add our display line:
+      <para lang='cs'>
+        Nyní můžeme připravený obrázek zobrazit:
+      </para>
+      <para lang='en'>
+        With the image ready to go, we can now re-add our display line:
       </para>
       <programlisting>
         (gimp-display-new theImage)
       </programlisting>
-      <para>
+      <para lang='cs'>
+        Nyní uložte práci, obnovte databázi a vyzkoušejte si svůj nový skript!
+      </para>
+      <para lang='en'>
         Save your work, refresh the database and give your first
         script a run!
       </para>
     </simplesect>
 
     <simplesect>
+      <title lang='cs'>Odstranění příznaku nečistoty</title>
       <title lang='en'>Clearing The Dirty Flag</title>
+      <para lang='cs'>
+        Pokud se pokusíte skriptem vytvořený obrázek zavřít, aniž byste ho
+        uložili, zeptá se vás Gimp, zda ho chcete nejprve uložit. Udělá to
+        proto, že je obrázek označen jako nečistý
+        (<foreignphrase>dirty</foreignphrase>), tzn. jako obsahující neuložené
+        změny. V případě našeho skriptu je to ale spíš na obtíž, protože práce
+        skriptu je snadno reprodukovatelná a obrázek je nově vytvořen, bez
+        manuálního zásahu. Proto může být vhodné příznak nečistoty odstranit.
+      </para>
       <para lang='en'>
         If you try to close the image created without first saving the
         file, Gimp will ask you if you want to save your work before
@@ -1219,18 +2298,31 @@
         is, our work is easily reproducible in such a simple script,
         so it makes sense to get rid of this dirty flag. 
       </para>
-      <para>
+      <para lang='cs'>
+        To lze snadno učinit po zobrazení obrázku následujícím způsobem:
+      </para>
+      <para lang='en'>
         To do this, we can clear the dirty flag after displaying the
-        image: 
+        image:
       </para>
       <programlisting>
         (gimp-image-clean-all theImage)
       </programlisting>
-      <para>
-        This will set dirty count to 0, making it appear to be a
-        "clean" image. 
+      <para lang='cs'>
+        Tak se nastaví počítadlo nečistoty na nulu, což obrázek nastaví jako
+        čistý, bez provedených změn, které by bylo nutno uložit.
       </para>
-      <para>
+      <para lang='en'>
+        This will set dirty count to 0, making it appear to be a
+        "clean" image.
+      </para>
+      <para lang='cs'>
+        Zda tuto řádku přidat nebo ne je otázkou vkusu. Já ji používám ve
+        skriptech tvořících jednoduché nové obrázky, jako je například tento
+        skript. Pokud je skript velmi složitý, nebo pokud pracuje s
+        existujícím obrázkem, není tato funkce vhodná.
+      </para>
+      <para lang='en'>
         Whether to add this line or not is a matter of personal
         taste. I use it in scripts that produce new images, where the
         results are trivial, as in this case. If your script is very
@@ -1241,10 +2333,22 @@
   </sect2>
 
   <sect2>
+    <title lang='cs'>Rozšíření skriptu Text Box</title>
     <title lang='en'>Extending The Text Box Script</title>
     <simplesect>
+      <title lang='cs'>Správné zacházení s historií změn</title>
       <title lang='en'>Handling Undo Correctly</title>
-      <para>
+      <para lang='cs'>
+        Při vytváření skriptu chcete umožnit uživatelům vracet provedené
+        akce, pokud udělají chybu. Toho lze snadno dosáhnout voláním funkcí
+        <code>gimp-undo-push-group-start</code> a
+        <code>gimp-undo-push-group-end</code> před a za kódem, který
+        manipuluje s obrázkem. Můžete si je představit jako párovou značku,
+        která Gimp informuje o tom, kdy začít a kdy skončit zaznamenávání
+        manipulací s obrázkem. Tento záznam umožňuje pozdější vrácení
+        provedených změn.
+      </para>
+      <para lang='en'>
         When creating a script, you want to give your users the
         ability to undo their actions, should they make a
         mistake. This is easily accomplished by calling the functions
@@ -1255,47 +2359,84 @@
         recording manipulations on the image, so that those
         manipulations can later be undone. 
       </para>
-      <para>
+      <para lang='cs'>
+        Pokud ale skript tvoří zcela nový obrázek, nemá smysl tyto funkce
+        používat, protože se žádný existující obrázek němění. Pokud ale skript
+        mění existující obrázek, jsou tyto funkce zcela nepostradatelné.
+      </para>
+      <para lang='en'>
         If you are creating a new image entirely, it doesn't make
         sense to use these functions because you're not changing an
         existing image. However, when you are changing an existing
-        image, you most surely want to use these functions. 
+        image, you most surely want to use these functions.
       </para>
-      <para>
+      <para lang='cs'>
+        Pokud jsou tyto funkce použity, nečiní vracemí změn provedených
+        skripty žádné potíže.
+      </para>
+      <para lang='en'>
         Undoing a script works nearly flawlessly when using these
-        functions. 
+        functions.
       </para>
     </simplesect>
 
     <simplesect>
+      <title lang='cs'>Další rozšíření skriptu</title>
       <title lang='en'>Extending The Script A Little More</title>
+      <para lang='cs'>
+        Nyní máme šikovný a funkční skript pro vytváření textových rámečků.
+        Přidáme mu ale ještě dvě další funkce rozšiřující jeho možnosti.
+      </para>
       <para lang='en'>
         Now that we have a very handy-dandy script to create text
         boxes, let's add two features to it: 
       </para>
-      <itemizedlist lang='en'>
-        <listitem><para>
-          Currently, the image is resized to fit exactly around the
-          text -- there's no room for anything, like drop shadows or
-          special effects (even though many scripts will automatically
-          resize the image as necessary). Let's add a buffer around
-          the text, and even let the user specify how much buffer to
-          add as a percentage of the size of the resultant text. 
-        </para></listitem>
-        <listitem><para>
-          This script could easily be used in other scripts that work
-          with text. Let's extend it so that it returns the image and
-          the layers, so other scripts can call this script and use
-          the image and layers we create. 
-        </para></listitem>
+      <itemizedlist>
+        <listitem>
+          <para lang='cs'>
+            V současné chvíli je velikost obrázku nastavována tak, že kolem
+            textu není žádné volné místo, například pro stíny nebo jiné
+            zvláštní efekty (i když mnoho skriptů tvořících takové efekty si
+            v případě potřeby obrázek bez potíží zvětší). Přidáme proto okolo
+            obrázku místo a dovolíme uživateli, aby jeho množství sám zadal
+            jako procento z velikosti textu.
+          </para>
+          <para lang='en'>
+            Currently, the image is resized to fit exactly around the
+            text -- there's no room for anything, like drop shadows or
+            special effects (even though many scripts will automatically
+            resize the image as necessary). Let's add a buffer around
+            the text, and even let the user specify how much buffer to
+            add as a percentage of the size of the resultant text.
+          </para>
+        </listitem>
+        <listitem>
+          <para lang='cs'>
+            Tento skript se dá snadno použít v rámci jiných skriptů
+            pracujících s textem. Rozšiřme ho proto tak, aby vracel
+            obrázek a vrstvy způsobem, který umožní, aby náš skript ostatní
+            skripty volaly a dále pracovaly s vytvořeným obrázkem a vrstvami.
+          </para>
+          <para lang='en'>
+            This script could easily be used in other scripts that work
+            with text. Let's extend it so that it returns the image and
+            the layers, so other scripts can call this script and use
+            the image and layers we create. 
+          </para>
+        </listitem>
       </itemizedlist>
     </simplesect>
 
     <simplesect>
+      <title lang='cs'>Úprava parametrů a registrační funkce</title>
       <title lang='en'>Modifying The Parameters And The Registration Function</title>
+      <para lang='cs'>
+        Aby mohl uživatel zadat množství volného místa, přidáme parametr naší
+        funkci i registrační funkci:
+      </para>
       <para lang='en'>
         To let the user specify the amount of buffer, we'll add a
-        parameter to our function and the registration function: 
+        parameter to our function and the registration function:
       </para>
       <programlisting>
         (define (script-fu-text-box inTest inFont inFontSize inTextColor inBufferAmount)
@@ -1361,13 +2502,24 @@
     </simplesect>
 
     <simplesect>
+      <title lang='cs'>Adding The New Code</title>
       <title lang='en'>Adding The New Code</title>
+      <para lang='cs'>
+        Kód musíme přidat na dvě místa: těsně před změnu velikosti obrázku a
+        úplně na konec skriptu (pro vrácení nového obrázku, vrstvy a textu).
+      </para>
       <para lang='en'>
         We're going to add code in two places: right before we resize
         the image, and at the end of the script (to return the new
         image, the layer and the text). 
       </para>
-      <para>
+      <para lang='cs'>
+        Jakmile získáme výšku a šířku textu, musíme hodnoty zvětšit podle
+        zadání uživatele. Nebudeme provádět žádnou kontrolu zadaných hodnot
+        (například zda leží v rozsahu 0-100%), protože nejde o život a protože
+        vlastně není důvod, pro uživateli nedovolit zadat například 200%.
+      </para>
+      <para lang='en'>
         After we get the text's height and width, we need to resize
         these values based on the buffer amount specified by the
         user. We won't do any error checking to make sure it's in the
@@ -1379,15 +2531,28 @@
         (set! theBuffer (* theImageHeight (/ inBufferAmount 100) ) )
 
         (set! theImageHeight (+ theImageHeight theBuffer theBuffer) )
-        (set! theImageWidth  (+ theImageWidth  theBuffer theBuffer) ) 	
+        (set! theImageWidth  (+ theImageWidth  theBuffer theBuffer) )
       </programlisting>
-      <para>
+      <para lang='cs'>
+        Všechno co děláme, je nastavení volného místa podle výšky textu
+        a požadavku užřivatele a přídání tohoto místa dvakrát k výšce i
+        šířce obrázku. (Přidáváme ho ke každému rozměru dvakrát, protože
+        volné místo musí být na každé straně textu.)
+      </para>
+      <para lang='en'>
         All we're doing here is setting the buffer based on the height
         of the text, and adding it twice to both the height and width
         of our new image. (We add it twice to both dimensions because
         the buffer needs to be added to both sides of the text.) 
       </para>
-      <para>
+      <para lang='cs'>
+        Nyní je obrázek ve vhodné velikosti, včetně požadovaného volného
+        místa, ale text není v obrázku vystředěn. Vystředení lze provést
+        posunem textu na (x, y) souřadnice (<varname>theBuffer</varname>,
+        <varname>theBuffer</varname>). Za místo, kde se v kódu mění velikost
+        obrázku, proto přidáme následující řádku:
+      </para>
+      <para lang='en'>
         Now that we have resized the image to allow for a buffer, we
         need to center the text within the image. This is done by
         moving it to the (x, y) coordinates of (<varname>theBuffer</varname>,
@@ -1397,22 +2562,37 @@
       <programlisting>
         (gimp-layer-set-offsets theText theBuffer theBuffer)
       </programlisting>
-      <para>
+      <para lang='cs'>
+        Nyní skript uložte, obnovte databázi a vyzkoušejte.
+      </para>
+      <para lang='en'>
         Go ahead and save your script, and try it out after refreshing
         the database.
       </para>
-      <para>
-  	All that is left to do is return our image, the layer, and the
-  	text layer. After displaying the image, we add this line: 
+      <para lang='cs'>
+        Již zbývá jen vrátit obrázek, vrstvu a textovou vrstvu jako výsledek
+        skriptu. Po zobrazení obrázku přidáme řádek:
+      </para>
+      <para lang='en'>
+        All that is left to do is return our image, the layer, and the
+        text layer. After displaying the image, we add this line: 
       </para>
       <programlisting>
         (list theImage theLayer theText)
       </programlisting>
-      <para>
+      <para lang='cs'>
+        To je poslední řádka funkce, což činí tento seznam přístupný ostatním
+        skriptům, které by ho chtěly využít.
+      </para>
+      <para lang='en'>
         This is the last line of the function, making this list
         available to other scripts that want to use it.
       </para>
-      <para>
+      <para lang='cs'>
+        Pro využití našeho Text Box skriptu v jiném skriptu stačí napsat
+        něco podobného:
+      </para>
+      <para lang='en'>
         To use our new text box script in another script, we could
         write something like the following: 
       </para>
@@ -1424,9 +2604,12 @@
                          "35"
                         )
         )
-        (gimp-image-flatten (car theResult))   	
+        (gimp-image-flatten (car theResult))
       </programlisting>
-      <para>
+      <para lang='cs'>
+        Výborně! Jste na cestě k černému pásku ve Script-Fu!
+      </para>
+      <para lang='en'>
         Congratulations, you are on your way to your Black Belt of Script-Fu!
       </para>
     </simplesect>
