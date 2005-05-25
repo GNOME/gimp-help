@@ -1,15 +1,23 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
 <sect2 id='gimp-image-scale' lang="en;fr;zh_CN">
+  <title lang="cs">Velikost obrázku</title>
   <title lang="en">Scale Image</title>
   <title lang="fr">Échelle et taille de l&apos;image</title>
   <title lang="zh_CN">缩放图像</title>
-  
+
   <indexterm>
+    <primary lang="cs">Velikost obrázku</primary>
     <primary lang="en">Scale Image</primary>
     <primary lang="fr">Échelle et taille de l&apos;image</primary>
     <primary lang="zh_CN">缩放图像</primary>
   </indexterm>
+
+  <mediaobject lang="cs">
+    <imageobject>
+      <imagedata fileref='../images/dialogs/dialogs-image-scale-image.png' format="PNG"/>
+    </imageobject>
+  </mediaobject>
 
   <mediaobject lang="en">
     <imageobject>
@@ -30,26 +38,44 @@
   </mediaobject>
 
   <simplesect>
+    <title lang="cs">Přehled</title>
     <title lang="en">Overview</title>
     <title lang="fr">Généralités</title>
     <title lang="zh_CN">概述</title>
 
-          <para lang="en">
-            The Scale Image function enlarges or reduces the image. It 
-            changes the scale of the image content and resizes the canvas 
-            so that the whole image remains visible. 
-            It also gives you informations about the size and the resolution 
-            your image will have when printed.
+          <para lang="cs">
+            Funkce Velikost obrázku slouží ke zvětšování nebo zmenšování
+            obrázku ve smyslu změny počtu pixelů, které obrázek obsahuje.
+            Změní velikost obsahu obrázku a zároveň změní ve stejném poměru
+            velikost plátna obrázku.
+          </para>
+          <para lang="cs">
+            Velikost obrázku mění celý obrázek. Pokud zmenšovaný obrázek
+            obsahuje více vrstev o různé velikosti, může se stát, že některá
+            z nich bude zmenšena natolik, že úplně zmizí (rozměry vrstvy
+            nemohou být menší, než 1 pixel). Pokud by se mělo něco
+            takového stát, Gimp vás na to upozorní.
           </para>
           <para lang="en">
-            It acts on the whole image. If your image has layers with 
-            different sizes, it is possible that making the image smaller 
-            will shrink some of them completely away. If this happens you 
-            will be warned before the operation is applied.
+            Pokud chcete zvětšit nebo zmenšit pouze jednu vrstvu, použijte
+            funkci Změnit velikost vrstvy. <!--link to do-->
+          </para>
+
+          <para lang="en"><!-- changed May 25 2005-->
+            The Scale Image function enlarges or reduces the image by changing
+            the number of pixels it contains. It changes the size of the image
+            content and resizes the canvas accordingly.
           </para>
           <para lang="en">
-            If you want to scale a particular layer, use the function Scale 
-            Layer <!--link to do--> 
+            It acts on the whole image. If your image has layers with
+            different sizes, it is possible that making the image smaller
+            will shrink some of them completely away (a layer cannot be less
+            than 1 pixel wide or high). If this happens you will be warned
+            before the operation is applied.
+          </para>
+          <para lang="en">
+            If you want to scale a particular layer only, use the function
+            Scale Layer <!--link to do--> 
           </para>
 
           <para lang="fr">
@@ -82,64 +108,65 @@
   </simplesect>
   
   <simplesect>
-      <title lang="en">Pixel Dimensions</title>
+      <title lang="en">Image Size</title><!-- changed May 25 2005 -->
       <title lang="fr">Dimensions en pixels</title>
       <title lang="zh_CN">像素尺寸</title>
 
           <para lang="en">
-            You must remember that an image can be located in four places: 
-            In the image file, in the RAM after loading, on your screen 
-            when displayed, on paper after printing.
+            You must remember that an image can be located in four places:
+            In the image file, in the RAM after loading, on your screen
+            when displayed, on paper after printing. Scaling the image
+            changes the number of pixels (information) the image contains,
+            so it directly changes the amount of memory the image needs (in
+            RAM or in a file).
           </para>
           <para lang="en">
-            This section deals with making your image bigger or smaller, 
-            what dimensions will be in RAM and then in file after saving.
+            However print size depends also on the resolution of the image
+            (which basically says, how many pixels each inch on paper
+            contains). If you want to change printing size without scaling
+            the image and changing the number of pixels it consist of, you
+            should use the <link linkend='gimp-image-print-size'>Print Size
+            dialog</link>. Screen size also depends not only on pixel number,
+            but also on the screen resolution, zoom factor and the <link
+            linkend='gimp-view-dot-for-dot'>Dot dor Dot</link> option.
           </para>
           <para lang="en">
-            When you open the dialog, the displayed dimensions are that of 
-            the original image. On screen, all pixels are displayed and the 
-            dimensions depend on the screen resolution and on the 
-            <link linkend='gimp-view-dot-for-dot'>Dot dor Dot</link> option 
-            you have choosen. 
-          </para> 
-          <para lang="en">
-            You can set there the <emphasis>Width</emphasis> and the 
-            <emphasis>Height</emphasis> you want to give to your image by 
-            adding or removing pixels, resulting in a variation of 
-            dimensions. 
-            Click on arrowheads to change the value in the text box. If you 
-            have clicked in this box, you can use the Up and Down arrow keys 
-            for precise setting.  
-            You can act directly on linear dimensions in the unit you want, 
-            and that will add or remove pixels. These linear 
-            dimensions in memory are not much useful: they depend on 
-            resolution and are different from that on screen. Only pixels 
-            are important, from which the section name. 
-          </para> 
-          <para lang="en">
-            <emphasis>Ratio</emphasis> is the ratio between the original 
-            dimension and the new dimension, for each X and Y axis. Default 
-            is 1. You can change it. If the adjacent Chain is intact both 
-            axis will develop jointly. If you break it by clicking on it, 
-            then you can set every axis separately: this will result in 
-            deforming the image.
+            When you launch the Scale function GIMP displays the dimensions
+            of the original image in pixels. You can set the
+            <guilabel>Width</guilabel> and the <guilabel>Height</guilabel>
+            you want to give to your image by adding or removing pixels.
+            If the adjacent Chain icon is intact, width and height keep
+            their proportion. If you break it by clicking on it, you can
+            set them separately: this will result in deforming the image.
           </para>
           <para lang="en">
-            You can enlarge an image safely only if the original has a high 
-            resolution, pixels enough to avoid adding new pixels. Else, 
-            missing pixels are calculated by interpolation but no new detail 
-            is added and the more enlarged the more blurred, with aliasing. 
-            You can improve the result by using the filter 
-            <link linkend='plug-in-sharpen'>Sharpen</link> (after scaling) 
-            but the best method is to use a high resolution when scanning an 
-            image you plan to enlarge.
-          </para>  
+            However you do not have to set dimensions in pixels, you can
+            choose different units from the dropdown menu. If you choose
+            percent as units, you can set the image size relatively to its
+            original size. You can also use physical units like inches or
+            millimeters. However if you do that, you should keep attention
+            to the <guilabel>X/Y resolution</guilabel> fields (and set them
+            to an appropriate value), because image dimensions in pixels,
+            which are being changed by this dialog, are computed from physical
+            units using these resolution values.
+          </para>
           <para lang="en">
-            Reducing your image may be necessary if you intend it to a Web 
-            page. You have to take in account that Internet users still have 
-            15' screens and that your big image cann't be completely 
-            displayed on them. Most of screens work in 800x600 and 1024x768 
-            resolution.
+            If you are enlarging an image beyond its original size, missing
+            pixels are calculated by interpolation but no new detail is added.
+            The more enlarged the image is, the more blurred it becomes. The
+            exact result of enlarging depends on the chosen interpolation
+            method. You can improve the result by using the filter <link
+            linkend='plug-in-sharpen'>Sharpen</link> (after scaling) but the
+            best method is to use a high resolution when scanning, taking
+            digital photographs aor producing digital images by other means.
+            Not scaling up well is an inherit nature of raster images.
+          </para>
+          <para lang="en">
+            Reducing your image may be necessary if you intend it to a Web
+            page. You have to take in account that most Internet users have
+            relatively small screens and that your big image cann't be
+            completely displayed on them. Many of screens work in 1024x768
+            or even smaller resolution.
           </para>
           <para lang="en"> 
             Adding or removing pixels is called "Resampling".
@@ -241,53 +268,10 @@
           </para>
     </simplesect>
 
-    <simplesect>
-      <title lang="en">Print Size &amp; Display Unit</title>
+    <simplesect lang="fr;zh_CN"><!-- May 25 2005: partially merged with the
+    above simplesect, mostly moved to -->
       <title lang="fr">Taille d'impression et Résolution</title>
       <title lang="zh_CN">打印大小和显示单位</title>
-
-          <para lang="en">
-            This section deals with the size and resolution your image will 
-            have when printed. Remember that all the pixels of the image 
-            will be printed and that there will be no splitting.
-          </para> 
-          <para lang="en">
-            When you launch the Scale function GIMP displays the dimensions 
-            of the original image that will allow printing without 
-            deformation.
-          </para>
-          <para lang="en">
-            As for screen, you can enlarge or reduce the printed image with 
-            the same risks.
-          </para>
-          <para lang="en">
-            Resolution deals with ouput resolution, that is the number of 
-            pixels that will be used in every inch of the printed image. You 
-            must not mistake the output resolution with the printer 
-            resolution which is expressed in dpi (dot per inch): several 
-            dots are necessary to print a pixel.
-          </para> 
-          <para lang="en">
-            The resolution proposed by GIMP is the resolution of the 
-            original image. If you increase the output resolution the 
-            printed image will be smaller since more pixels are used for an 
-            inch. Conversely and for the same reason resizing modifies 
-            resolution.
-          </para>
-          <para lang="en">
-            Increasing resolution results in increasing the printed image 
-            sharpness. This is quite different from simply reducing the 
-            image size since no pixels are removed.  
-          </para> 
-          <para lang="en">
-            Modifying resolution also acts for the image file. It is not 
-            visible at the pixel level but it is at the dimension level 
-            (inch for example). By reducing resolution you decrease the 
-            dimensions in the image file. By combining resolution reduction 
-            and pixel reduction and by restablishing the original dimensions 
-            of your image you can reduce the weight of your image file if 
-            PNG compression is not enough. 
-          </para>
 
           <para lang="fr">
             Cette section traite de la taille qu'aura votre image une fois 
@@ -360,32 +344,35 @@
             修改分辨率也会影响图像文件大小。这种修改因为总的像素数没变所以在像素级看不出来，但是尺寸级（例如英寸）可以看出来。减小输出分辨率就减小了图像文件大小。在使用 PNG 压缩后图像还不够小时，可以通过结合降低分辨率和减小像素并重建图像原始尺寸的方法来减小图像文件大小。
           </para>
     </simplesect>
-  
+
     <simplesect>
       <title lang="en">Interpolation Type</title>
       <title lang="fr">Type d'interpolation</title>
       <title lang="zh_CN">插值类型</title>
 
           <para lang='en'>
-            Here you can select the method used to interpolate the color of 
-            added pixels, valid for screen display and printing.
-          </para>         
+            The <guilabel>Interpolation</guilabel> dropdown list provides a
+            selection of available methods of interpolating the color of
+            pixels in a scaled image:
+          </para>
           <itemizedlist lang='en'>
             <listitem>
               <para>
-                <emphasis>None</emphasis>: no interpolation is used. Pixels 
-                are simply enlarged as they are when zooming. 
+                <guilabel>None</guilabel>: no interpolation is used. Pixels
+                are simply enlarged or removed as they are when zooming.
+                This method is low quality, but very fast.
               </para>
             </listitem>
             <listitem>
               <para>
-                <emphasis>Linear</emphasis>: 
+                <guilabel>Linear</guilabel>: this method is relativelly fast,
+                but still provides fairly good results.
               </para>
             </listitem>
             <listitem>
               <para>
-                <emphasis>Cubic</emphasis>: The best method but needing much 
-                calculation.
+                <guilabel>Cubic</guilabel>: The best, highest quality but also
+                the slowest method available.
               </para>
             </listitem>
           </itemizedlist> 
@@ -437,13 +424,8 @@
             </listitem>
           </itemizedlist>
 
-    <note>
-      <para lang="en">
-        To prepare your image for printing in a particular format use the 
-        <link linkend='gimp-tool-crop'>Crop</link> tool, with inch for unit: 
-        The displayed size is the printing size. 
-      </para>
-
+    <note lang="fr;zh_CN"><!-- i think that this note is not appropriate here,
+    removed from en when updating this section -->
       <para lang="fr">
         Pour préparer votre image à être imprimée dans un format précis, 
         utilisez l'outil 
@@ -461,21 +443,21 @@
 
     <note lang='en'>
       <para>
-	If scaling would produce an image larger than the "Maximum new
-	image size" set in the <link
-	linkend='gimp-prefs-environment'>Environment</link> page of the
-	Preferences dialog, you are warned and asked to confirm that you
-	really want to do it.  Saying yes will not necessarily have bad
-	consequences, but you should give it a moment of thought, because
-	very large images consume a lot of resources, and outrageously
-	large images may consume more resources than you have, causing GIMP
-	to crash or otherwise behave unpleasantly.
+        If scaling would produce an image larger than the "Maximum new
+        image size" set in the <link
+        linkend='gimp-prefs-environment'>Environment</link> page of the
+        Preferences dialog, you are warned and asked to confirm that you
+        really want to do it.  Saying yes will not necessarily have bad
+        consequences, but you should give it a moment of thought, because
+        very large images consume a lot of resources, and outrageously
+        large images may consume more resources than you have, causing GIMP
+        to crash or otherwise behave unpleasantly.
       </para>
     </note>
 
     <note lang='zh_CN'>
       <para>
-	如果缩放产生的新图层比首选项对话框的<link linkend='gimp-prefs-environment'>环境</link>里设置的“最大新建图像大小”还大。系统将询问您是否确定这样做。选“是”并不一定会有糟糕的后果，但您确实应该慎重考虑，因为大图像需要消耗许多系统资源，甚至比已有的资源还多。这将导致 GIMP 死机或产生其它不可预料的结果。
+        如果缩放产生的新图层比首选项对话框的<link linkend='gimp-prefs-environment'>环境</link>里设置的“最大新建图像大小”还大。系统将询问您是否确定这样做。选“是”并不一定会有糟糕的后果，但您确实应该慎重考虑，因为大图像需要消耗许多系统资源，甚至比已有的资源还多。这将导致 GIMP 死机或产生其它不可预料的结果。
       </para>
     </note>
   </simplesect>
