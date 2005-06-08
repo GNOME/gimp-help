@@ -1,25 +1,33 @@
 <?xml version='1.0' encoding='UTF-8'?>
- 
-<sect2 id='gimp-concepts-selection' lang="en;fr;it;zh_CN">
+
+<sect2 id='gimp-concepts-selection' lang="cs;en;fr;it;zh_CN">
+  <title lang="cs">Výběr</title>
   <title lang="en">The Selection</title>
   <title lang="fr">La Sélection</title>
   <title lang="it">La selezione</title>
   <title lang="zh_CN">选区</title>
 
+  <para lang='cs'>
+    Při manipulaci s obrázkem je často pořeba upravit jen jeho část.
+    V Gimpu se proto taková část před úpravou <emphasis>vybere</emphasis>.
+    Ke každému obrázku je připojen tzv. <emphasis>výběr</emphasis>.
+    Většina, nikoliv však všechny, operací v Gimpu se provádí pouze
+    na vybraných částech obrázku.
+  </para>
   <para lang='en'>
     Often when you operate on an image, you only want part of it to be
     affected.  In Gimp, you make this happen by
     <emphasis>selecting</emphasis> that part.  Each image has a
     <emphasis>selection</emphasis> associated with it.  Most, but not
     all, Gimp operations act only on the selected portions of the
-    image. 
+    image.
   </para>
   <para lang="fr">
     Souvent, quand vous travaillez sur une image, vous voulez que 
     seule une partie en soit affectée. Vous le faites en <emphasis>
     sélectionnant</emphasis> cette partie. Beaucoup d'opérations dans 
     Gimp ne portent que sur des sélections.    
-  </para> 
+  </para>
   <para lang='en'>
     Spesso quando si opera su di un'immagine si desidera lavorare solo su
     parte di essa. In Gimp basta <emphasis>selezionare</emphasis> questa parte.
@@ -31,6 +39,27 @@
     当对一个图像处理时，您常常只想处理其中的一部分。在 GIMP 中，通过<emphasis>选择</emphasis>那部分来实现。每个图像上都有一个相关的<emphasis>选区</emphasis>。大部分，但不是全部的 GIMP 操作只对图像选择部分进行操作。
   </para>
 
+  <para lang='cs'>
+    <informalfigure>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref='../images/using/fog-tree-example.png' format="PNG"/>
+        </imageobject>
+      <caption>
+        <para lang='cs'>
+          Jak oddělit strom od pozadí?
+        </para>
+      </caption>
+      </mediaobject>
+    </informalfigure>
+    V mnoha situacích je vytvoření správného a kvalitního výběru
+    nejdůležitějším a klíčovým momentem celé grafické práce. Často je také
+    úkolem nejobtížnějším, vyžadujícím nejvíce zkušeností. Představme si,
+    že z obrázku výše chceme oddělit strom od pozadí a vložit ho do jiného
+    obrázku. K tomu je zapotřebí vytvořit výběr obsahující celý strom alke nic
+    jiného. Protože tvar stromu je složitý a na mnoha místech je těžké odlišit
+    ho od pozadí, není to jednoduchý úkol.
+  </para>
   <para lang='en'>
     <informalfigure>
       <mediaobject>
@@ -44,14 +73,13 @@
       </caption>
       </mediaobject>
     </informalfigure>
-    There are many, many situations where creating just the right
-    selection is the key to getting the result you want, and often it
-    is not very easy to do.  For example, in the image to the right,
-    suppose I want to cut the tree out from its background, and paste
-    it into a different image.  In order to do this, I need to create
-    a selection that contains the tree and nothing but the tree.  It
-    is difficult because the tree has a very complex shape, and in
-    several spots is hard to distinguish from the objects behind it.  
+    There are many, many situations where creating just the right selection is
+    the key to getting the result you want, and often it is not very easy to
+    do.  For example, in the above image, suppose I want to cut the tree out
+    from its background, and paste it into a different image.  In order to do
+    this, I need to create a selection that contains the tree and nothing but
+    the tree.  It is difficult because the tree has a very complex shape, and
+    in several spots is hard to distinguish from the objects behind it.
   </para>
   <para lang="fr">
     <informalfigure>
@@ -90,6 +118,26 @@
     这有很多，很多的情形，创建正确的选区是获取您所有结果的关键，常常这并不容易办到。比如，在右边的图像中，我准备将树从背景中剪切出来，并粘贴到其它的图像中。为了达到这个目的，我需要创建一个只包含树而没有其它任何东西的选区。这就比较困难，因为树有一个非常复杂的形状，而且在某些地方与其后的物体很难区分。
   </para>
 
+  <para lang='cs'>
+    <informalfigure>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref='../images/using/select-outline.png' format="PNG"/>
+        </imageobject>
+      <caption>
+        <para lang='cs'>
+          Obvyklý způsob zobrazení výběru pomocí přerušované čáry,
+          tzv. „pochodujících mravenců“.
+        </para>
+      </caption>
+      </mediaobject>
+    </informalfigure>
+    Velmi důležité je pochopit následující skutečnost: Výběr se obvykle
+    zobrazuje jako přerušovaná čára ohraničující vybranou oblast. Z toho
+    se dalo usuzovat, že výběr je jakási nádoba, uvnitř které jsou vybrané
+    oblasti a mimo kterou jsou oblasti nevybrané. Tato představa výběru
+    je v mnoha případech použitelná, ale není správná.
+  </para>
   <para lang='en'>
     <informalfigure>
       <mediaobject>
@@ -148,6 +196,16 @@
     现在这是非常重要的地方了，弄明白这点是至关重要的。通常的，当创建一个选区，您会发现它是一条虚线环绕在图像一部分上。您可能决定选区好像一种容器，图像选择的部分在内，未选择部分在外。这种关于选区的观点在许多目的中没有问题，但它并不是完全正确的。
   </para>
 
+  <para lang='cs'>
+    Výběr je ve skutečnosti implementován jako <emphasis>kanál</emphasis>.
+    Z technického hlediska je tedy totožný s barevnými kanály či alfa kanálem
+    obrázku. Výběr tedy pro každý pixel obrázku definuje hodnotu v rozsahu
+    0 (nevybraný) až 255 (zcela vybraný). Výhodou tohoto přístupu je
+    skutečnost, že některé pixely mohou být <emphasis>částečně
+    vybrané</emphasis>, tedy jim je přiřazena některá z hodnot mezi 0 a 255.
+    Často jsou plynulé přechody mezi vybranými a nevybranými oblastmi
+    nenahraditelné.
+  </para>
   <para lang='en'>
     Actually the selection is implemented as a
     <emphasis>channel</emphasis>.  In terms of its internal structure,
@@ -175,9 +233,12 @@
     准确地说，选区是作为一个<emphasis>通道</emphasis>来实现的。在其内部结构方面，它与图像的红色，绿色，蓝色和 alpha通道完全相同。因此，选区中有一个定义每个图像像素的值，从 0 (未选中)到 255 (完全选中)。这种方式的优点是，它允许一些像素被<emphasis>部分选中</emphasis>，其值在 0 到 255 之间。正如您所见的，这有许多需要在选中和未选中区域间有个平滑的过渡的情况。
   </para>
 
+  <para lang='cs'>
+    Co tedy znamená ona přerušovaná čára plná mravenců?
+  </para>
   <para lang='en'>
     What, then, is the dashed line that appears when you create a
-    selection? 
+    selection?
   </para>
   <para lang="fr">
     Mais alors, que signifie la ligne pointillée qui entoure la sélection?
@@ -186,20 +247,45 @@
     哪怎么当您创建一个选区时，虚线就出现了？
   </para>
 
+  <para lang='cs'>
+    Jedná se o <emphasis>konturu</emphasis> dělící oblasti více než z poloviny
+    vybrané od oblastí vybraných méně než z poloviny.
+  </para>
   <para lang='en'>
     It is a <emphasis>contour line</emphasis>, dividing areas that are
     more than half selected from areas that are less than half
-    selected.  
+    selected.
   </para>
   <para lang="fr">
     C'est une <emphasis>ligne de contour</emphasis> qui sépare les 
     zones sélectionnées à plus de 50% de celles sélectionnées à moins 
     de 50%.
-  </para> 
+  </para>
   <para lang="zh_CN">
     那是一个<emphasis>轮廓线</emphasis>，它区分被选中多于半个像素的区域和被选中少于半个像素的区域。
   </para>
 
+  <para lang='cs'>
+    <informalfigure>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref='../images/using/select-outline-qmask.png' format="PNG"/>
+        </imageobject>
+      <caption>
+        <para lang='cs'>
+          Stejný výběr v režimu rychlé masky
+        </para>
+      </caption>
+      </mediaobject>
+    </informalfigure>
+    Vždy, když se podíváte na přerušovanou čáru ohraničující výběr, měli byste
+    si uvědomit, že ukazuje pouze část informace. Pokud chcete výběr vidět
+    se všemi podrobnostmi, je nejjednodušší přepnout se do režimu rychlé
+    masky kliknutím na tlačítko v levém dolním rohu okna obrázku. Výběr je v
+    režimu rychlé masky zobrazen jako průsvitný závoj zakrývající nevybrané
+    části obrázku. Vybrané oblasti nejsou zahaleny vůbec. Nad částečně
+    vybranými oblastmi je závoj úměrně zeslabený.
+  </para>
   <para lang='en'>
     <informalfigure>
       <mediaobject>
@@ -261,6 +347,12 @@
     您需要一直牢记，当您看到表现选区的虚线时，它只告诉您部分信息。如果您想了解选区的完全细节，最简单的方法就是点击图像窗口左下角的快速蒙板按钮。它使选区好像被蒙上一层半透明的遮盖。选中的区域没有受影响，而非选中区域则呈红色。越完全选中的区域，显示的红色越少。
   </para>
 
+  <para lang='cs'>
+    Režim rychlé masky je podrobně popsán dále  Pokud si při čtení této
+    kapitoly vše zkoušíte v Gimpu, přepněte se zpátky z režimu rychlé masky
+    (klikněte znovu na tlačítko, kterým jste rychlou masku zapnuli),
+    protože mnoho funkcí funguje v režimu rychlé masky jinak.
+  </para>
   <para lang='en'>
     QuickMask mode, and its uses, are described in detail below.
     Meanwhile, if you are following this discussion by trying things
@@ -280,20 +372,51 @@
     快速蒙板模式，及其使用，下面有详细描述。同时，如果您跟随该讨论并在 Gimp 中尝试，您会了解与许多操作在快速蒙板中工作方式不同，因此现在将其切换为关闭(再次点击快速蒙板按钮)。
   </para>
 
+  <formalpara lang='cs'>
+    <title>Feathering</title>
+    <para>
+      <informalfigure>
+        <mediaobject>
+          <imageobject>
+            <imagedata
+              fileref='../images/using/select-outline-qmask-feather.png'
+              format="PNG"/>
+          </imageobject>
+          <caption>
+            <para lang='cs'>
+              Stejný výběr v režimu rychlé masky po prolnutí
+            </para>
+          </caption>
+        </mediaobject>
+      </informalfigure>
+      Ve výchozím nastavení vytvářejí základní nástroje pro výběr, např.
+      nástroj Výběr obdélníku, ostře ohraničené výběry. Pixely uvnitř
+      čárkované hranice jsou zcela vybrané, pixely vně jsou zcela nevybrané.
+      Ověřit si to můžete přepnutím do režimu rychlé masky – uvidíte jasně
+      ohraničený obdélník bez závoje obklopený rovnoměrně červeně zahaleným
+      okolím. Ve volbách tohoto nástroje je však možnost zaškrtnutí volby
+      <guilabel>Prolnout okraje</guilabel>, která způsobí, že vytvořené výběry
+      budou plynule přecházet do okolí. Nastavený <guilabel>Poloměr</guilabel>
+      určuje velikost těchto přechodů.
+    </para>
+  </formalpara>
+
   <formalpara lang='en'>
     <title>Feathering</title>
     <para>
       <informalfigure>
-  <mediaobject>
-    <imageobject>
-      <imagedata fileref='../images/using/select-outline-qmask-feather.png' format="PNG"/>
-    </imageobject>
-  <caption>
-    <para lang='en'>
-      Same selection in QuickMask mode after feathering
-    </para>
-  </caption>
-      </mediaobject>
+        <mediaobject>
+          <imageobject>
+            <imagedata
+              fileref='../images/using/select-outline-qmask-feather.png'
+              format="PNG"/>
+          </imageobject>
+          <caption>
+            <para lang='en'>
+              Same selection in QuickMask mode after feathering
+            </para>
+          </caption>
+        </mediaobject>
       </informalfigure>
       With the default settings, the basic selection tools, such as the
       Rectangle Select tool, create sharp selections.  Pixels inside the
@@ -311,16 +434,18 @@
     <title>Adoucir</title>
     <para>
       <informalfigure>
-  <mediaobject>
-    <imageobject>
-      <imagedata fileref='../images/using/select-outline-qmask-feather.png' format="PNG"/>
-    </imageobject>
-  <caption>
-    <para>
-      Même sélection en Mode Masque rapide après adoucissement
-    </para>
-  </caption>
-      </mediaobject>
+        <mediaobject>
+          <imageobject>
+            <imagedata
+              fileref='../images/using/select-outline-qmask-feather.png'
+              format="PNG"/>
+          </imageobject>
+          <caption>
+            <para>
+              Même sélection en Mode Masque rapide après adoucissement
+            </para>
+          </caption>
+        </mediaobject>
       </informalfigure>
       Avec les réglages par défaut, les outils de sélection de base, 
       telle la Sélection Rectangulaire, créent des sélections à bords 
@@ -340,21 +465,28 @@
     <title>羽化</title>
     <para>
       <informalfigure>
-  <mediaobject>
-    <imageobject>
-      <imagedata fileref='../images/using/select-outline-qmask-feather.png' format="PNG"/>
-    </imageobject>
-  <caption>
-    <para lang="zh_CN">
-      羽化后在快速蒙板模式下的同一个选区
-    </para>
-  </caption>
-      </mediaobject>
+        <mediaobject>
+          <imageobject>
+            <imagedata
+              fileref='../images/using/select-outline-qmask-feather.png'
+              format="PNG"/>
+          </imageobject>
+          <caption>
+            <para lang="zh_CN">
+              羽化后在快速蒙板模式下的同一个选区
+            </para>
+          </caption>
+        </mediaobject>
       </informalfigure>
       默认设置下，基本的选择工具如矩形选择工具，生成锐利的选区。虚线内的像素被完全选中，而其外的像素则完全未选中。您可以通过切换快速蒙板来验证：您看到一个清晰带锐利边缘的矩形，并被统一的红色包围。而在工具选项有个“边缘羽化”勾选框。如果您勾选它，改工具将生成有层次的选区。羽化半径则可以用来调节在什么距离上进行过渡。
     </para>
   </formalpara>
 
+  <para lang='cs'>
+    Pokud máte po ruce Gimp, vyzkoušejte si to s nástrojem Výběr obdélníku
+    a pak se přepněte do režimu rychlé masky. Uvidíte, že okraj jasného
+    obdélníku je rozmazaný.
+  </para>
   <para lang='en'>
     If you are following along, try this out with the Rectangle Select
     tool, and then toggle QuickMask.  You will now see that the
@@ -369,6 +501,10 @@
     如果您沿着上面内容下来，可以用矩形选择工具来实践，然后切换到快速蒙板模式。您现在将看到带有一个模糊边界的清晰的矩形。
   </para>
 
+  <para lang='cs'>
+    Prolínání je velmi užitečné při vyjímání objektu a jeho vkládání na jiné
+    místo, neboť zlepšuje splývání objektu s okolím.
+  </para>
   <para lang='en'>
     Feathering is particularly useful when you are cutting and
     pasting, in helping the pasted object to blend smoothly and
@@ -383,6 +519,21 @@
     当剪切和粘贴后，羽化特别有用，它可以使被粘贴的物体平滑而不引人注意地和周围环境混合在一起。
   </para>
 
+  <para lang='cs'>
+    Výběr lze s nevybranými oblastmi prolnout kdykoliv, i tehdy, pokud byl
+    vytvořen s ostrými okraji. Slouží k tomu příkaz
+    <menuchoice>
+      <guimenu>Výběr</guimenu>
+      <guimenuitem>Prolnout</guimenuitem>
+    </menuchoice> z nabídky okna obrázku.
+    Otevře se tak dialog, ve kterém lze nastavit velikost prolnutí.
+    Lze učinit i opak, tedy změnit prolínající se neostrý výběr na
+    výběr typu „vše nebo nic“. K tonu slouží příkaz
+    <menuchoice>
+      <guimenu>Výběr</guimenu>
+      <guimenuitem>Zaostřit</guimenuitem>
+    </menuchoice> ze stejné nabídky.
+  </para>
   <para lang='en'>
     Actually, it is possible to feather a selection at any time, even
     if it was originally created as a sharp selection.  You can do
@@ -429,15 +580,19 @@
   </para>
 
   <note>
+    <para lang='cs'>
+      Pro technicky založené čtenáře: prolnutí se provádí aplikací Gausova
+      rozostření na kanál výběru, s nastaveným poloměrem rozostření.
+    </para>
     <para lang='en'>
-    For technically oriented readers: feathering works by applying a
-    Gaussian blur to the selection channel, with the specified
-    blurring radius.
+      For technically oriented readers: feathering works by applying a
+      Gaussian blur to the selection channel, with the specified
+      blurring radius.
     </para>
     <para lang="fr">
-    Pour les lecteurs intéressés par la technique: Adoucir agit par 
-    application d'un flou Gaussien sur le canal de la sélection, selon 
-    le rayon spécifié.
+      Pour les lecteurs intéressés par la technique: Adoucir agit par 
+      application d'un flou Gaussien sur le canal de la sélection, selon 
+      le rayon spécifié.
     </para> 
     <para lang="zh_CN">
       对于面向技术的读者：羽化实质上是对选区通道使用选定模糊半径的高斯模糊操作。
