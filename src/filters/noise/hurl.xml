@@ -11,8 +11,8 @@
     <tertiary lang="en">Hurl</tertiary>
 
     <primary lang="cs">filtry</primary>
-    <secondary lang="cs">šum</secondary>
-    <tertiary lang="cs">výpadky</tertiary>
+    <secondary lang="cs">Šum</secondary>
+    <tertiary lang="cs">Výpadky</tertiary>
 
     <primary lang="fr">Filtre</primary>
     <secondary lang="fr">Bruit</secondary>
@@ -40,24 +40,47 @@
     <title lang="cs">Přehled</title>
     <title lang="fr">Généralités</title>
     <para lang="en">
-      This filter is found in 
-      <guimenuitem>Image&gt;Filters/Noise/<accel>H</accel>url</guimenuitem>  
-    </para>
-    <para lang="en">
-      The Hurl filter changes pixels of active layer or selection to a random color if they are within a 
-      given range of randomization.
-    </para>
-    <para lang="cs">
-      Tento filtr lze nalézt v nabídce
-      <guimenuitem>Obrázek&gt;Filtry/Šum/<accel>V</accel>ýpadky</guimenuitem>.
+      This filter is found in
+      <menuchoice>
+        <guimenu>Filters</guimenu>
+        <guisubmenu>Noise</guisubmenu>
+        <guimenuitem><accel>H</accel>url</guimenuitem>
+      </menuchoice>.
     </para>
     <para lang="cs">
-      Filtr výpadky mění zadané procento pixelů aktivní vrstvy nebo výběru
-      na pixely náhodné barvy.
+      Tento filtr lze spustit z nabídky okna obrázku volbou
+      <menuchoice>
+        <guimenu>Filtry</guimenu>
+        <guisubmenu>Šum</guisubmenu>
+        <guimenuitem>Výpadky</guimenuitem>
+      </menuchoice>.
     </para>
     <para lang="fr">
-      Ce filtre se trouve à 
-      <guimenuitem>Image&gt;Filtres/Bruit/<accel>J</accel>eter</guimenuitem>
+      Ce filtre se trouve à
+      <menuchoice>
+        <guimenu>Filtres</guimenu>
+        <guisubmenu>Bruit</guisubmenu>
+        <guimenuitem><accel>J</accel>eter</guimenuitem>
+      </menuchoice>.
+    </para>
+
+    <para lang="en">
+      The Hurl filter changes each affected pixel to a random color, so it
+      porduces real <emphasis>random noise</emphasis>. All color channels,
+      including an alpha channel (if it is present) are randomized. All
+      possible values are assigned with the same probability. The original
+      valuies are not taken into account. All or only some pixels in an active
+      layer or selection are affected, the percentage of affected pixels is
+      determined by the <guilabel>Randomization (%)</guilabel> option.
+    </para>
+    <para lang="cs">
+      Filtr Výpadky přiřadí všem ovlivněným pixelům zcela náhodnou barvu,
+      vytváří tak skutečný <emphasis>náhodný šum</emphasis>. Náhodná hodnota
+      je přiřazena všem barevným kanálům, včetně případného alfa kanálu.
+      Všechny možné hodnoty mají stejnou pravděpodobnost přiřazení, originální
+      hodnoty pixelů se neberou v potaz. Filtrem jsou ovlivněny všechny nebo
+      jen některé pixely z aktivní vrstvy či výběru, jejich podíl je určen
+      volbou <guilabel>Náhodnost (%)</guilabel>.
     </para>
     <para lang="fr">
       Le filtre Jeter change au hasard la couleur de pixels s'ils se trouvent à une distance de 
@@ -76,18 +99,36 @@
         <term lang="cs">Hnízdo náhodných čísel</term>
         <term lang="fr">Graine aléatoire</term>
         <listitem>
+
           <para lang="en">
-            <guilabel>Random Seed</guilabel> controls the randomization
-            element of hurl. The <guibutton>Time</guibutton> button will
-            set the seed using the hardware clock of the computer. Using
-            <guibutton>Time</guibutton> is the preferred method for
-            initializing Hurl as it will provide a higher chance of differing
-            values over many uses.
+            <guilabel>Random Seed</guilabel> controls randomness of hurl.
+            If the same random seed in the same situation is used, the filter
+            produces exactly the same results. A diffrerent random seed
+            produces different results. Random seed can be entered manually
+            or generated randomly by pressing <guibutton>New Seed</guibutton>
+            button.
+          </para>
+          <para lang='en'>
+            When the <guilabel>Randomize</guilabel> option is checked, random
+            seed cannot be entered manually, but is randomly generated each
+            time the filter is run. If it is not checked, the filter remembers
+            the last random seed used.
+          </para>
+
+          <para lang="cs">
+            <guilabel>Hnízdo náhodných čísel</guilabel> určuje náhodné
+            vlastnosti výpadků. Pokud je ve stejné situaci použito stejné
+            hnízdo, výsledky filtru jsou stejné. Použití jiného hnízda
+            způsobí odlišné výsledky. Hnízdo lze zadat ručně nebo náhodně
+            vygenerovat tlačítkem <guibutton>Randomizovat</guibutton>.
           </para>
           <para lang="cs">
-            <guilabel>Hnízdo náhodných čísel</guilabel> ovládá náhodnost
-            výpadků. FIXME - angl. verze neodpovídá realitě.
+            Je-li zaškrtnuta volba <guilabel>Randomizovat</guilabel>, nelze
+            hnízdo náhodných čísel zadávat ručně, ale je náhodně generováno
+            při každém použití filtru. V opačném případě si filtr pamatuje
+            poslední použité hnízdo náhodných čísel.
           </para>
+
           <para lang="fr">
             <guibutton>Graine aléatoire</guibutton> contrôle le caractère 
             aléatoire du déplacement des pixels. Le bouton <guibutton>Aléatoire
@@ -97,22 +138,24 @@
         </listitem>
       </varlistentry>
       <varlistentry>
-        <term lang="en">Randomization %</term>
+        <term lang="en">Randomization (%)</term>
         <term lang="cs">Náhodnost (%)</term>
-        <term lang="fr">Aléa %</term>
+        <term lang="fr">Aléa (%)</term>
         <listitem>
           <para lang="en">
-             The <guibutton>Randomization</guibutton> slider represents the percentage of pixels of the 
-             active layer or selection which may be hurled. Higher value result in more hurling.
+            The <guibutton>Randomization</guibutton> slider represents the
+            percentage of pixels of the active layer or selection which will
+            be hurled. The higher value, the more pixels are hurled.
           </para>
           <para lang="cs">
-             Posuvník <guibutton>Náhodnost</guibutton> nastavuje podíl pixelů
-             v obrázku, které budou postiženy výpadky. Vyšší hodnota znamená
-             více výpadků.
+            Posuvník <guibutton>Náhodnost</guibutton> nastavuje podíl pixelů
+            v obrázku, které budou postiženy výpadky. Vyšší hodnota znamená
+            více výpadků.
           </para>
           <para lang="fr">
-            Le curseur <guibutton>Aléa</guibutton> représente le pourcentage de pixels de la 
-            sélection ou du calque actif qui peuvent être affectés par le filtre.
+            Le curseur <guibutton>Aléa</guibutton> représente le pourcentage
+            de pixels de la sélection ou du calque actif qui peuvent être
+            affectés par le filtre.
           </para>
         </listitem>
       </varlistentry>
@@ -122,17 +165,21 @@
         <term lang="fr">Répétition</term>
         <listitem>
           <para lang="en">
-            The <guibutton>Repeat</guibutton> slider represents the number of
-            times the active layer will be hurled. Higher values result in
-            more hurling.
+            The <guilabel>Repeat</guilabel> slider represents the number
+            of times the filter will be applied. In the case of the Hurl
+            filter it is not verfy useful, because the same results can be
+            obtained faster just by using a higher <guilabel>Randomization
+            (%)</guilabel> value.
           </para>
           <para lang="cs">
-            Posuvník <guibutton>Opakování</guibutton> určuje, kolikrát budou
-            výpadky aplikovány. Vyšší hodnota znamená více výpadků.
+            Posuvník <guibutton>Opakování</guibutton> určuje počet aplikací
+            filtru. V případě filtru výpadky nemá valného smyslu, neboť
+            stejného výsledku lze dosáhnout rychleji použitím vyšší hodnoty
+            pro <guilabel>Náhodnost (%)</guilabel>.
           </para>
           <para lang="fr">
-            Le curseur <guibutton>Répétition</guibutton> représente le nombre de fois 
-            où le filtre sera appliqué.
+            Le curseur <guibutton>Répétition</guibutton> représente le nombre
+            de fois où le filtre sera appliqué.
           </para>
         </listitem>
       </varlistentry>

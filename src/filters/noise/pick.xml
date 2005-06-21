@@ -1,20 +1,30 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<sect2 id='plug-in-randomize-pick' lang="en;fr">
+<sect2 id='plug-in-randomize-pick' lang="en;cs;fr">
   <title lang="en">Pick</title>
+  <title lang="cs">Vybrat</title>
   <title lang="fr">Piquer</title>
 
   <indexterm>
     <primary lang="en">Filter</primary>
     <secondary lang="en">Noise</secondary>
-    <tertiary lang="en">Pick</tertiary>    
-    
+    <tertiary lang="en">Pick</tertiary>
+
+    <primary lang="cs">filtry</primary>
+    <secondary lang="cs">Šum</secondary>
+    <tertiary lang="cs">Vybrat</tertiary>
+
     <primary lang="fr">Filtre</primary>
     <secondary lang="fr">Bruit</secondary>
-    <tertiary lang="fr">Piquer</tertiary>      
+    <tertiary lang="fr">Piquer</tertiary>
   </indexterm>
-  
+
   <mediaobject lang="en">
+    <imageobject>
+      <imagedata fileref='../images/filters/filters-noise-pick.png' format="PNG"/>
+    </imageobject>
+  </mediaobject>
+  <mediaobject lang="cs">
     <imageobject>
       <imagedata fileref='../images/filters/filters-noise-pick.png' format="PNG"/>
     </imageobject>
@@ -27,80 +37,145 @@
 
   <simplesect>
     <title lang="en">Overview</title>
+    <title lang="cs">Přehled</title>
     <title lang="fr">Généralités</title>
     <para lang="en">
-      This filter is found in 
-      <guimenuitem>Image&gt;Filters/Noise/<accel>P</accel>ick</guimenuitem>  
+      This filter is found in
+      <menuchoice>
+        <guimenu>Filters</guimenu>
+        <guisubmenu>Noise</guisubmenu>
+        <guimenuitem><accel>P</accel>ick</guimenuitem>
+      </menuchoice>.
     </para>
-    <para lang="en">
-      The Pick filter picks the highest channel value from three random neighbor pixels and applies this 
-      value to the channels in the concerned pixel.
+    <para lang="cs">
+      Tento filtr lze spustit z nabídky okna obrázku volbou
+      <menuchoice>
+        <guimenu>Filtry</guimenu>
+        <guisubmenu>Šum</guisubmenu>
+        <guimenuitem>Vybrat</guimenuitem>
+      </menuchoice>.
     </para>
     <para lang="fr">
-      Ce filtre se trouve à 
-      <guimenuitem>Image&gt;Filtres/Bruit/<accel>P</accel>iquer</guimenuitem>
-    </para>  
+      Ce filtre se trouve à
+      <menuchoice>
+        <guimenu>Filtres</guimenu>
+        <guisubmenu>Bruit</guisubmenu>
+        <guimenuitem><accel>P</accel>iquer</guimenuitem>
+      </menuchoice>.
+    </para>
+
+    <para lang="en">
+      The Pick filter replaces each affected pixel by a pixel value randomly
+      chosen from its eight neighbours and itself (from a 3×3 square the pixel
+      is center of). All or only some pixels in an active layer or selection
+      are affected, the percentage of affected pixels is determined by the
+      <guilabel>Randomization (%)</guilabel> option.
+    </para>
+    <para lang="cs">
+      Filtr Vybrat nahradí každý ovlivněný pixel hodnotou náhodně zvolenou
+      mezi jeho osmi sousedy a jím samotným (tedy ze čtverce 3×3 jehož je
+      středem). Filtrem jsou ovlivněny všechny nebo jen některé pixely z
+      aktivní vrstvy či výběru, jejich podíl je určen volbou
+      <guilabel>Náhodnost (%)</guilabel>.
+    </para>
     <para lang="fr">
       Le filtre Piquer prélève la plus forte valeur parmi les canaux de trois pixels voisins pris au hasard 
       et applique cette valeur aux canaux du pixel concerné.
-    </para> 
+    </para>
   </simplesect>
-  
+
   <simplesect>
     <title lang="en">Options</title>
+    <title lang="cs">Volby</title>
     <title lang="fr">Options</title>
     <variablelist>
 
       <varlistentry>
         <term lang="en">Random Seed</term>
+        <term lang="cs">Hnízdo náhodných čísel</term>
         <term lang="fr">Graine aléatoire</term>
         <listitem>
           <para lang="en">
-            <guilabel>Random Seed</guilabel> controls the randomization
-            element of picking. The <guibutton>Time</guibutton> button will
-            set the seed using the hardware clock of the computer. Using
-            <guibutton>Time</guibutton> is the preferred method for
-            initializing Pick as it will provide a higher chance of differing
-            values over many uses.
+            <guilabel>Random Seed</guilabel> controls randomness of picking.
+            If the same random seed in the same situation is used, the filter
+            produces exactly the same results. A diffrerent random seed
+            produces different results. Random seed can be entered manually
+            or generated randomly by pressing <guibutton>New Seed</guibutton>
+            button.
           </para>
+          <para lang='en'>
+            When the <guilabel>Randomize</guilabel> option is checked, random
+            seed cannot be entered manually, but is randomly generated each
+            time the filter is run. If it is not checked, the filter remembers
+            the last random seed used.
+          </para>
+
+          <para lang="cs">
+            <guilabel>Hnízdo náhodných čísel</guilabel> určuje náhodné
+            vlastnosti vybírání. Pokud je ve stejné situaci použito stejné
+            hnízdo, výsledky filtru jsou stejné. Použití jiného hnízda
+            způsobí odlišné výsledky. Hnízdo lze zadat ručně nebo náhodně
+            vygenerovat tlačítkem <guibutton>Randomizovat</guibutton>.
+          </para>
+          <para lang="cs">
+            Je-li zaškrtnuta volba <guilabel>Randomizovat</guilabel>, nelze
+            hnízdo náhodných čísel zadávat ručně, ale je náhodně generováno
+            při každém použití filtru. V opačném případě si filtr pamatuje
+            poslední použité hnízdo náhodných čísel.
+          </para>
+
           <para lang="fr">
             <guibutton>Graine aléatoire</guibutton> contrôle le caractère 
             aléatoire du choix des pixels. Le bouton <guibutton>Aléatoire
             </guibutton> permet d'ensemencer le générateur avec un nombre tiré de 
             l'horloge et qui sera donc bien différent à chaque utilisation.
-          </para>   
+          </para>
         </listitem>
       </varlistentry>
       <varlistentry>
-        <term lang="en">Randomization %</term>
-        <term lang="fr">Aléa %</term>
+        <term lang="en">Randomization (%)</term>
+        <term lang="cs">Náhodnost (%)</term>
+        <term lang="fr">Aléa (%)</term>
         <listitem>
           <para lang="en">
-             The <guibutton>Randomization</guibutton> slider represents the percentage of pixels of the 
-             active layer or selection which may be picked. Higher value result in more picking.
+            The <guibutton>Randomization</guibutton> slider represents the
+            percentage of pixels of the active layer or selection which will
+            be picked. The higher value, the more pixels are picked.
+          </para>
+          <para lang="cs">
+            Posuvník <guibutton>Náhodnost</guibutton> určuje podíl pixelů
+            aktivní vrstvy či výběru, které budou vybrány. Čím vyšší
+            hodnota, tím více vybraných pixelů.
           </para>
           <para lang="fr">
-            Le curseur <guibutton>Aléa</guibutton> représente le pourcentage de pixels de la 
-            sélection ou du calque actif qui peuvent être affectés par le filtre.
+            Le curseur <guibutton>Aléa</guibutton> représente le pourcentage
+            de pixels de la sélection ou du calque actif qui peuvent être
+            affectés par le filtre.
           </para>
         </listitem>
       </varlistentry>
       <varlistentry>
         <term lang="en">Repeat</term>
+        <term lang="cs">Opakování</term>
         <term lang="fr">Répétition</term>
         <listitem>
           <para lang="en">
-            The <guibutton>Repeat</guibutton> slider represents the number of
-            times the active layer will be picked. Higher values result in
-            more picking.
+            The <guibutton>Repeat</guibutton> slider represents the number
+            of times the filter will be applied. Higher values result in
+            more picking, pixel values can be transfered over longer
+            distances.
+          </para>
+          <para lang="cs">
+            Posuvník <guibutton>Opakování</guibutton> určuje počet aplikací
+            filtru. Čím vyšší hodnota, tím více vybírání a tím větší
+            vzdálenost, přes jakou se mohou přesunout hodnoty pixelů.
           </para>
           <para lang="fr">
-            Le curseur <guibutton>Répétition</guibutton> représente le nombre de fois 
-            où le filtre sera appliqué.
+            Le curseur <guibutton>Répétition</guibutton> représente le nombre
+            de fois où le filtre sera appliqué.
           </para>
         </listitem>
-      </varlistentry>     
-
-    </variablelist>    
+      </varlistentry>
+    </variablelist>
   </simplesect>
 </sect2>
