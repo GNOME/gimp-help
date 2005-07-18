@@ -59,6 +59,7 @@
     <para lang="en">
       The result is very naturally looking noise.
     </para>
+    
     <para lang="cs">
       Tento filtr lze spustit z nabídky okna obrázku volbou
       <menuchoice>
@@ -79,14 +80,27 @@
     <para lang="cs">
       Výsledkem aplikace tohoto filtru je velmi přirozeně vypadající šum.
     </para>
+    
     <para lang="fr">
-      Ce filtre se trouve à 
-      <guimenuitem>Image&gt;Filtres/Bruit/<accel>B</accel>rouiller</guimenuitem>
+      On accède à ce filtre par le menu d'image en suivant
+      <menuchoice>
+        <guimenu>Filtres</guimenu>
+        <guisubmenu>Bruit</guisubmenu>
+        <guimenuitem>Dispersion RVB</guimenuitem>
+      </menuchoice>
     </para>
     <para lang="fr">
-      Le filtre Brouiller renforce, pour des pixels choisis au hasard dans le calque actif ou la
-      sélection, la couleur d'un ou plusieurs canaux, créant l'analogue d'un «bruit» surajouté 
-      dans le domaine du son, ce qui aboutit à brouiller l'image.
+      Le filtre dispersion RVB ajoute un bruit distribué de façon «normale» 
+      à un calque ou à une sélection. Il utilise le mode de couleur RVB pour 
+      produire le bruit (le bruit est ajouté aux valeurs de rouge, de vert 
+      et de bleu de chaque pixel). «Distribution normale» signifie qu'un 
+      léger bruit est ajouté à la plus grande partie des pixels et un bruit 
+      fort à moins de pixels (si vous appliquez ce filtre à une image 
+      remplie d'un gris uniforme et vous examiniez son histogramme, vous 
+      verrez une classique courbe de Bell en cloche. 
+    </para>
+    <para lang='fr'>
+      Le résultat est un brouillage de l'image.
     </para>
   </simplesect>
   <simplesect>
@@ -116,26 +130,30 @@
       <varlistentry>
         <term lang="en">Correlated noise</term>
         <term lang="cs">Korelovaný šum</term>
-        <term lang="fr">fixme</term>
+        <term lang="fr">Bruit en corrélation</term>
         <listitem>
           <para lang="en">
+            When checked, this radio button makes sliders R, G and B to move 
+            all together. The same relative noise will be added to all
+            channels in each pixel, so the hue of pixels does not change much.
           </para>
           <para lang="cs">
           </para>
           <para lang="fr">
+            Ce bouton radio, quand il est coché, rend solidaires les 
+            trois curseurs R, V et B. Le même bruit sera ajouté à tous les 
+            canaux de chaque pixel, si bien que la teinte changera peu
           </para>
         </listitem>
       </varlistentry>
       <varlistentry>
         <term lang="en">Independent RGB</term>
         <term lang="cs">Nezávislé RGB</term>
-        <term lang="fr">Indépendant RGB</term>
+        <term lang="fr">R, V, B indépendants</term>
         <listitem>
           <para lang="en">
-            If this checkbox is not checked, sliders for <guilabel>Red</guilabel>,
-            <guilabel>Green</guilabel> and <guilabel>Blue</guilabel> channels
-            below move together and the same relative noise will be added to all
-            channels in each pixel, so the hue of pixels does not change much.
+            When this radio button is checked, you can move each RGB 
+            sliders separatly.
           </para>
           <para lang="cs">
             Pokud tato volba není aktivní, pohybují se všechny posuvníky
@@ -143,8 +161,8 @@
             Zachová se tak vyvážení barev.
           </para>
           <para lang="fr">
-            Si cette case n'est pas cochée, les trois curseurs seront solidaires et le même bruit sera 
-            ajouté aux trois canaux, de telle sorte que la balance des couleurs de l'image sera conservée.
+            Quand ce bouton radio est coché, les trois curseurs RVB sont 
+            indépendants. 
           </para>
         </listitem>
       </varlistentry>
@@ -184,15 +202,17 @@
         </listitem>
         <listitem lang="fr">
           <para>
-            Ces curseurs, et les boîtes de saisie adjacentes, permettent de fixer le niveau de bruit 
-            (de 0 à 1) dans chaque canal. Le canal Alpha n'est présent que si votre image possède un tel 
-            canal. Dans le cas d'une image en niveau de gris, le canal Rouge représente le Gris et le canal 
-            Vert représente l'Alpha.
+            Ces curseurs, et les boîtes de saisie adjacentes, permettent de 
+            fixer le niveau de bruit (de 0 à 1) dans chaque canal. Le canal 
+            Alpha n'est présent que si votre image possède un tel 
+            canal. 
           </para>
           <para>
-            En ajoutant de la couleur à un pixel, la valeur peut dépasser 255. Dans ce cas une valeur 
-            négative est ajoutée et la couleur diminue, ce qui peut amener un changement de couleur quand 
-            la valeur du canal concerné devient inférieure à celle de l'un ou l'autre canal.
+            La valeur fournie par ces curseurs détermine en fait la 
+            déviation standard de la distribution normale du bruit appliqué. 
+            La déviation standard utilisée est la moitié de la valeur fixée 
+            où 1 est la distance entre les valeurs minimale et maximale d'un 
+            canal). 
           </para>
         </listitem>
       </varlistentry>

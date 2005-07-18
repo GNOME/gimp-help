@@ -81,17 +81,28 @@
     </para>
 
     <para lang="fr">
-      Ce filtre se trouve à
-      <guimenuitem>Image&gt;Filtres/Améliorations/<accel>F</accel>iltre
-      NL</guimenuitem>.  Adaptation du programme «pnmnlfilt»: plus de
-      détails à <ulink
-      url="http://www.rt.com/man/pnmnlfilt.1.html">www.rt.com</ulink>.
-    </para>
-    <para lang="fr">
-      Il réunit les fonctions d'adoucissement, de déparasitage et
-      d'amélioration de la netteté.  Il agit sur toute l'image, pas sur
-      une sélection.
+      On accède à ce filtre par le menu d'image en suivant
+      <menuchoice>
+        <guimenu>Filtres</guimenu>
+        <guisubmenu>Amélioration</guisubmenu>
+        <guimenuitem><accel>F</accel>iltre NL</guimenuitem>
+      </menuchoice>.
+      NL signifie Non Linéaire. Dérivé du programme Unix <command>
+      pnmnlfilt</command>, il associe les fonctions d'amélioration 
+      adoucissement, déparasitage et renforcement de la netteté. Il 
+      travaille sur l'ensemble de l'image et pas sur une sélection. 
     </para> 
+    <para lang="en">
+      Il a quelque chose d'un couteau suisse, avec trois modes opératoires 
+      distincts. Dans tous les modes, chaque pixel de l'image est traité 
+      en fonction de sa valeur et de celle des pixels environnants. Plutôt 
+      que d'utiliser un bloc de 3x3 pixels, il prélève 7 échantillons 
+      hexagonaux, la taille des hexagones étant réglable grâce 
+      au paramètre Rayon. Un rayon de 0.3333 signifie que les 7 hexagones 
+      sont centrés exactement sur le pixel central et qu'il n'y aura pas 
+      de filtrage. Un rayon de 1.0 signifie que les 7 hexagones tiennent 
+      dans un tableau de 3x3 pixels. 
+    </para>
   </simplesect>
 
   <simplesect>
@@ -169,7 +180,7 @@
                 </para>
               </listitem> 
               <listitem>
-	        <para>
+          <para>
                   <guilabel>Rayon</guilabel>: Ce curseur contrôle la force
                   du filtre (0.33-1.00).
                 </para>
@@ -207,10 +218,10 @@
               </listitem>
               <listitem>
                 <para>
-                  <guilabel>Amélioration des bordures</guilabel>: Alpha
-                  contrôle le taux de renforcement des bordures qui
-                  deviennent plus nettes. Les valeurs utiles sont
-                  comprises entre 0.5 et 0.9.
+                  <guilabel>Amélioration des bords</guilabel>: Alpha
+                  contrôle le taux de renforcement des bords (limites 
+                  de contraste entre les couleurs), qui deviennent plus 
+                  nets. Les valeurs utiles sont comprises entre 0.5 et 0.9.
                 </para>
               </listitem>         
             </itemizedlist>
@@ -223,9 +234,10 @@
 
   </simplesect>
 
-  <simplesect lang="en;cs">
+  <simplesect lang="en;cs;fr">
     <title lang="en">Operating Modes</title>
     <title lang="cs">Operační režiny</title>
+    <title lang="fr">Modes opératoires</title>
     <para lang="cs">
       Tento filtr může zastat několik různých funkcí, v závislosti na
       nastavení parametru <parameter>alfa</parameter>.
@@ -234,6 +246,11 @@
       This filter can perform several distinct functions, depending on
       the value of the parameter <parameter>alpha</parameter>.
     </para>
+    <para lang="fr">
+      Ce filtre agit différemment selon la valeur du paramètre <parameter>
+      Alpha</parameter>:
+    </para>
+    
     <variablelist lang="en">
       <varlistentry>
       <term>Alpha trimmed mean filter. (0.0 &lt;=
@@ -352,6 +369,109 @@
         single pass with a large <parameter>alpha</parameter> value. As
         usual, there is a tradeoff between filtering effectiveness and
         losing detail. Experimentation is encouraged.
+      </para>
+      </listitem>
+      </varlistentry>
+    </variablelist>
+    
+    <variablelist lang="fr">
+      <title>Plus d'explications</title>
+      <varlistentry>
+      <term>Médiane réduite par alpha(0.0 &lt;=<parameter>alpha</parameter> &lt;= 0.5)</term> 
+      <listitem>
+      <para>
+        La valeur du pixel central sera remplacée par la moyenne des 
+        valeurs des 7 hexagones environnants, mais ces valeurs sont triées 
+        par taille et la plus forte ainsi que la plus basse sont exclues du 
+        calcul. Cela implique que qu'un alpha= 0 donne le même résultat 
+        qu'une convolution normale ( c-à-d celui d'un filtre de moyennage ou 
+        d'adoucissement), où le <parameter>rayon</parameter> déterminera 
+        la force du filtre. Pour démarrer avec un faible adoucissement, un 
+        alpha à 0 et un rayon à 0.55 sont de bonnes valeurs. Pour un 
+        adoucissement plus marqué, essayez un alpha à 0 et un rayon à 1.0. 
+      </para>
+      <para>
+        Une valeur <parameter>alpha</parameter> à 0.5 fera que la moyenne 
+        des 7-hexagones remplacera vraiment la valeur du pixel central. 
+        Cette sorte de filtre est parfaite pour éliminer des bruits d'un 
+        seul pixel. L'usage judicieux du <parameter>Rayon</parameter> 
+        permettra de régler finement l'effet du filtre. Des valeurs 
+        intermédiaires donneront un effet entre l'adoucissement et 
+        et l'élimination des petits bruits. Pour un filtrage léger, 
+        utilisez un alpha à 0.4 et un rayon à 0.6. Pour  un effet plus 
+        marqué essayez un alpha à 0.5 et un rayon à 1.0. 
+      </para>
+      </listitem>
+      </varlistentry>
+  
+      <varlistentry>
+      <term>Estimation optimale. (1.0 &lt;=
+      <parameter>alpha</parameter> &lt;= 2.0)</term> 
+      <listitem>
+      <para>
+        Ce type de filtre applique un adoucissement adapté à l'image. Pour 
+        chaque pixel, la variance des valeurs de l'hexagone environnant est 
+        calculée, et la valeur de l'adoucissement lui est inversement 
+        proportionnelle. L'idée est que, si la variance est faible, c'est 
+        qu'elle est due à un bruit dans l'image, tandis que si elle est 
+        forte, c'est qu'il s'agit d'un élément à conserver. Là aussi, le 
+        paramètre de rayon contrôle la force du filtre, mais il vaut mieux 
+        maintenir le rayon entre 0.8 et 1.0 pour que le calcul de variance 
+        soit significatif. Le paramètre alpha règle le seuil 
+        d'adoucissement, au-delà duquel l'adoucissement sera plus faible. 
+        De petites valeurs d'alpha donneront donc un effet subtil et de 
+        fortes valeurs tendront à adoucir toutes les parties de l'image. 
+        Démarrez avec un alpha à 1.2 et un rayon à 1.0 et essayez 
+        d'augmenter ou de diminuer le paramètre alpha pour obtenir l'effet 
+        désiré. Ce type de filtre est excellent pour éliminer les bruits 
+        «multicouleurs», composés de couleurs différentes, comme le moiré 
+        de certaines images. 
+      </para>
+      </listitem>
+      </varlistentry>
+  
+      <varlistentry>
+      <term>Améliorations des bords. (-0.1 >= <parameter>alpha</parameter> >=
+      -0.9)</term>  
+      <listitem>
+      <para>
+        C'est le contraire d'un filtre d'adoucissement. Il renforce les 
+        bords à l'intérieur d'une image. Le paramètres Alpha contrôle le 
+        degré de renforcement, de léger (-0.1) à marqué (-0.9). Le 
+        paramètre Rayon contrôle la force du filtre, comme d'habitude, 
+        mais les valeurs utiles sont comprises entre 0.5 et 0.9. 
+        Essayez en démarrant avec un alpha à 0.3 et un rayon à 0.8. 
+      </para>
+      </listitem>
+      </varlistentry>
+  
+      <varlistentry>
+      <term>Utilisation combinée</term>  
+      <listitem>
+      <para>
+        Les différents modes opératoires peuvent être utilisés l'un après 
+        l'autre pour obtenir l'effet désiré. par exemple, pour transformer 
+        une image tramée monochrome en une image en niveaux de gris, 
+        essayez une ou deux passes du filtre d'adoucissement puis une 
+        passe du filtre d'optimisation et enfin appliquez un léger 
+        renforcement des bords. Notez que le filtre Renforcement des bords 
+        n'est à utiliser qu'après le filtre d'adoucissement ou le filtre 
+        d'optimisation, puisque le Renforcement des bords est exactement le 
+        contraire d'un adoucissement. 
+      </para>
+      <para>
+        Pour réduire de bruit de quantification dans les images, (par 
+        exemple en re-transformant des images .GIF en fichiers 24-bits), 
+        vous pouvez essayer une passe du filtre d'optimisation avec un 
+        alpha à 1.2 et un rayon à 0.5, une passe du filtre d'adoucissement 
+        avec un alpha à 0.5 et un rayon à 0.55, et peut-être une passe du 
+        filtre de renforcement des bords. 
+      </para>
+      <para>
+        Plusieurs passes du filtre d'optimisation avec des valeurs alpha 
+        décroissantes est plus efficace qu'une seule passe avec un alpha 
+        élevé. Comme toujours, il faut trouver un compromis entre 
+        l'efficacité du filtrage et la perte de détails. Expérimentez! 
       </para>
       </listitem>
       </varlistentry>
