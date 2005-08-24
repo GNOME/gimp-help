@@ -1,22 +1,39 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<sect2 id='plug-in-rotate-colormap' lang="en;cs;fr">
+<!DOCTYPE sect2
+  PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+  "http://www.docbook.org/xml/4.3/docbookx.dtd">
+
+<!-- section history: -->
+<!-- 050820 de added by axel.wernicke -->
+<sect2 id='plug-in-rotate-colormap' lang="en;cs;de;fr">
   <title lang="en">Colormap Rotation</title>
   <title lang="cs">Rotace barevné mapy</title>
+  <title lang="de">Farben drehen</title>
   <title lang="fr">Rotation de la carte des couleurs</title>
 
-  <indexterm>
-    <primary lang="en">Filter</primary>
-    <secondary lang="en">Color</secondary>
-    <tertiary lang="en">Rotation</tertiary>
+  <indexterm lang="en">
+    <primary>Filter</primary>
+    <secondary>Color</secondary>
+    <tertiary>Rotation</tertiary>
+  </indexterm>
 
-    <primary lang="cs">filtry</primary>
-    <secondary lang="cs">Barvy</secondary>
-    <tertiary lang="cs">Rotace</tertiary>
+  <indexterm lang="cs">
+    <primary>filtry</primary>
+    <secondary>Barvy</secondary>
+    <tertiary>Rotace</tertiary>
+  </indexterm>
 
-    <primary lang="fr">Filtre</primary>
-    <secondary lang="fr">Color</secondary>
-    <tertiary lang="fr">Rotation</tertiary>
+  <indexterm lang="de">
+    <primary>Filter</primary>
+    <secondary>Farben</secondary>
+  </indexterm>
+  <indexterm lang="de"><primary>Farben drehen</primary></indexterm>
+
+  <indexterm lang="fr">
+    <primary>Filtre</primary>
+    <secondary>Color</secondary>
+    <tertiary>Rotation</tertiary>
   </indexterm>
 
   <mediaobject lang="en">
@@ -31,12 +48,6 @@
     </imageobject>
   </mediaobject>
 
-  <mediaobject lang="de">
-    <imageobject>
-      <imagedata fileref='../images/filters/filters-colormap-rotation.png' format="PNG"/>
-    </imageobject>
-  </mediaobject>
-
   <mediaobject lang="fr">
     <imageobject>
       <imagedata fileref='../images/filters/fr/filters-colormap-rotation.png' format="PNG"/>
@@ -46,6 +57,7 @@
   <simplesect>
     <title lang="cs">Přehled</title>
     <title lang="en">Overview</title>
+    <title lang="de">Wirkungsweise</title>
     <title lang="fr">Généralités</title>
     <para lang="en">
       This filter is found in
@@ -74,6 +86,29 @@
       rozsah barev.
     </para>
 
+    <para lang="de">
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/taj_orig.png"
+                     format="PNG"/>
+        </imageobject>
+      </inlinemediaobject>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/color-taj-rotation.png"
+                     format="PNG"/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+    <para>
+      v.l.n.r.: Originalbild, Farben drehen angewandt
+    </para>
+    <para lang="de">
+      Dieser Filter ermöglicht es Ihnen, in einem Bild die Farben aus
+      beliebigen Ausschnitt des Farbkreises gegen einen beliebigen anderen
+      Ausschnitt auszutauschen.
+    </para>
+    
      <para lang="fr">
        On accède à ce filtre par le menu d'image en suivant
        <menuchoice>
@@ -89,16 +124,52 @@
     </para>
   </simplesect>
 
+  <simplesect lang="de">
+    <title lang="de">Filteraufruf</title>
+    <para lang="de">
+      Dieser Filter lässt sich über das Menü
+      <menuchoice>
+        <guimenu><accel>F</accel>ilter</guimenu>
+        <guisubmenu><accel>F</accel>arben</guisubmenu>
+        <guisubmenu><accel>A</accel>bbilden</guisubmenu>
+        <guimenuitem>Farben <accel>d</accel>rehen</guimenuitem>
+      </menuchoice>
+      im Bildfenster aufrufen.
+    </para>
+  </simplesect>
+  
   <simplesect>
     <title lang="en">Main Options</title>
     <title lang="cs">Hlavní volby</title>
+    <title lang="de">Eigenschaften - Haupteigenschaften</title>
     <title lang="fr">Options principales</title>
+
+    <informalfigure lang="de">
+      <mediaobject>
+        <imageobject lang="de">
+          <imagedata fileref="../images/filters/de/options-color-rotation.png"
+						         format="PNG"/>
+        </imageobject>
+        <caption>
+          <para lang="de">
+            Eigenschaften für den Filter <quote>Farben drehen</quote>
+          </para>
+        </caption>
+      </mediaobject>
+    </informalfigure>
+
     <para lang="en">
       You have there two color circles, one for the "From" color range and 
       the other for the "To" color range:
     </para>
     <para lang="cs">
       Na této kartě se nastavují nejdůležitější volby filtru.
+    </para>
+    <para lang="de">
+      In den Eigenschaften des Dialoges werden zwei Farbkreise dargestellt.
+      Mit dem oberen können Sie auswählen welche Farben durch den Filter
+      verändert werden. Mit dem unteren bestimmen Sie auf welchen Bereich
+      des Farbkreises die zu bearbeitenden Farben abgebildet werden.
     </para>
     <para lang="fr">
       Vous disposez là de deux panneaux avec cercle colorimérique, l'un 
@@ -109,100 +180,130 @@
       <varlistentry>
         <term lang="en">From</term>
         <term lang="cs">Z</term>
+        <term lang="de">Von</term>
         <term lang="fr">Depuis</term>
-          <listitem lang="en">
-            <para>
-              The <guilabel>Color Circle</guilabel>: Two axis to define 
-              "From" range. The curved arrow in angle lets to recognise 
-              "From" axis and "To" axis of range. Click-drag these axis to 
-              change range.
-            </para>
-            <para>
-              <guilabel>Switch to Clockwise/Counterclockwise</guilabel>: 
-              Sets the direction the range is going.
-            </para>
-            <para>
-              <guilabel>Change Order of Arrows</guilabel>: Inverts From and 
-              To axis. This results in an important color change as colors 
-              in selection angle are different.
-            </para>
-            <para>
-              <guilabel>Select All</guilabel> selects the whole color 
-              circle.
-            </para> 
-            <para>
-              <guilabel>From</guilabel> and <guilabel>To</guilabel> boxes 
-              display start axis and end axis positions (in rad/PI) which 
-              are limiting the selected color range. You can enter these 
-              positions manually or with help of arrow-heads.
-            </para>
-          </listitem>
+        <listitem lang="en">
+          <para>
+            The <guilabel>Color Circle</guilabel>: Two axis to define 
+            "From" range. The curved arrow in angle lets to recognise 
+            "From" axis and "To" axis of range. Click-drag these axis to 
+            change range.
+          </para>
+          <para>
+            <guilabel>Switch to Clockwise/Counterclockwise</guilabel>: 
+            Sets the direction the range is going.
+          </para>
+          <para>
+            <guilabel>Change Order of Arrows</guilabel>: Inverts From and 
+            To axis. This results in an important color change as colors 
+            in selection angle are different.
+          </para>
+          <para>
+            <guilabel>Select All</guilabel> selects the whole color 
+            circle.
+          </para> 
+          <para>
+            <guilabel>From</guilabel> and <guilabel>To</guilabel> boxes 
+            display start axis and end axis positions (in rad/PI) which 
+            are limiting the selected color range. You can enter these 
+            positions manually or with help of arrow-heads.
+          </para>
+        </listitem>
 
-          <listitem lang="cs">
-            <para>
-              <guilabel>Barevný kruh</guilabel>: Barevný kruh obsahuje dvě
-              úsečky uzavírající úhel obsahující zdrojový rozsah barev.
-              Zakřivená šipka mezi nimi pomáhá vymezit úhel a určuje směr, ve
-              kterém se s rozsahem dále pracuje. Úsečky lze přesouvat
-              kliknutím a tažením.
-            </para>
-            <para>
-              <guilabel>Přepnout po/proti směru hodinových ručiček</guilabel>:
-              Tímto tlačítkem lze změnit směr vymezeného rozsahu barev.
-            </para>
-            <para>
-              <guilabel>Změnit směr šipek</guilabel>: Změní vybraný rozsah
-              barev na jeho doplněk.
-            </para>
-            <para>
-              <guilabel>Vybrat vše</guilabel> vybere do rozsahu celý barevný
-              kruh.
-            </para> 
-            <para>
-              Pole <guilabel>Z</guilabel> a <guilabel>Do</guilabel> zobrazují
-              a umožňují ručně nastavit polohy úseček vymezujících úhel.
-            </para>
-          </listitem>
+        <listitem lang="cs">
+          <para>
+            <guilabel>Barevný kruh</guilabel>: Barevný kruh obsahuje dvě
+            úsečky uzavírající úhel obsahující zdrojový rozsah barev.
+            Zakřivená šipka mezi nimi pomáhá vymezit úhel a určuje směr, ve
+            kterém se s rozsahem dále pracuje. Úsečky lze přesouvat
+            kliknutím a tažením.
+          </para>
+          <para>
+            <guilabel>Přepnout po/proti směru hodinových ručiček</guilabel>:
+            Tímto tlačítkem lze změnit směr vymezeného rozsahu barev.
+          </para>
+          <para>
+            <guilabel>Změnit směr šipek</guilabel>: Změní vybraný rozsah
+            barev na jeho doplněk.
+          </para>
+          <para>
+            <guilabel>Vybrat vše</guilabel> vybere do rozsahu celý barevný
+            kruh.
+          </para> 
+          <para>
+            Pole <guilabel>Z</guilabel> a <guilabel>Do</guilabel> zobrazují
+            a umožňují ručně nastavit polohy úseček vymezujících úhel.
+          </para>
+        </listitem>
 
-          <listitem lang="fr">
-            <para>
-              Le <guilabel>Cercle des couleurs</guilabel>: Il possède deux 
-              axes définissant l'intervalle de départ. La flèche courbe 
-              marquant l'angle permet de reconnaître l'axe de début («De») 
-              de l'intervalle et l'axe de fin d'intervalle («À»). Cliquez et 
-              faites glisser ces axes pour modifier l'intervalle.
-            </para>
-            <para>
-              <guilabel>Passer en mode horaire</guilabel> permet de basculer 
-              entre le sens des aiguilles d'une montre et le sens inverse 
-              des aiguilles d'une montre. Si les sens dans les deux 
-              cercles «Depuis» et «Vers», le «De» de «Depuis» correspondra 
-              au «À» de «Vers» et inversement.
-            </para>
-            <para>
-              <guilabel>Changer l'ordre des lignes</guilabel> intervertit 
-              les axes «De» / «À» et l'intervalle est inversé. Ce qui 
-              modifie beaucoup le résultat, car les couleurs comprises 
-              dans l'angle de sélection sont différentes.
-            </para>
-            <para>
-              <guilabel>Tout sélectionner</guilabel> sélectionne l'ensemble 
-              du cercle des couleurs.
-            </para> 
-            <para>
-              Les boîtes <guilabel>Depuis</guilabel> et 
-              <guilabel>Vers</guilabel> devraient s'appeler «De» 
-              et «À». Les positions (en radians/PI) de l'axe de début et de 
-              l'axe de fin limitant l'intervalle sélectionné dans le cercle 
-              des couleurs viennent s'y afficher, mais vous pouvez aussi 
-              les entrer manuellement ou à l'aide des pointes de flèches. 
-            </para>
-          </listitem>
+        <listitem lang="de">
+          <para>
+            Zwei <emphasis>Achsen im Farbkreis</emphasis> bestimmen den
+            Quellfarbbereich. Der gebogene Pfeil innerhalb des Winkels
+            macht die Richtung des Bereiches kenntlich. Sie können die
+            beiden Schenkel des Winkels mit der Maus verschieben, um einen
+            eigenen Bereich des Farbkreises zu bestimmen.
+          </para>
+          <para>
+            Die Schaltfläche <guilabel>Gegen den Uhrzeigersinn</guilabel>
+            dient zum ändert der Richtung des gewählten Farbbereiches.
+          </para>
+          <para>
+            Die Schaltfläche <guilabel>Reihenfolge der Pfeile
+            ändern</guilabel> kehrt die beiden Achsen um. Dies führt dazu,
+            dass genau der entgegengesetzte Farbbereich gewählt wird.
+          </para>
+          <para>
+            Die Schaltfläche <guilabel>Alles auswählen</guilabel> wählt den
+            gesamten Farbkreis als Bereich aus.
+          </para> 
+          <para>
+            Die Eingabefelder <guilabel>Von</guilabel> und
+            <guilabel>Nach</guilabel> erlauben eine direkte numerische
+            Eingabe der Werte (in rad/PI).
+          </para>
+        </listitem>
+
+        <listitem lang="fr">
+          <para>
+            Le <guilabel>Cercle des couleurs</guilabel>: Il possède deux 
+            axes définissant l'intervalle de départ. La flèche courbe 
+            marquant l'angle permet de reconnaître l'axe de début («De») 
+            de l'intervalle et l'axe de fin d'intervalle («À»). Cliquez et 
+            faites glisser ces axes pour modifier l'intervalle.
+          </para>
+          <para>
+            <guilabel>Passer en mode horaire</guilabel> permet de basculer 
+            entre le sens des aiguilles d'une montre et le sens inverse 
+            des aiguilles d'une montre. Si les sens dans les deux 
+            cercles «Depuis» et «Vers», le «De» de «Depuis» correspondra 
+            au «À» de «Vers» et inversement.
+          </para>
+          <para>
+            <guilabel>Changer l'ordre des lignes</guilabel> intervertit 
+            les axes «De» / «À» et l'intervalle est inversé. Ce qui 
+            modifie beaucoup le résultat, car les couleurs comprises 
+            dans l'angle de sélection sont différentes.
+          </para>
+          <para>
+            <guilabel>Tout sélectionner</guilabel> sélectionne l'ensemble 
+            du cercle des couleurs.
+          </para> 
+          <para>
+            Les boîtes <guilabel>Depuis</guilabel> et 
+            <guilabel>Vers</guilabel> devraient s'appeler «De» 
+            et «À». Les positions (en radians/PI) de l'axe de début et de 
+            l'axe de fin limitant l'intervalle sélectionné dans le cercle 
+            des couleurs viennent s'y afficher, mais vous pouvez aussi 
+            les entrer manuellement ou à l'aide des pointes de flèches. 
+          </para>
+        </listitem>
       </varlistentry> 
 
       <varlistentry>
         <term lang="en">To</term>
         <term lang="cs">Do</term>
+        <term lang="de">Nach</term>
         <term lang="fr">Vers</term>
         <listitem lang="en">
           <para>
@@ -212,6 +313,12 @@
         <listitem lang="cs">
           <para>
             Nastavení v této části jsou stejná, jako v části Z.
+          </para>
+        </listitem>
+        <listitem lang="de">
+          <para>
+            Die Eingabeelemente für den Zielfarbbereich entsprechen denen zur
+            Auswahl eines Quellfarbbereiches.
           </para>
         </listitem>
         <listitem lang="fr">
@@ -237,26 +344,37 @@
   <simplesect>
     <title lang="en">Grey Options</title>
     <title lang="cs">Různé</title>
+    <title lang="de">Eigenschaften - Grau-Eigenschaften</title>
     <title lang="fr">Options Gris</title>
-    <mediaobject lang="en;fr">
-    <imageobject>
-      <imagedata fileref='../images/filters/rotation.png' format="PNG"/>
-    </imageobject>
-    <caption>
-      <para lang='en'>
-        <emphasis>Example for Grey Options: three sectors are defined for 
-        Red, Green and Blue with different saturations. Grey and White 
-        colors are represented (0% Sat).</emphasis>
-      </para>
-      <para lang='fr'>
-        <emphasis>Exemple pour les Options de Gris: trois secteurs sont 
-        définis pour le Rouge, le Vert et le Bleu avec des saturations 
-        différentes. Le Gris et le Blanc sont représentés (Sat. 0°).
-        </emphasis>
-      </para>
-    </caption>
-    </mediaobject>
-
+    
+    <informalfigure lang="en;de;fr">
+      <mediaobject>
+        <imageobject lang="en;fr">
+          <imagedata fileref='../images/filters/rotation.png' format="PNG"/>
+        </imageobject>
+        <imageobject lang="de">
+          <imagedata fileref="../images/filters/de/options-color-rotation-gray.png"
+                     format="PNG"/>
+        </imageobject>
+        <caption>
+          <para lang='en'>
+            <emphasis>Example for Grey Options: three sectors are defined for 
+            Red, Green and Blue with different saturations. Grey and White 
+            colors are represented (0% Sat).</emphasis>
+          </para>
+          <para lang="de">
+            Grau-Eigenschaften für den Filter <quote>Farben drehen</quote>
+          </para>
+          <para lang='fr'>
+            <emphasis>Exemple pour les Options de Gris: trois secteurs sont 
+            définis pour le Rouge, le Vert et le Bleu avec des saturations 
+            différentes. Le Gris et le Blanc sont représentés (Sat. 0°).
+            </emphasis>
+          </para>
+        </caption>
+      </mediaobject>
+    </informalfigure>
+    
     <para lang="en">
       In this tab, you can specify how to treat gray. By default, grey is 
       not considered as a color and is not taken in account by the rotation.
@@ -268,6 +386,14 @@
       Tato karta se týká různých voleb.
     </para>
     
+    <para lang="de">
+      Diese Filtereigenschaften erlauben es Ihnen festzulegen, wie Grau durch
+      den Filter behandelt wird. Standardmässig wird Grau nicht als Farbe
+      betrachtet und durch den Filter ignoriert. Mit diesen Eigenschaften
+      können Sie wenig gesättigte Farben in Grautöne wandeln und ebenso
+      Grautöne einfärben.
+    </para>
+   
     <para lang="fr">
       Dans cet onglet, vous pouvez spécifier comment traiter  le gris. Par 
       défaut, le gris n'est pas considéré comme une couleur et n'est pas 
@@ -277,82 +403,9 @@
     </para>
     
     <variablelist>
-      <varlistentry>
-        <term lang="en">Gray Threshold</term>
-        <term lang="cs">Možnosti šedé</term>
-        <term lang="fr">Seuil de gris</term>
-        <listitem>
-          <mediaobject lang='en;fr'>
-            <imageobject>
-            <imagedata fileref='../images/filters/threshold.png' format="PNG"/>
-            </imageobject>
-            <caption>
-              <para lang='en'>
-              <emphasis>Greythreshold is just above 0.25: the blue sector 
-              has turned to Grey (Note that Grey and White, that are 
-              0% Sat., are not concerned).</emphasis>
-              </para>
-              <para lang='fr'>
-              <emphasis>Le seuil de gris est juste au-dessus de 0.25: le 
-              secteur bleu est devenu gris (Notez que ni le Gris ni le 
-              Blanc, bien que Sat 0%, ne sont concernés).</emphasis>
-              </para>
-            </caption>
-          </mediaobject>
-                    
-          <para lang='en'>
-            You specify there how much saturation will be considered grey. 
-            By increasing progressively saturation, you will see an 
-            enlarging circle in color circle and enlarging selected areas in 
-            Preview if "Continuous update" is checked. In a black to white 
-            gradient,you can see enlarging color replacement as you increase 
-            threshold very slowly.
-          </para>
-          
-          <para lang='cs'>
-            V této části lze nastavit způsob, jakým se zachází s šedými
-            barvami. Ve výchozím nastavení se šedá nepovažuje za barvu.
-            Silně desaturované barvy však také vypadají šedé. 
-          </para>
-          
-          <para lang='fr'>
-            Vous définissez là le degré de saturation qui sera considéré 
-            comme du gris. En augmentant progressivement la valeur vous 
-            verrez un cercle s'élargir dans le <guilabel>Cercle de 
-            couleurs Gris</guilabel> et les plages sélectionnées
-            s'étendre dans l'<guilabel>Aperçu</guilabel> si la case
-            «Mise à jour continue» est cochée. Dans un dégradé de noir vers 
-            blanc, vous voyez la couleur remplacer progressivement le gris 
-            quand vous augmentez très lentement le seuil.
-          </para>
-          <mediaobject lang='en'>
-            <imageobject>
-       <imagedata fileref='../images/filters/greythresh.png' format="PNG"/>    
-            </imageobject>
-            <caption>
-              <para>
-                <emphasis>Black to White gradient, progressively filled with 
-                color, as threshold increases.</emphasis>
-              </para>
-            </caption>
-          </mediaobject>
-          <mediaobject lang='fr'>
-            <imageobject>
-      <imagedata fileref='../images/filters/fr/greythresh.png' format="PNG"/>
-            </imageobject>
-            <caption>
-              <para lang='fr'>
-                <emphasis>Dégradé de Noir vers Blanc, progressivement rempli 
-                de couleur au fur et à mesure que le seuil augmente.
-                </emphasis>
-              </para>
-            </caption>
-          </mediaobject>
-        </listitem>
-      </varlistentry>
-      
-      <varlistentry lang='en;fr'>
+      <varlistentry lang='en;de;fr'>
         <term lang='en'>Grey Color Circle</term>
+        <term lang='de'>Farbkreis - Grau</term>
         <term lang='fr'>Cercle colorimétrique de gris</term>
         <listitem lang='en'>
           <para>
@@ -370,7 +423,24 @@
            </para>
          </listitem>
          
-         <listitem lang='fr'>
+        <listitem lang='de'>
+          <para>
+            Im Zentrum des Farbkreises befindet sich ein kleiner Kreis. Im
+            Zentrum repräsentiert dieser die Farbe Grau. Wenn Sie den
+            Schwellwert erhöhen, werden die Pixel im Bild, welche eine
+            geringere Farbsättigung als der Schwellwert haben, werden wie grau
+            behandelt.
+          </para>  
+          <para>
+            Wenn Sie den kleinen Kreis im Farbkreis verschieben, oder die
+            Werte in den Eingabefeldern <guilabel>Farbton</guilabel> und
+            <guilabel>Sättigung</guilabel> ändern, wird eine Farbe bestimmt.
+            Diese Farbe ersetzt bei der Anwendung des Filters alle die
+            Bereiche die als Grau betrachtet werden.
+          </para>
+        </listitem>
+         
+        <listitem lang='fr'>
            <para>
              Au centre de ce cercle colorimétrique se trouve un petit 
              «cercle de définition». Il représente alors le gris. Si vous 
@@ -389,8 +459,9 @@
          </listitem>
        </varlistentry>
        
-       <varlistentry lang='en;fr'>
+       <varlistentry lang='en;de;fr'>
          <term lang='en'>Grey Mode</term>
+         <term lang='de'>Graumodus</term>
          <term lang='fr'>Mode de gris</term>      
          <listitem lang='en'>
            <para>
@@ -421,7 +492,7 @@
            </para>
            <mediaobject lang='en'>
              <imageobject>
-         <imagedata fileref='../images/filters/changeto.png' format="PNG"/>
+               <imagedata fileref='../images/filters/changeto.png' format="PNG"/>
              </imageobject>
              <caption>
                <para>
@@ -431,6 +502,35 @@
              </caption>
            </mediaobject>
          </listitem>
+         
+          <listitem lang='de'>
+            <para>
+              In diesem Bereich können Sie für den
+              <guilabel>Graumodus</guilabel> einstellen. Diese Eigenschaft
+              bestimmt, wie die anderen Einstellungen durch den Filter
+              umgesetzt werden.
+            </para>
+            <itemizedlist>
+              <listitem>
+                <para>
+                  Die Einstellung <guilabel>Behandle als dies</guilabel>
+                  bewirkt, dass die Grauswerte des Bildes durch den Filter in
+                  die im Farbkreis eingestellte Farbe unter Berücksichtigung
+                  der eingestellten <guilabel>Von</guilabel> und
+                  <guilabel>Zu</guilabel> aus den Haupteigenschaften des
+                  Filters.
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  Die Einstellung <guilabel>Ändere in dies</guilabel>
+                  bewirkt, dass die Grauwerte des Bildes durch den Filter
+                  direkt in die im Farbkreis eingestellte Farbe umgewandelt
+                  werden.
+                </para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
          
          <listitem lang='fr'>
            <para>
@@ -462,7 +562,7 @@
            </para>
            <mediaobject lang='fr'>
              <imageobject>
-      <imagedata fileref='../images/filters/fr/changeto.png' format="PNG"/>
+              <imagedata fileref='../images/filters/fr/changeto.png' format="PNG"/>
              </imageobject>
              <caption>
                <para lang='fr'>
@@ -474,17 +574,99 @@
          </listitem>
        </varlistentry>
                   
+      <varlistentry>
+        <term lang="en">Gray Threshold</term>
+        <term lang="cs">Možnosti šedé</term>
+        <term lang="de">Schwellwert Grau</term>
+        <term lang="fr">Seuil de gris</term>
+        <listitem>
+          <mediaobject lang='en;fr'>
+            <imageobject>
+            <imagedata fileref='../images/filters/threshold.png' format="PNG"/>
+            </imageobject>
+            <caption>
+              <para lang='en'>
+                <emphasis>Greythreshold is just above 0.25: the blue sector 
+                has turned to Grey (Note that Grey and White, that are 
+                0% Sat., are not concerned).</emphasis>
+              </para>
+              <para lang='fr'>
+                <emphasis>Le seuil de gris est juste au-dessus de 0.25: le 
+                secteur bleu est devenu gris (Notez que ni le Gris ni le 
+                Blanc, bien que Sat 0%, ne sont concernés).</emphasis>
+              </para>
+            </caption>
+          </mediaobject>
+                    
+          <para lang='en'>
+            You specify there how much saturation will be considered grey. 
+            By increasing progressively saturation, you will see an 
+            enlarging circle in color circle and enlarging selected areas in 
+            Preview if "Continuous update" is checked. In a black to white 
+            gradient,you can see enlarging color replacement as you increase 
+            threshold very slowly.
+          </para>
+          
+          <para lang='cs'>
+            V této části lze nastavit způsob, jakým se zachází s šedými
+            barvami. Ve výchozím nastavení se šedá nepovažuje za barvu.
+            Silně desaturované barvy však také vypadají šedé. 
+          </para>
+          
+          <para lang='de'>
+            Hier stellen Sie ein, welchen Wert der Farbsättigung im Bild der
+            Filter noch als Grau betrachtet wird. Wenn Sie den Wert erhöhen,
+            wird der kleine Kreis im Farbkreis grösser.
+          </para>
+          
+          <para lang='fr'>
+            Vous définissez là le degré de saturation qui sera considéré 
+            comme du gris. En augmentant progressivement la valeur vous 
+            verrez un cercle s'élargir dans le <guilabel>Cercle de 
+            couleurs Gris</guilabel> et les plages sélectionnées
+            s'étendre dans l'<guilabel>Aperçu</guilabel> si la case
+            «Mise à jour continue» est cochée. Dans un dégradé de noir vers 
+            blanc, vous voyez la couleur remplacer progressivement le gris 
+            quand vous augmentez très lentement le seuil.
+          </para>
+          
+          <mediaobject lang="en;fr">
+            <imageobject lang='en'>
+               <imagedata fileref='../images/filters/greythresh.png'
+                          format="PNG"/>    
+            </imageobject>
+            <imageobject lang="fr">
+              <imagedata fileref='../images/filters/fr/greythresh.png'
+                         format="PNG"/>
+            </imageobject>
+            <caption>
+              <para lang="en">
+                <emphasis>Black to White gradient, progressively filled with 
+                color, as threshold increases.</emphasis>
+              </para>
+              <para lang='fr'>
+                <emphasis>Dégradé de Noir vers Blanc, progressivement rempli 
+                de couleur au fur et à mesure que le seuil augmente.
+                </emphasis>
+              </para>
+            </caption>
+          </mediaobject>
+          
+        </listitem>
+      </varlistentry>
     </variablelist>
   </simplesect>
 
   <simplesect>
     <title lang="en">Previews</title>
     <title lang="cs">Náhled</title>
+    <title lang="de">Vorschau</title>
     <title lang="fr">Aperçus</title>
     <variablelist>
       <varlistentry>
         <term lang="en">Original and Rotated</term>
         <term lang="cs">Náhled</term>
+        <term lang="de">Original und Gedreht</term>
         <term lang="fr">Original et Tourné</term>
         <listitem>
           <para lang="en">
@@ -496,6 +678,11 @@
             <guilabel>Náhled</guilabel>: Náhled tohoto filtru obsahuje dvě
             zmenšeniny obrázku, první zobrazuje původní stav pro snadné
             srovnání, druhá změny podle aktuálního nastavení filtru.
+          </para>
+          <para lang="de">
+            Die Vorschau besteht aus zwei Bildern. Im oberen wird das
+            Originalbild angezeigt, das Untere zeigt das Bild nach der
+            Ausführung des Filters mit den aktuellen Parametern.
           </para>
           <para lang="fr">
             <guilabel>Aperçu</guilabel>: Cet aperçu vous présente une
@@ -509,6 +696,7 @@
       <varlistentry>
         <term lang='en'>Continuous Update</term>
         <term lang='cs'>Plynulá aktualizace</term>
+        <term lang="de">Ständig neu berechnen</term>
         <term lang='fr'>Mise à jour continue</term>
         <listitem> 
           <para lang="en">
@@ -518,6 +706,10 @@
           <para lang='cs'> 
             <guilabel>Plynulá aktualizace</guilabel>: změny jsou v náhledu
             zobrazovány ihned, během tažení úseček v barevném kruhu.
+          </para>
+          <para lang="de">
+            Wenn dieses Kontrollkästchen aktiviert ist, wird eine Vorschau
+            angezeigt.
           </para>
           <para lang='fr'>
             <guilabel>Mise à jour continue</guilabel> permet d'avoir en temps 
@@ -529,6 +721,7 @@
       <varlistentry>
         <term lang='en'>Area</term>
         <term lang='cs'>Oblast</term>
+        <term lang='de'>Bereich</term>
         <term lang='fr'>Zone</term>
         <listitem>  
           <para lang='en'>
@@ -560,6 +753,31 @@
             výběr, <guilabel>Kontext</guilabel> zobrazuje výběr a jeho okolí.
           </para>
         
+          <para lang="de">
+            In diesem Klappmenü können Sie auswählen zwischen:
+            In this drop down list, you can select between
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <guilabel>Ganze Ebene</guilabel>: wirkt auf die gesamte
+                  Ebene (das Bild, sofern es keien Auswahl gibt).
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <guilabel>Auswahl</guilabel>: es wird nur die Auswahl
+                  dargestellt, 
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <guilabel>Umgebung</guilabel>: zeigt die Auswahl im
+                  Bildkontext an.
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          
           <para lang="fr">
             Dans cette liste déroulante, vous pouvez choisir entre:
             <itemizedlist>
@@ -591,6 +809,7 @@
   <simplesect>
     <title lang='en'>Units</title>
     <title lang="cs">Jednotky</title>
+    <title lang='de'>Einheiten</title>
     <title lang='fr'>Unités</title>
     <para lang='en'>
       You can select here the angle unit used to locate colors in the
@@ -604,6 +823,13 @@
       v barevném kruhu.
     </para>
 
+    <para lang='de'>
+      In diesem Bereich können Sie die Masseinheit auswählen, die zur 
+      Winkelangabe in den Farbkreisen genutzt wird. Zur Auswahl stehen die
+      Werte <guilabel>Radian</guilabel>, <guilabel>Radian/Pi</guilabel> und
+      <guilabel>Grad</guilabel>.
+    </para>
+    
     <para lang='fr'>
       Vous pouvez choisir là l'unité d'angle utilisée pour le repérage 
       des couleurs dans le cercle des couleurs: Radians, Radians/PI, 
@@ -611,7 +837,6 @@
       filtre: ne cliquez pas sur Valider juste après avoir choisi une 
       unité, mais revenez dans l'onglet voulu!
     </para>
-
   </simplesect>
 </sect2>
 

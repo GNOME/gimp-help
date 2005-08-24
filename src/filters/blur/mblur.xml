@@ -1,6 +1,12 @@
 <?xml version='1.0' encoding="UTF-8" ?>
 
-<sect2 id='plug-in-mblur' lang="en;cs;fr;zh_CN">
+<!DOCTYPE sect2
+  PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+  "http://www.docbook.org/xml/4.3/docbookx.dtd">
+
+<!-- section history: -->
+<!-- 050819 de added by axel.wernicke -->
+<sect2 id='plug-in-mblur' lang="en;cs;de;fr;zh_CN">
   <title lang="cs">Rozmáznutí pohybem</title>
   <title lang="de">Bewegungsunschärfe</title>
   <title lang="en">Motion Blur</title>
@@ -21,9 +27,9 @@
 
   <indexterm lang="de">
     <primary>Filter</primary>
-    <secondary>Weichzeichnen</secondary> 
-    <tertiary>Bewegungsunschärfe</tertiary> 
+    <secondary>Weichzeichnen</secondary>
   </indexterm>
+  <indexterm lang="de"><primary>Bewegungsunschärfe</primary></indexterm>
 
   <indexterm lang="fr">
     <primary>Filtre</primary>
@@ -64,6 +70,7 @@
   <simplesect>
     <title lang="en">Overview</title>
     <title lang="cs">Přehled</title>
+    <title lang="de">Wirkungsweise</title>
     <title lang="fr">Généralités</title>
     <title lang="zh_CN">概述</title>
     <para lang="en">
@@ -86,6 +93,40 @@
       Umožňuje napodobit lineární, radiální nebo přibližovací pohybové
       rozostření. U všech typů lze nastavit délku a/nebo úhel rozmáznutí.
     </para>
+
+    <para lang="de">
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/taj_orig.png" format="PNG"/>
+        </imageobject>
+      </inlinemediaobject>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/blur-taj-mblur-linear.png" format="PNG"/>
+        </imageobject>
+      </inlinemediaobject>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/blur-taj-mblur-radial.png" format="PNG"/>
+        </imageobject>
+      </inlinemediaobject>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/blur-taj-mblur-zoom.png" format="PNG"/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+    <para>
+      v.l.n.r.: Originalbild, Bewegungsunschärfe linear, Bewegungsunschärfe
+      radial, Bewegungsunschärfe zoom angewandt
+    </para>
+    <para lang="de">
+      Der Filter <quote>Bewegungsunschärfe</quote> kann die Wirkung von 
+      Bewegung in linearer, radialer (kreisförmiger) und zoom Richtung im
+      Bild erzeugen. Neben der Richtung können Sie auch die Stärke der
+      Weichzeichnungswirkung sowie den Ausgangspunkt der gedachten Bewegung
+      einstellen.
+    </para>
     <para lang="fr">
       On accède à ce filtre par le menu d'image en suivant
       <menuchoice><guimenu>Filtres</guimenu>
@@ -107,145 +148,284 @@
     </para>
   </simplesect>
 
+  <simplesect lang="de">
+    <title lang="de">Filteraufruf</title>
+    <para lang="de">
+      Dieser Filter lässt sich über das Menü
+      <menuchoice>
+        <guimenu><accel>F</accel>ilter</guimenu>
+        <guisubmenu><accel>W</accel>eichzeichnen</guisubmenu>
+        <guimenuitem><accel>B</accel>ewegungsunschärfe</guimenuitem>
+      </menuchoice>
+      im Bildfenster aufrufen.
+    </para>
+  </simplesect>
+  
   <simplesect> 
     <title lang="en">Options</title>
     <title lang="cs">Volby</title>
+    <title lang="de">Eigenschaften</title>
     <title lang="fr">Options</title>
     <title lang="zh_CN">选项</title>
+    
+    <informalfigure lang="de">
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/de/options-blur-mblur.png"
+						         lang="de" format="PNG"/>
+        </imageobject>
+        <caption>
+          <para lang="de">
+            Eigenschaften für den Filter <quote>Bewegungsunschärfe</quote>
+          </para>
+        </caption>
+      </mediaobject>
+    </informalfigure>
+
     <variablelist>
       <varlistentry>
         <term lang="en">Blur Type</term>
         <term lang="cs">Typ rozostření</term>
+        <term lang="de">Weichzeichnungsart</term>
         <term lang="fr">Type de flou</term> 
         <term lang="zh_CN">模糊类型</term>
-  <listitem>
-          <para lang="en">
-            <guilabel>Linear</guilabel> motion is a blur that travels in a
-            single direction, horizontally, for example. In this case,
-            Length means as Radius in other filters:it represents the blur
-            intensity. More Length will result in more blurring. Angle
-            describes the actual angle of the movement. Thus, a setting of
-            90 will produce a vertical blur, and a setting of 0 will
-            produce a horizontal blur.
-          </para>
-          <para lang="cs">
-            <guilabel>Lineární</guilabel> pohybové rozostření rozmázne pixely
-            v jednom směru, například vodorovně. V tomto případě slouží délka
-            k podobnému účelu jako poloměr u ostatních rozostřovacích filtrů
-            – určuje intenzitu rozostření. Větší délka odpovídá silnějšímu
-            rozostření. Úhel určuje skutečný úhel pohybu. 90° vytvoří svislé
-            rozostření, 0° vytvoří vodorovné rozostření.
-          </para>
-          <para lang="fr">
-            <guilabel>Linéaire</guilabel>: c'est un flou qui ne va
-            que dans une seule direction, par exemple  horizontalement.
-            Dans ce cas, Longueur a la même signification que le
-            Rayon des autres filtres: elle indique l'intensité du flou.
-            Angle désigne la direction du mouvement: 90 donne un
-            flou vertical et 0 un flou horizontal.
-          </para>
-          <para lang="zh_CN">
-      <guilabel>线性</guilabel>动态模糊是一种作用在单一方向，水平的模糊。例如，在这种情况下，长度就是相当于其他滤镜中的半径：它决定了模糊的强度。长度值越大就会产生越强烈的模糊效果。角度值决定了模糊中的实际角度。因此，角度值为 90 会产生垂直的模糊，设置为 0 度时则会产生水平的模糊。
-          </para>
+        <listitem>
+          <variablelist>
+            <varlistentry>
+              <term lang="en">Linear</term>
+              <term lang="cs">Lineární</term>
+              <term lang="de">Linear</term>
+              <term lang="fr">Linéaire</term> 
+              <term lang="zh_CN">线性</term>
+              <listitem>
+                <para lang="en">
+                  <guilabel>Linear</guilabel> motion is a blur that travels in a
+                  single direction, horizontally, for example. In this case,
+                  Length means as Radius in other filters:it represents the blur
+                  intensity. More Length will result in more blurring. Angle
+                  describes the actual angle of the movement. Thus, a setting of
+                  90 will produce a vertical blur, and a setting of 0 will
+                  produce a horizontal blur.
+                </para>
+                <para lang="cs">
+                  <guilabel>Lineární</guilabel> pohybové rozostření rozmázne pixely
+                  v jednom směru, například vodorovně. V tomto případě slouží délka
+                  k podobnému účelu jako poloměr u ostatních rozostřovacích filtrů
+                  – určuje intenzitu rozostření. Větší délka odpovídá silnějšímu
+                  rozostření. Úhel určuje skutečný úhel pohybu. 90° vytvoří svislé
+                  rozostření, 0° vytvoří vodorovné rozostření.
+                </para>
+                <para lang="de">
+                  Bei dieser Einstellung wird die Bewegung in einer einzigen,
+                  bestimmten Richtung ausgeführt. In diesem Fall wirkt die
+                  Eigenschaft <guilabel>Länge</guilabel> wie in anderen
+                  Weichzeichnungsfiltern der Radius; sie bestimmt die Stärke,
+                  mit der weichgezeichnet wird. Die Eigenschaft
+                  <guilabel>Winkel</guilabel> beschreibt, in welcher Richtung
+                  die Bewegung ausgeführt wird. Ein Wert von 0 ist horizontal,
+                  90 beschreibt eine vertikale Bewegung.
+                </para>
+                <para lang="fr">
+                  <guilabel>Linéaire</guilabel>: c'est un flou qui ne va
+                  que dans une seule direction, par exemple  horizontalement.
+                  Dans ce cas, Longueur a la même signification que le
+                  Rayon des autres filtres: elle indique l'intensité du flou.
+                  Angle désigne la direction du mouvement: 90 donne un
+                  flou vertical et 0 un flou horizontal.
+                </para>
+                <para lang="zh_CN">
+                  <guilabel>线性</guilabel>动态模糊是一种作用在单一方向，水平的模糊。例如，在这种情况下，长度就是相当于其他滤镜中的半径：它决定了模糊的强度。长度值越大就会产生越强烈的模糊效果。角度值决定了模糊中的实际角度。因此，角度值为 90 会产生垂直的模糊，设置为 0 度时则会产生水平的模糊。
+                </para>
+              </listitem>
+            </varlistentry>
+          </variablelist>
 
-    <para lang="en">
-            <guilabel>Radial</guilabel> motion blur creates a circular
-            blur. The Length slider is not important with this type of
-            blur. Angle on the other hand, is the primary setting that will
-            affect the blur. More Angle will result in more blurring in a
-            circular direction. The Radial motion blur is similar to the
-            effect of a spinning object. The center of the spin in this
-            case, is the center of the image.
-          </para>
-          <para lang="cs">
-            <guilabel>Radialní</guilabel> pohybové rozostření vytvoří kruhové
-            rozostření. Délka zde není důležitá. Podstatný je úhel, který
-            určuje intenzitu rozostření. Radiální rozostření vytváří efekt
-            otáčejícího se objektu. Střed otáčení je uprostřed obrázku.
-          </para>
-          <para lang="fr">
-            <guilabel>Radial</guilabel>: c'est un flou circulaire. Longueur
-            importe peu dans ce cas.  Angle est primordial: une forte
-            valeur donnera un flou plus étendu circulairement.Le
-            flou circulaire donne l'effet d'un objet tournoyant où
-            le centre de rotation est le centre de l'image. 
-          </para>
-    <para lang="zh_CN">
-      <guilabel>转向</guilabel>型动态模糊产生的是一种环状的模糊。长度在这个类型的模糊就显的不是那么重要了。角度的设置将是决定这个模糊基本因素。更大的角度值，将会在圆环方向上产生更强烈的模糊效果。旋转型动态模糊就类似于一个旋转的物体，旋转的中心就相当于这个滤镜所作用的图片的中心。
-          </para>
-    
-          <para lang="en">
-            <guilabel>Zoom</guilabel> blurring produces a blur that
-            radiates out from the center of the image. The center of the
-            image remains relatively calm, whilst the outer areas become
-            blurred toward the center. This filter option produces a
-            perceived forward movement, into the image.  Length is the main
-            setting here, and affects the amount of speed, as it were,
-            toward the center of the image.
-          </para>
-          <para lang="cs">
-            <guilabel>Přibližovací</guilabel> pohybové rozostření vytváří
-            rozostření, které vyzařuje ze středu obrázku. Střed zůstává
-            relativnmě klidný, zatímco vnější oblasti jsou rozmáznuté směrem
-            ke středu. Vzniká tak dojem dopředného pohybu, dovnitř obrázku.
-            Důležitým parametrem je zde délka, která určuje intenzitu
-            rozostření, tedy zdánlivou rychlost pohybu ke středu obrázku.
-          </para>
-          <para lang="fr">
-            <guilabel>Zoom</guilabel>: produit un flou qui irradie à
-            partir du centre de l'image. Le centre de l'image demeure
-            relativement calme tandis que les zones
-            périphériques deviennent floues. Cette option
-            donne un effet de mouvement vers l'avant à
-            l'intérieur de l'image, comme si un objet ou un
-            personnage venait vers vous. Longueur est le paramètre
-            qui conditionne l'effet de vitesse de déplacement.
-          </para>
-          <para lang="zh_CN">
-      <guilabel>缩放</guilabel>型动态模糊会产生一种从图片中心的辐射性模糊。图片的中心不会被模糊，而图片的外围相对于中心会显的模糊。这个滤镜给图像一种很突出的动态感觉。长度是主要的选项，影响着总体的速度，好比是向着图像的中心。
-          </para>
+          <variablelist>
+            <varlistentry>
+              <term lang="en;de;fr">Radial</term>
+              <term lang="cs">Radialní</term>
+              <term lang="zh_CN">转向</term>
+              <listitem>
+                <para lang="en">
+                  <guilabel>Radial</guilabel> motion blur creates a circular
+                  blur. The Length slider is not important with this type of
+                  blur. Angle on the other hand, is the primary setting that will
+                  affect the blur. More Angle will result in more blurring in a
+                  circular direction. The Radial motion blur is similar to the
+                  effect of a spinning object. The center of the spin in this
+                  case, is the center of the image.
+                </para>
+                <para lang="cs">
+                  <guilabel>Radialní</guilabel> pohybové rozostření vytvoří kruhové
+                  rozostření. Délka zde není důležitá. Podstatný je úhel, který
+                  určuje intenzitu rozostření. Radiální rozostření vytváří efekt
+                  otáčejícího se objektu. Střed otáčení je uprostřed obrázku.
+                </para>
+                <para lang="de">
+                  Dieser Typ beschreibt eine radiale, also kreisförmige
+                  Bewegung. Die Eigenschaft <guilabel>Länge</guilabel> ist
+                  nicht von Bedeutung. Der <guilabel>Winkel</guilabel>
+                  hingegen ist von zentraler Bedeutung. Die Einstellung dieser
+                  Eigenschaft bestimmt wie stark die Drehung erfolgt.
+                </para>
+                <para lang="fr">
+                  <guilabel>Radial</guilabel>: c'est un flou circulaire. Longueur
+                  importe peu dans ce cas.  Angle est primordial: une forte
+                  valeur donnera un flou plus étendu circulairement.Le
+                  flou circulaire donne l'effet d'un objet tournoyant où
+                  le centre de rotation est le centre de l'image. 
+                </para>
+                <para lang="zh_CN">
+                  <guilabel>转向</guilabel>型动态模糊产生的是一种环状的模糊。长度在这个类型的模糊就显的不是那么重要了。角度的设置将是决定这个模糊基本因素。更大的角度值，将会在圆环方向上产生更强烈的模糊效果。旋转型动态模糊就类似于一个旋转的物体，旋转的中心就相当于这个滤镜所作用的图片的中心。
+                </para>
+              </listitem>
+            </varlistentry>
+          </variablelist>
+
+          <variablelist>
+            <varlistentry>
+              <term lang="en;de;fr">Zoom</term>
+              <term lang="cs">Přibližovací</term>
+              <term lang="zh_CN">缩放</term>
+              <listitem>
+                <para lang="en">
+                  <guilabel>Zoom</guilabel> blurring produces a blur that
+                  radiates out from the center of the image. The center of the
+                  image remains relatively calm, whilst the outer areas become
+                  blurred toward the center. This filter option produces a
+                  perceived forward movement, into the image.  Length is the main
+                  setting here, and affects the amount of speed, as it were,
+                  toward the center of the image.
+                </para>
+                <para lang="cs">
+                  <guilabel>Přibližovací</guilabel> pohybové rozostření vytváří
+                  rozostření, které vyzařuje ze středu obrázku. Střed zůstává
+                  relativnmě klidný, zatímco vnější oblasti jsou rozmáznuté směrem
+                  ke středu. Vzniká tak dojem dopředného pohybu, dovnitř obrázku.
+                  Důležitým parametrem je zde délka, která určuje intenzitu
+                  rozostření, tedy zdánlivou rychlost pohybu ke středu obrázku.
+                </para>
+                <para lang="de">
+                  In diesem Modus wird eine Bewegungsunschärfe produziert die
+                  dem Effekt entspricht der beim Fotografieren durch
+                  ein Verstellen der Brennweite (des Zooms) während der
+                  Belichtung erreicht wird. Es entsteht der Eindruck einer
+                  <quote>Hinbewegung</quote>, also einer Bewegung zum Objekt
+                  hin. Der Ausgangspunkt der Bewegung bleibt fast unverändert,
+                  während die Unschärfe zu den Rändern hin start zunimmt.
+                  Die Eigenschaft <guilabel>Länge</guilabel> ist hierbei der
+                  entscheidende Parameter. Er bestimmt sozusagen die
+                  scheinbare Geschwindigkeit der Bewegung.
+                </para>
+                <para lang="fr">
+                  <guilabel>Zoom</guilabel>: produit un flou qui irradie à
+                  partir du centre de l'image. Le centre de l'image demeure
+                  relativement calme tandis que les zones
+                  périphériques deviennent floues. Cette option
+                  donne un effet de mouvement vers l'avant à
+                  l'intérieur de l'image, comme si un objet ou un
+                  personnage venait vers vous. Longueur est le paramètre
+                  qui conditionne l'effet de vitesse de déplacement.
+                </para>
+                <para lang="zh_CN">
+                  <guilabel>缩放</guilabel>型动态模糊会产生一种从图片中心的辐射性模糊。图片的中心不会被模糊，而图片的外围相对于中心会显的模糊。这个滤镜给图像一种很突出的动态感觉。长度是主要的选项，影响着总体的速度，好比是向着图像的中心。
+                </para>
+              </listitem>
+            </varlistentry>
+          </variablelist>
         </listitem>
       </varlistentry>
 
       <varlistentry>
         <term lang="en">Blur settings</term>
         <term lang="cs">Parametry rozmáznutí</term>
+        <term lang="de">Parameter</term>
         <term lang="fr">Paramètres de flou</term>
-  <term lang="zh_CN">模糊选项</term>
+        <term lang="zh_CN">模糊选项</term>
         <listitem>
-          <para lang="en">
-            <guilabel>Length</guilabel>: This slider controls the distance
-            pixels are moved (0 - 256)
+          <variablelist>
+            <varlistentry>
+              <term lang="en">Length</term>
+              <term lang="cs">Délka</term>
+              <term lang="de">Länge</term>
+              <term lang="fr">Longueur</term>
+              <term lang="zh_CN">长度</term>
+              <listitem>
+                <para lang="en">
+                  <guilabel>Length</guilabel>: This slider controls the distance
+                  pixels are moved (0 - 256)
+                </para>
+                <para lang="cs">
+                  <guilabel>Délka</guilabel>: Tento posuvník nastavuje délku
+                  dráhy pixelů (0-255).
+                </para>
+                <para lang="de">
+                  Diese Eigenschaft beschreibt die Länge der Bewegung. Der
+                  Wertebereich reicht von 0 bis 256.
+                </para>
+                <para lang="fr">
+                  <guilabel>Longueur</guilabel>: Ce curseur contrôle la
+                  distance de déplacement des pixels (0 - 256).
+                </para>
+                <para lang="zh_CN">
+                  <guilabel>长度</guilabel>：移动控制条控制间隔的像素（0 - 256）
+                </para>
+              </listitem>
+            </varlistentry>
+          
+            <varlistentry>
+              <term lang="en">Angle</term>
+              <term lang="cs">Úhel</term>
+              <term lang="de">Winkel</term>
+              <term lang="fr">Angle</term>
+              <term lang="zh_CN">角度</term>
+              <listitem>
+                <para lang="en">
+                  <guilabel>Angle</guilabel>: (0 - 360) As seen above, Angle
+                  slider effect depends on Blur type.
+                </para>
+                <para lang="cs">
+                  <guilabel>Úhel</guilabel>: (0 - 360), jak je uvedeno výše,
+                  vliv nastavení úhlu závisí na typu rozostření.
+                </para>
+                <para lang="de">
+                  Die Wirkung der Eigenschaft hängt von der gewählten
+                  <guilabel>Weichzeichnungsart</guilabel> ab. Der Wertebereich
+                  kann zwischen 0 und 360 eingestellt werden.
+                </para>
+                <para lang="fr">
+                  <guilabel>Angle</guilabel>: (0 - 360). Comme vu ci-dessus,
+                  l'effet de ce curseur dépend du Type de flou.
+                </para>
+                <para lang="zh_CN">
+                  <guilabel>角度</guilabel>：（0 - 360） 参照上面的，角度控制的不同影响取决于不同的模糊类型。
+                </para>
+              </listitem>
+            </varlistentry>
+          </variablelist>
+        </listitem>
+      </varlistentry>
+            
+      <varlistentry lang="de">
+        <term lang="de">Unschärfezentrum</term>
+        <listitem>
+          <para lang="de">
+            Mit dieser Eigenschaft legen Sie den Anfangspunkt der
+            Bewegung fest. Je nach gewählter Art kann dies
+            unterschiedliche Auswirkungen haben. Bei der radialen
+            Bewegung legen Sie beispielsweise das Rotationszentrum fest.
           </para>
-          <para lang="en">
-            <guilabel>Angle</guilabel>: (0 - 360) As seen above, Angle
-            slider effect depends on Blur type.
-          </para>
-
-          <para lang="cs">
-            <guilabel>Délka</guilabel>: Tento posuvník nastavuje délku
-            dráhy pixelů (0-255).
-          </para>
-          <para lang="cs">
-            <guilabel>Úhel</guilabel>: (0 - 360), jak je uvedeno výše,
-            vliv nastavení úhlu závisí na typu rozostření.
-          </para>
-
-          <para lang="fr">
-            <guilabel>Longueur</guilabel>: Ce curseur contrôle la
-            distance de déplacement des pixels (0 - 256).
-          </para>
-          <para lang="fr">
-            <guilabel>Angle</guilabel>: (0 - 360). Comme vu ci-dessus,
-            l'effet de ce curseur dépend du Type de flou.
-          </para> 
-
-          <para lang="zh_CN">
-            <guilabel>长度</guilabel>：移动控制条控制间隔的像素（0 - 256）
-          </para>
-          <para lang="zh_CN">
-            <guilabel>角度</guilabel>：（0 - 360） 参照上面的，角度控制的不同影响取决于不同的模糊类型。
-          </para>
+          <tip lang="de">
+            <para>
+              Sie müssen bei dieser Eigenschaft die Koordinaten des
+              Bewegungszentrums eingeben. Leider können Sie diese nicht
+              automatisch durch einen Mausklick bestimmen. Sie können
+              aber im Bildfenster den Mauszeiger über den gewünschen
+              Punkt verschieben. Die zugehörigen Koordinaten werden
+              dann in der Statusleiste am unteren Bildschirmrand
+              angezeigt.
+            </para>
+          </tip>
         </listitem>
       </varlistentry>
     </variablelist>

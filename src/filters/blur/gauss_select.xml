@@ -1,31 +1,48 @@
 <?xml version='1.0' encoding="UTF-8" ?>
 
-<sect2 id='plug-in-selective-blur' lang="en;cs;fr;zh_CN">
+<!DOCTYPE sect2
+  PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+  "http://www.docbook.org/xml/4.3/docbookx.dtd">
+
+<!-- section history: -->
+<!-- 050819 de added by axel.wernicke -->
+<sect2 id='plug-in-selective-blur' lang="en;cs;de;fr;zh_CN">
   <title lang="en">Selective Gaussian Blur</title>
   <title lang="cs">Selektivní Gaussovo rozostření</title>
+  <title lang="de">Selektiver Gaußscher Weichzeichner</title>
   <title lang="fr">Flou gaussien sélectif</title>
   <title lang="zh_CN">选择性高斯模糊</title>
 
-  <indexterm>
-    <primary lang="en">Filter</primary>
-    <secondary lang="en">Blur</secondary>
-    <tertiary lang="en">Gauss</tertiary>  
+  <indexterm lang="en">
+    <primary>Filter</primary>
+    <secondary>Blur</secondary>
+    <tertiary>Gauss</tertiary>
+  </indexterm>
 
-    <primary lang="cs">filtry</primary>
-    <secondary lang="cs">rozostření</secondary>
-    <tertiary lang="cs">Gaussovo selektivní</tertiary>
+  <indexterm lang="cs">
+    <primary>filtry</primary>
+    <secondary>rozostření</secondary>
+    <tertiary>Gaussovo selektivní</tertiary>
+  </indexterm>
 
-    <primary lang="de">Filter</primary>
-    <secondary lang="de">Weichzeichnen</secondary> 
-    <tertiary lang="de">Gauss</tertiary>  
+  <indexterm lang="de">
+    <primary>Filter</primary>
+    <secondary>Weichzeichnen</secondary> 
+  </indexterm>
+  <indexterm lang="de">
+    <primary>Gaußscher Weichzeichner (selektiv)</primary>
+  </indexterm>
 
-    <primary lang="fr">Filtre</primary>
-    <secondary lang="fr">Flou</secondary>
-    <tertiary lang="fr">Gauss</tertiary>
+  <indexterm lang="fr">
+    <primary>Filtre</primary>
+    <secondary>Flou</secondary>
+    <tertiary>Gauss</tertiary>
+  </indexterm>
 
-    <primary lang="zh_CN">滤镜</primary>
-    <secondary lang="zh_CN">模糊</secondary>
-    <tertiary lang="zh_CN">高斯</tertiary>  
+  <indexterm lang="zh_CN">
+    <primary>滤镜</primary>
+    <secondary>模糊</secondary>
+    <tertiary>高斯</tertiary>  
   </indexterm>
 
   <mediaobject lang="en">
@@ -55,6 +72,7 @@
   <simplesect>
     <title lang="en">Overview</title>
     <title lang="cs">Přehled</title>
+    <title lang="de">Wirkungsweise</title>
     <title lang="fr">Généralités</title>
     <title lang="zh_CN">概述</title>
     <para lang="en">
@@ -83,6 +101,29 @@
       tak, aby objekt v popředí z pozadí výrazněji vystupoval. Jedinou operací
       tak lze obrázku dodat hloubku.
     </para>
+
+    <para lang="de">
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/taj_orig.png" format="PNG"/>
+        </imageobject>
+      </inlinemediaobject>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/blur-taj-selective.png" format="PNG"/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+    <para>
+      links: Original; rechts: Gaußscher Weichzeichner angewandt
+    </para>
+    <para lang="de">
+      Im Gegensatz zu den anderen Weichzeichnungsfiltern wirkt der Selektive
+      Gaußsche Weichzeichner nicht auf alle Pixel des Bildes, der Auswahl oder
+      der aktuellen Ebene. Der Filter wirkt nur auf den Pixel, deren Farbe
+      höchstens um einen definierten Deltawert von der Farbe der Nachbarpixel
+      abweicht. Daher werden Kanten im Bild erhalten.
+    </para>
     <para lang="fr">
       Ce filtre se trouve à 
       <guimenuitem>Image&gt;Filtres/Flou/Flou gaussien <accel>s</accel>électif</guimenuitem>
@@ -106,23 +147,61 @@
     </para>
   </simplesect>
 
+  <simplesect lang="de">
+    <title lang="de">Filteraufruf</title>
+    <para lang="de">
+      Dieser Filter lässt sich über das Menü
+      <menuchoice>
+        <guimenu><accel>F</accel>ilter</guimenu>
+        <guisubmenu><accel>W</accel>eichzeichnen</guisubmenu>
+        <guimenuitem>
+          <accel>S</accel>elektiver Gaußscher Weichzeichner
+        </guimenuitem>
+      </menuchoice>
+      im Bildfenster aufrufen.
+    </para>
+  </simplesect>
+  
   <simplesect>
     <title lang="en">Options</title>
     <title lang="cs">Volby</title>
+    <title lang="de">Eigenschaften</title>
     <title lang="fr">Options</title>
     <title lang="zh_CN">选项</title>
+    
+    <informalfigure lang="de">
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/de/options-blur-selective.png"
+						         lang="de" format="PNG"/>
+        </imageobject>
+        <caption>
+          <para lang="de">
+            Eigenschaften für den Filter
+            <quote>Selektiver Gaußscher Weichzeichner</quote>
+          </para>
+        </caption>
+      </mediaobject>
+    </informalfigure>
+
     <variablelist>
       <varlistentry>
         <term lang="en">Blur Radius</term>
         <term lang="cs">Poloměr rozostření</term>
-	<term lang="fr">Rayon du flou</term>
-	<term lang="zh_CN">模糊半径</term>
+        <term lang="de">Radius</term>
+        <term lang="fr">Rayon du flou</term>
+        <term lang="zh_CN">模糊半径</term>
         <listitem>
           <para lang="en">
             Here you can set the blur intensity, in pixels.
           </para>
           <para lang="cs">
             Zde můžete nastavit intenzitu rozostření v pixelech.
+          </para>
+          <para lang="de">
+            Hier können Sie den Radius in Pixeln angeben, der zum Berechnen
+            des Filters verwendet wird. Dieser Wert beeinflusst massgeblich
+            die Intensität der Wirkung.
           </para>
           <para lang="fr">
             Vous pouvez régler là, en pixels, l'intensité du flou.
@@ -145,6 +224,13 @@
             Zde můžete nastavit maximální rozdíl (0-255) mezi pixelem a jeho
             okolím. Je-li rozdíl vyšší než tato delta, nebude pixel rozostřen.
           </para>
+          <para lang="de">
+            Mit dieser Eigenschaft können Sie die maximale Farbdifferen im
+            Bereich von 0 bis 255 einstellen. Diese Farbdifferenz bestimmt
+            welche Pixel aus der Umgebung weichgezeichnet werden. Dieser Wert
+            beeinflusst massgeblich wie gut Kanten gegen das Weichzeichnen
+            geschützt werden.
+          </para>
           <para lang="fr">
             Vous pouvez régler là la différence maximum entre la valeur d'un 
             pixel et la valeur des pixels environnants. Au-dessus de ce 
@@ -157,6 +243,4 @@
       </varlistentry>
     </variablelist>
   </simplesect>
-
 </sect2>
-        

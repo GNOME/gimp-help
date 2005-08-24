@@ -1,25 +1,41 @@
 <?xml version='1.0' encoding="UTF-8" ?>
 
-<sect2 id='script-fu-tile-blur' lang="en;cs;fr">
+<!DOCTYPE sect2
+  PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+  "http://www.docbook.org/xml/4.3/docbookx.dtd">
+
+<!-- section history: -->
+<!-- 050820 de added by axel.wernicke -->
+<sect2 id='script-fu-tile-blur' lang="en;cs;de;fr">
   <title lang="en">Tileable Blur</title>
   <title lang="cs">Dlaždicovatelné rozostření</title>
+  <title lang="de">Kachelbarer Weichzeichner</title>
   <title lang="fr">Flou mosaïque</title>
 
-  <indexterm>
-    <primary lang="en">Filter</primary>
-    <secondary lang="en">Blur</secondary>
-    <tertiary lang="en">Tileable</tertiary>  
-
-    <primary lang="cs">filtry</primary>
-    <secondary lang="cs">Rozostření</secondary>
-    <tertiary lang="cs">Dlaždicovatelné</tertiary>
-
-    <primary lang="de">Filter</primary>
-    <secondary lang="de">Weichzeichnen</secondary> 
-
-    <primary lang="fr">Filtre</primary>
-    <secondary lang="fr">Flou</secondary>
-    <tertiary lang="fr">Mosaïque</tertiary>
+  <indexterm lang="en">
+    <primary>Filter</primary>
+    <secondary>Blur</secondary>
+    <tertiary>Tileable</tertiary>  
+  </indexterm>
+  
+  <indexterm lang="cs">
+    <primary>filtry</primary>
+    <secondary>Rozostření</secondary>
+    <tertiary>Dlaždicovatelné</tertiary>
+  </indexterm>
+  
+  <indexterm lang="de">
+    <primary>Filter</primary>
+    <secondary>Weichzeichnen</secondary> 
+  </indexterm>
+  <indexterm lang="de">
+    <primary>Kachelbarer Weichzeichner</primary>
+  </indexterm>
+  
+  <indexterm lang="fr">
+    <primary>Filtre</primary>
+    <secondary>Flou</secondary>
+    <tertiary>Mosaïque</tertiary>
   </indexterm>
 
   <mediaobject lang="en">
@@ -43,6 +59,7 @@
   <simplesect>
     <title lang="en">Overview</title>
     <title lang="cs">Přehled</title>
+    <title lang="de">Wirkungsweise</title>
     <title lang="fr">Généralités</title>
     <para lang="en">
       This filter is found in 
@@ -63,6 +80,78 @@
       dlaždicemi. Dosahuje toho prolínáním a rozmazáváním hranic mezi obrázky,
       které budou v mozaice spolu sousedit.
     </para>
+    
+    <para lang="de">
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/taj_orig.png" format="PNG"/>
+        </imageobject>
+      </inlinemediaobject>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/blur-taj-tblur.png" format="PNG"/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+    <para>
+      v.l.n.r.: Originalbild, Kachelbarer Weichzeichner angewandt
+    </para>
+    <para lang="de">
+      Diesen Filter können Sie verwenden, wenn Sie das Bild kacheln, also
+      mehrfach aneinanderlegen wollen, um ein grösseres Bild zu erhalten.
+      Der Filter sorgt dabei für weiche Übergänge an den Rändern, an denen
+      die Kacheln zusammenstossen.
+    </para>
+    <tip lang="de">
+      <para>
+        Wenn Sie nur die Randbereiche des Bildes weichzeichnen möchten, reicht
+        es nicht aus den Filter auf das gesamte Bild anzuwenden. Der Ablauf,
+        um das gewünschte Ergebnis zu erzielen ist wie folgt:
+      </para>
+      <para>
+        Machen Sie eine Kopie der Ebene (
+        <menuchoice>
+          <guimenu><accel>E</accel>bene</guimenu>
+          <guimenuitem>Ebene <accel>d</accel>uplizieren</guimenuitem>
+        </menuchoice>
+        ) und wählen Sie diese aus, um damit zu arbeiten.
+      </para>
+      <para>  
+        Wenden Sie den Filter <quote>Kachelbarer Weichzeichner</quote> mit
+        einem Radius von 20 Pixeln auf die Ebene an.
+      </para>
+      <para>
+        Wählen Sie alles aus (
+        <keycombo><keycap>Strg</keycap><keycap>A</keycap></keycombo>) und
+        beschränken Sie die Auswahl (
+        <menuchoice>
+          <guimenu><accel>A</accel>uswahl</guimenu>
+          <guimenuitem>Ver<accel>k</accel>leinern</guimenuitem>
+        </menuchoice>
+        ), um einen Rand zu erhalten.
+      </para>
+      <para>
+        Geben Sie der Auswahl mittels 
+        <menuchoice>
+          <guimenu><accel>A</accel>uswahl</guimenu>
+          <guimenuitem>A<accel>u</accel>sblenden</guimenuitem>
+        </menuchoice>
+        eine weiche Kante.
+      </para>
+      <para>
+        Löschen Sie die Auswahl mittels
+        <keycombo><keycap>Strg</keycap><keycap>K</keycap></keycombo>.
+      </para>
+      <para>
+        Führen Sie die Ebenen mittels
+        <menuchoice>
+          <guimenu><accel>E</accel>bene</guimenu>
+          <guimenuitem>Nach un<accel>t</accel>en vereinen</guimenuitem>
+        </menuchoice>
+        wieder zusammen.
+      </para>
+    </tip>
+    
     <para lang="fr">
       Ce filtre se trouve à 
       <guimenuitem>Image&gt;Filtres/Flou/Flou <accel>m</accel>osaique</guimenuitem>
@@ -74,14 +163,45 @@
     </para>
   </simplesect>
 
+  <simplesect lang="de">
+    <title lang="de">Filteraufruf</title>
+    <para lang="de">
+      Dieser Filter lässt sich über das Menü
+      <menuchoice>
+        <guimenu><accel>F</accel>ilter</guimenu>
+        <guisubmenu><accel>W</accel>eichzeichnen</guisubmenu>
+        <guimenuitem><accel>K</accel>achelbarer Weichzeichner</guimenuitem>
+      </menuchoice>
+      im Bildfenster aufrufen.
+    </para>
+  </simplesect>
+  
   <simplesect>
     <title lang="en">Options</title>
     <title lang="cs">Volby</title>
+    <title lang="de">Eigenschaften</title>
     <title lang="fr">Options</title>
+    
+    <informalfigure lang="de">
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/de/options-blur-tblur.png"
+						         lang="de" format="PNG"/>
+        </imageobject>
+        <caption>
+          <para lang="de">
+            Eigenschaften für den Filter <quote>Kachelbarer
+            Weichzeichner</quote>
+          </para>
+        </caption>
+      </mediaobject>
+    </informalfigure>
+
     <variablelist>
       <varlistentry>
         <term lang="en">Blur Radius</term>
         <term lang="cs">Poloměr rozostření</term>
+        <term lang="de">Radius</term>
         <term lang="fr">Rayon du flou</term>
         <listitem>
           <para lang="en">
@@ -95,6 +215,11 @@
             vodorovně</guilabel> získáte dlaždicovatelné horizontální
             a vertikální okraje obrázku.
           </para>
+          <para lang="de">
+            Mit dieser Eigenschaft können Sie die Stärke der Weichzeichnung
+            einstellen. Je grösser der Radius, um so grösser die Wirkung des
+            Filters.
+          </para>
           <para lang="fr">
             Plus le rayon est grand, plus le flou est marqué. En sélectionnant
             <guilabel>Horizontal</guilabel> et <guilabel>Vertical</guilabel>,
@@ -102,9 +227,22 @@
           </para>
         </listitem>
       </varlistentry>
+      
+      <varlistentry lang="de">
+        <term lang="de">Vertikal / Horizontal weichzeichnen</term>
+        <listitem>
+          <para lang="de">
+            Mit diesen beiden Kontrollkästchen können Sie einstellen, ob Sie
+            die horizontalen, und/oder die vertikalen Ränder kachelbar machen
+            möchten.
+          </para>
+        </listitem>
+      </varlistentry>
+      
       <varlistentry>
         <term lang="en">Blur Type</term>
         <term lang="cs">Typ rozostření</term>
+        <term lang="de">Art des Weichzeichnens</term>
         <term lang="fr">Type de flou</term>
         <listitem>
           <para lang="en">
@@ -121,6 +259,15 @@
             <guilabel>RLE</guilabel>: je vhodný pro počítačem generované
             obrázky.
           </para>
+          <para lang="de">
+            Mit diesem Klappmenü können Sie den Algorithmus einstellen, der
+            zum Weichzeichnen verwendet werden soll. Auswahlmöglichkeiten sind
+            <guilabel>IIR</guilabel> und <guilabel>RLE</guilabel>. Beide
+            liefern das gleiche Ergebnis, jedoch ist <guilabel>IIR</guilabel>
+            schneller bei Bildern mit vielen kleinen Farbflächen (Fotos) und
+            <guilabel>RLE</guilabel> schneller bei Bildern mit wenigen grossen
+            Farbflächen (Comics).
+          </para>
           <para lang="fr">
             <guilabel>IIR</guilabel>: pour les images photographiques ou 
             scannées.
@@ -133,84 +280,83 @@
     </variablelist>
   </simplesect>
 
-  <simplesect>
+  <simplesect lang="cs;en;fr">
     <title lang="en">Additionnal information</title>
     <title lang="cs">Další informace</title>
     <title lang="fr">Informations complémentaires</title>
 
-          <para lang="en">
-            If you want the blur applied only to the borders, then simply 
-            applying Tileable Blur on the whole image is not enough. 
-            Directions for use are more complex:
-          </para>
-          <para lang="en">
-            Start with duplicating the layer and select it to work on it.
-          </para>
-          <para lang="en">  
-            Apply Tileable Blur with about 20 pixels radius.
-          </para>
-          <para lang="en">  
-            Select All and then Shrink selection to get a border.
-          </para>
-          <para lang="en">
-            Feather Selection.
-          </para>
-          <para lang="en">
-            Ctrl-K to delete the selection (the central part).
-          </para>
-          <para lang="en">
-            Merge layers Down.
-          </para>
+    <para lang="en">
+      If you want the blur applied only to the borders, then simply 
+      applying Tileable Blur on the whole image is not enough. 
+      Directions for use are more complex:
+    </para>
+    <para lang="en">
+      Start with duplicating the layer and select it to work on it.
+    </para>
+    <para lang="en">  
+      Apply Tileable Blur with about 20 pixels radius.
+    </para>
+    <para lang="en">  
+      Select All and then Shrink selection to get a border.
+    </para>
+    <para lang="en">
+      Feather Selection.
+    </para>
+    <para lang="en">
+      Ctrl-K to delete the selection (the central part).
+    </para>
+    <para lang="en">
+      Merge layers Down.
+    </para>
 
-          <para lang="cs">
-            Pokud chcete rozostření aplikovat pouze na okraje, pak postupujte
-            následujícím způsobem:
-          </para>
-          <para lang="cs">
-            Duplikujte vrstvu a aktivujte jiu pro další práci.
-          </para>
-          <para lang="cs">
-            Aplikujte Dlaždicovatelné rozostření s poloměrem 20.
-          </para>
-          <para lang="cs">
-            Vyberte vše a zužte výběr, taby vznikl okraj.
-          </para>
-          <para lang="cs">
-            Prolněte výběr.
-          </para>
-          <para lang="cs">
-            Stiskněte Ctrl-K pro smazání výběru (centrální části).
-          </para>
-          <para lang="cs">
-            Slučte vrtsvy dolů.
-          </para>
+    <para lang="cs">
+      Pokud chcete rozostření aplikovat pouze na okraje, pak postupujte
+      následujícím způsobem:
+    </para>
+    <para lang="cs">
+      Duplikujte vrstvu a aktivujte jiu pro další práci.
+    </para>
+    <para lang="cs">
+      Aplikujte Dlaždicovatelné rozostření s poloměrem 20.
+    </para>
+    <para lang="cs">
+      Vyberte vše a zužte výběr, taby vznikl okraj.
+    </para>
+    <para lang="cs">
+      Prolněte výběr.
+    </para>
+    <para lang="cs">
+      Stiskněte Ctrl-K pro smazání výběru (centrální části).
+    </para>
+    <para lang="cs">
+      Slučte vrtsvy dolů.
+    </para>
 
-          <para lang="fr">
-            Vous pourriez vouloir que le flou ne s'applique uniquement 
-            qu'aux bords, donc il ne suffit plus de simplement appliquer le 
-            Flou mosaïque sur une image. La marche à suivre est plus 
-            complexe:
-          </para>
-          <para lang="fr">
-            Commencez par dupliquer le calque et sélectionnez-le pour 
-            travailler dessus.
-          </para>
-          <para lang="fr">
-            Appliquez le flou mosaïque avec un rayon d'environ 20 pixels.
-          </para>
-          <para lang="fr">
-            Sélectionnez Tout puis réduisez la sélection pour créer une 
-            bordure.
-          </para>
-          <para lang="fr">
-            Adoucissez la sélection.
-          </para>
-          <para lang="fr">
-            Ctrl-K pour effacer la sélection (la partie centrale).
-          </para>
-          <para lang="fr">
-            Fusionnez les calques vers le bas.
-          </para>
+    <para lang="fr">
+      Vous pourriez vouloir que le flou ne s'applique uniquement 
+      qu'aux bords, donc il ne suffit plus de simplement appliquer le 
+      Flou mosaïque sur une image. La marche à suivre est plus 
+      complexe:
+    </para>
+    <para lang="fr">
+      Commencez par dupliquer le calque et sélectionnez-le pour 
+      travailler dessus.
+    </para>
+    <para lang="fr">
+      Appliquez le flou mosaïque avec un rayon d'environ 20 pixels.
+    </para>
+    <para lang="fr">
+      Sélectionnez Tout puis réduisez la sélection pour créer une 
+      bordure.
+    </para>
+    <para lang="fr">
+      Adoucissez la sélection.
+    </para>
+    <para lang="fr">
+      Ctrl-K pour effacer la sélection (la partie centrale).
+    </para>
+    <para lang="fr">
+      Fusionnez les calques vers le bas.
+    </para>
   </simplesect>
-
 </sect2>
