@@ -60,6 +60,7 @@ EXTRA_DIST = \
 	INSTALL				\
 	TERMINOLOGY			\
 	stylesheets/plainhtml.xsl.in	\
+	stylesheets/zh_CN/gimp-help-custom.css	\
 	$(XSL_FILES)			\
 	$(MAKEINDEX)			\
 	$(IMAGE_FILES)			\
