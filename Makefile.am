@@ -16,9 +16,12 @@ IMAGE_DIRS = \
 	menus
 
 IMAGE_FILES = \
-	$(wildcard $(top_srcdir)/images/*.png)	\
-	$(wildcard $(top_srcdir)/images/*/*.png)\
-	$(wildcard $(top_srcdir)/images/*/*/*.png)
+	$(wildcard $(top_srcdir)/images/*.png)		\
+	$(wildcard $(top_srcdir)/images/*.jpg)		\
+	$(wildcard $(top_srcdir)/images/*/*.png)	\
+	$(wildcard $(top_srcdir)/images/*/*.jpg)	\
+	$(wildcard $(top_srcdir)/images/*/*/*.png)	\
+	$(wildcard $(top_srcdir)/images/*/*/*.jpg)
 
 XML_FILES = \
 	$(wildcard $(top_srcdir)/src/*.xml)	\
@@ -122,16 +125,26 @@ $(STAMP_DIR)/images.stamp : $(patsubst %,$(STAMP_DIR)/images.%.stamp,$(ALL_LINGU
 $(patsubst %,$(STAMP_DIR)/images.%.stamp,$(ALL_LINGUAS)) : $(STAMP_DIR)/images.%.stamp : $(STAMP_DIR)/mkdirs.%.stamp $(IMAGE_FILES)
 	@for format in $(FORMATS); do \
 	  $(mkinstalldirs) $$format/images; \
-	  cp $(top_srcdir)/images/*.png $$format/images; \
+	  for name in $(wildcard $(top_srcdir)/images/*.png) \
+	  $(wildcard $(top_srcdir)/images/*.jpg); do \
+	    cp $$name $$format/images; \
+	    echo $$name; \
+	  done; \
 	  for dir in $(IMAGE_DIRS); do \
 	    if test -d $(top_srcdir)/images/$$dir; then \
 	      $(mkinstalldirs) $$format/images/$$dir; \
-	      cp $(top_srcdir)/images/$$dir/*.png $$format/images/$$dir && \
-	      if test -d $(top_srcdir)/images/$$dir/$*; then \
-		$(mkinstalldirs) $$format/images/$$dir/$* && \
-		cp $(top_srcdir)/images/$$dir/$*/*.png $$format/images/$$dir/$*; \
-	      fi \
-	    fi \
+	      for name in $(wildcard $(top_srcdir)/images/$$dir/*.png) \
+	      $(wildcard $(top_srcdir)/images/$$dir/*.jpg); do \
+	        cp $$name $$format/images/$$dir && \
+		if test -d $(top_srcdir)/images/$$dir/$*; then \
+		  $(mkinstalldirs) $$format/images/$$dir/$* &&  \
+		  for name2 in $(wildcard $(top_srcdir)/images/$$dir/$*/*.png) \
+		  $(wildcard $(top_srcdir)/images/$$dir/$*/*.jpg); do \
+		    cp $$name2 $$format/images/$$dir/$*; \
+		  done; \
+		fi; \
+	      done; \
+	    fi; \
 	  done; \
 	done
 
@@ -215,7 +228,7 @@ $(STAMP_DIR)/html.stamp: $(patsubst %,$(STAMP_DIR)/html.%.stamp,$(ALL_LINGUAS))
 	@touch $@
 
 $(patsubst %,$(STAMP_DIR)/html.%.stamp,$(ALL_LINGUAS)): $(STAMP_DIR)/html.%.stamp : $(STAMP_DIR)/profile.%.stamp $(STAMP_DIR)/css.%.stamp $(STAMP_DIR)/images.%.stamp $(STAMP_DIR)/convert.stamp
-	echo '-- Building HTML for '$*;\
+	@echo '-- Building HTML for '$*;\
 	(cd $(top_srcdir)/html/$* && \
 	  $(XSLTPROC) $(XSLTFLAGS) --xinclude \
 	     --stringparam l10n.gentext.default.language $* \
