@@ -76,9 +76,10 @@ $(STAMP_DIR)/clean.stamp: Makefile
 	@echo '*** Creating fresh stamps directory ***'
 	@rm -rf $(STAMP_DIR); $(mkinstalldirs) $(STAMP_DIR)
 	@echo '*** Removing the built help files ***'
-	rm -rf html
-	rm -rf pdf 
-	rm -rf xml
+	@rm -rf html
+	@rm -rf pdf 
+	@rm -rf xml
+
 	@echo '*** Removing temporary files ***'
 	@rm -rf `find . -name "*~"`
 	@rm -rf `find . -name "*.orig"`
@@ -90,6 +91,13 @@ $(STAMP_DIR)/clean.stamp: Makefile
 
 $(STAMP_DIR)/mkdirs.stamp: $(patsubst %,$(STAMP_DIR)/mkdirs.%.stamp,$(ALL_LINGUAS)) 
 	@echo '*** Creating directories ***'
+
+	@for format in $(FORMATS); do \
+	  for name in `find $(top_srcdir)/images/ -name "*.png" -o -name "*.jpg"`; do \
+	    $(mkinstalldirs) `dirname $$format/$$name`; \
+	  done; \
+        done;
+	
 	@touch $@
 
 $(patsubst %,$(STAMP_DIR)/mkdirs.%.stamp,$(ALL_LINGUAS)) : $(STAMP_DIR)/mkdirs.%.stamp :
@@ -118,35 +126,14 @@ $(patsubst %,$(STAMP_DIR)/css.%.stamp,$(ALL_LINGUAS)) : $(STAMP_DIR)/css.%.stamp
 css: $(STAMP_DIR)/css.stamp
 
 
-$(STAMP_DIR)/images.stamp : $(patsubst %,$(STAMP_DIR)/images.%.stamp,$(ALL_LINGUAS))
+$(STAMP_DIR)/images.stamp : $(STAMP_DIR)/mkdirs.stamp $(IMAGE_FILES)
 	@echo '*** Copying images ***'
-	@touch $@
 
-$(patsubst %,$(STAMP_DIR)/images.%.stamp,$(ALL_LINGUAS)) : $(STAMP_DIR)/images.%.stamp : $(STAMP_DIR)/mkdirs.%.stamp $(IMAGE_FILES)
 	@for format in $(FORMATS); do \
-	  $(mkinstalldirs) $$format/images; \
-	  for name in $(wildcard $(top_srcdir)/images/*.png) \
-	  $(wildcard $(top_srcdir)/images/*.jpg); do \
-	    cp $$name $$format/images; \
-	    echo $$name; \
+	  for name in `find $(top_srcdir)/images/ -name "*.png" -o -name "*.jpg"`; do \
+	    cp $$name $$format/$$name; \
 	  done; \
-	  for dir in $(IMAGE_DIRS); do \
-	    if test -d $(top_srcdir)/images/$$dir; then \
-	      $(mkinstalldirs) $$format/images/$$dir; \
-	      for name in $(wildcard $(top_srcdir)/images/$$dir/*.png) \
-	      $(wildcard $(top_srcdir)/images/$$dir/*.jpg); do \
-	        cp $$name $$format/images/$$dir && \
-		if test -d $(top_srcdir)/images/$$dir/$*; then \
-		  $(mkinstalldirs) $$format/images/$$dir/$* &&  \
-		  for name2 in $(wildcard $(top_srcdir)/images/$$dir/$*/*.png) \
-		  $(wildcard $(top_srcdir)/images/$$dir/$*/*.jpg); do \
-		    cp $$name2 $$format/images/$$dir/$*; \
-		  done; \
-		fi; \
-	      done; \
-	    fi; \
-	  done; \
-	done
+        done;
 
 	@touch $@
 
@@ -155,8 +142,9 @@ images: $(STAMP_DIR)/images.stamp
 
 $(STAMP_DIR)/convert.stamp: $(STAMP_DIR)/images.stamp
 	@echo '*** Converting Images to 8bit depth ***'
-	cd $(top_srcdir)/html/images/; \
-	for i in `find ./ -name '*.png' -type f`; do \
+
+	@cd $(top_srcdir)/html/images/; \
+	for i in `find $(top_srcdir) -name '*.png' -type f`; do \
 	  echo "Converting" $$i && \
 	  $(CONVERT) -colors 128 $$i $$i; \
 	done
@@ -227,7 +215,7 @@ $(STAMP_DIR)/html.stamp: $(patsubst %,$(STAMP_DIR)/html.%.stamp,$(ALL_LINGUAS))
 	@echo '*** Building HTML ***'
 	@touch $@
 
-$(patsubst %,$(STAMP_DIR)/html.%.stamp,$(ALL_LINGUAS)): $(STAMP_DIR)/html.%.stamp : $(STAMP_DIR)/profile.%.stamp $(STAMP_DIR)/css.%.stamp $(STAMP_DIR)/images.%.stamp $(STAMP_DIR)/convert.stamp
+$(patsubst %,$(STAMP_DIR)/html.%.stamp,$(ALL_LINGUAS)): $(STAMP_DIR)/html.%.stamp : $(STAMP_DIR)/profile.%.stamp $(STAMP_DIR)/css.%.stamp $(STAMP_DIR)/images.stamp $(STAMP_DIR)/convert.stamp
 	@echo '-- Building HTML for '$*;\
 	(cd $(top_srcdir)/html/$* && \
 	  $(XSLTPROC) $(XSLTFLAGS) --xinclude \
