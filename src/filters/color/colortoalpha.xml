@@ -1,27 +1,46 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<sect2 id='plug-in-colortoalpha' lang="en;cs;fr;zh_CN">
+<!DOCTYPE sect2
+  PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+  "http://www.docbook.org/xml/4.3/docbookx.dtd">
+
+<!-- section history: -->
+<!-- 050825 de added by axel.wernicke -->
+<sect2 id='plug-in-colortoalpha' lang="en;cs;de;fr;zh_CN">
   <title lang="en">Color to Alpha</title>
   <title lang="cs">Barva do alfy</title>
+  <title lang="de">Farbe zu Transparenz</title>
   <title lang="fr">Couleur vers Alpha</title>
   <title lang="zh_CN">颜色到 Alpha</title>
 
-  <indexterm>
-    <primary lang="en">Filter</primary>
-    <secondary lang="en">Color</secondary>
-    <tertiary lang="en">Alpha</tertiary>
+  <indexterm lang="en">
+    <primary>Filter</primary>
+    <secondary>Color</secondary>
+    <tertiary>Alpha</tertiary>
+  </indexterm>
 
-    <primary lang="cs">filtry</primary>
-    <secondary lang="cs">Barvy</secondary>
-    <tertiary lang="cs">Barva do alfy</tertiary>
+  <indexterm lang="cs">
+    <primary>filtry</primary>
+    <secondary>Barvy</secondary>
+    <tertiary>Barva do alfy</tertiary>
+  </indexterm>
 
-    <primary lang="fr">Filtre</primary>
-    <secondary lang="fr">Couleur</secondary>
-    <tertiary lang="fr">Alpha</tertiary>
+  <indexterm lang="fr">
+    <primary>Filtre</primary>
+    <secondary>Couleur</secondary>
+    <tertiary>Alpha</tertiary>
+  </indexterm>
 
-    <primary lang="zh_CN">滤镜</primary>
-    <secondary lang="zh_CN">颜色</secondary>
-    <tertiary lang="zh_CN">Alpha</tertiary>
+  <indexterm lang="de">
+    <primary>Filter</primary>
+    <secondary>Farben</secondary>
+  </indexterm>
+  <indexterm lang="de"><primary>Farbe zu Transparenz</primary></indexterm>
+  
+  <indexterm lang="zh_CN">
+    <primary>滤镜</primary>
+    <secondary>颜色</secondary>
+    <tertiary>Alpha</tertiary>
   </indexterm>
 
   <mediaobject lang="en">
@@ -49,6 +68,7 @@
   <simplesect>
     <title lang="en">Overview</title>
     <title lang="cs">Přehled</title>
+    <title lang="de">Wirkungsweise</title>
     <title lang="fr">Généralités</title>
     <title lang="zh_CN">概述</title>
     <para lang="en">
@@ -82,6 +102,32 @@
       podobnými zvolené barvě učiní částečně průhledné, průsvitné. Zůstane tak
       zachován plynulý přechod do okolních oblastí.
     </para>
+  
+    <para lang="de">
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/taj_orig.jpg"
+                     format="JPG"/>
+        </imageobject>
+      </inlinemediaobject>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/color-taj-colortoalpha.jpg"
+                     format="JPG"/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+    <para lang="de">
+      v.l.n.r.: Originalbild, Farbe zu Transparenz (blau) angewandt
+    </para>
+    <para lang="de">
+      Mit diesem Filter können Sie eine bestimmte Farbe in Transparenz
+      umwandeln. Ein Alphakanal für das Bild wird angelegt und die weichen
+      Kanten im Bild bleiben weitgehend vorhanden, da das Filter Pixel, welche
+      nur schwach mit der gewählten Farbe gesättigt sind auch nur schwach
+      transparent macht. Auf diese Art und Weise werden auch Objekte, die die
+      gewählte Farbe enthalten sanft in ihre Umgebung eingeblendet.
+    </para>
 
     <para lang="fr">
       Ce filtre se trouve à
@@ -107,16 +153,46 @@
       颜色到 Alpha 滤镜使所有包括指定颜色的像素变透明，同时会产生一个 Alpha 通道。它使用一种半智能的方式保存边缘平滑信息，即用弱 Alpha 信息替代弱的颜色信息。这样，包含指定颜色的区域将出现与周围像素相混合的现象。
     </para>
   </simplesect>
-
+  
+  <simplesect lang="de">
+    <title lang="de">Filteraufruf</title>
+    <para lang="de">
+      Dieses Filter lässt sich über das Menü
+      <menuchoice>
+        <guimenu><accel>F</accel>ilter</guimenu>
+        <guisubmenu><accel>F</accel>arben</guisubmenu>
+        <guimenuitem>Farbe zu <accel>T</accel>ransparenz</guimenuitem>
+      </menuchoice>
+      im Bildfenster aufrufen.
+    </para>
+  </simplesect>
+  
   <simplesect>
     <title lang="en">Options</title>
     <title lang="cs">Volby</title>
+    <title lang="de">Eigenschaften</title>
     <title lang="fr">Options</title>
     <title lang="zh_CN">选项</title>
+
+    <informalfigure lang="de">
+      <mediaobject>
+        <imageobject lang="de">
+          <imagedata fileref="../images/filters/de/options-color-colortoalpha.png"
+						         format="PNG"/>
+        </imageobject>
+        <caption>
+          <para lang="de">
+            Eigenschaften für das Filter <quote>Farbe zu Transparenz</quote>
+          </para>
+        </caption>
+      </mediaobject>
+    </informalfigure>
+
     <variablelist>
       <varlistentry>
         <term lang="en">Color</term>
         <term lang="cs">Barva</term>
+        <term lang="de">Farbe</term>
         <term lang="fr">Couleur</term>
         <term lang="zh_CN">颜色</term>
         <listitem>
@@ -137,6 +213,14 @@
             pole v dialogu filtru Barva do alfy. Kliknutím pravým tlačítkem
             myši na barevné pole v dialogu filtru se otevře nabídka,
             umožňující přímo zadat barvu popředí, pozadí, černou nebo bílou.
+          </para>
+          <para lang="de">
+            Durch Klicken auf die farbige Schaltfläche können Sie die Farbe
+            auswählen, die transparent werden soll. Um eine Farbe aus dem
+            Bild zu übernehmen wählen Sie die Farbe mit der Pipette als
+            aktuelle Vorder- oder Hintergrundfarbe aus. Im Kontextmenü der
+            farbigen Schaltfläche können Sie dann die Vorder- oder
+            Hintergrundfarbe als Eigenschaft des Filters einstellen.
           </para>
           <para lang="fr">
             Le fait de cliquer sur la boîte d'échantillon

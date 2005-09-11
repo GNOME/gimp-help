@@ -1,14 +1,33 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<sect2 id='plug-in-despeckle' lang="en;cs;fr">
+<!DOCTYPE sect2
+  PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+  "http://www.docbook.org/xml/4.3/docbookx.dtd">
+
+<!-- section history: -->
+<!-- 050830 de added by axel.wernicke -->
+<sect2 id='plug-in-despeckle' lang="en;cs;de;fr">
   <title lang="en">Despeckle</title>
   <title lang="cs">Vyčištění</title>
+  <title lang="de">Flecken entfernen</title>
   <title lang="fr">Anti-parasites</title>
 
-  <indexterm>
-    <primary lang="en">Despeckle</primary>
-    <primary lang="cs">Vyčištění</primary>
-    <primary lang="fr">Anti-parasites</primary>
+  <indexterm lang="en">
+    <primary>Despeckle</primary>
+  </indexterm>
+  
+  <indexterm lang="cs">
+    <primary>Vyčištění</primary>
+  </indexterm>
+
+  <indexterm lang="de">
+    <primary>Filter</primary>
+    <secondary>Verbessern</secondary>
+  </indexterm>
+  <indexterm lang="de"><primary>Flecken entfernen</primary></indexterm>
+  
+  <indexterm lang="fr">
+    <primary>Anti-parasites</primary>
   </indexterm>
 
   <mediaobject lang="en">
@@ -32,6 +51,7 @@
   <simplesect>
     <title lang="en">Overview</title>
     <title lang="cs">Přehled</title>
+    <title lang="de">Wirkungsweise</title>
     <title lang="fr">Généralités</title>
 
     <para lang="en">
@@ -53,6 +73,33 @@
       časopisů. Před aplikací filtru byste měli vybrat jednotlivé defekty v
       obrázku.
     </para>
+    
+    <para lang="de">
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/taj_orig.jpg"
+                     format="JPG"/>
+        </imageobject>
+      </inlinemediaobject>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/enhance-taj-despeckle.jpg"
+                     format="JPG"/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+    <para lang="de">
+      v.l.n.r.: Originalbild, Flecken entfernen angewandt
+    </para>
+    <para lang="de">
+      Dieses Filter können Sie benutzen, um kleine Schadstellen im Bild wie
+      Staub oder Kratzer auf einem gescannten Bild zu entfernen. Es hilft
+      auch gegen <link linkend="glossary-moire">Moiré</link> Effekte wie sie
+      beim Scannen gedruckter Vorlagen auftreten können. Es sei Ihnen
+      empfohlen die betroffenen Stellen auszuwählen, bevor Sie das Filter
+      anwenden.
+    </para>
+    
     <para lang="fr">
       Ce filtre se trouve à 
       <guimenuitem>Image&gt;Filtres/Améliorations/Anti-<accel>p</accel>arasites</guimenuitem>
@@ -64,14 +111,46 @@
       imperfections isolées, vous avez intérêt à les sélectionner 
       avant d'appliquer le filtre.
     </para> 
+  </simplesect>
+  
+  <simplesect lang="de">
+    <title lang="de">Filteraufruf</title>
+    <para lang="de">
+      Dieses Filter lässt sich über das Menü
+      <menuchoice>
+        <guimenu><accel>F</accel>ilter</guimenu>
+        <guisubmenu><accel>V</accel>erbessern</guisubmenu>
+        <guimenuitem><accel>F</accel>lecken entfernen</guimenuitem>
+      </menuchoice>
+      im Bildfenster aufrufen.
+    </para>
+  </simplesect>
+  
+  <simplesect>
+    <title lang="en">Options</title>
+    <title lang="cs">Volby</title>
+    <title lang="de">Eigenschaften</title>
+    <title lang="fr">Options</title>
+
+    <informalfigure lang="de">
+      <mediaobject>
+        <imageobject lang="de">
+          <imagedata fileref="../images/filters/de/options-enhance-despeckle.png"
+                     format="PNG"/>
+        </imageobject>
+        <caption>
+          <para lang="de">
+            Eigenschaften für das Filter <quote>Flecken entfernen</quote>
+          </para>
+        </caption>
+      </mediaobject>
+    </informalfigure>
 
     <variablelist>
-      <title lang="en">Options</title>
-      <title lang="cs">Volby</title>
-      <title lang="fr">Options</title>
       <varlistentry>
         <term lang="en">Preview</term>
         <term lang="cs">Náhled</term>
+        <term lang="de">Vorschau</term>
         <term lang="fr">Aperçu</term>
         <listitem> 
           <para lang="en">
@@ -80,6 +159,11 @@
           <para lang="cs">
             Nastavení parametrů je interaktivně zobrazováno v náhledu.
           </para>
+          <para lang="de">
+            In der Vorschau wird ein Ausschnitt des Bildes so dargestellt,
+            als wäre das Filter mit den aktuellen Einstellungen auf das Bild
+            angewandt worden.
+          </para> 
           <para lang="fr">
             Le résultat du réglage des paramètres est affiché en temps réel 
             dans l'aperçu.
@@ -90,6 +174,7 @@
       <varlistentry>
         <term lang="en">Type</term>
         <term lang="cs">Typ</term>
+        <term lang="de">Median</term>
         <term lang="fr">Type</term>
         <listitem lang="en">
           <para>
@@ -132,6 +217,32 @@
           </para>
         </listitem>
 
+        <listitem lang="de">
+          <para>
+            <itemizedlist>
+              <listitem> 
+                <para>
+                  <guilabel>Anpassend</guilabel>: Wenn diese Eigenschaft
+                  aktiviert ist, wird der Radius an den Inhalt des Bildes
+                  oder der Auswahl unter Verwendung eines
+                  <link linkend="glossary-histogram">Histogramms</link>
+                  angepasst. Der Schieberegler für den
+                  <guilabel>Radius</guilabel> wird dann deaktiviert. Diese
+                  Einstellung führt in der Regel zu besseren Ergebnissen, als
+                  das Einstellen des Radius von Hand.
+                </para>
+              </listitem> 
+              <listitem>
+                <para>
+                   <guilabel>Rekursiv</guilabel>: Das Einschalten dieser
+                   Eigenschaft bewirkt eine mehrfache Ausführung des Filters,
+                   was dessen Wirkung verstärkt.
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+        </listitem>
+        
         <listitem lang="fr">
           <para>
             <itemizedlist>
@@ -158,6 +269,7 @@
       <varlistentry>
         <term lang="en">Parameters settings</term>
         <term lang="cs">Nastavení parametrů</term>
+        <term lang="de">Radius</term>
         <term lang="fr">Réglage des paramètres</term>
  
         <listitem lang="en">
@@ -214,6 +326,17 @@
           </para>
         </listitem>
 
+        <listitem lang="de">
+          <para>
+            Mit dieser Eigenschaft können Sie über einen Schieberegler die
+            Grösse des Bereiches einstellen, den das Filter zur Berechnung
+            verwendet. Die Einstellung kann im Wertebereich von 1 (3x3 Pixel)
+            bis 20 (41x41 Pixel) liegen. Bitte beachten Sie, dass die Werte
+            für diese Eigenschaft automatisch vergeben werden, wenn die
+            Eigenschaft <guilabel>Anpassend</guilabel> aktiviert ist.
+          </para>
+        </listitem>
+        
         <listitem lang="fr">
           <para>
             <itemizedlist>
@@ -240,10 +363,23 @@
             </itemizedlist>
           </para>
         </listitem>
-
+      </varlistentry>
+      
+      <varlistentry lang="de">
+        <term lang="de">Schwellwert Schwarz / Weiss</term> 
+        <listitem lang="de">
+          <para>
+            Mit diesen beiden Eigenschaften können Sie einstellen, dass Pixel
+            die entweder nah an Schwarz, oder nah an Weiss sind, entfernt
+            werden. Die Einstllung erfolgt über die beiden Schieberegler
+            <guilabel>Schwellwert Schwarz</guilabel>, der gewöhnlich Werte
+            aus dem Bereich 0 bis 20 hat, und dem Schieberegler
+            <guilabel>Schwellwert Weiss</guilabel>, der festlegt ab welcher
+            Helligkeit ein Pixel entfernt werden soll und gewöhnlich Werte
+            zwischen 240 und 255 annimmt.
+          </para>
+        </listitem>
       </varlistentry>
     </variablelist>
-
   </simplesect>
-
 </sect2>

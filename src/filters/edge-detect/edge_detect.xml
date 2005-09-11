@@ -1,14 +1,38 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<sect2 id='plug-in-edge' lang="en;cs;fr">
+<!DOCTYPE sect2
+  PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+  "http://www.docbook.org/xml/4.3/docbookx.dtd">
+
+<!-- section history: -->
+<!-- 050829 de added by axel.wernicke -->
+<sect2 id='plug-in-edge' lang="en;cs;de;fr">
   <title lang="en">Edge</title>
   <title lang="cs">Hrana</title>
+  <title lang="de">Kanten</title>
   <title lang="fr">Contours</title>
 
-  <indexterm>
-    <primary lang="en">Edge</primary>
-    <primary lang="cs">Hrana</primary>
-    <primary lang="fr">Contours</primary>
+  <indexterm lang="en">
+    <primary>Edge</primary>
+  </indexterm>
+  
+  <indexterm lang="cs">
+    <primary>Hrana</primary>
+  </indexterm>
+
+  <indexterm lang="de">
+    <primary>Filter</primary>
+    <secondary>Kantenerkennung</secondary>
+  </indexterm>
+  <indexterm lang="de"><primary>Sobel</primary></indexterm>
+  <indexterm lang="de"><primary>Laplace</primary></indexterm>
+  <indexterm lang="de"><primary>Roberts</primary></indexterm>
+  <indexterm lang="de"><primary>Verlauf</primary></indexterm>
+  <indexterm lang="de"><primary>Prewitt</primary></indexterm>
+  <indexterm lang="de"><primary>Differentiell</primary></indexterm>
+
+  <indexterm lang="fr">
+    <primary>Contours</primary>
   </indexterm>
 
   <mediaobject lang="en">
@@ -32,6 +56,7 @@
   <simplesect>
     <title lang="en">Overview</title>
     <title lang="cs">Přehled</title>
+    <title lang="de">Wirkungsweise</title>
     <title lang="fr">Généralités</title>
     <para lang="en">
       This filter is found in
@@ -42,22 +67,104 @@
       <guimenuitem>Obrázek&gt;/Filtry/Detekce hran/Hrana</guimenuitem>
       z nabídky okna obrázku.
     </para>
+    
+    <para lang="de">
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/taj_orig.jpg"
+                     format="JPG"/>
+        </imageobject>
+      </inlinemediaobject>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/edge-taj-edge-sobel.jpg"
+                     format="JPG"/>
+        </imageobject>
+      </inlinemediaobject>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/edge-taj-edge-prewitt.jpg"
+                     format="JPG"/>
+        </imageobject>
+      </inlinemediaobject>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/edge-taj-edge-gradient.jpg"
+                     format="JPG"/>
+        </imageobject>
+      </inlinemediaobject>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/edge-taj-edge-roberts.jpg"
+                     format="JPG"/>
+        </imageobject>
+      </inlinemediaobject>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/edge-taj-edge-differential.jpg"
+                     format="JPG"/>
+        </imageobject>
+      </inlinemediaobject>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/edge-taj-edge-laplace.jpg"
+                     format="JPG"/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+    <para lang="de">
+      v.l.n.r.: Originalbild, Kantenerkennung (Sobel, Prewitt, Verlauf,
+      Roberts, Differentiell, Laplace) angewandt
+    </para>
+    <para>
+      Dieses Filter stellt Ihnen verschiedene Kantenerkennungsalgorithmen zur
+      Verfügung. Diese sind mit ihren Eigenschaften in den nächsten
+      Abschnitten detailliert erklärt.
+    </para>
     <para lang="fr">
       Ce filtre se trouve à 
       <guimenuitem>Image&gt;Filtre/Détection de bords/<accel>Contours</accel></guimenuitem>
     </para>
   </simplesect>
 
+  <simplesect lang="de">
+    <title lang="de">Filteraufruf</title>
+    <para lang="de">
+      Dieses Filter lässt sich über das Menü
+      <menuchoice>
+        <guimenu><accel>F</accel>ilter</guimenu>
+        <guisubmenu><accel>K</accel>anten finden</guisubmenu>
+        <guimenuitem><accel>K</accel>anten</guimenuitem>
+      </menuchoice>
+      im Bildfenster aufrufen.
+    </para>
+  </simplesect>
+
   <simplesect>
     <title lang="en">Options</title>
     <title lang="cs">Volby</title>
+    <title lang="de">Eigenschaften</title>
     <title lang="fr">Options</title>
 
-    <variablelist>
+    <informalfigure lang="de">
+      <mediaobject>
+        <imageobject lang="de">
+          <imagedata fileref="../images/filters/de/options-edge-edge.png"
+						         format="PNG"/>
+        </imageobject>
+        <caption>
+          <para lang="de">
+            Eigenschaften für das Filter <quote>Kanten</quote>
+          </para>
+        </caption>
+      </mediaobject>
+    </informalfigure>
 
+    <variablelist>
       <varlistentry>
         <term lang="en">Algorithm</term>
         <term lang="cs">Algoritmus</term>
+        <term lang="de">Algorithmus</term>
         <term lang="fr">Algorithme</term>
 
         <listitem lang="en">
@@ -150,6 +257,56 @@
           </para>
         </listitem>
 
+        <listitem lang="de">
+          <para>
+            Das Filter erlaubt Ihnen die Verwendung verschiedener Methoden der
+            Kantenerkennung:
+          </para> 
+          <para>
+            <itemizedlist>
+              <listitem>
+              <para>
+                <guilabel>Sobel</guilabel>: Im Kontext dieses Filters wird
+                der Sobeloperator nur mit den Standardeinstellungen angeboten.
+                Er ist aber als separates Filter zusätzlich verfügbar.
+              </para> 
+              </listitem>
+              <listitem>
+              <para>
+                <guilabel>Prewitt</guilabel>: Das Ergebnis unterscheidet sich
+                nicht wesentlich von Sobel.
+              </para>
+              </listitem>
+              <listitem>
+              <para>
+                <guilabel>Verlauf</guilabel>: Die Kanten werden dünner, mit
+                weniger Kontrast und unschärfer dargestellt als bei Sobel.
+              </para>
+              </listitem>
+              <listitem>
+              <para>
+                <guilabel>Roberts</guilabel>: Kein grosser Unterschied zu
+                Sobel.
+              </para>
+              </listitem>
+              <listitem>
+              <para>
+                <guilabel>Differentiell</guilabel>: Die Kanten sind weniger
+                hell als bei Sobel.
+              </para>   
+              </listitem>
+              <listitem>
+              <para>
+                <guilabel>Laplace</guilabel>: Im Kontext dieses Filters wird
+                der Laplaceoperator nur mit den Standardeinstellungen
+                angeboten. Er ist aber als separates Filter zusätzlich
+                verfügbar.
+              </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+        </listitem> 
+        
         <listitem lang="fr">
           <para lang="fr">
             Contours offre plusieurs méthodes de détection des contours:
@@ -199,6 +356,7 @@
       <varlistentry>
         <term lang="en">Parameter Settings</term>
         <term lang="cs">Nastavení parametrů</term>
+        <term lang="de">Menge</term>
         <term lang="fr">Réglage des paramètres</term>
 
         <listitem>
@@ -226,6 +384,13 @@
             dlaždicovatelnými obrázky.
           </para>
 
+          <para lang="de">
+            Mit dieser Eigenschaft können Sie die Stärke des Filters
+            einstellen. Ein niedriger Wert führt zu einem Bild in dem nur
+            wenige Kanten erkannt werden, ein hoher zu einem Ergebnis, in dem
+            aus kleinste Kanten dargestellt sind.
+          </para> 
+          
           <para lang="fr">
             <guilabel>Quantité</guilabel>:
             Une valeur faible donne une image noire, bien contrastée avec des 
@@ -236,6 +401,17 @@
             <guilabel>Enrouler, Étaler, Noir</guilabel>:           
             est le mode de recouvrement des cotés de l'image comme pour le 
             greffon «Déplacer». C'est utile pour les images à bords jointifs. 
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry lang="de">
+        <term lang="de">Umfalten, Verwischen, Schwarz</term>
+        <listitem>
+          <para lang="de">
+            <!-- de FIXME: didn't get that description :/ review! -->
+            Diese Eigenschaft gibt an, wie die Bildkanten behandelt werden.
+            Das ist nützlich, wenn Sie Bilder aneinander setzen wollen.
           </para>
         </listitem>
       </varlistentry>

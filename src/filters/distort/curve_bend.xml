@@ -1,14 +1,31 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<sect2 id='plug-in-curve-bend' lang="en;cs;fr">
-  <title lang="en">Curve Bend</title>
-  <title lang="cs">Zkřivit</title>
-  <title lang="fr">Déformer selon une courbe</title>
+<!DOCTYPE sect2
+  PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+  "http://www.docbook.org/xml/4.3/docbookx.dtd">
 
-  <indexterm>
-    <primary lang="en">Curve Bend</primary>
-    <primary lang="cs">Zkřivit</primary>
-    <primary lang="fr">Déformer selon une courbe</primary>
+<!-- section history: -->
+<!-- 050904 de added by axel.wernicke -->
+<sect2 id='plug-in-curve-bend' lang="en;cs;de;fr">
+  <title>
+    <phrase lang="en">Curve Bend</phrase>
+    <phrase lang="cs">Zkřivit</phrase>
+    <phrase lang="de">Verbiegen</phrase>
+    <phrase lang="fr">Déformer selon une courbe</phrase>
+  </title>
+
+  <indexterm lang="en"><primary>Curve Bend</primary></indexterm>
+  
+  <indexterm lang="cs"><primary>Zkřivit</primary></indexterm>
+  
+  <indexterm lang="de">
+    <primary>Filter</primary>
+    <secondary>Verzerren</secondary>
+  </indexterm>
+  <indexterm lang="de"><primary>Verbiegen</primary></indexterm>
+  
+  <indexterm lang="fr">
+    <primary>Déformer selon une courbe</primary>
   </indexterm>
 
   <mediaobject lang="en">
@@ -28,9 +45,31 @@
   </mediaobject>
 
   <simplesect>
-    <title lang="en">Overview</title>
-    <title lang="cs">Přehled</title>
-    <title lang="fr">Généralités</title>
+    <title>
+      <phrase lang="en">Overview</phrase>
+      <phrase lang="cs">Přehled</phrase>
+      <phrase lang="de">Wirkungsweise</phrase>
+      <phrase lang="fr">Généralités</phrase>
+    </title>
+
+    <para lang="de">
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/taj_orig.jpg"
+                     format="JPG"/>
+        </imageobject>
+      </inlinemediaobject>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/distort-taj-curve-bend.jpg"
+                     format="JPG"/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+    <para lang="de">
+      v.l.n.r.: Originalbild, Verbiegen angewandt
+    </para>
+
     <para lang="en">
       This filter is found in
       <menuchoice>
@@ -69,202 +108,301 @@
     </para>
   </simplesect>
 
-  <simplesect>
-    <title lang="en">Preview</title>
-    <title lang="cs">Náhled</title>
-    <title lang="fr">Aperçu</title>
+  <simplesect lang="de">
+    <title>
+      <phrase lang="de">Filteraufruf</phrase>
+    </title>
+    
+    <para lang="de">
+      Dieses Filter lässt sich über das Menü
+      <menuchoice>
+        <guimenu><accel>F</accel>ilter</guimenu>
+        <guisubmenu>Ver<accel>z</accel>erren</guisubmenu>
+        <guimenuitem><accel>V</accel>erbiegen</guimenuitem>
+      </menuchoice>
+      im Bildfenster aufrufen.
+    </para>
+  </simplesect>
 
-    <para lang="en">
-      The preview displays changes to image or selection without 
-      modifying the image until you press <emphasis>OK</emphasis>.
-    </para>
-    <para lang="cs">
-      Náhled zobrazuje změny dříve, než filtr aplikujete stisknutím tlačítka
-      <emphasis>OK</emphasis>.
-    </para>
-    <para lang="fr">
-      Cet aperçu affiche les modifications apportées au calque actif 
-      ou à la sélection sans modifier l'image jusqu'à ce que vous 
-      cliquiez sur <emphasis>Valider</emphasis>  
-    </para>
+  <simplesect>
+    <title>
+      <phrase lang="en">Options</phrase>
+      <phrase lang="cs">Volby</phrase>
+      <phrase lang="de">Eigenschaften</phrase>
+      <phrase lang="fr">Options</phrase>
+    </title>
+
+    <informalfigure lang="de">
+      <mediaobject>
+        <imageobject lang="de">
+          <imagedata fileref="../images/filters/de/options-distort-curve-bend.png"
+                     format="PNG"/>
+        </imageobject>
+        <caption>
+          <para lang="de">
+            Eigenschaften für das Filter <quote>Verbiegen</quote>
+          </para>
+        </caption>
+      </mediaobject>
+    </informalfigure>
 
     <variablelist>
       <varlistentry>
-        <term lang="en">Preview Once</term>
-        <term lang="cs">Náhled jednou</term>
-        <term lang="fr">Lancer l'aperçu</term>
+        <term lang="en">Preview</term>
+        <term lang="cs">Náhled</term>
+        <term lang="de">Vorschau</term>
+        <term lang="fr">Aperçu</term>
+        
         <listitem>
           <para lang="en">
-            This button allows you to update the preview each time you need 
-            it.
+            The preview displays changes to image or selection without 
+            modifying the image until you press <emphasis>OK</emphasis>.
           </para>
           <para lang="cs">
-            Tímto tlačítkem lze aktualizovat náhled kdykoliv podle potřeby.
+            Náhled zobrazuje změny dříve, než filtr aplikujete stisknutím tlačítka
+            <emphasis>OK</emphasis>.
           </para>
-          <para lang="fr">
-            Ce bouton vous permet de mettre à jour l'aperçu chaque fois que 
-            vous en avez besoin.
-          </para>
-        </listitem>
-      </varlistentry>
-
-      <varlistentry>
-        <term lang="en">Automatic Preview</term>
-        <term lang="cs">Náhled automaticky</term>
-        <term lang="fr">Aperçu automatique</term>
-        <listitem>
-          <para lang="en">
-            With this option, preview is changed in real time. This needs 
-            much calculation and may lengthen work. It is particularly 
-            evident when using "Rotation".
-          </para>
-          <para lang="cs">
-            Je-li aktivní tato volba, aktualizuje se náhled automaticky při
-            každé změně nastavení. Protože vytvoření náhledu v případě tohoto
-            filtru vyžaduje složité výpočty, může trvat dlouho a automatické
-            vytváření není proto aktivní ve výchozím nastavení. Je to
-            obzvláště patrné v případě použití rotace.
-          </para>
-          <para lang="fr">
-            Avec cette option, l'Aperçu est modifié en temps réel, ce qui 
-            nécessite beaucoup de calculs et peut ralentir le travail. Ceci 
-            est particulièrement net quand on utilise Rotation.
+          <para lang="de">
+            In der Vorschau wird ein Ausschnitt des Bildes so dargestellt,
+            als wäre das Filter mit den aktuellen Einstellungen auf das Bild
+            angewandt worden.
           </para> 
+          <para lang="fr">
+            Cet aperçu affiche les modifications apportées au calque actif 
+            ou à la sélection sans modifier l'image jusqu'à ce que vous 
+            cliquiez sur <emphasis>Valider</emphasis>  
+          </para>
+
+          <variablelist>
+            <varlistentry>
+              <term lang="en">Preview Once</term>
+              <term lang="cs">Náhled jednou</term>
+              <term lang="de">Vorschau einmal</term>
+              <term lang="fr">Lancer l'aperçu</term>
+              <listitem>
+                <para lang="en">
+                  This button allows you to update the preview each time you need 
+                  it.
+                </para>
+                <para lang="cs">
+                  Tímto tlačítkem lze aktualizovat náhled kdykoliv podle potřeby.
+                </para>
+                <para lang="de">
+                  Diese Schaltfläche aktualisiert die Vorschau wenn sie Sie
+                  anklicken.
+                </para>
+                <para lang="fr">
+                  Ce bouton vous permet de mettre à jour l'aperçu chaque fois que 
+                  vous en avez besoin.
+                </para>
+              </listitem>
+            </varlistentry>
+
+            <varlistentry>
+              <term lang="en">Automatic Preview</term>
+              <term lang="cs">Náhled automaticky</term>
+              <term lang="de">Automatische Vorschau</term>
+              <term lang="fr">Aperçu automatique</term>
+              <listitem>
+                <para lang="en">
+                  With this option, preview is changed in real time. This needs 
+                  much calculation and may lengthen work. It is particularly 
+                  evident when using "Rotation".
+                </para>
+                <para lang="cs">
+                  Je-li aktivní tato volba, aktualizuje se náhled automaticky při
+                  každé změně nastavení. Protože vytvoření náhledu v případě tohoto
+                  filtru vyžaduje složité výpočty, může trvat dlouho a automatické
+                  vytváření není proto aktivní ve výchozím nastavení. Je to
+                  obzvláště patrné v případě použití rotace.
+                </para>
+                <para lang="de">
+                  Wenn Sie diese Eigenschaft aktivieren, wird die Vorschau
+                  automatisch aktualisiert. Dies ist im Allgemeinen sehr
+                  praktisch, kostet aber einige Rechenleistung. Bei älteren
+                  Computern ist es empfehlenswert die Vorschau nicht
+                  automatisch, sondern über die Schaltfläche
+                  <guibutton>Vorschau einmal</guibutton> zu aktualisieren.
+                </para>
+                <para lang="fr">
+                  Avec cette option, l'Aperçu est modifié en temps réel, ce qui 
+                  nécessite beaucoup de calculs et peut ralentir le travail. Ceci 
+                  est particulièrement net quand on utilise Rotation.
+                </para> 
+              </listitem>
+            </varlistentry>
+          </variablelist>
         </listitem>
       </varlistentry>
-    </variablelist> 
-  </simplesect>
-
-  <simplesect>
-    <title lang="en">Options</title>
-    <title lang="cs">Volby</title>
-    <title lang="fr">Options</title>
-    <variablelist>
-    <varlistentry>
-      <term lang="en">Rotate</term>
-      <term lang="cs">Rotace</term>
-      <term lang="fr">Rotation</term>
-      <listitem>
-        <para lang="en">
-          There, you can set the application angle of filter (0-360 counter-
-          clockwise). 0 is default setting: The curve will be applied from 
-          the upper border and/or from the lower. Set to 90, it will be 
-          applied from left border and/or from the right one.
-        </para>
-        <para lang="cs">
-          Zde lze nastavit úhel aplikace filtru (0-360° proti směru hodinových
-          ručiček). Nula je výchozí nastavení, znamená, že je filtr aplikován
-          ve svislém směru. Je-li nastaveno 90°, je filtr aplikován ve
-          vodorovném směru.
-        </para>
-        <para lang="fr">
-          Ici, vous pouvez fixer l'angle d'application du filtre (0-360, dans 
-          le sens anti-horaire). Réglé à 0 par défaut, la courbe s'appliquera 
-          à partir du bord supérieur et/ou inférieur de l'image. Réglé à 90, 
-          elle s'appliquera à partir du bord gauche et/ou droit.
-        </para>
-      </listitem>
-    </varlistentry>
-
-    <varlistentry>
-      <term lang="en">Smoothing and Antialiasing</term>
-      <term lang="cs">Vyhlazování</term>
-      <term lang="fr">Adoucissement et lissage</term>
-      <listitem>
-        <para lang="en">
-          The distort process may create hard and stepped borders. These two 
-          options improve this aspect.
-        </para>
-        <para lang="cs">
-          Zkreslení může vytvářet zubaté okraje. Aktivace těchto voleb může
-          problém částečně vyřešit.
-        </para>
-        <para lang="fr">
-          Le processus de distorsion peut créer des bords durs et en escalier. 
-          Ces deux options permettent d'améliorer cet aspect.
-        </para> 
-      </listitem>
-    </varlistentry>
-
-    <varlistentry>
-      <term lang="en">Work on Copy</term>
-      <term lang="cs">Pracovat na kopii</term>
-      <term lang="fr">Travail sur copie</term>
-      <listitem> 
-        <para lang="en">
-          This option creates a new layer called "Curve_bend_dummy_layer_b" 
-          which becomes the active layer, allowing you to see changes to your 
-          image in normal size without modifying the original image until you 
-          press the "OK" key.
-        </para>
-        <para lang="cs">
-          Je-li aktivní tato volba, vytvoří se nová vrstva nazvaná
-          <literal>Curve_bend_dummy_layer_b</literal>, která se stane vrstvou
-          aktivní, což umožňuje prohlédnout-si výsledek v plné velikosti ještě
-          před stisknutím tlačítka <guibutton>Budiž</guibutton>.<!--???-->
-        </para>
-        <para lang="fr">
-          Cette option crée un calque supplémentaire appelé 
-          «Curve_bend_dummy_layer_b» qui devient le calque actif, vous 
-          permettant de voir en grandeur nature les modifications apportées à 
-          l'image sans toucher à l'image d'origine jusqu'à ce que vous 
-          cliquiez sur «Valider».
-        </para> 
-      </listitem>
-    </varlistentry>
-    </variablelist> 
-  </simplesect>
-
-  <simplesect>
-    <title lang="en">Modify Curve</title>
-    <title lang="cs">Upravit křivky</title>
-    <title lang="fr">Modifier les courbes</title>
-    <variablelist>
+      
       <varlistentry>
-        <term lang="en">The Grid</term>
-        <term lang="cs">Mřížka</term>
-        <term lang="fr">La grille</term>
-        <listitem lang="en">
-          <para>
+        <term lang="en">Options</term>
+        <term lang="cs">Volby</term>
+        <term lang="de">Einstellungen</term>
+        <term lang="fr">Options</term>
+
+        <listitem>
+          <variablelist>
+            <varlistentry>
+              <term lang="en">Rotate</term>
+              <term lang="cs">Rotace</term>
+              <term lang="de">Drehung</term>
+              <term lang="fr">Rotation</term>
+              <listitem>
+                <para lang="en">
+                  There, you can set the application angle of filter (0-360 counter-
+                  clockwise). 0 is default setting: The curve will be applied from 
+                  the upper border and/or from the lower. Set to 90, it will be 
+                  applied from left border and/or from the right one.
+                </para>
+                <para lang="cs">
+                  Zde lze nastavit úhel aplikace filtru (0-360° proti směru hodinových
+                  ručiček). Nula je výchozí nastavení, znamená, že je filtr aplikován
+                  ve svislém směru. Je-li nastaveno 90°, je filtr aplikován ve
+                  vodorovném směru.
+                </para>
+                <para lang="de">
+                  Mit dieser Eigenschaft können Sie einstellen in welchem Winkel
+                  der Filter auf das Bild wirkt. Die Einstellung erfolgt im
+                  Bereich von 0° bis 360°. 0° ist die Standardeinstellung, der
+                  Filter wird vom oberen und unteren Rand aus angewandt. Wenn
+                  dieser Wert beispielsweise auf 90° gesetzt wird, so wird das
+                  das Filter vom rechten und linken Rand aus aufgetragen.
+                </para>
+                <para lang="fr">
+                  Ici, vous pouvez fixer l'angle d'application du filtre (0-360, dans 
+                  le sens anti-horaire). Réglé à 0 par défaut, la courbe s'appliquera 
+                  à partir du bord supérieur et/ou inférieur de l'image. Réglé à 90, 
+                  elle s'appliquera à partir du bord gauche et/ou droit.
+                </para>
+              </listitem>
+            </varlistentry>
+
+            <varlistentry>
+              <term lang="en">Smoothing and Antialiasing</term>
+              <term lang="cs">Vyhlazování</term>
+              <term lang="de">Glättung; Kantenglättung</term>
+              <term lang="fr">Adoucissement et lissage</term>
+
+              <listitem>
+                <para lang="en">
+                  The distort process may create hard and stepped borders. These two 
+                  options improve this aspect.
+                </para>
+                <para lang="cs">
+                  Zkreslení může vytvářet zubaté okraje. Aktivace těchto voleb může
+                  problém částečně vyřešit.
+                </para>
+                <para lang="de">
+                  Durch die Anwendung des Filters können harte oder stufige
+                  Kanten entstehen. Mit diesen beiden Eigenschaften können Sie
+                  diese wieder glätten.
+                </para>
+                <para lang="fr">
+                  Le processus de distorsion peut créer des bords durs et en escalier. 
+                  Ces deux options permettent d'améliorer cet aspect.
+                </para> 
+              </listitem>
+            </varlistentry>
+
+            <varlistentry>
+              <term lang="en">Work on Copy</term>
+              <term lang="cs">Pracovat na kopii</term>
+              <term lang="de">Mit Kopie arbeiten</term>
+              <term lang="fr">Travail sur copie</term>
+
+              <listitem> 
+                <para lang="en">
+                  This option creates a new layer called "Curve_bend_dummy_layer_b" 
+                  which becomes the active layer, allowing you to see changes to your 
+                  image in normal size without modifying the original image until you 
+                  press the "OK" key.
+                </para>
+                <para lang="cs">
+                  Je-li aktivní tato volba, vytvoří se nová vrstva nazvaná
+                  <literal>Curve_bend_dummy_layer_b</literal>, která se stane vrstvou
+                  aktivní, což umožňuje prohlédnout-si výsledek v plné velikosti ještě
+                  před stisknutím tlačítka <guibutton>Budiž</guibutton>.<!--???-->
+                </para>
+                <para lang="de">
+                  Wenn diese Eigenschaft aktiviert ist, wird das Filter nicht
+                  auf dem Originalbild, sondern auf einer Kopie ausgeführt.
+                  Diese Kopie wird als neue Ebene unter dem Namen
+                  <quote>curve_bend_dummy_layer_b</quote> im aktuellen Bild
+                  angelegt und zur aktiven Ebene.
+                </para>
+                <para lang="fr">
+                  Cette option crée un calque supplémentaire appelé 
+                  «Curve_bend_dummy_layer_b» qui devient le calque actif, vous 
+                  permettant de voir en grandeur nature les modifications apportées à 
+                  l'image sans toucher à l'image d'origine jusqu'à ce que vous 
+                  cliquiez sur «Valider».
+                </para> 
+              </listitem>
+            </varlistentry>
+          </variablelist>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term lang="en">Modify Curve</term>
+        <term lang="cs">Upravit křivky</term>
+        <term lang="de">Kurven bearbeiten</term>
+        <term lang="fr">Modifier les courbes</term>
+        
+        <listitem>
+          <para lang="en">
             In this grid, you have a marked horizontal line, with a node at 
             both ends, which represents by default the upper border of image. 
             If you click on this curve, a new node appears, that you can drag 
             to modify the curve as you want. You can create several nodes on 
             the curve.
           </para>
-         <para>
+          <para lang="en">
             You can have only two curves on the grid, one for the so named 
             "upper" border and the other for the so named "lower" border. You 
             can activate one of them by checking the <emphasis>Upper</emphasis> 
             or <emphasis>Lower</emphasis> radio button.
           </para>
-         <para>
+          <para lang="en">
             If you use the <emphasis>Curve Type Free</emphasis> option, the 
             curve you draw will replace the active curve.
           </para>
-        </listitem>
 
-        <listitem lang="cs">
-          <para>
+          <para lang="cs">
             V této mřížce je vodorovná úsečka s uzlem na každém konci, která
             ve výchozím stavu reprezentuje horní okraj obrázku. Kliknutím na
             křivku se vytvoří nový uzel, který lze přetahovat a měnit tak tvar
             křivky. Křivka může obsahovat mnoho uzlů.
           </para>
-          <para>
+          <para lang="cs">
             V mřížce mohou být pouze dva uzly, jeden pro takzvaný horní a
             druhý pro takzvaný dolní okraj. Přepínat mezi nimi lze pomocí
             přpínačů <emphasis>Horní</emphasis> a <emphasis>Dolní</emphasis>.
           </para>
-          <para>
+          <para lang="cs">
             V případě přepnutí do volného režimu kreslení (přepínač
             <guilabel>Volná</guilabel>) se nepracuje s uzly, ale volně
             od ruky kreslená křivka nahrazuje stávající křivku.
           </para>
-        </listitem>
 
-        <listitem lang="fr">
-          <para>
+          <para lang="de">
+            In diesem Bereich des Filterdialoges haben Sie einen durch
+            ein Gitter gekennzeichneten Bereich zur Verfügung. In diesem
+            Bereich finden Sie eine schwarze Linie, welche horizontal durch
+            den Bereich gezeichnet, und an Beiden Enden mit einem Knoten
+            versehen ist. Diese Linie beschreibt die obere Kante des Bildes.
+            Wenn Sie diese Linie anklicken, wird ein neuer Knoten eingefügt
+            und Sie können die Kurve frei gestalten. Sie können auf diese
+            Weise auch mehrer Knoten in die Kurve einfügen.
+          </para>
+          <para lang="de">
+            Sie können höchstens zwei Kurven im Gitterbereich erzeugen. Eine
+            beschreibt die <quote>obere</quote> und die andere die
+            <quote>untere</quote> Kante des Bildes.
+          </para>
+
+          <para lang="fr">
             Au milieu de la grille, une ligne horizontale plus marquée indique 
             le bord de l'image que vous avez choisi. Quand vous cliquez sur la 
             courbe, un noeud apparaît qui vous permet, par un cliquer-glisser, 
@@ -273,14 +411,14 @@
             l'image. Vous pouvez ne déplacer que les noeuds des extrémités en 
             vue de créer un effet de perspective.
           </para>
-          <para>
+          <para lang="fr">
             Vous ne pouvez avoir que deux courbes sur la grille, l'une pour le 
             bord dit «supérieur» et l'autre pour le bord opposé dit 
             «inférieur». Vous rendez l'une ou l'autre active en cochant le 
             bouton radio <emphasis>Supérieure</emphasis> ou 
             <emphasis>Inférieure</emphasis>.
           </para>
-          <para>
+          <para lang="fr">
             Si vous utilisez l'option <emphasis>Type de courbe libre</emphasis>, 
             la courbe tracée prendra la place de la courbe active.
           </para> 
@@ -290,7 +428,9 @@
       <varlistentry>
         <term lang="en">Curve for Border</term>
         <term lang="cs">Křivka hranic</term>
+        <term lang="de">Kurve für Rand</term>
         <term lang="fr">Courbe pour la limite</term>
+        
         <listitem>
           <para lang="en">
             There you can select whether the active curve must be applied to 
@@ -304,6 +444,23 @@
             pravému (<guilabel>Dolní</guilabel>) okraji, v závislosti na
             rotaci.
           </para>
+          <para lang="de">
+            In dieser Eigenschaft haben Sie zwei Einstellungen zur Auswahl,
+            mit denen Sie festlegen können, ob sie die Kurve für den
+            <guilabel>Oberen</guilabel> oder die für den
+            <guilabel>Unteren</guilabel> Rand bearbeiten wollen. 
+          </para>
+          <caution lang="de">
+            <para>
+              Bitte beachten Sie an dieser Stellen, dass der Rand des Bildes
+              auf welchen die Kurve angewendet wird zusätzlich von der
+              Einstellung der Eigenschaft <guilabel>Drehen</guilabel> abhängt.
+              Bei einer Einstellung von beispielsweise 90° wird die Kurve für
+              den oberen Rand in Wirklichkeit auf den rechten Bildrand
+              angewandt.
+            </para>
+          </caution>
+          
           <para lang="fr">
             Vous choisissez là le bord de l'image sur lequel vous voulez agir. 
             <emphasis>Supérieure</emphasis> et <emphasis>Inférieure</emphasis> 
@@ -316,36 +473,49 @@
       <varlistentry>
         <term lang="en">Curve Type</term>
         <term lang="cs">Typ křivky</term>
+        <term lang="de">Kurventyp</term>
         <term lang="fr">Type de courbe</term>
-        <listitem lang="en">
-          <para>
+        
+        <listitem>
+          <para lang="en">
             With the <emphasis>Smooth</emphasis>, you get automatically a well 
             rounded curve when you drag a node.
           </para>
-          <para> 
+          <para lang="en">
             The <emphasis>Free</emphasis> option allows you to draw a curve 
             freely. It will replace the active curve.
           </para>
-        </listitem>
 
-        <listitem lang="cs">
-          <para>
+          <para lang="cs">
             V případě volby <emphasis>Plynulá</emphasis> je křivka během úprav
             automaticky vyhlazována do ladných zakřivených tvarů.
           </para>
-          <para>
+          <para lang="cs">
             V případě volby <emphasis>Volná</emphasis> lze křivku kreslit
             zcela volně, včetně zubatých okrajů.
           </para>
-        </listitem>
 
-        <listitem lang="fr">
-          <para>
+          <para lang="de">
+            Mit dieser Eigenschaft können Sie die Art der Kurve einstellen,
+            mit der Sie arbeiten möchten. Sie haben zwei verschiedene Typen
+            zur Auswahl:
+          </para>
+          <para lang="de">
+            Der Typ <guilabel>Glatt</guilabel> erzeugt automatisch eine
+            geglättete Kurve, welche Sie durch das Einfügen und verschieben
+            von Knoten verformen können.
+          </para>
+          <para lang="de">
+            Der Typ <guilabel>Frei</guilabel> hingegen, erlaubt Ihnen die
+            Kurve direkt freihand in den Gitterbereich hineinzuzeichnen.
+          </para>
+          
+          <para lang="fr">
             Avec l'option <emphasis>Adoucie</emphasis>, vous obtenez 
             automatiquement une courbe bien arrondie quand vous déplacez un 
             noeud.
           </para> 
-          <para>
+          <para lang="fr">
             L'option <emphasis>Libre</emphasis> vous permet de tracer une 
             courbe à main levée. Elle remplace la courbe active. Vous pouvez 
             très bien avoir une courbe supérieure «adoucie» et une courbe 
@@ -353,92 +523,178 @@
           </para>
         </listitem>
       </varlistentry>
+            
       <varlistentry>
         <term lang="en">Buttons</term>
         <term lang="cs">Tlačítka</term>
+        <term lang="de">Schaltflächen</term>
         <term lang="fr">Boutons</term>
-        <listitem lang="en">
-          <para>
-            <guilabel>Copy</guilabel>: Copy the active curve to the other 
-            border.
-          </para>
-          <para>
-            <guilabel>Mirror</guilabel>: Mirror the active curve to the other 
-            border.
-          </para>
-          <para>
-            <guilabel>Swap</guilabel>: Swap the "superior" and "inferior"
-            curves
-          </para>
-          <para>
-            <guilabel>Reset</guilabel>: Reset the active curve.
-          </para>
-          <para>
-            <guilabel>Open</guilabel>: Load the curve from a file.
-          </para>
-          <para>
-            <guilabel>Save</guilabel>: Save the curve to a file.
-          </para>
-        </listitem>
-
-        <listitem lang="cs">
-          <para>
-            <guilabel>Kopírovat</guilabel>: Zkopíruje aktivní křivku do křivky
-            pro druhý okraj.
-          </para> 
-          <para>
-            <guilabel>Zrcadlit</guilabel>: Zkopíruje zrcadlový obraz aktivní
-            křivky do křivky pro druhý okraj.
-          </para>
-          <para>
-            <guilabel>Prohodit</guilabel>: Vzájemně prohodí horní a dolní
-            křivku.
-          </para>
-          <para>
-            <guilabel>Obnovit</guilabel>: Zruší aktivní křivku a obnoví
-            výchozí rovnou úsečku.
-          </para>
-          <para>
-            <guilabel>Otevřít</guilabel>: Načte křivku ze souboru.
-          </para>
-          <para>
-            <guilabel>Uložit</guilabel>: Uloží křivku do souboru.
-          </para>
-        </listitem>
-
-        <listitem lang="fr">
-          <para>
-            <guilabel>Copier</guilabel>: Copie la courbe active vers l'autre 
-            bord.
-          </para> 
-          <para>
-            <guilabel>Miroir</guilabel>: Crée une courbe en miroir sur 
-            l'autre bord.
-          </para>
-          <para>
-            <guilabel>Échange</guilabel>: Échange les courbes «supérieure» 
-            et «inférieure».
-          </para>
-          <para>
-            <guilabel>Initialiser</guilabel>: Ré-initialise la courbe active.
-          </para>
-          <para>
-            <guilabel>Ouvrir</guilabel>: Permet de retrouver et de charger 
-            une courbe.
-          </para>
-          <para>
-            <guilabel>Enregistrer</guilabel>: Permet d'enregistrer une courbe 
-            que vous pourrez récupérer par la suite.
-          </para>
+        
+        <listitem>
+          <variablelist>
+            <varlistentry>
+              <term lang="en">Copy</term>
+              <term lang="cs">Kopírovat</term>
+              <term lang="de">Kopieren</term>
+              <term lang="fr">Copier</term>
+              
+              <listitem>
+                <para lang="en">
+                  <guilabel>Copy</guilabel>: Copy the active curve to the other 
+                  border.
+                </para>
+                <para lang="cs">
+                  <guilabel>Kopírovat</guilabel>: Zkopíruje aktivní křivku do křivky
+                  pro druhý okraj.
+                </para>
+                <para lang="de">
+                  Mit der Schaltfläche <guibutton>Kopieren</guibutton> können
+                  Sie die ausgewählte Kurve kopieren und damit die ander
+                  Kurve ersetzen.
+                </para>
+                <para lang="fr">
+                  <guilabel>Copier</guilabel>: Copie la courbe active vers l'autre 
+                  bord.
+                </para> 
+              </listitem>
+            </varlistentry>
+ 
+            <varlistentry>
+              <term lang="en">Mirror</term>
+              <term lang="cs">Zrcadlit</term>
+              <term lang="de">Spiegeln</term>
+              <term lang="fr">Miroir</term>
+              
+              <listitem>
+                <para lang="en">
+                  <guilabel>Mirror</guilabel>: Mirror the active curve to the other 
+                  border.
+                </para>
+                <para lang="cs">
+                  <guilabel>Zrcadlit</guilabel>: Zkopíruje zrcadlový obraz aktivní
+                  křivky do křivky pro druhý okraj.
+                </para>
+                <para lang="de">
+                  Mit der Schaltfläche <guibutton>Spiegeln</guibutton> können
+                  Sie die aktuelle Kurve spiegeln und damit die andere Kurve
+                  ersetzen.
+                </para>
+                <para lang="fr">
+                  <guilabel>Miroir</guilabel>: Crée une courbe en miroir sur 
+                  l'autre bord.
+                </para>
+              </listitem>
+            </varlistentry>
+ 
+            <varlistentry>
+              <term lang="en">Swap</term>
+              <term lang="cs">Prohodit</term>
+              <term lang="de">Austauschen</term>
+              <term lang="fr">Échange</term>
+              
+              <listitem>
+                <para lang="en">
+                  <guilabel>Swap</guilabel>: Swap the "superior" and "inferior"
+                  curves
+                </para>
+                <para lang="cs">
+                  <guilabel>Prohodit</guilabel>: Vzájemně prohodí horní a dolní
+                  křivku.
+                </para>
+                <para lang="de">
+                  Mit der Schaltfläche <guibutton>Austauschen</guibutton>
+                  können Sie die beiden Kurven vertauschen.
+                </para>
+                <para lang="fr">
+                  <guilabel>Échange</guilabel>: Échange les courbes «supérieure» 
+                  et «inférieure».
+                </para>
+              </listitem>
+            </varlistentry>
+ 
+            <varlistentry>
+              <term lang="en">Reset</term>
+              <term lang="cs">Obnovit</term>
+              <term lang="de">Rücksetzen</term>
+              <term lang="fr">Initialiser</term>
+              
+              <listitem>
+                <para lang="en">
+                  <guilabel>Reset</guilabel>: Reset the active curve.
+                </para>
+                <para lang="cs">
+                  <guilabel>Obnovit</guilabel>: Zruší aktivní křivku a obnoví
+                  výchozí rovnou úsečku.
+                </para>
+                <para lang="de">
+                  Mit dieser Schaltfläche können Sie die beiden Kurven in den
+                  Ausgangszustand zurückversetzen.
+                </para>
+                <para lang="fr">
+                  <guilabel>Initialiser</guilabel>: Ré-initialise la courbe active.
+                </para>
+              </listitem>
+            </varlistentry>
+ 
+            <varlistentry>
+              <term lang="en">Open</term>
+              <term lang="cs">Otevřít</term>
+              <term lang="de">Öffnen</term>
+              <term lang="fr">Ouvrir</term>
+              
+              <listitem>
+                <para lang="en">
+                  <guilabel>Open</guilabel>: Load the curve from a file.
+                </para>
+                <para lang="cs">
+                  <guilabel>Otevřít</guilabel>: Načte křivku ze souboru.
+                </para>
+                <para lang="de">
+                  Mit dieser Schaltfläche können Sie eine Kurvendefinition
+                  aus einer Datei laden.
+                </para>
+                <para lang="fr">
+                  <guilabel>Ouvrir</guilabel>: Permet de retrouver et de charger 
+                  une courbe.
+                </para>
+              </listitem>
+            </varlistentry>
+ 
+            <varlistentry>
+              <term lang="en">Save</term>
+              <term lang="cs">Uložit</term>
+              <term lang="de">Speichern</term>
+              <term lang="fr">Enregistrer</term>
+              
+              <listitem>
+                <para lang="en">
+                  <guilabel>Save</guilabel>: Save the curve to a file.
+                </para>
+                <para lang="cs">
+                  <guilabel>Uložit</guilabel>: Uloží křivku do souboru.
+                </para>
+                <para lang="de">
+                  Mit dieser Schaltfläche können Sie die aktuellen
+                  Kurvendefinitionen in eine Datei speichern.
+                </para>
+                <para lang="fr">
+                  <guilabel>Enregistrer</guilabel>: Permet d'enregistrer une courbe 
+                  que vous pourrez récupérer par la suite.
+                </para>
+              </listitem>
+            </varlistentry>
+          </variablelist>
         </listitem>
       </varlistentry>
     </variablelist>
   </simplesect>
 
-  <simplesect>
-    <title lang="en">Example</title>
-    <title lang="cs">Příklad</title>
-    <title lang="fr">Exemple</title>
+  <simplesect lang="en;cs;fr">
+    <title>
+      <phrase lang="en">Example</phrase>
+      <phrase lang="cs">Příklad</phrase>
+      <phrase lang="fr">Exemple</phrase>
+    </title>
     <mediaobject>
       <imageobject>
         <imagedata fileref='../images/filters/examples/curve-ex.png' format="PNG"/>

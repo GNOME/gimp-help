@@ -1,22 +1,33 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<sect2 id='plug-in-spread' lang="en;cs;fr">
+<!DOCTYPE sect2
+  PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+  "http://www.docbook.org/xml/4.3/docbookx.dtd">
+
+<!-- section history: -->
+<!-- 050826 de added by axel.wernicke -->
+<sect2 id='plug-in-spread' lang="en;cs;de;fr">
   <title lang="en">Spread</title>
   <title lang="cs">Rozprostřít</title>
+  <title lang="de">Verstreuen</title>
   <title lang="fr">Répandre</title>
 
-  <indexterm>
-    <primary lang="en">Filter</primary>
-    <secondary lang="en">Noise</secondary>
-    <tertiary lang="en">Spread</tertiary>
-
-    <primary lang="cs">filtry</primary>
-    <secondary lang="cs">Šum</secondary>
-    <tertiary lang="cs">Rozprostřít</tertiary>
-
-    <primary lang="fr">Filtre</primary>
-    <secondary lang="fr">Bruit</secondary>
-    <tertiary lang="fr">Répandre</tertiary>
+  <indexterm lang="en">
+    <primary>Filter</primary>
+    <secondary>Noise</secondary>
+    <tertiary>Spread</tertiary>
+  </indexterm>
+  
+  <indexterm lang="cs">
+    <primary>filtry</primary>
+    <secondary>Šum</secondary>
+    <tertiary>Rozprostřít</tertiary>
+  </indexterm>
+  
+  <indexterm lang="fr">
+    <primary>Filtre</primary>
+    <secondary>Bruit</secondary>
+    <tertiary>Répandre</tertiary>
   </indexterm>
 
   <mediaobject lang="en">
@@ -38,6 +49,7 @@
   <simplesect>
     <title lang="en">Overview</title>
     <title lang="cs">Přehled</title>
+    <title lang="de">Wirkungsweise</title>
     <title lang="fr">Généralités</title>
     <para lang="en">
       This filter is found in
@@ -76,6 +88,31 @@
       Vytváří tak intenzivní dojem šumu v oblastech výrazných barevných
       hranic, na jednobarevných plochách nemá žádný účinek.
       Do obrázku se nepřidává žádná nová barva.
+    </para>
+
+    <para lang="de">
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/taj_orig.jpg"
+                     format="JPG"/>
+        </imageobject>
+      </inlinemediaobject>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/noise-taj-spread.jpg"
+                     format="JPG"/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+    <para lang="de">
+      v.l.n.r.: Originalbild, Verstreuen angewandt
+    </para>
+    <para lang="de">
+      Dieses Filter vertauscht einen Pixel der aktiven Ebene oder einer
+      Auswahl mit einem anderen aus einer bestimmten Umgebung. Dieses Filter
+      wirkt nicht auf einfarbigen Flächen. Es werden keine neuen Farben in
+      das Bild eingebracht, da wie schon beschrieben, lediglich vorhandenen
+      Pixel vertauscht werden.
     </para> 
     <para lang="fr">
       Le filtre Etendre échange chaque pixel d'un calque ou d'une sélection 
@@ -86,14 +123,70 @@
     </para>
   </simplesect>
 
+  <simplesect lang="de">
+    <title lang="de">Filteraufruf</title>
+    <para lang="de">
+      Dieses Filter lässt sich über das Menü
+      <menuchoice>
+        <guimenu><accel>F</accel>ilter</guimenu>
+        <guisubmenu><accel>R</accel>auschen</guisubmenu>
+        <guimenuitem>Ver<accel>s</accel>treuen</guimenuitem>
+      </menuchoice>
+      im Bildfenster aufrufen.
+    </para>
+  </simplesect>
+
   <simplesect>
     <title lang="en">Options</title>
     <title lang="cs">Volby</title>
+    <title lang="de">Eigenschaften</title>
     <title lang="fr">Options</title>
+
+    <informalfigure lang="de">
+      <mediaobject>
+        <imageobject lang="de">
+          <imagedata fileref="../images/filters/de/options-noise-spread.png"
+						         format="PNG"/>
+        </imageobject>
+        <caption>
+          <para lang="de">
+            Eigenschaften für das Filter <quote>Verstreuen</quote>
+          </para>
+        </caption>
+      </mediaobject>
+    </informalfigure>
+
     <variablelist>
+      <varlistentry>
+        <term lang="en">Preview</term>
+        <term lang="cs">Náhled</term>
+        <term lang="de">Vorschau</term>
+        <term lang="fr">Aperçu</term>
+        <listitem>
+          <para lang="en">
+            This preview displays interactively changes before they are 
+            applied to the image.
+          </para>
+          <para lang="cs">
+            Náhled interaktivně zobrazuje změny dříve, než se skutečně provedou v obrázku.
+            FIXME - angličtina neodpovídá realitě.
+          </para>
+          <para lang="de">
+            In der Vorschau wird ein Ausschnitt des Bildes so dargestellt, als
+            wäre das Filter mit den aktuellen Einstellungen auf das Bild
+            angewandt worden.
+          </para>
+          <para lang="fr">
+            Cet aperçu affiche en temps réel le résultat des modifications 
+            apportées avant qu'elles ne soient appliquées à l'image. 
+          </para>
+        </listitem>
+      </varlistentry>
+      
       <varlistentry>
         <term lang="en">Spread amount</term>
         <term lang="cs">Míra rozprostření</term>
+        <term lang="de">Verteilungsmenge</term>
         <term lang="fr">Quantité d'épandage</term>
         <listitem>
           <para lang="en">
@@ -108,6 +201,12 @@
             <guilabel>Vodorovně</guilabel> a <guilabel>Svisle</guilabel>.
             Klikáním na ikonu řetězu můžete přepínát svázání vzdáleností pro
             jednotlivé osy pohybu. Můžete také zvolit jednotku vzdálenosti.
+          </para>
+          <para lang="de">
+            Mit dieser Eigenschaft können Sie einstellen über welche Distanz
+            die Pixel <guilabel>Horizontal</guilabel> und
+            <guilabel>Vertical</guilabel> verstreut werden. Die Werte sind, 
+            solange das Kettensymbol geschlossen ist, immer proportional fix.
           </para>
           <para lang="fr">
             Vous pouvez régler la distance de déplacement des pixels selon 

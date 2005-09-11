@@ -1,22 +1,39 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<sect2 id='plug-in-randomize-slur' lang="en;cs;fr">
+<!DOCTYPE sect2
+  PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+  "http://www.docbook.org/xml/4.3/docbookx.dtd">
+
+<!-- section history: -->
+<!-- 050826 de added by axel.wernicke -->
+<sect2 id='plug-in-randomize-slur' lang="en;cs;de;fr">
   <title lang="en">Slur</title>
   <title lang="cs">Roztřepení</title>
+  <title lang="de">Schmelzen</title>
   <title lang="fr">Mélanger</title>
 
-  <indexterm>
-    <primary lang="en">Filter</primary>
-    <secondary lang="en">Noise</secondary>
-    <tertiary lang="en">Slur</tertiary>
+  <indexterm lang="en">
+    <primary>Filter</primary>
+    <secondary>Noise</secondary>
+    <tertiary>Slur</tertiary>
+  </indexterm>
+  
+  <indexterm lang="cs">
+    <primary>filtry</primary>
+    <secondary>Šum</secondary>
+    <tertiary>Roztřepení</tertiary>
+  </indexterm>
 
-    <primary lang="cs">filtry</primary>
-    <secondary lang="cs">Šum</secondary>
-    <tertiary lang="cs">Roztřepení</tertiary>
+  <indexterm lang="de">
+    <primary>Filter</primary>
+    <secondary>Rauschen</secondary>
+  </indexterm>
+  <indexterm lang="de"><primary>Schmelzen</primary></indexterm>
 
-    <primary lang="fr">Filtre</primary>
-    <secondary lang="fr">Bruit</secondary>
-    <tertiary lang="fr">Mélanger</tertiary> 
+  <indexterm lang="fr">
+    <primary>Filtre</primary>
+    <secondary>Bruit</secondary>
+    <tertiary>Mélanger</tertiary> 
   </indexterm>
 
   <mediaobject lang="en">
@@ -38,6 +55,7 @@
   <simplesect>
     <title lang="en">Overview</title>
     <title lang="cs">Roztřepení</title>
+    <title lang="de">Wirkungsweise</title>
     <title lang="fr">Généralités</title>
 
     <para lang="en">
@@ -83,6 +101,34 @@
       či výběru, jejich podíl je určen volbou <guilabel>Náhodnost
       (%)</guilabel>.
     </para>
+
+    <para lang="de">
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/taj_orig.jpg"
+                     format="JPG"/>
+        </imageobject>
+      </inlinemediaobject>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/noise-taj-slur.jpg"
+                     format="JPG"/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+    <para lang="de">
+      v.l.n.r.: Originalbild, Schmelzen angewandt
+    </para>
+    <para lang="de">
+      Dieses Filter produziert einen Effekt, der die Farben scheinbar nach
+      unten verschmelzen lässt. Wenn ein Pixel durch das Filter verändert
+      wird, wird es mit einer Wahrscheinlichkeit von 80% durch den Pixel
+      direkt darüber ersetzt. Andernfalls erhält es die Farbe eines der beiden
+      schräg oberhalb befindlichen Pixel. Es werden durch das Filter entweder
+      alle, oder ein bestimmter Prozentsatz an Pixeln des Bildes oder der
+      aktuellen Auswahl verändert. Diesen Wert können Sie in den
+      Eigenschaften des Filters einstellen.
+    </para>
     <para lang="fr">
       Le filtre Mélanger produit un effet de fondu de l'image vers le bas. Si
       un pixel doit être mélangé, il a 80% de chances d'être remplacé par la
@@ -94,15 +140,45 @@
     </para> 
   </simplesect>
 
+  <simplesect lang="de">
+    <title lang="de">Filteraufruf</title>
+    <para lang="de">
+      Dieses Filter lässt sich über das Menü
+      <menuchoice>
+        <guimenu><accel>F</accel>ilter</guimenu>
+        <guisubmenu><accel>R</accel>auschen</guisubmenu>
+        <guimenuitem><accel>S</accel>chmelzen</guimenuitem>
+      </menuchoice>
+      im Bildfenster aufrufen.
+    </para>
+  </simplesect>
+
   <simplesect>
     <title lang="en">Options</title>
     <title lang="cs">Volby</title>
+    <title lang="de">Eigenschaften</title>
     <title lang="fr">Options</title>
+
+    <informalfigure lang="de">
+      <mediaobject>
+        <imageobject lang="de">
+          <imagedata fileref="../images/filters/de/options-noise-slur.png"
+						         format="PNG"/>
+        </imageobject>
+        <caption>
+          <para lang="de">
+            Eigenschaften für das Filter <quote>Schmelzen</quote>
+          </para>
+        </caption>
+      </mediaobject>
+    </informalfigure>
+
     <variablelist>
 
       <varlistentry>
         <term lang="en">Random Seed</term>
         <term lang="cs">Hnízdo náhodných čísel</term>
+        <term lang="de">Zufallssaat</term>
         <term lang="fr">Graine aléatoire</term>
         <listitem>
           <para lang="en">
@@ -134,6 +210,20 @@
             poslední použité hnízdo náhodných čísel.
           </para>
 
+          <para lang="de">
+            Mit dieser Eigenschaft können Sie den Zufallsgenerator des Filters
+            steuern. Mit der gleichen <guilabel>Zufallssaat</guilabel> sind
+            die Ergebnisse bei meheren Anwendungen des Filters reproduzierbar.
+            Der Wert kann von Hand eingetragen, oder durch einen Klick auf
+            die Schaltfläche <guilabel>Neu Würfeln</guilabel>guilabel> per Zufall
+            bestimmt werden.
+          </para>
+          <para lang="de">
+            Wenn das Kontrollkästchen <guilabel>Zufällig</guilabel> aktiviert
+            ist, wird die Zufallssaat automatisch bei jeder Ausführung des
+            Filters neu bestimmt.
+          </para>
+          
           <para lang="fr">
             <guibutton>Graine aléatoire</guibutton> contrôle le caractère 
             aléatoire du déplacement des pixels. Si la même graine aléatoire
@@ -155,6 +245,7 @@
       <varlistentry>
         <term lang="en">Randomization (%)</term>
         <term lang="cs">Náhodnost (%)</term>
+        <term lang="de">Zufallsanteil (%)</term>
         <term lang="fr">Aléa (%)</term>
         <listitem>
           <para lang="en">
@@ -172,6 +263,12 @@
             tento filtr pracuje, je ale efekt nejnápadnější při použití
             střední hodnoty, okolo 50. Vyzkoušejte si to sami!
           </para>
+          <para lang="de">
+            Mit dieser Eigenschaft können Sie einstellen, wieviel Prozent der
+            Pixel zufallsgesteuert verändert werden. Die Einstellung kann
+            über den Schieberegler vorgenommen, oder in das Eingabefeld
+            eingetragen werden.
+          </para>
           <para lang="fr">
             Le curseur <guibutton>Aléa</guibutton> représente le pourcentage
             de pixels de la sélection ou du calque actif qui peuvent être
@@ -184,6 +281,7 @@
       <varlistentry>
         <term lang="en">Repeat</term>
         <term lang="cs">Opakování</term>
+        <term lang="de">Wiederholen</term>
         <term lang="fr">Répétition</term>
         <listitem>
           <para lang="en">
@@ -195,6 +293,12 @@
             Posuvník <guilabel>Opakování</guilabel> určuje počet aplikací
             filtru. Čím vyšší hodnota, tím větší roztřepení a tím delší
             vzdálenost, po které se barva přenáší.
+          </para>
+          <para lang="de">
+            Diese Eigenschaft legt fest, wie oft der Filter auf das Bild
+            aufgetragen wird. Ein höherer Wert führt zu einem stärkeren
+            Effekt, da die Farben über eine grössere Distanz verschmolzen
+            werden.
           </para>
           <para lang="fr">
             Le curseur <guibutton>Répétition</guibutton> représente le nombre

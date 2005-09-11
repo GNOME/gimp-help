@@ -1,125 +1,173 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<sect2 id='filters-edges-introduction' lang="en;cs;fr">
+<!DOCTYPE sect2
+  PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+  "http://www.docbook.org/xml/4.3/docbookx.dtd">
+
+<!-- section history: -->
+<!-- 050829 de added by axel.wernicke -->
+<sect2 id='filters-edges-introduction' lang="en;cs;de;fr">
   <title lang="en">Edge-detect introduction</title>
   <title lang="cs">Úvod do detekování hran</title>
+  <title lang="de">Einführung</title>
   <title lang="fr">Introduction à la détection des bords</title>
 
-    <para lang="en">
-      Edge detect filters search for borders between different colors
-      and so can detect contours of objects.
-    </para>
-    <para lang="en">
-      They are used to make selections and for many artistic purposes.
-    </para>
+  <indexterm lang="de">
+    <primary>Filter</primary>
+    <secondary>Kantenerkennung</secondary>
+  </indexterm>
+  <indexterm lang="de"><primary>Einführung</primary></indexterm>
+  
+  <para lang="en">
+    Edge detect filters search for borders between different colors
+    and so can detect contours of objects.
+  </para>
+  <para lang="en">
+    They are used to make selections and for many artistic purposes.
+  </para>
 
-    <para lang="cs">
-      Filtry detekce hran hledají v obrázku hranice mezi jednotlivými
-      barvami, tedy obrysy grafických prvků, ze kterých se obrázek
-      skládá.
-    </para>
-    <para lang="cs">
-      Hodí se při tvorbě výběrů a k různým uměleckým záměrům.
-    </para>
+  <para lang="cs">
+    Filtry detekce hran hledají v obrázku hranice mezi jednotlivými
+    barvami, tedy obrysy grafických prvků, ze kterých se obrázek
+    skládá.
+  </para>
+  <para lang="cs">
+    Hodí se při tvorbě výběrů a k různým uměleckým záměrům.
+  </para>
 
-    <mediaobject lang="en">
-      <imageobject>
-        <imagedata fileref="../images/filters/filters-edgedetect-fig.png"
-        format="PNG" />
-      </imageobject>
-    </mediaobject>
+  <para lang="de">
+    Kantenerkennungsfilter sind in der Lage Kante zwischen verschiedenen
+    Farben und die Umrisse von Objekten aus Bildern zu extrahieren.
+  </para>
+  <para lang="de">
+    Diese Filter können benutzt werden, um Auswahlen zu erstellen und
+    verschiedene künstlerische Effekte zu erreichen.
+  </para>
 
-    <mediaobject lang="cs" >
-      <imageobject>
-        <imagedata fileref="../images/filters/cs/filters-edgedetect-fig.png"
-        format="PNG" />
-      </imageobject>
-    </mediaobject>
+  <mediaobject lang="en;de">
+    <imageobject>
+      <imagedata fileref="../images/filters/filters-edgedetect-fig.png"
+      format="PNG" />
+    </imageobject>
+  </mediaobject>
 
-    <para lang="en">
-      Most of them are based on gradient calculation methods and give thick
-      border lines. Look at fig.1 which represents color intensity
-      variations. On the left is a slow color gradient which is not a border.
-      On the right is a quick variation which is an edge. Now, let us
-      calculate the gradient, the variation speed, of this edge, i.e the first
-      derivative (fig.2). We have to decide that a border is detected when
-      gradient is more than a threshold value (the exact border is at top of
-      the curve, but this top varies according to borders). In most cases,
-      threshold is under top and border is thick.
-    </para> 
-    <para lang="en">
-      The Laplacian edge detection uses the second derivative (fig.3).
-      The top of the curve is now at zero and clearly identified. That's
-      why Laplace filter renders a thin border, only a pixel wide. But
-      this derivative gives several zeros corresponding to small
-      ripples, resulting in false edges.
-    </para>
-    <para lang="en">
-      Some blurring before applying edge filters is often necessary: it
-      flattens small ripples in signal and so prevents false edges.
-    </para>
+  <mediaobject lang="cs" >
+    <imageobject>
+      <imagedata fileref="../images/filters/cs/filters-edgedetect-fig.png"
+      format="PNG" />
+    </imageobject>
+  </mediaobject>
 
-    <para lang="cs">
-      Většina metod detekce hran je založena na metodách výpočtu gradientu a tvoří
-      silné hraniční linie. Podívejte se na graf 1, který vyjadřuje změny v
-      intenzitě barev. Vlevo je pozvolný gradient, který hranu netvoří. Vpravo
-      je ostrý přechod, který hranu tvoří. Nyní spočítejme gradient, rychlost
-      změny na této hraně, čili první derivaci (graf 2). Je nutno rozhodnou o
-      velikosti prahu, který musí gradient přesáhnout, aby byla nalezena hrana
-      (přesná hrana je na vrcholu křivky). Ve většině případů je práh pod
-      vrcholem a hrana je silná.
-    </para> 
-    <para lang="cs">
-      Laplaceova metoda hledání hran používá druhou derivaci (graf 3).
-      Hledaná část křivky protíná nulovou hodnotu a je tedy jasně
-      definovaná. Proto Lapalceova metoda vede k tenkým jednopixelovým hranám.
-      Druhá derivace však také nabývá nulových hodnot na mnoha místech, kde
-      dochází k malým neporavidelnostem, výsledkem jsou falešné hrany.
-    </para>
-    <para lang="cs">
-      Vzniku falešných hran lze zabránit mírným rozostřením obrázku před
-      použitím Laplaceova filtru. Drobné nepravidelnosti se rozostří,
-      a tak se zabrání vzniku falešných hran.
-    </para>
+  <para lang="en">
+    Most of them are based on gradient calculation methods and give thick
+    border lines. Look at fig.1 which represents color intensity
+    variations. On the left is a slow color gradient which is not a border.
+    On the right is a quick variation which is an edge. Now, let us
+    calculate the gradient, the variation speed, of this edge, i.e the first
+    derivative (fig.2). We have to decide that a border is detected when
+    gradient is more than a threshold value (the exact border is at top of
+    the curve, but this top varies according to borders). In most cases,
+    threshold is under top and border is thick.
+  </para> 
+  <para lang="en">
+    The Laplacian edge detection uses the second derivative (fig.3).
+    The top of the curve is now at zero and clearly identified. That's
+    why Laplace filter renders a thin border, only a pixel wide. But
+    this derivative gives several zeros corresponding to small
+    ripples, resulting in false edges.
+  </para>
+  <para lang="en">
+    Some blurring before applying edge filters is often necessary: it
+    flattens small ripples in signal and so prevents false edges.
+  </para>
 
-    <para lang="fr">
-      Les filtres de détection des bords recherchent les limites entre
-      les couleurs et détectent ainsi le contour des objets.
-    </para>
-    <para lang="fr">
-      Ils sont utilisés pour créer des sélections et dans de
-      multiples effets artistiques.
-    </para>
-    <mediaobject lang="fr" >
-      <imageobject>
-        <imagedata fileref="../images/filters/fr/filters-edgedetect-fig-fr.png" format="PNG" />
-      </imageobject>
-    </mediaobject>
-    <para lang="fr">
-      La plupart d'entre eux sont basés sur des méthodes de calcul de
-      gradient et donnent des bordures épaisses. Considérez la figure
-      1 qui représente des variations d'intensité de couleur. Sur la
-      gauche se trouve un lent dégradé de couleur qui n'est pas un
-      bord. Sur la droite, une brusque et importante variation est un
-      bord. Maintenant, calculons la pente, la vitesse de variation, de
-      ce bord: c'est la dérivée première (fig.2). Nous devons
-      décider qu'un bord est détecté quand la pente dépasse un
-      certain seuil (le bord se trouve exactement au sommet de la courbe
-      mais on ne peut l'utiliser car son niveau varie selon les bords).
-      Dans la plupart des cas, le seuil se trouve en dessous du sommet
-      et le bord est épais.
-    </para> 
-    <para lang="fr">
-      Le filtre de Laplace utilise la dérivée seconde (fig.3). Le
-      sommet se retrouve a zéro et est nettement identifié. C'est
-      pourquoi ce filtre donne une bordure fine, de 1 pixel. Mais ce
-      calcul donne aussi plusieurs autres zéros correspondant aux
-      petites rides du signal, ce qui est cause de multiples faux bords
-      dans l'image.
-    </para>
-    <para lang="fr">
-      Donner un peu de flou à l'image avant d'appliquer un filtre de
-      détection de bords est souvent nécessaire pour éviter ces faux
-      bords.
-    </para>
+  <para lang="cs">
+    Většina metod detekce hran je založena na metodách výpočtu gradientu a tvoří
+    silné hraniční linie. Podívejte se na graf 1, který vyjadřuje změny v
+    intenzitě barev. Vlevo je pozvolný gradient, který hranu netvoří. Vpravo
+    je ostrý přechod, který hranu tvoří. Nyní spočítejme gradient, rychlost
+    změny na této hraně, čili první derivaci (graf 2). Je nutno rozhodnou o
+    velikosti prahu, který musí gradient přesáhnout, aby byla nalezena hrana
+    (přesná hrana je na vrcholu křivky). Ve většině případů je práh pod
+    vrcholem a hrana je silná.
+  </para> 
+  <para lang="cs">
+    Laplaceova metoda hledání hran používá druhou derivaci (graf 3).
+    Hledaná část křivky protíná nulovou hodnotu a je tedy jasně
+    definovaná. Proto Lapalceova metoda vede k tenkým jednopixelovým hranám.
+    Druhá derivace však také nabývá nulových hodnot na mnoha místech, kde
+    dochází k malým neporavidelnostem, výsledkem jsou falešné hrany.
+  </para>
+  <para lang="cs">
+    Vzniku falešných hran lze zabránit mírným rozostřením obrázku před
+    použitím Laplaceova filtru. Drobné nepravidelnosti se rozostří,
+    a tak se zabrání vzniku falešných hran.
+  </para>
+
+  <para lang="de">
+    Die meisten der Filter zur Kantenerkennung basieren auf der Analyse von
+    Farbveränderungen und erzeugen dicke Kantenlinien. Beachten Sie den
+    ersten Teil der Abbildung, welche die Veränderungen der Farbintensität
+    symbolisch darstellt. Auf der linken Seite befinden sich leichte
+    Veränderungen, welche keine Kanten darstellen. Auf der linken Seite
+    sehen Sie eine Kante, dargestellt als Änderung der Farbintensität.
+    Die zweite Abbildung zeigt die Stärke der Veränderung der Farbintensität
+    angezeigt. Dies ist mathematisch betrachtet die erste Ableitung des
+    Graphen im ersten Teil der Abbildung. Ein Algorithmus zur
+    Kantenerkennung muss nun entscheiden, ab welcher Höhe der Ableitung eine
+    Kante als erkannt gilt.
+    Dies entspricht im Wesentlichen der Arbeitsweise des Sobel-Filters.
+  </para> 
+  <para lang="de">
+    Der Laplace-Operator verwendet zur Kantenerkennung die zweite Ableitung,
+    welche im dritten Teil der Abbildung zu sehen ist. Die daraus
+    entstehenden Kanten sind wesentlich schmaler, meist nur einen Pixel
+    breit. Bei kleineren Farbabweichungen können hier jedoch fasch erkannte
+    Kanten angezeigt werden.
+  </para>
+  <para lang="de">
+    Gegen diese falsch erkannten Kanten hilft eine leichte Weichzeichnung
+    des Bildes vor der Anwendung des Filters.
+  </para>
+
+  <para lang="fr">
+    Les filtres de détection des bords recherchent les limites entre
+    les couleurs et détectent ainsi le contour des objets.
+  </para>
+  <para lang="fr">
+    Ils sont utilisés pour créer des sélections et dans de
+    multiples effets artistiques.
+  </para>
+  <mediaobject lang="fr" >
+    <imageobject>
+      <imagedata fileref="../images/filters/fr/filters-edgedetect-fig-fr.png" format="PNG" />
+    </imageobject>
+  </mediaobject>
+  <para lang="fr">
+    La plupart d'entre eux sont basés sur des méthodes de calcul de
+    gradient et donnent des bordures épaisses. Considérez la figure
+    1 qui représente des variations d'intensité de couleur. Sur la
+    gauche se trouve un lent dégradé de couleur qui n'est pas un
+    bord. Sur la droite, une brusque et importante variation est un
+    bord. Maintenant, calculons la pente, la vitesse de variation, de
+    ce bord: c'est la dérivée première (fig.2). Nous devons
+    décider qu'un bord est détecté quand la pente dépasse un
+    certain seuil (le bord se trouve exactement au sommet de la courbe
+    mais on ne peut l'utiliser car son niveau varie selon les bords).
+    Dans la plupart des cas, le seuil se trouve en dessous du sommet
+    et le bord est épais.
+  </para> 
+  <para lang="fr">
+    Le filtre de Laplace utilise la dérivée seconde (fig.3). Le
+    sommet se retrouve a zéro et est nettement identifié. C'est
+    pourquoi ce filtre donne une bordure fine, de 1 pixel. Mais ce
+    calcul donne aussi plusieurs autres zéros correspondant aux
+    petites rides du signal, ce qui est cause de multiples faux bords
+    dans l'image.
+  </para>
+  <para lang="fr">
+    Donner un peu de flou à l'image avant d'appliquer un filtre de
+    détection de bords est souvent nécessaire pour éviter ces faux
+    bords.
+  </para>
 </sect2>

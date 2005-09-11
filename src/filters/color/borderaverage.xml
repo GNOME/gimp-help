@@ -1,22 +1,39 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<sect2 id='plug-in-borderaverage' lang="en;cs;fr">
+<!DOCTYPE sect2
+  PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+  "http://www.docbook.org/xml/4.3/docbookx.dtd">
+
+<!-- section history: -->
+<!-- 050824 de added by axel.wernicke -->
+<sect2 id='plug-in-borderaverage' lang="en;cs;de;fr">
   <title lang="en">Border Average</title>
   <title lang="cs">Průměr okraje</title>
+  <title lang="de">Randmittelwert</title>
   <title lang="fr">Moyenne du bord</title>
 
-  <indexterm>
-    <primary lang="en">Filter</primary>
-    <secondary lang="en">Color</secondary>
-    <tertiary lang="en">Border</tertiary>
-
-    <primary lang="cs">Filtry</primary>
-    <secondary lang="cs">Barvy</secondary>
-    <tertiary lang="cs">Průměr okraje</tertiary>
-
-    <primary lang="fr">Filtre</primary>
-    <secondary lang="fr">Couleur</secondary>
-    <tertiary lang="fr">Bord</tertiary>
+  <indexterm lang="en">
+    <primary>Filter</primary>
+    <secondary>Color</secondary>
+    <tertiary>Border</tertiary>
+  </indexterm>
+  
+  <indexterm lang="cs">
+    <primary>Filtry</primary>
+    <secondary>Barvy</secondary>
+    <tertiary>Průměr okraje</tertiary>
+  </indexterm>
+  
+  <indexterm lang="de">
+    <primary>Filter</primary>
+    <secondary>Statistik</secondary>
+  </indexterm>
+  <indexterm lang="de"><primary>Randmittelwert</primary></indexterm>
+  
+  <indexterm lang="fr">
+    <primary>Filtre</primary>
+    <secondary>Couleur</secondary>
+    <tertiary>Bord</tertiary>
   </indexterm>
 
   <mediaobject lang="en">
@@ -40,6 +57,7 @@
   <simplesect>
     <title lang="en">Overview</title>
     <title lang="cs">Přehled</title>
+    <title lang="de">Wirkungsweise</title>
     <title lang="fr">Généralités</title>
     <para lang="en">
       This filter is found in
@@ -69,6 +87,14 @@
       pozadí webové stránky, která se co nejméně liší  od okraje obrázku.
     </para>
     
+    <para lang="de">
+      Dieses Filter berechnet die Durchschnittsfarbe in einem Rand der aktiven
+      Ebene oder einer Auswahl. Die berechnete Farbe wird zur aktiven
+      Vordergrundfarbe. Dieses Filter kann sehr hilfreich sein, wenn Sie zum
+      Beispiel ein Bild vor einen farbigen Hintergrund bringen möchten, der
+      möglichst wenig von der Farbe des Bildrandes abweicht.
+    </para>
+    
     <para lang="fr"> 
       On accède à ce filtre par le menu d'image en suivant
       <menuchoice>
@@ -84,14 +110,45 @@
       bord de votre image.   
     </para>
   </simplesect>
+  
+  <simplesect lang="de">
+    <title lang="de">Filteraufruf</title>
+    <para lang="de">
+      Dieses Filter lässt sich über das Menü
+      <menuchoice>
+        <guimenu><accel>F</accel>ilter</guimenu>
+        <guisubmenu><accel>F</accel>arben</guisubmenu>
+        <guimenuitem><accel>R</accel>andmittelwert</guimenuitem>
+      </menuchoice>
+      im Bildfenster aufrufen.
+    </para>
+  </simplesect>
+  
   <simplesect>
     <title lang="en">Options</title>
     <title lang="cs">Volby</title>
+    <title lang="de">Eienschaften</title>
     <title lang="fr">Options</title>
+
+    <informalfigure lang="de">
+      <mediaobject>
+        <imageobject lang="de">
+          <imagedata fileref="../images/filters/de/options-color-border-average.png"
+						         format="PNG"/>
+        </imageobject>
+        <caption>
+          <para lang="de">
+            Eigenschaften für das Filter <quote>Randmittelwert</quote>
+          </para>
+        </caption>
+      </mediaobject>
+    </informalfigure>
+
     <variablelist>
       <varlistentry>
         <term lang="en">Border Size</term>
         <term lang="cs">Velikost okraje</term>
+        <term lang="de">Randgrösse</term>
         <term lang="fr">Taille du bord</term>
         <listitem>
           <para lang="en">
@@ -102,6 +159,11 @@
             <guilabel>Tloušťka</guilabel> umožňuje nastavit šířku uvažovaného
             okraje v pixelech.
           </para>
+          <para lang="de">
+            Mit dieser Eigenschaft können Sie die <guilabel>Dicke</guilabel>
+            des Randes festlegen, der zur Berechnung der Durchschnittsfarbe
+            benutzt wird.
+          </para>
           <para lang="fr">
             Vous pouvez régler là l'<guilabel>Épaisseur</guilabel> de la 
             bordure en pixels.
@@ -111,8 +173,10 @@
       <varlistentry>
         <term lang="en">Number of Colors</term>
         <term lang="cs">Počet barev</term>
+        <term lang="de">Anzahl der Farben</term>
         <term lang="fr">Nombre de couleurs</term>
         <listitem>
+          <!-- en FIXME: values are between 1 - 256! -->
           <para lang="en">
             You can set there the <guilabel>Bucket Size</guilabel>, i.e the 
             number of colors to be used when calculating the average color 
@@ -121,6 +185,13 @@
           <para lang="cs">
             <guilabel>Velikost vědra</guilabel> nastavuje počet barev
             uvažovaných při výpočtu průměrné barvy (2 - 128).
+          </para>
+          <para lang="de">
+            <!-- de CHECK: can please somebody check that - doesn't seem to
+                 make any sense to me. How is that average calculated? -->
+            Hier können Sie die <guilabel>Eimergrösse</guilabel>, also die
+            Anzahl der Farben im Bereich zwischen 1 und 256 festlegen, die zur
+            Berechnung der Durchschnittsfarbe benutzt werden.
           </para>
           <para lang="fr">
             Vous pouvez régler là la <guilabel>Taille du pôt de 

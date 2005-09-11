@@ -1,15 +1,31 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<sect2 id='plug-in-newsprint' lang="en;cs;fr">
-  <title lang="en">Newsprint</title>
-  <title lang="cs">Novinový tisk</title>
-  <title lang="fr">Trame d&apos;imprimerie</title>
+<!DOCTYPE sect2
+  PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+  "http://www.docbook.org/xml/4.3/docbookx.dtd">
 
-  <indexterm>
-    <primary lang="en">Newsprint</primary>
-    <primary lang="cs">Novinový tisk</primary>
-    <primary lang="fr">Trame d&apos;imprimerie</primary>
+<!-- section history: -->
+<!-- 050909 de added by axel.wernicke -->
+<sect2 id='plug-in-newsprint' lang="en;cs;de;fr">
+  <title>
+    <phrase lang="en">Newsprint</phrase>
+    <phrase lang="cs">Novinový tisk</phrase>
+    <phrase lang="de">Zeitungsdruck</phrase>
+    <phrase lang="fr">Trame d&apos;imprimerie</phrase>
+  </title>
+
+  <indexterm lang="en"><primary>Newsprint</primary></indexterm>
+  
+  <indexterm lang="cs"><primary>Novinový tisk</primary></indexterm>
+  
+  <indexterm lang="de">
+    <primary>Filter</primary>
+    <secondary>Verzerren</secondary>
   </indexterm>
+  <indexterm lang="de"><primary>Zeitungsdruck</primary></indexterm>
+  <indexterm lang="de"><primary>Druckraster</primary></indexterm>
+  
+  <indexterm lang="fr"><primary>Trame d&apos;imprimerie</primary></indexterm>
 
   <mediaobject lang="en">
     <imageobject>
@@ -28,9 +44,30 @@
   </mediaobject>
 
   <simplesect>
-    <title lang="en">Overview</title>
-    <title lang="cs">Přehled</title>
-    <title lang="fr">Généralités</title>
+    <title>
+      <phrase lang="en">Overview</phrase>
+      <phrase lang="cs">Přehled</phrase>
+      <phrase lang="de">Wirkungsweise</phrase>
+      <phrase lang="fr">Généralités</phrase>
+    </title>
+
+    <para lang="de">
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/taj_orig.jpg"
+                     format="JPG"/>
+        </imageobject>
+      </inlinemediaobject>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/distort-taj-newsprint.jpg"
+                     format="JPG"/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+    <para lang="de">
+      v.l.n.r.: Originalbild, Zeitungsdruck angewandt
+    </para>
 
     <para lang="en">
       This filter is found in
@@ -81,18 +118,61 @@
       </menuchoice>.
     </para>
     <para lang="cs">
-      Tento filtr <!-- FIXME-->
+      Tento filtr <!-- cs FIXME: -->
     </para>
     <para lang="cs">
       Základní myšlenkou je zvýšení zdánlivé barevné hloubky na úkor
       rozlišení (tzv. prostorové rozptylování, angl.
       <foreignphrase>spatial dithering</foreignphrase>).
     </para>
-    <para lang="cs"><!--fix in en-->
+    <para lang="cs"><!-- cs FIXME: in en-->
       Existuje řada způsobů, jak snížit množství barev. Jedním z nich je
       zahození bitů nízkého řádu z barevné informace – přesně to dělá filtr
       Posterizovat. Výsledky však nevypadají příliš dobře (není-li cílem
       zvláštní efekt). Nicméně se tak neztrácí prostorové rozlišení.
+    </para>
+    
+    <para lang="de">
+      Dieses Filter rastert das Bild unter Verwendung von im Zeitungsdruck
+      üblichen Algorithmen. Rasterung ist ein Prozess, bei welchem ein Bild
+      mit vielen verschieden Farben so aufbereitet wird, dass es auf einem 
+      Ausgabegerät welches nur über wenige Farben verfügt optimal dargestellt
+      werden kann. Druckmaschinen sind typischerweise solche Geräte. Es gibt
+      in der Wikipedia einen interessantent
+      <ulink url="http://de.wikipedia.org/wiki/Druckraster">Artikel</ulink>,
+      der sich mit diesem Thema beschäftigt.
+    </para>
+    <para lang="de">
+      Der grundsätzliche Ansatz besteht darin, Bildauflösung zu Gunsten einer
+      besseren Farbdarstellung zu <quote>opfern</quote>.
+    </para>
+    <para lang="de">
+      Es gibt viele verschiedene Algorithmen, um dies zu erreichen, Einer der
+      einfachsten besteht darin, einen Teil der Farbinformationen (die
+      niederertigen Bits der Farbinformationen) einfach
+      <quote>wegzuwerfen</quote> - das ist genau was Sie mit dem Werkzeug
+      <link linkend="gimp-tool-posterize">Posterisieren</link> erreichen
+      können. Allerdings ist das Ergebnis dieser Methode oft nicht
+      befriedigend, dafür bleibt die Auflösung vollständig erhalten.
+    </para> 
+    <para lang="de">
+      Dieses Filter verwendet einen Algorithmus der die Auflösung des Bildes
+      reduziert, indem Pixel zu Zellen zusammengefasst werden, welche je nach
+      erforderlicher (Farb-) Intensität mehr oder weniger vollständig gefüllt
+      werden.
+    </para>
+    <para lang="de">
+      Stellen Sie sich ein Gitter vor, welches über das originale Bild gelegt
+      wrid. Das Bild wird damit Gitterzellen geteilt. Jede Zelle enthält genau
+      einen Farbpunkt, dessen Grösse die originale Helligkeit des
+      Ausgangsbildes annähernd wiedergibt.
+    </para>
+    <para lang="de">
+      Offensichtlich führt eine grosse Zellengrösse zu einem starken Verlust
+      an Auflösung! Die Punkte in den Zellen starten typischerweise in Form
+      eines kleinen Kreises. Wenn eine stärkere Füllung nötig ist, nehmen sie
+      die Form eines Diamanten an. Diese Veränderung der Form könne Sie in
+      den Eigenschaften des Filters beeinflussen.
     </para>
 
     <para lang="fr">
@@ -140,254 +220,442 @@
     </para>
   </simplesect>
 
+  <simplesect lang="de">
+    <title>
+      <phrase lang="de">Filteraufruf</phrase>
+    </title>
+    
+    <para lang="de">
+      Dieses Filter lässt sich über das Menü
+      <menuchoice>
+        <guimenu><accel>F</accel>ilter</guimenu>
+        <guisubmenu>Ver<accel>z</accel>erren</guisubmenu>
+        <guimenuitem><accel>Z</accel>eitungsdruck</guimenuitem>
+      </menuchoice>
+      im Bildfenster aufrufen.
+    </para>
+  </simplesect>
+
   <simplesect>
-    <title lang="en">Options</title>
-    <title lang="cs">Volby</title>
-    <title lang="fr">Options</title>
+    <title>
+      <phrase lang="en">Options</phrase>
+      <phrase lang="cs">Volby</phrase>
+      <phrase lang="de">Eigenschaften</phrase>
+      <phrase lang="fr">Options</phrase>
+    </title>
+
+    <informalfigure lang="de">
+      <mediaobject>
+        <imageobject lang="de">
+          <imagedata fileref="../images/filters/de/options-distort-newsprint.png"
+                     format="PNG"/>
+        </imageobject>
+        <caption>
+          <para lang="de">
+            Eigenschaften für das Filter <quote>Zeitungsdruck</quote>
+          </para>
+        </caption>
+      </mediaobject>
+    </informalfigure>
+
     <variablelist>
       <varlistentry>
-        <term lang="en">Resolution</term>
-        <term lang="cs">Rozlišení</term>
-        <term lang="fr">Résolution</term>
-        <listitem lang="en">
-          <para>
-            This group controls the cell size, either by setting the
-            input and output resolutions, or directly.
+        <term lang="en">Preview</term>
+        <term lang="cs">Náhled</term>
+        <term lang="de">Vorschau</term>
+        <term lang="fr">Aperçu</term>
+        <listitem>
+          <para lang="en">
+            All your setting changes will appear in the Preview without 
+            affecting the image until you click on <guilabel>OK</guilabel>. 
+            Note that the preview displays the whole image, even if the 
+            final result will concern a selection. Don't keep 
+            <emphasis>Do Preview</emphasis> checked if your computer is too 
+            much slow.
           </para>
-          <itemizedlist>
-            <listitem>
-              <para>
-                <guilabel>Input SPI</guilabel>: Resolution of the
-                original input image, in Samples Per Inch (SPI).  This
-                is automatically initialised to the input image's resolution.
-              </para>
-            </listitem>
-            <listitem>
-              <para>
-                <guilabel>Output LPI</guilabel>: Desired output
-                resolution, in Lines Per Inch (LPI).
-              </para>
-            </listitem>
-            <listitem>
-              <para>
-                <guilabel>Cell Size</guilabel>: Resulting cell size, in
-                pixels.  Most often you will want to set this directly.
-              </para>
-            </listitem>
-          </itemizedlist>
-        </listitem>
-
-        <listitem lang="cs">
-          <para>
-            Zde se nastavuje velikost buněk.
+          <para lang="cs">
+            Všechny změny se promítnou v náhledu ještě před stisknutím
+            tlačítka <guibutton>Budiž</guibutton> a aplikací do obrázku.
+            Náhled zobrazuje celý obrázek, i když se výsledek bude týkat pouze
+            výběru. Vypnutí volby <emphasis>Náhled</emphasis> může pomoci na
+            slabších strojích.
           </para>
-        </listitem>
-
-        <listitem lang="fr">
-           <para>
-             Cette rubrique permet le contrôle de la taille des cellules 
-             soit en réglant les résolutions d'entrée et de sortie soit 
-             directement.
-           </para>
-           <itemizedlist>
-            <listitem>
-              <para>
-                <guilabel>D'entrée (EPP)</guilabel>: Résolution de l'image 
-                d'origine, en entrée (Echantillons Par Pouce). Cette valeur 
-                est initialisée automatiquement à la résolution que possède 
-                déjà l'image en entrée. 
-              </para>
-            </listitem>
-            <listitem>
-              <para>
-                <guilabel>De sortie (LPP)</guilabel>: Résolution de sortie 
-                souhaitée, en Lignes Par Pouce. C'est la linéature.
-              </para>
-            </listitem>
-            <listitem>
-              <para>
-                <guilabel>Taille des cellules</guilabel>: Il s'agit de 
-                cellules carrées, en pixels. C'est l'option que vous 
-                utiliserez le plus souvent. 
-              </para>
-            </listitem>
-          </itemizedlist>
+          <para lang="de">
+            In der Vorschau wird ein Ausschnitt des Bildes so dargestellt,
+            als wäre das Filter mit den aktuellen Einstellungen auf das Bild
+            angewandt worden.
+          </para> 
+          <para lang="fr">
+            L'Aperçu fournit une vignette de l'image reproduisant tous les 
+            réglages effectués sans agir sur l'image jusqu'à ce que vous 
+            cliquiez sur <guilabel>Valider</guilabel>. Notez qu'il donne un 
+            aperçu de toute l'image, même si le résultat final ne portera 
+            que sur une sélection. Il ne sera effectué que si la case est 
+            cochée, cette option étant surtout utile pour les ordinateurs 
+            lents.
+          </para>
         </listitem>
       </varlistentry>
 
       <varlistentry>
+        <term lang="en">Resolution</term>
+        <term lang="cs">Rozlišení</term>
+        <term lang="de">Auflösung</term>
+        <term lang="fr">Résolution</term>
+        
+        <listitem>
+          <para lang="en">
+            This group controls the cell size, either by setting the
+            input and output resolutions, or directly.
+          </para>
+          <para lang="cs">
+            Zde se nastavuje velikost buněk.
+          </para>
+          <para lang="de">
+            Mit dieser Gruppe von Eigenschaften können Sie die Grösse der
+            Zellen einstellen. Dies geschieht entweder durch Einstellen der
+            Ein- und Ausgabeauflösung, oder direkt.
+          </para>
+          <para lang="fr">
+            Cette rubrique permet le contrôle de la taille des cellules 
+            soit en réglant les résolutions d'entrée et de sortie soit 
+            directement.
+          </para>
+           
+          <variablelist lang="en;de;fr">
+            <varlistentry>
+              <term lang="en">Input SPI</term>
+              <term lang="de">Eingabe-SPI</term>
+              <term lang="fr">D'entrée (EPP)</term>
+              
+              <listitem>
+                <para lang="en">
+                  <guilabel>Input SPI</guilabel>: Resolution of the
+                  original input image, in Samples Per Inch (SPI).  This
+                  is automatically initialised to the input image's resolution.
+                </para>
+                <para lang="de">
+                  Mit dieser Eigenschaft stellen Sie die Auflösung (Punkte pro
+                  Zoll) des Originalbildes ein. Diese Eigenschaft wird
+                  automatisch aus der im Bild hinterlegten Auflösung
+                  eingestellt.
+                </para>
+                <para lang="fr">
+                  <guilabel>D'entrée (EPP)</guilabel>: Résolution de l'image 
+                  d'origine, en entrée (Echantillons Par Pouce). Cette valeur 
+                  est initialisée automatiquement à la résolution que possède 
+                  déjà l'image en entrée. 
+                </para>
+              </listitem>
+            </varlistentry>
+            
+            <varlistentry>
+              <term lang="en">Output LPI</term>
+              <term lang="de">Ausgabe-LPI</term>
+              <term lang="fr">De sortie (LPP)</term>
+              
+              <listitem>
+                <para lang="en">
+                  <guilabel>Output LPI</guilabel>: Desired output
+                  resolution, in Lines Per Inch (LPI).
+                </para>
+                <para lang="de">
+                  Mit dieser Eigenschaft können Sie die gewünschte
+                  Ausgabeauflösung (Zeilen pro Zoll) einstellen.
+                </para>
+                 <para lang="fr">
+                  <guilabel>De sortie (LPP)</guilabel>: Résolution de sortie 
+                  souhaitée, en Lignes Par Pouce. C'est la linéature.
+                </para>
+              </listitem>
+            </varlistentry>
+            
+            <varlistentry>
+              <term lang="en">Cell Size</term>
+              <term lang="de">Zellgrösse</term>
+              <term lang="fr">Taille des cellules</term>
+              
+              <listitem>
+                <para lang="en">
+                  <guilabel>Cell Size</guilabel>: Resulting cell size, in
+                  pixels.  Most often you will want to set this directly.
+                </para>
+                <para lang="de">
+                  Die Zellgrösse wird automatisch aus den Werten Ein- und
+                  Ausgabeauflösung berechnet. Sie können diese aber auch
+                  direkt einstellen, in diesem Fall wird die Ausgabeauflösung
+                  entsprechend angepasst.
+                </para>
+                <para lang="fr">
+                  <guilabel>Taille des cellules</guilabel>: Il s'agit de 
+                  cellules carrées, en pixels. C'est l'option que vous 
+                  utiliserez le plus souvent. 
+                </para>
+              </listitem>
+            </varlistentry>
+          </variablelist>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
         <term lang="en">Screen</term>
         <term lang="cs">Obrazovka</term>
+        <term lang="de">Schirm</term>
         <term lang="fr">Trames</term>
-        <listitem lang="en">
-          <itemizedlist>
-            <listitem> 
-              <para>
-                <guilabel>Separate To RGB, CMYK,
-                Intensity</guilabel>: Select which colourspace you
-                wish to operate in.  In <emphasis>RGB</emphasis> mode, no 
-                colourspace conversion is performed. In 
-                <emphasis>CMYK</emphasis>, the image is first
-                internally converted to CMYK, then each colour channel is
-                separately halftoned, before finally being
-                recombined back to an RGB image.  
-                In <emphasis>Intensity</emphasis> mode, the
-                image is internally converted to greyscale,
-                halftoned, then the result used as the alpha channel
-                for the input image.  This is good for special
-                effects, but requires a little experimentation to
-                achieve best results.  Hint: try CMYK if you don't know
-                which to go for initially.
-              </para>
-            </listitem>
-            <listitem>  
-              <para>
-                <guilabel>Black Pullout (%)</guilabel> When doing
-              RGB->CMYK conversion, how much K (black) should be used?
-              </para> 
-            </listitem>
-            <listitem> 
-              <para>
-                <guilabel>Angle</guilabel>: Cell grid angle for this channel.
-              </para>
-            </listitem>
-            <listitem> 
-              <para>
-                <guilabel>Spot Function</guilabel>: Spot function to
-                be used for this angle (see preview in blue cell-boxes).
-              </para>
-            </listitem> 
-            <listitem> 
-              <para>
-                <guilabel>Lock Channels</guilabel>: Make channel
-                modifications apply to all channels.
-              </para>
-            </listitem> 
-            <listitem> 
-              <para>
-                <guilabel>Factory Defaults</guilabel>: Restore the
-                default settings which should give pleasing results.
-              </para>
-            </listitem> 
-          </itemizedlist>
-        </listitem> 
-        <listitem lang="cs">
-          <itemizedlist>
-            <listitem> 
-              <para>
-                Určuje způsob separace.
-              </para>
-            </listitem>
-          </itemizedlist>
-        </listitem> 
-         <listitem lang="fr">
-          <itemizedlist>
-            <listitem> 
-              <para>
-                <guilabel>Séparer en RVB, CMJN, Intensité</guilabel>:
-                Vous permet de choisir dans quel espace de couleur vous 
-                voulez opérer. En mode <emphasis>RVB</emphasis>, aucune 
-                conversion d'espace de couleur n'est effectuée. En mode 
-                <emphasis>CMJN</emphasis>, l'image est d'abord convertie 
-                en CMJN, puis chaque canal de couleur subit un nivellement 
-                tonal avant d'être finalement recombinés en une image RVB. 
-                En mode <emphasis>Intensité</emphasis>, l'image est 
-                convertie en niveaux de gris, subit un nivellement tonal 
-                et le résultat est utilisé comme canal Alpha pour l'image 
-                d'entrée. Cette option convient aux effets spéciaux, mais 
-                nécessite plusieurs essais vant d'obtenir le meilleur 
-                résultat. Un conseil: essayez CMJN si vous ne savez pas 
-                par quoi commencer.
-              </para>
-            </listitem>
-            <listitem>  
-              <para>
-                <guilabel>Retirer du noir (%)</guilabel>: Quand vous 
-                faites une conversion RGB/CMJN, indiquez ici quelle 
-                quantité de noir doit être utilisée (La synthèse 
-                soustractive CMJ ne permet pas d'obtenir une couleur 
-                vraiment noire ou bien foncée, d'où la nécessité d'ajouter 
-                du noir). 
-              </para> 
-            </listitem>
-            <listitem> 
-              <para>
-                <guilabel>Angle</guilabel>: angle de la grille de cellules 
-                pour le canal concerné.
-              </para>
-            </listitem>
-            <listitem> 
-              <para>
-                <guilabel>Fonction point</guilabel>: Les pixels de la 
-                couleur du canal concerné présents dans une cellule seront 
-                rassemblés en un «point» de forme et de taille variable, 
-                au choix.
-              </para>
-            </listitem> 
-            <listitem> 
-              <para>
-                <guilabel>Bloquer les canaux</guilabel>: les modifications 
-                s'appliqueront à tous les canaux.
-              </para>
-            </listitem> 
-            <listitem> 
-              <para>
-                <guilabel>Réglages par défaut</guilabel>: Restaure les 
-                paramètres par défaut. 
-              </para>
-            </listitem> 
-           </itemizedlist>
-        </listitem>   
+        
+        <listitem>
+          <para lang="cs">
+            Určuje způsob separace.
+          </para>
+
+          <variablelist lang="en;de;fr">
+            <varlistentry>
+              <term lang="en">Separate To RGB, CMYK, Intensity</term>
+              <term lang="de">Separiere nach RGB; CMYK; Intensität</term>
+              <term lang="fr">Séparer en RVB, CMJN, Intensité</term>
+
+              <listitem>
+                <para lang="en">
+                  <guilabel>Separate To RGB, CMYK, Intensity</guilabel>:
+                  Select which colourspace you
+                  wish to operate in.  In <emphasis>RGB</emphasis> mode, no 
+                  colourspace conversion is performed. In 
+                  <emphasis>CMYK</emphasis>, the image is first
+                  internally converted to CMYK, then each colour channel is
+                  separately halftoned, before finally being
+                  recombined back to an RGB image.  
+                  In <emphasis>Intensity</emphasis> mode, the
+                  image is internally converted to greyscale,
+                  halftoned, then the result used as the alpha channel
+                  for the input image.  This is good for special
+                  effects, but requires a little experimentation to
+                  achieve best results.  Hint: try CMYK if you don't know
+                  which to go for initially.
+                </para>
+                <para lang="de">
+                  Mit dieser Eigenschaft können Sie einstellen, für welchen
+                  Farbraum die Separation vorgenommen wird. In der Einstellung
+                  <guilabel>RGB</guilabel> wird keine Farbraumkonvertierung
+                  vorgenommen. In der Einstellung <guilabel>CMYK</guilabel>
+                  wird das Bild zunächst in den CMYK Farbraum konvertiert und
+                  dann wird die Separation vorgenommen. Abschliessend wird
+                  das Bild zurück in den RGB Farbraum transformiert. In der
+                  Einstellung <guilabel>Intensität</guilabel> wird das Bild
+                  intern zunächst in ein Graustufenbild konvertiert, und dann
+                  als Transparenzkanal für die Separation verwendet. Diese
+                  Einstellung ist sehr gut für spezielle Effekte geeignet.
+                  Wenn Sie nicht sicher sind, welche Einstellung die Richtige
+                  ist, sei Ihnen <guilabel>CMYK</guilabel> empfohlen.
+                </para>
+                <para lang="fr">
+                  <guilabel>Séparer en RVB, CMJN, Intensité</guilabel>:
+                  Vous permet de choisir dans quel espace de couleur vous 
+                  voulez opérer. En mode <emphasis>RVB</emphasis>, aucune 
+                  conversion d'espace de couleur n'est effectuée. En mode 
+                  <emphasis>CMJN</emphasis>, l'image est d'abord convertie 
+                  en CMJN, puis chaque canal de couleur subit un nivellement 
+                  tonal avant d'être finalement recombinés en une image RVB. 
+                  En mode <emphasis>Intensité</emphasis>, l'image est 
+                  convertie en niveaux de gris, subit un nivellement tonal 
+                  et le résultat est utilisé comme canal Alpha pour l'image 
+                  d'entrée. Cette option convient aux effets spéciaux, mais 
+                  nécessite plusieurs essais vant d'obtenir le meilleur 
+                  résultat. Un conseil: essayez CMJN si vous ne savez pas 
+                  par quoi commencer.
+                </para>
+              </listitem>
+            </varlistentry>
+
+            <varlistentry>
+              <term lang="en">Black Pullout (%)</term>
+              <term lang="de">Schwarz-Auszug (%)</term>
+              <term lang="fr">Retirer du noir (%)</term>
+
+              <listitem>
+                <para lang="en">
+                  <guilabel>Black Pullout (%)</guilabel> When doing
+                  RGB->CMYK conversion, how much K (black) should be used?
+                </para> 
+                <para lang="de">
+                  <!-- de CHECK: add a better explanation -->
+                  Mit dieser Eigenschaft legen Sie fest, wieviel Schwarz für
+                  die RGB nach CMYK Konvertiertung verwendet wird.
+                </para> 
+                <para lang="fr">
+                  <guilabel>Retirer du noir (%)</guilabel>: Quand vous 
+                  faites une conversion RGB/CMJN, indiquez ici quelle 
+                  quantité de noir doit être utilisée (La synthèse 
+                  soustractive CMJ ne permet pas d'obtenir une couleur 
+                  vraiment noire ou bien foncée, d'où la nécessité d'ajouter 
+                  du noir). 
+                </para> 
+              </listitem>
+            </varlistentry>
+            
+            <varlistentry>
+              <term lang="en">Lock Channels</term>
+              <term lang="de">Kanäle verbinden</term>
+              <term lang="fr">Bloquer les canaux</term>
+
+              <listitem>
+                <para lang="en">
+                  <guilabel>Lock Channels</guilabel>: Make channel
+                  modifications apply to all channels.
+                </para>
+                <para lang="de">
+                  Wenn Sie diese Eigenschaft aktivieren, werden die
+                  Einstellungen für die Farbkanäle für alle Kanäle gemeinsam
+                  vorgenommen.
+                </para>
+                <para lang="fr">
+                  <guilabel>Bloquer les canaux</guilabel>: les modifications 
+                  s'appliqueront à tous les canaux.
+                </para>
+              </listitem> 
+            </varlistentry>
+          
+            <varlistentry>
+              <term lang="en">Factory Defaults</term>
+              <term lang="de">Fabrikeinstellungen</term>
+              <term lang="fr">Réglages par défaut</term>
+
+              <listitem>
+                <para lang="en">
+                  <guilabel>Factory Defaults</guilabel>: Restore the
+                  default settings which should give pleasing results.
+                </para>
+                <para lang="de">
+                  Mit dieser Schaltfläche können Sie die Eigenschaften der
+                  Farbkanäle wieder auf die Standardeinstellungen
+                  zurücksetzen.
+                </para>
+                <para lang="fr">
+                  <guilabel>Réglages par défaut</guilabel>: Restaure les 
+                  paramètres par défaut. 
+                </para>
+              </listitem>
+            </varlistentry>
+          
+            <varlistentry>
+              <term lang="en">Angle</term>
+              <term lang="de">Winkel</term>
+              <term lang="fr">Angle</term>
+
+              <listitem>
+                <para lang="en">
+                  <guilabel>Angle</guilabel>: Cell grid angle for this channel.
+                </para>
+                <para lang="de">
+                  Mit dieser Einstellung können Sie den Rasterwinkel
+                  einstellen. Gebräuchliche Rasterwinkel beim vierfarbigen
+                  Offsetdruck sind nach DIN 16 547 zum einen
+                  Cyan = 75°, Magenta = 15°, Gelb = 0°, Schwarz = 135° (-45°)
+                  oder Cyan = 15°, Magenta = 75°, Gelb = 0°, Schwarz = 45°.
+                </para>
+                <para lang="fr">
+                  <guilabel>Angle</guilabel>: angle de la grille de cellules 
+                  pour le canal concerné.
+                </para>
+              </listitem>
+            </varlistentry>
+          
+            <varlistentry>
+              <term lang="en">Spot Function</term>
+              <term lang="de">Punktfunktion</term>
+              <term lang="fr">Fonction point</term>
+
+              <listitem> 
+                <para lang="en">
+                  <guilabel>Spot Function</guilabel>: Spot function to
+                  be used for this angle (see preview in blue cell-boxes).
+                </para>
+                <para lang="de">
+                  Mit dieser Eigenschaft können Sie einstellen, welche Form
+                  die Füllung der Zellen haben wird.
+                </para>
+                <para lang="fr">
+                  <guilabel>Fonction point</guilabel>: Les pixels de la 
+                  couleur du canal concerné présents dans une cellule seront 
+                  rassemblés en un «point» de forme et de taille variable, 
+                  au choix.
+                </para>
+              </listitem> 
+            </varlistentry>
+          </variablelist>
+        </listitem>
       </varlistentry>
 
       <varlistentry>
         <term lang="en">Antialiasing</term>
         <term lang="cs">Vyhlazování</term>
-        <term lang="fr">Lissage</term>      
-        <listitem lang="en">
-          <para>
-          Proper halftoning does not need antialiasing: the aim is to
-          reduce the colour depth after all!  However, since this
-          plugin is mainly for special effects, the results are
-          displayed on screen rather than by a black/white printer.
-          So it is often useful to apply a little anti-aliasing to
-          simulate ink smearing on paper.  If you do want to print the
-          resulting image then set the antialising to 1 (ie, off).
+        <term lang="de">Kantenglättung</term>
+        <term lang="fr">Lissage</term>
+        
+        <listitem>
+          <para lang="en">
+            Proper halftoning does not need antialiasing: the aim is to
+            reduce the colour depth after all!  However, since this
+            plugin is mainly for special effects, the results are
+            displayed on screen rather than by a black/white printer.
+            So it is often useful to apply a little anti-aliasing to
+            simulate ink smearing on paper.  If you do want to print the
+            resulting image then set the antialising to 1 (ie, off).
           </para>
-          <para>
-            <guilabel>Oversample</guilabel>:Number of subpixels to
-            sample to produce each output pixel.  Set to 1 to disable
-            this feature.  Warning: large numbers here will lead to
-            very long filter runtimes!
-          </para>
-        </listitem>
-        <listitem lang="cs">
-          <para>
+          <para lang="cs">
             Zde se nastavuje způsob vyhlazování.
           </para>
-        </listitem>
-        <listitem lang="fr">
-          <para>
-          Le nivellement tonal ne nécessite pas par lui même de lissage. 
-          Toutefois, ce greffon étant utilisé surtout pour des effets 
-          spéciaux et comme le résultat sera affiché sur écran au lieu 
-          d'être imprimé avec une imprimante noir et blanc, il sera souvent 
-          utile d'appliquer un peu de lissage pour simuler l'encre s'étalant 
-          sur le papier. Et si vous voulez vraiment imprimer l'image, réglez 
-          le lissage à 1 (c-à-d sans).
+          <para lang="de">
+            Die Kantenglättung ist für die Druckrasterung selbst nicht
+            angebracht, oder gar notwendig. Wenn Sie dieses Filter jedoch
+            ausschliesslich als Effekt verwenden, kann es sehr vorteilhaft
+            wirken, wenn die Kanten geglättet werden.
           </para>
-          <para>
-            <guilabel>Sur-échantillonnage</guilabel>: Nombre de sous-pixels 
-            à utiliser pour produire chaque pixel résultant. Réglez-le à 1 
-            pour désactiver cette fonction. Attention, un nombre élevé 
-            risque d'allonger considérablement le temps de traitement!
+          <para lang="fr">
+            Le nivellement tonal ne nécessite pas par lui même de lissage. 
+            Toutefois, ce greffon étant utilisé surtout pour des effets 
+            spéciaux et comme le résultat sera affiché sur écran au lieu 
+            d'être imprimé avec une imprimante noir et blanc, il sera souvent 
+            utile d'appliquer un peu de lissage pour simuler l'encre s'étalant 
+            sur le papier. Et si vous voulez vraiment imprimer l'image, réglez 
+            le lissage à 1 (c-à-d sans).
           </para>
+          
+          <variablelist lang="en;de;fr">
+            <varlistentry>
+             <term lang="en">Oversample</term>
+             <term lang="de">Oversample</term>
+             <term lang="fr">Sur-échantillonnage</term>
+             
+             <listitem>
+                <para lang="en">
+                  <guilabel>Oversample</guilabel>: Number of subpixels to
+                  sample to produce each output pixel.  Set to 1 to disable
+                  this feature.  Warning: large numbers here will lead to
+                  very long filter runtimes!
+                </para>
+                <para lang="de">
+                  Mit dieser Eigenschaft können Sie einstellen wieviele
+                  Subpixel zur Kantenglättung verwendet werden. Setzen Sie
+                  diesen Wert auf 1, so wird die Kantenglättung ausgeschaltet.
+                  Rechenaufwand, und damit zu einer langen Wartezeit bei der
+                  Anwendung des Filters führen können.
+                </para>
+                <para lang="fr">
+                  <guilabel>Sur-échantillonnage</guilabel>: Nombre de sous-pixels 
+                  à utiliser pour produire chaque pixel résultant. Réglez-le à 1 
+                  pour désactiver cette fonction. Attention, un nombre élevé 
+                  risque d'allonger considérablement le temps de traitement!
+                </para>
+              </listitem>
+            </varlistentry>
+          </variablelist>
         </listitem>
       </varlistentry>
     </variablelist>
 
-    <tip lang='en'>
-      <para>
+    <!-- en cs fr FIXME: this external url is not valid anymore -->
+    <tip lang="en;fr">
+      <para lang="en">
         More explanations, illustrative diagrams, a gallery and a
         tutorial are to be found on the plug-in author site:
         <ulink
@@ -396,10 +664,7 @@
         You are strongly encouraged to visit it, since halftoning
         is a large and complex area.
       </para>
-    </tip>
-
-    <tip lang="fr">
-      <para>
+      <para lang="fr">
         Vous trouverez plus d'explications, une galerie d'exposition 
         et un cours sur le site de l'auteur du greffon (en anglais)    
         <ulink url="http://www.cl.cam.ac.uk/~and1000/newsprint">
@@ -416,11 +681,10 @@
     <para lang="fr">
       Voici un exemple, tiré de la galerie de l'auteur:
     </para>
-    <mediaobject>
+    <mediaobject lang="en;cs;fr">
       <imageobject>
-        <imagedata
-          fileref='../images/filters/examples/newsprint.png'
-          format='PNG'/>
+        <imagedata fileref='../images/filters/examples/newsprint.png'
+                   format='PNG'/>
        </imageobject>
     </mediaobject>
   </simplesect>

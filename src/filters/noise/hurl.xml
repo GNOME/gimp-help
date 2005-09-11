@@ -1,24 +1,41 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<sect2 id='plug-in-randomize-hurl' lang="en;cs;fr">
+<!DOCTYPE sect2
+  PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+  "http://www.docbook.org/xml/4.3/docbookx.dtd">
+
+<!-- section history: -->
+<!-- 050826 de added by axel.wernicke -->
+<sect2 id='plug-in-randomize-hurl' lang="en;cs;de;fr">
   <title lang="en">Hurl</title>
   <title lang="cs">Výpadky</title>
+  <title lang="de">Verwirbeln</title>
   <title lang="fr">Jeter</title>
 
-  <indexterm>
-    <primary lang="en">Filter</primary>
-    <secondary lang="en">Noise</secondary>
-    <tertiary lang="en">Hurl</tertiary>
-
-    <primary lang="cs">filtry</primary>
-    <secondary lang="cs">Šum</secondary>
-    <tertiary lang="cs">Výpadky</tertiary>
-
-    <primary lang="fr">Filtre</primary>
-    <secondary lang="fr">Bruit</secondary>
-    <tertiary lang="fr">Jeter</tertiary>
+  <indexterm lang="en">
+    <primary>Filter</primary>
+    <secondary>Noise</secondary>
+    <tertiary>Hurl</tertiary>
+  </indexterm>
+  
+  <indexterm lang="cs">
+    <primary>filtry</primary>
+    <secondary>Šum</secondary>
+    <tertiary>Výpadky</tertiary>
   </indexterm>
 
+  <indexterm lang="de">
+    <primary>Filter</primary>
+    <secondary>Rauschen</secondary>
+  </indexterm>
+  <indexterm lang="de"><primary>Verwirbeln</primary></indexterm>
+  
+  <indexterm lang="fr">
+    <primary>Filtre</primary>
+    <secondary>Bruit</secondary>
+    <tertiary>Jeter</tertiary>
+  </indexterm>
+  
   <mediaobject lang="en">
     <imageobject>
       <imagedata fileref='../images/filters/filters-noise-hurl.png' format="PNG"/>
@@ -38,6 +55,7 @@
   <simplesect>
     <title lang="en">Overview</title>
     <title lang="cs">Přehled</title>
+    <title lang="de">Wirkungsweise</title>
     <title lang="fr">Généralités</title>
     <para lang="en">
       This filter is found in
@@ -82,6 +100,33 @@
       jen některé pixely z aktivní vrstvy či výběru, jejich podíl je určen
       volbou <guilabel>Náhodnost (%)</guilabel>.
     </para>
+
+    <para lang="de">
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/taj_orig.jpg"
+                     format="JPG"/>
+        </imageobject>
+      </inlinemediaobject>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/noise-taj-hurl.jpg"
+                     format="JPG"/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+    <para lang="de">
+      v.l.n.r.: Originalbild, Verwirbeln angewandt
+    </para>
+    <para lang="de">
+      Das Filter verändert Pixel in eine Zufallsfarbe, so dass echtes
+      <emphasis>Weisses Rauschen</emphasis> produziert wird. Alle Kanäle
+      (inklusive eines gegebenfalls vorhandenen Alphakanals) werden in die
+      Zufallsverändungen einbezoben. Alle möglichen Werte werden mit der
+      gleichen Wahrscheinlichkeit verwendet. Die Originalwerte spielen dabei
+      keine Rolle. Ob alle, oder nur ein Teil der Pixel des Bildes verändert
+      werden, können Sie in den Eigenschaften des Filters einstellen.
+    </para>
     <para lang="fr">
       Le filtre Jeter change au hasard la couleur des pixels affectés, et
       produit un véritable <emphasis>bruit aléatoire</emphasis>. Tous les
@@ -93,15 +138,44 @@
     </para> 
   </simplesect>
 
+  <simplesect lang="de">
+    <title lang="de">Filteraufruf</title>
+    <para lang="de">
+      Dieses Filter lässt sich über das Menü
+      <menuchoice>
+        <guimenu><accel>F</accel>ilter</guimenu>
+        <guisubmenu><accel>R</accel>auschen</guisubmenu>
+        <guimenuitem><accel>V</accel>erwirbeln</guimenuitem>
+      </menuchoice>
+      im Bildfenster aufrufen.
+    </para>
+  </simplesect>
+
   <simplesect>
     <title lang="en">Options</title>
     <title lang="cs">Volby</title>
+    <title lang="de">Eigenschaften</title>
     <title lang="fr">Options</title>
+
+    <informalfigure lang="de">
+      <mediaobject>
+        <imageobject lang="de">
+          <imagedata fileref="../images/filters/de/options-noise-hurl.png"
+						         format="PNG"/>
+        </imageobject>
+        <caption>
+          <para lang="de">
+            Eigenschaften für das Filter <quote>Verwirbeln</quote>
+          </para>
+        </caption>
+      </mediaobject>
+    </informalfigure>
 
     <variablelist>
       <varlistentry>
         <term lang="en">Random Seed</term>
         <term lang="cs">Hnízdo náhodných čísel</term>
+        <term lang="de">Zufallssaat</term>
         <term lang="fr">Graine aléatoire</term>
         <listitem>
 
@@ -133,6 +207,20 @@
             při každém použití filtru. V opačném případě si filtr pamatuje
             poslední použité hnízdo náhodných čísel.
           </para>
+          
+          <para lang="de">
+            Mit dieser Eigenschaft können Sie den Zufallsgenerator des Filters
+            steuern. Mit der gleichen <guilabel>Zufallssaat</guilabel> sind
+            die Ergebnisse bei meheren Anwendungen des Filters reproduzierbar.
+            Der Wert kann von Hand eingetragen, oder durch einen Klick auf
+            die Schaltfläche <guilabel>Neu Würfeln</guilabel>guilabel> per Zufall
+            bestimmt werden.
+          </para>
+          <para lang="de">
+            Wenn das Kontrollkästchen <guilabel>Zufällig</guilabel> aktiviert
+            ist, wird die Zufallssaat automatisch bei jeder Ausführung des
+            Filters neu bestimmt.
+          </para>
 
           <para lang="fr">
             <guibutton>Graine aléatoire</guibutton> contrôle le caractère 
@@ -155,6 +243,7 @@
       <varlistentry>
         <term lang="en">Randomization (%)</term>
         <term lang="cs">Náhodnost (%)</term>
+        <term lang="de">Zufallsanteil (%)</term>
         <term lang="fr">Aléa (%)</term>
         <listitem>
           <para lang="en">
@@ -167,6 +256,12 @@
             v obrázku, které budou postiženy výpadky. Vyšší hodnota znamená
             více výpadků.
           </para>
+          <para lang="de">
+            Mit dieser Eigenschaft können Sie einstellen, wieviel Prozent der
+            Pixel zufallsgesteuert verändert werden. Die Einstellung kann
+            über den Schieberegler vorgenommen, oder in das Eingabefeld
+            eingetragen werden.
+          </para>
           <para lang="fr">
             Le curseur <guibutton>Aléa</guibutton> représente le pourcentage
             de pixels de la sélection ou du calque actif qui peuvent être
@@ -177,6 +272,7 @@
       <varlistentry>
         <term lang="en">Repeat</term>
         <term lang="cs">Opakování</term>
+        <term lang="de">Wiederholen</term>
         <term lang="fr">Répétition</term>
         <listitem>
           <para lang="en">
@@ -191,6 +287,10 @@
             filtru. V případě filtru výpadky nemá valného smyslu, neboť
             stejného výsledku lze dosáhnout rychleji použitím vyšší hodnoty
             pro <guilabel>Náhodnost (%)</guilabel>.
+          </para>
+          <para lang="de">
+            Diese Eigenschaft legt fest, wie oft der Filter auf das Bild
+            aufgetragen wird.
           </para>
           <para lang="fr">
             Le curseur <guibutton>Répétition</guibutton> représente le nombre

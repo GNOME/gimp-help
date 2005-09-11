@@ -1,14 +1,32 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<sect2 id='plug-in-nlfilt' lang="en;cs;fr">
-  <title lang="en">NL Filter</title>
+<!DOCTYPE sect2
+  PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+  "http://www.docbook.org/xml/4.3/docbookx.dtd">
+
+<!-- section history: -->
+<!-- 050830 de added by axel.wernicke -->
+<sect2 id='plug-in-nlfilt' lang="en;cs;de;fr">
+  <title lang="en;de">NL Filter</title>
   <title lang="cs">NL filtr</title>
   <title lang="fr">Filtre NL</title>
 
-  <indexterm>
-    <primary lang="en">NL Filter</primary>
-    <primary lang="cs">NL filtr</primary>
-    <primary lang="fr">Filtre NL</primary>
+  <indexterm lang="en">
+    <primary>NL Filter</primary>
+  </indexterm>
+
+  <indexterm lang="cs">
+    <primary>NL filtr</primary>
+  </indexterm>
+
+  <indexterm lang="de">
+    <primary>Filter</primary>
+    <secondary>Verbessern</secondary>
+  </indexterm>
+  <indexterm lang="de"><primary>NL Filter</primary></indexterm>
+
+  <indexterm lang="fr">
+    <primary>Filtre NL</primary>
   </indexterm>
 
   <mediaobject lang="en">
@@ -32,6 +50,7 @@
   <simplesect>
     <title lang="en">Overview</title>
     <title lang="cs">Přehled</title>
+    <title lang="de">Wirkungsweise</title>
     <title lang="fr">Généralités</title>    
     <para lang="en">
       This filter is found in 
@@ -79,6 +98,40 @@
       jednoho centrálního pixelu (a filtr nebude mít žádný efekt). Poloměr 1.0
       znamená, že se sedm hexagonů vejde na plochu 3×3 pixelů.
     </para>
+    
+    <para lang="de">
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/taj_orig.jpg"
+                     format="JPG"/>
+        </imageobject>
+      </inlinemediaobject>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/enhance-taj-nl-filter.jpg"
+                     format="JPG"/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+    <para lang="de">
+      v.l.n.r.: Originalbild, NL Filter angewandt
+    </para>
+    <para lang="de">
+      NL steht für <quote>Nich Linear</quote>. Abgeleitet von dem UNIX
+      Kommando <command>pnmnlfilt</command>, beinhaltet dieses Filter
+      Funktionen zur Weichzeichnung, Fleckentfernung und Schärfeerhöhung.
+      Dieses Filter kann nur auf komplette Bilder, nicht auf Auswahlen
+      angewendet werden.
+    </para> 
+    <para lang="de">
+      Dieses Filter ist so eine Art <quote>Schweizer Messer</quote> der
+      Bildbearbeitung. Es hat drei verschiedene Wirkungsmodi. In jedem Modus
+      werden alle Pixel des Bildes untersucht und in Abhängigkeit von ihren
+      Nachbarpixeln verarbeitet. Statt dabei wie andere Filter eine 3x3 Pixel
+      Matrix zu verwenden, arbeitet das NL Filter mit einer hexagonalen
+      Umgebung, deren Grösse über die Eigenschaft <guilabel>Radius</guilabel>
+      eingestellt werden kann.
+    </para>
 
     <para lang="fr">
       On accède à ce filtre par le menu d'image en suivant
@@ -105,14 +158,44 @@
     </para>
   </simplesect>
 
+  <simplesect lang="de">
+    <title lang="de">Filteraufruf</title>
+    <para lang="de">
+      Dieses Filter lässt sich über das Menü
+      <menuchoice>
+        <guimenu><accel>F</accel>ilter</guimenu>
+        <guisubmenu><accel>V</accel>erbessern</guisubmenu>
+        <guimenuitem><accel>N</accel>L Filter</guimenuitem>
+      </menuchoice>
+      im Bildfenster aufrufen.
+    </para>
+  </simplesect>
+
   <simplesect>
     <title lang="en">Options</title>
     <title lang="cs">Volby</title>
+    <title lang="de">Eigenschaften</title>
     <title lang="fr">Options</title>
-    <variablelist>    
+
+    <informalfigure lang="de">
+      <mediaobject>
+        <imageobject lang="de">
+          <imagedata fileref="../images/filters/de/options-enhance-nl-filter.png"
+						         format="PNG"/>
+        </imageobject>
+        <caption>
+          <para lang="de">
+            Eigenschaften für das Filter <quote>NL Filter</quote>
+          </para>
+        </caption>
+      </mediaobject>
+    </informalfigure>
+
+    <variablelist>
       <varlistentry>
         <term lang="en">Preview</term>
         <term lang="cs">Náhled</term>
+        <term lang="de">Vorschau</term>
         <term lang="fr">Aperçu</term>
         <listitem>
           <para lang="en">
@@ -122,6 +205,11 @@
           <para lang="cs">
             Pokud je zaškrtnuta volba <guilabel>Náhled</guilabel>,
             zobrazuej se výsledek nastavení filtru interaktivně v náhledu.
+          </para> 
+          <para lang="de">
+            In der Vorschau wird ein Ausschnitt des Bildes so dargestellt,
+            als wäre das Filter mit den aktuellen Einstellungen auf das Bild
+            angewandt worden.
           </para> 
           <para lang="fr">
             Quand l'option <guilabel>Effectuer l'aperçu</guilabel> est
@@ -134,8 +222,9 @@
       <varlistentry>
         <term lang="en">Parameter settings</term>
         <term lang="cs">Nastavení parametrů</term>
+        <term lang="de">Alpha, Radius</term>
         <term lang="fr">Réglage des paramètres</term>
-        <listitem> 
+        <listitem>
           <para lang="en">
             <itemizedlist>
               <listitem> 
@@ -171,6 +260,24 @@
             </itemizedlist>
           </para>
 
+          <para lang="de">
+            <itemizedlist>
+              <listitem> 
+                <para>
+                  <guilabel>Alpha</guilabel>: Die Bedeutung dieser Eigenschaft
+                  ist vom eingestellten Filtermodus abhängig.
+                </para>
+              </listitem> 
+              <listitem>
+                <para>
+                  <guilabel>Radius</guilabel>: Mit dieser Eigenschaft können
+                  Sie die Stärke der Filterweirkung im ereich von 0,33 bis
+                  1,00 einstellen.
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          
           <para lang="fr">
             <itemizedlist>
               <listitem> 
@@ -180,7 +287,7 @@
                 </para>
               </listitem> 
               <listitem>
-          <para>
+                <para>
                   <guilabel>Rayon</guilabel>: Ce curseur contrôle la force
                   du filtre (0.33-1.00).
                 </para>
@@ -234,9 +341,10 @@
 
   </simplesect>
 
-  <simplesect lang="en;cs;fr">
+  <simplesect lang="en;cs;de;fr">
     <title lang="en">Operating Modes</title>
     <title lang="cs">Operační režiny</title>
+    <title lang="de">Filter</title>
     <title lang="fr">Modes opératoires</title>
     <para lang="cs">
       Tento filtr může zastat několik různých funkcí, v závislosti na
@@ -246,6 +354,11 @@
       This filter can perform several distinct functions, depending on
       the value of the parameter <parameter>alpha</parameter>.
     </para>
+    <para lang="de">
+      Das Filter kann je nach eingestelltem Modus verschieden wirken. Davon
+      abhängig ist auch die Bedeutung der Eigenschaft
+      <parameter>Alpha</parameter>.
+    </para>
     <para lang="fr">
       Ce filtre agit différemment selon la valeur du paramètre <parameter>
       Alpha</parameter>:
@@ -253,227 +366,297 @@
     
     <variablelist lang="en">
       <varlistentry>
-      <term>Alpha trimmed mean filter. (0.0 &lt;=
-      <parameter>alpha</parameter> &lt;= 0.5)</term> 
-      <listitem>
-      <para>
-        The value of the center pixel will be replaced by the mean of
-        the 7 hexagon values, but the 7 values are sorted by size and
-        the top and bottom <parameter>alpha</parameter> portion of the 7
-        are excluded from the mean. This implies that an
-        <parameter>alpha</parameter> value of 0.0 gives the same sort of
-        output as a normal convolution (ie. averaging or smoothing
-        filter), where <parameter>radius</parameter> will determine the
-        "strength" of the filter. A good value to start from for subtle
-        filtering is <parameter>alpha</parameter> = 0.0,
-        <parameter>radius</parameter> = 0.55.  For a more blatant
-        effect, try <parameter>alpha</parameter> 0.0 and
-        <parameter>radius</parameter> 1.0.
-      </para>
-      <para>
-        An <parameter>alpha</parameter> value of 0.5 will cause the
-        median value of the 7 hexagons to be used to replace the center
-        pixel value. This sort of filter is good for eliminating "pop"
-        or single pixel noise from an image without spreading the noise
-        out or smudging features on the image. Judicious use of the
-        <parameter>radius</parameter> parameter will fine tune the
-        filtering. Intermediate values of <parameter>alpha</parameter>
-        give effects somewhere between smoothing and "pop" noise
-        reduction. For subtle filtering try starting with values of
-        <parameter>alpha</parameter> = 0.4,
-        <parameter>radius</parameter> = 0.6.  For a more blatant effect
-        try <parameter>alpha</parameter> = 0.5,
-        <parameter>radius</parameter> = 1.0 .
-      </para>
-      </listitem>
+        <term>
+          Alpha trimmed mean filter. (0.0 &lt;=
+          <parameter>alpha</parameter> &lt;= 0.5)
+        </term> 
+        <listitem>
+          <para>
+            The value of the center pixel will be replaced by the mean of
+            the 7 hexagon values, but the 7 values are sorted by size and
+            the top and bottom <parameter>alpha</parameter> portion of the 7
+            are excluded from the mean. This implies that an
+            <parameter>alpha</parameter> value of 0.0 gives the same sort of
+            output as a normal convolution (ie. averaging or smoothing
+            filter), where <parameter>radius</parameter> will determine the
+            "strength" of the filter. A good value to start from for subtle
+            filtering is <parameter>alpha</parameter> = 0.0,
+            <parameter>radius</parameter> = 0.55.  For a more blatant
+            effect, try <parameter>alpha</parameter> 0.0 and
+            <parameter>radius</parameter> 1.0.
+          </para>
+          <para>
+            An <parameter>alpha</parameter> value of 0.5 will cause the
+            median value of the 7 hexagons to be used to replace the center
+            pixel value. This sort of filter is good for eliminating "pop"
+            or single pixel noise from an image without spreading the noise
+            out or smudging features on the image. Judicious use of the
+            <parameter>radius</parameter> parameter will fine tune the
+            filtering. Intermediate values of <parameter>alpha</parameter>
+            give effects somewhere between smoothing and "pop" noise
+            reduction. For subtle filtering try starting with values of
+            <parameter>alpha</parameter> = 0.4,
+            <parameter>radius</parameter> = 0.6.  For a more blatant effect
+            try <parameter>alpha</parameter> = 0.5,
+            <parameter>radius</parameter> = 1.0 .
+          </para>
+        </listitem>
       </varlistentry>
   
       <varlistentry>
-      <term>Optimal estimation smoothing. (1.0 &lt;=
-      <parameter>alpha</parameter> &lt;= 2.0)</term> 
-      <listitem>
-      <para>
-        This type of filter applies a smoothing filter adaptively over
-        the image. For each pixel the variance of the surrounding
-        hexagon values is calculated, and the amount of smoothing is
-        made inversely proportional to it. The idea is that if the
-        variance is small then it is due to noise in the image, while if
-        the variance is large, it is because of "wanted" image features.
-        As usual the  <parameter>radius</parameter> parameter  controls
-        the effective radius, but it probably advisable  to  leave  the
-        radius between 0.8 and 1.0 for the variance calculation to be
-        meaningful. The <parameter>alpha</parameter> parameter sets the
-        noise threshold, over which less smoothing will be done. This
-        means that small values of <parameter>alpha</parameter> will
-        give the most subtle filtering effect, while large values will
-        tend to smooth all parts of the image. You could start with
-        values like 
-        <code>
-          <parameter>alpha</parameter>  =  1.2
-        </code>,
-        <code>
-          <parameter>radius</parameter> = 1.0 
-        </code>,
-        and try increasing or decreasing the
-        <parameter>alpha</parameter> parameter  to  get the desired
-        effect. This type of filter is best for filtering out dithering
-        noise in both bitmap and color images. 
-      </para>
-      </listitem>
+        <term>
+          Optimal estimation smoothing. (1.0 &lt;=
+          <parameter>alpha</parameter> &lt;= 2.0)
+        </term> 
+        <listitem>
+          <para>
+            This type of filter applies a smoothing filter adaptively over
+            the image. For each pixel the variance of the surrounding
+            hexagon values is calculated, and the amount of smoothing is
+            made inversely proportional to it. The idea is that if the
+            variance is small then it is due to noise in the image, while if
+            the variance is large, it is because of "wanted" image features.
+            As usual the  <parameter>radius</parameter> parameter  controls
+            the effective radius, but it probably advisable  to  leave  the
+            radius between 0.8 and 1.0 for the variance calculation to be
+            meaningful. The <parameter>alpha</parameter> parameter sets the
+            noise threshold, over which less smoothing will be done. This
+            means that small values of <parameter>alpha</parameter> will
+            give the most subtle filtering effect, while large values will
+            tend to smooth all parts of the image. You could start with
+            values like 
+            <code><parameter>alpha</parameter>  =  1.2</code>,
+            <code><parameter>radius</parameter> = 1.0</code>,
+            and try increasing or decreasing the
+            <parameter>alpha</parameter> parameter  to  get the desired
+            effect. This type of filter is best for filtering out dithering
+            noise in both bitmap and color images. 
+          </para>
+        </listitem>
       </varlistentry>
   
       <varlistentry>
-      <term>Edge enhancement. (-0.1 >= <parameter>alpha</parameter> >=
-      -0.9)</term>  
-      <listitem>
-      <para>
-        This is the opposite type of filter to the smoothing filter. It
-        enhances edges. The <parameter>alpha</parameter> parameter
-        controls the amount of edge enhancement, from subtle (-0.1) to
-        blatant (-0.9). The <parameter>radius</parameter> parameter
-        controls the effective radius as usual, but useful values are
-        between 0.5 and 0.9. Try starting with values of
-        <code>
-          <parameter>alpha</parameter> = 0.3
-        </code>,
-        <code>
-          <parameter>radius</parameter> = 0.8
-        </code>.
-      </para>
-      </listitem>
+        <term>
+          Edge enhancement. (-0.1 >= <parameter>alpha</parameter> >= -0.9)
+        </term>  
+        <listitem>
+        <para>
+          This is the opposite type of filter to the smoothing filter. It
+          enhances edges. The <parameter>alpha</parameter> parameter
+          controls the amount of edge enhancement, from subtle (-0.1) to
+          blatant (-0.9). The <parameter>radius</parameter> parameter
+          controls the effective radius as usual, but useful values are
+          between 0.5 and 0.9. Try starting with values of
+          <code>
+            <parameter>alpha</parameter> = 0.3
+          </code>,
+          <code>
+            <parameter>radius</parameter> = 0.8
+          </code>.
+        </para>
+        </listitem>
       </varlistentry>
   
       <varlistentry>
-      <term>Combination use</term>  
-      <listitem>
-      <para>
-        The various operating modes can be used one after the other to
-        get the desired result. For instance to turn a monochrome
-        dithered image into grayscale image you could try one or two
-        passes of the smoothing filter, followed by a pass of the
-        optimal estimation filter, then some subtle edge enhancement.
-        Note that using edge enhancement is only likely to be useful
-        after  one  of  the  non-linear filters (alpha trimmed mean or
-        optimal estimation filter), as edge enhancement is the direct
-        opposite of smoothing. 
-      </para>
-      <para>
-        For reducing color quantization noise in images (ie. turning
-        .gif files back into 24 bit files) you could try a pass of the
-        optimal estimation filter (<parameter>alpha</parameter> 1.2,
-        <parameter>radius</parameter> 1.0), a pass of the median filter
-        (<parameter>alpha</parameter> 0.5, <parameter>radius</parameter>
-        0.55), and possibly a pass of the edge enhancement filter.
-        Several passes of the optimal estimation filter with declining
-        <parameter>alpha</parameter> values are more effective than a
-        single pass with a large <parameter>alpha</parameter> value. As
-        usual, there is a tradeoff between filtering effectiveness and
-        losing detail. Experimentation is encouraged.
-      </para>
-      </listitem>
+        <term>Combination use</term>  
+        <listitem>
+          <para>
+            The various operating modes can be used one after the other to
+            get the desired result. For instance to turn a monochrome
+            dithered image into grayscale image you could try one or two
+            passes of the smoothing filter, followed by a pass of the
+            optimal estimation filter, then some subtle edge enhancement.
+            Note that using edge enhancement is only likely to be useful
+            after  one  of  the  non-linear filters (alpha trimmed mean or
+            optimal estimation filter), as edge enhancement is the direct
+            opposite of smoothing. 
+          </para>
+          <para>
+            For reducing color quantization noise in images (ie. turning
+            .gif files back into 24 bit files) you could try a pass of the
+            optimal estimation filter (<parameter>alpha</parameter> 1.2,
+            <parameter>radius</parameter> 1.0), a pass of the median filter
+            (<parameter>alpha</parameter> 0.5, <parameter>radius</parameter>
+            0.55), and possibly a pass of the edge enhancement filter.
+            Several passes of the optimal estimation filter with declining
+            <parameter>alpha</parameter> values are more effective than a
+            single pass with a large <parameter>alpha</parameter> value. As
+            usual, there is a tradeoff between filtering effectiveness and
+            losing detail. Experimentation is encouraged.
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+    
+    <variablelist lang="de">
+      <varlistentry>
+        <term>Alphabasierter Mittelwert</term> 
+        <listitem>
+          <para>
+            In diesem Modus wirkt das Filter als Weichzeichner. Jedes Pixel
+            wird durch den Mittelwert der es umgebenden 7 hexagonalen Pixel
+            ersetzt. Dabei werden die Werte der Pixel sortiert und die 
+            <guilabel>Alpha</guilabel> Werte von jedem Ende nicht in die
+            Bereichnung einbezogen. Dies bedeutet, dass bei einer Einstellung
+            von <guilabel>alpha</guilabel> = 0.0, das Filter das selbe
+            Ergebnist wie ein normales Mittelwertfilter ergibt. Empfehlenswert
+            sind in diesem Fall <guilabel>Radius</guilabel> zwischen 0,55
+            und 1,00.
+          </para>
+        </listitem>
+      </varlistentry>
+  
+      <varlistentry>
+        <term>Optimale Mittelung</term> 
+        <listitem>
+          <para>
+            In diesem Modus führt der Filter eine Weichzeichnung auf dem
+            Bild aus. Für jedes Pixel wird die Abweichung der umgebenden
+            7 hexahonalen Pixel berechnet. Die Stärke der Weichzeichnung ist
+            umgekehrt proportional zu dieser Abweichung. Die Idee dahinter
+            ist, dass wenn die Abweichung gering ist, diese durch Rauschen
+            verursacht wird. Ist die Abweichung aber grösser, wird angenommen,
+            dass diese durch gewollte Kanten im Bild verursacht ist. Wie in
+            den anderen Modi auch, können Sie mit dem
+            <guilabel>Radius</guilabel> die effetkive Grösse der
+            einbezogenen Umgebung beeinflussen. Es ist aber empfehlenswert
+            diese Einstellung zwischen 0,8 und 1,0 zu belassen. Die
+            Einstellung für den Wert <guilabel>Alpha</guilabel> bestimmt den
+            Schwellwert für das Rauschen für welches die Weichzeichnung
+            vorgenommen wird. Dies bedeutet, dass kleine Werte fast keine
+            sichtbare Auswirkung im Bild haben, während grössere Werte dann
+            mehr und mehr Bildteile weichzeichnen. Gute Startwerte sind 
+            <guilabel>Alpha</guilabel>  =  1.2 und
+            <guilabel>Radius</guilabel> = 1.0. Davon ausgehend können Sie
+            den Wert für <guilabel>Alpha</guilabel> solange anpassen, bis
+            Sie die für Ihr Bild optimalen einstellungen gefunden haben.
+          </para>
+        </listitem>
+      </varlistentry>
+  
+      <varlistentry>
+        <term>Kantenverstärkung</term>  
+        <listitem>
+        <para>
+          In diesem Modus wird das Gegenteil des vorher beschriebenen Modus
+          erreicht. Kanten werden in diesem Modus hervorgehoben. Mit dem Wert
+          von <guilabel>Alpha</guilabel> kontrollieren Sie die Stärke der
+          Hervorhebung der Kanten von kaum sichtbar (-0.1) bis sehr stark
+          (-0.9). Der Wert von <guilabel>Radius</guilabel> kontrolliert auch
+          in diesem Modus den effektiven Radius. Sinnvolle Werte hierfür
+          lieben im Bereich von 0.5 bis 0.9. Gute Startwerte sind
+          <guilabel>Alpha</guilabel> = 0.3 und
+          <guilabel>Radius</guilabel> = 0.8.
+        </para>
+        </listitem>
       </varlistentry>
     </variablelist>
     
     <variablelist lang="fr">
       <title>Plus d'explications</title>
       <varlistentry>
-      <term>Médiane réduite par alpha(0.0 &lt;=<parameter>alpha</parameter> &lt;= 0.5)</term> 
-      <listitem>
-      <para>
-        La valeur du pixel central sera remplacée par la moyenne des 
-        valeurs des 7 hexagones environnants, mais ces valeurs sont triées 
-        par taille et la plus forte ainsi que la plus basse sont exclues du 
-        calcul. Cela implique que qu'un alpha= 0 donne le même résultat 
-        qu'une convolution normale ( c-à-d celui d'un filtre de moyennage ou 
-        d'adoucissement), où le <parameter>rayon</parameter> déterminera 
-        la force du filtre. Pour démarrer avec un faible adoucissement, un 
-        alpha à 0 et un rayon à 0.55 sont de bonnes valeurs. Pour un 
-        adoucissement plus marqué, essayez un alpha à 0 et un rayon à 1.0. 
-      </para>
-      <para>
-        Une valeur <parameter>alpha</parameter> à 0.5 fera que la moyenne 
-        des 7-hexagones remplacera vraiment la valeur du pixel central. 
-        Cette sorte de filtre est parfaite pour éliminer des bruits d'un 
-        seul pixel. L'usage judicieux du <parameter>Rayon</parameter> 
-        permettra de régler finement l'effet du filtre. Des valeurs 
-        intermédiaires donneront un effet entre l'adoucissement et 
-        et l'élimination des petits bruits. Pour un filtrage léger, 
-        utilisez un alpha à 0.4 et un rayon à 0.6. Pour  un effet plus 
-        marqué essayez un alpha à 0.5 et un rayon à 1.0. 
-      </para>
-      </listitem>
+        <term>
+          Médiane réduite par alpha(0.0 &lt;=<parameter>alpha</parameter>
+          &lt;= 0.5)
+        </term> 
+        <listitem>
+          <para>
+            La valeur du pixel central sera remplacée par la moyenne des 
+            valeurs des 7 hexagones environnants, mais ces valeurs sont triées 
+            par taille et la plus forte ainsi que la plus basse sont exclues du 
+            calcul. Cela implique que qu'un alpha= 0 donne le même résultat 
+            qu'une convolution normale ( c-à-d celui d'un filtre de moyennage ou 
+            d'adoucissement), où le <parameter>rayon</parameter> déterminera 
+            la force du filtre. Pour démarrer avec un faible adoucissement, un 
+            alpha à 0 et un rayon à 0.55 sont de bonnes valeurs. Pour un 
+            adoucissement plus marqué, essayez un alpha à 0 et un rayon à 1.0. 
+          </para>
+          <para>
+            Une valeur <parameter>alpha</parameter> à 0.5 fera que la moyenne 
+            des 7-hexagones remplacera vraiment la valeur du pixel central. 
+            Cette sorte de filtre est parfaite pour éliminer des bruits d'un 
+            seul pixel. L'usage judicieux du <parameter>Rayon</parameter> 
+            permettra de régler finement l'effet du filtre. Des valeurs 
+            intermédiaires donneront un effet entre l'adoucissement et 
+            et l'élimination des petits bruits. Pour un filtrage léger, 
+            utilisez un alpha à 0.4 et un rayon à 0.6. Pour  un effet plus 
+            marqué essayez un alpha à 0.5 et un rayon à 1.0. 
+          </para>
+        </listitem>
       </varlistentry>
   
       <varlistentry>
-      <term>Estimation optimale. (1.0 &lt;=
-      <parameter>alpha</parameter> &lt;= 2.0)</term> 
-      <listitem>
-      <para>
-        Ce type de filtre applique un adoucissement adapté à l'image. Pour 
-        chaque pixel, la variance des valeurs de l'hexagone environnant est 
-        calculée, et la valeur de l'adoucissement lui est inversement 
-        proportionnelle. L'idée est que, si la variance est faible, c'est 
-        qu'elle est due à un bruit dans l'image, tandis que si elle est 
-        forte, c'est qu'il s'agit d'un élément à conserver. Là aussi, le 
-        paramètre de rayon contrôle la force du filtre, mais il vaut mieux 
-        maintenir le rayon entre 0.8 et 1.0 pour que le calcul de variance 
-        soit significatif. Le paramètre alpha règle le seuil 
-        d'adoucissement, au-delà duquel l'adoucissement sera plus faible. 
-        De petites valeurs d'alpha donneront donc un effet subtil et de 
-        fortes valeurs tendront à adoucir toutes les parties de l'image. 
-        Démarrez avec un alpha à 1.2 et un rayon à 1.0 et essayez 
-        d'augmenter ou de diminuer le paramètre alpha pour obtenir l'effet 
-        désiré. Ce type de filtre est excellent pour éliminer les bruits 
-        «multicouleurs», composés de couleurs différentes, comme le moiré 
-        de certaines images. 
-      </para>
-      </listitem>
+        <term>
+          Estimation optimale. (1.0 &lt;=<parameter>alpha</parameter>
+          &lt;= 2.0)
+        </term> 
+        <listitem>
+          <para>
+            Ce type de filtre applique un adoucissement adapté à l'image. Pour 
+            chaque pixel, la variance des valeurs de l'hexagone environnant est 
+            calculée, et la valeur de l'adoucissement lui est inversement 
+            proportionnelle. L'idée est que, si la variance est faible, c'est 
+            qu'elle est due à un bruit dans l'image, tandis que si elle est 
+            forte, c'est qu'il s'agit d'un élément à conserver. Là aussi, le 
+            paramètre de rayon contrôle la force du filtre, mais il vaut mieux 
+            maintenir le rayon entre 0.8 et 1.0 pour que le calcul de variance 
+            soit significatif. Le paramètre alpha règle le seuil 
+            d'adoucissement, au-delà duquel l'adoucissement sera plus faible. 
+            De petites valeurs d'alpha donneront donc un effet subtil et de 
+            fortes valeurs tendront à adoucir toutes les parties de l'image. 
+            Démarrez avec un alpha à 1.2 et un rayon à 1.0 et essayez 
+            d'augmenter ou de diminuer le paramètre alpha pour obtenir l'effet 
+            désiré. Ce type de filtre est excellent pour éliminer les bruits 
+            «multicouleurs», composés de couleurs différentes, comme le moiré 
+            de certaines images. 
+          </para>
+        </listitem>
       </varlistentry>
   
       <varlistentry>
-      <term>Améliorations des bords. (-0.1 >= <parameter>alpha</parameter> >=
-      -0.9)</term>  
-      <listitem>
-      <para>
-        C'est le contraire d'un filtre d'adoucissement. Il renforce les 
-        bords à l'intérieur d'une image. Le paramètres Alpha contrôle le 
-        degré de renforcement, de léger (-0.1) à marqué (-0.9). Le 
-        paramètre Rayon contrôle la force du filtre, comme d'habitude, 
-        mais les valeurs utiles sont comprises entre 0.5 et 0.9. 
-        Essayez en démarrant avec un alpha à 0.3 et un rayon à 0.8. 
-      </para>
-      </listitem>
+        <term>Améliorations des bords. (-0.1 >= <parameter>alpha</parameter> >=
+        -0.9)</term>  
+        <listitem>
+          <para>
+            C'est le contraire d'un filtre d'adoucissement. Il renforce les 
+            bords à l'intérieur d'une image. Le paramètres Alpha contrôle le 
+            degré de renforcement, de léger (-0.1) à marqué (-0.9). Le 
+            paramètre Rayon contrôle la force du filtre, comme d'habitude, 
+            mais les valeurs utiles sont comprises entre 0.5 et 0.9. 
+            Essayez en démarrant avec un alpha à 0.3 et un rayon à 0.8. 
+          </para>
+        </listitem>
       </varlistentry>
   
       <varlistentry>
-      <term>Utilisation combinée</term>  
-      <listitem>
-      <para>
-        Les différents modes opératoires peuvent être utilisés l'un après 
-        l'autre pour obtenir l'effet désiré. par exemple, pour transformer 
-        une image tramée monochrome en une image en niveaux de gris, 
-        essayez une ou deux passes du filtre d'adoucissement puis une 
-        passe du filtre d'optimisation et enfin appliquez un léger 
-        renforcement des bords. Notez que le filtre Renforcement des bords 
-        n'est à utiliser qu'après le filtre d'adoucissement ou le filtre 
-        d'optimisation, puisque le Renforcement des bords est exactement le 
-        contraire d'un adoucissement. 
-      </para>
-      <para>
-        Pour réduire de bruit de quantification dans les images, (par 
-        exemple en re-transformant des images .GIF en fichiers 24-bits), 
-        vous pouvez essayer une passe du filtre d'optimisation avec un 
-        alpha à 1.2 et un rayon à 0.5, une passe du filtre d'adoucissement 
-        avec un alpha à 0.5 et un rayon à 0.55, et peut-être une passe du 
-        filtre de renforcement des bords. 
-      </para>
-      <para>
-        Plusieurs passes du filtre d'optimisation avec des valeurs alpha 
-        décroissantes est plus efficace qu'une seule passe avec un alpha 
-        élevé. Comme toujours, il faut trouver un compromis entre 
-        l'efficacité du filtrage et la perte de détails. Expérimentez! 
-      </para>
-      </listitem>
+        <term>Utilisation combinée</term>  
+        <listitem>
+          <para>
+            Les différents modes opératoires peuvent être utilisés l'un après 
+            l'autre pour obtenir l'effet désiré. par exemple, pour transformer 
+            une image tramée monochrome en une image en niveaux de gris, 
+            essayez une ou deux passes du filtre d'adoucissement puis une 
+            passe du filtre d'optimisation et enfin appliquez un léger 
+            renforcement des bords. Notez que le filtre Renforcement des bords 
+            n'est à utiliser qu'après le filtre d'adoucissement ou le filtre 
+            d'optimisation, puisque le Renforcement des bords est exactement le 
+            contraire d'un adoucissement. 
+          </para>
+          <para>
+            Pour réduire de bruit de quantification dans les images, (par 
+            exemple en re-transformant des images .GIF en fichiers 24-bits), 
+            vous pouvez essayer une passe du filtre d'optimisation avec un 
+            alpha à 1.2 et un rayon à 0.5, une passe du filtre d'adoucissement 
+            avec un alpha à 0.5 et un rayon à 0.55, et peut-être une passe du 
+            filtre de renforcement des bords. 
+          </para>
+          <para>
+            Plusieurs passes du filtre d'optimisation avec des valeurs alpha 
+            décroissantes est plus efficace qu'une seule passe avec un alpha 
+            élevé. Comme toujours, il faut trouver un compromis entre 
+            l'efficacité du filtrage et la perte de détails. Expérimentez! 
+          </para>
+        </listitem>
       </varlistentry>
     </variablelist>
   </simplesect>

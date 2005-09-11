@@ -1,16 +1,35 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<sect2 id='plug-in-dog' lang="en;cs;fr">
+<!DOCTYPE sect2
+  PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+  "http://www.docbook.org/xml/4.3/docbookx.dtd">
+
+<!-- section history: -->
+<!-- 050829 de added by axel.wernicke -->
+<sect2 id='plug-in-dog' lang="en;cs;de;fr">
   <title lang="en">Difference of Gaussians</title>
   <title lang="cs">Rozdíl gaussovských rozostření</title>
+  <title lang="de">Differenz der Mittelwerte</title>
   <title lang="fr">Différence gaussienne</title>
 
-  <indexterm>
-    <primary lang="en">Difference of Gaussians</primary>
-    <primary lang="cs">Rozdíl gaussovských rozostření</primary>
-    <primary lang="fr">Filtres</primary>
-    <secondary lang="fr">Détection de bord</secondary>
-    <tertiary lang="fr">Différence gaussienne</tertiary>
+  <indexterm lang="en">
+    <primary>Difference of Gaussians</primary>
+  </indexterm>
+  
+  <indexterm lang="cs">
+    <primary>Rozdíl gaussovských rozostření</primary>
+  </indexterm>
+
+  <indexterm lang="de">
+    <primary>Filter</primary>
+    <secondary>Kantenerkennung</secondary>
+  </indexterm>
+  <indexterm lang="de"><primary>Differenz der Mittelwerte</primary></indexterm>
+  
+  <indexterm lang="fr">
+    <primary>Filtres</primary>
+    <secondary>Détection de bord</secondary>
+    <tertiary>Différence gaussienne</tertiary>
   </indexterm>
 
   <mediaobject lang="en">
@@ -32,6 +51,7 @@
   <simplesect>
     <title lang="en">Overview</title>
     <title lang="cs">Přehled</title>
+    <title lang="de">Wirkungsweise</title>
     <title lang="fr">Généralités</title>
     <para lang="en">
       This filter is located at
@@ -90,6 +110,41 @@
       zmenšení většího poloměru obvykle znamená zvýšení prahu pro rozpoznání
       hran.
     </para>
+
+    <para lang="de">
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/taj_orig.jpg"
+                     format="JPG"/>
+        </imageobject>
+      </inlinemediaobject>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/edge-taj-dog.jpg"
+                     format="JPG"/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+    <para lang="de">
+      v.l.n.r.: Originalbild, Differenz der Mittelwerte angewandt
+    </para>
+    <para lang="de">
+      Dieses Filter extrahiert Kanten aus Bildern indem der Gaußsche
+      Weichzeichnungsfilter mit zwei verschiedenen Stärken auf das Bild
+      angewendet wird. Aus den beiden Ergebnisbildern wird die Differenz 
+      berechnet. Dieser Algorithmus wird in der Forschungsrichtung Künstliches
+      Sehen sehr oft verwendet, da die Berechnung des Gaußschen Weichzeichners
+      sehr effizient ist. Die beiden wichtigsten Eigenschaften des Filters
+      sind die beiden Radien, mit denen die Anwendung der Weichzeichner
+      erfolgt. Bei der Einstellung der Werte kann es hilfreich sein zu wissen,
+      dass eine Erhöhung des kleineren Radius typischerweise zu stärkeren
+      Kanten führt, und eine Verkleinerung des grösseren Radius tendenziell
+      die Schwelle etwas im Bild als Kante zu erkennen erhöht. In den meisten
+      Fällen werden Sie gute Ergebnisse erreichen, wenn der Radius 2 kleiner
+      ist als der Radius 1. Manchmal jedoch, insbesondere bei Bildern mit
+      dunklem Hintergrund lohnt es sich, es andersherum zu probieren.
+    </para>
+    
     <para lang="fr">
       Ce filtre est apparu dans Gimp 2.2. Il fait une détection
       de bords en utilisant un algorihme appelé « Différence 
@@ -112,14 +167,45 @@
     </para>
   </simplesect>
 
+  <simplesect lang="de">
+    <title lang="de">Filteraufruf</title>
+    <para lang="de">
+      Dieses Filter lässt sich über das Menü
+      <menuchoice>
+        <guimenu><accel>F</accel>ilter</guimenu>
+        <guisubmenu><accel>K</accel>anten finden</guisubmenu>
+        <guimenuitem>Differenz der Mittelwerte</guimenuitem>
+      </menuchoice>
+      im Bildfenster aufrufen.
+    </para>
+  </simplesect>
+
   <simplesect>
     <title lang="en">Options</title>
     <title lang="cs">Volby</title>
+    <title lang="de">Eigenschaften</title>
     <title lang="fr">Options</title>
+
+    <informalfigure lang="de">
+      <mediaobject>
+        <imageobject lang="de">
+          <imagedata fileref="../images/filters/de/options-edge-dog.png"
+						         format="PNG"/>
+        </imageobject>
+        <caption>
+          <para lang="de">
+            Eigenschaften für das Filter <quote>Differenz der
+            Mittelwerte</quote>
+          </para>
+        </caption>
+      </mediaobject>
+    </informalfigure>
+
     <variablelist>
       <varlistentry>
         <term lang="en">Smoothing parameters</term>
         <term lang="cs">Parametry vyhlazování</term>
+        <term lang="de">Parameter abgleichen</term>
         <term lang="fr">Paramètres d'adoucissement</term>
         <listitem lang="en">
           <para>
@@ -139,6 +225,17 @@
             lepší nastavit Poloměr 2 menší než Poloměr 1.
           </para>
         </listitem>
+        <listitem lang="de">
+          <para>
+            <guilabel>Radius 1</guilabel> und <guilabel>Radius 2</guilabel>
+            sind die beiden Paramter, mit denen der Gaußsche Weichzeichner
+            ausgeführt wird. Die einzige Bedingung an die beiden Werte ist,
+            dass sie unterschiedlich sein müssen, da ansonsten keine Kanten
+            gefunden werden können. In den meisten Fällen führt es zu besseren
+            Ergebnissen, wenn <guilabel>Radius 2</guilabel> etwas kleiner ist
+            als <guilabel>Radius 1</guilabel>.
+          </para>
+        </listitem>
         <listitem lang="fr">
           <para>
             Les rayons 1 et 2 sont les rayons de flou pour les deux
@@ -153,6 +250,7 @@
       <varlistentry>
         <term lang="en">Normalize</term>
         <term lang="cs">Normalizovat</term>
+        <term lang="de">Normalisieren</term>
         <term lang="fr">Normaliser</term>
         <listitem lang="en">
           <para>
@@ -172,6 +270,14 @@
             zcela přesný (ohledně globálního kontrastu).
           </para>
         </listitem>
+        <listitem lang="de">
+          <para>
+            Wenn diese Eigenschaft aktiviert ist, wird das Ergebnis den
+            maximal möglichen Kontrastumfang erhalten. Das bedeutet, dass die
+            Kanten im Ergebnisbild soweit verstärkt werden, bis der volle
+            Helligkeitsumfang des Bildes ausgeschöpft ist.
+          </para>
+        </listitem>
         <listitem lang="fr">
           <para>
             Cocher cette option entraînera un résultat avec l'échelle
@@ -185,6 +291,7 @@
       <varlistentry>
         <term lang="en">Invert</term>
         <term lang="cs">Invertovat</term>
+        <term lang="de">Invertieren</term>
         <term lang="fr">Inverser</term>
         <listitem lang="en">
           <para>
@@ -197,6 +304,14 @@
           <para>
             Zaškrtnutí této volby invertuje výsledná obrázek, takže vidíte
             tmavé hrany na bílém pozadí, tedy jakoby kresbu na bílém papíře.
+          </para>
+        </listitem>
+        <listitem lang="de">
+          <para>
+            Diese Eigenschaft kehrt die Farbe des Ergebnisses um, so dass
+            dunkle Kanten auf einem weissen Hintergrund angezeigt werden.
+            Das eigentliche Ergebnis des Filters wäre umgekehrt, also helle
+            Kanten auf einem schwarzen Hintergrund.
           </para>
         </listitem>
         <listitem lang="fr">

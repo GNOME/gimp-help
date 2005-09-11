@@ -1,14 +1,33 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<sect2 id='plug-in-destripe' lang="en;cs;fr">
+<!DOCTYPE sect2
+  PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+  "http://www.docbook.org/xml/4.3/docbookx.dtd">
+
+<!-- section history: -->
+<!-- 050831 de added by axel.wernicke -->
+<sect2 id='plug-in-destripe' lang="en;cs;de;fr">
   <title lang="en">Destripe</title>
   <title lang="cs">Odstranit pruhy</title>
+  <title lang="de">Streifen entfernen</title>
   <title lang="fr">Anti-traînées</title>
 
-  <indexterm>
-    <primary lang="en">Destripe</primary>
-    <primary lang="cs">Odstranit pruhy</primary>
-    <primary lang="fr">Anti-traînées</primary>
+  <indexterm lang="en">
+    <primary>Destripe</primary>
+  </indexterm>
+  
+  <indexterm lang="cs">
+    <primary>Odstranit pruhy</primary>
+  </indexterm>
+
+  <indexterm lang="de">
+    <primary>Filter</primary>
+    <secondary>Verbessern</secondary>
+  </indexterm>
+  <indexterm lang="de"><primary>Streifen entfernen</primary></indexterm>
+  
+  <indexterm lang="fr">
+    <primary>Anti-traînées</primary>
   </indexterm>
 
   <mediaobject lang="en">
@@ -32,6 +51,7 @@
   <simplesect>
     <title lang="en">Overview</title>
     <title lang="cs">Přehled</title>
+    <title lang="de">Wirkungsweise</title>
     <title lang="fr">Généralités</title>   
 
     <para lang="en">
@@ -71,6 +91,41 @@
       result).
     </para>
 
+    <para lang="de">
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/taj_orig.jpg"
+                     format="JPG"/>
+        </imageobject>
+      </inlinemediaobject>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/enhance-taj-destripe.jpg"
+                     format="JPG"/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+    <para lang="de">
+      v.l.n.r.: Originalbild, Streifen entfernen angewandt
+    </para>
+    <para lang="de">
+      Dieses Filter können Sie anwenden, um vertikale Streifen, wie sie durch
+      schlechte Scanner verursacht werden, zu entfernen. Es arbeitet durch
+      hinzufügen eines Musters, welches mit die Bildfehler aufhebt, sofern
+      die Einstellungen korrekt vorgenommen sind. Dieses
+      <quote>Negativmuster</quote> wird auf der Basis von im Bild vorhandenen
+      vertikalen Bildelementen berechnet. Wundern Sie sich daher nicht, wenn
+      die Vorschauf für ein Bild welches keine vertikalen Streifen enthält
+      plötzlich Streifen hinzufügt (siehe Beispielbild).
+    </para> 
+    <para lang="de">
+      Wenn nach der ersten Anwendung des Filters noch einzelne Streifen im
+      Bild nicht entfernt wurden, wählen Sie den betroffenen Bereich aus und
+      wenden Sie das Filter auf diese Auswahl erneut an. Achten Sie darauf
+      eine rechteckige Auswahl zu verwenden, bei anderen Auswahltypen kann
+      sich das Ergebnis erheblich verschlechtern.
+    </para>
+    
     <para lang="fr">
       Ce filtre se trouve à
       <guimenuitem>Image&gt;Filtres/Améliorations/Anti-<accel>t</accel>raînées...</guimenuitem>
@@ -91,15 +146,45 @@
       autre type de sélection risque d'aggraver les choses).
     </para>
   </simplesect>
-
+  
+  <simplesect lang="de">
+    <title lang="de">Filteraufruf</title>
+    <para lang="de">
+      Dieses Filter lässt sich über das Menü
+      <menuchoice>
+        <guimenu><accel>F</accel>ilter</guimenu>
+        <guisubmenu><accel>V</accel>erbessern</guisubmenu>
+        <guimenuitem><accel>S</accel>treifen entfernen</guimenuitem>
+      </menuchoice>
+      im Bildfenster aufrufen.
+    </para>
+  </simplesect>
+  
   <simplesect>
     <title lang="en">Options</title>
     <title lang="cs">Volby</title>
+    <title lang="de">Eigenschaften</title>
     <title lang="fr">Options</title>
+
+    <informalfigure lang="de">
+      <mediaobject>
+        <imageobject lang="de">
+          <imagedata fileref="../images/filters/de/options-enhance-destripe.png"
+                     format="PNG"/>
+        </imageobject>
+        <caption>
+          <para lang="de">
+            Eigenschaften für das Filter <quote>Streifen entfernen</quote>
+          </para>
+        </caption>
+      </mediaobject>
+    </informalfigure>
+
     <variablelist>
       <varlistentry>
         <term lang="en">Preview</term>
         <term lang="cs">Náhled</term>
+        <term lang="de">Vorschau</term>
         <term lang="fr">Aperçu</term>
         <listitem>
           <para lang="en">
@@ -109,6 +194,11 @@
           <para lang="cs">
             Náhled výsledku filtru se interaktivně zobrazuje v náhledu.
             Posuvníku umožňují pohyb náhledu po celém obrázku.
+          </para>
+          <para lang="de">
+            In der Vorschau wird ein Ausschnitt des Bildes so dargestellt,
+            als wäre das Filter mit den aktuellen Einstellungen auf das Bild
+            angewandt worden.
           </para> 
           <para lang="fr">
             Le résultat du réglage des paramètres est affiché en temps
@@ -117,9 +207,11 @@
           </para>
         </listitem>
       </varlistentry>
+      
       <varlistentry>
         <term lang="en">Parameter setting</term>
         <term lang="cs">Nastavení parametrů</term>
+        <term lang="de">Breite</term>
         <term lang="fr">Réglage des paramètres</term>
         <listitem lang="en">
           <para>
@@ -161,6 +253,21 @@
             </itemizedlist>
           </para>
         </listitem>
+        
+        <listitem lang="de">
+          <para>
+            Mit dieser Eigenschaft können Sie über einen Schieberegler
+            die Stärke des Filters im Bereich von 2 bis 100 einstellen.
+            Ein Wert grösser als 60 ist dabei selten sinnvoll und kann
+            unschöne Artefakte im Bild erzeugen.
+          </para>
+          <para>
+            <guilabel>Create histogram</guilabel>: This "histogram"
+            is a black and white image showing the interference
+            pattern more legibly.
+          </para>
+        </listitem>
+        
         <listitem lang="fr">
           <para>
             <itemizedlist>
@@ -183,8 +290,17 @@
           </para>
         </listitem>
       </varlistentry>
+
+      <varlistentry lang="de">
+        <term lang="de">Histogramm erstellen</term>
+        
+        <listitem lang="de">
+          <para>
+            Wenn diese Eigenschaft aktiviert ist, wird das Filter ein
+            Graustufenbild erzeugen, in dem das Muster deutlich erkennbar ist.
+          </para>
+        </listitem>
+      </varlistentry>
     </variablelist>
-
   </simplesect>
-
 </sect2>

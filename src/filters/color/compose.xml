@@ -1,27 +1,51 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<sect2 id='plug-in-compose' lang="en;cs;fr;zh_CN">
+<!DOCTYPE sect2
+  PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+  "http://www.docbook.org/xml/4.3/docbookx.dtd">
+
+<!-- section history: -->
+<!-- 050825 de added by axel.wernicke -->
+<sect2 id='plug-in-compose' lang="en;cs;de;fr;zh_CN">
   <title lang="en">Compose</title>
   <title lang="cs">Komponovat</title>
+  <title lang="de">Zusammensetzen</title>
   <title lang="fr">Composer</title>
   <title lang="zh_CN">合成</title>
 
-  <indexterm>
-    <primary lang="en">Filter</primary>
-    <secondary lang="en">Color</secondary>
-    <tertiary lang="en">Compose</tertiary>
+  <indexterm lang="en">
+    <primary>Filter</primary>
+    <secondary>Color</secondary>
+    <tertiary>Compose</tertiary>
+  </indexterm>
+  
+  <indexterm lang="cs">
+    <primary>Filtry</primary>
+    <secondary>Barvy</secondary>
+    <tertiary>Komponovat</tertiary>
+  </indexterm>
 
-    <primary lang="cs">Filtry</primary>
-    <secondary lang="cs">Barvy</secondary>
-    <tertiary lang="cs">Komponovat</tertiary>
+  <indexterm lang="de">
+    <primary>Filter</primary>
+    <secondary>Farben</secondary>
+  </indexterm>
+  <indexterm lang="de"><primary>Zusammensetzen</primary></indexterm>
+  <indexterm lang="de"><primary>CMYK</primary></indexterm>
+  <indexterm lang="de"><primary>HSV</primary></indexterm>
+  <indexterm lang="de"><primary>RGB</primary></indexterm>
+  <indexterm lang="de"><primary>YUV</primary></indexterm>
+  <indexterm lang="de"><primary>YCbCr</primary></indexterm>
 
-    <primary lang="fr">Filtre</primary>
-    <secondary lang="fr">Couleur</secondary>
-    <tertiary lang="fr">Composer</tertiary>
-
-    <primary lang="zh_CN">滤镜</primary>
-    <secondary lang="zh_CN">颜色</secondary>
-    <tertiary lang="zh_CN">合成</tertiary>
+  <indexterm lang="fr">
+    <primary>Filtre</primary>
+    <secondary>Couleur</secondary>
+    <tertiary>Composer</tertiary>
+  </indexterm>
+  
+  <indexterm lang="zh_CN">
+    <primary>滤镜</primary>
+    <secondary>颜色</secondary>
+    <tertiary>合成</tertiary>
   </indexterm>
 
   <mediaobject lang="en">
@@ -52,6 +76,7 @@
   <simplesect>
     <title lang="en">Overview</title>
     <title lang="cs">Přehled</title>
+    <title lang="de">Wirkungsweise</title>
     <title lang="fr">Généralités</title>
     <title lang="zh_CN">概述</title>
     <para lang="en">
@@ -80,6 +105,30 @@
       Tento filtr rekonstruuje obrázkek z jeho RGB, HSV či jiných komponent.
     </para>
 
+
+    <para lang="de">
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/color-taj-decompose.jpg"
+                     format="JPG"/>
+        </imageobject>
+      </inlinemediaobject>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/taj_orig.jpg"
+                     format="JPG"/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+    <para lang="de">
+      v.l.n.r.: Komponentenbild (RGB zerlegt), Zusammengesetztes Originalbild
+    </para>
+    <para lang="de">
+      Dieses Filter kehrt die Wirkung des Filters
+      <link linkend="plug-in-decompose">Zerlegen</link> um. Es fügt ein Bild
+      aus extrahierten Farbkomponenten zusammen.
+    </para>
+    
     <para lang="fr">
       Ce filtre se trouve dans
       <menuchoice>
@@ -102,16 +151,45 @@
     </para>
   </simplesect>
 
+  <simplesect lang="de">
+    <title lang="de">Filteraufruf</title>
+    <para lang="de">
+      Dieses Filter lässt sich über das Menü
+      <menuchoice>
+        <guimenu><accel>F</accel>ilter</guimenu>
+        <guisubmenu><accel>F</accel>arben</guisubmenu>
+        <guimenuitem><accel>Z</accel>usammensetzen</guimenuitem>
+      </menuchoice>
+      im Bildfenster aufrufen.
+    </para>
+  </simplesect>
+
   <simplesect>
     <title lang="en">Options</title>
     <title lang="cs">Volby</title>
+    <title lang="de">Eigenschaften</title>
     <title lang="fr">Options</title>
     <title lang="zh_CN">选项</title>
+
+    <informalfigure lang="de">
+      <mediaobject>
+        <imageobject lang="de">
+          <imagedata fileref="../images/filters/de/options-color-compose.png"
+						         format="PNG"/>
+        </imageobject>
+        <caption>
+          <para lang="de">
+            Eigenschaften für das Filter <quote>Zusammensetzen</quote>
+          </para>
+        </caption>
+      </mediaobject>
+    </informalfigure>
 
     <variablelist>
       <varlistentry>
         <term lang="en">Compose Channels</term>
         <term lang="cs">Kompozice kanálů</term>
+        <term lang="de">Kanäle zusammensetzen</term>
         <term lang="fr">Composer Canaux</term>
         <term lang="zh_CN">合成通道</term>
         <listitem lang="en">
@@ -126,6 +204,15 @@
             Zde lze zvolit, jaký barevný model (RGB, HSV...) se má použít.
             Možnosti jsou popsány v části věnované modulu
             <link linkend="plug-in-decompose">Dekomponovat</link>.
+          </para>
+        </listitem>
+        <listitem lang="de">
+          <para>
+            Hier wählen Sie aus, aus welchen Farbkomponenten das Bild
+            zusammengesetzt werden soll. Zur Auswahl stehen verschiedene
+            Farbmodelle, welche im Filter
+            <link linkend="plug-in-decompose">Zerlegen</link> bereits
+            ausführlich beschrieben wurden.
           </para>
         </listitem>
         <listitem lang="fr">
@@ -146,6 +233,7 @@
       <varlistentry>
         <term lang="en">Channel Representation</term>
         <term lang="cs">Reprezentace kanálů</term>
+        <term lang="de">Kanalzuweisungen</term>
         <term lang="fr">Représentation des Canaux</term>
         <term lang="zh_CN">通道代表</term>
         <listitem lang="en">
@@ -158,6 +246,21 @@
           <para>
             Umožňuje zvolit zdroj pro každý kanál.
           </para>
+        </listitem>
+        <listitem lang="de">
+          <para>
+            Hier können Sie einstellen, aus welchen Ebenen die Farbkanäle
+            wiederhergestellt werden sollen.
+          </para>
+          <tip>
+            <para>
+              Wenn die Einstellungen beim Zusammensetzen von denen des
+              Zerlegens verschieden sind, Sie also beispielsweise ein Bild
+              nach RGB zerlegen und dann die RGB Farbkanäle als Lab Kanäle
+              wieder zusammensetzen lassen sich sehr
+              interessante Farbffekte erzielen. Probieren Sie es einmal aus.
+            </para>
+          </tip>
         </listitem>
         <listitem lang="fr">
           <para>

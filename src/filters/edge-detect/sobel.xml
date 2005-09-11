@@ -1,18 +1,24 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<sect2 id='plug-in-sobel' lang="en;cs;fr;zh_CN">
-  <title lang="en">Sobel</title>     <!--Changed 050714-->
+<!DOCTYPE sect2
+  PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+  "http://www.docbook.org/xml/4.3/docbookx.dtd">
+
+<!-- section history: -->
+<!-- 050829 de added by axel.wernicke -->
+<sect2 id='plug-in-sobel' lang="en;cs;de;fr;zh_CN">
+  <title lang="en;de;fr;zh_CN">Sobel</title>
   <title lang="cs">Sobelova metoda</title>
-  <title lang="fr">Sobel</title>
-  <title lang="zh_CN">Sobel</title>
+ 
+  <indexterm lang="en;fr;de;zh_CN"><primary>Sobel</primary></indexterm>
 
-  <indexterm>
-    <primary lang="en">Sobel</primary>
-    <primary lang="cs">Sobelova metoda</primary>
-    <primary lang="fr">Sobel</primary>
-    <primary lang="zh_CN">Sobel</primary>
+  <indexterm lang="cs"><primary>Sobelova metoda</primary></indexterm>
+
+  <indexterm lang="de">
+    <primary>Filter</primary>
+    <secondary>Kantenerkennung</secondary>
   </indexterm>
-
+  
   <mediaobject lang="en">
     <imageobject>
       <imagedata fileref='../images/filters/filters-edgedetect-sobel.png' format="PNG"/>
@@ -34,10 +40,10 @@
     </imageobject>
   </mediaobject>
 
-
   <simplesect>
     <title lang="en">Overview</title>
     <title lang="cs">Přehled</title>
+    <title lang="de">Wirkungsweise</title>
     <title lang="fr">Généralités</title>
     <title lang='zh_CN'>概述</title>
     <para lang="en">
@@ -61,6 +67,31 @@
       </menuchoice>
       z nabídky okna obrázku.
     </para>
+    
+    <para lang="de">
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/taj_orig.jpg"
+                     format="JPG"/>
+        </imageobject>
+      </inlinemediaobject>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/edge-taj-sobel.jpg"
+                     format="JPG"/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+    <para lang="de">
+      v.l.n.r.: Originalbild, Sobel angewandt
+    </para>
+    <para lang="de">
+      Dieses Filter extrahiert Kanten in einem Bild durch Verwendung des
+      Sobel-Operators. Eine detailliertere Beschreibung des Operators finden
+      Sie im Internet in der <ulink
+      url="http://de.wikipedia.org/wiki/Sobel-Operator">Wikipedia</ulink>.
+    </para>
+    
     <para lang="fr">
       On accède à ce filtre par le menu d'image en suivant
       <menuchoice>
@@ -82,15 +113,45 @@
     </para>
   </simplesect>
 
+  <simplesect lang="de">
+    <title lang="de">Filteraufruf</title>
+    <para lang="de">
+      Dieses Filter lässt sich über das Menü
+      <menuchoice>
+        <guimenu><accel>F</accel>ilter</guimenu>
+        <guisubmenu><accel>K</accel>anten finden</guisubmenu>
+        <guimenuitem><accel>S</accel>obel</guimenuitem>
+      </menuchoice>
+      im Bildfenster aufrufen.
+    </para>
+  </simplesect>
+
   <simplesect>
     <title lang="en">Options</title>
     <title lang="cs">Volby</title>
+    <title lang="de">Eigenschaften</title>
     <title lang="fr">Options</title>
     <title lang='zh_CN'>选项</title>
+
+    <informalfigure lang="de">
+      <mediaobject>
+        <imageobject lang="de">
+          <imagedata fileref="../images/filters/de/options-edge-sobel.png"
+						         format="PNG"/>
+        </imageobject>
+        <caption>
+          <para lang="de">
+            Eigenschaften für das Filter <quote>Sobel</quote>
+          </para>
+        </caption>
+      </mediaobject>
+    </informalfigure>
+
     <variablelist>
       <varlistentry>
         <term lang="en">Parameters Settings</term>
         <term lang="cs">Nastavení parametrů</term>
+        <term lang="de">Sobel Horizontal / Vertikal</term>
         <term lang="fr">Réglage des paramètres</term>
         <term lang='zh_CN'>参数设定</term>
         <listitem lang="en">
@@ -145,7 +206,18 @@
             </itemizedlist>
           </para>
         </listitem>
-
+        
+        <listitem lang="de">
+          <para>
+            Mit diesen Eigenschaften legen Sie fest, in welche Richtungen der
+            der Sobel-Operator ausgeführt wird. Da dieser auf der Ableitung
+            der ersten Ordnung basiert ist er grundsätzlich anisotrop
+            (richtungsabhängig). Mit diesen Einstellungen können Sie
+            bestimmen, ob das Filter horizontale und/oder vertikale Kanten
+            finden soll.
+          </para>
+        </listitem>
+        
        <listitem lang="fr">
           <para>
             <itemizedlist>
@@ -194,6 +266,18 @@
             </itemizedlist>
           </para>
         </listitem> 
+      </varlistentry>
+      
+      <varlistentry lang="de">
+        <term lang="de">Vorzeichen des Ergebnisses beibehalten</term>
+        <listitem lang="de">
+          <para>
+            Mit dieser Einstellung können Sie festlegen wie das Filter wirkt,
+            wenn Sie nur eine Richtung zur Anwendung ausgewählt haben. Ist die
+            Eigenschaft aktiviert, wird ein graues, reliefartiges Bild das
+            Ergebnis sein.
+          </para>
+        </listitem>
       </varlistentry>
     </variablelist>
   </simplesect>

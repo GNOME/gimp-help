@@ -1,22 +1,39 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<sect2 id='plug-in-noisify' lang="en;cs;fr">
+<!DOCTYPE sect2
+  PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+  "http://www.docbook.org/xml/4.3/docbookx.dtd">
+
+<!-- section history: -->
+<!-- 050826 de added by axel.wernicke -->
+<sect2 id='plug-in-noisify' lang="en;cs;de;fr">
   <title lang="en">Scatter RGB</title>
   <title lang="cs">Roztřepení RGB</title>
+  <title lang="de">Streue RGB</title>
   <title lang="fr">Dispersion RVB</title>
 
-  <indexterm>
-    <primary lang="en">Filter</primary>
-    <secondary lang="en">Noise</secondary>
-    <tertiary lang="en">Scatter RGB</tertiary>
+  <indexterm lang="en">
+    <primary>Filter</primary>
+    <secondary>Noise</secondary>
+    <tertiary>Scatter RGB</tertiary>
+  </indexterm>
+  
+  <indexterm lang="cs">
+    <primary>filtry</primary>
+    <secondary>Šum</secondary>
+    <tertiary>Roztřepení RGB</tertiary>
+  </indexterm>
 
-    <primary lang="cs">filtry</primary>
-    <secondary lang="cs">Šum</secondary>
-    <tertiary lang="cs">Roztřepení RGB</tertiary>
+  <indexterm lang="de">
+    <primary>Filter</primary>
+    <secondary>Rauschen</secondary>
+  </indexterm>
+  <indexterm lang="de"><primary>Streue RGB</primary></indexterm>
 
-    <primary lang="fr">Filtre</primary>
-    <secondary lang="fr">Bruit</secondary>
-    <tertiary lang="fr">Dispersion RVB</tertiary>
+  <indexterm lang="fr">
+    <primary>Filtre</primary>
+    <secondary>Bruit</secondary>
+    <tertiary>Dispersion RVB</tertiary>
   </indexterm>
 
   <mediaobject lang="en">
@@ -34,9 +51,11 @@
       <imagedata fileref='../images/filters/fr/filters-noise-noisify.png' format="PNG"/>
     </imageobject>
   </mediaobject>
+  
   <simplesect>
     <title lang="en">Overview</title>
     <title lang="cs">Přehled</title>
+    <title lang="de">Filterwirkung</title>
     <title lang="fr">Généralités</title>
     <para lang="en">
       This filter is found in the image window menu under
@@ -81,6 +100,37 @@
       Výsledkem aplikace tohoto filtru je velmi přirozeně vypadající šum.
     </para>
     
+    <para lang="de">
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/taj_orig.jpg"
+                     format="JPG"/>
+        </imageobject>
+      </inlinemediaobject>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/noise-taj-scatter-rgb.jpg"
+                     format="JPG"/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+    <para lang="de">
+      v.l.n.r.: Originalbild, Streue RGB angewandt
+    </para>
+    <para lang="de">
+      Dieses Filter fügt zu einer Ebene oder einer Auswahl normalverteiltes
+      Rauschen hinzu. Das RGB Farbmodell wird benutzt, um das Rauschen zu
+      erzeugen. Dabei wird ein Rauschanteil zu den Rot- Blau- und Grünanteilen
+      jedes Pixels hinzugefügt. Normalverteilt bedeutet, dass die meisten
+      Pixel mit einem geringen und nur wenige Pixel mit einem grossen
+      Rauschanteil versehen werden. Wenn Sie dieses Filter auf eine einfarbig
+      graue Fläche anwenden würden, könnten Sie im Histogramm eine klassische
+      glockenförmige Gausskurve sehen.
+    </para>
+    <para lang="de">
+      Das Ergebnis dieses Filters ist ein sehr natürlich wirkendes Rauschen.
+    </para>
+    
     <para lang="fr">
       On accède à ce filtre par le menu d'image en suivant
       <menuchoice>
@@ -103,14 +153,45 @@
       Le résultat est un brouillage de l'image.
     </para>
   </simplesect>
+
+  <simplesect lang="de">
+    <title lang="de">Filteraufruf</title>
+    <para lang="de">
+      Dieses Filter lässt sich über das Menü
+      <menuchoice>
+        <guimenu><accel>F</accel>ilter</guimenu>
+        <guisubmenu><accel>R</accel>auschen</guisubmenu>
+        <guimenuitem>Streue <accel>R</accel>GB</guimenuitem>
+      </menuchoice>
+      im Bildfenster aufrufen.
+    </para>
+  </simplesect>
+
   <simplesect>
     <title lang="en">Options</title>
     <title lang="cs">Volby</title>
+    <title lang="de">Eigenschaften</title>
     <title lang="fr">Options</title>
+
+    <informalfigure lang="de">
+      <mediaobject>
+        <imageobject lang="de">
+          <imagedata fileref="../images/filters/de/options-noise-scatter-rgb.png"
+						         format="PNG"/>
+        </imageobject>
+        <caption>
+          <para lang="de">
+            Eigenschaften für das Filter <quote>Streue RGB</quote>
+          </para>
+        </caption>
+      </mediaobject>
+    </informalfigure>
+
     <variablelist>
       <varlistentry>
         <term lang="en">Preview</term>
         <term lang="cs">Náhled</term>
+        <term lang="de">Vorschau</term>
         <term lang="fr">Aperçu</term>
         <listitem>
           <para lang="en">
@@ -121,15 +202,22 @@
             Náhled zobrazuje interaktivně změny dříve, než jsou skutečně
             aplikovány do obrázku.
           </para>
+          <para lang="de">
+            Die Vorschau zeigt Ihnen einen Ausschnitt des Bildes, so wie das
+            Bild aussehen würde, wenn Sie den Filter mit den aktuellen
+            Einstellungen ausführen würden.
+          </para>
           <para lang="fr">
             Cet aperçu affiche en temps réel le résultat des modifications
             apportées avant qu'elles ne soient appliquées à l'image.
           </para>
         </listitem>
       </varlistentry>
+      
       <varlistentry>
         <term lang="en">Correlated noise</term>
         <term lang="cs">Korelovaný šum</term>
+        <term lang="de">Korreliertes Rauschen</term>
         <term lang="fr">Bruit en corrélation</term>
         <listitem>
           <para lang="en">
@@ -138,6 +226,14 @@
             channels in each pixel, so the hue of pixels does not change much.
           </para>
           <para lang="cs">
+          </para>
+          <para lang="de">
+            <!-- de CHECK: it doesn't work that way for me, please doublecheck -->
+            Wenn diese Eigenschaft aktiviert ist, haben werden die drei
+            Schieberegler für Rot, Grün und Blau alle den gleichen Wert haben.
+            Das gleich relative Rauschen wird damit auf alle Kanäle jedes
+            Pixels angewendet. Daher ändert sich der Farbton der Pixel nicht
+            sehr.
           </para>
           <para lang="fr">
             Ce bouton radio, quand il est coché, rend solidaires les 
@@ -149,6 +245,7 @@
       <varlistentry>
         <term lang="en">Independent RGB</term>
         <term lang="cs">Nezávislé RGB</term>
+        <term lang="de">Unabhängige RGB Kanäle</term>
         <term lang="fr">R, V, B indépendants</term>
         <listitem>
           <para lang="en">
@@ -160,15 +257,22 @@
             společně a do všech kanálu bude přidán stejný relativní šum.
             Zachová se tak vyvážení barev.
           </para>
+          <para lang="de">
+            <!-- de CHECK: it doesn't work that way for me, please doublecheck -->
+            Wenn diese Eingenschaft aktiviert ist, können die Schieberegler
+            unabhängig voneinander bewegt werden.
+          </para>
           <para lang="fr">
             Quand ce bouton radio est coché, les trois curseurs RVB sont 
             indépendants. 
           </para>
         </listitem>
       </varlistentry>
+      
       <varlistentry>
         <term lang="en">Red, Blue, Green and Alfa Sliders</term>
         <term lang="cs">Posuvníky Červená, Zelená, Modrá a Alfa</term>
+        <term lang="de">Rot, Blau, Grün, Alpha</term>
         <term lang="fr">Curseurs Rouge Vert Bleu</term>
         <listitem lang="en">
           <para>
@@ -199,6 +303,32 @@
             polovinou nastavené hodnoty (kde 1 odpovídá vzdálenosti mezi
             nejnižší a nejvyšší možnou hodnotou v kanálu).
           </para>
+        </listitem>
+        <listitem lang="de">
+          <para>
+            Mit diesen Schiebereglern und den zugeordneten Eingabefeldern
+            können Sie das Rauschniveau im Bereich 0,00 bis 1,00 einstellen.
+            Der Alphakanal wird nur angezeigt, wenn das Bild über einen
+            solchen verfügt. Falls dasd Bild ein Graustufenbild ist, wird
+            an Stelle der RGB Felder <guilabel>Grau</guilabel> angezeigt.
+          </para>
+          <para>
+            Der Wert, der durch die Schieberegler eingestellt wird ist die
+            Standardabweichung von der Normalverteilung des aufgebrachten
+            Rauschens. Die benutzte Standardabeichung ist die Hälfte des hier
+            eingetragenen Wertes. Dabei ist 1 der Abstand zwischen dem
+            höchsten und dem niedrigsten möglichen Wert in einem Kanal.
+          </para>
+          <tip>
+            <para>
+              Falls sich der letzte Abschnitt für Sie nach einer Vorlesung in
+              Statistik anhört, so liegen Sie nicht ganz falsch. Sollten Sie
+              dabei kein Wort verstanden haben, so macht das gar nichts.
+              Betrachten Sie die Einstellung einfach als Menge des durch das
+              Filter aufgetragenen Rauschens und experimentieren Sie ein
+              bisschen mit den Werten.
+            </para>
+          </tip>
         </listitem>
         <listitem lang="fr">
           <para>

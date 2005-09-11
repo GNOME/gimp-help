@@ -1,15 +1,30 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<sect2 id='plug-in-mosaic' lang="en;cs;fr">
-  <title lang="en">Mosaic</title>
-  <title lang="cs">Mozaika</title>
-  <title lang="fr">Mosaïque</title>
+<!DOCTYPE sect2
+  PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+  "http://www.docbook.org/xml/4.3/docbookx.dtd">
 
-  <indexterm>
-    <primary lang="en">Mosaic</primary>
-    <primary lang="cs">Mozaika</primary>
-    <primary lang="fr">Mosaïque</primary>
+<!-- section history: -->
+<!-- 050905 de added by axel.wernicke -->
+<sect2 id='plug-in-mosaic' lang="en;cs;de;fr">
+  <title>
+    <phrase lang="en">Mosaic</phrase>
+    <phrase lang="cs">Mozaika</phrase>
+    <phrase lang="de">Mosaik</phrase>
+    <phrase lang="fr">Mosaïque</phrase>
+  </title>
+
+  <indexterm><primary lang="en">Mosaic</primary></indexterm>
+  
+  <indexterm><primary lang="cs">Mozaika</primary></indexterm>
+  
+  <indexterm lang="de">
+    <primary>Filter</primary>
+    <secondary>Verzerren</secondary>
   </indexterm>
+  <indexterm lang="de"><primary>Mosaik</primary></indexterm>
+  
+  <indexterm><primary lang="fr">Mosaïque</primary></indexterm>
 
   <mediaobject lang="en">
     <imageobject>
@@ -28,9 +43,31 @@
   </mediaobject>
 
   <simplesect>
-    <title lang="en">Overview</title>
-    <title lang="cs">Přehled</title>
-    <title lang="fr">Généralités</title>
+    <title>
+      <phrase lang="en">Overview</phrase>
+      <phrase lang="cs">Přehled</phrase>
+      <phrase lang="de">Wirkungsweise</phrase>
+      <phrase lang="fr">Généralités</phrase>
+    </title>
+
+    <para lang="de">
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/taj_orig.jpg"
+                     format="JPG"/>
+        </imageobject>
+      </inlinemediaobject>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/distort-taj-mosaic.jpg"
+                     format="JPG"/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+    <para lang="de">
+      v.l.n.r.: Originalbild, Mosaik angewandt
+    </para>
+
     <para lang="en">
       This filter is found in
       <guimenuitem>Image&gt;Filters/Distorts/<accel>M</accel>osaic...</guimenuitem>
@@ -54,6 +91,12 @@
       čtverců či jiných mnohoúhelníků.
     </para>
 
+    <para lang="de">
+      Dieses Filter schneidet die aktive Ebene oder Auswahl in Vielecke,
+      welche leicht erhöht, und durch Stege getrennt werden. Dadurch entsteht
+      der Eindruck eines Mosaikes.
+    </para>
+    
     <para lang="fr">
       Ce filtre se trouve dans
       <guimenuitem>Image&gt;Filtres/Distorsions/<accel>M</accel>osaïque...</guimenuitem>
@@ -65,273 +108,507 @@
     </para>
   </simplesect>
 
+  <simplesect lang="de">
+    <title>
+      <phrase lang="de">Filteraufruf</phrase>
+    </title>
+    
+    <para lang="de">
+      Dieses Filter lässt sich über das Menü
+      <menuchoice>
+        <guimenu><accel>F</accel>ilter</guimenu>
+        <guisubmenu>Ver<accel>z</accel>erren</guisubmenu>
+        <guimenuitem><accel>M</accel>osaik</guimenuitem>
+      </menuchoice>
+      im Bildfenster aufrufen.
+    </para>
+  </simplesect>
+
   <simplesect>
-    <title lang="en">Options</title>
-    <title lang="cs">Volby</title>
-    <title lang="fr">Options</title>
+    <title>
+      <phrase lang="en">Options</phrase>
+      <phrase lang="cs">Volby</phrase>
+      <phrase lang="de">Eigenschaften</phrase>
+      <phrase lang="fr">Options</phrase>
+    </title>
+
+    <informalfigure lang="de">
+      <mediaobject>
+        <imageobject lang="de">
+          <imagedata fileref="../images/filters/de/options-distort-mosaic.png"
+                     format="PNG"/>
+        </imageobject>
+        <caption>
+          <para lang="de">
+            Eigenschaften für das Filter <quote>Mosaik</quote>
+          </para>
+        </caption>
+      </mediaobject>
+    </informalfigure>
+
     <variablelist>
+      <!-- en de cs fr TODO: enable for 2.4
       <varlistentry>
-        <term lang="en">Parameter setting</term>
-        <term lang="cs">Nastavení parametrů</term>
-        <term lang="fr">Réglage des paramètres</term>
-        <listitem lang="en">
-          <para>
-            <guilabel>Tile Size</guilabel>: Slider and input box allow you 
-            to set the size of tile surface.
+        <term lang="en">Preview</term>
+        <term lang="cs">Náhled</term>
+        <term lang="de">Vorschau</term>
+        <term lang="fr">Aperçu</term>
+        <listitem>
+          <para lang="en">
+            All your setting changes will appear in the Preview without 
+            affecting the image until you click on <guilabel>OK</guilabel>. 
+            Note that the preview displays the whole image, even if the 
+            final result will concern a selection. Don't keep 
+            <emphasis>Do Preview</emphasis> checked if your computer is too 
+            much slow.
           </para>
-          <para>
-            <guilabel>Tile Heigth</guilabel>: That's ledge, relief of 
-            tiles. Value is width of the lit border in pixels.
-          </para>
-          <para>
-            <guilabel>Tile Spacing</guilabel>: That's width of the join 
-            between tiles.
-          </para>
-          <para>
-            <guilabel>Tile Neatness</guilabel>: When set to 1, most of 
-            tiles have the same size. With 0 value, size is determined 
-            at random and this may lead to shape variation.
-          </para>
-          <para>
-            <guilabel>Light Direction</guilabel>: By default light comes 
-            from the upper left corner (135°). You can change this 
-            direction from 0 to 360 (counter clockwise).
-          </para>
-          <para>
-            <guilabel>Color Variation</guilabel>: Each tile has only one 
-            color. So, the number of colors is reduced, compared to the 
-            original image. Here, you can increase the number of colors, 
-            a little.
-          </para>
-        </listitem>
-        <listitem lang="cs">
-          <para>
-            <guilabel>Velikost dlaždic</guilabel>: Tento parametr určuje
-            velikost jednotlivých dlaždic.
-          </para>
-          <para>
-            <guilabel>Výška dlaždice</guilabel>: Zdánlivá výška dlaždice,
-            vystouplost reliéfu. Určuje šířku osvětleného okraje v pixelech.
-          </para>
-          <para>
-            <guilabel>Rozestup dlaždic</guilabel>: Určuje šířku spár mezi
-            dlaždicemi.
-          </para>
-          <para>
-            <guilabel>Úpravnost dlaždic</guilabel>: Je-li nastaveno na 1,
-            mají dlaždice stejnou velikost a pravidelné tvary. Je-li hodnota
-            nižší, velikost i tvar dlaždic jsou méně pravidelné.
-          </para>
-          <para>
-            <guilabel>Směr světla</guilabel>: Směr, odkud přichází světlo
-            (0-360° proti směru hodinových ručiček). Ve výchozím nastavení je
-            to 135°, tedy z levého horního rohu.
-          </para>
-          <para>
-            <guilabel>Barevná variace</guilabel>: Každá dlaždice má pouze
-            jednu barvu, proto je počet barev oproti původnímu obrázku snížen.
-            Zde lze počet barev zvýšit.
-          </para>
-        </listitem>
-        <listitem lang="fr">
-            <para>
-            <guilabel>Taille des carreaux</guilabel>: Le curseur et la 
-            boîte de saisie vous permettent de régler la taille des 
-            tesselles (ou abacules).
-          </para>
-          <para>
-            <guilabel>Hauteur des carreaux</guilabel>: C'est en fait la 
-            saillie, le relief des carreaux. La valeur représente la 
-            largeur, en pixels, de la bordure éclairée.
-          </para>
-          <para>
-            <guilabel>Espacement des carreaux</guilabel>: C'est la largeur 
-            du joint entre les carreaux.
-          </para>
-          <para>
-            <guilabel>Régularité des carreaux</guilabel>: Quand elle est 
-            réglée sur 1, la plupart des carreaux ont la même taille. Avec 
-            la valeur 0, la taille de chaque carreau est déterminée au 
-            hasard, ce qui peut conduire à des formes diverses.
-          </para>
-          <para>
-            <guilabel>Direction de la lumière</guilabel>: Par défaut, elle 
-            vient du coin supérieur gauche (135°). Vous pouvez faire 
-            varier cette direction entre 0 et 360, dans le sens 
-            anti-horaire.
-          </para>
-          <para>
-            <guilabel>Variation de couleur</guilabel>: Chaque tesselle n'a 
-            qu'une seule couleur, et le nombre de couleurs dans l'image 
-            est réduit par rapport à l'image d'origine. Avec cette option, 
-            vous pouvez augmenter un peu le nombre de couleurs.
+          <para lang="cs">
+            Všechny změny se promítnou v náhledu ještě před stisknutím
+            tlačítka <guibutton>Budiž</guibutton> a aplikací do obrázku.
+            Náhled zobrazuje celý obrázek, i když se výsledek bude týkat pouze
+            výběru. Vypnutí volby <emphasis>Náhled</emphasis> může pomoci na
+            slabších strojích.
+          </para> 
+          <para lang="de">
+            In der Vorschau wird ein Ausschnitt des Bildes so dargestellt,
+            als wäre das Filter mit den aktuellen Einstellungen auf das Bild
+            angewandt worden.
+          </para> 
+          <para lang="fr">
+            L'Aperçu fournit une vignette de l'image reproduisant tous les 
+            réglages effectués sans agir sur l'image jusqu'à ce que vous 
+            cliquiez sur <guilabel>Valider</guilabel>. Notez qu'il donne un 
+            aperçu de toute l'image, même si le résultat final ne portera 
+            que sur une sélection. Il ne sera effectué que si la case est 
+            cochée, cette option étant surtout utile pour les ordinateurs 
+            lents.
           </para>
         </listitem>
       </varlistentry>
+      -->
 
       <varlistentry>
         <term lang="en">Options</term>
         <term lang="cs">Volby</term>
+        <term lang="de">Einstellungen</term>
         <term lang="fr">Options</term>
-        <listitem lang="en">
-            <para>
-              <guilabel>Antialiasing</guilabel>: This option reduces the 
-              stepped aspect that may have borders.
-            </para>
-            <para>
-              <guilabel>Color Averaging</guilabel> When this option is 
-              unchecked, the image drawing can be recognized inside tiles. 
-              When checked, the colors inside tiles are averaged into 
-              a single color.
-            </para> 
-            <para>
-              <guilabel>Allows Tile Splitting</guilabel>: This option 
-              splits tiles in areas with many colors, and so allows a 
-              better color gradation and more details in these areas. 
-            </para>
-            <para>
-              <guilabel>Pitted Surfaces</guilabel>: With this option tile 
-              surface looks pitted.
-            </para>
-            <para>
-              <guilabel>FG/BG Lighting</guilabel>: When this option is 
-              checked, tiles are lit by the foreground color of the 
-              toolbox, and shadow is colored by the background color. 
-              Joins have the background color.
-            </para> 
-        </listitem> 
+        
+        <listitem>
+          <variablelist>
+            <varlistentry>
+              <term lang="en">Antialiasing</term>
+              <term lang="cs">Vyhlazování</term>
+              <term lang="de">Kantenglättung</term>
+              <term lang="fr">Lissage</term>
+              
+              <listitem>
+                <para lang="en">
+                  <guilabel>Antialiasing</guilabel>: This option reduces the 
+                  stepped aspect that may have borders.
+                </para>
+                <para lang="cs">
+                  <guilabel>Vyhlazování</guilabel>: Snižuje zubatost okrajů.
+                </para>
+                <para lang="de">
+                  Wenn Sie diese Eigenschaft einschalten, werden die Kanten,
+                  welche das Filter in das Bild einfügt geglättet.
+                </para>
+                <para lang="fr">
+                  <guilabel>Lissage</guilabel>: Cette option reduit l'aspect 
+                  en escalier que peuvent avoir certaines bordures.
+                </para>
+              </listitem>
+            </varlistentry>
 
-        <listitem lang="cs">
-            <para>
-              <guilabel>Vyhlazování</guilabel>: Snižuje zubatost okrajů.
-            </para>
-            <para>
-              <guilabel>Průměrování barev</guilabel>: Pokud tato volba není
-              zaškrtnuta, zůstává uvnitř dlaždic kresba původního obrázku.
-              Pokud zaškrtnuta je, jsou dlaždice vyplněny průměrnou barvou.
-            </para> 
-            <para>
-              <guilabel>Povolit dělení dlaždic</guilabel>: Je-li tato volba
-              aktivní, jsou dlaždice v oblastech s mnoha barvami děleny na
-              půl, čímž se zvýší množství zachovaných detailů.
-            </para>
-            <para>
-              <guilabel>Nerovný povrch</guilabel>: Tato volba vytváří iluzi
-              hrbolatého povrchu dlaždic.
-            </para>
-            <para>
-              <guilabel>Osvětlení popředí/pozadí</guilabel>:POkud je
-              zaškrtnuta tato volba, má světlo dopadající na dlaždice barvu
-              popředí a stíny barvu pozadí. Spáry mají také barvu pozadí.
-            </para>
+            <varlistentry>
+              <term lang="en">Color Averaging</term>
+              <term lang="cs">Průměrování barev</term>
+              <term lang="de">Farbmittelwerte berechnen</term>
+              <term lang="fr">Moyenne des couleurs</term>
+              
+              <listitem>
+                <para lang="en">
+                  <guilabel>Color Averaging</guilabel> When this option is 
+                  unchecked, the image drawing can be recognized inside tiles. 
+                  When checked, the colors inside tiles are averaged into 
+                  a single color.
+                </para> 
+                <para lang="cs">
+                  <guilabel>Průměrování barev</guilabel>: Pokud tato volba není
+                  zaškrtnuta, zůstává uvnitř dlaždic kresba původního obrázku.
+                  Pokud zaškrtnuta je, jsou dlaždice vyplněny průměrnou barvou.
+                </para>
+                <para lang="de">
+                  Wenn diese Eigenschaft eingeschaltet ist, werden die
+                  einzelnen Elemente mit der Durchschnittsfarbe des Bereiches
+                  gefüllt.
+                </para> 
+                <para lang="fr">
+                  <guilabel>Moyenne des couleurs</guilabel> Quand cette option 
+                  n'est pas cochée, le dessin de l'image peut être reconnu 
+                  dans les tesselles. Quand elle est cochée, toutes les 
+                  couleurs présentes dans le carreau sont moyennées en une 
+                  couleur unique.
+                </para> 
+              </listitem>
+            </varlistentry>
+
+            <varlistentry>
+              <term lang="en">Allows Tile Splitting</term>
+              <term lang="cs">Povolit dělení dlaždic</term>
+              <term lang="de">Zerteilung der Kacheln erlauben</term>
+              <term lang="fr">Autorise le découpage des carreaux</term>
+              
+              <listitem>
+                <para lang="en">
+                  <guilabel>Allows Tile Splitting</guilabel>: This option 
+                  splits tiles in areas with many colors, and so allows a 
+                  better color gradation and more details in these areas. 
+                </para>
+                <para lang="cs">
+                  <guilabel>Povolit dělení dlaždic</guilabel>: Je-li tato volba
+                  aktivní, jsou dlaždice v oblastech s mnoha barvami děleny na
+                  půl, čímž se zvýší množství zachovaných detailů.
+                </para>
+                <para lang="de">
+                  Wenn Sie diese Eigenschaft einschalten, werden die Kacheln
+                  in Bildbereichen mit vielen Farben geteilt. Dies führt zu
+                  einer weit detaillierteren Farbwiedergabe in diesen
+                  Bereichen.
+                </para>
+                <para lang="fr">
+                  <guilabel>Autorise le découpage des carreaux</guilabel>: 
+                  Cette option coupe en deux les carreaux dans les zones de 
+                  l'image riches en couleurs, ce qui donne une meileure 
+                  gradation des couleurs et plus de détails dans ces zones.
+                </para>
+              </listitem>
+            </varlistentry>
+
+            <varlistentry>
+              <term lang="en">Pitted Surfaces</term>
+              <term lang="cs">Nerovný povrch</term>
+              <term lang="de">Vertiefungen in der Oberfläche</term>
+              <term lang="fr">Surfaces piquées</term>
+              
+              <listitem>
+                <para lang="en">
+                  <guilabel>Pitted Surfaces</guilabel>: With this option tile 
+                  surface looks pitted.
+                </para>
+                <para lang="cs">
+                  <guilabel>Nerovný povrch</guilabel>: Tato volba vytváří iluzi
+                  hrbolatého povrchu dlaždic.
+                </para>
+                <para lang="de">
+                  Wenn Sie diese Eigenschaft einschalten, wird die Oberfläche
+                  der Kacheln körnig gestaltet.
+                </para>
+                <para lang="fr">
+                  <guilabel>Surfaces piquées</guilabel>: Avec cette option, 
+                  la surface des tesselles apparaît piquée, tachetée.
+                </para>
+              </listitem>
+            </varlistentry>
+
+            <varlistentry>
+              <term lang="en">FG/BG Lighting</term>
+              <term lang="cs">Osvětlení popředí/pozadí</term>
+              <term lang="de">VG/HG Beleuchtung</term>
+              <term lang="fr">Eclairage par l'Av/Ar plan</term>
+              
+              <listitem>
+                <para lang="en">
+                  <guilabel>FG/BG Lighting</guilabel>: When this option is 
+                  checked, tiles are lit by the foreground color of the 
+                  toolbox, and shadow is colored by the background color. 
+                  Joins have the background color.
+                </para> 
+                <para lang="cs">
+                  <guilabel>Osvětlení popředí/pozadí</guilabel>:POkud je
+                  zaškrtnuta tato volba, má světlo dopadající na dlaždice barvu
+                  popředí a stíny barvu pozadí. Spáry mají také barvu pozadí.
+                </para>
+                <para lang="de">
+                  Wenn diese Eigenschaft eingeschaltet ist, werden die Kacheln
+                  auf der Lichtseite mit der Vorder- und auf der Schattenseite
+                  mit der Hintergrundfarbe gefüllt. Die Stege zwischen den
+                  Kacheln werden ebenfalls mit der Hintergrundfarbe gefüllt.
+                </para>
+                <para lang="fr">
+                  <guilabel>Eclairage par l'Av/Ar plan</guilabel>: Quand cette 
+                  option est cochée, les tesselles sont éclairées par la 
+                  couleur d'avant-plan de la boîte à outils, et les 
+                  ombres sont colorées par la couleur d'arrière-plan. 
+                  Les joints ont la couleur de l'arrière-plan pure.
+                </para> 
+              </listitem>
+            </varlistentry>
+          </variablelist>
         </listitem>
+      </varlistentry>
 
-        <listitem lang="fr">
-            <para>
-              <guilabel>Lissage</guilabel>: Cette option reduit l'aspect 
-              en escalier que peuvent avoir certaines bordures.
-            </para>
-            <para>
-              <guilabel>Moyenne des couleurs</guilabel> Quand cette option 
-              n'est pas cochée, le dessin de l'image peut être reconnu 
-              dans les tesselles. Quand elle est cochée, toutes les 
-              couleurs présentes dans le carreau sont moyennées en une 
-              couleur unique.
-            </para> 
-            <para>
-              <guilabel>Autorise le découpage des carreaux</guilabel>: 
-              Cette option coupe en deux les carreaux dans les zones de 
-              l'image riches en couleurs, ce qui donne une meileure 
-              gradation des couleurs et plus de détails dans ces zones.
-            </para>
-            <para>
-              <guilabel>Surfaces piquées</guilabel>: Avec cette option, 
-              la surface des tesselles apparaît piquée, tachetée.
-            </para>
-            <para>
-              <guilabel>Eclairage par l'Av/Ar plan</guilabel>: Quand cette 
-              option est cochée, les tesselles sont éclairées par la 
-              couleur d'avant-plan de la boîte à outils, et les 
-              ombres sont colorées par la couleur d'arrière-plan. 
-              Les joints ont la couleur de l'arrière-plan pure.
-            </para> 
-        </listitem>   
+      <varlistentry>
+        <term lang="en">Parameter setting</term>
+        <term lang="cs">Nastavení parametrů</term>
+        <term lang="de">Einstellungen</term>
+        <term lang="fr">Réglage des paramètres</term>
+        
+        <listitem>
+          <variablelist>
+            <varlistentry>
+              <term lang="en">Tile Size</term>
+              <term lang="cs">Velikost dlaždic</term>
+              <term lang="de">Kachelgrösse</term>
+              <term lang="fr">Taille des carreaux</term>
+
+              <listitem>
+                <para lang="en">
+                  <guilabel>Tile Size</guilabel>: Slider and input box allow you 
+                  to set the size of tile surface.
+                </para>
+                <para lang="cs">
+                  <guilabel>Velikost dlaždic</guilabel>: Tento parametr určuje
+                  velikost jednotlivých dlaždic.
+                </para>
+                <para lang="de">
+                  Mittels eines Schiebereglers und des zugeordneten
+                  Eingabefeldes können Sie die Grösse der Kacheln im Bereich
+                  von 5,0 bis 100,0 einstellen.
+                </para>
+                <para lang="fr">
+                  <guilabel>Taille des carreaux</guilabel>: Le curseur et la 
+                  boîte de saisie vous permettent de régler la taille des 
+                  tesselles (ou abacules).
+                </para>
+              </listitem>
+            </varlistentry>
+            
+            <varlistentry>
+              <term lang="en">Tile Heigth</term>
+              <term lang="cs">Výška dlaždice</term>
+              <term lang="de">Kachelhöhe</term>
+              <term lang="fr">Hauteur des carreaux</term>
+
+              <listitem>
+                <para lang="en">
+                  <guilabel>Tile Heigth</guilabel>: That's ledge, relief of 
+                  tiles. Value is width of the lit border in pixels.
+                </para>
+                <para lang="cs">
+                  <guilabel>Výška dlaždice</guilabel>: Zdánlivá výška dlaždice,
+                  vystouplost reliéfu. Určuje šířku osvětleného okraje v pixelech.
+                </para>
+                <para lang="de">
+                  Die Kacheln erhalten durch einen optischen Trick eine
+                  bestimmte Höhe, mit der sie über die Stege dazwischen
+                  hinausragen. Mittels eines Schiebereglers und des
+                  zugeordneten Eingabefeldes können Sie diese Höhe im Bereich
+                  von 1,0 bis 50,0 einstellen.
+                </para>
+                <para lang="fr">
+                  <guilabel>Hauteur des carreaux</guilabel>: C'est en fait la 
+                  saillie, le relief des carreaux. La valeur représente la 
+                  largeur, en pixels, de la bordure éclairée.
+                </para>
+              </listitem>
+            </varlistentry>
+            
+            <varlistentry>
+              <term lang="en">Tile Spacing</term>
+              <term lang="cs">Rozestup dlaždic</term>
+              <term lang="de">Kachelabstand</term>
+              <term lang="fr">Espacement des carreaux</term>
+
+              <listitem>
+                <para lang="en">
+                  <guilabel>Tile Spacing</guilabel>: That's width of the join 
+                  between tiles.
+                </para>
+                <para lang="cs">
+                  <guilabel>Rozestup dlaždic</guilabel>: Určuje šířku spár mezi
+                  dlaždicemi.
+                </para>
+                <para lang="de">
+                  Mit dieser Eigenschaft können Sie die Abstände zwischen den
+                  einzelnen Kacheln, also die Breite der Stege einstellen im
+                  Bereich von bis einstellen.
+                </para>
+                <para lang="fr">
+                  <guilabel>Espacement des carreaux</guilabel>: C'est la largeur 
+                  du joint entre les carreaux.
+                </para>
+              </listitem>
+            </varlistentry>
+            
+            <varlistentry>
+              <term lang="en">Tile Neatness</term>
+              <term lang="cs">Úpravnost dlaždic</term>
+              <term lang="de">Kachelordnung</term>
+              <term lang="fr">Régularité des carreaux</term>
+
+              <listitem>
+                <para lang="en">
+                  <guilabel>Tile Neatness</guilabel>: When set to 1, most of 
+                  tiles have the same size. With 0 value, size is determined 
+                  at random and this may lead to shape variation.
+                </para>
+                <para lang="cs">
+                  <guilabel>Úpravnost dlaždic</guilabel>: Je-li nastaveno na 1,
+                  mají dlaždice stejnou velikost a pravidelné tvary. Je-li hodnota
+                  nižší, velikost i tvar dlaždic jsou méně pravidelné.
+                </para>
+                <para lang="de">
+                  Wenn Sie diese Eigenschaft auf 1 einstellen, werden alle
+                  Kacheln eine sehr ähnliche Grösse haben. Mit einer
+                  Einstellung von 0 wird die Kachegrösse vom Zufall bestimmt.
+                </para>
+                <para lang="fr">
+                  <guilabel>Régularité des carreaux</guilabel>: Quand elle est 
+                  réglée sur 1, la plupart des carreaux ont la même taille.
+                  Avec la valeur 0, la taille de chaque carreau est déterminée
+                  au hasard, ce qui peut conduire à des formes diverses.
+                </para>
+              </listitem>
+            </varlistentry>
+            
+            <varlistentry>
+              <term lang="en">Light Direction</term>
+              <term lang="cs">Směr světla</term>
+              <term lang="de">Richtung des Lichtes</term>
+              <term lang="fr">Direction de la lumière</term>
+
+              <listitem>
+                <para lang="en">
+                  <guilabel>Light Direction</guilabel>: By default light comes 
+                  from the upper left corner (135°). You can change this 
+                  direction from 0 to 360 (counter clockwise).
+                </para>
+                <para lang="cs">
+                  <guilabel>Směr světla</guilabel>: Směr, odkud přichází
+                  světlo (0-360° proti směru hodinových ručiček). Ve výchozím
+                  nastavení je to 135°, tedy z levého horního rohu.
+                </para>
+                <para lang="de">
+                  In der Standardeinstellung befindet sich die Lichtquelle,
+                  welche bestimmt an welcher Seite die hellen und an welcher
+                  die dunklen Kanten einer Kachel sind, in der linken, oberen
+                  Ecke (135°). Sie können diese Position mit dieser
+                  Eigenschaft im Bereich von 0° bis 360° frei bestimmen.
+                </para>
+                <para lang="fr">
+                  <guilabel>Direction de la lumière</guilabel>: Par défaut, elle 
+                  vient du coin supérieur gauche (135°). Vous pouvez faire 
+                  varier cette direction entre 0 et 360, dans le sens 
+                  anti-horaire.
+                </para>
+              </listitem>
+            </varlistentry>
+            
+            <varlistentry>
+              <term lang="en">Color Variation</term>
+              <term lang="cs">Barevná variace</term>
+              <term lang="de">Farbvariation</term>
+              <term lang="fr">Variation de couleur</term>
+
+              <listitem>
+                <para lang="en">
+                  <guilabel>Color Variation</guilabel>: Each tile has only one 
+                  color. So, the number of colors is reduced, compared to the 
+                  original image. Here, you can increase the number of colors, 
+                  a little.
+                </para>
+                <para lang="cs">
+                  <guilabel>Barevná variace</guilabel>: Každá dlaždice má pouze
+                  jednu barvu, proto je počet barev oproti původnímu obrázku snížen.
+                  Zde lze počet barev zvýšit.
+                </para>
+                <para lang="de">
+                  Jede Kachel hat nur eine geringe Anzahl von Farben. Die
+                  Gesamtzahl der Farben im Bild wird also zumeist stark
+                  verringert. Mit dieser Eigenschaft können Sie die Anzahl der
+                  Farben, welche erhalten bleiben, erhöhen.
+                </para>
+                <para lang="fr">
+                  <guilabel>Variation de couleur</guilabel>: Chaque tesselle n'a 
+                  qu'une seule couleur, et le nombre de couleurs dans l'image 
+                  est réduit par rapport à l'image d'origine. Avec cette option, 
+                  vous pouvez augmenter un peu le nombre de couleurs.
+                </para>
+              </listitem>
+            </varlistentry>
+          </variablelist>
+        </listitem>
       </varlistentry>
 
       <varlistentry>
         <term lang="en">Tile Primitives</term>
         <term lang="cs">Základní dlaždice</term>
+        <term lang="de">Primitive für die Kacheln</term>
         <term lang="fr">Forme des carreaux</term>
-        <listitem lang="en">
-          <para> 
+        
+        <listitem>
+          <para lang="en"> 
             This options are self-undestanding:
           </para>
-          <itemizedlist>
-            <listitem>
-              <para>
-                <guilabel>Squares</guilabel>
-              </para>
-            </listitem>
-            <listitem>
-              <para>
-                <guilabel>Hexagons</guilabel>: (hexa = 6)
-              </para>
-            </listitem> 
-            <listitem>
-              <para>
-                <guilabel>Octogons and Squares</guilabel>: (octo = 8) 
-              </para>
-            </listitem>
-          </itemizedlist>
-        </listitem> 
-
-        <listitem lang="cs">
-          <para> 
+          <para lang="cs">
             Tuto volbu netřeba vysvětlovat:
           </para>
-          <itemizedlist>
-            <listitem>
-              <para>
-                <guilabel>Čtverce</guilabel>
-              </para>
-            </listitem>
-            <listitem>
-              <para>
-                <guilabel>Šestiúhelníky</guilabel>
-              </para>
-            </listitem> 
-            <listitem>
-              <para>
-                <guilabel>Osmiúhelníky a čtverce</guilabel>
-              </para>
-            </listitem>
-          </itemizedlist>
-        </listitem> 
-
-        <listitem lang="fr">
-          <para>
+          <para lang="en"> 
+            Diese Eigenschaft ist weitgehend selbsterklärend, sie beschreibt
+            die Grundform der Kacheln:
+          </para>
+          <para lang="fr">
             Ces options se comprennent d'elles-mêmes:
           </para>
           <itemizedlist>
             <listitem>
-              <para>
+              <para lang="en"> 
+                <guilabel>Squares</guilabel>
+              </para>
+              <para lang="cs">
+                <guilabel>Čtverce</guilabel>
+              </para>
+              <para lang="de"> 
+                <guilabel>Viereck</guilabel>, alle Kacheln haben vier Kanten.
+              </para>
+              <para lang="fr">
                 <guilabel>Carrés</guilabel>
               </para>
             </listitem>
             <listitem>
-              <para>
+              <para lang="en"> 
+                <guilabel>Hexagons</guilabel>: (hexa = 6)
+              </para>
+              <para lang="cs">
+                <guilabel>Šestiúhelníky</guilabel>
+              </para>
+              <para lang="de"> 
+                <guilabel>Sechseck</guilabel>, alle Kacheln haben sechs
+                Kanten.
+              </para>
+              <para lang="fr">
                 <guilabel>Hexagones</guilabel> (Hexa = 6)
               </para>
             </listitem> 
             <listitem>
-              <para>
+              <para lang="en"> 
+                <guilabel>Octogons and Squares</guilabel>: (octo = 8) 
+              </para>
+              <para lang="cs">
+                <guilabel>Osmiúhelníky a čtverce</guilabel>
+              </para>
+              <para lang="de"> 
+                <guilabel>Achtecke und Quadrate</guilabel>, alle Kacheln haben
+                acht Kanten.
+              </para>
+              <para lang="fr">
                 <guilabel>Octogones et carrés</guilabel> (octo = 8)
               </para>
             </listitem>
           </itemizedlist>
-        </listitem>   
+        </listitem>
       </varlistentry>
     </variablelist>
   </simplesect>
-
 </sect2>

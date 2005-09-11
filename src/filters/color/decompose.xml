@@ -1,22 +1,44 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<sect2 id='plug-in-decompose' lang="en;cs;fr">
+<!DOCTYPE sect2
+  PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+  "http://www.docbook.org/xml/4.3/docbookx.dtd">
+
+<!-- section history: -->
+<!-- 050825 de added by axel.wernicke -->
+<sect2 id='plug-in-decompose' lang="en;cs;de;fr">
   <title lang="en">Decompose</title>
   <title lang="cs">Dekomponovat</title>
+  <title lang="de">Zerlegen</title>
   <title lang="fr">Décomposer</title>
 
-  <indexterm>
-    <primary lang="en">Filter</primary>
-    <secondary lang="en">Color</secondary>
-    <tertiary lang="en">Compose</tertiary>
+  <indexterm lang="en">
+    <primary>Filter</primary>
+    <secondary>Color</secondary>
+    <tertiary>Compose</tertiary>
+  </indexterm>
+  
+  <indexterm lang="cs">
+    <primary>Filtry</primary>
+    <secondary>Barvy</secondary>
+    <tertiary>Dekomponovat</tertiary>
+  </indexterm>
 
-    <primary lang="cs">Filtry</primary>
-    <secondary lang="cs">Barvy</secondary>
-    <tertiary lang="cs">Dekomponovat</tertiary>
-
-    <primary lang="fr">Filtre</primary>
-    <secondary lang="fr">Couleur</secondary>
-    <tertiary lang="fr">Composer</tertiary>
+  <indexterm lang="de">
+    <primary>Filter</primary>
+    <secondary>Farben</secondary>
+  </indexterm>
+  <indexterm lang="de"><primary>Zerlegen</primary></indexterm>
+  <indexterm lang="de"><primary>CMYK</primary></indexterm>
+  <indexterm lang="de"><primary>HSV</primary></indexterm>
+  <indexterm lang="de"><primary>RGB</primary></indexterm>
+  <indexterm lang="de"><primary>YUV</primary></indexterm>
+  <indexterm lang="de"><primary>YCbCr</primary></indexterm>
+  
+  <indexterm lang="fr">
+    <primary>Filtre</primary>
+    <secondary>Couleur</secondary>
+    <tertiary>Composer</tertiary>
   </indexterm>
 
   <mediaobject lang="en">
@@ -40,6 +62,7 @@
   <simplesect>
     <title lang="en">Overview</title>
     <title lang="cs">Přehled</title>
+    <title lang="de">Wirkungesweise</title>
     <title lang="fr">Généralités</title>
     <para lang="en">
       This filter is found in
@@ -64,6 +87,32 @@
       Filtr rozloží obrázek do jeho složek podle zvoleného systému barev (RGB,
       HSV, CMYK...).
     </para>
+
+    <para lang="de">
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/taj_orig.jpg"
+                     format="JPG"/>
+        </imageobject>
+      </inlinemediaobject>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/color-taj-decompose.jpg"
+                     format="JPG"/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+    <para lang="de">
+      v.l.n.r.: Originalbild, Zerlegen (RGB) angewandt
+    </para>
+    <para lang="de">
+      Das Filter separiert ein die Farbkanäle eines Bildes in einzelne Ebenen.
+      So können Sie sehr einfach drei Ebenen erzeugen, von denen eine den
+      Rotkanal, eine den Grünkanal und eine den Blaukanal enthält (alternativ
+      auch CMYK, HSV, Lab und andere). Diese Zerlegung kann über das Filter
+      <link linkend="plug-in-compose">Zusammensetzten</link> umgekehrt werden.
+    </para>
+    
     <para lang="fr">
       Ce filtre se trouve dans
       <menuchoice>
@@ -78,14 +127,44 @@
     </para>
   </simplesect>
 
+  <simplesect lang="de">
+    <title lang="de">Filteraufruf</title>
+    <para lang="de">
+      Dieses Filter lässt sich über das Menü
+      <menuchoice>
+        <guimenu><accel>F</accel>ilter</guimenu>
+        <guisubmenu><accel>F</accel>arben</guisubmenu>
+        <guimenuitem>Z<accel>e</accel>rlegen</guimenuitem>
+      </menuchoice>
+      im Bildfenster aufrufen.
+    </para>
+  </simplesect>
+
   <simplesect>
     <title lang="en">Options</title>
     <title lang="cs">Volby</title>
+    <title lang="de">Eigenschaften</title>
     <title lang="fr">Options</title>
+
+    <informalfigure lang="de">
+      <mediaobject>
+        <imageobject lang="de">
+          <imagedata fileref="../images/filters/de/options-color-decompose.png"
+						         format="PNG"/>
+        </imageobject>
+        <caption>
+          <para lang="de">
+            Eigenschaften für das Filter <quote>Zerlegen</quote>
+          </para>
+        </caption>
+      </mediaobject>
+    </informalfigure>
+
     <variablelist>
       <varlistentry>
         <term lang="en">Decompose to Layers</term>
         <term lang="cs">Dekomponovat do vrstev</term>
+        <term lang="de">In Ebenen Zerlegen</term>
         <term lang="fr">Décomposer en calques</term>
         <listitem>
           <para lang="en">
@@ -111,6 +190,18 @@
             <guilabel>Dekomponovat do vrstev</guilabel> aktivní.
           </para>
 
+          <para lang="de">
+            Wenn diese Eigenschaft aktiviert ist, wird ein neues Bild erzeugt,
+            in dem jede Ebene einen Farbkanal repräsentiert. Ist diese
+            Eigenschaft nicht aktiviert, wird stattdessen für jeden Farbkanal
+            ein neues Bild erzeugt, welches automatisch nach dem entsprechend
+            dem Kanal aus dem es erzeugt wurde benannt wird.
+          </para>
+          <para lang="de">
+            Die folgenden Eigenschaften werden für den Fall beschrieben, dass
+            <guilabel>In Ebenen zerlegen</guilabel> aktiviert ist.
+          </para>
+          
           <para lang="fr">
             Si cette option est cochée, une nouvelle image en niveaux de 
             gris est créée, possédant un certain nombre de calques 
@@ -129,6 +220,7 @@
       <varlistentry>
         <term lang="en">RGB Decomposing</term>
         <term lang="cs">RGB dekompozice</term>
+        <term lang="de">RGB Kanäle extrahieren</term>
         <term lang="fr">Décomposition RVB</term>
         <listitem lang="en">
           <para>
@@ -157,6 +249,22 @@
             Uložit do kanálu).
           </para>
         </listitem>
+        <listitem lang="de">
+          <para>
+            Wenn die Einstellung <link linkend="glossary-rgb">RGB</link>
+            ausgewählt ist, wird
+            ein Graustufenbild erzeugt, welches für jeden der drei Kanäle Rot,
+            Grün und Blau eine Ebene enthält und aus zwei Kanälen (Grau und
+            Transparenz) besteht.
+          </para>
+          <para>
+            Diese Funktion ist interessant, wenn Sie das Werkzeug
+            <link linkend="gimp-tool-threshold">Schwellwert</link> benutzen.
+            Sie können ausserdem Funktionen wie Ausschneiden, Einfügen
+            verwenden, oder Auswahlen in einem einzelnen RGB Kanal vornehmen.
+            Sie können eine extrahierten Farbkanal auch speichern.
+          </para>
+        </listitem>
         <listitem lang="fr">
           <para>
             Si le bouton radio RVB est coché, elle crée une image en niveaux 
@@ -176,6 +284,7 @@
       <varlistentry>
         <term lang="en">RGBA Decomposing</term>
         <term lang="cs">RGBA dekompozice</term>
+        <term lang="de">RGBA Kanäle extrahieren</term>
         <term lang="fr">Décomposition RVBA</term>
         <listitem lang="en">
           <para>
@@ -193,6 +302,15 @@
             jsou bílé.
           </para>
         </listitem>
+        <listitem lang="de">
+          <para>
+            Wenn Sie diese Einstellung ausgewählt haben, wird ein ähnliches
+            Bild erzeugt wir für <guilabel>RGB</guilabel>, zusätzlich wird
+            aber eine Ebene erzeugt, die die Transparenzwerte des
+            Ausgangsbildes enthält. Vollständig transparente Pixel werden
+            dabei schwarz, komplett deckende Pixel werden weiss.
+          </para>
+        </listitem>
         <listitem lang="fr">
           <para>
             Si le bouton radio RVBA est coché, l'image créée est identique à 
@@ -207,6 +325,7 @@
       <varlistentry>
         <term lang="en">HSV Decomposing</term>
         <term lang="cs">HSV dekompozice</term>
+        <term lang="de">HSV Kanäle extrahieren</term>
         <term lang="fr">Décomposition TSV</term>
         <listitem lang="en">
           <para>
@@ -248,6 +367,27 @@
             (šedé odstíny) a minimální hodnotě (černá).
           </para>
         </listitem>
+        <listitem lang="de">
+          <para>
+            In dieser Einstellung wird das Bild in drei Graustufenebenen
+            zerlegt, eine für den Farbton, eine für die Sättigung und eine
+            für die Helligkeit. Dies entspricht den Farbkanälend des
+            Farbmodelles <link linkend="glossary-hsv">HSV</link>
+          </para>
+          <para>
+            Auch wenn die Ebene für den Farbton nur Graustufen enthält, sie
+            repräsentiert trotzdem Farbwerte. Schwarz und Weiss sind die
+            Anfangs- und Endpunkte des Farbkreises. Sie repräsentieren das Rot
+            des Farbkreises. Die Graustufen dazwischen korrespondieren mit den
+            Zwischentönen im Farbkreis; dunkles Grau mit Orange, mittleres
+            Grau mit Grün und helles Grau mit Magenta.
+          </para>
+          <para>
+            Für Farbsättigung und Helligkeit gilt, dass Schwarz jeweils die
+            minimalen Sättigungs- und Helligkeitswerte repräsentiert und Weiss
+            die maximalen.
+          </para>
+        </listitem>
         <listitem lang="fr">
           <para>
             Cette option décompose l'image en trois calques de gris, un pour
@@ -276,6 +416,7 @@
       <varlistentry>
         <term lang="en">CMY Decomposing</term>
         <term lang="cs">CMY dekompozice</term>
+        <term lang="de">CMY Kanäle extrahieren</term>
         <term lang="fr">Décomposition Trichromie</term>  
         <listitem lang="en">
           <para>
@@ -298,6 +439,19 @@
             zařízení pracujících v režimu CMY.
           </para>
         </listitem>
+        <listitem lang="de">
+          <para>
+            Mit dieser Einstellung wird das Filter das Originalbild in drei
+            Ebenen mit Graustufen zerlegen. Jeweils eine Ebene für Gelb
+            (Yellow), eine für Magenta und eine für Cyan.
+          </para>
+          <para>
+            Dies ist hilfreich, wenn Bilder zu Druckprogrammen transferiert
+            werden sollen, die mit dem
+            <link linkend="glossary-cmyk">CMY</link>
+            <link linkend="glossary-colormodel">Farbraum</link> arbeiten.
+          </para>
+        </listitem>
         <listitem lang="fr">
           <para>
             Cette option décompose l'image en trois calques en niveaux de
@@ -314,6 +468,7 @@
       <varlistentry>
         <term lang="en">CMYK Decomposing</term>
         <term lang="cs">CMYK dekompozice</term>
+        <term lang="de">CMYK Kanäle extrahieren</term>
         <term lang="fr">Décomposition Quadrichromie</term>
         <listitem lang="en">
           <para>
@@ -335,6 +490,18 @@
             zařízení pracujících v režimu CMYK.
           </para>
         </listitem>
+        <listitem lang="de">
+          <para>
+            Diese Einstellung ist <link linkend="glossary-cmyk">CMY</link>
+            sehr ähnlich. Einziger Unterschied ist, dass eine zusätzliche
+            Ebene für schwarz angelegt wird.
+          </para>
+          <para>
+            Dies ist hilfreich, wenn Bilder zu Druckprogrammen transferiert
+            werden sollen, die mit dem CMYK
+            <link linkend="glossary-colormodel">Farbraum</link> arbeiten.
+          </para>
+        </listitem>
         <listitem lang="fr">
           <para>
             Cette option est identique à la décomposition 
@@ -351,6 +518,7 @@
       <varlistentry>
         <term lang="en">Alpha Decomposing</term>
         <term lang="cs">Alfa dekompozice</term>
+        <term lang="de">Alpha Kanal extrahieren</term>
         <term lang="fr">Décomposition Alpha</term>
         <listitem lang="en">
           <para>
@@ -370,6 +538,14 @@
             obrázku.
           </para>
         </listitem>
+        <listitem lang="de">
+          <para>
+            Mit dieser Einstellung wird die im Alphakanal eines Bildes
+            enthaltene Transparenz in eine Ebene extrahiert. Dabei werden die
+            vollständig transparenten Pixel schwarz, die vollständig deckenden
+            zu weiss und die Zwischenstufen auf Graustufen abgebildet.
+          </para>
+        </listitem>
         <listitem lang="fr">
           <para>
             Cette option extrait la transparence de l'image représentée par 
@@ -386,6 +562,7 @@
       <varlistentry>
         <term lang="en">LAB Decomposing</term>
         <term lang="cs">LAB dekompozice</term>
+        <term lang="de">LAB Kanäle extrahieren</term>
         <term lang="fr">Décomposition LAB</term>
         <listitem lang="en">
           <para>
@@ -413,6 +590,24 @@
             program Adobe Photoshop.
           </para>
         </listitem>
+        <listitem lang="de">
+          <para>
+            Diese Einstellung bewirkt, dass das Filter das Bild in drei Ebenen
+            aus Graustufen zerlegt. Eine Ebene <quote>L</quote> für die
+            Leuchtkraft (Luminanz), eine Ebene <quote>a</quote>, welche die
+            Farbtöne zwischen Grün und Rot enthält und eine Ebene
+            <quote>b</quote>, welche die Farbtöne zwischen Blau und Gelb
+            enthält.
+          </para>
+          <para>
+            <link linkend="glossary-lab">Lab</link> ist ein
+            <link linkend="glossary-colormodel">Farbmodell</link>
+            aus der Leuchtkraft-Farbe Familie. Dabei wird ein Kanal benutzt,
+            um die Leuchtkraft abzubilden und zwei weitere werden für die
+            Farbtöne benutzt. Das Lab Modell wird auch in
+            <application>Adobe Photoshop</application> verwendet.
+          </para>
+        </listitem>
         <listitem lang="fr">
           <para>
             Cette option décompose l'image en trois calques en niveaux de 
@@ -432,6 +627,7 @@
       <varlistentry>
         <term lang="en">YCbCr Decomposing</term>
         <term lang="cs">YCbCr dekompozice</term>
+        <term lang="de">YCbCr Kanäle extrahieren</term>
         <term lang="fr">Décomposition YCbCr</term>
         <listitem lang="en">
           <para>
@@ -461,6 +657,27 @@
             než barev. YCbCr dekompozice používá transformační matrix a různé
             volby používají různá nastavení doporučená ITU (Mezinárodní
             telekomunikační unie).
+          </para>
+        </listitem>
+        <listitem lang="de">
+          <para>
+            In <application><acronym>GIMP</acronym></application> gibt es vier
+            <link linkend="glossary-ycbcr">YCbCr</link> Extraktionen mit
+            verschiedenen Werten. Jede erzeugt ein Bild
+            mit drei Ebenen. Einer Ebene für die Leuchtkraft und je zwei
+            Ebenen, um bläuliche und rötliche Farben abzubilden.
+          </para>
+          <para>
+            Das <link linkend="glossary-ycbcr">YCbCr</link> Farbmodell ist
+            dem Modell <link linkend="glossary-yuv">YUV</link> ähnlich und
+            wird heute für digitales Video benutzt. Ursprünglich war es das
+            Farbmodell für analoges Video nach dem PAL Standard. Es basiert
+            auf der Tatsache, dass das menschliche Auge sehr empfindlich für
+            die Leuchtkraft ist und erst in zweiter Linie für Farben. Die
+            Extraktion erfolgt auf Basis einer Transformationsmatrix. Die
+            verschiedenen Typen entsprechen den verschiedenen Werten, die
+            von der ITU (International Telecommunication Union) empfohlen
+            werten.
           </para>
         </listitem>
         <listitem lang="fr">
