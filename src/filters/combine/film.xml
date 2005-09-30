@@ -1,8 +1,16 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<sect2 id='plug-in-film' lang="en;cs;fr;zh_CN">
-  <title lang="en;cs;fr">Film</title>
-  <title lang="zh_CN">胶卷</title>
+<!DOCTYPE sect2
+  PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+  "http://www.docbook.org/xml/4.3/docbookx.dtd">
+
+<!-- section history: -->
+<!-- 2005/09/25 translated to german by axel.wernicke -->
+<sect2 id='plug-in-film' lang="en;cs;de;fr;zh_CN">
+  <title>
+    <phrase lang="en;cs;de;fr">Film</phrase>
+    <phrase lang="zh_CN">胶卷</phrase>
+  </title>
 
   <indexterm lang="en">
     <primary>Filter</primary>
@@ -16,6 +24,12 @@
     <tertiary>film</tertiary>
   </indexterm>
 
+  <indexterm lang="de">
+    <primary>Filter</primary>
+    <secondary>Kombinieren</secondary>
+  </indexterm>
+  <indexterm lang="de"><primary>Film</primary></indexterm>
+  
   <indexterm lang="fr">
     <primary>Filtre</primary>
     <secondary>Combiner</secondary>
@@ -48,665 +62,720 @@
 
 
   <simplesect>
-    <title lang="en">Overview</title>
-    <title lang="cs">Přehled</title>
-    <title lang="fr">Généralités</title>
-    <title lang="zh_CN">概述</title>
+    <title>
+      <phrase lang="en">Overview</phrase>
+      <phrase lang="cs">Přehled</phrase>
+      <phrase lang="de">Wirkungsweise</phrase>
+      <phrase lang="fr">Généralités</phrase>
+      <phrase lang="zh_CN">概述</phrase>
+    </title>
+
+    <figure lang="de">
+      <title>
+        <phrase lang="de">
+          v.l.n.r.: Originalbild, Film angewandt
+        </phrase>
+      </title>
+      <mediaobject lang="de">
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/taj_orig.jpg"
+                     format="JPG"/>
+        </imageobject>
+      </mediaobject>
+      <mediaobject lang="de">
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/combine-taj-film.jpg"
+                     format="JPG"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+        
+    <para lang="en">
+      Film filter allows the user to merge several pictures into a
+      photographic film drawing.
+    </para>
+    <para lang="cs">
+      Filtr Film umožňuje spojit několik obrázků do filmového pásu.
+    </para>
+    <para lang="de">
+      Dieses Filter ermöglicht es Ihnen eines oder mehrere Bilder zu einem
+      Filmstreifen zu kombinieren.
+    </para>
+    <para lang="fr">
+      Le filtre Film permet à l'utilisateur de rassembler plusieurs
+      documents en un seul à l'intérieur d'un graphisme de film
+      photographique de manière à simuler l'aspect d'un négatif.
+    </para>
+    <para lang="zh_CN">
+      用户通过胶卷滤镜可以将多个图片放入摄影胶卷中。
+    </para>
+
+    <note>
+      <para lang="en">
+        This filter does not invert colors, so it does not
+        imitate negative film of the sort used to produce
+        prints.  Instead you should think of the result as an
+        imitation of slide film or cinema film.
+      </para>
+      <para lang="cs">
+        Tento filtr neinvertuje barvy, takže neimintuje negativní film
+        používaný k výrobě zvětšenin. Jedná se spíše o imitaci
+        diapozitivního filmu nebo filmového pásu určeného k promítání v
+        kině.
+      </para>
+      <para lang="de">
+        Bitte beachten Sie, dass dieses Filter die Farben des Bildes nicht
+        verändert. Insbesondere werden die Farben nicht wie auf einem
+        herkömmlichen Negativfilm umgekehrt.
+      </para>
+      <para lang="fr">
+        Il n'inverse pas les couleurs comme cela est le cas sur un
+        négatif photographique réel.
+      </para>
+      <para lang="zh_CN">
+        它不会像真正的摄影胶卷一样会颠倒原文档的颜色。
+      </para>
+    </note>
+  </simplesect>
+  
+  <simplesect>
+    <title>
+      <phrase lang='en'>Accessing this Filter</phrase>
+      <phrase lang='cs'>Vyvolání filtru</phrase>
+      <phrase lang="de">Filteraufruf</phrase>
+      <phrase lang='fr'>Accéder à ce filtre</phrase>
+      <phrase lang="zh_CN">使用该滤镜</phrase>
+    </title>
+    
+    <para lang="en">
+      This filter is in
+      <guimenuitem>Image/Filters/Combine/Film</guimenuitem>
+    </para>
+    <para lang="cs">
+      Tento filtr naleznete v nabídce
+      <guimenuitem>Obrázek/Filtry/Kombinace/Film</guimenuitem>
+    </para>
+    <para lang="de">
+      Dieses Filter lässt sich über das Menü
+      <menuchoice>
+        <guimenu><accel>F</accel>ilter</guimenu>
+        <guisubmenu>K<accel>o</accel>mbinieren</guisubmenu>
+        <guimenuitem><accel>F</accel>ilm</guimenuitem>
+      </menuchoice>
+      im Bildfenster aufrufen.
+    </para>
+    <para lang="fr">
+      Ce filtre se trouve à
+      <guimenuitem>Image/Filtres/Combiner/Film</guimenuitem>
+    </para>
+    <para lang="zh_CN">
+      该滤镜在<guimenuitem>图像/滤镜/组合/胶卷</guimenuitem>
+    </para>
+  </simplesect>
+
+  <simplesect>
+    <title>
+      <phrase lang="en;fr">Options</phrase>
+      <phrase lang="cs">Volby</phrase>
+      <phrase lang="de">Eigenschaften</phrase>
+      <phrase lang="zh_CN">选项</phrase>
+    </title>
 
     <variablelist>
       <varlistentry>
-        <term lang='en'>Accessing this Filter</term>
-        <term lang='cs'>Vyvolání filtru</term>
-        <term lang='fr'>Accéder à ce filtre</term>
-        <term lang="zh_CN">使用该滤镜</term>
+        <term lang="en">Selection Options</term>
+        <term lang="cs">Volby na kartě Výběr</term>
+        <term lang="de">Reiter Auswahl</term>
+        <term lang="fr">Options Sélection</term>
+        <term lang="zh_CN">选择选项</term>
+        
         <listitem>
-          <para lang="en">
-            This filter is in
-            <guimenuitem>Image/Filters/Combine/Film</guimenuitem>
-          </para>
+          <figure lang="de">
+            <title>
+              <phrase lang="de">
+                Eigenschaften (Auswahl) für das Filter <quote>Film</quote>
+              </phrase>
+            </title>
+            <mediaobject>
+              <imageobject lang="de">
+                <imagedata fileref="../images/filters/de/options-combine-film1.png"
+                           format="PNG" />
+              </imageobject>
+            </mediaobject>
+          </figure>
 
-          <para lang="en">
-            Film filter allows the user to merge several pictures into a
-            photographic film drawing.
-          </para>
+          <variablelist>
+            <varlistentry>
+              <term lang="en">Fit Height to images</term>
+              <term lang="cs">Upravit výšku podle obrázků</term>
+              <term lang="de">Höhe an Bilder anpassen</term>
+              <term lang="fr">Ajuster la hauteur aux images</term>
+              <term lang="zh_CN">以图像高度为准</term>
+              
+              <listitem>
+                <para lang="en">
+                  Applies the height of original pictures to the resulting one. 
+                </para>
+                <para lang="cs">
+                  Použije výšku zdrojových obrázků pro výsledek.
+                </para>
+                <para lang="de">
+                  Wenn Sie diese Eigenschaft aktiviert haben, wird die Höhe
+                  des Originalbildes als Höhe des Filmstreifens verwendet.
+                </para>
+                <para lang="fr">
+                  Applique la hauteur des images d'origine au fichier résultant.
+                </para>
+                <para lang="zh_CN">
+                  产生的图像使用原图像高度。
+                </para>
+              </listitem>
+            </varlistentry>
 
-          <para lang="cs">
-            Tento filtr naleznete v nabídce
-            <guimenuitem>Obrázek/Filtry/Kombinace/Film</guimenuitem>
-          </para>
+            <varlistentry>
+              <term lang="en">Height</term>
+              <term lang="cs">Výška</term>
+              <term lang="de">Höhe</term>
+              <term lang="fr">Hauteur</term>
+              <term lang="zh_CN">高度</term>
 
-          <para lang="cs">
-            Filtr Film umožňuje spojit několik obrázků do filmového pásu.
-          </para>
+              <listitem>
+                <para lang="en">
+                  Allows to define the height of resulting picture.  If originals
+                  have different sizes, they will be scaled to this size. 
+                </para>
+                <para lang="cs">
+                  Umožňuje nastavit výšku výsledného obrázku.
+                  Pokud jsou zdrojové obrázky jiných rozměrů,
+                  budou zvětšeny nebo zmenšeny.
+                </para>
+                <para lang="de">
+                  Diese Eigenschaft ermöglicht es Ihnen die Höhe des
+                  Filmstreifens in Pixeln einzustellen. Falls die
+                  Originalbilder eine abweichede Höhe haben, werden diese
+                  entsprechend skaliert. Die Einstellung können Sie mit Hilfe
+                  eines Eingabefeldes vornehmen.
+                </para>
+                <para lang="fr">
+                  Permet de définir la hauteur de l'image finale.  Si les
+                  documents originaux ne sont pas de cette dimension, ils seront
+                  mis à l'échelle pour s'y contraindre. 
+                </para>
+                <para lang="zh_CN">
+                  其中定义生成图像的高度。如果它和原图像不同，生成的图像会缩放到该大小。
+                </para>
+              </listitem>
+            </varlistentry>
 
-          <para lang="fr">
-            Ce filtre se trouve à
-            <guimenuitem>Image/Filtres/Combiner/Film</guimenuitem>
-          </para>
+            <varlistentry>
+              <term lang="en">Color</term>
+              <term lang="cs">Barva</term>
+              <term lang="de">Farbe</term>
+              <term lang="fr">Couleur</term>
+              <term lang="zh_CN">颜色</term>
 
-          <para lang="fr">
-            Le filtre Film permet à l'utilisateur de rassembler plusieurs
-            documents en un seul à l'intérieur d'un graphisme de film
-            photographique de manière à simuler l'aspect d'un négatif.
-          </para>
+              <listitem> 
+                <para lang="en">
+                  By clicking on the color dwell you can define the color of the
+                  film (around and between pictures).
+                </para>
+                <para lang="cs">
+                  Zde můžete nastavit barvu filmového pásu (okolo a mezi obrázky).
+                  Kliknutím na barevné pole otevřete standardní dialog pro volbu
+                  barev.
+                </para>
+                <para lang="de">
+                  Durch einen Klick auf die
+                  <guibutton>Farbschaltfläche</guibutton> können Sie die Farbe
+                  des Filmstreifens, also des Rahmens um die Bilder herum,
+                  einstellen. Hierzu steht Ihnen ein Farbauswahldialog zur
+                  Verfügung.
+                </para>
+                <para lang="fr">
+                  En cliquant sur la source de couleur, vous pouvez définir la
+                  couleur de la pellicule (autour et entre les images).
+                </para>
+                <para lang="zh_CN">
+                  其中可以定义胶片的颜色(图像周围和两个图像之间)。
+                </para>
+              </listitem>
+            </varlistentry>
 
-          <para lang="zh_CN">
-            该滤镜在<guimenuitem>图像/滤镜/组合/胶卷</guimenuitem>
-          </para>
+            <varlistentry>
+              <term lang="en">Start Index</term>
+              <term lang="cs">Počáteční index</term>
+              <term lang="de">Startindex</term>
+              <term lang="fr">Index de départ</term>
+              <term lang="zh_CN">起始编号</term>
 
-          <para lang="zh_CN">
-            用户通过胶卷滤镜可以将多个图片放入摄影胶卷中。
-          </para>
+              <listitem>
+                <para lang="en">
+                  Defines the begining number that will be used for the images. 
+                </para>
+                <para lang="cs">
+                  Nastavuje počáteční číslo pro číslování obrázků na filmovém pásu.
+                </para>
+                <para lang="de">
+                  Die Bilder auf dem Filmstreifen werden fortlaufend
+                  numeriert. Mit dieser Eigenschaft können Sie den Startwert
+                  festlegen. Hierzu steht Ihnen ein Eingabefeld zur Verfügung.
+                </para>
+                <para lang="fr">
+                  Définit le nombre initial pour la numérotation des images
+                  assemblées.
+                </para>
+                <para lang="zh_CN">
+                  定义图像中使用的起始编号。
+                </para>
+              </listitem>
+            </varlistentry>
 
-          <note lang="en">
-            <para>
-              This filter does not invert colors, so it does not
-              imitate negative film of the sort used to produce
-              prints.  Instead you should think of the result as an
-              imitation of slide film or cinema film.
-            </para>
-          </note>
+            <varlistentry>
+              <term lang="en">Font</term>
+              <term lang="cs">Písmo</term>
+              <term lang="de">Schrift</term>
+              <term lang="fr">Police</term>
+              <term lang="zh_CN">字体</term>
 
-          <note lang="cs">
-            <para>
-              Tento filtr neinvertuje barvy, takže neimintuje negativní film
-              používaný k výrobě zvětšenin. Jedná se spíše o imitaci
-              diapozitivního filmu nebo filmového pásu určeného k promítání v
-              kině.
-            </para>
-          </note>
+              <listitem>
+                <para lang="en">
+                  Defines the font of digits.
+                </para>
+                <para lang="cs">
+                  Nastavuje font číslic.
+                </para>
+                <para lang="de">
+                  Mit dieser Eigenschaft können Sie die Schriftart wählen, in
+                  der die Beschriftung des Filmstreifens vorgenommen wird.
+                  Klicken Sie hierzu auf die <guibutton>Schaltfläche zur
+                  Schriftauswahl</guibutton>.
+                </para>
+                <para lang="fr">
+                  Définit la police du chiffre de numérotation des images
+                  assemblées.
+                </para>
+                <para lang="zh_CN">
+                  定义用于编号的字体。
+                </para>
+              </listitem>
+            </varlistentry>
 
-          <warning lang="fr">
-            <para>
-              It does not invert colors of originals documents as it should
-              Il n'inverse pas les couleurs comme cela est le cas sur un
-              négatif photographique réel.
-            </para>
-          </warning>
+            <varlistentry>
+              <term lang="en">Color</term>
+              <term lang="cs">Barva</term>
+              <term lang="de">Farbe</term>
+              <term lang="fr">Couleur</term>
+              <term lang="zh_CN">颜色</term>
 
-          <warning lang="zh_CN">
-            <para>
-              它不会像真正的摄影胶卷一样会颠倒原文档的颜色。
-            </para>
-          </warning>
+              <listitem>
+                <para lang="en">
+                  By clicking on the the color dwell, you can define the font
+                  color of digits.
+                </para>
+                <para lang="cs">
+                  Barva číslic na filmovém pásu.
+                  Kliknutím na barevné pole otevřete standardní dialog pro volbu
+                  barev.
+                </para>
+                <para lang="de">
+                  Durch einen Klick auf die
+                  <guibutton>Farbschaltfläche</guibutton> können Sie die Farbe
+                  der Beschriftung des Filmstreifens einstellen. Hierzu steht
+                  Ihnen ein Farbauswahldialog zur Verfügung.
+                </para>
+                <para lang="fr">
+                  En cliquant sur la source de couleur, vous pouvez définir la
+                  couleur de police des chiffres de numérotation des images
+                  assemblées.
+                </para>
+                <para lang="zh_CN">
+                  定义编号字体的颜色。
+                </para>
+              </listitem>
+            </varlistentry>
+
+            <varlistentry>
+              <term lang="en">At Top, At Bottom</term>
+              <term lang="cs">Nahoře, Dole</term>
+              <term lang="de">Am Kopf; Am Fuss</term>
+              <term lang="fr">En Haut, En bas</term>
+              <term lang="zh_CN">在顶部，在底部</term>
+
+              <listitem>
+                <para lang="en">
+                  Defines the position of the number.
+                </para>
+                <para lang="cs">
+                  Určuje polohu čísel na filmovém pásu.
+                </para>
+                <para lang="de">
+                  Mit diesen beiden Eigenschaften können Sie festlegen, ob
+                  die Beschriftung ober- und/oder unterhalb der Bilder
+                  erfolgen soll.
+                </para>
+                <para lang="fr">
+                  Définit la position du chiffre de numérotation des images
+                  assemblées.
+                </para>
+                <para lang="zh_CN">
+                  定义标号的位置。
+                </para>
+              </listitem>
+            </varlistentry>
+
+            <varlistentry>
+              <term lang="en">Available Images</term>
+              <term lang="cs">Dostupné obrázky</term>
+              <term lang="de">Vorhandene Bilder</term>
+              <term lang="fr">Images Disponibles</term>
+              <term lang="zh_CN">可用的图像</term>
+
+              <listitem>
+                <para lang="en">
+                  Shows the pictures that can be used for the merging.  The
+                  pictures are these that are already opened in Gimp.
+                </para>
+                <para lang="cs">
+                  Zobrazuje seznam obrázků, které lze pro spojení do filmového pásu
+                  použít. Jedná se o obrázky, které jsou otevřené v Gimpu.
+                </para>
+                <para lang="de">
+                  Diese Liste enthält die Bilder welche Sie auf einem
+                  Filmstreifen kombinieren können. Wählen Sie eines oder
+                  mehrere Bilder aus und betätigen Sie die Schaltfläche
+                  <guibutton>Hinzufügen</guibutton>, um die Bilder auf
+                  mit auf dem Filmstreifen zu erhalten.
+                </para>
+                <para lang="fr">
+                  Définit la liste des images qui peuvent être utilisées dans
+                  l'assemblage. Cette liste correspond à l'ensemble des images
+                  ouvertes dans GIMP.
+                </para>
+                <para lang="zh_CN">
+                  显示能用作合并的图像，即那些已经在 GIMP 中打开的图像。
+                </para>
+              </listitem> 
+            </varlistentry>
+
+            <varlistentry>
+              <term lang="en">On Film</term>
+              <term lang="cs">Na filmu</term>
+              <term lang="de">Auf dem Film</term>
+              <term lang="fr">Sur le film</term>
+              <term lang="zh_CN">放入胶卷中</term>
+
+              <listitem>
+                <para lang="en">
+                  Shows the pictures chosen to be merged.
+                </para>
+                <para lang="cs">
+                  Seznam obrázků vybraných ke spojení do filmového pásu.
+                </para>
+                <para lang="de">
+                  Diese Liste enthät die Bilder, welche auf dem Filmstreifen
+                  erscheinen sollen. Sie können Bilder zur auswählen und
+                  Betätigen der Schaltfläche <guibutton>Entfernen</guibutton>
+                  wieder aus der Liste streichen.
+                </para>
+                <para lang="fr">
+                  Montre les images sélectionnées pour l'assemblage.
+                </para>
+                <para lang="zh_CN">
+                  显示将被合并的图像。
+                </para>
+              </listitem>
+            </varlistentry>
+
+            <varlistentry lang="en;cs;fr;zh_CN">
+              <term lang="en">Add</term>
+              <term lang="cs">Přidat</term>
+              <term lang="fr">Ajouter</term>
+              <term lang="zh_CN">添加</term>
+
+              <listitem>
+                <para lang="en">
+                  This button allows the user to put an available image in the
+                  "On film" section.
+                </para>
+                <para lang="cs">
+                  Tímto tlačítkem lze dostupný obrázek zařadit mezi obrázky určené
+                  ke spojení do filmového pásu.
+                </para>
+                <para lang="fr">
+                  Ce bouton permet le passage d'une image disponible dans la zone
+                  "Sur le film".
+                </para>
+                <para lang="zh_CN">
+                  用户通过该按钮将选中的可用图像“放入胶卷中”。
+                </para>
+              </listitem>
+            </varlistentry>
+
+            <varlistentry lang="en;cs;fr;zh_CN">
+              <term lang="en">Remove</term>
+              <term lang="cs">Odstranit</term>
+              <term lang="fr">Enlever</term>
+              <term lang="zh_CN">删除</term>
+
+              <listitem>
+                <para lang="en">
+                  This button allows to bring a picture from "on Film" to
+                  "available images". After that, the picture will not be used
+                  anymore in the resulting document.
+                </para>
+                <para lang="cs">
+                  Toto tlačítko umožňuje odstranit obrázek z obrázků určených pro
+                  spojení do filmového pásu.
+                </para>
+                <para lang="fr">
+                  Ce bouton permet le passage d'une image de la zone "Sur le
+                  film" à la zone "Images disponibles" de manière à la
+                  soustraire du montage.
+                </para>
+                <para lang="zh_CN">
+                  通过该按钮将图像从“放入胶卷中”移掉，这样产生的图像中就不会包括该图像。
+                </para>
+              </listitem>
+            </varlistentry>
+          </variablelist>
         </listitem>
       </varlistentry>
-    </variablelist>
-  </simplesect>
-
-  <simplesect>
-    <title lang="en">Selection Options</title>
-    <title lang="cs">Volby na kartě Výběr</title>
-    <title lang="fr">Options Sélection</title>
-    <title lang="zh_CN">选择选项</title>
-
-    <variablelist>
+      
       <varlistentry>
-        <term lang="en">Fit Height to images</term>
-        <term lang="cs">Upravit výšku podle obrázků</term>
-        <term lang="fr">Ajuster la hauteur aux images</term>
-        <term lang="zh_CN">以图像高度为准</term>  
-
-        <listitem lang="en"> 
-          <para>
-            Applies the height of original pictures to the resulting one. 
-          </para>
-        </listitem>
-
-        <listitem lang="cs"> 
-          <para>
-            Použije výšku zdrojových obrázků pro výsledek.
-          </para>
-        </listitem>
-
-        <listitem lang="fr">
-          <para>
-            Applique la hauteur des images d'origine au fichier résultant.
-          </para>
-        </listitem>
-
-        <listitem lang="zh_CN">
-          <para>
-            产生的图像使用原图像高度。
-          </para>
-        </listitem>
-      </varlistentry>
-
-      <varlistentry>
-        <term lang="en">Height</term>
-        <term lang="cs">Výška</term>
-        <term lang="fr">Hauteur</term>
-        <term lang="zh_CN">高度</term>
-
-        <listitem lang="en">
-          <para>
-            Allows to define the height of resulting picture.  If originals
-            have different sizes, they will be scaled to this size. 
-          </para>
-        </listitem>
-
-        <listitem lang="cs">
-          <para>
-            Umožňuje nastavit výšku výsledného obrázku.
-            Pokud jsou zdrojové obrázky jiných rozměrů,
-            budou zvětšeny nebo zmenšeny.
-          </para>
-        </listitem>
-
-        <listitem lang="fr">
-          <para>
-            Permet de définir la hauteur de l'image finale.  Si les
-            documents originaux ne sont pas de cette dimension, ils seront
-            mis à l'échelle pour s'y contraindre. 
-          </para>
-        </listitem>
-
-        <listitem lang="zh_CN">
-          <para>
-            其中定义生成图像的高度。如果它和原图像不同，生成的图像会缩放到该大小。
-          </para>
-        </listitem>
-      </varlistentry>
-
-      <varlistentry>
-        <term lang="en">Color</term>
-        <term lang="cs">Barva</term>
-        <term lang="fr">Couleur</term>
-        <term lang="zh_CN">颜色</term>
-
-        <listitem lang="en"> 
-          <para>
-            By clicking on the color dwell you can define the color of the
-            film (around and between pictures).
-          </para>
-        </listitem>
-
-        <listitem lang="cs"> 
-          <para>
-            Zde můžete nastavit barvu filmového pásu (okolo a mezi obrázky).
-            Kliknutím na barevné pole otevřete standardní dialog pro volbu
-            barev.
-          </para>
-        </listitem>
-
-        <listitem lang="fr">
-          <para>
-            En cliquant sur la source de couleur, vous pouvez définir la
-            couleur de la pellicule (autour et entre les images).
-          </para>
-        </listitem>
-       
-        <listitem lang="zh_CN">
-          <para>
-            其中可以定义胶片的颜色(图像周围和两个图像之间)。
-          </para>
-        </listitem>
-      </varlistentry>
-
-      <varlistentry>
-        <term lang="en">Start Index</term>
-        <term lang="cs">Počáteční index</term>
-        <term lang="fr">Index de départ</term>
-        <term lang="zh_CN">起始编号</term>
-
-        <listitem lang="en">         
-          <para>
-            Defines the begining number that will be used for the images. 
-          </para>
-        </listitem>
-
-        <listitem lang="cs">
-          <para>
-            Nastavuje počáteční číslo pro číslování obrázků na filmovém pásu.
-          </para>
-        </listitem>
-
-        <listitem lang="fr">
-          <para>
-            Définit le nombre initial pour la numérotation des images
-            assemblées.
-          </para>
-        </listitem>
-
-        <listitem lang="zh_CN">
-          <para>
-            定义图像中使用的起始编号。
-          </para>
-        </listitem>
-      </varlistentry>
-
-      <varlistentry>
-        <term lang="en">Font</term>
-        <term lang="cs">Písmo</term>
-        <term lang="fr">Police</term>
-        <term lang="zh_CN">字体</term>
-
-        <listitem lang="en">
-          <para>Defines the font of digits.</para>
-        </listitem>
-
-        <listitem lang="cs">
-          <para>Nastavuje font číslic.</para>
-        </listitem>
-
-        <listitem lang="fr">
-          <para>
-            Définit la police du chiffre de numérotation des images
-            assemblées.
-          </para>
-        </listitem>
-
-        <listitem lang="zh_CN">
-          <para>
-            定义用于编号的字体。
-          </para>
-        </listitem>
-      </varlistentry>
-
-     <varlistentry>
-        <term lang="en">Color</term>
-        <term lang="cs">Barva</term>
-        <term lang="fr">Couleur</term>
-        <term lang="zh_CN">颜色</term>
-
-        <listitem lang="en"> 
-          <para>
-            By clicking on the the color dwell, you can define the font
-            color of digits.
-          </para>
-        </listitem>
-
-        <listitem lang="cs">
-          <para>
-            Barva číslic na filmovém pásu.
-            Kliknutím na barevné pole otevřete standardní dialog pro volbu
-            barev.
-          </para>
-        </listitem>
-
-        <listitem lang="fr">
-          <para>
-            En cliquant sur la source de couleur, vous pouvez définir la
-            couleur de police des chiffres de numérotation des images
-            assemblées.
-          </para>
-        </listitem>
-
-        <listitem lang="zh_CN">
-          <para>
-            定义编号字体的颜色。
-          </para>
-        </listitem>
-      </varlistentry>
-
-      <varlistentry>
-        <term lang="en">At Top, At Bottom</term>
-        <term lang="cs">Nahoře, Dole</term>
-        <term lang="fr">En Haut, En bas</term>
-        <term lang="zh_CN">在顶部，在底部</term>
-
-        <listitem lang="en">
-          <para>Defines the position of the number.</para>
-        </listitem>
-
-        <listitem lang="cs">
-          <para>Určuje polohu čísel na filmovém pásu.</para>
-        </listitem>
-
-        <listitem lang="fr">
-          <para>
-            Définit la position du chiffre de numérotation des images
-            assemblées.
-          </para>
-        </listitem>
-
-        <listitem lang="zh_CN">
-          <para>
-            定义标号的位置。
-          </para>
-        </listitem>
-      </varlistentry>
-
-      <varlistentry>
-        <term lang="en">Available Images</term>
-        <term lang="cs">Dostupné obrázky</term>
-        <term lang="fr">Images Disponibles</term>
-        <term lang="zh_CN">可用的图像</term>
-
-        <listitem lang="en">
-          <para>
-            Shows the pictures that can be used for the merging.  The
-            pictures are these that are already opened in Gimp.
-          </para>
-        </listitem>
-
-        <listitem lang="cs">
-          <para>
-            Zobrazuje seznam obrázků, které lze pro spojení do filmového pásu
-            použít. Jedná se o obrázky, které jsou otevřené v Gimpu.
-          </para>
-        </listitem>
-
-        <listitem lang="fr">
-          <para>
-            Définit la liste des images qui peuvent être utilisées dans
-            l'assemblage. Cette liste correspond à l'ensemble des images
-            ouvertes dans GIMP.
-          </para>
-        </listitem>
-
-        <listitem lang="zh_CN">
-          <para>
-            显示能用作合并的图像，即那些已经在 GIMP 中打开的图像。
-          </para>
-        </listitem> 
-      </varlistentry>
-
-      <varlistentry>
-        <term lang="en">On Film</term>
-        <term lang="cs">Na filmu</term>
-        <term lang="fr">Sur le film</term>
-        <term lang="zh_CN">放入胶卷中</term>
-
-        <listitem lang="en"> 
-          <para>Shows the pictures chosen to be merged.</para>
-        </listitem>
-
-        <listitem lang="cs"> 
-          <para>Seznam obrázků vybraných ke spojení do filmového pásu.
-          </para>
-        </listitem>
-
-        <listitem lang="fr">
-          <para>Montre les images sélectionnées pour l'assemblage.</para>
-        </listitem>
-
-        <listitem lang="zh_CN">
-          <para>显示将被合并的图像。</para>
-        </listitem>
-      </varlistentry>
-
-      <varlistentry>
-        <term lang="en">Add</term>
-        <term lang="cs">Přidat</term>
-        <term lang="fr">Ajouter</term>
-        <term lang="zh_CN">添加</term>
-
-        <listitem lang="en">
-          <para>
-            This button allows the user to put an available image in the
-            "On film" section.
-          </para>
-        </listitem>
-
-        <listitem lang="cs">
-          <para>
-            Tímto tlačítkem lze dostupný obrázek zařadit mezi obrázky určené
-            ke spojení do filmového pásu.
-          </para>
-        </listitem>
-
-        <listitem lang="fr">
-          <para>
-            Ce bouton permet le passage d'une image disponible dans la zone
-            "Sur le film".
-          </para>
-        </listitem>
-
-        <listitem lang="zh_CN">
-          <para>
-            用户通过该按钮将选中的可用图像“放入胶卷中”。
-          </para>
-        </listitem>
-      </varlistentry>
-
-      <varlistentry>
-        <term lang="en">Remove</term>
-        <term lang="cs">Odstranit</term>
-        <term lang="fr">Enlever</term>
-        <term lang="zh_CN">删除</term>
-
-        <listitem lang="en">
-          <para>
-            This button allows to bring a picture from "on Film" to
-            "available images". After that, the picture will not be used
-            anymore in the resulting document.
-          </para>
-        </listitem>
-
-        <listitem lang="cs">
-          <para>
-            Toto tlačítko umožňuje odstranit obrázek z obrázků určených pro
-            spojení do filmového pásu.
-          </para>
-        </listitem>
-
-        <listitem lang="fr">
-          <para>
-            Ce bouton permet le passage d'une image de la zone "Sur le
-            film" à la zone "Images disponibles" de manière à la
-            soustraire du montage.
-          </para>
-        </listitem>
-
-        <listitem lang="zh_CN">
-          <para>
-            通过该按钮将图像从“放入胶卷中”移掉，这样产生的图像中就不会包括该图像。
-          </para>
-        </listitem>
-      </varlistentry>
-    </variablelist>
-  </simplesect>
-
-  <simplesect>
-    <title lang="en">Advanced Options</title>
-    <title lang="cs">Pokročilé volby</title>
-    <title lang="fr">Options Avancées</title>
-    <title lang="zh_CN">高级选项</title>
-
-    <variablelist>
-      <varlistentry>
-        <term lang="en">Image Height</term>
-        <term lang="cs">Výška obrázku</term>
-        <term lang="fr">Hauteur de l'image</term>
-        <term lang="zh_CN">图像高度</term>
-
-        <listitem lang="en">
-          <para lang="en">
-            Defines the height of each pictures in the resulting
-            image.
-          </para>
-        </listitem>
-
-        <listitem lang="cs">
-          <para lang="cs">
-            Určuje výšku obrázků ve výsledném filmovém pásu.
-          </para>
-        </listitem>
-
-        <listitem lang="fr">
-          <para>
-            Permet de définir la hauteur des vignettes en proportion de la
-            hauteur totale du document résultant.
-          </para>
-        </listitem>
-
-        <listitem lang="zh_CN">
-          <para>
-            定义产生的图像中每个画面的高度。
-          </para>
-        </listitem>
-      </varlistentry>
-
-      <varlistentry>
-        <term lang="en">Image Spacing</term>
-        <term lang="cs">Rozestup obrázků</term>
-        <term lang="fr">Espacement de l'image</term>
-        <term lang="zh_CN">图像间距</term>
-
-        <listitem lang="en">
-          <para>
-            Defines the space between the pictures as they will be inserted
-            in the future image.
-          </para>
-        </listitem>
-
-        <listitem lang="cs">
-          <para>
-            Určuje rozestup obrázků na filmovém pásu.
-          </para>
-        </listitem>
-
-        <listitem lang="fr">
-          <para>Permet de définir l'espacement des vignettes.</para>
-        </listitem>
-
-        <listitem lang="zh_CN">
-          <para>
-            定义产生的图像中两个画面间的距离。
-          </para>
-        </listitem>
-      </varlistentry>
-
-      <varlistentry>
-        <term lang="en">Hole Offset</term>
-        <term lang="cs">Posun děr</term>
-        <term lang="fr">Décalage des trous</term>
-        <term lang="zh_CN">小孔位移</term>
-
-        <listitem lang="en">
-          <para>Defines the hole position from image border.</para>
-        </listitem>
-
-        <listitem lang="cs">
-          <para>Určuje polohu děr vzhledem k okraji obrázku.</para>
-        </listitem>
-
-        <listitem lang="fr">
-          <para>
-            Permet de définir la position des trous par rapport au bord du
-            film résultant.
-          </para>
-        </listitem>
-
-        <listitem lang="zh_CN">
-          <para>
-            定义小孔在图像边缘处的位置。
-          </para>
-        </listitem>
-
-      </varlistentry>
-
-      <varlistentry>
-        <term lang="en">Hole Width</term>
-        <term lang="cs">Šířka děr</term>
-        <term lang="fr">Largeur des trous</term>
-        <term lang="zh_CN">小孔宽度</term>
-
-        <listitem lang="en">
-          <para>
-            Defines the width of the holes in the resulting image.
-          </para>
-        </listitem>
-
-        <listitem lang="cs">
-          <para>
-            Určuje šířku děr ve filmovém pásu.
-          </para>
-        </listitem>
-
-        <listitem lang="fr">
-          <para>Permet de définir la largeur des trous.</para>
-        </listitem>
-
-        <listitem lang="zh_CN">
-          <para>定义产生的图像中画面周围小孔的宽度。</para>
-        </listitem>
-      </varlistentry>
-
-      <varlistentry>
-        <term lang="en">Hole Height</term>
-        <term lang="cs">Výška děr</term>
-        <term lang="fr">Hauteur des trous</term>
-        <term lang="zh_CN">小孔高度</term>
-
-        <listitem lang="en">
-          <para>
-            Defines the height of the holes in the resulting image.
-          </para>
-        </listitem>
-
-        <listitem lang="cs">
-          <para>
-            Určuje výšku děr ve filmovém pásu.
-          </para>
-        </listitem>
-
-        <listitem lang="fr">
-          <para>Permet de définir la largeur des trous.</para>
-        </listitem>
-
-        <listitem lang="zh_CN">
-          <para>定义产生的图像中小孔的高度。</para>
-        </listitem>
-      </varlistentry>
-
-      <varlistentry>
-        <term lang="en">Hole Spacing</term>
-        <term lang="cs">Rozestup děr</term>
-        <term lang="fr">Espacement des trous</term>
-        <term lang="zh_CN">小孔间距</term>
-
-        <listitem lang="en">
-          <para>Defines the space between holes</para>
-        </listitem>
-
-        <listitem lang="cs">
-          <para>Určuje rozestupy mezi děrami na filmovém pásu.</para>
-        </listitem>
-
-        <listitem lang="fr">
-          <para>
-            Permet de définir l'espace qui séparera les trous dans
-            l'image résultante des trous.
-          </para>
-        </listitem>
-
-        <listitem lang="zh_CN">
-          <para>定义小孔间的距离。</para>
-        </listitem>
-      </varlistentry>
-
-      <varlistentry>
-        <term lang="en">Number Height</term>
-        <term lang="cs">Výška číslic</term>
-        <term lang="fr">Hauteur du numéro</term>
-        <term lang="zh_CN">数字高度</term>
-
-        <listitem lang="en">
-          <para>
-            Defines the height of the index number, proportionnaly to the
-            height of the picture.
-          </para>
-        </listitem>
-
-        <listitem lang="cs">
-          <para>
-            Určuje výšku číslic na filmovém pásu relativně k výšce obrázku.
-          </para>
-        </listitem>
-
-        <listitem lang="fr">
-          <para>
-            Permet de définir la hauteur du numéro d'index des images, en
-            proportion de la taille de l'image résultante.
-          </para>
-        </listitem>
-
-        <listitem lang="zh_CN">
-          <para>
-            定义编号的高度，这里是它和图像高度的比值。
-          </para>
+        <term lang="en">Advanced Options</term>
+        <term lang="cs">Pokročilé volby</term>
+        <term lang="de">Reiter Erweitert</term>
+        <term lang="fr">Options Avancées</term>
+        <term lang="zh_CN">高级选项</term>
+        
+        <listitem>
+          <figure lang="de">
+            <title>
+              <phrase lang="de">
+                Eigenschaften (Erweitert) für das Filter <quote>Film</quote>
+              </phrase>
+            </title>
+            <mediaobject>
+              <imageobject lang="de">
+                <imagedata fileref="../images/filters/de/options-combine-film2.png"
+                           format="PNG" />
+              </imageobject>
+            </mediaobject>
+          </figure>
+
+          <variablelist>
+            <varlistentry>
+              <term lang="en">Image Height</term>
+              <term lang="cs">Výška obrázku</term>
+              <term lang="de">Bildhöhe</term>
+              <term lang="fr">Hauteur de l'image</term>
+              <term lang="zh_CN">图像高度</term>
+
+              <listitem>
+                <para lang="en">
+                  Defines the height of each pictures in the resulting
+                  image.
+                </para>
+                <para lang="cs">
+                  Určuje výšku obrázků ve výsledném filmovém pásu.
+                </para>
+                <para lang="de">
+                  Mit dieser Eigenschaft können Sie die Höhe des Bildes im
+                  Filmstreifen einstellen. Hierzu stehen Ihnen ein Schieberegler
+                  und ein zugeordnetes Eingabefeld zur Verfügung. Die
+                  Einstellung kann im Bereich von 0,0 bis 1,0 erfolgen.
+                </para>
+                <para lang="fr">
+                  Permet de définir la hauteur des vignettes en proportion de la
+                  hauteur totale du document résultant.
+                </para>
+                <para lang="zh_CN">
+                  定义产生的图像中每个画面的高度。
+                </para>
+              </listitem>
+            </varlistentry>
+
+            <varlistentry>
+              <term lang="en">Image Spacing</term>
+              <term lang="cs">Rozestup obrázků</term>
+              <term lang="en">Image Spacing</term>
+              <term lang="de">Bildabstand</term>
+              <term lang="fr">Espacement de l'image</term>
+              <term lang="zh_CN">图像间距</term>
+
+              <listitem>
+                <para lang="en">
+                  Defines the space between the pictures as they will be inserted
+                  in the future image.
+                </para>
+                <para lang="cs">
+                  Určuje rozestup obrázků na filmovém pásu.
+                </para>
+                <para lang="de">
+                  Mit dieser Eigenschaft können Sie die Stegbreite des
+                  Filmstreifens zwischen den Bildern einstellen. Hierzu stehen
+                  Ihnen ein Scheiberegler und ein Eingabefeld zur Verfügung.
+                  Die Einstellung kann im Bereich von 0,0 bis 1,0 erfolgen.
+                </para>
+                <para lang="fr">
+                  Permet de définir l'espacement des vignettes.
+                </para>
+                <para lang="zh_CN">
+                  定义产生的图像中两个画面间的距离。
+                </para>
+              </listitem>
+            </varlistentry>
+
+            <varlistentry>
+              <term lang="en">Hole Offset</term>
+              <term lang="cs">Posun děr</term>
+              <term lang="de">Lochversatz</term>
+              <term lang="fr">Décalage des trous</term>
+              <term lang="zh_CN">小孔位移</term>
+
+              <listitem>
+                <para lang="en">
+                  Defines the hole position from image border.
+                </para>
+                <para lang="cs">
+                  Určuje polohu děr vzhledem k okraji obrázku.
+                </para>
+                <para lang="de">
+                  Mit dieser Eigenschaft können Sie den Abstand des ersten
+                  Loches des Filmstreifens vom Rand einstellen. Hierzu stehen
+                  Ihenen ein Schieberegler sowie ein Eingabefeld zur Verfügung.
+                  Die Einstellung kann im Bereich von 0,0 bis 1,0 erfolgen.
+                </para>
+                <para lang="fr">
+                  Permet de définir la position des trous par rapport au bord du
+                  film résultant.
+                </para>
+                <para lang="zh_CN">
+                  定义小孔在图像边缘处的位置。
+                </para>
+              </listitem>
+            </varlistentry>
+
+            <varlistentry>
+              <term lang="en">Hole Width</term>
+              <term lang="cs">Šířka děr</term>
+              <term lang="de">Lochbreite</term>
+              <term lang="fr">Largeur des trous</term>
+              <term lang="zh_CN">小孔宽度</term>
+
+              <listitem>
+                <para lang="en">
+                  Defines the width of the holes in the resulting image.
+                </para>
+                <para lang="cs">
+                  Určuje šířku děr ve filmovém pásu.
+                </para>
+                <para lang="de">
+                  Mit dieser Eigenschaft können Sie den Breite der Löcher des
+                  Filmstreifens einstellen. Hierzu stehen Ihnen ein
+                  Schieberegler sowie ein Eingabefeld zur Verfügung.
+                  Die Einstellung kann im Bereich von 0,0 bis 1,0 erfolgen.
+                </para>
+                <para lang="fr">
+                  Permet de définir la largeur des trous.
+                </para>
+                <para lang="zh_CN">
+                  定义产生的图像中画面周围小孔的宽度。
+                </para>
+              </listitem>
+            </varlistentry>
+
+            <varlistentry>
+              <term lang="en">Hole Height</term>
+              <term lang="cs">Výška děr</term>
+              <term lang="de">Lochhöhe</term>
+              <term lang="fr">Hauteur des trous</term>
+              <term lang="zh_CN">小孔高度</term>
+
+              <listitem>
+                <para lang="en">
+                  Defines the height of the holes in the resulting image.
+                </para>
+                <para lang="cs">
+                  Určuje výšku děr ve filmovém pásu.
+                </para>
+                <para lang="de">
+                  Mit dieser Eigenschaft können Sie den Höhe der Löcher des
+                  Filmstreifens einstellen. Hierzu stehen Ihnen ein
+                  Schieberegler sowie ein Eingabefeld zur Verfügung.
+                  Die Einstellung kann im Bereich von 0,0 bis 1,0 erfolgen.
+                </para>
+                <para lang="fr">
+                  Permet de définir la largeur des trous.
+                </para>
+                <para lang="zh_CN">
+                  定义产生的图像中小孔的高度。
+                </para>
+              </listitem>
+            </varlistentry>
+
+            <varlistentry>
+              <term lang="en">Hole Spacing</term>
+              <term lang="cs">Rozestup děr</term>
+              <term lang="de">Lochabstand</term>
+              <term lang="fr">Espacement des trous</term>
+              <term lang="zh_CN">小孔间距</term>
+
+              <listitem>
+                <para lang="en">
+                  Defines the space between holes
+                </para>
+                <para lang="cs">
+                  Určuje rozestupy mezi děrami na filmovém pásu.
+                </para>
+                <para lang="de">
+                  Mit dieser Eigenschaft können Sie den Abstand zwischen den
+                  Löchern des Filmstreifens einstellen. Hierzu stehen Ihnen ein
+                  Schieberegler sowie ein Eingabefeld zur Verfügung.
+                  Die Einstellung kann im Bereich von 0,0 bis 1,0 erfolgen.
+                </para>
+                <para lang="fr">
+                  Permet de définir l'espace qui séparera les trous dans
+                  l'image résultante des trous.
+                </para>
+                <para lang="zh_CN">
+                  定义小孔间的距离。
+                </para>
+              </listitem>
+            </varlistentry>
+
+            <varlistentry>
+              <term lang="en">Number Height</term>
+              <term lang="cs">Výška číslic</term>
+              <term lang="de">Nummernhöhe</term>
+              <term lang="fr">Hauteur du numéro</term>
+              <term lang="zh_CN">数字高度</term>
+
+              <listitem>
+                <para lang="en">
+                  Defines the height of the index number, proportionnaly to the
+                  height of the picture.
+                </para>
+                <para lang="cs">
+                  Určuje výšku číslic na filmovém pásu relativně k výšce obrázku.
+                </para>
+                <para lang="de">
+                  Mit dieser Eigenschaft können Sie die Höhe der Beschriftung
+                  auf dem Filmstreifen, proportional zur Höhe des Bildes
+                  einstellen. Hierzu stehen Ihnen ein Schieberegler sowie ein
+                  Eingabefeld zur Verfügung. Die Einstellung kann im Bereich
+                  von 0,0 bis 1,0 erfolgen.
+                </para>
+                <para lang="fr">
+                  Permet de définir la hauteur du numéro d'index des images, en
+                  proportion de la taille de l'image résultante.
+                </para>
+                <para lang="zh_CN">
+                  定义编号的高度，这里是它和图像高度的比值。
+                </para>
+              </listitem>
+            </varlistentry>
+          </variablelist>
         </listitem>
       </varlistentry>
     </variablelist>
