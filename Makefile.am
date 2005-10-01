@@ -141,6 +141,7 @@ images: $(STAMP_DIR)/images.stamp
 
 
 $(STAMP_DIR)/convert.stamp: $(STAMP_DIR)/images.stamp
+if USE_CONVERT
 	@echo '*** Converting Images to 8bit depth ***'
 
 	@cd $(top_srcdir)/html/images/; \
@@ -148,7 +149,7 @@ $(STAMP_DIR)/convert.stamp: $(STAMP_DIR)/images.stamp
 	  echo "Converting" $$i && \
 	  $(CONVERT) -colors 128 $$i $$i; \
 	done
-
+endif
 	@touch $@
 
 convert: $(STAMP_DIR)/convert.stamp
