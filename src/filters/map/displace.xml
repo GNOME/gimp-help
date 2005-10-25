@@ -1,0 +1,511 @@
+<?xml version='1.0' encoding="UTF-8" ?>
+
+<!DOCTYPE sect2
+  PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+  "http://www.docbook.org/xml/4.3/docbookx.dtd">
+
+<!-- section history:
+     2005-10-14 ceated by julien hardelin
+-->
+<sect2 id='plug-in-displace' lang="en;fr">
+  <title>
+    <phrase lang="en">Flame</phrase>
+    <phrase lang="fr">Déplacement d'après une carte</phrase>
+  </title>
+  
+  <indexterm lang="en">
+    <primary>Filters</primary>
+    <secondary lang="en">map</secondary>
+  </indexterm>
+  <indexterm lang="en"><primary>Displace</primary></indexterm>
+
+  <indexterm lang="fr">
+    <primary>Filtres</primary>
+    <secondary>Carte</secondary>
+  </indexterm>
+  <indexterm lang="fr"><primary>Déplacement d'après une carte</primary></indexterm>
+  
+  <mediaobject lang="en;fr">
+    <imageobject lang="en">
+      <imagedata fileref='../images/filters/filters-map-displace.png' format='PNG'/>
+    </imageobject>
+    <imageobject lang="fr">
+      <imagedata fileref='../images/filters/fr/filters-map-displace.png' format='PNG'/>
+    </imageobject>
+
+  </mediaobject>
+
+  <simplesect>
+    <title>
+      <phrase lang="en">Overview</phrase>
+      <phrase lang="fr">Généralités</phrase>
+    </title>
+ 
+    <para lang="en">
+      You can find this filter from the image menu
+      <menuchoice>
+        <guimenu>Filte<accel>r</accel>s</guimenu>
+        <guisubmenu><accel>M</accel></guisubmenu>
+        <guimenuitem><accel>D</accel>isplace</guimenuitem>
+      </menuchoice>
+    </para>
+
+    <para lang="fr">
+      On accède à ce filtre par le menu d'image en suivant
+      <menuchoice>
+        <guimenu>Filt<accel>r</accel>es</guimenu>
+        <guisubmenu><accel>C</accel>arte</guisubmenu>
+        <guimenuitem><accel>D</accel>éplacer selon une carte</guimenuitem>
+      </menuchoice>
+    </para>
+
+    <para lang="en">
+      This filter uses a 'displace-map' to displace corresponding pixels of 
+      the image. This filter displaces the content of the specified drawable 
+      (active layer or selection) by the amounts specified in X and Y 
+      Displacement multiplied by the intensity of the corresponding pixel in 
+      the 'displace map' drawables. <emphasis role='bold'>Both X and Y 
+      displace maps must be gray-scale images and have the same size as the 
+      drawable</emphasis> . This filter allows interesting distortion effects. 
+    </para>
+
+    <para lang="fr">
+      Ce filtre utilise une «carte de déplacement» pour déplacer les pixels 
+      correspondants du calque actif ou de la sélection. Il déplace le 
+      contenu du calque actif ou de la sélection des montants spécifiés dans 
+      Déplacement X et Déplacement Y multipliés par l'intensité du pixel 
+      correspondant dans les cartes de déplacement. <emphasis role='bold'>
+      Ces cartes de déplacement doivent être en Niveaux de gris et avoir la 
+      même taille que le calque actif ou la sélection</emphasis>. Ce filtre 
+      permet d'intéressants effets de déformation.
+    </para>
+
+  </simplesect>
+
+  <simplesect>
+    <title>
+      <phrase lang="en">Options</phrase>
+      <phrase lang="fr">Options</phrase>
+    </title>
+
+    <variablelist>
+      <varlistentry lang="en;fr">
+        <term lang="en">Preview</term>
+        <term lang="fr">Aperçu</term>
+        
+        <listitem>
+          <para lang="en">
+            Uncheck this option if your processor is slow.
+          </para> 
+          <para lang="fr">
+            Décochez cette option si votre ordinateur est trop lent.
+          </para> 
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term lang="en">X/Y Displacements</term>
+        <term lang="fr">Déplacements X/Y</term>
+
+        <listitem>
+          <para lang="en">
+            When you select one or both options, active layer pixels 
+            corresponding to pixels different from 128 in displacement map, 
+            will be displaced horizontally (X) or/and vertically (Y).
+          </para>
+          <para lang="en">
+            Why 128 ? Because map, that must be grey-level, has 256 gray 
+            levels: 128 intensity corresponds to <emphasis>medium gray
+            </emphasis> (R128, V128, B128). Filter displaces image pixels, 
+            corresponding to <emphasis>pixels higher than 128</emphasis> in 
+            map, to the left for X and upwards for Y. Likewise, filter 
+            displaces image pixels, corresponding to <emphasis>pixels lesser 
+            then 128</emphasis> in map, to the right for X and downwards for 
+            Y. 
+          </para>
+          
+          <para lang="fr">
+            En cochant une ou les deux options, vous choisissez de déplacer, 
+            horizontalement (X) ou/et verticalement (Y), les pixels du 
+            calque correspondant à des pixels d'intensité différente de 128 
+            dans la carte de déplacement.
+          </para>
+          <para lang="fr">
+            Pourquoi 128 ? Parce que la carte de déplacement, qui doit être 
+            une image en niveaux de gris, possède 256 niveaux de gris: 
+            l'intensité 128 correspond au <emphasis>Gris moyen</emphasis> 
+            (R128, V128, B128). Le filtre déplace les pixels de l'image, 
+            correspondants aux pixels d'<emphasis>intensité supérieure à 128
+            </emphasis> dans la carte de déplacement, vers la gauche pour X 
+            et vers le haut pour Y. De même, il déplace les pixels de 
+            l'image, correspondants à des pixels d'<emphasis>intensité 
+            inférieure à 128</emphasis> dans la carte de déplacement, dans 
+            l'autre sens, vers la droite pour X et vers le bas pour Y.
+          </para>
+        </listitem>
+      </varlistentry>
+        
+      <varlistentry>
+        <term lang="en">Input boxes</term>
+        <term lang="fr">Boîtes de saisie</term>
+        
+        <listitem lang="en">  
+          <para>
+            <quote>X/Y Displacement</quote> should be called 
+            <emphasis>X/Y Displacement Coefficient</emphasis>. What you 
+            enter in input boxes, directly or by using arrow-head buttons, 
+            is not the actual displacement. This coefficient is used in 
+            a <emphasis role='bold'>displacement = (intensity x coefficient)
+            /128</emphasis> formula which gives the pixel actual 
+            displacement according to the intensity of the corresponding 
+            pixel in map, modulated by the coefficient you enter. 
+            Introducing intensity into formula is important: this allows 
+            progressive displacement by using a gradient map.
+          </para>
+          <para>
+            This value varies in limits equal to image dimensions double. 
+            That corresponds to maximum displacement, from an image edge 
+            to the other.
+          </para>
+          <para>
+            This value may be positive or negative. A negative 
+            displacement is reverse of a positive one.
+          </para>
+          <para>
+            To complicate stuff, intensity used in formula is not 
+            directly pixel intensity. Actual intensity is plotted on a 
+            -128 +128 scale, where 0 corresponds to null displacement as 
+            we have seen higher. Transformation is done by subtracting 
+            128 from the pixel intensity and adding +1. So, in previous 
+            example, 75 associated to a white pixel (value 255 reported 
+            to 255-128+1= 128) gives a (128*75)/128=75 pixels 
+            displacement. And a black (0) pixel gives a -75 pixels 
+            displacement.
+          </para>
+        </listitem>
+          
+        <listitem lang="fr">
+          <para>
+          «Déplacement X/Y» devrait s'appeler <emphasis>Coefficient de 
+          déplacement</emphasis>. En effet, ce que vous entrez, en pixels, 
+          directement ou à l'aide des boutons-mollettes dans les boîtes 
+          de saisie, n'est pas le déplacement lui-même. Ce coefficient 
+          est utilisé dans la formule <emphasis role='bold'>
+          déplacement=(intensité * coefficient)/128</emphasis>
+          qui donne le déplacement effectif du pixel en fonction de 
+          l'intensité du pixel correspondant dans la carte, modulé par le 
+          coefficient que vous avez introduit. L'introduction de 
+          l'intensité dans la formule est importante: elle permet 
+          d'obtenir un déplacement progressif avec une carte de dégradé. 
+          </para>
+          <para>
+            Cette valeur varie dans des limites égales au double des 
+            dimensions de votre image, car cela correspond au déplacement 
+            maximum d'un pixel, d'un bord à l'autre, ce qui double la 
+            dimension totale. 
+          </para>
+          <para>
+            Cette variation se fait dans le sens positif ET dans le sens 
+            négatif. Un déplacement négatif se fait en sens inverse du 
+            déplacement positif. 
+          </para>
+          <para>
+            Pour compliquer les choses, l'intensité utilisée dans la formule 
+            n'est pas directement l'intensité du pixel de la carte, mais 
+            l'intensité rapportée à l'échelle -128 +128, où 0 correspond à 
+            un déplacement nul comme nous l'avons vu au début. La 
+            transformation se fait en soustrayant 128 à l'intensité du pixel 
+            +1. Dans l'exemple précédent, un coefficient de 75 associé à 
+            un pixel blanc (intensité 255 rapportée à 255-128+1=128) donne 
+            bien un déplacement de (128x75)/128=75 pixels. Et un pixel noir 
+            (0) donne un déplacement de -75 pixels.
+          </para>
+        </listitem>
+      </varlistentry>
+            
+      <varlistentry>  
+        <term lang="en">Selecting displacement maps</term>
+        <term lang="fr">Sélection des cartes de déplacement</term>
+        <listitem>
+          <para lang="en">
+            When you click on the drop-down list button, a list appears 
+            where you can select a displacement map. To be present in this 
+            list, an image must respect two conditions. First, this image 
+            must be present on your screen when you call filter. Then, this 
+            image must have the same dimensions as the original image. Most 
+            often, it will be a duplicate original image, which is 
+            transformed to grey scale and modified appropriately,with a 
+            gradient. It may be possible to use RGB images, but color 
+            luminosity is used making result prevision difficult. Map may 
+            be different in horizontal and vertical directions.
+          </para>
+          <para lang="en">
+            Map gradient must be horizontal for a vertical displacement, 
+            and vertical for a horizontal displacement.
+          </para>
+
+          <para lang="fr">
+            Pour être prise en compte dans cette liste déroulante, la carte 
+            de déplacement doit respecter deux conditions: être présente sur 
+            votre écran quand vous appeler le filtre et être aux mêmes 
+            dimensions que l'image à traiter. Le plus souvent, ce sera un
+            double de l'image que vous aurez mis en mode Niveaux de gris et 
+            modifié de façon appropriée, avec application d'un dégradé. Il 
+            n'est pas impossible d'utiliser des cartes en mode RVB, mais ce 
+            qui est pris en compte alors est la luminosité des couleurs, ce 
+            qui ne rend pas aisée la prévision du résultat. La carte peut 
+            être différente dans le sens horizontal et dans le sens vertical.
+          </para>
+          <para lang="fr">
+            Le dégradé de la carte doit être horizontal pour un déplacement 
+            vertical, et vertical pour un déplacement horizontal.
+          </para>
+          
+          <figure>
+            <title>
+              <phrase lang='en'>Displacement examples</phrase>
+              <phrase lang='fr'>Exemples de déplacement</phrase>
+            </title>
+  
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref='../images/filters/examples/map-displace4.png'
+                         format='PNG'/> 
+              </imageobject>
+              <caption>
+                <para lang="en">
+                X displacement coefficient is 30 (with a negative 
+                coefficient displacement would be inverse). Vacated 
+                pixels are black. Displacement map has three grey 
+                stripes, from top to bottom: medium gray (128), light 
+                gray 200), dark gray (60).
+                </para>
+                <para lang="en">
+                You can see that the image area corresponding to medium 
+                gray in map was not displaced. The image area 
+                corresponding to light gray (&gt;128) was displaced 17 
+                pixels to the left. The image area corresponding to dark 
+                gray (&lt;128) was displaced -15 pixels, to the right.
+                </para>
+                
+                <para lang="fr">
+                Le coefficient de déplacement X est de 30 (avec un 
+                coefficient négatif les déplacements seraient inversés), 
+                les pixels libérés par les déplacements sont en noir. 
+                La carte de déplacement comporte 3 bandes de gris 
+                superposées, de haut en bas: gris neutre (128), gris clair 
+                (200), gris foncé (60). 
+                </para>
+                <para lang="fr">
+                On voit que la partie de l'image correspondant à la bande 
+                de gris neutre de la carte n'a pas été déplacée. La partie 
+                de l'image correspondant à la bande de gris clair 
+                (&gt;128) s'est déplacée vers la gauche de 17 pixels. La 
+                partie de l'image correspondant à la bande de gris foncé 
+                (&lt;128) s'est déplacée vers la droite de 15 pixels.
+                </para>
+              </caption>
+            </mediaobject>
+          </figure>
+        </listitem>        
+      </varlistentry> 
+             
+      <varlistentry lang="en;fr">
+        <term lang="en">On Edges</term>
+        <term lang="fr">Sur les bords</term>
+        
+        <listitem lang="en">
+          <para>
+            These options allow you to set displacement behaviour on active 
+            layer or selection edges:
+          </para>
+          <itemizedlist>
+            <listitem>
+              <formalpara>
+                <title>Wrap</title>
+                <para>
+                With this option, what disappears on one edge reappears on 
+                the opposite edge.
+                </para>
+              </formalpara>
+            </listitem>
+            <listitem>
+              <formalpara>
+                <title>Smear</title>
+                <para>
+                  With this option, pixels vacated by displacement are 
+                  replaced with pixels stretched from the adjacent part of 
+                  the image.
+                </para>
+              </formalpara>
+            </listitem>
+            
+            <listitem>
+              <formalpara>
+                <title>Black</title>
+                <para>
+                  With this option, pixels vacated by deplacement are 
+                  replaced with black.
+                </para>
+              </formalpara>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+        
+        <listitem lang="fr">          
+          <para>
+            Ces options vous permettent de régler le comportement du 
+            déplacement sur les bords du calque actif ou de la sélection:
+          </para>
+          <itemizedlist>
+            <listitem>
+              <formalpara>
+                <title>Enrouler</title>
+                <para>
+                Avec cette option, ce qui disparaît d'un côté du fait du 
+                déplacement réapparaît de l'autre côté.
+                </para>
+              </formalpara>
+            </listitem>
+            <listitem>
+              <formalpara>
+                <title>Étaler</title>
+                <para>
+                Avec cette option, la partie libérée par le déplacement est 
+                remplacée par un étirement de la partie adjacente de 
+                l'image.
+                </para>
+              </formalpara>
+            </listitem>
+            <listitem>
+              <formalpara>
+                <title>Noir</title>
+                <para>
+                Avec cette option, la partie libérée par le déplacement est 
+                remplacée par du noir.
+                </para>
+              </formalpara>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </simplesect>
+  
+  <simplesect>
+    <title lang="en">Using gradient to bend a text</title>
+    <title lang="fr">Utiliser un dégradé pour courber un texte</title>
+    <para lang="en">
+      Follow following steps:
+    </para>
+    <para lang="fr">
+      Suivez les étapes suivantes:
+    </para>
+         
+    <procedure>
+      <step>
+        <para lang="en">
+          Start with opening your image.
+        </para>
+        <para lang="fr">
+          Commencez par ouvrir votre image.
+        </para>
+      </step>
+      <step>
+        <para lang="en">
+          Duplicate this image. Activate this duplicate and make it 
+          gray-scaled (&lt;IMAGE&gt;/Image/Mode/GrayScale). Fill it with 
+          the wanted gradient. This image will be your 
+          <emphasis>Displacement map</emphasis>, with the dimensions of 
+          original image.
+        </para>
+        <para lang="fr">
+          Dupliquez cette image. Activez ce double et mettez-le en mode 
+          Niveau de gris (&lt;IMAGE&gt;/Image/Mode/Niveau de gris). 
+          Remplissez-le avec le dégradé voulu. Cette image constituera 
+          votre <emphasis>carte de déplacement</emphasis>, aux dimensions de 
+          l'image d'origine.
+        </para>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref='../images/filters/examples/2zinnias-c.png'
+                       format='PNG'/> 
+          </imageobject>
+        </mediaobject>
+      </step>
+      <step>
+        <para lang="en">
+          Activate original image. Create a <emphasis>Text Layer</emphasis> 
+          with your text. Set layer to image size: right-click on the layer 
+          in layer dialog and, in the pop-menu, click on <quote>Layer to 
+          image size</quote>. Note that letters in text layer lie on 
+          transparent background; now this filter doesn't displace 
+          transparent pixels. Only letters will be displaced.
+        </para>
+        <para lang="fr">
+          Activez l'image d'origine. Créez un <emphasis>calque de texte
+          </emphasis> avec votre texte. Mettez ce calque aux dimensions de 
+          l'image: clic droit sur le bandeau du calque de texte et dans le 
+          menu local cliquez sur «Calque aux dimensions de l'image». 
+          Remarquez que les lettres dans le calque de texte reposent sur un 
+          fond transparent; or, le filtre ne déplace pas les pixels 
+          transparents: seules les lettres seront donc décalées. 
+        </para>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref='../images/filters/examples/2zinnias-i.png'
+                       format='PNG'/> 
+          </imageobject>
+        </mediaobject>
+      </step>
+      <step>
+        <para lang="en">
+          Activate text layer. Open Displace filter window. Set parameters 
+          particularly displacement coefficient according to the result in 
+          Preview. OK.
+        </para>
+        <para lang="fr">
+          Activez le calque de texte. Ouvrez la fenêtre du filtre Déplacer 
+          d'après une carte. Réglez les paramètres, en particulier le 
+          coefficient de déplacement en fonction de l'aspect obtenu dans 
+          l'Aperçu. Validez.
+        </para>
+      </step>         
+    </procedure>
+    
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref='../images/filters/examples/map-displace5.png'
+                   format='PNG'/> 
+      </imageobject>
+    </mediaobject>
+
+    <para lang="en">
+      This method also applies to standard layers:
+    </para>
+    <para lang="fr">
+      Bien entendu, cette méthode s'applique aussi aux calques standards:
+    </para>
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref='../images/filters/examples/map-displace6.png'
+                   format='PNG'/> 
+      </imageobject>
+    </mediaobject>
+    
+    <note>
+      <para lang="en">
+        To get the wanted gradient, first draw a black to white gradient. 
+        Then use the <link linkend='gimp-tool-curves'>Curves</link> tool to
+        modify the gradient curve.
+      </para>
+      <para lang="fr">
+        Pour d'obtenir un dégradé adapté à votre projet de déplacement,
+        tracez un dégradé de noir vers blanc. Puis, 
+        avec l'outil <link linkend='gimp-tool-curves'>Courbes</link>, 
+        modifiez la courbe du dégradé.
+      </para>
+    </note>
+    
+  </simplesect>
+</sect2>
