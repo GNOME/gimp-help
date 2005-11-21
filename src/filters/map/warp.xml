@@ -1,0 +1,401 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!DOCTYPE sect2
+  PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+  "http://www.docbook.org/xml/4.3/docbookx.dtd">
+
+<!-- section history: 
+     051105: created by julien hardelin 
+-->
+
+<sect2 id='plugin-warp' lang="en;fr">
+  <title> 
+    <phrase lang="en">Warp</phrase>
+    <phrase lang="fr">Décaler</phrase>
+  </title>
+
+  <indexterm lang="en">
+    <primary>Filters</primary>
+    <secondary>Map</secondary>
+  </indexterm>
+  <indexterm lang="en"><primary>Warp</primary></indexterm>
+  
+  <indexterm lang="fr">
+    <primary>Filtres</primary>
+    <secondary>Carte</secondary>
+  </indexterm>
+  <indexterm lang="fr"><primary>Décaler</primary></indexterm>
+
+  <sect3>    
+    <title>
+      <phrase lang="en">Overview</phrase>
+      <phrase lang="fr">Généralités</phrase>
+    </title>
+    <para lang="en">
+      This filter .
+    </para>
+    <para lang="en">
+      This filter is found in the image window menu under
+      <menuchoice>
+        <guimenu>Filters</guimenu>
+        <guisubmenu>Map</guisubmenu>
+        <guimenuitem><accel>W</accel>arp</guimenuitem>
+      </menuchoice>.
+      This filter has no Preview.
+    </para>
+      
+    <para lang="fr">
+      Ce filtre déplace les pixels du calque actif ou d'une sélection en 
+      fonction des niveaux de gris d'une <emphasis>Carte de 
+      déplacement</emphasis>. Les pixels de l'image sont déplacés en 
+      fonction de la pente du dégradé dans la carte de déplacement. Les 
+      pixels correspondant à des plages unies ne sont pas déplacés; plus 
+      importante est la pente, et plus le déplacement est important.
+    </para>
+          
+    <figure>
+      <title>
+        <phrase lang="en">
+          From left to right: original image, displace map, displaced image
+        </phrase>
+        <phrase lang="fr">
+          De gauche à droite: image d'origine, carte de déplacement, 
+          déplacement d'après la carte
+        </phrase>
+      </title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/example-map-displace1.png"
+                   format="PNG"/>
+        </imageobject>
+      </mediaobject>
+      <caption>
+        <para lang="en">
+        
+        </para>
+        <para lang="fr">
+          Les parties unies de la carte de déplacement n'entraînent aucun 
+          déplacement. Les transitions brutales donnent un fort déplacement. 
+          Un dégradé linéaire donne un déplacement régulier. La direction du 
+          déplacement est perpendiculaire au sens du dégradé (angle = 90°).    
+        </para>
+        
+      </caption>
+    </figure>  
+    <figure>
+      <title>
+        <phrase lang="en">
+          
+        </phrase>
+        <phrase lang="fr">
+          Avec un dégradé non-linéaire
+        </phrase>
+      </title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/example-map-displace2.png"
+                   format="PNG"/>
+        </imageobject>
+      </mediaobject>
+      <caption>
+        <para lang="en">
+        
+        </para>
+        <para lang="fr">
+          Un dégradé non-linéaire entraîne des ondulations.
+        </para>
+        
+      </caption>
+    </figure>
+    <figure>
+      <title>
+        <phrase lang="en">
+          
+        </phrase>
+        <phrase lang="fr">
+          Avec un dégradé complexe:
+        </phrase>
+      </title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/example-map-displace3.png"
+                   format="PNG"/>
+        </imageobject>
+      </mediaobject>
+      <caption>
+        <para lang="en">
+        
+        </para>
+        <para lang="fr">
+          Et un dégradé complexe, tel que peut le créer le filtre
+          <link linkend='plug-in-solid-noise'>Brouillage uni</link>, donne 
+          des effets de remous.
+        </para>        
+      </caption>
+    </figure>    
+      
+    <para lang="fr">
+      Ce filtre vous offre en outre la possibilité de masquer une partie de 
+      l'image pour la protéger de l'action du filtre.
+    </para>
+    <para lang="fr">
+      L'équivalent anglais de ce filtre est «Warp». 
+    </para>     
+    <para lang="fr">
+      On accède à ce filtre par le menu d'image en suivant 
+      <menuchoice>
+        <guimenu>Filtres</guimenu>
+        <guisubmenu>Carte</guisubmenu>
+        <guimenuitem><accel>D</accel>écaler</guimenuitem>
+      </menuchoice>.
+      Ce filtre n'a pas d'Aperçu.
+    </para>
+
+  </sect3> 
+  
+  <sect3 lang="en;fr">
+    <title>
+      <phrase lang="en;fr">Options</phrase>
+    </title>
+    <variablelist>
+      <title>
+        <phrase lang="en">Basic Options</phrase>
+        <phrase lang="fr">Options de base</phrase>
+        <varlistentry>
+          <term lang="en">Step Size</term>
+          <term lang="fr">Taille du pas</term>
+          <listitem>
+            <para lang="en">
+            
+            </para>
+            <para lang="fr">
+              Le «pas» représente, la distance de déplacement des pixels à 
+              chaque itération du filtre. Il faut une valeur de 10 pour 
+              obtenir un déplacement sur un pixel de distance. La valeur 
+              peut être négative, ce qui inverse le sens du déplacement.
+            </para>
+          </listitem>
+        </varlistentry> 
+        <varlistentry>
+          <term lang="en">Iterations</term>
+          <term lang="fr">Itérations</term>
+          <listitem>
+            <para lang="en">
+            
+            </para>
+            <para lang="fr">
+              <guilabel>Itérations</guilabel> représente le nombre de 
+              répétitions de l'effet lors de l'application du filtre. 
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term lang="en">On Edges</term>
+          <term lang="fr">Sur les côtés</term>
+          <listitem>
+            <para lang="en">
+            
+            </para>
+            <para lang="fr">
+              Du fait du décalage, une partie des pixels est rejetée 
+              en-dehors des limites du calque ou de la sélection, et, à 
+              l'opposé, certains emplacements de pixels se vident. Les 
+              quatre options suivantes permettent de fixer comment régler 
+              ce problème:
+              <itemizedlist>
+                <listitem>
+                  <para>
+                    <guilabel>Enrouler</quilabel>: ce qui sort d'un côté 
+                    ressort de l'autre côté.
+                  </para>
+              
+              </itemizedlist>
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term lang="en">Displacement Map</term>
+          <term lang="fr">Carte de déplacement</term>
+          <listitem>
+            <para lang="en">
+            
+            </para>
+            <para lang="fr">
+              Pour figurer dans cette liste déroulante, La carte de 
+              déplacement, qui est une image en niveaux de gris, doit être 
+              <emphasis>présente sur votre écran quand vous appelez le 
+              filtre et doit avoir la même taille que l'image source 
+              </emphasis>.
+            </para>
+          </listitem>
+        </varlistentry>   
+      </variablelist>
+    
+      <variablelist>
+      <title>
+        <phrase lang="en">Advanced Options</phrase>
+        <phrase lang="fr">Options avancées</phrase>
+        <varlistentry>
+          <term lang="en">Dither Size</term>.
+          <term lang="fr">Taille de tramage</term>
+          <listitem>
+            <para lang="en">
+            
+            </para>
+            <para lang="fr">
+              Après que les pixels aient été décalés, cette option les 
+              éparpille au hasard, donnant du grain à l'image. Plus la 
+              valeur (de 0,00 à 1,00) est élevée et plus le grain est fin
+            </para>
+            
+            <figure>
+              <title>
+                <phrase lang="en">
+          
+                </phrase>
+                <phrase lang="fr">
+                  Avec une taille de tramage à 3,00:
+                </phrase>
+              </title>
+              <mediaobject>
+                <imageobject>
+                  <imagedata fileref="../images/filters/examples/example-map-warpc3.png"
+                   format="PNG"/>
+                </imageobject>
+              </mediaobject>
+            </figure>    
+          </listitem>
+        </varlistentry>
+        
+        <varlistentry>
+          <term lang="en">Rotation Angle</term>.
+          <term lang="fr">Angle de rotation</term>
+          <listitem>
+            <para lang="en">
+            
+            </para>
+            <para lang="fr">
+              Cette option règle l'angle de déplacement des pixels par 
+              rapport à la direction de la pente du dégradé. Les exemples 
+              précédents ont été réalisés avec un dégradé de direction 
+              verticale et un angle de 90°: les pixels se sont donc déplacés 
+              horizontalement et rien n'est sorti du cadre de l'image. Voici 
+              un exemple avec un angle de 10° et 6 itérations.
+            </para>
+            
+            <figure>
+              <title>
+                <phrase lang="en">
+          
+                </phrase>
+                <phrase lang="fr">
+                  Avec un angle de 10° et 6 itérations:
+                </phrase>
+              </title>
+              <mediaobject>
+                <imageobject>
+                  <imagedata fileref="../images/filters/examples/example-map-warpc4.png"
+                   format="PNG"/>
+                </imageobject>
+              </mediaobject>
+              <caption>
+                <para lang="en">
+                
+                </para>
+                <para lang="fr">
+                  Le décalage se fait selon un angle de 10° par rapport à la 
+                  verticale. Des pixels sortent par en bas à chaque 
+                  itération et ressortent en haut donnant l'aspect de 
+                  pointillés.
+                </para>
+            </figure>    
+          </listitem>
+        </varlistentry>
+        
+        <varlistentry>
+          <term lang="en">Rotation Angle</term>.
+          <term lang="fr">Angle de rotation</term>
+          <listitem>
+            <para lang="en">
+            
+            </para>
+            <para lang="fr">
+              Cette option règle l'angle de déplacement des pixels par 
+              rapport à la direction de la pente du dégradé. Les exemples 
+              précédents ont été réalisés avec un dégradé de direction 
+              verticale et un angle de 90°: les pixels se sont donc déplacés 
+              horizontalement et rien n'est sorti du cadre de l'image. Voici 
+              un exemple avec un angle de 10° et 6 itérations.
+            </para>
+            
+            <figure>
+              <title>
+                <phrase lang="en">
+          
+                </phrase>
+                <phrase lang="fr">
+                  Avec un angle de 10° et 6 itérations:
+                </phrase>
+              </title>
+              <mediaobject>
+                <imageobject>
+                  <imagedata fileref="../images/filters/examples/example-map-warpc4.png"
+                   format="PNG"/>
+                </imageobject>
+              </mediaobject>
+              <caption>
+                <para lang="en">
+                
+                </para>
+                <para lang="fr">
+                  Le décalage se fait selon un angle de 10° par rapport à la 
+                  verticale. Des pixels sortent par en bas à chaque 
+                  itération et ressortent en haut donnant l'aspect de 
+                  pointillés.
+                </para>
+            </figure>    
+          </listitem>
+        </varlistentry>
+                
+        <varlistentry>
+          <term lang="en">Magnitude map</term>.
+          <term lang="fr">Carte de force</term>
+          <listitem>
+            <para lang="en">
+              
+            </para>
+            <para lang="fr">
+              En plus de la carte de déplacement, vous pouvez ajouter une 
+              <guilabel>Carte de force</guilabel> ou carte d'amplitude. 
+              C'est aussi une carte en niveaux de gris, de la même taille 
+              que l'image source et qui doit aussi être présente sur votre 
+              écran si vous voulez qu'elle figure dans cette liste 
+              déroulante. Elle permet de donner plus ou moins de force au 
+              filtre selon les régions de l'image, en fonction des niveaux 
+              de gris de cette carte de force. Les parties de l'image 
+              correspondant aux zones noires de la carte de force seront 
+              épargnées par le filtre. Les parties de l'image correspondant 
+              aux zones blanches de la carte subiront toute la force du 
+              filtre. Les niveaux de gris intermédiaires atténueront plus ou 
+              moins les zones correspondantes de l'image. L'option 
+              <guilabel>Utiliser la carte de force</guilabel> doit être 
+              cochée pour cela.
+            </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    
+      <variablelist>
+      <title>
+        <phrase lang="en">More Advanced Options</phrase>
+        <phrase lang="fr">Autres options</phrase>
+        <varlistentry>
+          <term lang="en">Gradient Scale</term>.
+          <term lang="fr">Échelle de dégradé</term>
+          <listitem>
+            <para lang="en">
+            
+            </para>
+            <para lang="fr">
+      
+      
