@@ -20,7 +20,7 @@
   <xsl:param name="latex.is.draft">1</xsl:param>
   
   <xsl:output encoding="UTF-8"/>
-  <xsl:variable name="latex.inputenc">utf8</xsl:variable>
+  <xsl:variable name="latex.inputenc">utf8x</xsl:variable>
   <xsl:variable name="latex.use.ucs">1</xsl:variable>
   <xsl:variable name="latex.ucs.options">postscript</xsl:variable>
   
