@@ -92,11 +92,10 @@ $(STAMP_DIR)/clean.stamp: Makefile
 $(STAMP_DIR)/mkdirs.stamp: $(patsubst %,$(STAMP_DIR)/mkdirs.%.stamp,$(ALL_LINGUAS)) 
 	@echo '*** Creating directories ***'
 
-	@for format in $(FORMATS); do \
-	  for name in `find $(top_srcdir)/images/ -name "*.png" -o -name "*.jpg"`; do \
-	    $(mkinstalldirs) `dirname $$format/$$name`; \
-	  done; \
-        done;
+    # we care only for HTML here
+	@for name in `find $(top_srcdir)/images/ -name "*.png" -o -name "*.jpg"`;\
+		do $(mkinstalldirs) `dirname html/$$name`; \
+	done;
 	
 	@touch $@
 
@@ -105,6 +104,10 @@ $(patsubst %,$(STAMP_DIR)/mkdirs.%.stamp,$(ALL_LINGUAS)) : $(STAMP_DIR)/mkdirs.%
 	@for format in $(FORMATS); do \
 	  $(mkinstalldirs) $$format/$*; \
 	done;
+  # only create a link in the PDF directory, because image files are
+  # included in the PDF anyways
+	@echo '*** Creating link in PDF directory to images ***'
+	@cd $(srcdir)/pdf && ln -s ../images;
 
 	@touch $@
 
@@ -129,11 +132,10 @@ css: $(STAMP_DIR)/css.stamp
 $(STAMP_DIR)/images.stamp : $(STAMP_DIR)/mkdirs.stamp $(IMAGE_FILES)
 	@echo '*** Copying images ***'
 
-	@for format in $(FORMATS); do \
-	  for name in `find $(top_srcdir)/images/ -name "*.png" -o -name "*.jpg"`; do \
-	    cp $$name $$format/$$name; \
-	  done; \
-        done;
+  # copy the image files to html directory
+	@for name in `find $(top_srcdir)/images/ -name "*.png" -o -name "*.jpg"`;\
+    do cp $$name html/$$name; \
+	done;
 
 	@touch $@
 
@@ -175,7 +177,7 @@ $(patsubst %,$(STAMP_DIR)/profile.%.stamp,$(ALL_LINGUAS)): $(STAMP_DIR)/profile.
 profile: $(STAMP_DIR)/profile.stamp 
 
 
-$(STAMP_DIR)/latex.stamp: $(STAMP_DIR)/profile.stamp
+$(STAMP_DIR)/latex.stamp: $(STAMP_DIR)/mkdirs.stamp $(STAMP_DIR)/profile.stamp
 	@echo '*** Building LaTeX files ***'
 	@for lang in $(ALL_LINGUAS); do \
 	  echo '-- Building LaTeX for '$$lang; \
