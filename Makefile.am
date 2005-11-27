@@ -96,6 +96,10 @@ $(STAMP_DIR)/mkdirs.stamp: $(patsubst %,$(STAMP_DIR)/mkdirs.%.stamp,$(ALL_LINGUA
 	@for name in `find $(top_srcdir)/images/ -name "*.png" -o -name "*.jpg"`;\
 		do $(mkinstalldirs) `dirname html/$$name`; \
 	done;
+  # only create a link in the PDF directory, because image files are
+  # included in the PDF anyways
+	@echo '*** Creating link in PDF directory to images ***'
+	@cd $(srcdir)/pdf && ln -s ../images;
 	
 	@touch $@
 
@@ -104,10 +108,6 @@ $(patsubst %,$(STAMP_DIR)/mkdirs.%.stamp,$(ALL_LINGUAS)) : $(STAMP_DIR)/mkdirs.%
 	@for format in $(FORMATS); do \
 	  $(mkinstalldirs) $$format/$*; \
 	done;
-  # only create a link in the PDF directory, because image files are
-  # included in the PDF anyways
-	@echo '*** Creating link in PDF directory to images ***'
-	@cd $(srcdir)/pdf && ln -s ../images;
 
 	@touch $@
 
