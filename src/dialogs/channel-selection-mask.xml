@@ -1,10 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
 
-<sect2 id="dialogs-selection-masks" lang="de;cs;en;fr;zh_CN">
+<sect2 id="dialogs-selection-masks" lang="de;cs;en;fr;it;zh_CN">
   <title lang="en">Selection masks</title>
   <title lang="cs">Masky výběru</title>
   <title lang="de">Auswahlmasken</title>
   <title lang="fr">Masques de sélection</title>  <!--050511-->   
+  <title lang="it">Maschere di selezione</title>
   <title lang="zh_CN">选区蒙板</title>
 
   <mediaobject lang="en" >
@@ -23,6 +24,11 @@
     </imageobject>
   </mediaobject>
   <mediaobject lang="fr" >
+    <imageobject>
+      <imagedata fileref="../images/dialogs/dialogs-channel-masks.png" format="PNG" />
+    </imageobject>
+  </mediaobject>
+  <mediaobject lang="it" >
     <imageobject>
       <imagedata fileref="../images/dialogs/dialogs-channel-masks.png" format="PNG" />
     </imageobject>
@@ -78,6 +84,23 @@
     Les pixels gris sont partiellement sélectionnés. Nous allons voir 
     comment créer et utiliser ces masques de sélections.
   </para>
+  <para lang="it"> 
+    I canali si possono utilizzare per salvare e poi ripristinare le selezioni.
+    Facendo un clic sul pulsante della <guilabel>Maschera veloce</guilabel> 
+    nella <!--link linkend="gimp-concepts-image-window" FIXME -->finestra immagine<!--/link--> 
+    viene creato automaticamente un nuovo canale chiamato <guilabel>Maschera 
+    veloce</guilabel> e la selezione attiva visualizzata viene salvata in una
+    miniatura prima del canale. Per creare delle selezioni continue ci sono 
+    molti strumenti in Gimp, come la selezione rettangolare o la bacchetta 
+    magica. Le maschere di selezione rappresentano un modo di costruire le 
+    selezioni graficamente all'interno di un canale in scala di grigi, dove i 
+    pixel bianchi sono selezionati ed i pixel neri sono quelli non selezionati.
+    Quindi i pixel grigi sono parzialmente selezionati. Si può pensare ad essi
+    come ad una sfumatura della selezione, una transizione graduale tra ciò che
+    è selezionato e ciò che non lo è. Questo è importante per evitare il brutto 
+    effetto scalinato dei pixel quando si riempie una selezione o quando si 
+    cancella il suo contenuto dopo aver isolato un soggetto dallo sfondo.
+  </para>
   <para lang="zh_CN"> 
     通道可以保存和恢复您的选区。点击<link linkend="gimp-concepts-image-window">图像窗口</link>的<guilabel>快速蒙板</guilabel>按键会自动新建一个叫作<guilabel>Qmask</guilabel>的通道，并将显示的当前选区保存为通道前的一个缩略图上。GIMP 中有很多像矩形选择或模糊选择这样的选择工具。选区蒙板是一种能将选区放入一个灰阶通道的方法，其中选中的为白色像素，未选中的为黑色像素，而灰色像素则表示部分选中。您可以把它们看作被羽化的选区，是选中和未选中之间的过渡。这对在您填充选区或在从背景中分离一个物体后删除其内容时，避免产生的丑陋的格删化现象非常重要。
   </para>
@@ -88,6 +111,7 @@
       <term lang="cs">Vytvoření masky výběru</term>
       <term lang="de">Erstellen von Auswahlmasken</term>
       <term lang="fr">Création d'un masque de sélection</term>
+      <term lang="it">Creazione delle maschere di selezione</term>
       <term lang="zh_CN">创建选区蒙板</term>
       <listitem lang="en">
         <para>
@@ -147,6 +171,22 @@
           canaux en cliquant sur le bouton <guilabel>Nouveau
             canal</guilabel> ou depuis le menu contextuel obtenu par 
             clic-droit sur un canal.
+        </para>
+      </listitem>
+      <listitem lang="it">
+        <para>
+          Ci sono diversi modi per creare una maschera di selezione. Se è
+          attiva una selezione, nel menu della finestra immagine è
+          disponibile la voce:
+          <menuchoice>
+            <guimenu><accel>S</accel>eleziona</guimenu>
+            <guisubmenu>Salva nel <accel>C</accel>anale</guisubmenu>
+          </menuchoice>.
+          Il pulsante in basso a sinistra nella finestra dell'immagine crea una 
+          <link linkend="gimp-qmask">Maschera veloce</link>; il cui contenuto
+          iniziale sarà quello della selezione attiva. Dalla finestra dei 
+          canali quando si fa clic sul pulsante <guilabel>Nuovo canale</guilabel> 
+          o dal menu contestuale.
         </para>
       </listitem>
       <listitem lang="zh_CN">
@@ -298,6 +338,43 @@
       </para>
         </caution>
   </simplesect>
+
+  <simplesect lang='it'>
+    <title lang="it">Utilizzo delle maschere di selezione</title>
+    <para>
+      Una volta che il canale è stato creato, è selezionato (evidenziato in blu),
+      è visibile (icona con l'occhio nella finestra), ed è visualizzato nel 
+      modo desiderato (attributi di colore ed opacità), si può iniziare a 
+      lavorarci con tutti gli strumenti di disegno. I colori utilizzati sono
+      importanti. Se si dipinge con colori diversi dal bianco, dal grigio o dal
+      nero, il valore del colore (luminosità) sarà usato per definire un grigio
+      (medio, chiaro o scuro). Quando la maschera è stata dipinta la si può 
+      trasformare in una selezione facendo clic sul pulsante <guilabel>Canale a 
+      selezione</guilabel> o dal menu contestuale.
+    </para>
+    <tip>
+      <para>
+        Sulle maschere di selezione si può lavorare non solo con gli strumenti
+        di disegno, ma anche con altri strumenti. Per esempio, si possono usare
+        gli strumenti di selezione per riempire uniformemente delle zone con dei
+        gradienti o con dei motivi. Aggiungendo alla lista diverse maschere 
+        di selezione si possono facilmente comporre delle selezioni complesse.
+        Si può affermare che una maschera di selezione rappresenta per le 
+        selezioni quello che un livello rappresenta per un'immagine.
+      </para>
+    </tip>
+    <caution>
+      <para>
+        Fintanto che una maschera di selezione è attiva si lavora sulla maschera
+        e non sull'immagine. Per lavorare sull'immagine è necessario disattivare
+        tutte le maschere di selezione. Non va dimenticato anche di disabilitare
+        la visualizzazione delle maschere nell'immagine, eliminando l'icona con
+        l'occhio. Va anche controllato che tutti i canali RGB e alfa sia attivi
+        e visualizzati nell'immagine.
+      </para>
+    </caution>
+  </simplesect>
+  
   <simplesect lang='zh_CN'>
     <title lang="zh_CN">使用选区蒙板</title>
         <para>
