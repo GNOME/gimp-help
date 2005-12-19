@@ -4,22 +4,25 @@
      Version 1.1 which is available from http://www.gnu.org. -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
   <xsl:import href="http://db2latex.sourceforge.net/xsl/docbook.xsl" />
-  <xsl:param name="generate.index">1</xsl:param>
-  <xsl:param name="section.autolabel" select="1" />
+
   <xsl:param name="admon.graphics" select="1" />
   <xsl:param name="admon.graphics.path">../images</xsl:param>
   <xsl:param name="callout.graphics">1</xsl:param>
   <xsl:param name="callout.graphics.path">../images/callouts/</xsl:param>
   <xsl:param name="generate.callout.arearefs">1</xsl:param>
+  <xsl:param name="generate.index">1</xsl:param>
+  <xsl:param name="insert.xref.page.number">1</xsl:param>
   <xsl:param name="latex.document.font">palatino</xsl:param>
-  <xsl:param name="latex.use.tabularx">0</xsl:param>
+  <xsl:param name="latex.documentclass">scrreprt</xsl:param>
+  <xsl:param name="latex.is.draft">1</xsl:param>
   <xsl:param name="latex.use.ltxtable">0</xsl:param>
   <xsl:param name="latex.use.overpic">1</xsl:param>
-  <xsl:param name="latex.documentclass">scrreprt</xsl:param>
-  <xsl:param name="insert.xref.page.number">1</xsl:param>
-  <xsl:param name="latex.is.draft">1</xsl:param>
-  
+  <xsl:param name="latex.use.tabularx">0</xsl:param>
+  <xsl:param name="section.autolabel" select="1" />
+  <xsl:param name="toc.section.depth">2</xsl:param>
+
   <xsl:output encoding="UTF-8"/>
+
   <xsl:variable name="latex.inputenc">utf8x</xsl:variable>
   <xsl:variable name="latex.use.ucs">1</xsl:variable>
   <xsl:variable name="latex.ucs.options">postscript</xsl:variable>
