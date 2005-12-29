@@ -69,18 +69,15 @@
       do with them.
     </para>
     
-    <para lang="de">
-      Man möchte am liebsten den Begriff des
-      <emphasis>Bildes</emphasis>
-      durch ein Bildformat wie
-      <link linkend="file-jpeg-load">JPEG</link>
-      beschreiben. Vielleicht könnte man den Begriff auch annähern, indem man
-      das Bildfenster beschreibt. Jedoch ist ein
-      <acronym>Gimp</acronym>
-      -Bild etwas viel komplexeres. Eine Struktur aus einem Stapel von Ebenen,
-      Bildobjekten, Masken, Pfaden etc. In diesem Abschnitt möchten wir Ihnen
-      einen detailierten Überblick über alle Bildkomponenten geben und Ihnen
-      zeigen, wie man sie benutzt.
+    <para lang='de'>
+      Es mag verlockend sein, sich ein Bild in GIMP einfach als eine Fläche
+      vorzustellen auf der man Zeichnen, die man mit Filtern verändern und
+      dann in einem Dateiformat wie <link linkend='file-jpeg-load'>JPEG</link>
+      speichern kann. Prinzipiell könnten Sie es in der Tat bei dieser
+      Vorstellung belassen, allerdings wird sich Ihnen die Welt von GIMP dann
+      nur in einem klitzekleinen Ausschnitt präsentieren. Um Ihnen das ganze
+      GIMP Universum zugänglich zu machen, werden wir Ihnen in diesem Kapitel
+      Begriffe wie Farbmodell, Ebene, Kanal, Maske und Pfad näher bringen.
     </para>
 
     <para lang="fr">
@@ -134,6 +131,25 @@
       Color Models</link>
     </para>
 
+    <!--  this para describes the difference between vecotor and pixel based images -->
+    <para lang='de'>
+      Zunächsteinmal ist es wichtig zu wissen, dass sich Bilder grundsätzlich
+      in zwei Klassen einteilen lassen. Zum einen gibt es Vektorgrafiken.
+      Diese zeichnen sich dadurch aus, dass alle Bildinhalte als mathematische
+      Formen beschrieben werden
+      <footnote>
+        <para>
+          Ein frei verfügbares Programm, um Vektorgrafiken zu bearbeiten ist
+          <ulink url="http://www.inkscape.org/?lang=de">Inkscape.</ulink>
+        </para>
+      </footnote>.
+      Dies hat den großen Vorteil, dass solche Bilder völlig problemlos
+      beliebig vergrößert werden können, ohne dass Stufen oder ähnliches
+      sichtbar werden. Allerdings ist es für viele Bildinhalte wie
+      beispielsweise Digitalfotos sehr kompliziert bis unmöglich diese in
+      mathematischen Formen wie Linien, Kreisen oder Bögen zu beschreiben.
+    </para>
+
     <para lang="fr">
       La propriété de base d'une image est son <emphasis>mode</emphasis>: 
       RVB, Niveaux de gris et Indexé. RVB veut dire Rouge Vert Bleu et 
@@ -141,16 +157,6 @@
       rouge, un niveau de vert et un niveau de bleu. Chaque canal de couleur 
       possède 256 niveaux d'intensité. Plus de détails peuvent être trouvés 
       dans <link linkend="glossary-colormodel">Couleurs: modèles</link>
-    </para>
-    
-    <para lang="de">
-      Die wohl grundlegenste Eigenschaft eines Bildes ist der
-      <emphasis>Modus</emphasis>. Es gibt drei mögliche Modi: RGB,
-      Graustufen oder Indiziert. Jeder Pixel im Bild wird durch einen
-      (R)oten,(G)rünen und (B)lauen Wert beschrieben. Da die Farben, die
-      das menschliche Auge ebenfalls durch eine Kombination von Rot,
-      Grün und Blau beschrieben werden kann, spricht man auch von
-      Echtfarben. Jeder Farbkanal hat 256 mögliche Intensitätsstufen.
     </para>
 
     <para lang="nl">
@@ -183,11 +189,38 @@
       values representing different levels of gray.
     </para>
 
+    <!--  this para describes different color models -->
     <para lang="de">
-      In einem Graustufenbild wird jeder Pixel durch einen
-      Helligkeitswert beschrieben. Dieser Helligkeitswert reicht von 0
-      für Schwarz bis einem Wert von 255 (Weiß).  Inmitten von Schwarz
-      und Weiß verstehen sich die Stufen als Grauwerte.
+      Hierfür ist die zweite Gruppe von Bildern, als Rastergrafik bezeichnet,
+      sehr viel besser geeignet. Bei Rastergrafiken werden die Bilder in
+      kleine Punkte, sogenannte Pixel, zerlegt, die in einem Raster aus Zeilen
+      und Spalten angeordnet die Bildinhalte abbilden. Bilder, welche Sie in
+      GIMP bearbeiten sind immer Rastergrafiken. Bilder haben in GIMP einige
+      sehr wichtige Eigenschaften. Zunächsteinmal ist da die Anzahl der Zeilen
+      und Spalten in denen Pixel angeordnet sind. Diese bestimmen die
+      Bildgröße (nicht zu verwechseln mit der Dateigröße, die eine Eigenschaft
+      der Datei ist, in die Sie ein Bild speichern). Die zweite wichtige
+      Eigenschaft von Bildern neben der Bildgröße ist das 
+      <link linkend="glossary-colormodel">Farbmodell</link>. Dieses beschreibt,
+      welche Farben die Pixel annehmen können und wie diese Farben
+      zusammengesetzt werden. Zu den bekanntesten Farbmodellen gehören
+      <link linkend="glossary-rgb">RGB</link>, 
+      <link linkend="glossary-cmyk">CMY(K)</link>, 
+      <link linkend="glossary-hsv">HSV</link> und 
+      <link linkend="glossary-rgb">YUV</link>.
+      Alle diese Farbmodelle dienen dazu, Farben zu beschreiben. Hierzu werden
+      verschiedene Komponenten zur Verfügung gestellt. Das RGB Modell
+      verwendet beispielsweise als Komponenten die Primärfarben
+      <emphasis>R</emphasis>ot, <emphasis>G</emphasis>rün und
+      <emphasis>B</emphasis>lau, welche in verschiedenen Verhältnissen addiert
+      werden. Daher ist RGB ein sogenanntes additives Farbmodell. Bei CMY(K)
+      werden als Komponenten <emphasis>C</emphasis>yan,
+      <emphasis>M</emphasis>agenta, <emphasis>Y</emphasis>ello und
+      <emphasis>K</emphasis>ey verwendet, die beim Mischen voneinander
+      subtrahiert werden. CMYK ist daher ein subtraktives Farbmodell. Bei HSV
+      dienen <emphasis>H</emphasis>ue (Farbton),
+      <emphasis>S</emphasis>aturation (Sättigung) und
+      <emphasis>V</emphasis>alue (Intensität) als Komponenten.
     </para>
 
     <para lang="fr">
@@ -207,6 +240,40 @@
       对一个灰度的图像，每个点由从 0 (黑色)到 255 (白色)的亮度值来表现，其中间的值来表现不同程度的灰。
     </para>
 
+    <figure lang="de">
+      <title>
+        <phrase lang="en">Components of the RGB and CMY color model</phrase>
+        <phrase lang="de">Komponenten der Farbmodelle RGB und CMY</phrase>
+      </title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="../images/glossary/color-model-additive.png"
+            format="PNG" />
+        </imageobject>
+        <caption>
+          <para lang="de">
+            Im RGB Farbmodell ergeben die Grundfarben Rot, Grün und Blau
+            zusammengemischt Weiss. Ein Anwendungsbeispiel ist die Darstellung
+            von Farben auf einem Bildschirm
+          </para>
+        </caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="../images/glossary/color-model-subtractive.png"
+            format="PNG" />
+        </imageobject>
+        <caption>
+          <para lang="de">
+            Im CMY(K) Farbmodell ergeben die Grundfarben Cyan, Magenta und
+            Yellow zusammengemischt Schwarz. Ein Anwendungsbeispiel ist der
+            Farbdruck, bei dem oftmals zusätzlich echtes Schwarz (K) verwendet
+            wird.
+          </para>
+        </caption>
+      </mediaobject>
+    </figure>
+
     <para lang="cs">
       Rozdíl mezi obrázkem v odstínech šedi a barevným RGB obrázkem je
       v počtu barevných kanálů. Obrázek v odstínech šedi má kanál jediný,
@@ -223,12 +290,24 @@
       and one blue.
     </para>
 
+    <!--  this para describes the image modus as color model -->
     <para lang="de">
-      Der Unterschwied zwischen einem Graustufen und RGB Bild besteht in
-      der Anzahl der "Farbkanäle": Ein Graustufenbild besitzt einen; ein
-      RGB Bild gleich drei. Ein RGB Bild auch als eine Komposition aus
-      drei Graustufenbilder – jedes Bild beschreibt einen Farbkanal –
-      verstanden werden.
+      Das Farbmodell eines Bildes wird in GIMP als <emphasis>Modus</emphasis>
+      bezeichnet. Neben RGB können sich Bilder in GIMP auch in den Modi
+      <emphasis>Graustufen</emphasis> oder <emphasis>Indiziert</emphasis>
+      befinden. Die beiden letzteren stellen keine Farbmodelle im engeren Sinn
+      dar. Ein Graustufenbild ist sozusagen ein Bild mit genau einer
+      Komponente, nämlich der Helligkeit im Bereich zwischen Schwarz und
+      Weiss. Im Modus indiziert wird eine Palette vordefinierter Farben
+      verwendet und jedem Pixel eines der 256 Fächer der Palette zugewiesen.
+      Indizierte Bilder haben den Vorteil, dass Sie im Rechner mit wenig
+      Ressourcen dargestellt und gespeichert werden können. Dieser Vorteil war
+      vor allem in Zeiten der Vernetzung mit langsamen Verbindungen ein
+      entscheidender Punkt. So waren indizierte Bilder in den Anfängen des
+      World Wide Webs sehr stark verbreitet. Die anderen oben erwähnten
+      Farbmodelle können in GIMP nicht als Eigenschaft des Bildes eingestellt
+      werden. Jedoch stehen sie als Farbwähler zur Verfügung und sind,
+      insbesondere im Fall von HSV, Grundlage verschiedener Filter.
     </para>
 
     <para lang="fr">
@@ -270,24 +349,23 @@
       underneath.  When alpha is maximal, the layer is opaque, and the
       color is determined by the color of the layer.  Intermediate
       alpha values correspond to varying degrees of translucency:  the
-      color at the location is a proportionl mixture of color from the
+      color at the location is a proportional mixture of color from the
       layer and color from underneath.
     </para>
 
+    <!--  this para describes channels, representing the components of the color model -->
     <para lang="de">
-      Eigentlich haben beide Modi – also RGB und Graustufen – einen
-      zusätzlichen Farbkanal; den sogenannten <emphasis>Alpha</emphasis>
-      Kanal. Dieser beschreibt die Deckkraft. Wenn ein Bereich im Bild
-      einen Alphawert von 0 besitzt, ist dieser Bereich vollkommen
-      transparent und wird im Aussehen dadurch bestimmt, was "unter"
-      diesen Bereich hindurch zu sehen ist. Ist der Alphawert jedoch auf
-      den Maximalwert, ist dieser Bereich komplett deckend und das
-      Aussehen dieses Bereiches wird durch die Farbe in diesem Bereich
-      bestimmt. Alphawerte können verschiedene Arten des Durchscheinens
-      oder Blendens
-      beschreiben. So werden die Farben zweier Ebenen beispielsweise
-      gemischt, wenn die oberste Ebene einen mittleren Alphawert
-      besitzt.
+      Jede einzelne Komponente eines Farbmodells wird in GIMP als
+      <emphasis>Kanal</emphasis> abgebildet. Bei einem Bild im RGB Modus
+      werden folglich drei Kanäle, je einer für Rot, Grün und Blau verwendet.
+      Befindet sich das Bild hingegen im Modus Graustufen, wird lediglich ein
+      Kanal für die Helligkeit verwendet. In jedem Kanal werden die Werte in
+      256 Stufen abgebildet. Mit einem Bild im RGB Modus lassen sich daher
+      256 Rottöne * 256 Grüntöne * 256 Blautöne = 16,8 Millionen verschiedene
+      Farben darstellen, während ein Bild im Modus Graustufen lediglich über
+      256 Helligkeitsstufen = Grautöne verfügt. Sie können die Kanäle eines
+      Bildes in GIMP im <link linkend="gimp-channel-dialog">Kanaldialog</link>
+      sehen und sogar einzeln bearbeiten.
     </para>
     
     <para lang="fr">
@@ -319,6 +397,43 @@
       准确的说，RGB 和灰度图像都有一个附加的颜色通道，叫做 <emphasis>alpha</emphasis> 通道，它代表不透明度。当选定的图层其上位置的不透明度为零，图层就完全是透明的，这样那个位置的颜色由它下面是什么决定。当 alpha 为最大值，图层就是不透明的，该位置的颜色有图层颜色决定。其中间的 alpha 值用来区分不同的透明程度：该位置的颜色就由一定比例的图层颜色和图层下面的颜色决定。
    </para>
 
+    <figure lang="de">
+      <title>
+        <phrase lang="en">
+          Example of an image in RGB and Grayscale mode
+        </phrase>
+        <phrase lang="de">
+          Ein Bild im RGB Modus und im Graustufenmodus
+        </phrase>
+      </title>
+
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="../images/using/wilber-channel-rgb.png"
+            format="PNG" />
+        </imageobject>
+        <caption lang="de">
+          <para lang="de">
+            Ein Farbbild im RGB Modus mit den zugehörigen Kanälen für Rot,
+            Grün und Blau.
+          </para>
+        </caption>
+      </mediaobject>
+
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="../images/using/wilber-channel-gray.png"
+            format="PNG" />
+        </imageobject>
+        <caption lang="de">
+          <para lang="de">
+            Ein Bild im Modus Graustufen mit dem zugehörigen Kanal für die
+            Helligkeit.
+          </para>
+        </caption>
+      </mediaobject>
+    </figure>
+
     <para lang="cs">
       V Gimpu mají hodnoty v každém kanálu, včetně barevného kanálu,
       rozsah od 0 do 255, tj. 256 možných hodnot. V počítačové grafice
@@ -342,18 +457,13 @@
       perceptible. 
     </para>
 
-    <para lang="de">
-      Jeder Farb- und Alphakanal in <acronym>Gimp</acronym> hat einen
-      Wertebereich von 0 bis 255; rechentechnisch 8 Bit. Dieser
-      Wertebereich wird auch Farbtiefe genannt. Einige
-      hochwertige Digitalkameras können Bilder mit einer Farbtiefe von
-      16 Bit pro Farbkanal erzeugen. <acronym>Gimp</acronym> kann diese
-      Bilder nicht ohne Verlust laden.  In den meisten Fällen wird der
-      Verlust durch Menschen nicht wahrgenommen und ist zu
-      vernachlässigen. Jedoch besteht in manchen Fällen dringenden
-      Bedarf für 16 Bit Farbtiefe. Vor allem bei großen Bildbereichen
-      mit kaum sichtbaren Kontrastveränderungen ist ein Unterschied in
-      der Farbtiefe zu erkennen.
+    <!--  this para describes transparency and alpha channels  -->
+    <para lang='de'>
+      Neben den Kanälen zur Abbildung des Farbmodells kann ein Bild in GIMP
+      zusätzlich über einen sogenannten Alphakanal verfügen. Mit diesem
+      können Sie in 256 Stufen einstellen, wie durchsichtig ein Pixel des
+      Bildes sein soll. Dies ist insbesondere im Zusammenhang mit Ebenen
+      wichtig.
     </para>
     
     <para lang="fr">
@@ -383,6 +493,30 @@
       Gimp 中，每个颜色通道包括 alpha 通道其可能的值都在 0 到 255 之间；用计算机术语说就是 8 位深度。一些数码相机能产生每个颜色通道 16 位深度的图像文件。Gimp 无法读取这种文件而不丢失分辨率。大部分情况下，那样的效果太细微以至人眼无法查觉，但在一些情况中，主要是缓慢颜色渐变的大片区域，还是能够查觉到其差别。
     </para>
 
+    <figure lang="de">
+      <title>
+        <phrase lang="en">Example of an image with alpha channel</phrase>
+        <phrase lang="de">Ein Bild mit Alphakanal</phrase>
+      </title>
+
+      <mediaobject>
+        <imageobject lang="en">
+          <imagedata fileref="../images/dialogs/dialogs-channels-example.png"
+            format="PNG" />
+        </imageobject>
+        <imageobject lang="de">
+          <imagedata fileref="../images/dialogs/de/dialogs-channels-example.png"
+            format="PNG" />
+        </imageobject>
+        <caption lang="de">
+          <para lang="de">
+            Ein Farbbild im RGB Modus mit Alphakanal. Der Alphakanal
+            beschreibt, welche Bildbereiche durchsichtig sein sollen.
+          </para>
+        </caption>
+      </mediaobject>
+    </figure>
+
     <para lang="cs">
       Třetí typ, <emphasis>indexované obrázky</emphasis>, je trochu náročnější
       k pochopení. V ibnexovaném obázku je použita pouze omezená paleta barev,
@@ -398,33 +532,37 @@
     </para>
 
     <para lang="en">
-      The third type, <emphasis>indexed</emphasis> images, is a bit
-      more complicated to understand.  In an 
-      indexed image, only a limited set of discrete colors are used,
-      usually 256 or less.  These colors form the "colormap" of the
-      image, and each point in the image is assigned a color from the
-      colormap.  Indexed images have the advantage that they can be
-      represented inside a computer in a way that consumes relatively
-      little memory, and back in the dark ages (say, ten years ago),
-      they were very commmonly used.  As time goes on, they are used
-      less and less, but they are still important enough to be worth
-      supporting in Gimp.  (Also, there are a few important kinds of
-      image manipulation that are easier to implement with indexed
-      images than with continuous-color RGB images.)
+      The third type, <emphasis>indexed</emphasis>
+      images, is a bit more complicated to understand. In an indexed image,
+      only a limited set of discrete colors are used, usually 256 or less.
+      These colors form the "colormap" of the image, and each point in the
+      image is assigned a color from the colormap. Indexed images have the
+      advantage that they can be represented inside a computer in a way that
+      consumes relatively little memory, and back in the dark ages (say, ten
+      years ago), they were very commonly used. As time goes on, they are
+      used less and less, but they are still important enough to be worth
+      supporting in Gimp. (Also, there are a few important kinds of image
+      manipulation that are easier to implement with indexed images than with
+      continuous-color RGB images.)
     </para>
 
-    <para lang="de">
-      Der dritte und letzte Typ der hier beschrieben wird, sind
-      <emphasis>indizierte</emphasis> Bilder. Dieser Modus ist etwas
-      schwerer zu verstehen, da es in einem indizierten Bild nur eine
-      Anzahl von 256 (oder wenigeren) wohldefinierten Farben gibt.
-      Diese maximal 256 wohldefinierten Farben werden in einer Tabelle
-      geführt, die auch als Farbpalette oder im englischen Colormap
-      bezeichnet wird. Indizierte Bilder haben den Vorteil, dass Sie im
-      Rechner mit wenig Ressourcen dargestellt und gespeichert werden
-      können. Dieser Vorteil ist vor allem in Zeiten der Vernetzung mit
-      langsamen Bandbreiten ein entscheidener Punkt. So waren indizierte
-      Bilder in den Anfangen des World Wide Webs sehr stark verbreitet.
+    <!--  this para describes layers -->
+    <para lang='de'>
+      Im vorigen Absatz wurde bereits ein Begriff aus der GIMP Welt verwendet,
+      der noch nicht erklärt wurde: die Ebene. Grob gesagt können Sie sich
+      eine Ebene als eine Art Klarsichtfolie vorstellen, auf der Sie malen,
+      oder die Sie mit Filtern und all den anderen tollen Werkzeugen von
+      GIMP bearbeiten können. Was Ebenen in GIMP so nützlich macht, ist dass
+      es davon beliebig viele geben kann. Alle Ebenen liegen in einem Stapel
+      übereinander. Das Gesamtbild ergibt sich, wenn Sie von oben durch den
+      gesamten Ebenenstapel hindurchschauen. Jede Ebene verfügt über einen
+      eigenen Satz an Kanälen, inklusive Alphakanal. Um mit Ebenen arbeiten
+      zu können, sollten Sie sich intensiv mit dem Ebenendialog (siehe
+      <xref linkend="gimp-layer-dialog" />) vertraut machen. Dort können Sie
+      unter anderem einstellen welche Ebenen sichtbar sein sollen und wie die
+      einzelnen Ebenen miteinander verknüpft werden. Außerdem erhalten Sie im
+      <xref linkend="gimp-concepts-layers" /> einige nützliche Hinweise zur
+      Arbeit mit Ebenen.
     </para>
     
     <para lang="fr">
@@ -483,16 +621,17 @@
       convert it back to indexed mode when you are ready of save it
     </para>
     
-    <para lang="de">
-      Verschiedene Bildformate werden als indizierte Bilder in
-      <acronym>Gimp</acronym> geöffnet (z.B. <link
-      linkend="file-gif-load">GIF</link>, <link
-      linkend="file-png-load">PNG</link>).  Viele der
-      <acronym>Gimp</acronym> Werkzeuge funktionieren durch die
-      begrenzte Anzahl von Farben, nicht richtig auf indizierten
-      Bildern. Demnach ist es besser die geöffneten Bilder nach RGB zu
-      konvertieren, bevor das Bild manipuliert wird. Falls nötig kann
-      das bearbeitete Bild wieder zurückkonvertiert werden.
+    <para lang='de'>
+      Verschiedene Dateiformate werden als indizierte Bilder in
+      <acronym>GIMP</acronym> geöffnet (z.B.
+      <link linkend='file-gif-load'>GIF</link>,
+      <link linkend='file-png-load'>PNG</link>). Viele der
+      <acronym>GIMP</acronym>
+      Werkzeuge und Filter funktionieren durch die begrenzte Anzahl von
+      Farben unter Umständen nicht auf indizierten Bildern. Daher empfehlen
+      wir Ihnen die geöffneten Bilder nach RGB zu konvertieren, bevor das
+      Bild manipuliert wird. Falls nötig kann das bearbeitete Bild wieder
+      zurückkonvertiert werden.
     </para>
     
     <para lang="fr">
@@ -537,11 +676,16 @@
     </para>
 
     <para lang="de">
-      Mit <acronym>Gimp</acronym> ist es einfach von einen Farbmodus in
-      den Farbmodus mittels <link linkend="gimp-image-mode">Modus</link>
-      zu konvertieren. Angemerkt sei noch, dass bestimmte
-      Konvertierungen verlustbehaftet sind, wie z.B. RGB nach
-      Graustufen.
+      Mit GIMP ist es sehr einfach ein Bild von einem Modus in einen anderen
+      umzuwandeln. Hierzu steht Ihnen das Menü
+      <menuchoice>
+        <guimenu>Farbe</guimenu>
+        <guisubmenu>Modus</guisubmenu>
+      </menuchoice> im Bildfenster zur Verfügung. Bitte beachten Sie jedoch,
+      dass bei der Umwandlung zum Beispiel von RGB nach Graustufen
+      Informationen verloren gehen können (nämlich in diesem Fall alle
+      Farbinformationen) und Sie diesen Schritt nicht rückgängig machen
+      können.
     </para>
 
     <para lang="fr">
@@ -573,31 +717,29 @@
     <note>
       <para lang="cs">
         Pokud se nsažíte na obrázek aplikovat filtr,ale ten je v nabídce
-        zašedlý, bývá často důvodem špatný režim obrázku (nebo vrstvy).
-        Mnoho filtrů například nelze použít na indexované obrázky. Některé
-        fungují pouze na RGB obrázcích, jiné na obrázcích ve stupních šedi.
-        Některé také vyžadují přítomnost alfa kanálu. Řešením je převedení
-        obrázku do správného režimu, obvykle RGB.
+        zašedlý, bývá často důvodem špatný režim obrázku (nebo vrstvy). Mnoho
+        filtrů například nelze použít na indexované obrázky. Některé fungují
+        pouze na RGB obrázcích, jiné na obrázcích ve stupních šedi. Některé
+        také vyžadují přítomnost alfa kanálu. Řešením je převedení obrázku do
+        správného režimu, obvykle RGB.
       </para>
 
       <para lang="en">
-        If you are trying to use a filter on an image, and it appears
-        grayed out in the menu, usually the cause is that the image (or,
-        more specifically, the layer) you are working on is the wrong
-        type.  Many filters can't be used on indexed images.  Some can
-        be used only on RGB images, or only on grayscale images.  Some
-        also require the presence or absence of an alpha channel.
-        Usually the fix is to convert the image to a different type,
-        most commonly RGB.
+        If you are trying to use a filter on an image, and it appears grayed
+        out in the menu, usually the cause is that the image (or, more
+        specifically, the layer) you are working on is the wrong type. Many
+        filters can't be used on indexed images. Some can be used only on RGB
+        images, or only on grayscale images. Some also require the presence or
+        absence of an alpha channel. Usually the fix is to convert the image
+        to a different type, most commonly RGB.
       </para>
 
-      <para lang="de">
-        Sollten Sie einen Filter benutzen wollen, der ausgegraut
-        im Menü erscheint, liegt es am falschen Farbmodus der Ebene oder
-        des Bildes. Manche Filter funktionieren nur auf Bilder mit RGB
-        Farbmodus. Manche davon benötigen noch einen zusätzlichen
-        Alphakanal. Meistens reicht es jedoch aus, den Farbmodus auf RGB
-        zu ändern.
+      <para lang='de'>
+        Sollten Sie einen Filter benutzen wollen, der ausgegraut im Menü
+        erscheint, liegt es am falschen Farbmodus der Ebene oder des Bildes.
+        Manche Filter funktionieren nur auf Bilder mit RGB Farbmodus. Manche
+        davon benötigen noch einen zusätzlichen Alphakanal. Meistens reicht es
+        jedoch aus, den Farbmodus auf RGB zu ändern.
       </para>
       
       <para lang="fr">
@@ -619,10 +761,10 @@
         toepassen van het verkeerde type is. Sommige bewerkingen kunnen
         namelijk alleen uitgevoerd worden op RGB of alleen grijswaarde
         afbeeldingen. Of voor sommigen is de aanwezigheid, of juist de
-        áfwezigheid van het transparantie- (of alfa-)kanaal noodzakelijk.
-        Als u dan toch de bewuste bewerking nodig heeft kunt u dit oplossen
-        door de afbeelding naar een ander type om te zetten; meestal komt dit
-        neer op een omzetting naar RGB.
+        áfwezigheid van het transparantie- (of alfa-)kanaal noodzakelijk. Als
+        u dan toch de bewuste bewerking nodig heeft kunt u dit oplossen door
+        de afbeelding naar een ander type om te zetten; meestal komt dit neer
+        op een omzetting naar RGB.
       </para>
 
       <para lang="zh_CN">
