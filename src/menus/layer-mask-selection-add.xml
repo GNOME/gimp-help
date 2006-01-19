@@ -4,21 +4,35 @@
   PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
   "http://www.docbook.org/xml/4.3/docbookx.dtd">
 
-<!-- section history: -->
-<!-- 2005/11/11 split of from layer-mask.xml by axel.wernicke -->
-<sect2 id='gimp-layer-mask-selection-add' lang="en;de;zh_CH">
+<!-- section history: 
+     2006-01-13 en;fr reviewed - figure added by j.h
+     2005/11/15 split of from layer-mask.xml by axel.wernicke 
+-->
+<sect2 id='gimp-layer-mask-selection-add' lang="en;de;fr;zh_CH">
   <title>
-    <phrase lang='en'>Add to Selection</phrase>
+    <phrase lang='en'>Add Layer Mask to Selection</phrase>
     <phrase lang='de'>Zur Auswahl hinzufügen</phrase>
+    <phrase lang='fr'>Ajouter le masque de calque à la sélection</phrase>
     <phrase lang="zh_CN">添加到选区</phrase>
   </title>
+  
+  <indexterm lang="en">
+    <primary>Layer Mask</primary>
+    <secondary>Add to Selection</secondary>
+  </indexterm>
+  <indexterm lang="fr">
+    <primary>Masque de calque</primary>
+    <secondary>Ajouter à la sélection</secondary>
+  </indexterm>
 
   <para lang="en">
-    With this command you can transform the layer mask of the active layer 
-    into a selection which will be added to the selection already existing 
-    in the active image. White areas of the layer mask will be selected and 
-    black areas will remain out of selection. Grey areas will be added as 
-    feathered areas. Layer mask itself will not be modified by this command.
+    This commands adds to the existing selection the pixels of the active 
+    layer corresponding to pixels with more than 0% opacity in the layer 
+    mask. White pixels (100% opaques) in layer mask will give pixels fully 
+    selected in the image. Grayscaled pixels (1%-99% opaques) will give a 
+    feathered selection. Black pixels (0% opaques) will not be selected. 
+    Pixels are not actually added: they are included in the selection. The 
+    layer mask is not modified by this command.
   </para>
   <para lang="de">
     Mit diesem Kommando können Sie die Ebenenmaske der aktiven Eben in eine
@@ -30,16 +44,47 @@
     verändert.
   </para>
   <para lang="fr">
-    Avec cette commande vous pouvez transformer le masque de calque du 
-    calque actif en une sélection qui sera ajoutée à la sélection déjà 
-    existante dans l'image active. Les zones blanches du masque de calque 
-    seront sélectionnées et les zones noires resteront en dehors de la 
-    sélection. Les zones grises du masque de calque seront ajoutées en zones 
-    adoucies. Le masque de calque lui-même ne sera pas modifié par cette 
-    commande.
+    Cette commande ajoute à la sélection existante les pixels de l'image 
+    correspondant dans le masque de calque à des pixels dont 
+    l'opacité est supérieure à 0%. Les pixels blancs (100% opaques) du 
+    masque de calque donneront des pixels entièrement sélectionnés dans 
+    l'image. Les pixels gris (1%-99% opaques) donneront une sélection 
+    adoucie. Les pixels noirs (0% opaques ne seront pas ajoutés. les pixels 
+    ne sont pas véritablement ajoutés: ils sont inclus dans la sélection. 
+    Le masque de calque n'est pas modifié par cette commande.
   </para>
 
-
+  <figure lang="en;fr">
+    <title>
+      <phrase lang="en">Illustration of Add layer mask to Selection</phrase>
+      <phrase lang="fr">Illustration de Ajouter le masque de calque à la 
+      sélection</phrase>
+    </title>
+<!-- A layer-mask-select.xcf file exists to create your own language image-->  
+    <mediaobject>
+      <imageobject lang="en">
+        <imagedata 
+        fileref='../images/menus/layer-mask-add.png' format='PNG' />
+      </imageobject>
+      <imageobject lang="fr">
+        <imagedata 
+        fileref='../images/menus/fr/layer-mask-add.png' format='PNG' />
+      </imageobject>
+      <caption>
+        <para lang="en">
+          From left to right: original image with a selection, layer dialog 
+          with a layer mask created with the <quote>Layer's alpha 
+          channel</quote> option, after adding layer mask to selection.
+        </para>
+        <para lang="fr">
+          De gauche à droite: image d'origine avec sélection, dialogue des 
+          calques avec masque de calque créé avec l'option «Canal Alpha du 
+          calque», après ajout du masque de calque à la sélection.
+        </para>
+      </caption>
+    </mediaobject>
+  </figure>
+  
   <sect3>
     <title>
       <phrase lang="en">Activate Dialog</phrase>
@@ -54,9 +99,9 @@
         <para lang='en'>
           These commands can be accessed from an image menubar as
           <menuchoice>
-            <guimenu>Layer</guimenu>
-            <guisubmenu>Mask</guisubmenu>
-            <guimenuitem>Add to Selection</guimenuitem>
+            <guimenu><accel>L</accel>ayer</guimenu>
+            <guisubmenu><accel>M</accel>ask</guisubmenu>
+            <guimenuitem><accel>A</accel>dd to Selection</guimenuitem>
           </menuchoice>,
         </para>
         <para lang="de">
@@ -65,6 +110,16 @@
             <guimenu><accel>E</accel>bene</guimenu>
             <guisubmenu><accel>M</accel>aske</guisubmenu>
             <guimenuitem>Zur Auswahl <accel>h</accel>inzufügen</guimenuitem>
+          </menuchoice>
+        </para>
+        <para lang='fr'>
+          On accède à cette commande à partir de la barre de menu de l'image 
+          par
+          <menuchoice>
+            <guimenu><accel>C</accel>alque</guimenu>
+            <guisubmenu><accel>M</accel>asque</guisubmenu>
+            <guimenuitem>A<accel>j</accel>outer à la sélection
+            </guimenuitem>
           </menuchoice>
         </para>
         <para lang="zh_CN">
@@ -84,6 +139,10 @@
         <para lang="de">
           Alternativ können Sie das Kommando im Kontextmenü des Ebenendialoges
           aufrufen.
+        </para>
+        <para lang="fr">
+          ou par le menu local obtenu par clic droit sur le calque actif 
+          dans la fenêtre de dialogue des calques.
         </para>
         <para lang="zh_CN">
           ，或从右键点击图层对话框中活动图层弹出的菜单中选取。
