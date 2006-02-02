@@ -8,5 +8,8 @@
   <xsl:output method="xml" encoding="utf-8"
     doctype-public="-//OASIS//DTD DocBook XML V4.3//EN"
     doctype-system="http://www.docbook.org/xml/4.3/docbookx.dtd"/>
-</xsl:stylesheet>
 
+  <!-- Drop comments -->
+  <xsl:template match="comment()" mode="profile"></xsl:template>
+
+</xsl:stylesheet>
