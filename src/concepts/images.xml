@@ -7,13 +7,14 @@
 <!-- section history:
   2005-12-18 reviewed and added rewrote de image explenation by lexa
 -->
-<sect1 id="gimp-concepts-images" xmlns:xi="http://www.w3.org/2001/XInclude" lang="cs;en;de;fr;nl;zh_CN">
+<sect1 id="gimp-concepts-images" xmlns:xi="http://www.w3.org/2001/XInclude" lang="cs;en;de;fr;nl;it;zh_CN">
   <title>
     <phrase lang="cs">Práce s obrázky</phrase>
     <phrase lang="en">Working with Images</phrase>
     <phrase lang="de">Mit Bildern arbeiten</phrase>
     <phrase lang="fr">Travailler avec des Images</phrase>  <!--050508-->
     <phrase lang="nl">Het werken met afbeeldingen</phrase>
+    <phrase lang="it">Lavorare con le immagini</phrase>
     <phrase lang="zh_CN">了解图像</phrase>
   </title>
 
@@ -43,6 +44,7 @@
       <phrase lang="de">Aufbau von Bildern in GIMP</phrase>
       <phrase lang="fr">Types d'images</phrase>
       <phrase lang="nl">Soorten afbeeldingen</phrase>
+      <phrase lang="it">Tipi di immagine</phrase>
       <phrase lang="zh_CN">图像格式</phrase>
     </title>
 
@@ -86,6 +88,18 @@
       un masque de sélection, une série de canaux, des chemins, un 
       historique d'annulation...etc. Nous allons voir en détail chacun des 
       composants d'une image, et ce que vous pouvez faire avec.
+    </para>
+
+    <para lang="it">
+      È facile pensare ad una <emphasis>immagine</emphasis> come qualcosa
+      che corrisponda ad una singola finestra del display o ad un singolo
+      file come un file <!--link linkend="file-jpeg-load" FIXME
+      -->JPEG<!--/link-->, invece un'immagine di Gimp è una struttura
+      veramente complessa, contenente una pila di livelli, oltre a molti
+      altri tipi di oggetti: una maschera di selezione, un'insieme di
+      canali, un'insieme di tracciati, una cronologia degli "annullamenti",
+      ecc. In questa sezione verrà fatta un'analisi un po' più in dettaglio
+      di tutti i componenti di un'immagine e di come possono essere utilizzati.
     </para>
 
     <para lang="nl">
@@ -159,6 +173,20 @@
       dans <link linkend="glossary-colormodel">Couleurs: modèles</link>
     </para>
 
+    <para lang="it">
+      La proprietà principale di un'immagine è la sua
+      <emphasis>modalità</emphasis>. Ci sono tre possibili modalità: RGB,
+      scala di grigi, e indicizzata. RGB, un acronimo che in inglese sta
+      per Rosso-Verde-Blu (Red-Green-Blue), indica che ogni punto
+      dell'immagine è rappresentato da un livello "rosso", uno "verde" e
+      uno "blu". Dato che ogni colore percepito dall'essere umano può
+      essere rappresentato come una combinazione di questi tre colori, le
+      immagini RGB sono immagini complete a colori. Ogni canale colore ha
+      256 livelli di intensità possibili. È possibile trovare ulteriori
+      dettagli cercando <link linkend="glossary-colormodel">modelli di
+      colore</link> nel glossario.
+    </para>
+
     <para lang="nl">
       De elementaire eigenschap van een afbeelding is de kleurmethode of
       <emphasis>modus</emphasis>. Er zijn drie verschillende kleurmodi:
@@ -229,6 +257,12 @@
       intermédiaires représentant les différents niveaux de gris.
     </para>
     
+    <para lang="it">
+      In un'immagine in scala di grigi, ogni punto è rappresentato da un
+      valore di luminosità che varia da 0 (nero) a 255 (bianco), con i
+      valori intermedi che rappresentano diversi livelli di grigio.
+    </para>
+
     <para lang="nl">
       Als een afbeelding uit grijswaarden opgebouwd is, wordt er aan ieder
       beeldpunt een helderheidswaarde gegeven die varieert tussen 0 (zwart) en
@@ -244,6 +278,7 @@
       <title>
         <phrase lang="en">Components of the RGB and CMY color model</phrase>
         <phrase lang="de">Komponenten der Farbmodelle RGB und CMY</phrase>
+        <phrase lang="it">Componenti del modello di colore RGB e CMY</phrase>
       </title>
       <mediaobject>
         <imageobject>
@@ -256,6 +291,12 @@
             zusammengemischt Weiss. Ein Anwendungsbeispiel ist die Darstellung
             von Farben auf einem Bildschirm
           </para>
+          <!--para lang="en" FIXME>
+	    Please translate from German in English
+          </para-->
+          <!--para lang="it" FIXME>
+	    Da tradurre in italiano quando c'è la traduzione in inglese
+          </para-->
         </caption>
       </mediaobject>
       <mediaobject>
@@ -270,6 +311,12 @@
             Farbdruck, bei dem oftmals zusätzlich echtes Schwarz (K) verwendet
             wird.
           </para>
+          <!--para lang="en" FIXME>
+	    Please translate from German in English
+          </para-->
+          <!--para lang="it" FIXME>
+	    Da tradurre in italiano quando c'è la traduzione in inglese
+          </para-->
         </caption>
       </mediaobject>
     </figure>
@@ -314,6 +361,15 @@
       La différence essentielle entre une image en niveaux de gris et une 
       image RVB est le nombre de canaux de couleur: une image en niveau de 
       gris n'en a qu'un alors que l'image RVB en a trois. 
+    </para>
+
+    <para lang="it">
+      Essenzialmente la differenze tra un'immagine in scala di grigi e
+      un'immagine RGB è il numero dei "canali di colore": un'immagine in
+      scala di grigi ne ha solo uno; un'immagine RGB ne possiede
+      tre. Un'immagine RGB può essere pensata come la sovrapposizione di
+      tre immagini in scala di grigi sovrapposte, ognuna con un filtro
+      colorato rispettivamente di rosso, verde e blu.
     </para>
 
     <para lang="nl">
@@ -380,6 +436,20 @@
       proportionnel de la couleur du calque et de la couleur située dessous.
     </para> 
 
+    <para lang="it">
+      Attualmente, sia le immagini RGB che a scala di grigi possiedono un
+      canale di colore aggiuntivo chiamato canale 
+      <emphasis>alfa</emphasis>, che rappresenta l'opacità. Quando il
+      valore alfa in un dato punto nel dato livello è zero, il livello è
+      completamente trasparente ed il colore in quel punto viene
+      determinato unicamente dal colore dei livelli sottostanti. Quando il
+      valore alfa è massimo, il livello è completamente opaco ed assume il
+      colore propriamente del livello stesso. Valori intermedi di alfa
+      corrispondono a valori di trasparenza: il colore del punto è
+      proporzionale alla somma dei colori del livello e dei livelli
+      sottostanti. 
+    </para>
+
     <para lang="nl">
       Naast de normale kleurkanalen hebben lagen in RGB en grijswaarde
       afbeeldingen nóg een kanaal dat het <emphasis>alfakanaal</emphasis>
@@ -397,13 +467,16 @@
       准确的说，RGB 和灰度图像都有一个附加的颜色通道，叫做 <emphasis>alpha</emphasis> 通道，它代表不透明度。当选定的图层其上位置的不透明度为零，图层就完全是透明的，这样那个位置的颜色由它下面是什么决定。当 alpha 为最大值，图层就是不透明的，该位置的颜色有图层颜色决定。其中间的 alpha 值用来区分不同的透明程度：该位置的颜色就由一定比例的图层颜色和图层下面的颜色决定。
    </para>
 
-    <figure lang="de">
+    <figure lang="de;en;it">
       <title>
         <phrase lang="en">
           Example of an image in RGB and Grayscale mode
         </phrase>
         <phrase lang="de">
           Ein Bild im RGB Modus und im Graustufenmodus
+        </phrase>
+        <phrase lang="it">
+	  Esempio di un'immagine in modalità RGB e in scala di grigi
         </phrase>
       </title>
 
@@ -417,6 +490,12 @@
             Ein Farbbild im RGB Modus mit den zugehörigen Kanälen für Rot,
             Grün und Blau.
           </para>
+          <!--para lang="en" FIXME>
+	    Please translate from German in English
+          </para-->
+          <!--para lang="it" FIXME>
+	    Da tradurre in italiano quando c'è la traduzione in inglese
+          </para-->
         </caption>
       </mediaobject>
 
@@ -430,6 +509,12 @@
             Ein Bild im Modus Graustufen mit dem zugehörigen Kanal für die
             Helligkeit.
           </para>
+          <!--para lang="en" FIXME>
+	    Please translate from German in English
+          </para-->
+          <!--para lang="it" FIXME>
+	    Da tradurre in italiano quando c'è la traduzione in inglese
+          </para-->
         </caption>
       </mediaobject>
     </figure>
@@ -477,6 +562,18 @@
       couleur très progressif.    
     </para>
 
+    <para lang="it">
+      In Gimp, ogni canale di colore, incluso il canale alfa, ha un campo
+      di valori possibili tra 0 e 255: in termini tecnici si dice che ha
+      una "profondità di colore" di 8 bit. Alcune macchine fotografiche
+      digitali possono produrre file immagine con 16 bit di profondità di
+      colore. Gimp non può caricare tali file senza perdere in risoluzione.
+      In molti casi l'effetto è troppo esiguo da poter essere percepito
+      dall'occhio umano, ma in alcuni casi dove ci sono larghe aree con
+      colori che variano molto poco, la differenza può essere
+      percettibile.
+    </para>
+
     <para lang="nl">
       De intensiteit van ieder kleur-kanaal in <acronym>Gimp</acronym> kan
       over 256 waarden ofwel 8 bits varïeren, dit wordt wel de kleurendiepte
@@ -493,10 +590,11 @@
       Gimp 中，每个颜色通道包括 alpha 通道其可能的值都在 0 到 255 之间；用计算机术语说就是 8 位深度。一些数码相机能产生每个颜色通道 16 位深度的图像文件。Gimp 无法读取这种文件而不丢失分辨率。大部分情况下，那样的效果太细微以至人眼无法查觉，但在一些情况中，主要是缓慢颜色渐变的大片区域，还是能够查觉到其差别。
     </para>
 
-    <figure lang="de">
+    <figure lang="de;en;it">
       <title>
         <phrase lang="en">Example of an image with alpha channel</phrase>
         <phrase lang="de">Ein Bild mit Alphakanal</phrase>
+        <phrase lang="it">Esempio di un'immagine con un canale alfa</phrase>
       </title>
 
       <mediaobject>
@@ -508,11 +606,21 @@
           <imagedata fileref="../images/dialogs/de/dialogs-channels-example.png"
             format="PNG" />
         </imageobject>
+        <imageobject lang="it">
+          <imagedata fileref="../images/dialogs/it/dialogs-channels-example.png"
+            format="PNG" />
+        </imageobject>
         <caption lang="de">
           <para lang="de">
             Ein Farbbild im RGB Modus mit Alphakanal. Der Alphakanal
             beschreibt, welche Bildbereiche durchsichtig sein sollen.
           </para>
+          <!--para lang="en" FIXME>
+	    Please translate from German in English
+          </para-->
+          <!--para lang="it" FIXME>
+	    Da tradurre in italiano quando c'è la traduzione in inglese
+          </para-->
         </caption>
       </mediaobject>
     </figure>
@@ -577,12 +685,27 @@
       particulier dans les animations.
     </para>
 
+    <para lang="it">
+      Il terzo tipo di immagine, <emphasis>indicizzato</emphasis>, è un po'
+      più complicato da capire. In un'immagine indicizzata vengono usati
+      solo un numero limitato di colori, 256 o meno. Questi colori formano
+      la "mappa colore" dell'immagine e ad ogni punto nell'immagine viene
+      assegnato un colore della mappa. Le immagini indicizzate hanno il
+      vantaggio che possono essere rappresentate su di un computer in un
+      modo che permette un uso molto limitato della memoria e molto tempo
+      fa, informaticamente parlando, (diciamo dieci anni fa), erano molto
+      usate. Ora vengono usate molto meno ma sono ancora tanto importanti
+      da essere supportate da Gimp (e anche perché alcune tecniche di
+      elaborazione delle immagini sono molto più semplici da implementare
+      con le immagini indicizzate che con immagini RGB).
+    </para>
+
     <para lang="nl">
       De derde weergavemodus, die van <emphasis>geïndexeerde</emphasis>
       afbeeldingen is wat moeilijker uit te leggen in een geïndexeerde
       afbeelding wordt er van een beperkte hoeveelheid kleuren gebruik
       gemaakt, meestal 256 of minden. Deze kleuren zitten in een kleurentabel
-      van de afbeeldingen vormen de "colormap. Van ieder beeldpunt wordt dan
+      van de afbeeldingen vormen de "colormap". Van ieder beeldpunt wordt dan
       de kleur gegeven door er het getal van de overeenkoomstige kleur in te
       stoppen. Geïndexeerde-afbeeldingen vergen in minder ruimte in het
       computergeheugen en in voorbije tijden, (zo'n tiental jaar geleden)
@@ -643,6 +766,18 @@
       indexées.
     </para>
 
+    <para lang="it">
+      Alcuni tipi di file immagine molto usati (compreso il <!-- link
+      linkend="file-gif-load" FIXME -->GIF<!--/link-->) sono aperti in Gimp
+      come immagini indicizzate. Molti strumenti di Gimp non funzionano
+      bene sulle immagini indicizzate e molti filtri non funzionano per
+      niente a causa del numero limitato di colori disponibile. Per questa
+      ragione spesso è meglio convertire un'immagine in modalità RGB prima
+      di lavorarci su. Se necessario è poi possibile ritrasformare
+      l'immagine in indicizzata per poterla poi salvare nel formato
+      originale.
+    </para>
+
     <para lang="nl">
       Enkele veelvoorkomende bestandsformaten (Waaronder <!--link
       linkend="file-gif-load"XXX_NL-->GIF<!--/link-->) worden als geïndexeerde
@@ -696,6 +831,14 @@
       faisant la transformation inverse.
     </para>
 
+    <para lang="it">
+      Gimp rende semplice convertire da un tipo di immagine ad un'altro
+      usando il comando <!--link linkend="gimp-image-mode" FIXME
+      -->Modalità<!--/link--> dal menu immagine. Alcuni tipi di
+      conversione (da RGB a scala di grigi o indicizzata per esempio)
+      perdono informazioni che non possono essere ripristinate
+      facendo successivamente l'operazione al contrario.  
+    </para>
     
     <para lang="nl">
       Het is eenvoudig om met <acronym>Gimp</acronym> een afbeelding van de
@@ -751,6 +894,18 @@
         images en Niveaux de gris, ou encore nécessitent la présence ou
         l'absence d'un canal Alpha. La solution est alors  de convertir
         l'image en mode RVB.
+      </para>
+
+      <para lang="it">
+	Se si sta provando ad usare un filtro su di un'immagine e questo
+        appare disabilitato, probabilmente la causa è da ricercare nel
+        fatto che l'immagine (o più specificatamente il livello) su cui si
+        sta lavorando è del tipo sbagliato. Molti filtri non possono essere
+        utilizzati su immagini indicizzate. Alcuni possono essere usati
+        solo su immagini RGB o solo su immagini in scala di grigi. Alcuni
+        richiedono la presenza o l'assenza del canale alfa. Normalmente per
+        risolvere basta convertire l'immagine a un tipo differente,
+        probabilmente RGB.
       </para>
 
       <para lang="nl">
