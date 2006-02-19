@@ -5,12 +5,27 @@
   "http://www.docbook.org/xml/4.3/docbookx.dtd">
 
 <!-- section history:
+  2006-02-10 en;fr revised by j.h ; control keys modified; added section for
+             Measuring surfaces
   2005-12-06 replaced sect3 by sect3 by lexa
   2005-12-06 replaced informalfigure by figure by lexa
   050818 de reorganized key modifier list
   050818 de reviewed by axel.wernicke
   -->
 <sect2 id='gimp-tool-measure' lang="cs;de;en;fr;it;zh_CN">
+  <sect2info lang="en;de;fr">
+    <revhistory>
+      <revision>
+        <revnumber>$Revision$</revnumber>
+        <date lang="en">2006-02-10</date>
+        <date lang="de">2005-08-18</date>
+        <date lang="fr">2006-02-10</date>
+        <authorinitials lang="en">j.h</authorinitials>
+        <authorinitials lang="de">a.w</authorinitials>
+        <authorinitials lang="fr">j.h</authorinitials>
+      </revision>
+    </revhistory>
+  </sect2info>
   <title lang="en">Measure Tool</title>
   <title lang="cs">Nástroj Měřidlo</title>
   <title lang="de">Maßband</title>
@@ -22,6 +37,7 @@
     <primary>Toolbox</primary>
     <secondary>Measure</secondary>
   </indexterm>
+  <indexterm lang="en"><primary>Measure</primary></indexterm>
 
   <indexterm lang="cs">
     <primary>Panel nástrojů</primary>
@@ -38,6 +54,11 @@
     <primary>Boîte à Outils</primary>
     <secondary>Mesure</secondary>
   </indexterm>
+  <indexterm lang="fr"><primary>Mesurer</primary></indexterm>
+  <indexterm lang="fr">
+    <primary>Mesurer</primary>
+    <secondary>Surface</secondary>
+  </indexterm>
   
   <indexterm lang="it">
     <primary>Barra degli strumenti</primary>
@@ -51,10 +72,11 @@
   
   <figure>
     <title>
-      <phrase lang="en;cs;fr;zh_CN">Measure tool</phrase>
+      <phrase lang="en;cs;zh_CN">Measure tool</phrase>
       <phrase lang="de">
         Das Werkzeug <quote>Maßband</quote> im Werkzeugfenster
       </phrase>
+      <phrase lang="fr">L'outil de mesure dans la Boîte à outils</phrase>
       <phrase lang="it">Lo strumento misurino</phrase>
     </title>
     <mediaobject>
@@ -218,13 +240,13 @@
         <para>
           Un bouton de <emphasis>zoom</emphasis>, pour agrandir si 
           vous voulez travailler avec plus de précision, ou rétrécir 
-          si votre image est plus grande que le canevas.
+          si votre image est plus grande que la fenêtre d'affichage.
         </para>
       </listitem> 
       <listitem>
         <para>
           L'affichage de la <emphasis>distance entre le point 
-          d'origine et le pointeurde la souris</emphasis>, suivi de l'
+          d'origine et le pointeur de la souris</emphasis>, suivi de l'
           <emphasis>angle</emphasis>, dans chaque quadrant, de 0° 
           à 90°.
         </para>
@@ -271,17 +293,17 @@
     <itemizedlist lang="en">
       <listitem>
         <para>
-          The Measure Tool can be called in the following
+          You can call the Measure Tool in the following
           order, from the image-menu:
           <menuchoice>
             <guimenu><accel>T</accel>ools</guimenu>
-            <guisubmenu><accel>M</accel>easure</guisubmenu>
+            <guimenuitem><accel>M</accel>easure</guimenuitem>
           </menuchoice>.
         </para>
       </listitem>
       <listitem>
         <para>
-          The Tool can also be called by clicking the tool icon:
+          You can also access to it by clicking the tool icon:
           <guiicon>
 	    <inlinemediaobject>
 	      <imageobject>
@@ -348,9 +370,11 @@
       <listitem>
         <para>
           L'outil Mesure peut être appelé à partir de la barre de 
-          menus de l'image par 
-          <guimenuitem><accel>O</accel>utils</guimenuitem>/
-          <guimenuitem><accel>M</accel>esure</guimenuitem>.
+          menus de l'image par
+          <menuchoice>
+            <guimenu><accel>O</accel>utils</guimenu>
+            <guimenuitem><accel>M</accel>esure</guimenuitem>
+          </menuchoice>
         </para>
       </listitem>
       <listitem>
@@ -429,15 +453,37 @@
         <term lang='fr'>Par défaut</term>
         <term lang='it'>Predefiniti</term>
         <term lang='zh_CN'>默认值</term>
+        <!-- Control keys are working differently on different versions and
+             OS-->
         <listitem lang="en">
           <para>
             Holding down the <keycap>Ctrl</keycap> key puts the tool
             into constrained straight line mode. The orientation of the
             line is constrained to the nearest multiple of 15 degrees.
           </para>
+          <para lang="en">
+            Holding down the <keycap>Shift</keycap> allows to start a new 
+            measure from the pointed point without deleting the previous 
+            measure. Angle is measured from the previous line. Mouse pointer 
+            is accompanied by a <quote>+</quote> sign.
+          </para>
           <para>
-            <keycap>Ctrl</keycap> key pressed and click on the second
-            end point creates a horizontal guide.
+            <keycap>Ctrl</keycap> key pressed and click on an end point 
+            creates a horizontal guide.
+          </para>
+          <para lang="en">
+            <keycap>Alt</keycap> key and click on an end point should 
+            create a vertical guide...
+          </para>
+          <para lang="en">
+            <keycombo><keycap>Ctrl</keycap><keycap>Alt</keycap></keycombo> 
+            key combination and click on an end point creates a vertical and 
+            a horizontal guides.
+          </para>
+          <para lang="en">
+            <keycombo><keycap>Ctrl</keycap><keycap>Alt</keycap></keycombo> 
+            key combination and click on a measure line allows to move the 
+            measure.
           </para>
         </listitem>
         <listitem lang="cs">
@@ -485,26 +531,36 @@
         <listitem lang="fr">
           <para>
             La touche <keycap>Ctrl</keycap> pressée pendant le 
-            déplacement du pointeur permet de faire une mesure 
-            strictement horizontale. 
+            déplacement du pointeur contraint la mesure à des angles de 
+            15°. Vous pouvez l'utiliser pour faire des mesures 
+            strictement horizontales ou verticales. 
+          </para>
+          <para lang="fr">
+            L'appui sur la touche <keycap>Maj</keycap> (Shift) permet de 
+            démarrer une nouvelle mesure à partir du dernier point, sans 
+            supprimer la précédente. L'angle est mesuré à partir de la ligne 
+            précédente. Le pointeur de la souris est accompagné d'un signe 
+            <quote>+</quote>.
           </para>
           <para>
-            La touche <keycap>Alt</keycap> pressée pendant le 
-            déplacement du pointeur permet de faire une mesure 
-            strictement verticale. 
-          </para>
-          <para>
-            La touche <keycap>Ctrl</keycap> pressée et le clic sur le 
+            La touche <keycap>Ctrl</keycap> pressée et le clic sur un 
             point terminal met en place un guide horizontal.
           </para>
           <para>
             La touche <keycap>Alt</keycap> pressée et le clic sur le 
-            point terminal met en place un guide vertical.
+            point terminal devrait mettre en place un guide vertical.
           </para>
           <para>
             La combinaison de touche  
             <keycombo><keycap>Ctr</keycap><keycap>Alt</keycap>
-            </keycombo> permet de déplacer la mesure.
+            </keycombo> plus un clic sur un point terminal permet de 
+            mattre en place un guide vertical et un guide horizontal.
+          </para>
+          <para>
+            La combinaison de touche  
+            <keycombo><keycap>Ctr</keycap><keycap>Alt</keycap>
+            </keycombo> plus un cliquer-glisser sur une ligne de mesure 
+            permet de déplacer la mesure.
           </para>
         </listitem>
         
@@ -514,13 +570,6 @@
             il cursore del mouse permette di ottenere una misurazione 
             forzata a scatti di 15 gradi.
           </para>
-          <!--Questa azione sembra non sortire effetti
-          <para>
-            Il tasto <keycap>Alt</keycap> premuto mentre si trascina
-            il cursore del mouse permette di ottenere una misurazione 
-            verticale.
-          </para>
-          -->
           <para>
             Premendo il tasto <keycap>Ctrl</keycap> e facendo clic su una
             delle due estremità sarà posizionata una linea guida orizzontale.
@@ -729,5 +778,22 @@
         </listitem>
       </varlistentry>
     </variablelist>
+  </sect3>
+  
+  <sect3 lang="en;fr">
+    <title>
+      <phrase lang="en">Measuring surfaces</phrase>
+      <phrase lang="fr">Mesure des surfaces</phrase>
+    </title>
+    <para lang="en">
+      You cann't measure surfaces directly, but you can use the 
+      <link linkend='gimp-histogram-dialog'>Histogram</link> that gives you 
+      the number of pixels in a selection.
+    </para>
+    <para lang="fr">
+      Vous ne pouvez pas mesurer directement une surface, mais vous pouvez 
+      utiliser l'<link linkend='gimp-histogram-dialog'>Histogramme</link> 
+      qui vous donne le nombre de pixels dans une sélection.
+    </para>
   </sect3>
 </sect2>
