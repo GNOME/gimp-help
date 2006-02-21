@@ -176,25 +176,63 @@ class LibXMLValidator(XMLReferenceValidator):
         return self.invalid
 
 class FileLookup(object):
-    
-    def __init__(self, verbose=0, xml_root=None):
-        self.verbose = verbose
+    """Runs through each directory of <gimp_help_root> and checks each
+       xml file it can find.
 
-        if xml_root is None:
-            self.xml_root = os.path.join(os.curdir, 'src')
-        else:
-            self.xml_root = xml_root
+       >>> fl = FileLookup(gimp_help_root='src/toolbox')
+       >>> fl.get_image_root()
+       '/home/roman/works/projects/gimp-help-2/images'
+       
+       If we run the tests already from the gimp-help-2 root, the method
+       should return a None given by this path
+       >>> fl.gimp_help_root = '../tools'
+       >>> fl.get_image_root()
+    """
+    
+    def __init__(self, verbose=0, gimp_help_root='.'):
+        self.verbose = verbose
+        self.gimp_help_root = gimp_help_root
         
         self.all_img_references = []
         self.brokenimages = []
 
+    def get_image_root(self):
+        """Returns the absolute path to the images directory
+        """
+        result = None
+        abspath = os.path.abspath(self.gimp_help_root)
+        h, t = os.path.split(abspath) 
+        
+        while abspath:
+            # if we hit the gimp_help_root, we need to check if an
+            # 'images' dir exist
+            if os.path.exists(os.path.join(h, 'images')) and not\
+               h.endswith('src'):
+                result = os.path.join(h, 'images')
+                break
+            
+            abspath = h
+            h, t = os.path.split(abspath) 
+
+            if t == '':
+                break
+
+        return result
+
     def validate_imagefiles(self):
         """checks if each image file is referenced in the XML files"""
+        imageroot = self.get_image_root()
+        
         if not self.all_img_references:
             return
 
-        for root, dirs, files in os.walk(os.path.join(os.curdir,
-                                                      'images')):
+        if imageroot is None:
+            sys.stderr.write("The path you specified or the directory"\
+                             " you're don't contain an 'images' directory")
+            return
+
+
+        for root, dirs, files in os.walk(imageroot):
             if 'CVS' in dirs:
                 dirs.remove('CVS')
 
@@ -212,7 +250,8 @@ class FileLookup(object):
         """walks to each xml file directory, reads each xml file and
            validates the references
         """
-        for root, dirs, files in os.walk(self.xml_root):
+        top = os.path.join(self.gimp_help_root, 'src')
+        for root, dirs, files in os.walk(top):
             # don't visit CVS directories
             if 'CVS' in dirs:
                 dirs.remove('CVS') 
@@ -254,16 +293,16 @@ class FileLookup(object):
                     errormsg = "File %s \ncontains invalid references"\
                                " to\n\n%s\n" %(item)
                 else:
-                    errormsg = "%s <%s>" %(item)
+                    errormsg = "%s invalid: <%s>" %(item)
                 print errormsg
 
             
 def main():
     verbose = 0
-    xml_root = None 
+    gimp_help_root = os.curdir 
 
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "hivx:")
+        opts, args = getopt.getopt(sys.argv[1:], "hivf:x:")
     except getopt.GetoptError:
         usage()
         sys.exit(2)
@@ -273,15 +312,30 @@ def main():
             usage()
         if o == "-v":
             verbose = 1
+        if o == "-f":
+            result = []
+            for xpath_expr in refs_to_test:
+                if have_lxml:
+                    val = LxmlValidator(xpath_expr, 
+                                        a)
+                else:
+                    val = LibXMLValidator(xpath_expr,
+                                          a)
+                result += val.validate_imagepath_references()
+            
+            for r in result:
+                print "%s invalid: %s" %(r)
+            sys.exit(1)
+        
         if o == "-x":
-            xml_root = a
+            gimp_help_root = a
         if o == "-i":
-            fl = FileLookup(verbose, xml_root)
+            fl = FileLookup(verbose, gimp_help_root)
             fl.validate_refs()
             fl.validate_imagefiles()
             sys.exit(1)
     
-    fl = FileLookup(verbose, xml_root)
+    fl = FileLookup(verbose, gimp_help_root)
     fl.validate_refs()
     fl.print_broken_imagefilepaths()
     sys.exit(1)
@@ -297,6 +351,7 @@ usage: validate_references.py [options]
         -h          this help
         -v          verbose
         -i          check for orphaned image files
+        -f  <file>  check only <file>
         -x  <path>  specify another root of xml files""" )
     
 if __name__ == "__main__":
