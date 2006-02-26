@@ -40,9 +40,6 @@ xmlfile_exp = re.compile('[\w-]*.xml$')
 # check only png and jpg files
 imagefile_exp = re.compile('[\w-]*.(png|jpg)$')
 
-# ignore directories to look for images
-ignore_image_dirs = ['callouts',]
-
 class XMLReferenceValidator(object):
     """A validator to validate filereferences in a DocBook complient
        XML file.
@@ -233,17 +230,27 @@ class FileLookup(object):
                              " you're in do not contain an 'images"\
                              " directory.\n")
             return
-
-
+        
         for root, dirs, files in os.walk(imageroot):
+            # XXX this filtering of dirs is awkward, but I couldn't come
+            # up with a better method yet
             if 'CVS' in dirs:
                 dirs.remove('CVS')
-
+            if 'callouts' in dirs:
+                dirs.remove('callouts')
+            
             for file in files:
                 if not imagefile_exp.match(file):
                     continue
                  
                 filepath = os.path.join(root, file)
+                # ignore images in the first level of the images dir
+                h, t = os.path.split(filepath)
+                if h.endswith('images') and imagefile_exp.match(t):
+                    continue
+                
+                # remove the filepath
+                # everything which can't be removed is b0rked
                 try:
                     self.all_img_references.remove(filepath)
                 except ValueError:
