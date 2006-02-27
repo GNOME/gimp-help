@@ -7,12 +7,13 @@
 <!-- section history:
   2006-02-25 lexa: added translation for de and made file docbook compliant
 -->
-<sect2 id="gimp-concepts-undo"  lang="en;cs;de;fr;nl;zh_CN">
+<sect2 id="gimp-concepts-undo"  lang="en;cs;de;fr;it;nl;zh_CN">
   <title>
     <phrase lang="en">Undoing</phrase>
     <phrase lang="cs">Vracení změn</phrase>
     <phrase lang="de">Rückgängig (Undo)</phrase>
     <phrase lang="fr">Annuler</phrase>
+    <phrase lang="it">Annullamenti</phrase>
     <phrase lang="nl">Ongedaan maken</phrase>
     <phrase lang="zh_CN">撤消</phrase>
   </title>
@@ -34,6 +35,11 @@
   <indexterm lang="fr">
     <primary>Image</primary>
     <secondary>Annuler</secondary>
+  </indexterm>
+
+  <indexterm lang="it">
+    <primary>Immagine</primary>
+    <secondary>Annullamenti</secondary>
   </indexterm>
 
   <indexterm lang="nl">
@@ -100,6 +106,21 @@
     </menuchoice>
     dans le menu image, mais vous aurez à le faire si souvent qu'il vous 
     faut mémoriser le raccourci clavier 
+    <keycombo>
+      <keycap>Ctrl</keycap>
+      <keycap>Z</keycap>
+    </keycombo>.
+  </para>
+
+  <para lang="it">
+    Qualsiasi cosa, o quasi, si possa fare su di un'immagine con GIMP, può
+    essere annullata. Per annullare l'azione più recente selezionare
+    <menuchoice>
+      <guimenu>Modifica</guimenu>
+      <guimenuitem>Annulla</guimenuitem>
+    </menuchoice>
+    dal menu immagine. È un'operazione che viene usata così spesso che
+    si impara molto presto la scorciatoia con la tastiera:
     <keycombo>
       <keycap>Ctrl</keycap>
       <keycap>Z</keycap>
@@ -207,6 +228,24 @@
     pouvez donc l'utiliser sans danger.
   </para>
 
+  <para lang="it">
+    Anche l'annullamento può essere annullato. Dopo aver annullato
+    un'azione è possibile <emphasis>ripeterla</emphasis> scegliendo dal menu
+    immagine
+    <menuchoice>
+      <guimenu>Modifica</guimenu>
+      <guimenuitem>Ripeti</guimenuitem>
+    </menuchoice>, oppure usando la scorciatoia da tastiera,
+    <keycombo>
+      <keycap>Ctrl</keycap>
+      <keycap>Y</keycap>
+    </keycombo>.
+    È spesso utile per giudicare l'effetto di un'operazione ripeterla
+    spesso dopo averla annullata. Normalmente l'operazione è molto veloce e
+    non occupa risorse extra né altera la cronologia degli annullamenti,
+    per cui non c'è nessuna controindicazione.
+  </para>
+
   <para lang="nl">
     Ongedaan maken kan zelf ook ongedaan gemaakt worden. Als u een bewerking
     ongedaan heeft gemaakt kunt u die <emphasis>Opnieuw uitvoeren</emphasis>
@@ -280,6 +319,15 @@
       Annuler/Refaire n'est pas copié quand vous dupliquez l'image.
     </para>
 
+    <para lang="it">
+      Se si annulla una o più azioni e dopodiché si opera sull'immagine in
+      qualsiasi modo eccetto che con annulla o ripeti, non sarà più possibile
+      ripetere queste azioni: saranno perse per sempre. La soluzione è la
+      seguente: duplicare l'immagine e poi operare sulla copia
+      (<emphasis>non</emphasis> sull'originale, dato che la cronologia
+      degli annullamenti non viene copiata insieme all'immagine).
+    </para>
+
     <para lang="nl">
       Als u een of meerdere bewerkingen ongedaan maakt en daarna een nieuwe
       bewerking op de afbeelding uitvoert behalve Ongedaan maken of Opnieuw
@@ -330,6 +378,15 @@
     Si vous devez revenir plusieurs pas en arrière dans vos annulations, au
     lieu de répéter Ctrl-Z utilisez plutôt l'
     <link linkend="gimp-undo-dialog">Historique d'Annulation</link>.
+  </para>
+
+  <para lang="it">
+    Se vi trovate spesso ad annullare e rifare molte operazioni al colpo,
+    potreste considerare di usare invece la <link
+    linkend="gimp-undo-dialog">finestra di dialogo della cronologia degli
+    annullamenti</link>, una finestra agganciabile che mostra una miniatura
+    di ogni voce della cronologia, consentendo di andare avanti e indietro
+    semplicemente con un colpo di clic del mouse.
   </para>
 
   <para lang="nl">
@@ -400,6 +457,20 @@
     éléments les plus anciens de l'historique.
   </para>
 
+  <para lang="it">
+    L'annullamento viene eseguito su una caratteristica specifica
+    dell'immagine: la "cronologia degli annullamenti" è un elemento proprio
+    dell'immagine. GIMP infatti riserva a questo scopo un certo ammontare
+    di memoria per ogni immagine la cui quantità è modificabile attraverso
+    la pagina <!-- link linkend="gimp-prefs-environment" FIXME
+    -->Ambiente<!--/link--> della finestra delle preferenze. Le variabili
+    importanti sono: il
+    <emphasis>numero minimo di annullamenti</emphasis>,
+    che GIMP mantiene indipendentemente da quanta memoria occupano, e
+    la <emphasis>massima quantità di memoria annullamenti</emphasis>, oltre
+    la quale GIMP comincerà a cancellare le voci più vecchie della cronologia.
+  </para>
+
   <para lang="nl">
     Het ongedaan maken is gekoppeld aan een afbeelding: De
     "Bewerkingsgeschiedenis" (of "Ongedaan maken") is een onderdeel van de
@@ -447,6 +518,13 @@
       pas sauvegardé quand vous enregistrez une image au format XCF, qui
       pourtant préserve toutes les autres propriétés de l'image. Quand l'image
       est réouverte, l'historique d'annulation est vide.
+    </para>
+    <para lang="it">
+      Malgrado il fatto che la cronologia degli annullamenti sia una
+      componente dell'immagine, essa non viene salvata quando si salva
+      un'immagine, anche se si utilizza il formato nativo di GIMP XCF che
+      conserva ogni altra proprietà dell'immagine: quando l'immagine viene
+      riaperta, si ottiene invariabilmente una cronologia vuota.
     </para>
     <para lang="nl">
       De bewerkingsgeschiedenis is weliswaar uniek voor iedere geopende
@@ -529,6 +607,25 @@
     qu'elles ne soient rejetées de l'Historique d'annulation.
   </para>
 
+  <para lang="it">
+    L'implementazione della cronologia degli annullamenti di GIMP è
+    piuttosto sofisticata. Molte operazioni possono richiedere pochissima
+    memoria (per es. quando si cambia la visibilità di un livello)
+    permettendo l'esecuzione di sequenze molto lunghe di comandi prima che
+    si renda necessaria la cancellazione dei primi dalla cronologia. Molte
+    operazioni (il cambiamento della visibilità di un canale è il solito
+    esempio) vengono <emphasis>compresse</emphasis>, in maniera tale che
+    molte di esse occupino solo un punto nella cronologia. Al contrario,
+    esistono delle operazioni che invece occupano molta memoria. Per
+    esempio molti filtri, dato che essi sono spesso implementati come
+    plugin, GIMP non ha modo di sapere cosa essi abbiano cambiato
+    nell'immagine e quindi non ha altro modo di gestire l'annullamento se
+    non quello di memorizzare l'intero contenuto del livello in oggetto
+    prima dell'operazione. Sarà quindi possibile eseguire solo poche di
+    tali operazioni prima che si superino i limiti della memoria di
+    ripristino.
+  </para>
+
   <para lang="nl">
     De bewerkingsgeschiedenis van <acronym>gimp</acronym>
     is een behoorlijk complexe constructie. Het opslaan van veel bewerkingen
@@ -558,6 +655,7 @@
       </phrase>
       <phrase lang="en">Things that cannot be Undone</phrase>
       <phrase lang="fr">Ce qui ne peut pas être annulé</phrase>
+      <phrase lang="it">Operazioni che non possono essere annullate</phrase>
       <phrase lang="nl">Dingen die u niet kunt ongedaan kunt maken</phrase>
       <phrase lang="zh_CN">不能被撤消的东西</phrase>
     </title>
@@ -603,6 +701,16 @@
       exceptions: la bascule du Masque Rapide peut être Annulée, bien qu'elle
       ne modifie pas l'image.
     </para>
+    <para lang="it">
+      Quasi tutte le operazioni sulle immagini sono annullabili mentre le
+      operazioni che non alterano le immagini, generalmente non lo
+      sono. Queste ultime includono il salvataggio di un'immagine, la
+      duplicazione di essa, la copia di parte dell'immagine negli appunti,
+      ecc. Sono incluse anche molte azioni che modificano la
+      visualizzazione dell'immagine senza modificarla. La più importante di
+      esse è lo zoom. Ci sono anche delle eccezioni: la commutazione della
+      maschera veloce può essere annullata anche se non altera l'immagine.
+    </para>
     <para lang="nl">
       De meeste bewerkingen die een afbeelding veranderen kunnen ongedaan
       gemaakt worden. Acties die de afbeelding <emphasis>niet</emphasis>
@@ -634,6 +742,10 @@
       Inversement, il y a des opérations qui modifient l'image et qui 
       pourtant ne peuvent pas être Annulées:
     </para>
+    <para lang="it">
+      Ci sono poche importanti operazioni che modificano un'immagine ma che
+      non possono essere annullate:
+    </para>
     <para lang="nl">
       Er zijn een paar ingrijpende akties die de afbeelding veranderen, maar
       die niet ongedaan gemaakt kunnen worden:
@@ -648,6 +760,7 @@
         <term lang="de">Das Schließen eines Bildes</term>
         <term lang="en">Closing the image</term>
         <term lang="fr">Fermeture d'une image</term>
+        <term lang="it">Chiusura dell'immagine</term>
         <term lang="nl">De afbeelding sluiten</term>
         <term lang="zh_CN">关闭图像</term>
 
@@ -694,6 +807,19 @@
             des Préférences (mais c'est de votre responsabilité de savoir ce
             que vous faites).
           </para>
+          <para lang="it">
+            La cronologia degli annullamenti è una componente
+            dell'immagine, per cui quando l'immagine viene chiusa, 
+            tutte le risorse che occupava vengono liberate e con esse anche
+            la cronologia. Per questa ragione, a menoché l'immmagine non
+            sia stata modificata dall'ultimo salvataggio, GIMP chiede
+            sempre di confirmare la chiusura dell'immagine (è sempre
+            possibile disabilitare questo comportamento nella pagina dell'
+            <!--link linkend="gimp-prefs-environment"
+            FIXME -->Ambiente<!--/link--> nella finestra di dialogo delle
+            preferenze; naturalmente poi sarà vostra responsabilità pensare
+            attentamente a ciò che fate...uomo avvisato...).
+          </para>
           <para lang="nl">
             De bewerkingsgeschiedenis is een onderdeel van de afbeelding, dus
             wanneer het bewerken van de afbeelding afgesloten wordt en alle
@@ -717,6 +843,7 @@
         <term lang="de">Das Zurücksetzen eines Bildes</term>
         <term lang="en">Reverting the image</term>
         <term lang="fr">Revenir à l'image</term>
+        <term lang="it">Ricaricare l'immagine</term>
         <term lang="nl">Terugdraaien</term>
         <term lang="zh_CN">恢复图像</term>
 
@@ -749,6 +876,14 @@
             demande toujours de confirmer si vous tenez vraiment à revenir à
             l'image.
           </para>
+          <para lang="it">
+            <quote>Ricaricare</quote> un'immagine significa ricaricarla da
+            file. GIMP esegue questo comando chiudendo l'immagine e
+            creandone una nuova, di conseguenza la cronologia degli
+            annullamenti viene persa. Per questa ragione, se l'immagine è
+            stata modificata, GIMP chiede sempre se si è sicuri di voler
+            ricaricare l'immagine.
+          </para>
           <para lang="nl">
             <emphasis>Terugdraaien</emphasis> betekent dat de afbeelding weer
             uit het bestand geladen wordt. <acronym>Gimp</acronym> sluit de
@@ -769,6 +904,7 @@
         <term lang="de"><quote>Teile</quote> von Aktionen</term>
         <term lang="en"><quote>Pieces</quote> of actions</term>
         <term lang="fr"><quote>Parties</quote> d'actions</term>
+        <term lang="it"><quote>Pezzi</quote> d'azione</term>
         <term lang="nl"><quote>Onderdelen</quote> van bewerkingen</term>
         <term lang="zh_CN">动作的“片段”</term>
 
@@ -822,6 +958,20 @@
             exemple concerne l'outil Texte: vous ne pouvez pas annuler les
             lettres individuelles, les changements de police...etc, mais
             seulement le calque de Texte une fois créé.
+          </para>
+          <para lang="it">
+	    Alcuni strumenti richiedono che si esegua una serie complessa
+            di elaborazioni prima di avere effetto ma possono essere
+            annullate solo in blocco e non una per volta. Per esempio le
+            forbici intelligenti richiedono di creare un tracciato chiuso
+            facendo clic su più punti dell'immagine per poi fare clic
+            all'interno del tracciato per creare la selezione. Non è
+            possibile annullare i punti individuali: l'annullamento porta
+            invariabilmente a cancellare tutti i punti come all'inizio
+            dell'operazione. Un'altro esempio è dato dallo strumento testo;
+            non è possibile annullare le singole lettere o il cambiamento
+            del tipo di carattere: l'annullamento rimuove sempre il testo
+            appena creato.
           </para>
           <para lang="nl">
             Bij sommige gereedschappen moet u een ingewikkelde reeks stappen
@@ -886,6 +1036,21 @@
       d'autre origine. Le risque est alors une altération de l'Historique
       d'annulation. C'est également le cas si vous interrompez un greffon en
       cours.
+    </para>
+    <para lang="it">
+      Filtri e altre azioni eseguite da plugin o script possono essere
+      annullate come qualsiasi altra operazione, ma esse necessitano
+      del corretto uso delle funzioni interne di annullamento di GIMP. Se
+      il codice di cui sono costituite non è corretto, un plugin può,
+      ipoteticamente, modificare la cronologia degli annullamenti in
+      maniera tale da impedire l'annullamento dell'ultima e di tutte le
+      altre azioni. Tutti i pluin e gli script distribuiti con GIMP
+      dovrebbero comportarsi correttamente, ma naturalmente non ci sono
+      garanzie per altri che vengono forniti in forma di sorgente. Inoltre,
+      anche se il codice è corretto, la cancellazione di un plugin mentre è
+      in esecuzione può portare ad una alterazione non prevista della
+      cronologia degli annullamenti; perciò è sconsigliabile interrompere
+      tali operazioni a meno che non sia veramente necessario.
     </para>
     <para lang="nl">
       Filters en andere plugin of script-bewerkingen kunnen net zoals bij de
