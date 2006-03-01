@@ -100,7 +100,7 @@ $(STAMP_DIR)/mkdirs.stamp: $(patsubst %,$(STAMP_DIR)/mkdirs.%.stamp,$(ALL_LINGUA
   # included in the PDF anyways
 	@echo '*** Creating link in PDF directory to images ***'
 	@cd $(srcdir)/pdf && ln -s ../images;
-	
+
 	@touch $@
 
 $(patsubst %,$(STAMP_DIR)/mkdirs.%.stamp,$(ALL_LINGUAS)) : $(STAMP_DIR)/mkdirs.%.stamp :
@@ -146,7 +146,7 @@ $(STAMP_DIR)/convert.stamp: $(STAMP_DIR)/images.stamp
 if USE_CONVERT
 	@echo '*** Converting Images to 8bit depth ***'
 
-	@cd $(top_srcdir)/html/images/; \
+	@cd html/images/; \
 	for i in `find $(top_srcdir) -name '*.png' -type f`; do \
 	  echo "Converting" $$i && \
 	  $(CONVERT) -colors 128 $$i $$i; \
@@ -224,7 +224,7 @@ $(patsubst %,$(STAMP_DIR)/html.%.stamp,$(ALL_LINGUAS)): $(STAMP_DIR)/html.%.stam
 	  $(XSLTPROC) $(XSLTFLAGS) --xinclude \
 	     --stringparam l10n.gentext.default.language $* \
 	     --stringparam profile.lang $* \
-	     ../../stylesheets/plainhtml.xsl ../../xml/$*.xml);
+	     @abs_top_builddir@/stylesheets/plainhtml.xsl ../../xml/$*.xml);
 
 	@touch $@
 
@@ -239,7 +239,7 @@ $(patsubst %,$(STAMP_DIR)/index.%.stamp,$(ALL_LINGUAS)): $(STAMP_DIR)/index.%.st
 	echo '-- Generating index for '$*; \
 	  $(XSLTPROC) $(XSLTFLAGS) \
 	     $(MAKEINDEX) \
-	       html/$*/gimp-xrefs.xml > html/$*/gimp-help.xml;
+	       $(top_srcdir)/html/$*/gimp-xrefs.xml > html/$*/gimp-help.xml;
 
 	@touch $@
 
