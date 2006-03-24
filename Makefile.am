@@ -276,6 +276,7 @@ lint: $(STAMP_DIR)/profile.stamp
 	  done \
 	fi
 
+
 if GIMP_HELP_BUILD
 
 dist-check-build:
@@ -307,11 +308,3 @@ install-data-local:
 maintainer-clean-local:
 	rm -rf html
 
-## Do not copy the complete html directory to distdir.
-## The images don't need to be in the tarball twice, they are copied
-## by the images.stamp rule.
-dist-hook:
-	$(mkinstalldirs) $(distdir)/html
-	for lang in $(ALL_LINGUAS); do \
-	  cp -r html/$$lang $(distdir)/html; \
-	done
