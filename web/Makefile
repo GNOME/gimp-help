@@ -16,7 +16,7 @@ autolayout: layout.xml
 
 html: autolayout
 	@echo "-- Creating html"; \
-	mkdir html;
+	mkdir -p html;
 	if ! test -e html/Layout; then \
 	  mkdir html/Layout && cp -r layout/* html/Layout; \
 	fi
