@@ -135,7 +135,7 @@ autoconf || exit 1
 
 cd $ORIGDIR
 
-if $srcdir/configure --enable-maintainer-mode --enable-build "$@"; then
+if $srcdir/configure --enable-maintainer-mode "$@"; then
   echo
   echo "Now type 'make' to compile $PROJECT."
 else
