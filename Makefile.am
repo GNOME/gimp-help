@@ -308,3 +308,10 @@ install-data-local:
 maintainer-clean-local:
 	rm -rf html
 
+
+dist-hook:
+	rmdir $(distdir)/images/\*/\*
+	rmdir $(distdir)/images/\*
+	rmdir $(distdir)/src/\*/\*/\*
+	rmdir $(distdir)/src/\*/\*
+	rmdir $(distdir)/src/\*
