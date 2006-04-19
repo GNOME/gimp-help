@@ -9,10 +9,20 @@
      050916 added by axel.wernicke 
      051022 en;fr by julien hardelin
 -->
-<sect2 id="plug-in-photocopy" lang="de">
+<sect2 id="plug-in-photocopy" lang="en;cs;de;fr">
+  <sect2info lang="cs" role="cvs">
+    <revhistory>
+      <revision>
+        <revnumber>$Revision$</revnumber>
+        <date lang="cs">2006-04-19</date>
+        <authorinitials lang="cs">jfriedl</authorinitials>
+      </revision>
+    </revhistory>
+  </sect2info>
   <title>
     <phrase lang="en">Photocopy</phrase>
-    <phrase lang="de">Fotokopie</phrase>
+    <phrase lang="cs">Fotokopie</phrase>
+    <phrase lang="de">Fotokopiie</phrase>
     <phrase lang='fr'>Photocopie</phrase>
   </title>
 
@@ -21,13 +31,19 @@
     <secondary>Artistic</secondary>
   </indexterm>
   <indexterm lang="en"><primary>Photocopy</primary></indexterm>
-  
+
+  <indexterm lang="cs">
+    <primary>Filtry</primary>
+    <secondary>Umění</secondary>
+  </indexterm>
+  <indexterm lang="cs"><primary>Fotokopie</primary></indexterm>
+
   <indexterm lang="de">
     <primary>Filter</primary>
     <secondary>Künstlerisch</secondary>
   </indexterm>
   <indexterm lang="de"><primary>Fotokopie</primary></indexterm>
-  
+
   <indexterm lang="fr">
     <primary>Filtres</primary>
     <secondary>Artistique</secondary>
@@ -37,6 +53,7 @@
   <sect3>
     <title>
       <phrase lang="en">Overview</phrase>
+      <phrase lang="cs">Přehled</phrase>
       <phrase lang="de">Wirkungsweise</phrase>
       <phrase lang="fr">Généralités</phrase>
     </title>
@@ -45,6 +62,9 @@
       <title>
         <phrase lang="en">
           The same image, before and after applying Photocopy filter
+        </phrase>
+        <phrase lang="cs">
+          Stejný obrázek před a po aplikaci filtru Fotokopie.
         </phrase>
         <phrase lang="de">
           v.l.n.r.: Originalbild, Fotokopie angewandt
@@ -74,6 +94,13 @@
       achieved by darkening areas of the image which are measured to be 
       darker than a neighborhood average, and setting other pixels to white. 
     </para>
+    <para lang="cs"><!--FIXME-cs: popis algoritmu?-->
+      Filtr Fotokopie upravuje aktivní vrstvu či výběr tak, aby vypadala jako
+      černobílá fotokopie, jako by byl toner přenášen na základě relativní
+      tmavosti dané oblasti. Dosáhne se toho ztmavením oblastí, které jsou
+      tmavší než je průměr okolí, a nastavením ostatních pixelů na bílou
+      barvu.
+    </para>
     <para lang="de">
       Mit diesem Filter können Sie Ihrem Bild das Aussehen einer Fotokopie
       geben. Es stehen Ihnen verschiedene Eigenschaften zur Verfügung, um
@@ -92,17 +119,25 @@
   <sect3>
     <title>
       <phrase lang="en">Starting filter</phrase>
+      <phrase lang="cs">Spuštění filtru</phrase>
       <phrase lang="de">Filteraufruf</phrase>
       <phrase lang="fr">Lancement du filtre</phrase>
     </title>    
-    <para lang="fr">
+    <para lang="en">
       You can find this filter from the image menu through
       <menuchoice>
         <guimenu>Filte<accel>r</accel>s</guimenu>
         <guisubmenu><accel>A</accel>rtistic</guisubmenu>
         <guimenuitem><accel>P</accel>hotocopy</guimenuitem>
-      </menuchoice>
-      Large borrowing from Exts/Plugin Browser/.
+      </menuchoice>.
+    </para>
+    <para lang="cs">
+      Tento filtr najdete v nabídce okna obrázku jako
+      <menuchoice>
+        <guimenu>Filtry</guimenu>
+        <guisubmenu>Umění</guisubmenu>
+        <guimenuitem>Fotokopie</guimenuitem>
+      </menuchoice>.
     </para>
     <para lang="de">
       Dieses Filter lässt sich über das Menü
@@ -127,6 +162,7 @@
   <sect3>
     <title>
       <phrase lang="en;fr">Options</phrase>
+      <phrase lang="cs">Volby</phrase>
       <phrase lang="de">Eigenschaften</phrase>
     </title>
 
@@ -134,6 +170,9 @@
       <title>
         <phrase lang="en">
           <quote>Photocopy</quote> filter options
+        </phrase>
+        <phrase lang="cs">
+          Volby filtru <quote>Fotokopie</quote>
         </phrase>
         <phrase lang="de">
           Eigenschaften für das Filter <quote>Fotokopie</quote>
@@ -144,6 +183,10 @@
       </title>
       <mediaobject>
         <imageobject lang="en">
+          <imagedata fileref="../images/filters/options-artistic-photocopy.png"
+                     format="PNG"/>
+        </imageobject>
+        <imageobject lang="cs">
           <imagedata fileref="../images/filters/options-artistic-photocopy.png"
                      format="PNG"/>
         </imageobject>
@@ -174,6 +217,7 @@
       
       <varlistentry>
         <term lang="en">Mask radius</term>
+        <term lang="cs">Poloměr masky</term>
         <term lang="de">Masken Radius</term>
         <term lang="fr">Rayon du masque</term>
 
@@ -186,6 +230,14 @@
             bordering the regions of white and much less detail for black 
             areas. Small values result in less toner overall and more 
             details everywhere.
+          </para>
+          <para lang="cs">
+            Tento parametr nastavuje velikost sousedství pixelů, ve kterém je
+            počítána průměrná intenzita pro porovnání s jednotlivými pixely a
+            rozhodnutí, zda mají být ztmaveny. Vyšší hodnoty vytváří velmi
+            silné tmavé oblasti okolo oblastí bílých a mnohem méně detailů
+            v tmavých oblastech. Nižší hodnoty způsobují použití menšího
+            množství barvy a více podrobností ve všech oblastech.
           </para>
           <para lang="de">
             Mit dieser Eigenschaft können Sie einstellen, wie stark das
@@ -206,6 +258,7 @@
 
       <varlistentry>
         <term lang="en">Sharpness</term>
+        <term lang="cs">Ostrost</term>
         <term lang="de">Schärfe</term>
         <term lang="fr">Augmentation de contraste</term>
 
@@ -213,6 +266,10 @@
           <para lang="en">
             With this option, you can set photocopy sharpness, from 0.0 to 
             1.0.
+          </para>
+          <para lang="cs">
+            Tato volba umožňuje nastavit ostrost fotokopie. Možné hodnoty
+            jsou od 0.0 do 1.0.
           </para>
           <para lang="de">
             Mit dieser Eigenschaft können Sie einstellen, wie scharf die
@@ -229,6 +286,7 @@
       
       <varlistentry>
         <term lang="en">Percent black</term>
+        <term lang="cs">Procento černé</term>
         <term lang="de">Schwarz (%)</term>
         <term lang="fr">Pourcentage de noir</term>
 
@@ -239,8 +297,17 @@
             areas smoother and dark lines themselves thinner and less
             noticeable. Larger values make the lines thicker, darker and
             sharper. The maximum value makes the lines aliased. The best, most
-            natural results are usually achieved with an intermediate value. 
+            natural results are usually achieved with an intermediate value.
             Values vary from 0.0 to 1.0.
+          </para>
+          <para lang="cs">
+            Tento parametr ovlivňuje množství černé barvy přidané do obrázku.
+            Je-li hodnota malá, jsou přechody do černých oblastí jemnější
+            a tmavé čáry jsou užší a méně patrné. Vysoké hodnoty vytváří
+            silnější, tmavší a ostřejší černé oblasti. Maximální hodnota
+            vytváří nevyhlazené (aliasované) černé oblasti. Nejlepší a
+            nejpřirozenější výsledky je obvykle možno dosáhnout středními
+            hodnotami. Hodnota se může pohybovat mezi 0.0 a 1.0.
           </para>
           <para lang="de">
             Mit dieser Eigenschaft können Sie den Prozentsatz der
@@ -259,12 +326,16 @@
       </varlistentry>
       <varlistentry>
         <term lang="en">Percent White</term>
+        <term lang="cs">Procento bílé</term>
         <term lang="de">Weiss (%)</term>
         <term lang="fr">Pourcentage de blanc</term>
 
         <listitem>
           <para lang="en">
             This parameter increases white pixels percentage.
+          </para>
+          <para lang="cs">
+            Tento parametr ovlivňuje procento bílé barvy.
           </para>
           <para lang="de">
             Mit dieser Eigenschaft können Sie den Prozentsatz der
