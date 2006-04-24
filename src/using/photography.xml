@@ -227,7 +227,7 @@
       easier to get things right on the first try.
       </para>
       <para lang="cs">
-      V Gimpu 2.2 je možné zapnout náhled transformací místo pouhé sítě.
+      V GIMPu 2.2 je možné zapnout náhled transformací místo pouhé sítě.
       Je tak snadnější provést transformaci přesně na první pokus.
       </para>
       <para lang="fr">
@@ -385,7 +385,7 @@
       </menuchoice> in the image menu. 
     </para>
     <para lang="cs"><!--FIXME: vidím tam o dva více-->
-      Gimp nabízí pět automatických nástrojů pro korekci barevnosti. Ne vždy
+      GIMP nabízí pět automatických nástrojů pro korekci barevnosti. Ne vždy
       dosáhnou požadovaného výsledku, ale lze je vyzkoušet během okamžiku a
       poskytnou vám přínejmenším určitou představu o možném směru úprav.
       Kromě automatické úpravy úrovní je najdete v nabídce okna obrázku
@@ -788,8 +788,15 @@
       produce color shifts in the image.
     </para>
     <para lang="cs">
-      Jedním z nejmocnějších způsobů úpravy jasu a kontrastu je
-      FIXME
+      Jedním z nejmocnějších způsobů úpravy jasu a kontrastu, který je vhodný
+      pro náročnou práci a expertní uživatele, je vytvoření nové vrstvy nad
+      vrstvou upravovanou, a nastavení režimu této nové vrstvy na
+      <quote>Násobit</quote>. Nová vrstva pak slouží jako vrstva určující
+      zisk vrstvy pod ní. Bílá znamená maximální zisk a černá nulový zisk.
+      Malováním na tuto vrstvu tak můžete přesně určit zisk v jednotlivých
+      částech obrázku. Měli byste ale malovat pouze s plynulými a pozvolnými
+      přechody, jinak v obrázku vzniknou nepěkné hrany a artefakty. Pokud
+      nechcete způsobit barevný posun obrázku, malujte pouze odstíny šedi.
     </para>
     <para lang="fr">
       L' approche la plus puissante pour ajuster la luminosité et le 
@@ -818,7 +825,12 @@
       of an image:
     </para>
     <para lang="cs">
-      FIXME
+      Režim <quote>Násobit</quote> není jediným vhodným režimem pro kontrolu
+      zisku. Režim <quote>Násobit</quote> může oblasti obrázku pouze
+      ztmavovat, ne však zesvětlovat. Je proto užitečný na přeexponované
+      obrázky. Režim <quote>Dělit</quote> má efekt opačný, umožňuje
+      zesvětlení, nikolv však zmavení částí obrázku. Chcete-li maximalizovat
+      množství viditelných detailů v celém obrázku, použijte následující trik:
     </para>
     <para lang="fr">
       <quote>Multiplier</quote> n'est pas le seul Mode utilisable pour 
@@ -852,6 +864,29 @@
       When you are happy with the result, you can use <guibutton>Merge Down</guibutton>
       to combine the control layer and the original layer into a
       single layer.
+    </para></step>
+    </procedure>
+    <procedure lang="cs">
+    <step><para>
+      Zduplikujte vrstvu (vytvořte nad ní novou).
+    </para></step>
+    <step><para>
+      Odbarvěte novou vrstvu.
+    </para></step>
+    <step><para>
+      Na výsledek aplikujte Gaussovo rozostření s velkým poloměrem
+      (100 nebo více).
+    </para></step>
+    <step><para>
+      Nastavte režim vrstvy na Dělit.
+    </para></step>
+    <step><para>
+      Sílu korekce ovládejte změnou krytí vrstvy či pomocí nástrojů
+      Jas/Kontrast, Úrovně či Křivky na nové vrstvě.
+    </para></step>
+    <step><para>
+      Jste-li s výsledkem spokojeni, spojte původní a kontrolní vrstvu
+      pomocí <guibutton>Sloučit dolů</guibutton>.
     </para></step>
     </procedure>
     <procedure lang="fr">
@@ -890,6 +925,14 @@
       spent an hour twiddling parameters.  Be warned: the more
       options you have, the harder it is to make a decision.
     </para>
+    <para lang="cs">
+      Kromě režimů <quote>Násobení</quote> a <quote>Dělení</quote> lze využít
+      i další režimy kombinace vsrtev, jako je <quote>Dodge</quote>,
+      <quote>Burn</quote> nebo <quote>Soft Light</quote>. Může se však stát,
+      že strávíte hraním si s těmito parametry celé hodiny, aniž si všimnete
+      kolik času uběhlo. Čím více máte možností, tím těžší může být rozhodnout
+      se.
+    </para>
     <para lang="fr">
       Outre <quote>Multiplier</quote> et <quote>Diviser</quote> vous tirerez 
       souvent bénéfice des autres modes de combinaison comme 
@@ -917,7 +960,11 @@
       of special effects, though.) 
     </para>
     <para lang="cs">
-      FIXME
+      Pokud má váš obrázek barevný závoj, je podle našich zkušeností
+      nejjednodušší opravit jej nástrojem Úrovně - upravit samostatně úrovně
+      jednotlivých barevných kanálů. Pokud tudy cesta nevede, zkuste nástroj
+      Vyvážení barev či Křivky, jejich použití je však náročnější.
+      <!--FIXME-cs angl?-->
     </para>
     <para lang="fr">
       Dans notre expérience, si une image présente une dominance de couleur, 
@@ -942,6 +989,17 @@
       then you should see what sort of adjustment you need to make.
       This technique, when well used, allows even color-blind people
       to color-correct an image.
+    </para>
+    <para lang="cs">
+      Někdy je těžké poznat, zda jsou barvy upraveny správně. Dobrou a
+      objektivní technikou je nalézt bod v obrázku, který má být buď bílý nebo
+      šedý. Aktivujte nástroj <link
+      linkend='gimp-tool-color-picker'>Barevná pipeta</link> (ikona kapátka
+      v panelu nástrojů) a klikněte na zmíněný bod. Otevře se dialog výběru
+      barev. Pokud jsou barvy správně nastaveny, měly by být červená, zelená a
+      modrá složka stejné. Pokud si rovny nejsou, uvidíte jakou úpravu je
+      třeba provést. Tato technika, je-li správně použita, dovoluje upravit
+      barevnost obrázku i barvoslepým.
     </para>
     <para lang="fr">
       Il peut être difficile de dire si vous avez ajusté correctement les 
@@ -970,6 +1028,18 @@
       if you want to get natural-looking colors, in most cases you
       should avoid doing this.
     </para>
+    <para lang="cs">
+      Pokud je obrázek vybledlý (což se může snadno stát, pokud fotíte v
+      ostrém světle), zkuste nástroj Odstín/Sytost. Ten poskytuje tři
+      posuvníky: pro odstín, světlost a sytost. Zvýšení sytosti pravděpodobně
+      pomůže. Současně ale bývá užitečné upravit i světlost.
+      (<quote>Světlost</quote> má podobný význam jako <quote>Jas</quote>
+      v nástroji Jas/Kontrast, je lae tvořena jinou kombinací červené, zelené
+      a modré složky.) Nástroj Odstín/Sytost umožňuje upravovat omezený rozsah
+      barev (pomocí tlačítek v horní části dialogu), pokud však chcete
+      dosáhnout přirozeně vypadajícího výsledku, je většinou dobré se této
+      možnosti vyhnout.
+    </para>
     <para lang="fr">
       Si votre image paraît délavée, ce qui arrive facilement si vous 
       prenez une photo avec une lumière très vive, essayez l'outil Teinte/
@@ -992,7 +1062,10 @@
       for producing highly saturated prints.
       </para>
       <para lang="cs">
-      FIXME
+      I když obrázek nevypadá vybledlý, může zvýšení sytosti zlepšit jeho
+      účinek. Veteráni éry klasického filmu tomuto triku občas říkají
+      <quote>Fujifikace</quote>, podle filmu Fujichrome, který je známý
+      vysoce barevně sytými zvětšeninami.
       </para>
       <para lang="fr">
       Même si une image n'est pas surexposée, vous la rendrez souvent plus 
@@ -1004,6 +1077,11 @@
       you have the opposite problem: too much saturation.  In this
       case too the Hue/Saturation tool is a good one to use, only by
       reducing the saturation instead of increasing it.  
+    </para>
+    <para lang="cs">
+      Pokud fotografujete ve slabém světle, je někdy problém opačný: přílišná
+      sytost obrázku. V takovém případě je nástroj Odstín/Sytost také
+      užitečný, použijte jej ke snížení sytosti.
     </para>
     <para lang="fr">
       Avec les photos sous-exposées, le problème est inverse: trop de 
@@ -1032,7 +1110,10 @@
       only a moderate amount, you should be able to improve the image.
     </para>
     <para lang="cs">
-      FIXME
+      Pokud není fotoaparát správně zaostřen nebo pokud se během
+      snímání obrázků pohne, vznikne rozostřený obrázek. Pokud je
+      hodně rozostřený, nelze s tím nic dělat, ale pokud je rrozostřen jen
+      mírně, mělo by jej být možné opravit.
     </para>
     <para lang="fr">
       Si la mise au point de l'appareil photo est défectueuse ou si vous 
@@ -1043,6 +1124,22 @@
     </para>
 
     <para lang="en">
+      The most generally useful technique for sharpening a fuzzy image
+      is called the <link linkend='plug-in-unsharp-mask'>Unsharp
+      Mask</link>.  In spite of the rather confusing name, which
+      derives from its origins as a technique used by film developers,
+      its result is to make the image sharper, not <quote>unsharp</quote>. 
+      It is a plug-in, and you can access it as Filters->Enhance->Unsharp 
+      Mask in the image menu.  There are two parameters, 
+      <quote>Radius</quote> and <quote>Amount</quote>. The default values 
+      often work pretty well, so you should try them first.  Increasing 
+      either the radius or the amount increases the strength of the effect.  
+      Don't get carried away, though: if you make the unsharp mask too 
+      strong, it will amplify noise in the image and also give rise to 
+      visible artifacts where there are sharp edges. 
+    </para>
+    <para lang="cs">
+      
       The most generally useful technique for sharpening a fuzzy image
       is called the <link linkend='plug-in-unsharp-mask'>Unsharp
       Mask</link>.  In spite of the rather confusing name, which
@@ -1584,6 +1681,9 @@
       See the <link linkend='gimp-using-fileformats'>File
       Formats</link> section for more information.
     </para>
+    <para lang="en">
+      Více se dozvíte v části Souborové formáty.
+    </para>
     <para lang="fr">
       Voyez la section <link linkend='gimp-using-fileformats'>Formats de 
       Fichiers</link>
@@ -1632,13 +1732,13 @@
       Moderní digitální fotoaparáty zapisují do souboru s obrázkem i údaje
       o nastavení fotoaparátu a dalších okolnostech v okamžiku pořízení
       snímku. Tyto údaje jsou v souborech JPEG či TIFF uložena ve
-      strukturovaném formátu zvaném EXIF. Gimp, pokud byl správným způsobem
+      strukturovaném formátu zvaném EXIF. GIMP, pokud byl správným způsobem
       sestaven (funkce závisí na knihovně libexif), umožňuje tato data
       v JPEG souborech zachovat. Pokud je v Gimpu otevřen obrázek obsahující
       EXIF údaje, upraven a znovu uložen ve formátu JPEG, údaje EXIF zůstanou
       beze změny zachovány. To sice není ideální způsob, kterým by měl
       grafický editor s EXIF daty pracovat, ale je to lepší, než je prostě
-      smazat, jak to dělaly starší verze Gimpu.
+      smazat, jak to dělaly starší verze GIMPu.
     </para>
     <para lang="fr">
       Quand vous prenez une photo, les appareils actuels lui ajoutent  
