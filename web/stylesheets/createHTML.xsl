@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
-  <xsl:import href="http://docbook.sourceforge.net/release/website/2.5.0/xsl/chunk-website.xsl" />
-  <xsl:output method="xml" 
-              encoding="utf-8"
-              doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN"
-              doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"
+<xsl:stylesheet 
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+    xmlns="http://www.w3.org/1999/xhtml"
+    version="1.0">
+
+  <xsl:import href="http://docbook.sourceforge.net/release/website/2.5.0/xsl/website.xsl" />
+
+
+  <xsl:output   indent="yes"
+                method="xml" 
+                encoding="UTF-8"
+                doctype-public="-//W3C//DTD XHTML 1.0 Strict//EN"
+                doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"
               />
 
   <xsl:param name="output-root">html</xsl:param>
   <xsl:param name="collect.xref.targets">yes</xsl:param>
   <xsl:template name="home.navhead" />
   <xsl:template name="home.navhead.upperright" />
+
   <xsl:template name="allpages.banner">
     <div id="Header">
       <a href="http://docs.gimp.org" title="Home">
