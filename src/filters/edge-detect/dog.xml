@@ -8,14 +8,19 @@
   2005-12-07 replaced <simplesect> by <sect3> by lexa
   050930 de replaced informalfigure by axel.wernicke
   050829 de added by axel.wernicke -->
-<sect2 id='plug-in-dog' lang="en;cs;de;fr">
+<sect2 id='plug-in-dog' lang="en;cs;de;fr;it">
   <title>
     <phrase lang="en">Difference of Gaussians</phrase>
     <phrase lang="cs">Rozdíl gaussovských rozostření</phrase>
     <phrase lang="de">Differenz der Mittelwerte</phrase>
     <phrase lang="fr">Différence gaussienne</phrase>
+    <phrase lang="it">Differenza di gaussiane</phrase>
   </title>
 
+  <indexterm lang="en">
+    <primary>Filters</primary>
+    <secondary>Edge-detect</secondary>
+  </indexterm>
   <indexterm lang="en">
     <primary>Difference of Gaussians</primary>
   </indexterm>
@@ -38,7 +43,15 @@
     <tertiary>Différence gaussienne</tertiary>
   </indexterm>
 
-  <mediaobject lang="en;cs">
+  <indexterm lang="it">
+    <primary>Filtri</primary>
+    <secondary>Rilevamento bordi</secondary>
+  </indexterm>
+  <indexterm lang="it">
+    <primary>Differenza di gaussiane</primary>
+  </indexterm>
+
+  <mediaobject lang="en;cs;it">
     <imageobject>
       <imagedata fileref='../images/filters/filters-edgedetect-dog.png' format="PNG"/>
     </imageobject>
@@ -55,12 +68,16 @@
       <phrase lang="cs">Přehled</phrase>
       <phrase lang="de">Wirkungsweise</phrase>
       <phrase lang="fr">Généralités</phrase>
+      <phrase lang="it">Panoramica</phrase>
     </title>
 
     <figure lang="de">
       <title>
         <phrase lang="de">
           v.l.n.r.: Originalbild, Differenz der Mittelwerte angewandt
+        </phrase>
+        <phrase lang="it">
+          Esempio di applicazione del filtro Differenza di gaussiane
         </phrase>
       </title>
       <mediaobject>
@@ -101,6 +118,16 @@
         <guimenuitem>Différence gaussienne</guimenuitem>
       </menuchoice>
     </para>
+    <para lang="it">
+      Questo filtro si trova nel menu immagine:
+      <menuchoice>
+        <guimenu>Filt<accel>r</accel>i</guimenu>
+        <guisubmenu>Rilevamen<accel>t</accel>o bordi</guisubmenu>
+        <guimenuitem><accel>D</accel>ifferenza di gaussiane</guimenuitem>
+      </menuchoice>.
+    </para>
+    
+    <!-- FIXME en de fr it: for gimp 2.4 the filter is no more new -->
     <para lang="en">
       This filter is new in GIMP 2.2.  It does edge detection using
       the so-called "Difference of Gaussians" algorithm, which works
@@ -134,7 +161,6 @@
       zmenšení většího poloměru obvykle znamená zvýšení prahu pro rozpoznání
       hran.
     </para>
-
     <para lang="de">
       Dieses Filter extrahiert Kanten aus Bildern indem der Gaußsche
       Weichzeichnungsfilter mit zwei verschiedenen Stärken auf das Bild
@@ -151,7 +177,6 @@
       ist als der Radius 1. Manchmal jedoch, insbesondere bei Bildern mit
       dunklem Hintergrund lohnt es sich, es andersherum zu probieren.
     </para>
-    
     <para lang="fr">
       Ce filtre est apparu dans Gimp 2.2. Il fait une détection
       de bords en utilisant un algorihme appelé « Différence 
@@ -171,6 +196,24 @@
       si le 2ème rayon est plus petit que le premier mais rien ne
       vous empêche de les inverser, c'est même recommandé dans le 
       cas où vous avez un visage éclairé sur un fond noir.
+    </para>
+    <para lang="it">
+      Questo filtro è nuovo in GIMP 2.2. Esegue il rilevamento dei bordi
+      usando il cosiddetto algoritmo "Differenza di gaussiane" che funziona
+      eseguendo due differenti sfumature gaussiane sull'immagine ciascuna con
+      un raggio di sfumatura differente e sottraendo le due versioni per
+      ottenere il risultato finale. Questo algoritmo è diffusamente utilizzato
+      nel campo della visione artificiale ed è molto veloce perchè vi sono
+      metodi molto efficienti per eseguire sfumature gaussiane. I parametri
+      più importanti sono i raggi delle due sfumature gaussiane. E' probabilmente
+      più facile impostarli utilizzando l'anteprima ma può essere utile sapere
+      che aumentando il raggio minore si otterranno bordi più spessi e
+      che diminuendo il raggio maggiore si innalzerà la soglia per il
+      rilevamento di qualcosa come bordo. Nella maggioranza dei casi si
+      otterranno risultati migliori se Raggio 2 è minore di Raggio 1 ma nulla
+      vieta di invertirli tra di loro e in situazioni dove sono presenti
+      soggetti chiari su sfondo scuro l'inversione può anzi migliorare il
+      risultato.
     </para>
   </sect3>
 
@@ -195,6 +238,7 @@
       <phrase lang="cs">Volby</phrase>
       <phrase lang="de">Eigenschaften</phrase>
       <phrase lang="fr">Options</phrase>
+      <phrase lang="it">Opzioni</phrase>
     </title>
 
     <figure lang="de">
@@ -218,6 +262,7 @@
         <term lang="cs">Parametry vyhlazování</term>
         <term lang="de">Parameter abgleichen</term>
         <term lang="fr">Paramètres d'adoucissement</term>
+        <term lang="it">Parametri di arrotondamento</term>
         <listitem>
           <para lang="en">
             Radius 1 and Radius 2 are the blurring radii for the two
@@ -250,6 +295,13 @@
             un dessin au crayon alors régler le rayon 1 plus petit
             que le rayon 2 donnera de meilleurs résultats.
           </para>
+          <para lang="it">
+            Raggio 1 e Raggio 2 sono i raggi di sfumatura delle due sfumature
+            gaussiane. L'unico vincolo è che non devono essere uguali altrimenti
+            il risultato sarà un'immagine vuota. Se si vuole produrre qualcosa
+            che assomigli ad un disegno a mano libera nella maggior parte dei
+            casi impostando Raggio 2 minore di Raggio 1 darà risultati migliori.
+          </para>
         </listitem>
       </varlistentry>
 
@@ -258,6 +310,7 @@
         <term lang="cs">Normalizovat</term>
         <term lang="de">Normalisieren</term>
         <term lang="fr">Normaliser</term>
+        <term lang="it">Normalizza</term>
 
         <listitem>
           <para lang="en">
@@ -287,6 +340,14 @@
             est prise en considération, ainsi l'aperçu n'est pas
             rigoureusement exact en ce qui concerne cette option.
           </para>
+          <para lang="it">
+            Selezionando questa casella si forzerà la gamma di brillantezza alla
+            sua massima estensione. Si tenga conto che nell'anteprima l'estensione
+            viene effettuata solo per la parte visualizzata quindi
+            con &quot;Normalizza&quot; impostato l'anteprima non è completamente
+            accurata (sebbene sia comunque accurata in termini di contrasto
+            globale).
+          </para>
         </listitem>
       </varlistentry>
 
@@ -295,6 +356,7 @@
         <term lang="cs">Invertovat</term>
         <term lang="de">Invertieren</term>
         <term lang="fr">Inverser</term>
+        <term lang="it">Inverti</term>
         <listitem>
           <para lang="en">
             Checking this box inverts the result, so that you see dark
@@ -316,6 +378,11 @@
             que vous obtiendrez des traits sombres sur un fond blanc
             donnant plus l'impression de quelque chose qui ressemble
             à un dessin.
+          </para>
+          <para lang="it">
+            Impostando questa casella si inverte il risultato, si osserveranno
+            lati scuri su sfondo chiaro ottenendo qualcosa che assomiglia ad
+            un disegno a mano libera.
           </para>
         </listitem>
       </varlistentry>

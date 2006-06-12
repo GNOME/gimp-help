@@ -6,17 +6,26 @@
 
 <!-- section history: -->
 <!-- 050829 de added by axel.wernicke -->
-<sect2 id='filters-edges-introduction' lang="en;cs;de;fr">
-  <title lang="en">Edge-detect introduction</title>
-  <title lang="cs">Úvod do detekování hran</title>
-  <title lang="de">Einführung</title>
-  <title lang="fr">Introduction à la détection des bords</title>
-
+<sect2 id="filters-edges-introduction" lang="en;cs;de;fr;it">
+  <title>
+    <phrase lang="en">Edge-detect introduction</phrase>
+    <phrase lang="cs">Úvod do detekování hran</phrase>
+    <phrase lang="de">Einführung</phrase>
+    <phrase lang="fr">Introduction à la détection des bords</phrase>
+    <phrase lang="it">Introduzione al rilevamento bordi</phrase>
+  </title>
+  
   <indexterm lang="de">
     <primary>Filter</primary>
     <secondary>Kantenerkennung</secondary>
   </indexterm>
   <indexterm lang="de"><primary>Einführung</primary></indexterm>
+
+  <indexterm lang="it">
+    <primary>Filtri</primary>
+    <secondary>Rilevamento bordi</secondary>
+  </indexterm>
+  <indexterm lang="it"><primary>Introduzione</primary></indexterm>
   
   <para lang="en">
     Edge detect filters search for borders between different colors
@@ -44,7 +53,24 @@
     verschiedene künstlerische Effekte zu erreichen.
   </para>
 
-  <mediaobject lang="en;de">
+  <para lang="fr">
+    Les filtres de détection des bords recherchent les limites entre
+    les couleurs et détectent ainsi le contour des objets.
+  </para>
+  <para lang="fr">
+    Ils sont utilisés pour créer des sélections et dans de
+    multiples effets artistiques.
+  </para>
+
+  <para lang="it">
+    I filtri di rilevamento dei bordi cercano i confini tra le aree di colore
+    differente e quindi trovano i contorni degli oggetti. 
+  </para>
+  <para lang="it">
+    Sono utilizzati per creare selezioni e per scopi artistici.
+  </para>
+
+  <mediaobject lang="en;de;it">
     <imageobject>
       <imagedata fileref="../images/filters/filters-edgedetect-fig.png"
       format="PNG" />
@@ -55,6 +81,12 @@
     <imageobject>
       <imagedata fileref="../images/filters/cs/filters-edgedetect-fig.png"
       format="PNG" />
+    </imageobject>
+  </mediaobject>
+
+  <mediaobject lang="fr" >
+    <imageobject>
+      <imagedata fileref="../images/filters/fr/filters-edgedetect-fig-fr.png" format="PNG" />
     </imageobject>
   </mediaobject>
 
@@ -129,20 +161,6 @@
     Gegen diese falsch erkannten Kanten hilft eine leichte Weichzeichnung
     des Bildes vor der Anwendung des Filters.
   </para>
-
-  <para lang="fr">
-    Les filtres de détection des bords recherchent les limites entre
-    les couleurs et détectent ainsi le contour des objets.
-  </para>
-  <para lang="fr">
-    Ils sont utilisés pour créer des sélections et dans de
-    multiples effets artistiques.
-  </para>
-  <mediaobject lang="fr" >
-    <imageobject>
-      <imagedata fileref="../images/filters/fr/filters-edgedetect-fig-fr.png" format="PNG" />
-    </imageobject>
-  </mediaobject>
   <para lang="fr">
     La plupart d'entre eux sont basés sur des méthodes de calcul de
     gradient et donnent des bordures épaisses. Considérez la figure
@@ -169,5 +187,32 @@
     Donner un peu de flou à l'image avant d'appliquer un filtre de
     détection de bords est souvent nécessaire pour éviter ces faux
     bords.
+  </para>
+
+  <para lang="it">
+    La maggior parte di essi è basata su metodi di calcolo dei gradienti e
+    restituisce linee di bordo spesse. Osservate la figura 1 che raffigura
+    la variazione dell'intensità di colore. Sulla sinistra c'è una variazione
+    graduale di colore che non è un bordo. Sulla destra c'è una variazione
+    rapida che è un bordo. Calcoliamo ora il gradiente (la velocità di
+    variazione) di questo bordo, cioè la sua derivata prima (figura 2).
+    Dobbiamo decidere se un bordo venga rilevato quando il gradiente supera un
+    valore di soglia (il bordo esatto si trova in corrispondenza della cima
+    della curva ma questa cima varia a seconda dei bordi). Nella maggioranza dei
+    casi la linea di soglia si trova sotto la cima e il bordo corrispondente è
+    spesso.
+  </para> 
+  <para lang="it">
+    Il rilevamento bordi laplaciano utilizza la derivata seconda (figura 3).
+    La cima della curva corrisponde allo zero ed è identificata chiaramente.
+    Questo è il motivo per il quale il filtro di Laplace restituisce bordi
+    sottili larghi un pixel. Tuttavia questa derivata restituirà parecchi zeri
+    corrispondenti a piccole oscillazioni di colore che si traducono in falsi
+    bordi.
+  </para>
+  <para lang="it">
+    E' spesso necessaria una leggera sfumatura prima di applicare i filtri di
+    rilevamento dei bordi perchè attenua le piccole oscillazioni di colore e
+    previene il rilevamento di falsi bordi.
   </para>
 </sect2>
