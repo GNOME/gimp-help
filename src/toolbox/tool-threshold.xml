@@ -5,6 +5,7 @@
   "http://www.docbook.org/xml/4.3/docbookx.dtd">
 
 <!-- section history:
+  2006-06-18 small tutorial Threshold+Qmask added by j.h
   2005-12-06 replaced simplesect by sect3 by lexa
   2005-12-06 replaced informalfigure by figure by lexa
   050807 de reviewed and restructured by axel.wernicke
@@ -12,17 +13,24 @@
 <sect2 id='gimp-tool-threshold' lang="de;en;fr;it;zh_CN">
   <sect2info lang="en;de;fr">
     <revhistory>
-      <revision>
+      <revision lang="en">
         <revnumber>$Revision$</revnumber>
-        <date lang="en">2006-02-18</date>
-        <date lang="de">2005-08-07</date>
-        <date lang="fr">2006-02-18</date>
-        <authorinitials lang="en">j.h</authorinitials>
-        <authorinitials lang="de">a.w</authorinitials>
-        <authorinitials lang="fr">j.h</authorinitials>
+        <date>2006-06-18</date>
+        <authorinitials>j.h</authorinitials>
+      </revision>
+      <revision lang="de">
+        <revnumber>$Revision$</revnumber>
+        <date>2005-08-07</date>
+        <authorinitials>a.w</authorinitials>
+      </revision>
+      <revision lang="fr">
+        <revnumber>$Revision$</revnumber>
+        <date>2006-06-18</date>
+        <authorinitials>j.h</authorinitials>
       </revision>
     </revhistory>
   </sect2info>
+  
   <title lang="en">Threshold Tool</title>
   <title lang="de">Schwellwert</title>
   <title lang="fr">Outil Seuil</title>
@@ -30,7 +38,7 @@
   <title lang="zh_CN">阈值工具</title>
 
   <indexterm lang="en">
-    <primary>Toolbox</primary>
+    <primary>Tools</primary>
     <secondary>Threshold</secondary>
   </indexterm>
   <indexterm lang="en"><primary>Treshold</primary></indexterm>
@@ -42,15 +50,22 @@
   <indexterm lang="de"><primary>Schwellwert</primary></indexterm>
   
   <indexterm lang="fr">
-    <primary>Boîte à outils</primary>
+    <primary>Outils</primary>
     <secondary>Seuil</secondary>
   </indexterm>
   <indexterm lang="fr"><primary>Seuil</primary></indexterm>
 
-  <para lang="en">
-    With the Treshold tool you can make visible or invisible the 
-    pixels of the active layer or selection by their intensity values. 
+  <para lang="en"> <!--changed 060618-->
+    The Threshold tool transforms the current layer or the selection into
+    a black and white image, where white pixels represent the pixels of the
+    image whose Value is in the threshold range, and black pixels represent
+    pixels with Value out of the threshold range.
   </para>
+  <para lang="en"> <!--added 060618-->
+    You can use it to enhance a black and white image (a scanned text for
+    example) or to create selection masks.
+  </para>
+  
   <para lang="de">
     Das Werkzeug <quote>Schwellwert</quote> wandelt die aktive Ebene in ein 
     Schwarz/Weiss Bild um, indem es den eingestellten Schwellwert als 
@@ -60,9 +75,14 @@
   </para>
   
   <para lang="fr">
-    Avec l'outil Seuil vous pouvez rendre visibles ou non les pixels du
-    calque actif ou de la sélection en fonction de leurs valeurs
-    d'intensités. 
+    L'outil Seuil tranforme le calque actif ou la sélection en une image en
+    noir et blanc, où les pixels blancs représentent les pixels dont la
+    Valeur est supérieure à l'intervalle de seuil fixé, et les pixels noirs
+    représentent les pixels en dehors de cet intervalle.
+  </para>
+  <para lang="fr">
+    Vous pouvez l'utiliser pour améliorer le rendu d'une image noir et blanc
+    (un texte scanné par exemple) ou créer des masques de sélection.
   </para>
   <para lang="fr">
     Le nom anglais de cet outil est <quote>Threshold</quote>.  
@@ -76,6 +96,19 @@
   <para lang="zh_CN">
     阈值工具可以通过像素的亮度值决定活动图层或选区上的像素是否可见。
   </para>
+
+  <note lang="en;fr"> <!--added 060618-->
+    <para lang="en">
+      As this tool creates a black and white image, the anti-aliasing of the
+      original image disappears. If this poses a problem, rather use the
+      <link linkend='gimp-tool-levels'>Levels </link> tool.
+    </para>
+    <para lang="fr">
+      Comme cet outil crée une image en noir et blanc, l'anticrénelage de
+      l'image d'origine disparaît. Si cela pose problème, utilisez plutôt
+      l'outil <link linkend='gimp-tool-levels'>Niveaux</link>
+    </para>
+  </note>
 
   <sect3>
     <title lang="en">Activate Tool</title>
@@ -225,17 +258,15 @@
         <term lang="zh_CN">阈值范围</term>
         <listitem>
           <para lang="en">
-            The Threshold tool provides a visual graph of the intensity 
-            value of the active layer or selection. You can set the 
-            threshold range either using the input boxes or clicking 
+            The Threshold tool provides a visual graph, a histogram, of the
+            intensity value of the active layer or selection. You can set
+            the threshold range either using the input boxes or clicking
             button 1 and dragging on the graph.  It allows you to 
             select a part of the image with some intensity from a 
             background with another intensity. Pixels inside
             the range will be white, and the others will be black. 
             Adjust the range to get the selection you want in white
-            on black background. This method of extracting a selection 
-            is well explained in <link
-            linkend="bibliography-grokking">Grokking the Gimp</link>.
+            on black background.
           </para>
           <para lang="de">
             Im Bereich Schwellwerteinstellung des Dialogs werden die
@@ -247,17 +278,16 @@
             schwarz. 
           </para>
           <para lang="fr">
-            Cet outil fournit un graphique des valeurs d'intensité de la
-            sélection ou du calque actif. Vous pouvez régler 
-            l'intervalle de seuil en utilisant les boîtes de saisie ou 
-            par un cliquer-glisser sur le graphisme.  Il permet 
+            Cet outil fournit un <emphasis>histogramme</emphasis> des valeurs
+            d'intensité de la sélection ou du calque actif. Vous pouvez
+            régler l'intervalle de seuil en utilisant les boîtes de saisie
+            ou par un cliquer-glisser sur le graphisme.  Il permet
             d'isoler une partie de l'image ayant une certaine intensité 
             sur un fond ayant une autre intensité. Les pixels compris 
             dans l'intervalle de seuil seront en blanc et les
             autres en noir. Le but est donc d'ajuster l'intervalle de 
             seuil de façon à obtenir l'objet à isoler en blanc sur fond 
-            noir. Cette technique d'extraction d'une sélection est 
-            expliquée en détail dans Grokking the Gimp.
+            noir.
           </para>
           <para lang="it">
             Lo strumento della soglia fornisce un grafico dell'intensità del
@@ -310,5 +340,247 @@
         </listitem>
       </varlistentry>
     </variablelist>
+  </sect3>
+
+  <sect3 lang="en;fr"> <!--added 060619-->
+    <title>
+      <phrase lang="en">Using Threshold and Quick Mask to create a selection
+        mask</phrase>
+      <phrase lang="fr">Utiliser l'outil Seuil et le Masque rapide pour
+        créer un masque de sélection</phrase>
+    </title>
+    
+    <para lang="en">
+      That's not always the case, but an element you want to extract from
+      an image can stand out well against the background. In this case,
+      you can use the Threshold tool to select this element as a whole.
+      Grokking the GIMP described a method based on a channel mask, but now, 
+      using the <link linkend='gimp-image-window-qmask-button'>Quick mask
+      </link> is easier.
+    </para>
+    <para lang="fr">
+      Ce n'est pas toujours le cas, mais il arrive qu'un motif que vous
+      voulez extraire d'une image se détache bien sur le fond. Dans ce cas,
+      vous pouvez utiliser l'outil Seuil pour sélectionner d'un bloc le
+      motif. Grokking the GIMP décrivait une méthode basée sur un masque
+      de canal, mais il est maintenant plus rapide de passer par le
+      <link linkend='gimp-image-window-qmask-button'>Masque Rapide</link>.
+      Voici les étapes à suivre:
+    </para>
+
+    <procedure>
+      <step>
+        <para lang="en">
+          First start decomposing you image into its RGB and HSV components
+          by using the <link linkend='plug-in-decompose'>Decompose</link>
+          filter. A new grey-scaled image is created and the components
+          are displayed as layers in the Layer Dialog. These layers come
+          with a thumbnail but it is too small for an easy study. You can,
+          of course, increase the size of this preview with the dialog menu
+          (the small triangular button), but playing with the <quote>eyes
+          </quote> is more simple to display the wanted layer in the
+          decompose image. Select the layer that isolates the element the
+          best.
+        </para>
+        <para lang="fr">
+          Commencez par décomposer votre image en ses composantes RVB et TSV
+          à l'aide du filtre
+          <link linkend='plug-in-decompose'>Décomposer</link>. Une nouvelle
+          image en niveaux de gris est ouverte et ces différentes
+          composantes apparaissent sous forme de calques dans le
+          Dialogue des calques. Ces calques sont accompagnés d'une
+          miniature, trop petite pour qu'on puisse en apprécier pleinement
+          le contenu. Vous pouvez certes augmenter la taille de ces aperçus
+          avec le menu du dialogue (petit bouton triangulaire), mais il est
+          plus simple de jouer avec les <quote>yeux</quote> pour n'afficher
+          que la composante voulue dans la fenêtre de l'image de
+          décomposition. Sélectionnez le calque qui isole le mieux le motif
+          à extraire.
+        </para>
+        <figure>
+          <title>
+            <phrase lang="en">The original image, the decompose image
+            and its Layer Dialog</phrase>
+            <phrase lang="fr">L'image d'origine, l'image décomposée et son
+              dialogue des calques</phrase>
+          </title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="../images/using/threshold-orig.png"
+                         format="PNG" />
+            </imageobject>
+          </mediaobject>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="../images/using/threshold-decomp.png"
+                         format="PNG" />
+            </imageobject>
+          </mediaobject>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="../images/using/threshold-layers.png"
+                         lang="en" format="PNG" />
+              <imagedata fileref="../images/using/fr/threshold-layers.png"
+                         lang="fr" format="PNG" />
+            </imageobject>
+          </mediaobject>
+        </figure>
+      </step>
+
+      <step>
+        <para lang="en">
+          Call the Threshold tool from the decompose image. By moving the
+          black cursor, fit threshold to isolate the best the element you
+          want to extract. This will probably not be perfect: we will
+          enhance the result with the selection mask we are going to create. 
+        </para>
+        <para lang="fr">
+          À partir de l'image de décomposition, appelez l'outil Seuil. En
+          déplaçant le curseur noir, ajustez le seuil de façon à obtenir le
+          meilleur isolement du motif à extraire. Ce ne sera probablement
+          pas parfait, mais nous améliorerons le résultat avec le masque de
+          sélection que nous allons créer.
+        </para>
+          
+        <warning>
+          <para lang="en">
+            Make sure you have selected the right layer when you call the
+            Threshold tool: when it is opened, you can't change to another
+            layer.
+          </para>
+          <para lang="fr">
+            Assurez-vous que c'est le bon calque qui est activé quand
+            vous appelez l'outil Seuil: celui-ci ouvert, vous ne pourrez
+            plus changer de calque.
+          </para>
+        </warning>
+
+        <figure>
+          <title>
+            <phrase lang="en">The selected layer after threshold fit</phrase>
+            <phrase lang="fr">Le calque sélectionné après ajustement du
+            seuil</phrase>
+          </title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="../images/using/threshold-fit.png"
+                format="PNG" />
+            </imageobject>
+            <caption>
+              <para lang="en">
+                We got the best outline for our flower. There are several
+                red objects which we must remove.
+              </para>
+              <para lang="fr">
+                Nous avons obtenu le meilleur contour pour notre fleur. Il
+                y a plusieurs objets rouges qui doivent être supprimés.
+              </para>
+            </caption>
+          </mediaobject>
+        </figure>
+      </step>
+      
+      <step>
+        <para lang="en">
+          Make sure the image displaying the selected layer is active and
+          copy it to the clipboard with
+          <keycombo><keycap>Ctrl</keycap><keycap>C</keycap></keycombo>.
+        </para>
+        <para lang="fr">
+          La fenêtre affichant le calque sélectionné étant active, faites
+          une copie de ce calque ajusté dans le presse-papier par
+          <keycombo><keycap>Ctrl</keycap><keycap>C</keycap></keycombo>.
+        </para>
+      </step>
+      
+      <step>
+        <para lang="en">
+          Now, make the original image active. Click on the
+          <guibutton>Quick Mask</guibutton> button at the bottom-left corner
+          of the image window: the image gets covered with a red (default)
+          translucent mask. This red color does not suit well to our image
+          with much red: go to the Channel Dialog, activate the
+          <quote>Quick mask</quote> channel and change this color with the
+          <guibutton>Edit Channel Attributs</guibutton>. Come back to the
+          original image. Press
+          <keycombo><keycap>Ctrl</keycap><keycap>V</keycap></keycombo> to
+          paste the previously copied layer.
+        </para>
+        <para lang="fr">
+          Activez maintenant l'image d'origine. Cliquez sur le bouton situé
+          en bas à gauche de la fenêtre pour activer le Masque Rapide:
+          l'image se couvre d'un voile rouge uniforme (par défaut). Cette
+          couleur rouge ne convient guère à notre image qui contient
+          beaucoup de rouge: passez dans le Dialogue des Canaux, activez
+          le canal <quote>Masque rapide</quote> et changez cette couleur
+          avec le bouton
+          <guibutton>Éditer les attributs du canal</guibutton>. Revenez dans
+          l'image d'origine. Tapez
+          <keycombo><keycap>Ctrl</keycap><keycap>V</keycap></keycombo> pour
+          coller le calque copié précédemment.
+        </para>
+        <figure>
+          <title>
+            <phrase lang="en">The mask</phrase>
+            <phrase lang="fr">Le masque</phrase>
+          </title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="../images/using/threshold-mask.png"
+                         format="PNG" />
+            </imageobject>
+          </mediaobject>
+        </figure>
+      </step>
+      
+      <step>
+        <para lang="en">
+          Voilà. Your selection mask is ready: you can improve the selection
+          as usually. When the selection is ready, disable the Quick mask by
+          clicking again on its button: you will see the marching ants
+          around the selection.
+        </para>
+        <para lang="fr">
+          Voilà. Votre masque de sélection est prêt: vous pouvez peaufiner
+          la sélection de la façon habituelle. Quand elle sera prête,
+          désactivez le Masque rapide en cliquant à nouveau sur son bouton:
+          vous verrez alors les pointillés mobiles entourant la sélectio.
+          Vous pourrez la copier puis la coller dans le document que vous
+          voulez.
+        </para>
+        <figure>
+          <title>
+            <phrase lang="en">The result</phrase>
+            <phrase lang="fr">Le résultat</phrase>
+          </title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="../images/using/threshold-result.png"
+                         format="PNG" />
+            </imageobject>
+          </mediaobject>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="../images/using/threshold-selection.png"
+                         format="PNG" />
+            </imageobject>
+          </mediaobject>
+        </figure>
+
+        <para lang="en">
+          We used the Zoom to work at a pixel level, the Lasso to
+          remove large unwanted areas,the pencil (to get hard limits),
+          black paint to remove selected areas, white paint to add
+          selected areas, especially for stem.
+        </para>
+        <para lang="fr">
+          Nous avons utilisé le zoom pour travailler au niveau du
+          pixel, le lasso pour éliminer les larges plages superflues,
+          un crayon fin (pour avoir des bords nets), la peinture noire
+          pour supprimer de la sélection et la peinture blanche pour
+          ajouter à la sélection, en particulier pour la tige.
+        </para>
+      </step>
+    </procedure>
   </sect3>
 </sect2>
