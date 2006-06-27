@@ -1,4 +1,4 @@
-﻿<?xml version='1.0' encoding="UTF-8" ?>
+<?xml version='1.0' encoding="UTF-8" ?>
 <!DOCTYPE glossdiv PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
                           "http://www.docbook.org/xml/4.3/docbookx.dtd">
 
@@ -6,7 +6,7 @@
      2006-05-24 added Korean translation by Dust
      050801 de reviewed by axel.wernicke 
      -->
-<glossdiv lang="cs;en;de;es;fr;ko;no;zh_CN">
+<glossdiv lang="cs;en;de;es;fr;it;ko;no;zh_CN">
   <title>X</title>
 
   <anchor id="gimp-xcf-open" />
@@ -32,20 +32,33 @@
         file is the undo history.
       </para>
       <para>
-<!--    This is not true, RLE compression is used in XCF. I have rewritten
-        it in the Czech version already
--->
-        The pixel data in an XCF file is represented in a raw,
-        uncompressed form: each byte of image data equals one byte in
-        the XCF file.  Thus, XCF files for even modestly sized images
-        can be quite large:  for example, a 1000x1000 RGB image with 3
-        layers will produce an XCF file of over 10 megabytes.  It is not
-        at all difficult to get XCF files of over 100 megabytes.
-        Fortunately, although XCF files do not intrinsically compress
-        their data, Gimp allows you to compress the files themselves,
-        using either the gzip or bzip2 compression methods, both of
-        which are fast, efficient, and freely available.  Compressingan
-        XCF file will often shrink it by a factor of 10 or more.
+	<!-- 
+	     This is not true, RLE compression is used in XCF. I have
+	     rewritten it in the Czech version already
+	  -->
+	<!-- 
+	     English writers! Since noone seems to care to correct this
+	     error, I wrote this little stub. Please correct it since my
+	     english is veeery poor. Ciampix
+	
+	The pixel data in an XCF file is represented in a raw, uncompressed
+        form: each byte of image data equals one byte in the XCF file.
+        Thus, XCF files for even modestly sized images can be quite large:
+        for example, a 1000x1000 RGB image with 3 layers will produce an
+        XCF file of over 10 megabytes.  It is not at all difficult to get
+        XCF files of over 100 megabytes.  Fortunately, although XCF files
+        do not intrinsically compress their data, Gimp allows you to
+        compress the files themselves, using either the gzip or bzip2
+        compression methods, both of which are fast, efficient, and freely
+        available.  Compressingan XCF file will often shrink it by a factor
+        of 10 or more.
+	  --> 
+	
+	The pixel data in an XCF file is represented in a lossless
+        compressed form: the image byte blocks are compressed using the
+        lossless RLE algorithm. This means that no matter how many times
+        you load and save an image using this format: not a single pixel or
+        other image data will be lost or modified because of this format.
       </para>
       <para>
         The Gimp developers have made a great effort to keep the XCF
@@ -216,6 +229,44 @@
       </para>
     </glossdef>
 
+    <glossdef lang="it">
+      <para>
+	Il tipo file XCF è un tipo speciale dato che è il file nativo di
+        GIMP: cioè è stato specificatamente progettato per memorizzare
+        tutte le informazioni che compongono un'immagine di GIMP. Per
+        questa ragione i file in formato XCF possono essere molto complessi
+        e ci sono pochi programmi, a parte GIMP, che sono in grado di
+        leggerli.
+      </para>
+      <para>
+	Quando un'immagine viene memorizzata in un file XCF, il file
+        codifica quasi ogni informazione riguardante l'immagine: i pixel
+        che compongono ogni livello, la selezione corrente, i canali
+        aggiuntivi se ne esistono, i tracciati se esistono e le guide.
+	La cosa più importante che <emphasis>non</emphasis> viene salvata
+        in un file in formato XCF è la cronologia degli annullamenti.
+      </para>
+      <para>
+	I dati immagine in un file XCF sono rappresentati in formato
+	compresso senza perdite: l'algoritmo di compressione utilizzato è
+	di tipo RLE. Ciò significa che non è importante quante volte
+	un'immagine viene scritta e riletta da disco: non verrà perso
+	neanche un pixel o un dato dell'immagine a causa del formato
+	utilizzato.
+      </para>
+      <para>
+	Gli sviluppatori di GIMP hanno fatto un grande sforzo per mantenere
+        il formato XCF compatibile attraverso le versioni.  Se si crea un
+        file usando GIMP 2.0 dovrebbe essere ancora possibile aprire il
+        file con GIMP 1.2.  Comunque, alcune informazioni nel file
+        saranno inutilizzabili: per esempio GIMP 2.0 possiede un
+        metodo di gestione del testo molto più sofisticato di GIMP 1.2,
+        perciò un livello di testo proveniente da un file immagine scritto
+        da GIMP 2.0 apparirà semplicemente come un normale livello immagine
+        una volta aperto con GIMP 1.2.
+      </para>
+    </glossdef>
+
     <glossdef lang="ko">
       <para>
         XCF 파일 형식은 김프 전용 파일 형식이다. 이는 김프로 작업한 
@@ -273,9 +324,10 @@
         angreloggen.
       </para>
       <para>
-        <!--    This is not true, RLE compression is used in XCF. I have rewritten
-                it in the Czech version already. Somebody translating it to english?
-                -->
+        <!-- This is not true, RLE compression is used in XCF. I have
+	     rewritten it in the Czech version already. Somebody
+	     translating it to english?
+          -->
         Pikseldata blir lagra i rå og ukomprimert form. Difor kan
         XCF-filene sjølv for eit enkelt lite bilete bli nokså store. Eit
         1000 × 1000 piksels bilete i RGB-format med tre lag vil lage ei
@@ -299,16 +351,29 @@
     
     <glossdef lang="zh_CN">
       <para>
-        XCF 文件格式比较特殊因为它是 GIMP 的内部格式：也就是，它被专用来保存 GIMP 图像中所用数据。所以 XCF 文件可能比较复杂，很少有其它程序能够读取它。
+        XCF 文件格式比较特殊因为它是 GIMP 的内部格式：也就是，它被专用来保存
+        GIMP 图像中所用数据。所以 XCF 文件可能比较复杂，很少有其它程序能够读
+        取它。
       </para>
       <para>
-        当一个图像被保存为 XCF 文件，文件编码几乎包括了解图像所需的所有信息：各个图层中的像素数据，当前选区，附加通道，路径和参考线。<emphasis>没有</emphasis>保存在一个 XCF 文件中最重要的东西是撤消历史。
+        当一个图像被保存为 XCF 文件，文件编码几乎包括了解图像所需的所有信息：
+        各个图层中的像素数据，当前选区，附加通道，路径和参考线。<emphasis>没
+        有</emphasis>保存在一个 XCF 文件中最重要的东西是撤消历史。
       </para>
       <para>
-        一个 XCF 文件中的像素信息保存为一种未加工的，非压缩的形式：所以 XCF 文件常常比较大：比如，一个 1000x1000 的带3个图层的 RGB 图像将生成大于 10 兆的 XCF 文件。要产生于大于 100 兆的 XCF 文件也不难。幸运的是，虽然 XCF 文件本身不支持压缩其数据，但 GIMP 允许您自己用 gzip 或 bzip2(都快速而有效，并且可免费获得)压缩方式来压缩文件。压缩一个 XCF 文件通常能减少 10 倍或更多。
+        一个 XCF 文件中的像素信息保存为一种未加工的，非压缩的形式：所以 XCF
+        文件常常比较大：比如，一个 1000x1000 的带3个图层的 RGB 图像将生成大
+        于 10 兆的 XCF 文件。要产生于大于 100 兆的 XCF 文件也不难。幸运的是，
+        虽然 XCF 文件本身不支持压缩其数据，但 GIMP 允许您自己用 gzip 或
+        bzip2(都快速而有效，并且可免费获得)压缩方式来压缩文件。压缩一个 XCF
+        文件通常能减少 10 倍或更多。
       </para>
       <para>
-        GIMP 开发者在保持 XCF 文件格式在各个版本间兼容上花了很大的力气。比如您在 GIMP 2.0 中创建一个文件，它也应该可以在 GIMP 1.2中打开。不过，文件中的一些信息可能不能用：比如，GIMP 2.0 有比 GIMP 1.2 更复杂地处理文字的方式，因此，GIMP 2.0 中的文字图层在 GIMP 1.2 中打开后，这些文字就和原图像作为图像图层而混在一起了。
+        GIMP 开发者在保持 XCF 文件格式在各个版本间兼容上花了很大的力气。比如
+        您在 GIMP 2.0 中创建一个文件，它也应该可以在 GIMP 1.2中打开。不过，
+        文件中的一些信息可能不能用：比如，GIMP 2.0 有比 GIMP 1.2 更复杂地处
+        理文字的方式，因此，GIMP 2.0 中的文字图层在 GIMP 1.2 中打开后，这些
+        文字就和原图像作为图像图层而混在一起了。
       </para>
     </glossdef>
   </glossentry>
