@@ -99,7 +99,7 @@ $(STAMP_DIR)/mkdirs.stamp: $(patsubst %,$(STAMP_DIR)/mkdirs.%.stamp,$(ALL_LINGUA
   # only create a link in the PDF directory, because image files are
   # included in the PDF anyways
 	@echo '*** Creating link in PDF directory to images ***'
-	@cd $(srcdir)/pdf && ln -s ../images;
+	@cd $(srcdir)/pdf && ln -fs ../images;
 
 	@touch $@
 
