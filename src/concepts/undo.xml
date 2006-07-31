@@ -9,8 +9,8 @@
   2006-02-25 lexa: added translation for de and made file docbook compliant
 -->
 
-<sect2 id="gimp-concepts-undo"  lang="en;cs;de;fr;it;ko;nl;ru;zh_CN">
-  <sect2info lang="en;de;fr" role="cvs">
+<sect2 id="gimp-concepts-undo"  lang="en;cs;de;es;fr;it;ko;nl;ru;zh_CN">
+  <sect2info lang="en;de;es;fr" role="cvs">
     <revhistory>
       <revision lang="en">
         <revnumber>$Revision$</revnumber>
@@ -21,6 +21,11 @@
         <revnumber>$Revision$</revnumber>
         <date>2006-02-25</date>
         <authorinitials>lexa</authorinitials>
+      </revision>
+      <revision lang="es">
+        <revnumber>$Revision$</revnumber>
+        <date>2006-07-27</date>
+        <authorinitials>m.q</authorinitials>
       </revision>
       <revision lang="fr">
         <revnumber>$Revision$</revnumber>
@@ -34,6 +39,7 @@
     <phrase lang="en">Undoing</phrase>
     <phrase lang="cs">Vracení změn</phrase>
     <phrase lang="de">Rückgängig (Undo)</phrase>
+    <phrase lang="es">Deshacer</phrase>
     <phrase lang="fr">Annuler</phrase>
     <phrase lang="it">Annullamenti</phrase>
     <phrase lang="ko">실행 취소</phrase>
@@ -54,6 +60,10 @@
   <indexterm lang="de"><primary>Rückgängig</primary></indexterm>
   <indexterm lang="de"><primary>Journal</primary></indexterm>
   <indexterm lang="de"><primary>Undo</primary></indexterm>
+
+  <indexterm lang="es">
+    <primary>Deshacer</primary>
+  </indexterm>
 
   <indexterm lang="fr">
     <primary>Annuler</primary>
@@ -127,6 +137,21 @@
       <keycap>Strg</keycap>
       <keycap>Z</keycap>
     </keycombo> zur Verfügung.
+  </para>
+
+  <para lang="es">
+    Casi todo lo que se puede hacer sobre una imagen puede deshacerse.
+    Puedes deshacer la acción más reciente escogiendo
+    <menuchoice>
+      <guimenu>Editar</guimenu>
+      <guimenuitem>Deshacer</guimenuitem>
+    </menuchoice>
+    desde el menú de la imagen.  Pero esto se hace tan a menudo que
+    realmente deberías memorizar el atajo de teclado,
+    <keycombo>
+      <keycap>Ctrl</keycap>
+      <keycap>Z</keycap>
+    </keycombo>.
   </para>
 
   <para lang="fr">
@@ -221,7 +246,7 @@
   </para>
 
   <para lang="en">
-    Undoing can itself be undone.  After having undone an action, you
+    Undoing can itself be undone. After having undone an action, you
     can <emphasis>redo</emphasis> it by choosing
     <menuchoice>
       <guimenu>Edit</guimenu>
@@ -272,6 +297,23 @@
     einschätzen zu können, ist es oft hilfreich schnell zwischen dem Bild vor
     und nach der Ausführung des Kommandos umschalten zu können. Mit den beiden
     hier vorgestellten Kommandos ist das sehr leicht.
+  </para>
+
+  <para lang="es">
+    El deshacer puede a su vez deshacerse.  Luego de haber deshecho
+    una acción, puedes <emphasis>rehacerla</emphasis> escogiendo
+    <menuchoice>
+      <guimenu>Editar</guimenu>
+      <guimenuitem>Rehacer</guimenuitem>
+    </menuchoice>
+    desde el menú de la imagen, o usando el atajo de teclado,
+    <keycombo>
+      <keycap>Ctrl</keycap>
+      <keycap>Y</keycap> </keycombo>.
+      A menudo es útil juzgar el efecto de una acción deshaciéndola y
+      rehaciéndola repetidamente.  Esto usualmente se realiza muy
+      rápido, y no consume recursos extra, ni altera el historial de
+      deshacer.  Así que no se produce daño al hacer esto.
   </para>
 
   <para lang="fr">
@@ -411,6 +453,16 @@
       <guilabel>Wiederholen</guilabel> Historie wird nicht mit dupliziert.
     </para>
 
+    <para lang="es">
+      Si deshaces una o más acciones y luego operas sobre la imagen de
+      cualquier forma, excepto deshaciendo o rehaciendo, ya no será
+      posible rehacer dichas acciones: se perderán para siempre.  La
+      solución a esto, si es que genera problemas, es duplicar la
+      imagen y luego operar sobre la copia (<emphasis>no</emphasis>
+      sobre el original, porque el historial de deshacer/rehacer no se
+      copia cuando se duplica una imagen)
+    </para>
+
     <para lang="fr">
       Si vous avez annulé une ou plusieurs actions et qu'ensuite vous faites
       autre chose qu'Annuler ou Refaire, il ne sera plus possible de Refaire
@@ -491,6 +543,15 @@
     <!-- PENDING de  gimp-undo-dialog
     Weitere Informationen zu diesem  
     Dialog finden Sie in <xref linkend="gimp-undo-dialog" />. -->
+  </para>
+
+  <para lang="es">
+    Si a menudo te encuentras deshaciendo y rehaciento muchos pasos a
+    la vez, puede ser más conveniente trabajar con el <!--PENDING link
+    linkend="gimp-undo-dialog"-->Historial de
+    deshacer<!--/link-->. Éste es un diálogo empotrable que muestra
+    una pequeña imagen para cada punto del historial de acciones, y
+    permite retroceder o avanzar hacia cierto punto efectuando clics.
   </para>
 
   <para lang="fr">
@@ -578,6 +639,22 @@
     Journal</guilabel> lässt Sie hingegeben einstellen, wie viel Speicher
     GIMP für die Historie jedes Bildes maximal belegt. Wenn diese Menge
     verbraucht ist, werden die ältesten Einträge der Historie verworfen.
+  </para>
+
+  <para lang="es">
+    El deshacer es específico a cada imagen: el "Historial" de
+    deshacer es uno de los componentes de una imagen.  Para este
+    propósito, el GIMP aloja cierta cantidad de memoria para cada
+    imagen.  Puedes personalizar las preferencias para incrementar o
+    decrementar dicha cantidad, utilizando la página <!-- PENDING link
+    linkend="gimp-prefs-environment"-->Entorno<!--/link--> del diálogo
+    de preferencias.  Allí hay dos variables importantes: la
+    <emphasis>cantidad mínima de niveles de deshacer</emphasis>, la
+    cual será mantenida por el GIMP sin importar la cantidad de
+    memoria que se consuma, y la <emphasis>memoria máxima para
+    deshacer</emphasis>, la cual al ser sobrepasada hará que el GIMP
+    comience a borrar los ítems más antigüos del historial de
+    deshacer.
   </para>
 
   <para lang="fr">
@@ -675,6 +752,13 @@
       speichern kann, bleibt die Historie erhalten. Wenn Sie ein Bild in GIMP
       öffnen, wird das Journal immer neu angelegt.
     </para>
+    <para lang="es">
+      Si bien el historial de deshacer es un componente de la imagen,
+      no es guardado cuando guardas la imagen usando el formato nativo
+      del GIMP, XCF.  Éste sí preserva todas las otras propiedades de
+      la imagen.  Cuando la imagen vuelve a abrirse, tiene un
+      historial de deshacer vacío.
+    </para>
     <para lang="fr">
       Même si l'Historique d'annulation est un composant de l'image, il n'est
       pas sauvegardé quand vous enregistrez une image au format XCF, qui
@@ -768,6 +852,25 @@
     ganze Menge Speicher.
   </para>
 
+  <para lang="es">
+    La implementación del GIMP del deshacer es bastante sofisticada.
+    Muchas de las operaciones requieren muy poca memoria de deshacer
+    (por ejemplo, cambiar la visibilidad a una capa), así que puedes
+    realizar secuencias largas de las mismas antes de que se empiecen
+    a eliminar del historial de deshacer.  Algunas operaciones
+    (cambiar la visibilidad a una capa es de nuevo un buen ejemplo)
+    son <emphasis>comprimidas</emphasis>, por lo que efectuarlas
+    varias veces produce un solo punto en el historial de deshacer.
+    Sin embargo, hay otras operaciones que pueden consumir un montón
+    de memoria de deshacer.  La mayoría de los filtros son ejemplos de
+    esto: se debe a que están implementados por añadidos (plug-ins), y
+    el GIMP no tiene una manera eficiente de conocer qué han cambiado,
+    por lo que la única forma de implementar el deshacer es memorizar
+    el contenido completo de la capa afectada antes y después de la
+    operación.  Podrás efectuar unas pocas operaciones de éstas antes
+    de que se empiecen a eliminar del historial de deshacer.
+  </para>
+
   <para lang="fr">
     La mise en œuvre d'Annuler par Gimp est assez perfectionnée. Beaucoup
     d'opérations ne requièrent que peu de mémoire (p.e changer la visibilité
@@ -858,6 +961,7 @@
         Aktionen die Sie nicht rückgängig machen können
       </phrase>
       <phrase lang="en">Things that cannot be Undone</phrase>
+      <phrase lang="es">Las cosas que no se pueden deshacer</phrase>
       <phrase lang="fr">Ce qui ne peut pas être annulé</phrase>
       <phrase lang="it">Operazioni che non possono essere annullate</phrase>
       <phrase lang="ko">실행 취소를 할 수 없는 것들</phrase>
@@ -896,6 +1000,17 @@
       important example is zooming. There are, however, exceptions: toggling
       QuickMask on or off can be undone, even though it does not alter the
       image data.
+    </para>
+    <para lang="es">
+      La gran parte de las acciones que alteran una imagen pueden
+      deshacerse.  Las acciones que no la alteran en general no pueden
+      deshacerse.  Éstas incluyen operaciones como guardar la imagen a
+      un archivo, duplicar la imagen, copiar parte de la imagen a la
+      papelera, etc.  También incluye la mayoría de las acciones que
+      afectan a la representación de la imagen sin alterar sus datos.
+      El ejemplo más relevante es la ampliación.  Hay, sin embargo,
+      excepsiones: activar y desactivar la máscara rápida puede
+      deshacerse, a pesar de que no altera los datos de la imagen.
     </para>
     <para lang="fr">
       Toutes les actions qui modifient une image peuvent être Annulées. Celles
@@ -964,6 +1079,10 @@
       There are a few important actions that do alter an image but
       cannot be undone:
     </para>
+    <para lang="es">
+      Hay unas pocas acciones importantes que alteran una imagen pero
+      no pueden deshacerse:
+    </para>
     <para lang="fr">
       Inversement, il y a des opérations qui modifient l'image et qui 
       pourtant ne peuvent pas être Annulées:
@@ -992,6 +1111,7 @@
         <term lang="cs">Zavření obrázku</term>
         <term lang="de">Das Schließen eines Bildes</term>
         <term lang="en">Closing the image</term>
+        <term lang="es">La clausura de la imagen</term>
         <term lang="fr">Fermeture d'une image</term>
         <term lang="it">Chiusura dell'immagine</term>
         <term lang="ko">이미지 닫기</term>
@@ -1031,6 +1151,18 @@
             <link linkend="gimp-prefs-environment">Environment</link>
             page of the Preferences dialog; if you do, you are assuming
             responsibility for thinking about what you are doing.)
+          </para>
+          <para lang="es">
+            El historial de deshacer es un componente de la imagen,
+            así que cuando una imagen se cierra y todos sus recursos
+            son liberados, el historial se va con ellos.  Por esto, a
+            menos que la imagen no haya sido modificada desde la
+            última vez que fue guardada, el GIMP simpre pregunta para
+            que confirmes si realmente quieres cerrarla (puedes
+            desactivar esto en la página <!-- PENDING link
+            linkend="gimp-prefs-environment"-->Entorno<!--/link--> del
+            diálogo de preferencias; de hacerlo, estás asumiendo
+            responsabilidad por saber qué estás haciendo).
           </para>
           <para lang="fr">
             L'historique d'annulation est un composant d'une image, ainsi
@@ -1096,6 +1228,7 @@
         <term lang="cs">Navrácení obrázku</term>
         <term lang="de">Das Zurücksetzen eines Bildes</term>
         <term lang="en">Reverting the image</term>
+        <term lang="es">Revertir la imagen</term>
         <term lang="fr">Revenir à l'image</term>
         <term lang="it">Ricaricare l'immagine</term>
         <term lang="ko">이미지 원래대로 만들기</term>
@@ -1124,6 +1257,14 @@
             is lost as a consequence. Because of this, if the image is
             unclean, GIMP always asks you to confirm that you really want to
             revert the image.
+          </para>
+          <para lang="es">
+            <quote>Revertir</quote> significa recargar la imagen del
+            archivo.  El GIMP implementa esto cerrando la imagen y
+            creando una imagen nueva, así que el historial de deshacer
+            es perdido en consecuencia.  Por esto, si la imagen no fue
+            guardada, el GIMP pregunta para que confirmes que
+            realmente quieres revertir la imagen.
           </para>
           <para lang="fr">
             Cela veut dire recharger l'image depuis le fichier. Gimp réalise
@@ -1174,6 +1315,7 @@
         <term lang="cs">Části operací</term>
         <term lang="de"><quote>Teile</quote> von Aktionen</term>
         <term lang="en"><quote>Pieces</quote> of actions</term>
+        <term lang="es"><quote>Porciones</quote> de acciones</term>
         <term lang="fr"><quote>Parties</quote> d'actions</term>
         <term lang="it"><quote>Pezzi</quote> d'azione</term> 
         <term lang="ko">동작의 <quote>부분들</quote></term>
@@ -1219,6 +1361,22 @@
             with the Text tool, you cannot undo individual letters, font
             changes, etc.: undoing after you are finished removes the newly
             created text layer.
+          </para>
+          <para lang="es">
+            Algunas herramientas requieren que realices una compleja
+            serie de manipulaciones antes de que surtan efecto, pero
+            sólo permiten deshacerse en su totalidad en lugar de
+            hacerlo para sus elementos individuales.  Por ejemplo, las
+            tijeras inteligentes requieren que crees un camino cerrado
+            efectuando clics en múltiples puntos de la imagen, y que
+            luego hagas clic dentro del camino para crear una
+            selección.  No puedes deshacer los clics individualmente:
+            si deshaces luego de haber terminado, te envía de regreso
+            al punto inicial.  Para dar otro ejemplo, cuando trabajas
+            con la herramienta de texto, no puedes deshacer cada letra
+            individualmente, ni los cambios de tipografía, etc.  Si
+            deshaces luego de haber terminado se borra la capa de
+            texto creada.
           </para>
           <para lang="fr">
             Certains outils vous obligent à réaliser une série complexe de
@@ -1326,6 +1484,22 @@
       Undo History corrupted, so it is best to avoid this unless you have
       accidentally done something whose consequences are going to be very
       harmful.
+    </para>
+    <para lang="es">
+      Los filtros, y demás acciones efectuadas por añadidos (plug-ins)
+      o guiones (scripts), pueden deshacerse al igual que las acciones
+      implementadas dentro del GIMP, pero se requiere que hagan un uso
+      correcto de las funciones de deshacer del GIMP.  Si el código no
+      es correcto, un añadido puede corromper el historial de
+      deshacer, no sólo en sus propios cambios, sino en las acciones
+      previas que ya no se podrán deshacer.  Los añadidos y los
+      guiones que se distribuyen con el GIMP son confiables, pero
+      abviamente no hay ninguna garantía para los añadidos que
+      obtengas de otras fuentes.  A la vez, incluso cuando el código
+      es correcto, cancelar un añadido mientras se encuentra corriendo
+      puede aveces dejar el historial de deshacer corrompido, así que
+      es mejor no hacerlo a menos que hayas hecho algo cuyas
+      consecuencias pueden ser muy dañinas.
     </para>
     <para lang="fr">
       Les actions réalisées à l'aide de filtres, de greffons ou de scripts
