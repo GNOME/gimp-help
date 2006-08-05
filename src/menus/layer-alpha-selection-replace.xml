@@ -1,32 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE sect2
-  PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
-  "http://www.docbook.org/xml/4.3/docbookx.dtd">
+          PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+          "http://www.docbook.org/xml/4.3/docbookx.dtd">
 
 <!-- section history:
-  2006-01-13 lexa: fixed error in de
-  2006-01-10 en;fr reviewed by j.h
-  2005/11/11 split of from layer-mask.xml by axel.wernicke 
--->
-<sect2 id='gimp-layer-alpha-selection-replace' lang="en;cs;de;fr;zh_CN">
-  <sect2info lang="cs" role="cvs">
+     2006-01-13 lexa: fixed error in de
+     2005/11/11 split of from layer-mask.xml by axel.wernicke
+     -->
+<sect2 id="gimp-layer-alpha-selection-replace" lang="en;cs;de;fr;zh_CN">
+  <sect2info lang="en;cs;de;fr" role="cvs">
     <revhistory>
-      <revision>
+      <revision lang="en">
         <revnumber>$Revision$</revnumber>
-        <date lang="cs">2006-03-06</date>
-        <authorinitials lang="cs">jfriedl</authorinitials>
+        <date>2006-08-01</date>
+        <authorinitials>scb</authorinitials>
+      </revision>
+      <revision lang="cs">
+        <revnumber>$Revision$</revnumber>
+        <date>2006-03-06</date>
+        <authorinitials>jfriedl</authorinitials>
+      </revision>
+      <revision lang="de">
+        <revnumber>$Revision$</revnumber>
+        <date>2005-09-09</date>
+        <authorinitials>a.w</authorinitials>
+      </revision>
+      <revision lang="fr">
+        <revnumber>$Revision$</revnumber>
+        <date>2006-07-03</date>
+        <authorinitials>j.h</authorinitials>
       </revision>
     </revhistory>
   </sect2info>
+  
   <title>
-    <phrase lang='en'>Alpha to Selection</phrase>
-    <phrase lang='cs'>Alfa do výběru</phrase>
-    <phrase lang='de'>Auswahl aus Alphakanal</phrase>
+    <phrase lang="en">Alpha to Selection</phrase>
+    <phrase lang="cs">Alfa do výběru</phrase>
+    <phrase lang="de">Auswahl aus Alphakanal</phrase>
     <phrase lang="fr">Alpha vers sélection</phrase>
     <phrase lang="zh_CN">Alpha 到选区</phrase>
   </title>
-
+  
   <indexterm lang="en">
     <primary>Layer</primary>
     <secondary>Alpha to Selection</secondary>
@@ -40,17 +55,23 @@
     <secondary>Alpha vers Sélection</secondary>
   </indexterm>
   
-  <para lang='en'>
-    "Alpha to Selection" transforms the active layer's alpha channel (which
-    encodes transparency) into the image's selection. Opaque areas become
-    fully selected, transparent areas unselected, and translucent areas
-    partially selected. The other operations in this group do similar things,
+  <para lang="en">
+    The <guimenuitem>Alpha to Selection</guimenuitem> command
+    creates a selection in the image from the active layer's
+    alpha channel, which encodes transparency. Opaque areas are
+    fully selected, transparent areas are unselected, and translucent areas
+    are partially selected. This selection <emphasis>replaces</emphasis>
+    the existing selection. The alpha channel itself is not changed.
+  </para>
+  <para lang="en">
+    The other commands in this group of operations are similar,
     except that instead of completely replacing the existing selection with
     the selection produced from the alpha channel, they either add the two
-    selections, subtract the alpha-selection from the existing selection, or
+    selections, subtract the alpha selection from the existing selection, or
     create a selection that is the intersection of the two.
   </para>
-  <para lang='cs'>
+  
+  <para lang="cs">
     Příkaz Alfa do výběru vytvoří z alfa kanálu aktivní vrstvy (alfa kanál
     obsahuje informace o průhlednosti) výběr. Oblasti s plným krytím jsou
     úplně vybrány, zcela průhledné oblasti nejsou vybrány vůbec a průsvitné
@@ -68,45 +89,46 @@
     Auswahlkanten umgewandelt. Der Alphakanal selbst wird durch dieses
     Kommando nicht verändert.
   </para>
-  <para lang='fr'>
-    <guilabel>Alpha vers sélection</guilabel>: permet de créer une sélection 
-    des pixels de l'image correspondant aux pixels non transparents du 
-    calque actif: les pixels du calque actif opaques à 100% seront 
-    complètement sélectionnés; les pixels du calque actif partiellement 
-    opaques seront partiellement sélectionnés et les pixels du calque actif 
-    complètement transparents ne seront pas sélectionnés.
+  <para lang="fr">
+    <guilabel>Alpha vers sélection</guilabel>: permet de créer une sélection
+    dans l'image à partir des pixels non transparents du calque actif: les
+    pixels du calque actif opaques à 100% seront complètement sélectionnés;
+    les pixels du calque actif partiellement opaques seront partiellement
+    sélectionnés et les pixels du calque actif complètement transparents ne
+    seront pas sélectionnés.
   </para>
   <para lang="fr">
-    Cette option remplace complètement une sélection existante qui disparaît.
-    Mais les autres commandes du groupe permettent d'ajouter, de soustraire 
-    ou de ne conserver que les pixels communs (intersection), à une 
-    sélection existante.
+    Cette commande remplace la sélection existante par cette sélection
+    que vous pouvez déplacer ou copier-coller dans une autre image.
+    Mais les autres commandes du groupe permettent d'ajouter, de soustraire
+    ou de ne conserver que les pixels communs (intersection), à la
+    sélection existante. Le canal Alpha n'est pas modifié.
   </para>
-
+  
   <para lang="zh_CN">
     “Alpha 到选区”将活动图层的 Alpha 通道转变为图像选区。不透明区域变为完全选中，透明区域未选中，而半透明区域变为部分选中。该组中其它命令也做相似的事，不过它们不是用从 Alpha 通道得到的选区完全替代已存在选区，而是将两个选区相加，从已存在选区中减去 Alpha-选区，或从两个选区相交部分新建一个选区。
   </para>
-
+  
   <sect3>
     <title>
-      <phrase lang="en">Activate Dialog</phrase>
+      <phrase lang="en">Activating the Command</phrase>
       <phrase lang="cs">Aktivace</phrase>
       <phrase lang="de">Aufruf des Kommandos</phrase>
-      <phrase lang="fr">Activer le Dialogue</phrase>
+      <phrase lang="fr">Appel de la commande</phrase>
       <phrase lang="zh_CN">开启对话框</phrase>
     </title>
-
+    
     <itemizedlist>
       <listitem>
-        <para lang='en'>
-          These commands can be accessed from an image menubar as 
+        <para lang="en">
+          You can access this command from the image menubar through
           <menuchoice>
             <guimenu>Layer</guimenu>
             <guisubmenu>Transparency</guisubmenu>
             <guimenuitem>Alpha to Selection</guimenuitem>
-          </menuchoice><!--commands? or command?-->
+          </menuchoice>
         </para>
-        <para lang='cs'>
+        <para lang="cs">
           Tyto příkazy lze vyvolat z nabídky okna obrázku volbou
           <menuchoice>
             <guimenu>Vrstva</guimenu>
@@ -122,9 +144,9 @@
             <guimenuitem>Aus<accel>w</accel>ahl aus Alphakanal</guimenuitem>
           </menuchoice>
         </para>
-        <para lang='fr'>
+        <para lang="fr">
           Ces commandes sont accessibles depuis le menu de la fenêtre
-          d'image 
+          d'image
           <menuchoice>
             <guimenu>Calque</guimenu>
             <guisubmenu>Transparence</guisubmenu>
@@ -142,8 +164,8 @@
       </listitem>
       <listitem>
         <para lang="en">
-          or from the pop-menu you get by right clicking on the active layer 
-          in Layer Dialog.
+          or from the pop-up menu which appears when you right-click on the
+          active layer in the Layer Dialog.
         </para>
         <para lang="cs">
           nebo z kontextové nabídky dialogu vrstvy (otevře se kliknutím
@@ -162,5 +184,45 @@
         </para>
       </listitem>
     </itemizedlist>
+  </sect3>
+  
+  <sect3 lang="en;fr">
+    <title>
+      <phrase lang="en">Example</phrase>
+      <phrase lang="fr">Exemple</phrase>
+    </title>
+    <figure lang="en;fr">
+      <title>
+        <phrase lang="en">Applying <quote>Alpha to Selection</quote>
+        </phrase>
+        <phrase lang="fr">Application de Alpha vers sélection</phrase>
+      </title>
+      <mediaobject lang="en">
+        <imageobject>
+          <imagedata fileref="../images/menus/BBR.png" format="PNG" />
+        </imageobject>
+      </mediaobject>
+      <mediaobject lang="fr">
+        <imageobject>
+          <imagedata fileref="../images/menus/fr/BBR.png" format="PNG" />
+        </imageobject>
+      </mediaobject>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="../images/menus/layer-alpha-replace.png"
+                     format="PNG" />
+        </imageobject>
+        <caption>
+          <para lang="en">
+            Non-transparent pixels of the active layer have replaced
+            the existing rectangular selection.
+          </para>
+          <para lang="fr">
+            Les pixels correspondant aux pixels non-transparents du calque
+            actif ont remplacé la sélection rectangulaire existante.
+          </para>
+        </caption>
+      </mediaobject>
+    </figure>
   </sect3>
 </sect2>
