@@ -32,7 +32,7 @@ import getopt
 import re
 
 # xpath expressions of filereferences in a DocBook XML file
-refs_to_test = ['//imagedata[@fileref]',]
+refs_to_test = ['//imagedata[@fileref]','//graphic[@fileref]']
 
 # check only xml files
 xmlfile_exp = re.compile('[\w-]*.xml$')
@@ -95,10 +95,15 @@ class LxmlValidator(XMLReferenceValidator):
        error.
        >>> str = '<sect1><imagedata '\
                  'fileref="../foobar/toolbox/toolbox-flip.png" /></sect1>'
-       >>> val.xmlstr = str
+       >>> val = LxmlValidator(refs_to_test[0], xmlstr=str)
        >>> val.validate_imagepath_references()
        [(0, './foobar/toolbox/toolbox-flip.png')]
-
+      
+       >>> str = '<sect2><graphic '\
+                 'fileref="../foobar/math/dot-for-dot.png" /></sect2>'
+       >>> val = LxmlValidator(refs_to_test[1], xmlstr=str)
+       >>> val.validate_imagepath_references()
+       [(0, './foobar/math/dot-for-dot.png')]
     """
 
     def get_elements_by_xpath(self):
@@ -143,10 +148,15 @@ class LibXMLValidator(XMLReferenceValidator):
        error.
        >>> str = '<sect1><imagedata '\
                  'fileref="../foobar/toolbox/toolbox-flip.png" /></sect1>'
-       >>> val.xmlstr = str
+       >>> val = LibXMLValidator(refs_to_test[0], xmlstr=str)
        >>> val.validate_imagepath_references()
        [(0, './foobar/toolbox/toolbox-flip.png')]
-
+        
+       >>> str = '<sect2><graphic '\
+                 'fileref="../foobar/math/dot-for-dot.png" /></sect2>'
+       >>> val = LibXMLValidator(refs_to_test[1], xmlstr=str)
+       >>> val.validate_imagepath_references()
+       [(0, './foobar/math/dot-for-dot.png')]
     """
 
     def get_elements_by_xpath(self):
