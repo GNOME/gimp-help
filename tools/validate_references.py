@@ -24,8 +24,13 @@ try:
 except ImportError:
     have_lxml = False
 
-from xml import xpath
-from xml.dom import minidom
+try:
+    from xml import xpath
+    from xml.dom import minidom
+    have_xml = True
+except ImportError:
+    have_xml = False
+
 import sys
 import os
 import getopt
@@ -344,11 +349,11 @@ def main():
             result = []
             for xpath_expr in refs_to_test:
                 if have_lxml:
-                    val = LxmlValidator(xpath_expr, 
-                                        a)
+                    val = LxmlValidator(xpath_expr, a)
+                elif have_xml:
+                    val = LibXMLValidator(xpath_expr, a)
                 else:
-                    val = LibXMLValidator(xpath_expr,
-                                          a)
+                    sys.exit(1)
                 result += val.validate_imagepath_references()
             
             for r in result:
