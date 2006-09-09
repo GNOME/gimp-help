@@ -5,12 +5,16 @@
           "http://www.docbook.org/xml/4.3/docbookx.dtd">
 
 <!-- section history:
-  2006-08-28 added norwegian translation by KoSt
   2006-07-31 lexa: applied patch from hans de jonge
 -->
-<sect1 id="gimp-concepts-plugins" lang="cs;en;fr;it;ko;nl;no;ru;zh_CN">
-  <sect1info lang="fr;ko;nl;no">
+<sect1 id="gimp-concepts-plugins" lang="cs;de;en;fr;it;ko;nl;ru;zh_CN">
+  <sect1info lang="de;fr;ko;nl">
     <revhistory>
+      <revision lang="de">
+        <revnumber>$Revision$</revnumber>
+        <date lang="de">2006-09-05</date>
+        <authorinitials lang="de">ude</authorinitials>
+      </revision>
       <revision lang="fr">
         <revnumber>$Revision$</revnumber>
         <date lang="fr">2006-04-02</date>
@@ -26,22 +30,17 @@
         <date lang="nl">2006-07-31</date>
         <authorinitials lang="nl">먼지군</authorinitials>
       </revision>
-      <revision lang="no">
-        <revnumber>$Revision$</revnumber>
-        <date lang="no">2006-08-28</date>
-        <authorinitials lang="no">KoSt</authorinitials>
-      </revision>
     </revhistory>
   </sect1info>
   
   <title lang="cs">Zásuvné moduly</title>
+  <title lang="de">Erweiterungen</title>
   <title lang="en">Plugins</title>
   <title lang="fr">Greffons</title>
   <title lang="sv">Använda GIMP</title>
   <title lang="it">Plugin</title>
   <title lang="ko">플러그인</title>
   <title lang="nl">Uitbreidingen (Plugins)</title>
-  <title lang="no">Tilleggsprogram</title>
   <title lang="ru">Плагины</title>
   <title lang="zh_CN">插件</title>
 
@@ -52,7 +51,7 @@
     <primary>Zásuvné moduly</primary>
   </indexterm>
   <indexterm lang="de">
-    <primary>Plugins</primary>
+    <primary>Erweiterungen</primary>
   </indexterm>
   <indexterm lang="fr">
     <primary>Greffons</primary>
@@ -63,13 +62,9 @@
   <indexterm lang="ko">
     <primary>플러그인</primary>
   </indexterm>
-
   <indexterm lang="nl">
     <primary>Uitbreidingen</primary>
     <secondary>Plugins</secondary>
-  </indexterm>
-  <indexterm lang="no">
-    <primary>Tilleggsprogram</primary>
   </indexterm>
   <indexterm lang="ru">
     <primary>Плагины</primary>
@@ -81,12 +76,12 @@
   <sect2>
     <title>
       <phrase lang="cs">Úvod</phrase>
+      <phrase lang="de">Einführung</phrase>
       <phrase lang="en">Introduction</phrase>
       <phrase lang="fr">Introduction</phrase>
       <phrase lang="it">Introduzione</phrase>
       <phrase lang="ko">소개</phrase>
       <phrase lang="nl">Introduktie</phrase>
-      <phrase lang="no">Innleiing</phrase>
       <phrase lang="ru">Введение</phrase>
       <phrase lang="zh_CN">简介</phrase>
     </title>
@@ -99,6 +94,21 @@
       libovolným způsobem. Je mnohem snazší napsat malý zásuvný modul, než
       novou funkci složitě implementovat do jádra Gimpu. Mnoho cenných modulů
       má jen několik málo set řádků C kódu.
+    </para>
+    <para lang="de">
+      Eine der besten Eigenschaften vom <acronym>GIMP</acronym> ist,
+      wie einfach man die Funktionalität erweitern kann, nämlich mit
+      <quote>Plugins</quote> (Erweiterungen). 
+      <acronym>GIMP</acronym>-Erweiterungen sind externe Programme, die
+      unter der Kontrolle des <acronym>GIMP</acronym>-Hauptprogrammes
+      laufen und sehr eng mit diesem zusammenarbeiten. Plugins können
+      Bilder praktisch genauso verändern, wie Benutzer es können. Ihr
+      Vorteil liegt darin, dass es sehr viel einfacher ist,
+      <acronym>GIMP</acronym> um eine Fähigkeit zu erweitern, indem man
+      ein kleines Plugin schreibt, als den extrem umfangreichen und
+      komplexen Code des <acronym>GIMP</acronym>-Kernes zu verändern.
+      Viele wichtige Erweiterungen bestehen lediglich aus 100 oder 200
+      Zeilen C-Code.
     </para>
     <para lang="en">
       One of the nicest things about <acronym>GIMP</acronym> is how easily its
@@ -165,19 +175,6 @@
       dit mechanisme en hebben door de weldoordachtheid ervan vaak maar een stuk of
       100 tot 200 regels C-code nodig.
     </para>  
-    <para lang="no">
-      Noe av det beste med <acronym>GIMP</acronym> er at det er lett å
-      utvida funksjonane ved hjelp av såkalla tilleggsprogram (engelsk:
-      <quote>Plugins</quote>). Tilleggsprogramma samarbeider svært nær med
-      <acronym>GIMP</acronym>, men det er <acronym>GIMP</acronym> som har
-      kontrollen med dei. Ofte gjer ikkje tilleggsprogramma anna enn det
-      du også kan gjere direkte, men på ein for deg enklare måte. Den store
-      fordelen med desse programma, er at det er lett å lage tilleggsfunksjonar
-      utan å måtte gjere endringar i det nokså kompliserte programmet
-      <acronym>GIMP</acronym> er. Mange verdfulle tilleggsprogram har ei
-      kjeldekode på bare 100 - 200 linjer. Dei fleste er skrivne i språket
-      <quote>C</quote> eller ein variant av dette. 
-    </para>
     <para lang="ru">
       Одна из наилучших вещей в <acronym>GIMP</acronym> это возможность легко
       расширить его функциональность с помощью использования плагинов. Плагины
@@ -203,6 +200,19 @@
       netuší, že používá zásuvný modul. Například funkce „Normalizovat“
       pro automatickou korekci barev je ve skutečnosti zásuvným modul, ačkoli
       z uživatelského hlediska tomu nic nenapovídá.
+    </para>
+
+    <para lang="de">
+      Einige Dutzend Erweiterungen werden zusammen mit
+      <acronym>GIMP</acronym> ausgeliefert und automatisch installiert.
+      Auf die meisten Plugins können Sie über das
+      <guimenu>Filtermenü</guimenu> zugreifen (tatsächlich ist alles in
+      diesem Menü ein Plugin), aber einige sind auch in anderen Menüs
+      zu finden. In vielen Fällen können Sie eines benutzen, ohne
+      überhaupt zu merken, dass es ein Plugin ist. Beispielsweise ist die
+      <quote>Normalisierungsfunktion</quote> für die automatische
+      Farbkorrektur tatsächlich eine Erweiterung, auch wenn das nirgendwo
+      zu erkennen ist.
     </para>
 
     <para lang="en">
@@ -261,17 +271,6 @@
       <quote>Normalisatie</quote> <!-- XXX_NL is dat het correcte item?? -->
       functie om kleuren vanzelf te corrigeren is daar een voorbeeld van.
     </para>
-    <para lang="no">
-      Fleire titals tilleggsprogram er inkluderte i grunnutgåva av 
-      <acronym>GIMP</acronym>, og blir automatisk installerte saman med
-      <acronym>GIMP</acronym>. Dei fleste av desse er tilgjengelege gjennom
-      menyen <guimenu>Filter</guimenu>. (Alt i denne menyen er faktisk
-      tilleggsprogram). Ein del av tilleggsprogramma er likevel plasserte i
-      andre menyar. Som oftast merkar du ikkje at funksjonen du nyttar deg av
-      er eit tillegg. T.d. er funksjonen <quote>Normaliser</quote> for
-      automatisk fargekorreksjon eigentleg eit tilleggsprogram, men det er
-      ingenting i måten det arbeider på som røper dette.
-    </para>
     <para lang="ru">
       Несколько дюжин плагинов включены в основную поставку
       <acronym>GIMP</acronym> и устанавливаются автоматически вместе с ним.
@@ -305,6 +304,18 @@
       repository for plugins. Creators of plugins can upload them there;
       users in search of plugins for a specific purpose can search the site in
       a variety of ways.
+    </para>
+
+    <para lang="de">
+      Zusätzlich zu den mit <acronym>GIMP</acronym> ausgelieferten
+      Erweiterungen gibt es noch viele mehr im Internet. Insbesondere
+      können Sie viele Plugins im
+      <ulink url="http://registry.gimp.org">
+      <acronym>GIMP</acronym>-Plugin-Register</ulink> finden, eine Webseite,
+      deren Ziel eine zentrale Datenbank für Erweiterungen ist.
+      Autoren können ihre Erweiterungen dort heraufladen, und Benutzer,
+      auf der Suche nach einem speziellen Plugin, können dort auf vielfältige
+      Weise suchen.
     </para>
 
     <para lang="fr">
@@ -351,17 +362,6 @@
       hebben kunnen daar op verschillende manieren naar de gewenste
       uitbreiding zoeken.
     </para>
-    <para lang="no">
-      I tillegg til dei innebygde tilleggsprogramma, er det store mengder
-      tilgjengelege på Internett. Prøv å ta ein tur innom <ulink
-      url="http://registry.gimp.org">GIMP Plugin Registry</ulink>, ein
-      nettstad som ønskjer å vere eit sentrallager for tilleggsprogram.
-      Nettstaden er open for å laste opp nylaga tilleggsprogram, og har eit
-      greitt søkesystem for deg som ønskjer å finne bestemte tilleggsprogram.
-      (Har du tenkt å søke internasjonalt etter tilleggsprogram, bruk
-      <quote>plugin</quote> som søkeord avgrensa med <acronym>GIMP</acronym>.
-      <acronym>GIMP</acronym> er ikkje åleine om å bruke plugins). 
-    </para>
     <para lang="ru">
       В дополнение к включенным в <acronym>GIMP</acronym> плагинам, намного
       больше доступно в сети. Большое количество можно найти на вебсайте
@@ -392,6 +392,28 @@
       zdarma, a mnohdy dostanete přesně to, za co jste zaplatili. Tím vás
       nechceme odradit, jen si chceme být jistí, že chápete tvrdou realitu
       světa Internetu.
+    </para>
+
+    <para lang="de">
+      Jeder auf der ganzen Welt kann ein <acronym>GIMP</acronym>-Plugin
+      schreiben und es über das Internet zur Verfügung stellen, entweder
+      über die Datenbank oder auf einer persönlichen Webseite, und viele
+      wichtige Erweiterungen kann man sich so beschaffen. Einige davon
+      werden an anderen Stellen im Benutzerhandbuch beschrieben.
+      Mit dieser uneingeschränkten Freiheit geht allerdings auch ein
+      gewisses Risiko einher: da jeder ein Plugin schreiben kann, gibt es
+      keine effektive Qualitätskontrolle. Die zusammen mit
+      <acronym>GIMP</acronym> ausgelieferten Erweiterungen wurden alle
+      von den Entwicklern getestet und angepaßt, aber viele von denen, die
+      Sie herunterladen können, wurden nur schnell zusammengeschustert
+      und dann <quote>nach mir die Sintflut</quote>. Einige Pluginprogrammierer
+      interessiert Robustheit überhaupt nicht, und selbst bei den übrigen
+      sind die Möglichkeiten, auf verschieden Systemen in verschiedenen
+      Situationen zu testen, oftmals nur beschränkt.
+      Wenn Sie eine Erweiterung herunterladen, erhalten Sie letztlich etwas
+      umsonst, und manchmal bekommen Sie genau den entsprechenden Gegenwert
+      dafür.  Das eben Gesagte soll Sie jetzt keineswegs entmutigen, sondern
+      sicherstellen, daß Sie der Realität ins Auge sehen.
     </para>
 
     <para lang="en">
@@ -486,26 +508,6 @@
       wijzen hoe de zaken nu eenmaal in elkaar steken.
     </para>
 
-    <para lang="no">
-      Alle med litt kjennskap til programmering, kan skrive tilleggsprogram
-      og eventuelt gjere dei tilgjengelege for andre anten gjennom <ulink
-      url="http://registry.gimp.org">GIMP Plugin Registry</ulink>,
-      private heimesider eller andre nettstader. Noen av desse programma er
-      omtalte andre stader i denne handboka. Sjølvsagt er det også ein risiko
-      med dette frie livet. Sidan kven som helst kan lage og spreie programma,
-      er det heller ingen former for kvalitetskontroll av programma. Mange
-      av dei ser ut som dei er snikra saman i seine kveldstimar til eit
-      avgrensa føremål og deretter spreidde for alle vindar. Ikkje alle
-      utviklarane har kunnskap eller utstyr nok til å kunne prøva ut
-      programma med alle dei systema og systemvariasjonane programma kan kome
-      ut for. Du står sjølvsagt fritt i å prøva ut programma, men har altså
-      ingen garanti for resultatet. Dette er ikkje sagt for å skræme deg, men
-      for å vise kva som er den verkelege verda. Dei tilleggsprogramma som
-      blir leverte saman med <acronym>GIMP</acronym> er sjølvsagt sikra og
-      kontrollerte så langt det er praktisk mogleg. Du kan difor bruke desse
-      nokså trygt.
-    </para>
-
     <para lang="ru">
       Кто угодно в мире может написать плагин и сделать его доступным 
       через сеть, через реестр плагинов или через персональный вебсайт, 
@@ -537,6 +539,13 @@
         cokoliv, co ostatní programy. To zahrnuje i možnost instalace zadních
         vrátek do systému, poškození dat či jiné ohrožení bezpečnosti. Nikdy
         neinstalujte zásuvný modul ze zdroje, kterému plně nedůvěřujete.
+      </para>
+      <para lang="de">
+        Erweiterungen sind vollwertige ausführbare Programme und können
+        alles das tun, was jedes andere Programm tun kann, einschließlich
+        Hintertüren auf Ihrem System installieren oder sonstwie die
+        Sicherheit kompromittieren. Installieren Sie kein Plugin, das nicht 
+        aus einer vertrauenswürdigen Quelle stammt!
       </para>
       <para lang="en">
         Plugins, being full-fledged executable programs, can do any of the
@@ -571,13 +580,6 @@
         ervoor de hoeden een uitbreiding vanaf een niet-vertrouwde bron te
         installeren.
       </para>
-      <para lang="no">
-        Sidan tilleggsprogramma er fullverdige program, kan dei gjere alt
-        det andre slike program kan gjere. Dette omfattar også funksjonar som
-        kan påverka tryggleiken til maskinen din. Ikkje installer eit
-        tilleggsprogram utan at du er nokså sikker på at det kjem frå ei
-        truverdig kjelde. 
-      </para>
       <para lang="ru">
         Плагины являются полноценными исполняемыми программами, они могут
         тоже, что и другие программы, включая установку "back-door" (тайного
@@ -586,7 +588,6 @@
       <para lang="zh_CN">
         插件，作为完整的可执行程序，能做其它任何程序所能做的，包括在您的系统上安装后门或其它为害安全的事。不要轻易安装插件除非它的来源是可信任的。
       </para>
-
     </warning>
 
     <para lang="cs">
@@ -597,6 +598,17 @@
       špatného, odstraní to. Nicméně je nutno si uvědomit, že pro
       <acronym>GIMP</acronym> i jeho zásuvné moduly je stejná záruka, jako pro
       každý jiný volně distribuovatelný software: tedy žádná.
+    </para>
+
+    <para lang="de">
+      Diese Vorsichtsmaßnahmen gelten sowohl für das Pluginregister als
+      auch für jede andere Quelle. Das Register steht jedem Autor von
+      Erweiterungen zur Verfügung: es gibt keine systematische Aufsicht.
+      Natürlich würden die Verwalter jedes Schadprogramm, dessen sie Gewahr
+      werden, sofort entfernen (bisher ist das noch nicht vorgekommen).
+      Allerdings gibt es für <acronym>GIMP</acronym> und seine Erweiterungen
+      dieselben Gewährleistungen wie für jede andere freie Software,
+      nämlich gar keine.
     </para>
 
     <para lang="en">
@@ -649,16 +661,6 @@
       als voor alle vrije programmatuur: geen.
     </para>
 
-    <para lang="no">
-      Denne åtvaringa gjeld like mykje for <quote>GIMP Plugin Registry</quote>
-      som for andre kjelder du måtte nytta deg av. <quote>GIMP Plugin
-      Registry</quote> er tilgjengeleg for alle som utviklar tilleggsprogram,
-      også dei useriøse. Dersom dei som driv nettstaden kjem over snuskete
-      program, vil desse sjølvsagt bli fjerna. (Til nå har ingen lagt inn
-      slike program). Den same garantiregelen gjeld for <acronym>GIMP</acronym>
-      sine tilleggsprogram som for alle andre frie program: Ingen garanti. 
-    </para>
-
     <para lang="ru">
       Эти предупреждения относятся как к реестру плагинов так  и к другим
       источникам плагинов. Реестр плагинов доступен  для всех создателей
@@ -681,6 +683,17 @@
         nebo ne. Mnoho zásuvných modulů je dostupých v různých verzích pro
         různé verze Gimpu. Před instalací zásuvného modulu si ověřte, že je
         určen pro vámi používanou verzi.
+      </para>
+      <para lang="de">
+        Erweiterungen gehören seit vielen Versionen zu
+        <acronym>GIMP</acronym> dazu. Allerdings können Plugins, die für
+        eine <acronym>GIMP</acronym>-Version geschrieben wurden, nur selten
+        ohne Probleme von anderen Versionen verwendet werden. Sie müssen
+        portiert werden. Manchmal ist das einfach, manchmal nicht. Zum Glück
+        gibt es viele Erweiterungen bereits in verschiedenen Versionen. Fazit:
+        Bevor Sie versuchen, ein Plugin zu installieren, vergewissern Sie
+        sich, dass es tatsächlich für Ihre <acronym>GIMP</acronym>-Version
+        geschrieben wurde.
       </para>
       <para lang="en">
         Plugins have been a feature of <acronym>GIMP</acronym> for many
@@ -727,13 +740,6 @@
         installeerd, dien u eerst te verifieëren of deze wel aan uw versie van
         <acronym>GIMP</acronym> gemaakt of aangepast is.
       </para>
-      <para lang="no">
-        Tilleggsprogramma har følgd <acronym>GIMP</acronym> gjennom mange
-        versjonar. Eit tilleggsprogram skriven for ein versjon høver sjeldan
-        for andre versjonar. Pass difor på at det tilleggsprogrammet du
-        ønskjer å installera er skriven for den versjonen av
-        <acronym>GIMP</acronym> du bruker. 
-      </para>
       <para lang="ru">
         Плагины <acronym>GIMP</acronym> написаны для разных версий. Однако
         плагины, написанные для одной версии едва ли могут  быть успешно
@@ -751,12 +757,12 @@
   <sect2>
     <title>
       <phrase lang="cs">Používání zásuvných modulů</phrase>
+      <phrase lang="de">Mit Plugins arbeiten</phrase>
       <phrase lang="en">Using Plugins</phrase>
       <phrase lang="fr">Utiliser les greffons</phrase>
       <phrase lang="it">Uso dei plugin</phrase>
       <phrase lang="ko">플러그인 사용하기</phrase>
       <phrase lang="nl">Uitbreidingen gebruiken</phrase>
-      <phrase lang="no">Å bruke tilleggsprogram</phrase>
       <phrase lang="ru">Использование плагинов</phrase>
       <phrase lang="zh_CN">使用插件</phrase>
     </title>
@@ -766,6 +772,12 @@
       není nutno vědět, že používáte zásuvný modul. Existuje ale pár věcí,
       kterým je užitečné rozumět.
     </para>
+    <para lang="de">
+      Meistens können Sie eine Erweiterung wie jedes andere
+      <acronym>GIMP</acronym>-Werkzeug verwenden, ohne sich dessen bewußt
+      zu sein, daß es ein Plugin ist. Allerdings ist es hilfreich, ein paar
+      Dinge über Plugins zu verstehen.
+    </para>
     <para lang="en">
       For the most part you can use a plugin like any other
       <acronym>GIMP</acronym> tool, without needing to be aware that it is a
@@ -773,18 +785,15 @@
       understand.
     </para>
     <para lang="fr">
-
       La plupart du temps vous utiliserez un greffon tout comme les autres
       outils de <acronym>GIMP</acronym>, sans même savoir qu'il s'agit d'un
       greffon. Mais il y a quelques petites choses qu'il est utile de savoir
       sur les greffons.
-
     </para>
     <para lang="it">
       Per la maggior parte è possibile usare un plugin come se fosse un
       qualsiasi altro strumento di <acronym>GIMP</acronym> senza la
       consapevolezza del fatto che sia effettivamente un plugin. Ci sono però
-
       dettagli riguardo i plugin che è utile sapere.
     </para>
     <para lang="ko">
@@ -796,12 +805,6 @@
       Een uitbreiding gedraagt zich voor een groot deel zoals ieder ander
       gereedschap van de <acronym>GIMP</acronym>, het is echter handig om
       enkele specifieke eigenschappen ervan te kennen en begrijpen.
-    </para>
-    <para lang="no">
-      Oftast vil du kunne bruke eit tilleggsprogram i <acronym>GIMP</acronym>
-      utan å bry deg om eller merka at det eigentleg er eit tillegg. Det er
-      likevel noe småting med tilleggsprogramma som det kan vere nyttig å
-      kjenne litt til. 
     </para>
     <para lang="ru">
       В большинстве случаев вы можете использовать плагин также,  как и любой
@@ -819,6 +822,15 @@
       problém, který může přinést uživateli hodně trápení. Pokud spadne
       zásuvný modul, nejsou obvykle důsledky tak vážné. Většinou lze plynule
       pokračovat v práci.
+    </para>
+    <para lang="de">
+      Als erstes gilt, dass Erweiterungen im allgemeinen nicht so robust
+      sind wie der <acronym>GIMP</acronym>-Kern. Wenn <acronym>GIMP</acronym>
+      abstürzt, ist das eine ernste Sache: es kann dem Benutzer eine Menge
+      Ärger und Kopfschmerzen bereiten. Wenn ein Plugin abstürzt, sind die
+      Folgen üblicherweise nicht so gravierend. In den meisten Fällen
+      kann man einfach weiterarbeiten, ohne sich irgendwelche Gedanken zu
+      machen.
     </para>
     <para lang="en">
       One is that plugins are generally not as robust as the
@@ -860,14 +872,6 @@
       problemen vaak niet zo ernstig; meestal kunt u zonder problemen
       doorwerken, maar dat kunt u zelf te beoordelen.
     </para>
-    <para lang="no">
-      Som oftast er tilleggsprogramma ikkje like robuste som programkjerna
-      i <acronym>GIMP</acronym>. Når <acronym>GIMP</acronym> krasjar, må du
-      ofte starte heile prosessen på nytt. Kanskje blir også mykje arbeid
-      øydelagt. Når eit tilleggsprogram krasjar, kan du ofte likevel arbeida
-      vidare med <acronym>GIMP</acronym> utan å bry deg meir om heile
-      krasjet. 
-    </para>
     <para lang="ru">
       Одна из них это то, что плагины обычно не так устойчивы как ядро
       <acronym>GIMP</acronym>. Когда в <acronym>GIMP</acronym> происходит
@@ -887,6 +891,14 @@
         komunikovat zvláštním způsobem. Hackeři pracující na Gimpu mluví o
         <quote>hovoru po drátě</quote> Když zásuvný modul spadne, komunikace
         se přeruší a objeví se chybová hláška <quote>wire read error</quote>
+      </para>
+      <para lang="de">
+        Weil Plugins eigene Programme sind, kommunizieren sie mit dem
+        <acronym>GIMP</acronym>-Kern in einer besonderen Art und Weise.
+        Die <acronym>GIMP</acronym>-Entwickler nennen es <quote>über
+        eine Leitung sprechen</quote>. Wenn ein Plugin abstürzt, bricht
+        die Verbindung ab, und Sie sehen eine Fehlermeldung mit dem Text
+        <quote>wire read error</quote>.
       </para>
       <para lang="en">
         Because plugins are separate programs, they communicate with the
@@ -911,7 +923,6 @@
         fili</quote> Quando un plugin va in crash, la comunicazione viene
         interrotta ed il fatto viene segnalato da un messaggio di errore circa
         un <quote>errore di lettura filo ('wire read error')</quote>
-
       </para>
       <para lang="ko">
         그것은 플러그인들은 서로 각기 다른 프로그램들로 김프 코어와 특별한
@@ -928,13 +939,6 @@
         </quote> gedoopt is. Als een uitbreiding afstort, wordt de
         communicatie over deze draad onderbroken en zul u een foutmelding
         over een <quote>Gebroken Pijp</quote> zien.
-      </para>
-      <para lang="no">
-        Fordi tilleggsprogramma er sjølvstendige program, kommuniserer dei med
-        <acronym>GIMP</acronym> via det utviklarane kallar <quote>talking over
-        a wire</quote>. Når eit tilleggsprogram krasjar, bryt dette sambandet
-        saman, og det vil dukka opp ei feilmelding om <quote>wire read
-        error</quote> eller noe i den duren. 
       </para>
       <para lang="ru">
         Поскольку плагины представляют собой отдельные программы,  они
@@ -960,6 +964,20 @@
         většina uživatelů prostě bez přerušení pokračuje v práci. Musíte se
         rozhodnout sami, zvážit, jaké problémy by případná nestabilita Gimpu
         pro vás znamenala.
+      </para>
+      <para lang="de">
+        Wenn eine Erweiterung abstürzt, erhalten Sie von
+        <acronym>GIMP</acronym> die sehr beunruhigende Meldung, dass das
+        Pluging <acronym>GIMP</acronym> möglicherweise in einem fehlerhaften
+        Zustand hinterlassen hat und Sie besser Ihre Daten sichern und das
+        Programm beenden sollten. Genau genommen ist das völlig korrekt,
+        da Erweiterungen nahezu alles in <acronym>GIMP</acronym> verändern
+        können, aber praktisch zeigt die Erfahrung, dass eine
+        Datenverfälschung tatsächlich sehr selten ist, daher arbeiten
+        viele Benutzer einfach weiter und kümmern sich nicht darum. Unsere
+        Empfehlung lautet:
+        überlegen Sie einfach, wie groß der angerichtete Schaden ist, falls
+        etwas schiefgeht, und wägen Sie danach ab.
       </para>
       <para lang="en">
         When a plugin crashes, <acronym>GIMP</acronym> gives you a very
@@ -1020,18 +1038,6 @@
         nadenk hoeveel problemen het op zou leveren als er iets verkeerd gaat
         en de nadelen tegen de voordelen af te wegen.
       </para>
-      <para lang="no">
-        Når eit tilleggsprogram krasjar, dukkar det opp ei melding frå
-        <acronym>GIMP</acronym> om at tilleggsprogrammet kan ha øydelagt
-        <acronym>GIMP</acronym>. Du får beskjed om å lagre alt du held på med
-        og avslutta <acronym>GIMP</acronym>. Dette kan i teorien vere heilt
-        rett. Tilleggsprogramma er i stand til å endre nesten kva det skal
-        vere i <acronym>GIMP</acronym>. Praktisk røynsle har derimot vist at
-        det er sjeldan at tilleggsprogramma gjer nemnande skade. Som oftast
-        kan du halde fram som om ingenting var hendt. Kanskje etter å ha
-        vurdert kva du taper dersom programmet likevel skulle vere øydelagt
-        og arbeidet ditt forsvinna. 
-      </para>
       <para lang="ru">
         Когда в плагине происходит сбой, <acronym>GIMP</acronym> выдаёт вам
         выглядящее зловещим сообщение о том, что плагин возможно покинул
@@ -1059,6 +1065,22 @@
       Pokud tomuto varování nebudete věnovat pozornost, pravděpodobně si
       zkazíte obrázek a navíc možná poškodíte historii změn, takže ani svou
       chybu nebudete moci napravit.
+    </para>
+
+    <para lang="de">
+      Wegen der besonderen Art und Weise, wie Plugins mit
+      <acronym>GIMP</acronym> kommunizieren, haben sie keinen Mechanismus,
+      um über Änderungen informiert zu werden, die Sie nach dem Starten
+      des Plugins an einem Bild vorgenommen haben. Wenn Sie eine Erweiterung
+      starten und dann das Bild mit einem anderen Werkzeug verändern, wird
+      das Pluging des öfteren abstürzen oder falsche Resultate liefern.
+      Sie sollten es vermeiden, ein Bild mit mehr als einem Plugin
+      gleichzeitig zu bearbeiten oder irgendetwas mit dem Bild zu machen,
+      bis das Plugin seine Arbeit beendet hat. Wenn Sie diesen Rat ignorieren,
+      werden Sie vermutlich nicht nur Ihr Bild vermurksen, sondern
+      wahrscheinlich auch gleich das System zum Zurücknehmen von Aktionen,
+      so dass Sie nicht einmal mehr in der Lage sein werden, Ihren Blödsinn
+      wieder rückgängig zu machen.
     </para>
 
     <para lang="en">
@@ -1128,22 +1150,6 @@
       kunnen herstellen.
     </para>
 
-    <para lang="no">
-      På grunn av den måten tilleggsprogramma kommuniserer med
-      <acronym>GIMP</acronym> på, har dei ingen måte å få greie på endringar
-      du har gjort i biletet etter at tilleggsprogrammet har starta. Gjer du
-      forandringar på eit bilete medan eit tilleggsprogram er i arbeid, vil
-      dette ofte føre til at tilleggsprogrammet krasjar og etterlet seg eit
-      noe forvirrande bilete. Du bør difor unngå å køyre meir enn eitt
-      tileggsprogram om gongen (noe som stort sett ikkje er mogleg i nyare
-      versjonar av <acronym>GIMP</acronym>), og unngå å gjere noe som helst
-      med biletet før tilleggsprogrammet er ferdig. Dersom du ikkje følgjer
-      dette rådet, er det stor sjanse for at du endar opp med eit øydelagt
-      bilete i tillegg til at også angreloggen er øydelagt. Du kan altså
-      heller ikkje tilbakeføra biletet til slik det var før krasjet. Kanskje
-      lurt å lagra biletet før du bruker tilleggsprogrammet. 
-    </para>
-
     <para lang="ru">
       Из-за особенностей метода связи плагинов с <acronym>GIMP</acronym>,  они
       не имеют никакого механизма информирования  о изменениях, которые вы
@@ -1166,12 +1172,12 @@
   <sect2 id="gimp-plugins-install">
     <title>
       <phrase lang="cs">Instalace nových zásuvných modulů</phrase>
+      <phrase lang="de">Neue Plugins installieren </phrase>
       <phrase lang="en">Installing New Plugins</phrase>
       <phrase lang="fr">Installation de nouveaux greffons</phrase>
       <phrase lang="it">Installazione di nuovi Plugin</phrase>
       <phrase lang="ko">새 플러그인 설치하기</phrase>
       <phrase lang="nl">Installatie van nieuwe uitbreidingen</phrase>
-      <phrase lang="no">Å installera nye tilleggsprogram</phrase>
       <phrase lang="ru">Установка новых плагинов</phrase>
       <phrase lang="zh_CN">安装新插件</phrase>
     </title>
@@ -1184,6 +1190,16 @@
       modulu obvykle velice jednoduchá, ve Windows to může být jednoduché ale
       i pekelně složité (ne, Windows už dávno nejsou snáze ovladatelným
       systémem). V každém případě je lépe obě možnosti probrat zvlášť.
+    </para>
+    <para lang="de">
+      Die mit <acronym>GIMP</acronym> ausgelieferten Erweiterungen müssen
+      nicht extra installiert werden; Plugins, die Sie selbst herunterladen,
+      schon. Dafür gibt es verschiedene Szenarien, je nachdem, welches
+      Betriebssystem Sie benutzen und wie das Plugin strukturiert ist.
+      Unter Linux ist es normalerweise ganz simpel, eine neue Erweiterung
+      zu installieren, unter Windows ist es entweder leicht oder sehr schwer.
+      Auf jeden Fall sollten diese beiden Szenarien getrennt betrachtet
+      werden.
     </para>
     <para lang="en">
       The plugins that are distributed with <acronym>GIMP</acronym> don't
@@ -1224,18 +1240,9 @@
       zelf van het web ophaalt echter wel. Met de verschillende
       besturingssystemen en manieren waarop de uitbreiding in elkaar steekt,
       zijn er verschillende manieren waarop u dat doen kunt. In
-
       <acronym>Linux</acronym> is het betrekkelijk eenvoudig; in
       <acronym>Windows</acronym> is het óf makkelijk óf heel moeilijk.  In
       ieder geval is het het beste om ze beiden apart uit te leggen.
-    </para>
-    <para lang="no">
-      Dei tilleggsprogramma som følgjer med <acronym>GIMP</acronym> treng du
-      ikkje installera spesielt. Det må du derimot gjere med dei du lastar ned
-      eller skriv sjølv. Måten du installerar eit tilleggsprogram på, er
-      sterkt avhengig av kva for operativsystem (OS) du køyrer og korleis
-      tilleggsprogrammet er bygd opp. I Linux er det som oftast ein enkel
-      jobb, i Windows stort sett anten svært lett eller (nesten) umogleg. 
     </para>
     <para lang="ru">
       Поставляемые вместе с <acronym>GIMP</acronym> плагины не требуют никакой
@@ -1251,9 +1258,8 @@
 
     <sect3>
       <title>
-        <phrase lang="cs;en;fr;it;nl;no;ru;zh_CN">Linux</phrase>
+        <phrase lang="cs;de;en;fr;it;nl;ru;zh_CN">Linux</phrase>
         <phrase lang="ko">리눅스(Linux)</phrase>
-
       </title>
 
       <para lang="cs">
@@ -1262,6 +1268,12 @@
         (<filename>.c</filename>). Druhou skupinu tvoří moduly, jejichž
         zdrojový kód je šířen jako adresář s více soubory včetně
         Makefile.
+      </para>
+      <para lang="de">
+        Die meisten Plugins gehören in eine von zwei Kategorien: kleine,
+        deren Quellcode in einer einzigen C-Datei ausgeliefert wird, und
+        größere, deren Quellcode in einem Verzeichnis mit mehreren Dateien
+        inklusive einem <filename>Makefile</filename> ausgeliefert wird.
       </para>
       <para lang="en">
         Most plugins fall into two categories: small ones whose source
@@ -1294,12 +1306,6 @@
         bestanden in een eigen map geleverd worden inclusief een eigen
         <filename>Makefile</filename>.
       </para>
-      <para lang="no">
-        Dei fleste tilleggsprogramma kan delast i to grupper, dei små med
-        kjeldekoden levert i ei enkelt .c-fil, og dei større der kjeldekoden
-        kjem i ei mappe med fleire ulike filer, deriblant også ei
-        <quote>Makefile</quote>. 
-      </para>
       <para lang="ru">
         Большинство плагинов делятся на две категории: небольшие, чей исходный
         код распространяется в одном файле с расширением ".c", и большие, чей
@@ -1322,11 +1328,24 @@
         Pokud překlad zásuvného modulu selže, buďte tvořiví.
       </para>
 
+      <para lang="de">
+        Für den simplen Fall einer einfachen Datei(-Erweiterung), nennen wir
+        sie mal <filename>borker.c</filename>, besteht das Installieren einfach
+        nur darin, den Befehl <command>gimptool-2.0 --install borker.c</command>
+        einzugeben. Dieses Kommando übersetzt das Plugin und installiert
+        es in Ihrem persönlichen Pluginverzeichnis
+        <filename>~/gimp-2.2/plugins</filename> (falls Sie das nicht gändert
+        haben). Dann wird es automatisch geladen, wenn Sie
+        <acronym>GIMP</acronym> das nächste Mal starten.
+        Sie müssen nicht root sein, um das Ganze auszuführen, tatsächlich
+        sollten Sie es nicht einmal.  Falls die Erweiterung nicht übersetzt
+        werden kann, na ja, dann seien Sie halt etwas kreativ.
+      </para>
+
       <para lang="en">
         For a simple one-file plugin, call it <filename>borker.c</filename>,
         installing it is just a matter of running the command
         <command>gimptool-2.0 --install borker.c</command>.   This command
-
         compiles the plugin and installs it in your personal plugin directory,
         <filename>~/gimp-2.2/plugins</filename> unless you have changed it.
         This will cause it to be loaded automatically the next time you start
@@ -1387,19 +1406,6 @@
         vinden.
       </para>
 
-      <para lang="no">
-        Eit tilleggsprogram som blir levert på ei enkelt fil, la oss kalla
-        det <filename>borker.c</filename>, kan installerast ved å køyra
-        kommandoen <command>gimptool-2.0 –install borker.c</command>. Denne
-        kommandoen kompilerer tilleggsprogrammet og installerer det i den
-        private mappa di <filename>~/gimp-2.2/plugins</filename> dersom du
-        ikkje har forandra adressa. Tilleggsprogrammet vil vere aktivisert
-        frå neste gong du startar GIMP. Du treng ikkje vere i
-        <quote>root</quote> for å gjere dette. Faktisk så skal du ikkje
-        heller. Dersom du ikkje får kompilert programmet skikkeleg, må du
-        finne fram dei kreative evnene dine. 
-      </para>
-
       <para lang="ru">
         Для одного простого плагина, назовём его
         <filename>borker.c</filename>, установка представляет  собой просто
@@ -1426,6 +1432,19 @@
         Můžete si také prostě jen pečlivě prohlédnout všechny nabídky
         Gimpu nebo, což je nejspolehlivější, přečíst zdrojový kód zásuvného
         modulu.
+      </para>
+
+      <para lang="de">
+        Wenn Sie erstmal das Plugin installiert haben, wie aktivieren
+        Sie es dann? Der Menüpfad wird durch das Plugin selbst festgelegt,
+        d.h. um diese Frage zu beantworten, müssen Sie entweder einen
+        Blick in die Dokumentation der Erweiterung werfen (falls vorhanden) 
+        oder den Plugin-Beschreibungsdialog (aus Xtns/Plugin-Details)
+        aufrufen, das Plugin über seinen Namen suchen und auf den
+        <guilabel>Baumansichts</guilabel>-Reiter schauen. Wenn Sie es
+        dann immer noch nicht finden, durchsuchen Sie die Menüs oder
+        werfen Sie einen Blick auf den Quellcode (Registerabschnitt) -
+        je nachdem, was einfacher ist.
       </para>
 
       <para lang="en"> <!-- changed 11-10-2004 -->
@@ -1482,21 +1501,6 @@
         programmacode in de <quote>Register</quote> sectie kijken.
       </para>
 
-      <para lang="no">
-        Korleis aktivisera tilleggsprogrammet etter at du har installert
-        det? Kva meny det legg seg i, blir bestemt av tilleggsprogrammet.
-        Du må difor sjå i dokumentasjonen for tilleggsprogrammet, dersom
-        denne finst, eller finne fram til ei beskriving i dei ulike menyvala
-        i hovudmenyen under
-        <menuchoice>
-          <guimenu>Utvid</guimenu>
-          <guimenuitem>Lesar for tilleggsprogram</guimenuitem>
-        </menuchoice>.
-        Du kan også sjå i <guimenuitem>Prosedyrelesar</guimenuitem> i same
-        menyen. Endeleg kan du leite gjennom alle menyane for å sjå om
-        programmet har dukka opp einkvan staden. 
-      </para>
-
       <para lang="ru">
         Как только вы установили плагин, возникает вопрос:  как его
         активировать? Расположение в меню  определяется самим плагином,
@@ -1521,6 +1525,17 @@
         se něčemu jinému, protože kód bez dokumentace bude stejně
         pravděpodobně obsahovat příliš nepříjemných chyb a přinášet řadu
         problémů.
+      </para>
+
+      <para lang="de">
+        Für komplexere Erweiterungen, die als ein Verzeichnis mit mehreren
+        Dateien organisiert sind, sollte im Verzeichnis eine Datei namens
+        <filename>INSTALL</filename> oder <filename>README</filename> mit
+        Instruktionen vorhanden sein. Falls nicht, lautet der beste Rat,
+        das Plugin auf den Müll zu werfen und die Zeit für etwas anderes
+        zu nutzen. Jeder Code, der geschrieben wurde, ohne sich um den
+        Benutzer zu scheren, wird vermutlich nur jede Menge Frustration
+        verursachen.
       </para>
 
       <para lang="en">
@@ -1571,15 +1586,6 @@
         gehouden is, levert geheid op talloze manieren enorm veel fustratie op.
       </para>
 
-      <para lang="no">
-        For meir komplekse tilleggsprogram skal det ein eller annan stad i
-        mappa finnast ei <quote>install</quote> eller <quote>readme</quote>
-        fil med nødvendige instruksjonar. Dersom du ikkje finn desse
-        forklaringane, er det betre å gi blaffen i heile programmet. Ein
-        kode som er skriven heilt utan omtanke for andre brukarar, vil ofte
-        gi deg myriadar av frustrasjonar uansett. 
-      </para>
-
       <para lang="ru">
         Для более сложных плагинов, организованных как каталог с множеством
         файлов, вероятно должен находится  файл с именем
@@ -1601,6 +1607,14 @@
         navrženy pro instalaci do hlavního adresáře Gimpu, nikoliv do
         uživatelského adresáře. V jejich případě potřebujete pro konečnou fázi
         (<command>make install</command>) instalace rootovská práva.
+      </para>
+      <para lang="de">
+        Einige Plugins (insbesondere diejenigen, die auf der
+        <acronym>GIMP</acronym>-Pluginschablone basieren) sind so entworfen,
+        dass sie im <acronym>GIMP</acronym>-Hauptverzeichnis statt in
+        Ihren persönlichem Verzeichnis installiert werden. Bei diesen müssen
+        Sie den letzten Installationsschritt (also den Befehl <command>make
+        install</command>) als root ausführen.
       </para>
       <para lang="en">
         Some plugins (specifically those based on the <acronym>GIMP</acronym>
@@ -1640,13 +1654,6 @@
         het <command>make install</command> commando) systeembeheerdersrechten
         hebben.
       </para>
-      <para lang="no">
-        Noen tilleggsprogram, spesielt slike som er baserte på GIMP Plugin
-        Template, er laga for å bli installerte i <acronym>GIMP</acronym>
-        si hovudsystemmappe i staden for i ei privat mappe. For å
-        installera desse må du vere administrator (root) for å få lov til å
-        installera programmet (<quote>make install</quote>).
-      </para>
       <para lang="ru">
         Некоторые плагины (особенно те, которые основаны на  шаблоне плагина
         <acronym>GIMP</acronym>) предназначены для установки  в основную
@@ -1664,6 +1671,14 @@
         adresáři, nahraje se pouze jeden z nich, a to ten, který je ve vašem
         osobním adresáři. Při každém spouštění Gimpu na to budete
         upozorňování. Je lépe se takové situaci vyhýbat.
+      </para>
+      <para lang="de">
+        Wenn Sie eine Erweiterung in Ihrem persönlichen Pluginverzeichnis
+        installieren, die denselben Namen wie eine Erweiterung aus dem
+        Systemverzeichnis hat, kann nur eine davon geladen werden, und zwar
+        die in Ihrem persönlichen Verzeichnis. Sie werden jedesmal, wenn Sie
+        <acronym>GIMP</acronym> starten, eine entsprechende Meldung bekommen.
+        Das Beste ist, so eine Situation ganz zu vermeiden.
       </para>
       <para lang="en">
         If you install in your personal plugin directory a plugin that has the
@@ -1701,13 +1716,6 @@
         keer extra gemeld bij het opstarten van <acronym>GIMP</acronym> en
         deze situatie kan eigenlijk het beste vermeden worden.
       </para>
-      <para lang="no">
-        Har du eit tilleggsprogram i den private mappa di med same namnet
-        som eit anna tilleggsprogram i hovudmappa, vil bare programmet i
-        hovudmappa bli lasta inn. Kvar gong du startar
-        <acronym>GIMP</acronym>, vil du få melding om at det finst fleire
-        program med same namnet. Dette bør du sjølvsagt unngå. 
-      </para>
       <para lang="ru">
         Если вы установите в вашу персональную директорию плагин с таким же
         именем, как и в системной директории,  будет загружен только один, и
@@ -1721,7 +1729,7 @@
     </sect3>
 
     <sect3>
-      <title lang="cs;en;fr;it;ko;nl;no;ru;zh_CN">Windows</title>
+      <title lang="cs;de;en;fr;it;ko;nl;ru;zh_CN">Windows</title>
 
       <para lang="cs">
         Windows jsou pro tvorbu programů ve srovnání s Linuxem velmi nešikovný
@@ -1732,6 +1740,16 @@
         nervy.
       </para>
 
+      <para lang="de">
+        Windows ist für die Programmentwicklung eine sehr viel
+        problematischere Umgebung als Linux. Jede ordentliche
+        Linuxdistribution enthält sämtliche Werkzeuge, um Software zu
+        übersetzen, und sie sind sich in ihrer Arbeitsweise alle sehr
+        ähnlich, aber solche Werkzeuge sind bei Windows nicht dabei.
+        Es ist zwar möglich, eine gute Programmentwicklungs-Umgebung
+        unter Window aufzusetzen, aber dazu benötigt man entweder genügend
+        Geld oder sehr viel Anstrengungen und Wissen.
+      </para>
 
       <para lang="en">
         Windows is a much more problematic environment for building software
@@ -1782,15 +1800,6 @@
         moeite.
       </para>
 
-      <para lang="no">
-        Windows er mykje meir problematisk enn Linux med omsyn til å lage og
-        legge inn ny programvare. Alle utgåver av Linux blir leverte med
-        verktøy for å kompilere programvare. I Windows finst det ikkje slike
-        hjelpemiddel. Det er råd å installera gode program for å lage program
-        også i Windows, men det krev anten tilgang til uhorvelege pengemengder
-        eller tilsvarande mengder med tålmod og kunnskap. 
-      </para>
-
       <para lang="ru">
         Windows представляет собой намного более проблематичное окружение для
         сборки программного обеспечения чем Linux. Каждый порядочный
@@ -1814,6 +1823,20 @@
         pro zásuvné moduly. Pokud máte ve Windows vhodné prostředí pro tvorbu
         software, pravděpodobně s ním umíte zacházet. Postupujte pak podle
         linuxových instrukcí.
+      </para>
+
+      <para lang="de">
+        In Bezug auf <acronym>GIMP</acronym>-Plugins bedeutet das folgendes:
+        entweder haben Sie eine Umgebung, in der Sie Software entwickeln
+        können, oder Sie haben Sie nicht. Wenn nicht, dann besteht Ihre beste
+        Hoffnung darin, irgendwo eine bereits übersetzte Version der
+        Erweiterung zu finden (oder jemanden dazu zu überreden, sie für Sie
+        zu übersetzen). In diesem Fall müssen Sie sie nur in Ihren
+        persönlichen Pluginordner kopieren. Wenn Sie eine Umgebung haben,
+        um Software zu entwickeln (also eine Umgebung, in der Sie
+        <acronym>GIMP</acronym> übersetzen können), dann haben Sie
+        zweifellos schon etwas Vorwissen und können einfach den
+        Instruktionen für Linux folgen.
       </para>
 
       <para lang="en">
@@ -1877,18 +1900,6 @@
         aanwijzingen uit de voeten.
       </para>
 
-      <para lang="no">
-        Dette betyr i praksis, i høve til tilleggsprogramma for
-        <acronym>GIMP</acronym>, at anten så har du utstyr som du kan setje
-        opp programvaren med, eller så har du det ikkje. I det siste
-        tilfellet den einaste utvegen å finne ei ferdigkompilert utgåve av
-        programmet, eller få noen til å gjere det for deg. Er du så heldig,
-        er det bare å legge det inn i den private mappa di for tilleggsprogram.
-        Dersom du skulle ha program for å lage Windows-program for
-        <acronym>GIMP</acronym>, veit du truleg såpass mykje om desse tinga at
-        du lett kan følgje instruksjonane for Linux. 
-      </para>
-
       <para lang="ru">
         Это означает применительно к плагинам <acronym>GIMP</acronym>
         следующее:  или вы имеете окружение в котором можете собирать
@@ -1911,17 +1922,31 @@
         Pokud si chcete prostředí pro překlad Gimpu a jeho zásuvných modulů ve
         Windows vytvořit, a máte skutečně odvahu k tak hrdinskému činu,
         najdete víceméně aktuální popis v gimpí wiki na stránce <ulink
-        url="http://wiki.gimp.org/gimp/HowToCompileGimp_2fMicrosoftWindows">
+        url="http://wiki.gimp.org/gimp/HowToCompileGimp/MicrosoftWindows">
         HowToCompileGimp/MicrosoftWindows</ulink>. Je to wiki, kterou může
         kdokoliv upravovat, proto prosím připište své zkušenosti, pokud
         myslíte, že mohou být ostatním užitečné.
+      </para>
+
+      <para lang="de">
+        Wenn Sie genügend Wagemut besitzen und eine Entwicklungsumgebung
+        aufsetzen wollen, können Sie eine hinreichend aktuelle Beschreibung
+        dazu im <acronym>GIMP</acronym>-Wiki unter <ulink
+        url="http://wiki.gimp.org/gimp/HowToCompileGimp/MicrosoftWindows">
+        HowToCompileGimp/MicrosoftWindows</ulink> bzw. <ulink
+        url="http://wiki.gimp.org/gimp/HowToCompileGimp/MicrosoftWindowsDeutsch">
+        HowToCompileGimp/MicrosoftWindowsDeutsch</ulink>
+        finden. Da es ein Wiki
+        ist, ist jedem freigestellt, den Text zu bearbeiten. Also halten
+        Sie ihn ruhig aktuell, indem Sie auf Ihren Erfahrungen basierende
+        Hinweise ergänzen.
       </para>
 
       <para lang="en">
         If you would like to set up a build environment, and are ready for the
         heroism involved, you can find a reasonably recent description of how
         to go about it in the <acronym>GIMP</acronym> Wiki, at <ulink
-        url="http://wiki.gimp.org/gimp/HowToCompileGimp_2fMicrosoftWindows">
+        url="http://wiki.gimp.org/gimp/HowToCompileGimp/MicrosoftWindows">
         HowToCompileGimp/MicrosoftWindows </ulink>. Since it is a Wiki,
         anybody is free to edit it, so please keep it up to date by adding
         advice based on your own experiences.
@@ -1944,7 +1969,7 @@
         disposti all'eroismo che ne consegue, è possibile trovare una
         descrizione ragionevolmente recente su come fare quest'operazione
         nel Wiki di <acronym>GIMP</acronym>, su <ulink
-        url="http://wiki.gimp.org/gimp/HowToCompileGimp_2fMicrosoftWindows">
+        url="http://wiki.gimp.org/gimp/HowToCompileGimp/MicrosoftWindows">
         HowToCompileGimp/MicrosoftWindows </ulink>. Dato che è un wiki,
         tutti sono liberi di modificarlo, perciò sentitevi liberi di
         aggiornarlo inserendo le vostre esperienze.
@@ -1953,7 +1978,7 @@
       <para lang="ko"> 
         만일 도전적으로 개발 환경을 구축하고자 한다면 김프 위키의 다음 
         페이지를 참고하면 될 것이다. <ulink
-        url="http://wiki.gimp.org/gimp/HowToCompileGimp_2fMicrosoftWindows">
+        url="http://wiki.gimp.org/gimp/HowToCompileGimp/MicrosoftWindows">
         HowToCompileGimp/MicrosoftWindows </ulink>
         위키는 모든 사용자가 편집할 수 있으므로 팁이나 조언을 올려주기 
         바란다.
@@ -1964,7 +1989,7 @@
         <acronym>Windows</acronym>-ontwikkelomgeving op te zetten, kunt u een
         redelijk recente beschrijving hierover in de
         <acronym>GIMP-Wiki</acronym> vinden op:<ulink
-        url="http://wiki.gimp.org/gimp/HowToCompileGimp_2fMicrosoftWindows">
+        url="http://wiki.gimp.org/gimp/HowToCompileGimp/MicrosoftWindows">
         HowToCompileGimp/MicrosoftWindows </ulink>. Omdat dit een
         <acronym>Wiki</acronym> is, kan iedereen hier wijzigingen op
         aanbrengen. Dus als u nieuwe ervaringen in dit proces opdoet, bent u
@@ -1972,22 +1997,11 @@
         te voeren.
       </para>
 
-      <para lang="no">
-        Dersom du ønskjer å setje opp alt frå grunnen av, og er klar for
-        berømminga dette fører med seg, kan du finne brukbare oppskrifter i
-        GIMP Wiki på <ulink
-        url="http://wiki.gimp.org/gimp/HowToCompileGimp_2fMicrosoftWindows">
-        HowToCompileGimp/MicrosoftWindows</ulink>. Sidan dette er ein Wiki,
-        er det ope for alle å gjere endringar. Difor bør du i tilfelle vere
-        med på å halde opplysningane oppdaterte ved at du fører inn eigne
-        røynsler. 
-      </para>
-
       <para lang="ru">
         Если вы желаете настроить окружение для сборки,  и готовы к
     	героическим поступкам, можете найти  достаточно недавнее
     	описание этих действий на странице <acronym>GIMP</acronym>  Wiki <ulink 
-    	url="http://wiki.gimp.org/gimp/HowToCompileGimp_2fMicrosoftWindows">
+        url="http://wiki.gimp.org/gimp/HowToCompileGimp/MicrosoftWindows">
         HowToCompileGimp/MicrosoftWindows </ulink>. Поскольку 
         это Wiki, кто угодно может его править, поэтому пожалуйста, 
         поддержите эту страницу добавлением совета, основанном на 
@@ -1996,19 +2010,20 @@
 
       <para lang="zh_CN">
         如果您想建立一个编软件环境，并准备无所畏惧地投入其中，您可以在
-        <acronym>GIMP</acronym> Wiki 中找到一个适当的当前关于如何开始的介绍 <ulink url="http://wiki.gimp.org/gimp/HowToCompileGimp_2fMicrosoftWindows">HowToCompileGimp/MicrosoftWindows</ulink>。由于这是个 Wiki,任何人都可以编辑它，所以请添加基于您自己经验的建议，以便让它保持最新。
+        <acronym>GIMP</acronym> Wiki 中找到一个适当的当前关于如何开始的介绍 <ulink url="http://wiki.gimp.org/gimp/HowToCompileGimp/MicrosoftWindows">HowToCompileGimp/MicrosoftWindows</ulink>。由于这是个 Wiki,任何人都可以编辑它，所以请添加基于您自己经验的建议，以便让它保持最新。
       </para>   
     </sect3>
 
     <sect3>
-      <!-- TODO: cs en fr it ko no zh_CN Mac specific content missing here -->
+      <!-- TODO: cs de en fr it ko zh_CN Mac specific content missing here -->
       <title>
-        <phrase lang="cs;en;it;nl;no;ru;zh_CN">Macintosh</phrase>
+        <phrase lang="cs;de;en;it;nl;ru;zh_CN">Macintosh</phrase>
         <phrase lang="fr">Macintosh</phrase>
         <phrase lang="ko">맥킨토시(Macintosh)</phrase>
       </title>
 
       <para lang="cs">Tato část vyžaduje doplnění.</para>
+      <para lang="de">Wir könnten hier etwas Material gebrauchen...</para>
       <para lang="en">We could use some material here.</para>
       <para lang="fr">Appel à contribution pour écrire cette partie.</para>
       <para lang="it">
@@ -2016,21 +2031,20 @@
       </para>
       <para lang="ko">차후 추가 예정</para>
       <para lang="nl">Hier kunnen we wel wat meer informatie gebruiken.</para>
-      <para lang="no">Manglar data. Kan noen skrive denne?</para>
       <para lang="ru">Необходим материал для этого раздела.</para>
       <para lang="zh_CN">我们可以使用这儿的一些材料。</para>
-      </sect3>
+    </sect3>
   </sect2>
 
   <sect2>
     <title>
     <phrase lang="cs">Psaní vlastních zásuvných modulů</phrase>
+    <phrase lang="de">Plugins schreiben</phrase>
     <phrase lang="en">Writing Plugins</phrase>
     <phrase lang="fr">Ecrire des greffons</phrase>
     <phrase lang="it">Scrittura dei plugin</phrase>
     <phrase lang="ko">플러그인 작성하기</phrase>
     <phrase lang="nl">Uitbreidingen maken</phrase>
-    <phrase lang="no">Å skrive tilleggsprogram</phrase>
     <phrase lang="ru">Написание плагинов</phrase>
     <phrase lang="zh_CN">写插件</phrase>
     </title>
@@ -2046,6 +2060,21 @@
       komunikaci s Gimpem (libgimp) má dobře dokumentované programovací
       aplikační rozhraní (<acronym>API</acronym>). Dobří programátoři jsou
       schopni vytvořit zajímavé moduly již po několika dnech učení a práce.
+    </para>
+    <para lang="de">
+      Wenn Sie lernen möchten, wie man eine Erweiterung schreibt, können
+      Sie reichlich Hilfestellungen auf der
+      <acronym>GIMP</acronym>-Entwicklerwebseite finden: <ulink 
+      url="http://developer.gimp.org/plug-ins.html">developer.gimp.org</ulink>.
+      <acronym>GIMP</acronym> ist ein komplexes Programm, aber das
+      Entwicklerteam hat erhebliche Anstrengungen unternommen, die Lernkurve
+      fürs Schreiben von Plugins flach zu halten. Es gibt ausgezeichnete
+      Unterweisungen und Beispiele, und die Programmbibliothek, die Plugins
+      zur Kommunikation mit <acronym>GIMP</acronym> verwenden
+      (<quote>libgimp</quote>), besitzt eine gut dokumentierte Schnittstelle
+      (<acronym>API</acronym>). Gute Programmierer, die dadurch lernen, dass
+      sie vorhandene Erweiterung modifizieren, sind oft schon nach wenigen
+      Tagen in der Lage, erstaunliche Dinge zu erreichen.
     </para>
     <para lang="en">
       If you want to learn how to write a plugin, you can find plenty of help
@@ -2111,20 +2140,6 @@
       <acronym>API</acronym>. Goede programmeurs, die ervaringen opdoen door
       in bestaande uitbreidingen wijzigingen aan te brengen, kunnen vaak al
       binnen enkele dagen interressante dingen verwezenlijken.
-    </para>
-    <para lang="no">
-      Har du ønskje om å lære å skrive tilleggsprogram, kan du finne mykje
-      hjelp på utviklingssidene til <acronym>GIMP</acronym>: <ulink
-      url="http://developer.gimp.org/plug-ins.html">
-      developer.gimp.org</ulink>. <acronym>GIMP</acronym> er eit nokså
-      komplisert program, men utviklarane har lagt mykje arbeid i å flate
-      ut læringskurva for å lage tilleggsprogram. Du finn fyldige
-      instruksjonar og gode eksempel på dei nemnde sidene. Hovudbiblioteket
-      (<quote>libgimp</quote>) som tilleggsprogramma nyttar for å
-      kommunisera med <acronym>GIMP</acronym>, er i tillegg veldokumentert.
-      Ein mykje brukt måte for å lære seg programmeringa, er å modifisere
-      eksisterande program. Dyktige programmerarar er dermed ofte i stand
-      til å lage svært så interessante ting bare etter eit par netters arbeid. 
     </para>
     <para lang="ru">
       Если вы желаете научиться написанию плагинов, вы можете найти
