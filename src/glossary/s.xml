@@ -1,8 +1,9 @@
-<?xml version='1.0' encoding="UTF-8" ?>
+﻿<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE glossdiv PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
           "http://www.docbook.org/xml/4.3/docbookx.dtd">
 
 <!-- section history:
+  2006-09-06 scb: thorough review and/or rewrite of English
   2006-07-25 lexa: applied changes suggested by Sally
   2006-06-30 added italian translation by ciampix
   2006-05-23 added Korean translation by Dust
@@ -12,14 +13,16 @@
 <glossdiv lang="cs;en;de;es;fr;ko;it;no;zh_CN">
   <title>S</title>
   
-  <glossentry id='glossary-samplemerge' lang="cs;de;en;ko;zh_CN">
+  <glossentry id="glossary-samplemerge" lang="cs;de;en;ko;zh_CN">
     <glossterm>
       <phrase lang="cs">Sloučený vzorek</phrase>
       <phrase lang="en">Sample Merge</phrase>
-      <phrase lang='de'>Vereinigung abtasten</phrase>
+      <phrase lang="de">Vereinigung abtasten</phrase>
+      <!-- es MARK: see phrase "Muestreo, unión de"-->
+      <!-- fr MARK: see glossentry "Échantillonner sur tous les calques" -->
       <!-- it MARK: see phrase "Campionamento diffuso" -->
       <phrase lang="ko">표본 합치기(Sample Merge)</phrase>
-      <!-- es MARK: see phrase "Muestreo, unión de"-->
+      <!-- no MARK: see glossentry "Markeringsfletting" -->
       <phrase lang="zh_CN">Sample Merge(位样合并)</phrase>
     </glossterm>
 
@@ -32,12 +35,19 @@
         prosvítající pixely z vrstvy umístěné níže).
       </para>
       <para lang="en">
-        Sample Merge is a technique useful when working with more than one
-        layer where operations that affect one layer may take advantage of
-        color or pixel information on all visible layers. Consider selection
-        by color as an example of a time that this function may be useful.
+        Sample Merged is an option you can set when you use the
+        <link linkend="gimp-tool-bucket-fill">Bucket Fill</link> tool, the
+        <link linkend="gimp-tool-color-picker">Color Picker</link> tool and
+        various selection tools. It is useful when you are working on an
+        image with several layers and the active layer is either
+        semi-transparent or has a
+        <link linkend="glossary-modes">Layer Mode</link> which is not set
+        to Normal. When you check the Sample Merged option, the color which
+        is used for the operation is the composite color of all the visible
+        layers. When the Sample Merged option is not checked, the color used
+        is the color of the active layer itself.
       </para>
-      <para lang='de'>
+      <para lang="de">
         <guilabel>Vereinigung abtasten</guilabel> ist eine nützlich wenn
         Sie mit mehr als einer Ebene arbeiten und Pixelinformationen der
         anderen Ebenen mit hinzuziehen wollen.  Beispielsweise kann die
@@ -59,7 +69,7 @@
   </glossentry>
 
 
-  <glossentry id='glossary-fileformat-cs' lang='cs'>
+  <glossentry id="glossary-fileformat-cs" lang="cs">
     <glossterm>Souborový formát</glossterm>
 
     <glossdef>
@@ -74,10 +84,11 @@
   </glossentry>
 
 
-  <glossentry id='glossary-supersampling' lang="cs;de;en;es;fr;it;ko;no;zh_CN">
+  <glossentry id="glossary-supersampling" lang="cs;de;en;es;fr;it;ko;no;zh_CN">
     <glossterm>
       <phrase lang="cs">Supersampling</phrase>
       <phrase lang="de">Supersampling</phrase>
+      <!-- de MARK: see also glossentry "Hochrechnung (Anpassende)" -->
       <phrase lang="en">Supersampling</phrase>
       <phrase lang="es">Supermuestreo</phrase>
       <phrase lang="fr">Suréchantillonnage</phrase>
@@ -92,16 +103,42 @@
         Technika vylepšující kvalitu vykreslování.<!-- FIXME: cs -->
       </para>
       <para lang="de">
-        Mit dieser Technik verwendet GIMP mehr Pixel zur Berechnung eines
+        Mit dieser Technik verwendet <acronym>GIMP</acronym> mehr Pixel
+        zur Berechnung eines
         Farbübergangs, zum Beispiel für eine Interpolation. Diese Technik
         führt zu sehr guten Ergebnissen, erfordert allerdings mehr
         Rechenaufwand und damit eine längere Zeit zur Berechnung.
       </para>
+      
       <para lang="en">
-        With this technique, GIMP uses more pixels to calculate a transitional
-        color, for instance, for interpolation. This technique results in a
-        better image, but it requires more time for the calculations.
+        Supersampling is a more sophisticated antialiasing technique, that
+        is, a method of reducing jagged and stair-stepped edges along a
+        slanted or curved line. Samples are taken at several locations
+        <emphasis>within</emphasis> each pixel, not just at the center, and
+        an average color is calculated. This is done by rendering the image
+        at a much higher resolution than the one being displayed and then
+        shrinking it to the desired size, using the extra pixels for
+        calculation. The result is a smoother transition from one line of
+        pixels to another along the edges of objects.
       </para>
+      <para lang="en">
+        The quality of the result depends on the number of samples.
+        Supersampling is often performed at a range of 2× to 16× the
+        original size. It greatly increases the amount of time needed to
+        draw the image and also the amount of space needed to store the
+        image in memory.
+      </para>
+      <para lang="en">
+        One way to reduce the space and time requirement is to use Adaptive
+        Supersampling. This method takes advantage of the fact that very few
+        pixels are actually on an object boundary, so only those pixels need
+        to be supersampled. At first, only a few samples are taken within a
+        pixel. If the colors are very similar to each other, only those
+        samples are used to calculate the final color. If not, more samples
+        are used. This means that the higher number of samples is calculated
+        only where necessary, which improves performance.
+      </para>
+
       <para lang="es">
         Utilizando esta técnica el <acronym>GIMP</acronym> toma más
         pixeles de alrededor para calcular un nuevo color, por ejemplo
@@ -109,13 +146,15 @@
         tiempo.
       </para>
       <para lang="fr">
-        Avec cette technique, GIMP utilise plus de pixels aux alentours pour
+        Avec cette technique, <acronym>GIMP</acronym> utilise plus de
+        pixels aux alentours pour
         calculer une couleur de transition, par exemple lors d'une
         interpolation. Le rendu est meilleur mais le temps de traitement est
         allongé.
       </para>
       <para lang="it">
-        Con questa tecnica GIMP preleva più pixel attorno per calcolare un
+        Con questa tecnica <acronym>GIMP</acronym> preleva più pixel attorno
+        per calcolare un
         colore di transizione come prova di iterpolazione. Il risultato è
         migliore ma l'elaborazione risulta più lunga.
       </para>
@@ -125,7 +164,7 @@
         필요로 한다.
       </para>
       <para lang="no">
-        Som <link linkend='glossary-samplemerge-no'>Markeringsfletting</link>,
+        Som <link linkend="glossary-samplemerge-no">Markeringsfletting</link>,
         markeringsfletting, men nå bruker <acronym>GIMP</acronym>
         opplysningar frå fleire pikslar for eksempel ved interpolering.
         Resultatet blir betre enn med markeringsfletting, men tar meir tid.
@@ -138,7 +177,7 @@
   </glossentry>
   
 
-  <glossentry lang="fr" id='glossary-floatingselection-fr'>
+  <glossentry lang="fr" id="glossary-floatingselection-fr">
     <glossterm lang="fr">Sélection Flottante</glossterm>
 
     <glossdef>
