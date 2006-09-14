@@ -9,7 +9,7 @@
      050916 added by axel.wernicke 
      051022 en;fr by julien hardelin
 -->
-<sect2 id="plug-in-photocopy" lang="en;cs;de;fr">
+<sect2 id="plug-in-photocopy" lang="en;cs;de;fr;ru">
   <sect2info lang="cs" role="cvs">
     <revhistory>
       <revision>
@@ -24,6 +24,7 @@
     <phrase lang="cs">Fotokopie</phrase>
     <phrase lang="de">Fotokopiie</phrase>
     <phrase lang='fr'>Photocopie</phrase>
+    <phrase lang="ru">Копия</phrase>
   </title>
 
   <indexterm lang="en">
@@ -50,12 +51,19 @@
   </indexterm>
   <indexterm lang="fr"><primary>Photocopie</primary></indexterm>
 
+  <indexterm lang="ru">
+    <primary>Фильтры</primary>
+    <secondary>Имитация</secondary>
+  </indexterm>
+  <indexterm lang="en"><primary>Копия</primary></indexterm>
+
   <sect3>
     <title>
       <phrase lang="en">Overview</phrase>
       <phrase lang="cs">Přehled</phrase>
       <phrase lang="de">Wirkungsweise</phrase>
       <phrase lang="fr">Généralités</phrase>
+      <phrase lang="ru">Общая информация</phrase>
     </title>
 
     <figure>
@@ -71,6 +79,9 @@
         </phrase>
         <phrase lang="fr">
           La même image, avant et après application du filtre Photocopie
+        </phrase>
+        <phrase lang="ru">
+          То же изображение до применения фильтра <quote>Копия</quote>
         </phrase>
       </title>
       <mediaobject>
@@ -114,6 +125,13 @@
       sombres que la moyenne de leur voisinage, et en rendant blancs les 
       autres pixels.
     </para>
+    <para lang="ru">
+      Фильтр <quote>Копия</quote> изменяет текущий слой или выделение так, что
+      он выглялит как чёрно-белая копия, как если бы количество чернил 
+      зависело от относительной темноты определённой области. Это достигается
+      путём затемнения тех областей изображения, где цвет темнее среднего
+      цвета окружения и делая оставшиеся пикселы белыми. 
+    </para>
   </sect3>
 
   <sect3>
@@ -122,6 +140,7 @@
       <phrase lang="cs">Spuštění filtru</phrase>
       <phrase lang="de">Filteraufruf</phrase>
       <phrase lang="fr">Lancement du filtre</phrase>
+      <phrase lang="ru">Активизация</phrase>
     </title>    
     <para lang="en">
       You can find this filter from the image menu through
@@ -157,6 +176,14 @@
       </menuchoice>
       Larges emprunts au Exts/Navigateur de greffons/.
     </para>
+    <para lang="ru">
+      Этот фильтр находится в
+      <menuchoice>
+        <guimenu>Фильтры</guimenu>
+        <guisubmenu>И<accel>м</accel>итация</guisubmenu>
+        <guimenuitem>Копия</guimenuitem>
+      </menuchoice>.
+    </para>
   </sect3>
 
   <sect3>
@@ -164,6 +191,7 @@
       <phrase lang="en;fr">Options</phrase>
       <phrase lang="cs">Volby</phrase>
       <phrase lang="de">Eigenschaften</phrase>
+      <phrase lang="ru">Параметры</phrase>
     </title>
 
     <figure>
@@ -180,9 +208,12 @@
         <phrase lang="fr">
           Options du filtre <quote>Photocopie</quote>
         </phrase>
+        <phrase lang="ru">
+            Значение параметров для фильтра <quote>Копия</quote>
+        </phrase>
       </title>
       <mediaobject>
-        <imageobject lang="en">
+        <imageobject lang="en;ru">
           <imagedata fileref="../images/filters/options-artistic-photocopy.png"
                      format="PNG"/>
         </imageobject>
@@ -220,6 +251,7 @@
         <term lang="cs">Poloměr masky</term>
         <term lang="de">Masken Radius</term>
         <term lang="fr">Rayon du masque</term>
+        <term lang="ru">Радиус маски</term>
 
         <listitem>
           <para lang="en">
@@ -253,6 +285,15 @@
             moins de détails dans les zones noires. Des valeurs faibles 
             donnent une charge d'encre moindre et plus de détails partout.
           </para>
+          <para lang="ru">
+            Этот параметр устанавливает размер рабочей области фильтра, над
+            которой вычисляется среднее значение яркости и сравнивается
+            с окружением.
+            Большее значение параметра создает толще области чёрного цвета 
+            на границе с белым и меньше деталей для чёрных областей.
+            Меньшее значение параметра создает больше деталей и меньше
+            чёрного.
+          </para>
         </listitem>
       </varlistentry>
 
@@ -261,6 +302,7 @@
         <term lang="cs">Ostrost</term>
         <term lang="de">Schärfe</term>
         <term lang="fr">Augmentation de contraste</term>
+        <term lang="ru">Острота</term>
 
         <listitem>
           <para lang="en">
@@ -281,6 +323,9 @@
             Avec cette option, vous pouvez régler la netteté de la 
             photocopie, de 0,0 à 1,0.
           </para>
+          <para lang="ru">
+            Этот параметр задаёт остроту копии.
+          </para>
         </listitem>
       </varlistentry>
       
@@ -289,6 +334,7 @@
         <term lang="cs">Procento černé</term>
         <term lang="de">Schwarz (%)</term>
         <term lang="fr">Pourcentage de noir</term>
+        <term lang="ru">Процент чёрного</term>
 
         <listitem>
           <para lang="en">
@@ -322,6 +368,15 @@
             des lignes plus épaisses, parfois crénelées. Les valeurs 
             moyennes donnent les meilleurs résultats. Valeurs de 0,0 à 1,0.
           </para>
+          <para lang="ru">
+            Этот параметр устанавливает количество чёрного цвета, добавляемого
+            к изображению. Маленькие значения делают переход области цвета в
+            затемнённую область сглаженным, а сами тёмные линии - тоньше и
+            более незаметными. Значения побольше делают линии тольше, темнее
+            и чётче. Максимальное значение параметра делает линии зубчатами.
+            Для лучших, более натуральных результатов, используйте промежуточные
+            значения.
+          </para>
         </listitem>
       </varlistentry>
       <varlistentry>
@@ -329,6 +384,7 @@
         <term lang="cs">Procento bílé</term>
         <term lang="de">Weiss (%)</term>
         <term lang="fr">Pourcentage de blanc</term>
+        <term lang="ru">Процент белого</term>
 
         <listitem>
           <para lang="en">
@@ -345,6 +401,10 @@
           </para>
           <para lang="fr">
             Ce paramètre augmente le pourcentage de pixels blancs.
+          </para>
+          <para lang="ru">
+            Этот параметр устанавливает количество белого цвета по сравнению
+            с чёрным.
           </para>
         </listitem>
       </varlistentry>
