@@ -8,13 +8,14 @@
   2005-12-07 replaced <simplesect> by <sect3> by lexa
   050830 de replaced informalfigure by axel.wernicke
   050901 de added by axel.wernicke -->
-<sect2 id='plug-in-convmatrix' lang="en;cs;de;fr;it">
+<sect2 id="plug-in-convmatrix" lang="en;cs;de;fr;it;ru">
   <title>
     <phrase lang="en">Convolution matrix</phrase>
     <phrase lang="cs">Konvoluční matice</phrase>
     <phrase lang="de">Faltungsmatrix</phrase>
     <phrase lang="fr">Matrice de convolution</phrase>
     <phrase lang="it">Matrice di convoluzione</phrase>
+    <phrase lang="ru">Матрица конволюции</phrase>
   </title>
 
   <indexterm lang="en">
@@ -46,6 +47,12 @@
     <secondary>Generici</secondary>
   </indexterm>
   <indexterm lang="it"><primary>Matrice di convoluzione</primary></indexterm>
+
+  <indexterm lang="ru">
+    <primary>Фильтры</primary>
+    <secondary>Общие</secondary>
+  </indexterm>
+  <indexterm lang="ru"><primary>Матрица конволюции</primary></indexterm>
 
   <mediaobject lang="en">
     <imageobject>
@@ -83,6 +90,7 @@
       <phrase lang="de">Wirkungsweise</phrase>
       <phrase lang="fr">Généralités</phrase>
       <phrase lang="it">Panoramica</phrase>
+      <phrase lang="ru">Общая информация</phrase>
     </title>
 
     <para lang="en">
@@ -280,7 +288,48 @@
       Un semplice esempio:
     </para>
     
-    <mediaobject lang="en;cs;de;fr;it">
+    <para lang="ru">
+      Этот фильтр находится в
+      <menuchoice>
+        <guimenu>Фильтры</guimenu>
+        <guisubmenu>Общие</guisubmenu>
+        <guimenuitem>Матрица конволюции</guimenuitem>
+      </menuchoice>.
+    </para>
+    <para lang="ru">
+      Это область математики. Большинство фильтров используют матрицу
+      конволюции. С помощью фильтра <quote>Матрица конволюции</quote> можно
+      создать фильтры на заказ. 
+    </para> 
+    <para lang="ru">
+      Что же такое матрица конволюции? Её можно понять без применения
+      мало знакомых инструментов математики. Конволюция - применение одной
+      матрицы, называемой <quote>ядром</quote>, на другую. 
+    </para>
+    <para lang="ru">
+      фильтр <quote>Матрица конволюции</quote> использует в качестве первой 
+      матрицы изображение, над которым производится работа. Изображение - 
+      двухмерное собрание пикселей в прямоугольных координатах. Используемое
+      ядро зависит от желаемого эффекта.
+    </para> 
+    <para lang="ru">
+      <acronym>GIMP</acronym> использует матрицы 5x5 или 3x3. Матрица 3x3 -
+      наиболее часто используемая, и её достаточно для большинства эффектов.
+      Если значения по краям ядра обнулить, <acronym>GIMP</acronym> будет
+      считать его как матрицу 3x3.
+    </para>
+    <para lang="ru">
+      Фильтр изучает пиксель за пикселем. Для каждого из них, называемого
+      <quote>начальным пикселем</quote>, он умножает значение этого пикселя
+      и значения восьми окружающих пикселей на соответствующие значения ядра.
+      Затем он складывает результаты умножения и устанавливает эту сумму как
+      новое значение начального пикселя.
+    </para>
+    <para lang="ru">
+      простой пример:
+    </para>
+
+    <mediaobject lang="en;cs;de;fr;it;ru">
       <imageobject>
         <imagedata fileref="../images/filters/examples/convolution-example1.png" 
                    format="PNG" />
@@ -372,6 +421,22 @@
       composto da pixel con valore 100. Il risultato grafico è che il pixel si
       sposta di una posizione in basso.
     </para>
+    <para lang="ru">
+      Слева - матрица изображения: каждый пиксель помечен своим значением.
+      У начального пикселя красная граница. В середине - ядро. Активная 
+      область ядра помечена зелёной границей. Справа - результат конволюции.
+    </para>
+    <para lang="ru">
+      Произошло следующее: фильтр прочитал по-порядку, слева направо и сверху
+      вниз, все пиксели активной области изображения. Потом он 
+      умножил значение каждого из них на соответствующие значения ядра и 
+      сложил результат: (100*0)+(50*1)+(50*0)*(100*0)+(100*0) 
+      +(100*0)+(100*0)+(100*0)+(100*0)+(100*0) = 50. Значение начального
+      пикселя стало 50. До этого, когда значение начального пикселя было 50,
+      оно стало 100, значение пикселя сверху (фильтр работает не над 
+      изображением, а над его копией). В результате, начальный пиксель 
+      продвинулся вниз.
+    </para>
   </sect3>
   
   <sect3 lang="de">
@@ -397,6 +462,7 @@
       <phrase lang="de">Eigenschaften</phrase>
       <phrase lang="fr">Options</phrase>
       <phrase lang="it">Opzioni</phrase>
+      <phrase lang="ru">Параметры</phrase>
     </title>
     
     <figure lang="de">
@@ -426,6 +492,7 @@
         <term lang="en;de">Matrix</term>
         <term lang="cs">Matice</term>
         <term lang="fr;it">Matrice</term>
+        <term lang="ru">Матрица</term>
         
         <listitem>
           <para lang="en">
@@ -446,6 +513,10 @@
           <para lang="it">
             Questa è la matrice 5x5 del kernel: i valori si immettono
             direttamente nelle caselle di testo.
+          </para> 
+          <para lang="ru">
+            Это и есть матрица ядра 5x5: желаемые значения заполняются прямо
+            в вводные поля.
           </para> 
           
           <para lang="en">
@@ -477,6 +548,12 @@
             invariato il risultato, e 9 o 25, a seconda della dimensione della
             matrice del kernel, che restituisce la media dei valori del pixel.
           </para>
+          <para lang="ru">
+            <guilabel>Делитель</guilabel>: результат предыдущих вычислений
+            будет разделен на этот делитель. Значение 1 оставляет результат
+            как есть, 9 и 25, в зависимости от размера матрицы, даёт среднее
+            значение пикселей.
+          </para>
           
           <para lang="en">
             <guilabel>Offset</guilabel>: this value is added to the division 
@@ -504,6 +581,11 @@
             risultato della divisione. Ciò è utile se il risultato può diventare
             negativo. Il valore di offset può esso stesso essere negativo.
           </para>
+          <para lang="ru">
+            <guilabel>Смещение</guilabel>: это значение добавляется к 
+            результату деления. Это полезно, когда результат отрицателен.
+            Смещение может быть отрицателеным.
+          </para>
         </listitem>  
       </varlistentry>
 
@@ -513,6 +595,7 @@
         <term lang="de">Rand</term>
         <term lang="fr">Bordure</term>
         <term lang="it">Bordo</term>
+        <term lang="ru">Граница</term>
 
         <listitem>
           <para>
@@ -548,7 +631,7 @@
           </para>
           <para lang="fr">Source, Étendre, Enrouler, Rogner</para>
           <para lang="it">Estendi, Wrap, Taglierino</para>
-          
+          <para lang="ru">Источник добавить, завернуть, отрезать</para>
           
           <para lang="en">
             When the initial pixel is on a border, a part of kernel is out of
@@ -576,6 +659,10 @@
             fuori dell'immagine. Occorre decidere come il filtro si debba
             comportare:
           </para>
+          <para lang="ru">
+            Когда начальный пиксель находится на границе, часть ядра находится
+            вне изображения. Существует три варианта действия:
+          </para>
           
           <itemizedlist>
             <listitem>
@@ -599,6 +686,10 @@
               <para lang="it">
                 <guilabel>Estendi</guilabel>: questa parte del kernel non viene
                 presa in considerazione.
+              </para>
+              <para lang="ru">
+                <guilabel>Добавить</guilabel>: эта часть ядра не принимается
+                во внимание.
               </para>
             </listitem>
             
@@ -628,6 +719,11 @@
                 a pixel del bordo opposto cosicchè pixel che scompaiono da un
                 lato ricompaiono dall'altro.
               </para>
+              <para lang="ru">
+                <guilabel>Завернуть</guilabel>: эта часть ядра возмёт пиксели
+                на противоположной стороне изображения. Пиксели, пропадающие
+                на одной стороне, появляются на другой.
+              </para>
             </listitem>
             
             <listitem>
@@ -653,6 +749,10 @@
                 <guilabel>Taglierino</guilabel>: i pixel sul bordo non sono
                 modificati ma vengono ritagliati.
               </para>
+              <para lang="ru">
+                <guilabel>Отрезать</guilabel>: пиксели на границе отрезаются
+                от изображения.
+              </para>
             </listitem>  
           </itemizedlist>
         </listitem>
@@ -664,6 +764,7 @@
         <term lang="de">Kanäle</term>
         <term lang="fr">Canaux</term>
         <term lang="it">Canali</term>
+        <term lang="ru">Каналы</term>
 
         <listitem>
           <para lang="en">
@@ -685,6 +786,9 @@
           <para lang="it">
             Si possono scegliere i canali su cui il filtro opererà.
           </para>
+          <para lang="ru">
+            Выбор каналов, над которыми фильтр будет работать.
+          </para>
         </listitem>
       </varlistentry>
 
@@ -694,6 +798,7 @@
         <term lang="de">Automatisch</term>
         <term lang="fr">Automatique</term>
         <term lang="it">Automatico</term>
+        <term lang="ru">Автоматический</term>
         
         <listitem>
           <para lang="en">
@@ -729,6 +834,13 @@
             Se è negativo (un colore negativo non è possibile) allora viene
             applicato un offset di 255 (inverte il risultato).
           </para> 
+          <para lang="ru">
+            При этом выборе, <quote>Делитель</quote> берёт результат
+            конволюции. Если результат равен нулю (невозможно разделить на 
+            ноль), тогда он смещается на 128. Если результат отрицателен
+            (отрицательный цвет невозможен) тогда он смещается на 255
+            (результат инвертируется).
+          </para> 
         </listitem> 
       </varlistentry>
  
@@ -738,6 +850,7 @@
         <term lang="de">Alpha-Gewichtung</term>
         <term lang="fr">Poids alpha</term>
         <term lang="it">Ponderazione-alfa</term>
+        <term lang="ru">Доля альфы</term>
         <listitem>
           <para lang="en">
             If this option is not checked, the filter doesn't take in account 
@@ -763,6 +876,11 @@
             Se questa opzione non è selezionata il filtro non tiene conto della
             trasparenza e ciò può causare degli artefatti durante la sfocatura.
           </para> 
+          <para lang="ru">
+            Если этот параметр не выбран, фильтр не принимает во внимание
+            прозрачность. Это может добавить нежелательных эффектов при
+            размывке. 
+          </para> 
         </listitem>
       </varlistentry>
     </variablelist> 
@@ -775,6 +893,7 @@
       <phrase lang="de">Anwendungsbeispiele</phrase>
       <phrase lang="fr">Exemples</phrase>
       <phrase lang="it">Esempi</phrase>
+      <phrase lang="ru">Примеры</phrase>
     </title>
     <para lang="en">
       Design of kernels is based on high levels mathematics. You can find 
@@ -798,6 +917,10 @@
       La progettazione dei kernel si basa su matematica di alto livello. Si
       possono trovare kernel preconfezionati sul web. Di seguito alcuni esempi:
     </para>
+    <para lang="ru">
+      Создание ядер базируется на высшей математике. Готовые ядра находятся
+      на веб. Вот несколько примеров:
+    </para>
     
     <figure>
       <title>
@@ -806,6 +929,7 @@
         <phrase lang="de">v.l.n.r.: Kern (Schärfen), Kern angewandt</phrase>
         <phrase lang="fr">Augmenter le contraste</phrase>
         <phrase lang="it">Aumento del contrasto</phrase>
+        <phrase lang="ru">Увеличить контраст</phrase>
       </title>
       <mediaobject>
         <imageobject>
@@ -828,6 +952,7 @@
         <phrase lang="de">v.l.n.r.: Kern (Weichzeichnen), Kern angewandt</phrase>
         <phrase lang="fr">Flou</phrase>
         <phrase lang="it">Sfocatura</phrase>
+        <phrase lang="ru">Размыть</phrase>
       </title>
       <mediaobject>
         <imageobject>
@@ -850,6 +975,7 @@
         <phrase lang="de">v.l.n.r.: Kern (Kanten verstärken), Kern angewandt</phrase>
         <phrase lang="fr">Amélioration des phrase</phrase>
         <phrase lang="it">Evidenziazione dei bordi</phrase>
+        <phrase lang="ru">Усилить край</phrase>
       </title>
       <mediaobject>
         <imageobject>
@@ -874,6 +1000,7 @@
         </phrase>
         <phrase lang="fr">Détection des bords</phrase>
         <phrase lang="it">Individuazione dei bordi</phrase>
+        <phrase lang="ru">Найти край</phrase>
       </title>
       <mediaobject>
         <imageobject>
@@ -896,6 +1023,7 @@
         <phrase lang="de">v.l.n.r.: Kern (Relief), Kern angewandt</phrase>
         <phrase lang="fr">Repoussage</phrase>
         <phrase lang="it">Bassorilievo</phrase>
+        <phrase lang="ru">Придать рельеф</phrase>
       </title>
       <mediaobject>
         <imageobject>
