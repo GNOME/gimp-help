@@ -1,31 +1,80 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 
-<sect2 id='plug-in-autocrop' lang='cs;en;fr;zh_CN'>
-  <title lang='cs'>Automaticky oříznout obrázek</title>
-  <title lang='en'>Autocrop Image</title>
-  <title lang="fr">Découpage automatique</title> 
-  <title lang="zh_CN">自动剪裁图像</title>
+<!DOCTYPE sect2
+          PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+          "http://www.docbook.org/xml/4.3/docbookx.dtd">
 
-<!--section history: 
-    2006-01-21 en;fr reviewed by j.h
+<!--section history:
+  2006-08-27: rewritten en;fr. Added an example by j.h
 -->
+<sect2 id="plug-in-autocrop" lang="cs;en;de;fr;zh_CN">
+  <sect2info lang="en;de;fr" role="cvs">
+    <revhistory>
+      <revision lang="en">
+        <revnumber>$Revision$</revnumber>
+        <date>2006-09-04</date>
+        <authorinitials>scb</authorinitials>
+      </revision>
+      <revision lang="de">
+        <revnumber>$Revision$</revnumber>
+        <date>2005-11-19</date>
+        <authorinitials>a.w</authorinitials>
+      </revision>
+      <revision lang="fr">
+        <revnumber>$Revision$</revnumber>
+        <date>2006-08-27</date>
+        <authorinitials>j.h</authorinitials>
+      </revision>
+    </revhistory>
+  </sect2info>
+  
+  <title>
+    <phrase lang="cs">Automaticky oříznout obrázek</phrase>
+    <phrase lang="en">Autocrop Layer</phrase>
+    <phrase lang="de">Automatisch zuschneiden</phrase>
+    <phrase lang="fr">Découpage automatique du calque</phrase>
+    <phrase lang="zh_CN">自动剪裁图像</phrase>
+  </title>
+
+  <indexterm lang="en">
+    <primary>Layer</primary>
+    <secondary>Autocrop</secondary>
+  </indexterm>
   <indexterm lang="en">
     <primary>Crop</primary>
-    <secondary>Auto-crop</secondary>
+    <secondary>Autocrop layer</secondary>
+  </indexterm>
+  <indexterm lang="de">
+    <primary>Ebene</primary>
+    <secondary>zuschneiden</secondary>
   </indexterm>
   <indexterm lang="fr">
-    <primary>Découpage</primary>
-    <secondary>Découpage automatique</secondary>
+    <primary>Decoupage</primary>
+    <secondary>Découpage automatique du calque</secondary>
+  </indexterm>
+  <indexterm lang="fr">
+    <primary>Calque</primary>
+    <secondary>Decoupage automatique</secondary>
   </indexterm>
   
-  <para lang='cs'>
-    Tento příkaz je přístupný z nabídky okna obrázku volbou
-    <menuchoice>
-      <guimenu>Obrázek</guimenu>
-      <guimenuitem>Automaticky ořezat obrázek</guimenuitem>
-    </menuchoice>.
+  <para lang="en">
+    The <guimenuitem>Autocrop Layer</guimenuitem> command automatically
+    crops the active layer, unlike the
+    <link linkend="gimp-tool-crop">Crop Tool</link>, which lets you
+    manually define the area to be cropped.
   </para>
-  <para lang='cs'>
+  <para lang="en">
+    This command removes the largest possible area around the outside edge
+    which all has the same color. It does this by scanning the layer along a
+    horizontal line and a vertical line and cropping the layer as soon as it
+    encounters a different color, whatever its transparency.
+  </para>
+  <para lang="en">
+    You can use this command to crop the layer to the dimensions of a subject
+    that is lost in a solid background which is too large.
+  </para>
+
+  <para lang="cs">
     <guimenuitem>Automaticky ořezat obrázek</guimenuitem> v aktivní vrstvě
     vyhledá největší možný jednobarevný okraj a pak ho z obrázku odřízne,
     stejně jako by to udělal nástroj Ořez.
@@ -39,62 +88,28 @@
     </para>
   </caution>
 
-  <para lang='en'>
-    This command can be accessed from an image menubar as 
-    <menuchoice>
-      <guimenu><accel>I</accel>mage</guimenu>
-      <guimenuitem><accel>A</accel>utocrop Image</guimenuitem>
-    </menuchoice>.
+  <para lang="de">
+    Mit diesem Kommando können Sie die aktuellen Ebene automatisch
+    zuschneiden. Dabei werden in der aktiven Ebene alle einfarbigen
+    Randbereiche entfernt.
   </para>
-  <para lang='en'>
-    "Autocrop Image" removes borders from an image.  It searches the
-    active layer for the largest possible border area that all has
-    the same color, and then crops this area from the image, just as
-    though you had used the Crop tool.
-  </para>
-  <caution lang="en">
-    <para>
-      Note carefully that this command only uses the <emphasis>active
-      layer</emphasis> of the image to find borders.  If other layers
-      have color variations extending into the border zone of the
-      active layer, they will be cropped away.
-    </para>
-  </caution>
-
-
+  
   <para lang="fr">
-    On accède à cette commande par le menu d'image en suivant 
-    <menuchoice>
-      <guimenu><accel>I</accel>mage</guimenu>
-      <guimenuitem>Découpage <accel></accel>utomatique de l'image</guimenuitem>
-    </menuchoice>.
+    Cette fonction automatise le Découpage du calque actif, à la différence
+    de <link linkend="gimp-tool-crop">l'outil Découpage</link> qui
+    vous permet de définir manuellement la zone à découper.
   </para>
-  <para lang='fr'>
-    Cette fonction automatise le Découpage de l'image, à la différence 
-    de <link linkend='gimp-tool-crop'>l'outil Découpage</link> qui
-    vous permet de définir manuellement la zone à découper.  
-  </para> 
-  <para lang='fr'> 
-    Elle est en fait à réserver au cas où vous avez un sujet perdu 
-    dans un fond uni trop grand: la nouvelle image sera recadrée aux 
-    dimensions du sujet. 
+  <para lang="fr">
+    La commande scanne le calque selon une ligne horizontale et une ligne
+    verticale et découpe le calque dès qu'elle rencontre une couleur
+    différente, quelque soit sa transparence.
   </para>
-  <para lang='fr'>
-    Dans les autres cas, le résultat risque d'être aléatoire. En 
-    particulier, si votre image a plusieurs calques, le découpage se 
-    basera sur le <emphasis>calque actif</emphasis> et appliquera les mêmes 
-    dimensions aux autres calques, ce qui peut occasionner d'importantes 
-    pertes d'informations. 
+  <para lang="fr">
+    Elle est en fait à réserver au cas où vous avez un sujet perdu dans un
+    fond uni trop grand: le calque sera recadré aux dimensions du sujet.
   </para>
-
+  
   <para lang="zh_CN">
-    该命令在图像菜单的
-    <menuchoice>
-      <guimenu>图像</guimenu>
-      <guimenuitem>自动剪裁图像</guimenuitem>
-    </menuchoice>.
-  </para>
-  <para lang="zh_CN">   
     “自动剪裁图像”从图像中删除边缘。它从活动图层中搜索有相同颜色的最大区域，并把它们从图像中裁剪出来，就像使用剪裁工具一样。
   </para>
   <caution lang="zh_CN">
@@ -102,4 +117,115 @@
       需要注意的是该命令只在图像的<emphasis>活动图层</emphasis>上搜索边缘。如果其它图层上的颜色变化延伸至活动图层的边界内，它们将被剪掉。
     </para>
   </caution>
+
+  <sect3>
+    <title>
+      <phrase lang="en">Activating the Command</phrase>
+      <phrase lang="cs">Aktivace dialogu</phrase>
+      <phrase lang="de">Aufruf des Kommandos</phrase>
+      <phrase lang="fr">Appel de la commande</phrase>
+      <phrase lang="zh_CN">开启对话框</phrase>
+    </title>
+    
+    <itemizedlist>
+      <listitem>
+        <para lang="en">
+          You can access this command from the image menubar through
+          <menuchoice>
+            <guimenu><accel>L</accel>ayer</guimenu>
+            <guimenuitem><accel>A</accel>utocrop Layer</guimenuitem>
+          </menuchoice>.
+        </para>
+        <para lang="cs">
+          Tento příkaz je přístupný z nabídky okna obrázku volbou
+          <menuchoice>
+            <guimenu>Obrázek</guimenu>
+            <guimenuitem>Automaticky ořezat obrázek</guimenuitem>
+          </menuchoice>.
+        </para>
+        <para lang="de">
+          Das Kommando kann aus dem Bildfenster erreicht werden:
+          <menuchoice>
+            <guimenu><accel>E</accel>bene</guimenu>
+            <guimenuitem><accel>A</accel>utomatisch zuschneiden</guimenuitem>
+          </menuchoice>
+        </para>
+        <para lang="fr">
+          On accède à cette commande à partir de la barre de menu de l'image
+          par
+          <menuchoice>
+            <guimenu><accel>C</accel>alque</guimenu>
+            <guimenuitem>Découpage <accel></accel>utomatique du
+              calque</guimenuitem>
+          </menuchoice>.
+        </para>
+        <para lang="zh_CN">
+          该命令在图像菜单的
+          <menuchoice>
+            <guimenu>图像</guimenu>
+            <guimenuitem>自动剪裁图像</guimenuitem>
+          </menuchoice>.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </sect3>
+
+  <sect3 lang="en;fr">
+    <title>
+      <phrase lang="en">Example</phrase>
+      <phrase lang="fr">Exemple</phrase>
+    </title>
+
+    <figure lang="en;fr">
+      <title>
+        <phrase lang="en">Before applying <quote>Autocrop
+            Layer</quote></phrase>
+        <phrase lang="fr">Avant application de <quote>Découpe automatique du
+          calque</quote></phrase>
+      </title>
+
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="../images/menus/crop-layer-1.png" format="PNG" />
+        </imageobject>
+      </mediaobject>
+
+      <mediaobject>
+        <imageobject lang="en">
+          <imagedata fileref="../images/menus/crop-layer-1b.png" format="PNG" />
+        </imageobject>
+        <imageobject lang="fr">
+          <imagedata fileref="../images/menus/fr/crop-layer-1b.png"
+            format="PNG" />
+        </imageobject>
+      </mediaobject>
+    </figure>
+
+    <figure lang="en;fr">
+      <title>
+        <phrase lang="en">
+          After applying <quote>Autocrop Layer</quote>
+        </phrase>
+        <phrase lang="fr">
+          Après application de <quote>Découpe automatique du calque</quote>
+        </phrase>
+      </title>
+
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="../images/menus/crop-layer-2.png" format="PNG" />
+        </imageobject>
+      </mediaobject>
+      <mediaobject>
+        <imageobject lang="en">
+          <imagedata fileref="../images/menus/crop-layer-2b.png" format="PNG" />
+        </imageobject>
+        <imageobject lang="fr">
+          <imagedata fileref="../images/menus/fr/crop-layer-2b.png"
+            format="PNG" />
+        </imageobject>
+      </mediaobject>
+    </figure>
+  </sect3>
+  
 </sect2>

@@ -1,18 +1,38 @@
-<?xml version='1.0' encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 
 <!DOCTYPE sect2
   PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
   "http://www.docbook.org/xml/4.3/docbookx.dtd">
 
-<!-- section history: 
-     2006-01-21 fr reviewed by j.h
-     2005/11/11 split of from layer-colors.xml by axel.wernicke 
+<!-- section history:
+  2006-09-05 Example added by j.h; text revised by scb
+  2005/11/11 split of from layer-colors.xml by axel.wernicke
 -->
-<sect2 id='plug-in-c-stretch' lang="en;de;fr">
+<sect2 id="plug-in-c-stretch" lang="en;de;fr">
+  <sect2info lang="en;de;fr" role="cvs">
+    <revhistory>
+      <revision lang="en">
+        <revnumber>$Revision$</revnumber>
+        <date>2006-09-11</date>
+        <authorinitials>scb</authorinitials>
+      </revision>
+      <revision lang="de">
+        <revnumber>$Revision$</revnumber>
+        <date>2005-11-11</date>
+        <authorinitials>lexa</authorinitials>
+      </revision>
+      <revision lang="fr">
+        <revnumber>$Revision$</revnumber>
+        <date>2006-09-05</date>
+        <authorinitials>j.h</authorinitials>
+      </revision>
+    </revhistory>
+  </sect2info>
+  
   <title>
-    <phrase lang='en'>Stretch Contrast</phrase>
+    <phrase lang="en">Stretch Contrast</phrase>
     <phrase lang="de">Automatische Kontrastspreizung</phrase>
-    <phrase lang='fr'>Étendre le contraste</phrase>
+    <phrase lang="fr">Étendre le contraste</phrase>
     <phrase lang="zh_CN">拉伸对比度</phrase>
   </title>
 
@@ -20,58 +40,90 @@
     <primary>Layer</primary>
     <secondary>Stretch Contrast</secondary>
   </indexterm>
+  <indexterm lang="en"><primary>Contrast</primary></indexterm>
+
   <indexterm lang="de">
     <primary>Ebene</primary>
     <secondary>Automatische Kontrastspreizung</secondary>
   </indexterm>
+
   <indexterm lang="fr">
     <primary>Calque</primary>
     <secondary>Étendre le contraste</secondary>
   </indexterm>
+  <indexterm lang="fr"><primary>Contraste</primary></indexterm>
 
-
-  <para lang='en'>
-    This command is somewhat similar to 
-    <link linkend="plug-in-normalize">Normalize</link> plug-in in its 
-    effects, except that it works on each color channel of the layer 
-    individually, rather than just the brightness values. This usually leads 
-    to color shifts within the image, so it may not produce the result you 
-    are looking for. Stretch Contrast operates on layers from RGB, 
-    Grayscale, and Indexed images.
+  <para lang="en">
+    The <guimenuitem>Stretch Contrast</guimenuitem> command automatically
+    stretches the histogram values in the active layer. For each channel
+    of the active layer, it finds the minimum and maximum values and uses
+    them to stretch the Red, Green and Blue histograms to the full contrast
+    range. The bright colors become brighter and the dark colors become
+    darker, which increases the contrast.
+    This command produces a somewhat similar effect to the
+    <link linkend="plug-in-normalize">Normalize</link> command, except that
+    it works on each color channel of the layer individually. This usually
+    leads to color shifts in the image, so it may not produce the desired
+    result. <quote>Stretch Contrast</quote> works on layers of RGB,
+    Grayscale and Indexed images. Use <quote>Stretch Contrast</quote> only
+    if you want to remove an undesirable color tint from an image which
+    should contain pure white and pure black.
   </para>
+  <para lang="en">
+    This command is also similar to the
+    <link linkend="gimp-layer-white-balance">White Balance</link>
+    command, but it does not reject any of the very dark or very bright
+    pixels, so the white might be impure.
+  </para>
+
   <para lang="de">
-    Mit diesem Kommando können Sie einen ähnlichen Effekt erzielen, wie mit dem
-    Kommando <link linkend="plug-in-normalize">Normalisieren</link>, mit dem
-    Unterschied, dass die <quote>Automatische Kontrastspreizung</quote> auf
-    jeden Kanal der Ebene wirkt und nicht nur auf die Helligkeitswerte. Daraus
-    resultieren gelegentlich leichte Farbverschiebungen, welche zu einem
-    unerwünschten Ergebnis führen können.
+    Mit diesem Kommando können Sie einen ähnlichen Effekt erzielen, wie mit
+    dem Kommando <link linkend="plug-in-normalize">Normalisieren</link>, mit
+    dem Unterschied, dass die <quote>Automatische Kontrastspreizung</quote>
+    auf jeden Kanal der Ebene wirkt und nicht nur auf die Helligkeitswerte.
+    Daraus resultieren gelegentlich leichte Farbverschiebungen, welche zu
+    einem unerwünschten Ergebnis führen können.
   </para>
-  <para lang='fr'>
-    Cette commande ressemble au greffon 
+
+  <para lang="fr">
+    Ce greffon réalise un étalement automatique du contraste dans
+    l'histogramme du calque actif. Pour chaque canal de l'image, il trouve 
+    les valeurs minimum et maximum. Il utilise ces valeurs pour étaler les 
+    histogrammes individuels sur l'étendue de l'intervalle de contraste. Les 
+    couleurs claires deviennent donc plus claires et les couleurs sombres 
+    plus sombres, d'où augmentation du contraste.
+    L'action de cette commande ressemble à celle du greffon
     <link linkend="plug-in-normalize">Normaliser</link>, mais elle
     agit sur chaque canal de couleur de façon séparée si bien que des
     aberrations de couleurs peuvent survenir et que le résultat recherché
     n'est pas obtenu. Elle agit sur les trois types d'image: RVB, Indexée,
-    Niveaus de gris.
+    Niveaus de gris. N'utilisez cette commande que si vous souhaitez
+    supprimer une teinte indésirable sur ce qui devrait être un blanc pur ou
+    un noir pur.
+  </para>
+  <para lang="fr">
+    Cette commande ressemble beaucoup à la nouvelle commande 
+    <link linkend="gimp-layer-white-balance">Balance des Blancs</link>. Mais 
+    contrairement à cette dernière, les quelques pixels très noirs ou très 
+    clairs ne sont pas éliminés, si bien que le blanc créé n'est pas aussi pur.
   </para>
 
   <sect3>
     <title>
-      <phrase lang="en">Activate Dialog</phrase>
+      <phrase lang="en">Activating the Command</phrase>
       <phrase lang="cs">Aktivace dialogu</phrase>
       <phrase lang="de">Aufruf des Kommandos</phrase>
-      <phrase lang="fr">Activer le Dialogue</phrase>
+      <phrase lang="fr">Appel de la commande</phrase>
       <phrase lang="zh_CN">开启对话框</phrase>
     </title>
 
     <itemizedlist>
       <listitem>
-        <para lang='en'>
+        <para lang="en">
           This command can be accessed from an image menubar as 
           <menuchoice>
             <guimenu><accel>L</accel>ayer</guimenu>
-            <guisubmenu><accel>C</accel>olor</guisubmenu>
+            <guisubmenu><accel>C</accel>olors</guisubmenu>
             <guisubmenu><accel>A</accel>uto</guisubmenu>
             <guimenuitem><accel>S</accel>tretch Contrast</guimenuitem>
           </menuchoice>.
@@ -85,9 +137,9 @@
             <guimenuitem>
               Automatische <accel>K</accel>ontrastspreizung
             </guimenuitem>
-          </menuchoice>
+          </menuchoice>.
         </para>
-        <para lang='fr'>
+        <para lang="fr">
           On accède à cette commande à partir de la barre de menu de l'image 
           par
           <menuchoice>
@@ -99,5 +151,72 @@
         </para>
       </listitem>
     </itemizedlist>
+  </sect3>
+
+  <sect3 lang="en;fr">
+    <title>
+      <phrase lang="en"><quote>Stretch Contrast</quote> Example</phrase>
+      <phrase lang="fr">
+        Exemple de <quote>Etendre le Contraste</quote>
+      </phrase>
+    </title>
+
+    <figure lang="en;fr">
+      <title>
+        <phrase lang="en">Original image</phrase>
+        <phrase lang="fr">Image d'origine</phrase>
+      </title>
+
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="../images/menus/alice.png" format="PNG" />
+        </imageobject>
+
+        <caption>
+          <para lang="en">
+            The layer and its Red, Green and Blue histograms before
+            <quote>Stretch Contrast</quote>.
+          </para>
+          <para lang="fr">
+            Le calque et ses histogrammes Rouge, Vert, Bleu avant traitement.
+          </para>
+        </caption>
+      </mediaobject>
+    </figure>
+
+    <figure lang="en;fr">
+      <title>
+        <phrase lang="en">Image after the command</phrase>
+        <phrase lang="fr">Image Traitée</phrase>
+      </title>
+
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="../images/menus/c-stretch.png" format="PNG" />
+        </imageobject>
+        <caption>
+          <para lang="en">
+            The layer and its Red and Green and Blue histograms after
+            <quote>Stretch Contrast</quote>.
+            The pixel columns do not reach the right end of the histogram
+            (255) because of a few very bright pixels, unlike
+            <quote>White Balance</quote>.
+          </para>
+          <para lang="en">
+            Histogram stretching creates gaps between the pixel columns,
+            giving it a striped look.
+          </para>
+          <para lang="fr">
+            Le calque et ses histogrammes Rouge, Vert, Bleu après traitement.
+            Les colonnes de pixels n'atteignent pas l'extrémité droite de
+            l'histogramme (255), contrairement à Balance des Blancs.
+          </para>
+          <para lang="fr">
+            L'étalement des histogrammes crée des vides entre les colonnes de
+            pixels, lui donnant un aspect strié.
+          </para>
+        </caption>
+      </mediaobject>
+    </figure>
   </sect3>
 </sect2>
