@@ -259,8 +259,12 @@ $(STAMP_DIR)/validate.stamp: $(patsubst %,$(STAMP_DIR)/validate.%.stamp,$(ALL_LI
 
 $(patsubst %,$(STAMP_DIR)/validate.%.stamp,$(ALL_LINGUAS)): $(STAMP_DIR)/validate.%.stamp : $(STAMP_DIR)/profile.%.stamp
 	@echo -n '-- Validating XML for '$*; \
-	$(XMLLINT) --noout --valid xml/$*.xml >/dev/null 2>xml/$*-validity-errors.log; \
-	echo -n '	number of errors: '; \
+	$(XMLLINT) --noout --valid xml/$*.xml >/dev/null 2>xml/$*-validity-errors.log;
+	@find src -name "*.xml" | while read f; do \
+	    if grep -qU $$(echo -en '\r') $$f; then\
+	        echo "validity error: Carriage return detected in $$f" >> xml/$*-validity-errors.log; \
+	fi; done;
+	@echo -n '	number of errors: '; \
 	grep "validity error" xml/$*-validity-errors.log | wc -l
 
 	@touch $@
