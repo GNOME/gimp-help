@@ -1,35 +1,39 @@
-﻿<?xml version='1.0' encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE sect1
           PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
           "http://www.docbook.org/xml/4.3/docbookx.dtd">
 
 <!-- section history:
+  2006-08-19 Added Norwegian translation by KoSt
   2006-07-22 dust: added ko translation
 -->
-<sect1 id='gimp-using-setup-tile-cache' lang="cs;en;de;fr;ko;zh_CN">
+<sect1 id="gimp-using-setup-tile-cache" lang="cs;en;de;fr;ko;no;zh_CN">
   <sect1info lang="en;fr;ko">
     <revhistory>
-      <revision lang="en;fr;ko">
+      <revision lang="en;fr;ko;no">
         <revnumber>$Revision$</revnumber>
         <date lang="en">2006-08-06</date>
         <date lang="fr">2006-03-16</date>
         <date lang="ko">2006-07-16</date>
+        <date lang="no">2006-08-19</date>
         <authorinitials lang="en">romanofski</authorinitials>
         <authorinitials lang="fr">j.h</authorinitials>
         <authorinitials lang="ko">먼지군</authorinitials>
+        <authorinitials lang="no">KoSt</authorinitials>
       </revision>
     </revhistory>
   </sect1info>
-  
+
   <title>
     <phrase lang="cs">Jak nastavit vyrovnávací paměť dlaždic</phrase>
     <phrase lang="en">How to Set Your Tile Cache</phrase>
     <phrase lang='de'>Einstellen des Datenspeichers</phrase>
     <phrase lang="fr">Comment ajuster le cache d'image</phrase>
     <phrase lang="ko">타일 캐쉬 설정하는 방법</phrase>
+    <phrase lang="no">Korleis setje opp bufferlageret</phrase>
     <phrase lang="zh_CN">如何设置平铺缓存</phrase>
   </title>
-  
+
   <indexterm lang="en">
     <primary>Tile cache</primary>
   </indexterm>
@@ -39,7 +43,10 @@
   <indexterm lang="ko">
     <primary>타일 캐쉬</primary>
   </indexterm>
-  
+  <indexterm lang="no">
+    <primary>Bufferlageret</primary>
+  </indexterm>
+
   <!-- TODO: en please, translate this part to English -->
   <para lang="cs">
     Zpracování obrázků může vyžadovat obrovské množství paměti. GIMP, do
@@ -74,6 +81,17 @@
     Le réglage du cache d'image détermine la quantité de mémoire vive
     utilisée par les images au-delà de laquelle les données les plus anciennes
     seront envoyées sur le disque dur dans le répertoire d'échange.
+  </para>
+  <para lang="no">
+    Biletbehandling kan bruke store mengder maskinminne.
+    <acronym>GIMP</acronym> bruker tenestene frå operativsystemet opp til ei
+    viss grense. Blir denne grensa overstige, nyttar <acronym>GIMP</acronym>
+    sitt eige system for ikkje å leggje beslag på alle minneressursane. Dette
+    systemet går ut på å sende gamle data til filer på harddisken.
+    Skiljeområdet blir bestemt av storleiken på <acronym>GIMP</acronym> sitt
+    bufferlager. Kor raskt <acronym>GIMP</acronym> arbeider, vil såleis vere
+    avhengig av kor mykje av arbeidet som kan utførast i minnet og kor
+    mykje som må gjerast på harddisken.
   </para>
   <para lang="zh_CN">
     图像处理需要大量的内存。GIMP 依赖操作系统来处理内存，直到超过一定数量时，它就使用自己的系统，这样就不会用光所有系统内存资源。该系统发送旧数据到磁盘文件上。该临界数量就由平铺缓存决定---能使用操作系统资源的最大值---用字节(或其倍数，象兆字节)。它不包括 GIMP 自身的内存，只是图像数据需求的空间。
@@ -115,11 +133,21 @@
     zur Verfügung haben.
   </para>
   <para lang="ko">
-    낮은 값은 김프로 하여금 굳이 디스크를 사용하지 않아도 되는 경우에도 
-    램이 아닌 디스크를 사용하게 만든다. 그리고 너무 높은 값은 다른 
+
+    낮은 값은 김프로 하여금 굳이 디스크를 사용하지 않아도 되는 경우에도
+    램이 아닌 디스크를 사용하게 만든다. 그리고 너무 높은 값은 다른
     프로그램에 할당되는 시스템 리소스를 제한하게 되므로, 해당 프로그램들이
     스왑 공간인 디스크를 사용하게 만들거나 간혹은 메모리 부족으로 실행이
     안되게 만드는 수도 있다.
+  </para>
+  <para lang="no">
+    Er storleiken på bufferlageret sett lågt, vil <acronym>GIMP</acronym>
+    ofte ha behov for å sende data til harddisken. Internminnet, RAM, blir
+    lite utnytta og harddisken får ekstraarbeid. Blir storleiken på
+    bufferlageret sett for høgt, vil andre program oppleve at det er for
+    lite RAM, og må altså ta i bruk harddisken som minneplass. I verste fall
+    kan du oppleve at programma sluttar å verke, eller til og med krasjar,
+    på grunn av for lite minneplass.
   </para>
   <para lang="zh_CN">
     一个低值意味着 GIMP 很快地发送数据到文件，并不真正使用可用到的 RAM，也不需要任何真正理由就使磁盘工作。太高的值意味着其它程序启动时使用更少的内存，使它们使用交换空间，而这也要使磁盘工作；或许一些会被杀掉或由于缺乏内存而发生故障。
@@ -144,6 +172,11 @@
   <para lang="ko">
     그러면 얼마 정도의 타일 캐쉬 크기가 적당할까? 다음 사항들을 참고하면
     그 적정값을 정하는데 도움이 될 것이다.
+  </para>
+  <para lang="no">
+    Korleis i all verda skal ein då kunne finne kva storleik som passar
+    for bufferlageret på ein bestemt maskin? Her er noen måtar for å
+    bestemme verdiane, og noe få triks i tillegg:
   </para>
   <para lang="zh_CN">
     如何选取一个平铺缓存的值？这有一些可行的办法和技巧：
@@ -187,6 +220,15 @@
         사실 가장 속편한 방법은 그냥 기본값으로 사용하는 것이다. 이것은 컴퓨터에 메모리가 적을 경우에 필요한 항목이다. 따라서
         일반적인 사용에서는 크게 신경을 쓰지 않아도 된다.
       </para>
+      <para lang="no">
+        Den enklaste metoden er å gløyme alt om minnelageret og håpe på at
+        førehandsinnstillingane passar. Dette var greiare før då datamaskinane
+        hadde lite RAM (minne) og dei fleste brukarane stort sett laga små
+        bilete med <acronym>GIMP</acronym>, og i tillegg stort sett bare køyrde
+        eitt eller to program samstundes. Dersom du bare bruker
+        <acronym>GIMP</acronym> til å ta skjermdumpar og å lage noen logoar av
+        og til, er dette framleis truleg den beste metoden.
+      </para>
       <para lang="zh_CN">
         最简单的办法就是不用管它，并希望默认值能工作。当电脑有少量内存时是个可行办法，大部分人只是用 GIMP
         生成小图像同时运行一个或两个其它的程序。假如您只是使用 GIMP 来生成截图和标志，这可能是最好的解决办法。
@@ -217,6 +259,13 @@
         프로그램을 방해하지 않으면서도 좋은 성능을 체험할 수 있다. 그리고 메모리의 3/4 가량을 할당한다면 그보다 더 좋은 성능을
         보일 것이다.
       </para>
+      <para lang="no">
+        Har du ein nyare datamaskin med 512 Mb eller meir minneplass (RAM), vil
+        eit bufferlager på omkring halvparten av RAM som oftast vere høvande for
+        normal bruk av <acronym>GIMP</acronym>, utan å stressa andre program for
+        mykje. Kanskje kan til og med opp til 3/4 av RAM avsetjast til
+        bufferlageret utan å lage konfliktar.
+      </para>
       <para lang="zh_CN">
         假如您有一个现代的电脑和大量内存---512 MB 或更多---设置平铺缓存为一半的内存可能将使 GIMP
         在大多数情况下有个好的表现，而且不会使其它程序丧失使用内存的权利。或许甚至是 3/4 的 RAM 都很好。
@@ -230,7 +279,7 @@
       </para>
     </listitem>
 
-    <listitem lang="cs;en;fr;ko;zh_CN">
+    <listitem lang="cs;en;fr;ko;no;zh_CN">
       <para lang="cs">
         Můžete také požádat někoho zkušenějšího, aby vám GIMP nastavil. V
         případě, že počítač sdílíte s dalšími uživateli je to velmi dobrý
@@ -241,6 +290,7 @@
       </para>
       <para lang="en">
         Ask someone to do it for you, which in the case of a computer serving
+
         multiple users at the same time can be a good idea: that way the
         administrator and other users do not get mad at you for abusing the
         machine, nor do you get a badly underperfoming GIMP. If it is your
@@ -259,12 +309,21 @@
         수 있는 방법을 요구할지도 모른다. 하지만 그 컴퓨터가 당신의 것이고, 특정 시간에 단일 사용자만 사용한다면 크게 문제가 될
         것이 없을 것이다.
       </para>
+      <para lang="no">
+        Be noen om å setje opp maskinen for deg. Særleg dersom datamaskinen
+        blir brukt av fleire ulike brukarar samstundes, kan dette vere ein
+        god ide. På den måten unngår du at administratoren eller andre brukarar
+        blir sure på deg fordi du misbruker maskinen, og at du står att med ein
+        underytande <acronym>GIMP</acronym>. Er det din maskin, og han bare blir
+        brukt av ein brukar om gongen, kan det bety at du må ut med litt
+        småpengar eller ei venneteneste for jobben.
+      </para>
       <para lang="zh_CN">
         当电脑用于多用户环境中时，最好请别人帮您设置：这样管理员和其它用户就不会由于您错误的设置而发疯，也不会使 GIMP 表现地很差。
       </para>
     </listitem>
 
-    <listitem lang="cs;en;fr;ko;zh_CN">
+    <listitem lang="cs;en;fr;ko;no;zh_CN">
       <para lang="cs">
         Můžete také vyrovnávací paměť dlaždic při každém spuštění Gimpu
         opatrně zvyšovat a dávat pozor, zda si operační systém nestěžuje na
@@ -288,12 +347,19 @@
         타일 캐쉬값을 조절하는 것은 그 값을 하나씩 증가시켜가면서 시스템이 메모리 부족을 겪지 않으면서 최고의 성능을 발휘하는 값을
         찾아내는 과정이다. 미리 경고하지만, 메모리 부족은 때때로 다른 응용 프로그램을 종료시킬 수도 있다.
       </para>
+      <para lang="no">
+        Start med å auka bufferverdien litt om gongen medan du kontrollerar
+        om <acronym>GIMP</acronym> arbeider raskare, samstundes som maskinen
+        din ikkje protesterar på reduksjonen av ledig minne. Åtvaring: Noen
+        gonger kan mangel på minne syne seg nokså plutseleg ved at systemet
+        slår av enkelte program for å halde dei andre programma i live.
+      </para>
       <para lang="zh_CN">
         每次稍微地改变其值，然后检查每次增加变得越来越快，而系统未报怨缺乏内存。预先警告您，有时突然出现的缺乏内存会使一些程序被杀掉来为其它腾出空间。
       </para>
     </listitem>
 
-    <listitem lang="cs;en;fr;ko;zh_CN">
+    <listitem lang="cs;en;fr;ko;no;zh_CN">
       <para lang="cs">
         Další možností je vhodnou hodnotu vypočítat. Možná ji bude později
         nutné doladit, ale to se může stát i u předešlých metod. Výhodou
@@ -313,6 +379,12 @@
       <para lang="ko">
         간단한 계산으로 정확한 값을 계산할 수도 있고, 나중에 조정할 수도 있다. 하지만 타일 캐쉬값을 언제 조정하든, 어떤 방법으로
         하든 명심해야 할 것은 당신의 컴퓨터에 최적인 값을 택해야 한다라는 것이다.
+      </para>
+      <para lang="no">
+        Forsøk litt matematikk og rekn ut ein høvande verdi. Kanskje må du
+        finjustere denne seinare med ein av dei andre metodane, men det må du
+        som oftast likevel uansett. I det minste veit du nå kva som skjer, og
+        du kan få det beste ut av datamaskinen.
       </para>
       <para lang="zh_CN">
         做一些简单的数学运算来计算一个可用的值。也许您需要以后再调整，但是务必要用其它以前的方法调整。至少您明白将发生什么并得到适合您电脑的最佳值。
@@ -355,11 +427,26 @@
   </para>
   <para lang="ko">
     마지막 방법을 선택하고 적정한 값으로 시작하기를 원한다면 먼저 당신의
-    컴퓨터에 대해 알고 있어야 한다. 그것은 설치된 메모리의 총량, 운영 
-    체제의 사용 가능한 스왑 공간 용량, 스왑 공간이 있는디스크의 속도 등에 
+    컴퓨터에 대해 알고 있어야 한다. 그것은 설치된 메모리의 총량, 운영
+    체제의 사용 가능한 스왑 공간 용량, 스왑 공간이 있는디스크의 속도 등에
     대한 정보이다. 그렇다고 해서 디스크를 테스트해보거나 RPM 을 측정해 볼
     필요는 없다. 그저 확연히 빠른지, 혹은 느린지만 확인하면 된다. 김프의
     스왑 디렉토리는 기본 설정 대화상자의 폴더 페이지에서 변경할 수 있다.
+  </para>
+  <para lang="no">
+    Lat oss gå ut frå at du vel den siste metoden for å finne ein god
+    startverdi. Først treng du noen data om maskinen din. Altså kor mykje
+    RAM maskinen har, kor stor diskbuffer operativsystemet bruker (swap
+    space) og eit generelt inntrykk av kor rask harddisken som hyser denne
+    diskbufferen er, og kva mappe som blir brukt som diskbuffer for
+    <acronym>GIMP</acronym>. Du treng ikkje køyre disktestar eller finne ut
+    rotasjonsfarten på harddisken. Du treng bare gjere ei lausleg vurdering
+    av kva som kan bety noe for bruken av maskinen — og for bruken av
+    <acronym>GIMP</acronym>. Du kan endre storleiken på bufferen i menyen
+    <menuchoice>
+      <guimenu>Innstillingar</guimenu>
+      <guimenuitem>Omgivnader</guimenuitem>
+    </menuchoice>.
   </para>
   <para lang="zh_CN">
     我们假设您喜欢最后一种方式，并想用一个好的值来启动。首先，您需要从您的电脑知道一些数据。您系统安装的内存大小，操作系统可用的交换空间，和存储操作系统交换区和 GIMP 交换目录的磁盘大致速度。您并不需要进行磁盘测试，或检查磁盘的转速，只需知道哪一个看起来要明显得快或慢，或完全相同。您可以在首选项对话框的文件夹页来改变 GIMP 的交换目录。
@@ -391,24 +478,36 @@
     Note down also the free swap
   </para>
   <para lang='fr'>
-    Ensuite, vous devez déterminer la quantité de mémoire nécessaire pour 
+    Ensuite, vous devez déterminer la quantité de mémoire nécessaire pour
     les applications que vous voulez faire tourner en même temps que GIMP.
-    Démarrez toutes vos applications, sauf GIMP, effectuez quelque travail 
-    avec, et voyez le taux d'occupation de la mémoire. Sous Linux, les 
-    commandes <quote>free</quote> et <quote>top</quote> vous fournissent ces 
-    données, en anglais. Avec free, notez la valeur free "-/+ buffers/cache" 
+    Démarrez toutes vos applications, sauf GIMP, effectuez quelque travail
+    avec, et voyez le taux d'occupation de la mémoire. Sous Linux, les
+    commandes <quote>free</quote> et <quote>top</quote> vous fournissent ces
+    données, en anglais. Avec free, notez la valeur free "-/+ buffers/cache"
     et le free swap.
   </para>
   <para lang="ko">
-    그 다음에 할 일은 김프와 동시에 사용할 프로그램들에 필요한 리소스양을 
-    확인하는 것이다. 이제 자주 쓰는 (김프를 제외한) 모든 프로그램을 
-    실행시키고 메모리 사용량을 확인해라. 사용하는 프로그램은 사용중인 
+    그 다음에 할 일은 김프와 동시에 사용할 프로그램들에 필요한 리소스양을
+    확인하는 것이다. 이제 자주 쓰는 (김프를 제외한) 모든 프로그램을
+    실행시키고 메모리 사용량을 확인해라. 사용하는 프로그램은 사용중인
     운영체제나 사용 환경에 따라 다를 것이다. 그리고 사용가능한 프로그램의
     숫자도 파일 캐쉬를 포함한 메모리의 잔량에 따라 달라질 것이다. 근래의
     유닉스는 큰 파일를 유지하기 위해 매우 작은 공(空) 영역과 버퍼 캐쉬를
-    가지고 있다. 리눅스에서 메모리 잔량을 확인하려면 
+    가지고 있다. 리눅스에서 메모리 잔량을 확인하려면
     <emphasis>free</emphasis> 명령을 이용하여
     <quote>-/+ buffers/cache</quote> 라인을 확인하면 된다.
+  </para>
+  <para lang="no">
+    Det neste du må gjere er å sjå kor mykje ressursar du treng til andre
+    program som du ønskjer å køyre samstundes med <acronym>GIMP</acronym>.
+    Start alle programma du reknar med å bruke, utanom <acronym>GIMP</acronym>,
+    og gjer noe arbeid med dei. Bruk eit program som viser kor mykje minne du
+    bruker, eller helst kor mykje minne det er att. Kva for program er avhengig
+    av kva slag OS (operativsystem, dvs. Unix, Windows osv) du køyrer. Unix
+    held svært lite av minnet fritt for å kunne handtere store filer og store
+    bufferområde. I Linux vil kommandoen <emphasis>free</emphasis> gjere
+    utrekningane for deg. Sjekk kolonnane <quote>free</quote> og linja
+    <quote>-/+ buffers/cache</quote>. Noter deg også ledig diskbufferplass.
   </para>
   <para lang="zh_CN">
     下一件事就是看和 GIMP 一起运行的其它程序需要多少资源。因此启动您的所有工具并在上干些事，当然除了 GIMP，并检查使用率。您可使用 free 或 top 等程序，这和您使用何种 OS 和环境有关。您想知道的是剩余多少内存，包括文件缓冲。现代 Unix 只保留一小部分空闲，而为了保持大量的文件和缓存区缓存。Linux 的 <emphasis>free</emphasis> 命令帮您计算：查看“free”列，“-/+ buffers/cache”行。下面则是 free swap。
@@ -433,11 +532,15 @@
     이제 간단한 계산을 할 차례이다. 이는 램이나 운영체제 스왑 공간에 얼마
     만큼의 타일 캐쉬 공간을 할당할 것인가 하는 결정이다. :
   </para>
+  <para lang="no">
+    Nå er det på tide å bestemma seg, og litt enkel matematikk. Valet er
+    mellom å leggje heile bufferen i RAM eller i RAM pluss diskbuffaren.
+  </para>
   <para lang="zh_CN">
     现在是决定和进行一点简单数学计算的时候了，主要是决定是否想要基于 RAM 所有平铺缓存，或 RAM 加上操作系统交换区：
   </para>
 
-  <procedure lang="cs;en;fr;ko;zh_CN">
+  <procedure lang="cs;en;fr;ko;no;zh_CN">
     <step>
       <para lang="cs">
         Přecházíte hodně mezi jednotlivými aplikacemi? Nebo pracujete v Gimpu
@@ -470,6 +573,16 @@
         여유분을 더 두어야 할 것이고, 그렇지 않다면 다음 과정을 따라해라.(이 부분에 대해 확신을 할 수 없다면 다음 과정을 확인해
         보면 된다.) 그리고 만약 사용하는 프로그램들을 자주 교체한다면 여유 메모량만 체크한뒤 마지막 과정을 따라하면 된다.
       </para>
+      <para lang="no">
+        Endrar du oppsettet stadig vekk eller arbeider lange økter med
+        <acronym>GIMP</acronym>? Bruker du mykje tid på
+        <acronym>GIMP</acronym> bør du bruke så mykje ledig RAM  og ledig
+        diskbuffer som det er tilgjengeleg. Elles bør du gå vidare på denne
+        lista. (Føler du deg usikker på dette, les gjennom lista først).
+        Dersom du veit at kjem til å bytte program heile tida, finn ut
+        kor mykje ledig RAM du har og gå til slutten av lista. Det er i
+        tilfelle ikkje nødvendig å kontrollera fleire ting.
+      </para>
       <para lang="zh_CN">
         您是否常常变换程序？或在一个很长时间保持 GIMP 工作？如果您在 GIMP 中花费许多时间，您可以考虑空闲 RAM
         和可用的空闲交换区。否则，继续看下面步骤。(假如您对此不确定，也继续查看下面的步骤。)如果您确认每几分钟常常转换应用程序，就只把空闲 RAM
@@ -495,6 +608,11 @@
       </para>
       <para lang="ko">
         운영 체제의 스왑이 김프의 스왑과 같은 디스크 내에 있는가? 그렇다면 램과 스왑을 더하라. 그렇지 않다면 다음 과정으로..
+      </para>
+      <para lang="no">
+        Er operativsystemet og <acronym>GIMP</acronym> sine bufferfiler på
+        same fysiske harddisk, les av RAM og bufferstorleik og adder tala.
+        Elles går du til neste punkt på lista.
       </para>
       <para lang="zh_CN">
         操作系统交换区是否和 GIMP 交换目录在同一个物理磁盘上：如果是，加上 RAM 和交换区。否则，到下一步。
@@ -522,6 +640,12 @@
         OS 스왑이 있는 디스크가 김프 스왑이 있는 디스크보다 빠르거나 같은 속도인가? 김프 스왑이 있는 디스크보다 느리다면, 여유
         메모리값만 취하고, 비슷하거나 빠르다면 램과 스왑의 각 여분을 더한다.
       </para>
+      <para lang="no">
+        Er harddisken som operativsystemet ligg på raskare eller held same
+        farten som harddisken <acronym>GIMP</acronym> arbeider på, legg saman
+        ledig RAM + diskbuffer. Dersom harddisken med operativsystemet er
+        tregare, noter bare ledig RAM.
+      </para>
       <para lang="zh_CN">
         OS 交换区所在磁盘是否比包含 GIMP 交换目录的磁盘速度快或一样？如果更慢，只算空闲 RAM；如果更快或相等，加上 RAM 和交换区。
       </para>
@@ -548,6 +672,13 @@
         자 이제 램 여분이나, 램 여분과 OS 스왑 여분을 더한 값을 가지고 있을 것이다. 그 값에서 한 자리를 뺀 것이 안전하고
         최적의 성능을 제공하는 타일 캐쉬값이다.
       </para>
+      <para lang="no">
+        Du skal nå ha eit tal som anten fortel kor mykje ledig RAM du har
+        eller ledig RAM + ledig plass på operativsystemet sin diskbuffer.
+        Reduser talet litt, for å vere på den sikre sida, og du har eit godt
+        utgangspunkt for kor mykje bufferplass <acronym>GIMP</acronym> har
+        bruk for.
+      </para>
       <para lang="zh_CN">
         您现在有一个数字，它要么是空闲 RAM 或空闲 RAM 加上空闲 OS 交换区。为安全起见减少一点，那就是能够有个好的开始的平铺缓冲值。
       </para>
@@ -571,6 +702,11 @@
   <para lang="ko">
     위에서 보았듯이 이 과정은 모두 여유 리소스를 확인하는 것이며, OS 스왑을
     사용할 가치가 있는지,  아니면 더 문제만 일으키는지 결정하는 것이다.
+  </para>
+  <para lang="no">
+    Som du ser, går det heile ut på å finne dei ledige ressursane og avgjere
+    om det er verd å bruke operativsystemet sin diskbufferen, eller om dette
+    vil bli meir til ulempe enn til hjelp.
   </para>
   <para lang="zh_CN">
     正如您看到的，所有这些都是关于检查空闲资源，并决定OS 交换区是否值得使用，是否比它的所带来的帮助产生更多问题。
@@ -600,10 +736,18 @@
   </para>
 
   <para lang="ko">
-    이 값을 조정하려는 이유는 다양하겠지만, 대부분은 컴퓨터 사용 습관이 
+    이 값을 조정하려는 이유는 다양하겠지만, 대부분은 컴퓨터 사용 습관이
     바뀌었거나 하드웨어가 바뀌었을 경우이다. 이는 컴퓨터의 사용 습관이나
     성능에 관한 기존의 결정이 더이상 유효하지 않다라는 말이다. 따라서 앞의
     과정을 통해 적정한 새 값으로 조정을 해야한다.
+  </para>
+
+  <para lang="no">
+    Det kan likevel hende du seinare ønskjer å forandra den verdien du kom
+    fram til. Oftast fordi du har endra måten du bruker datamaskinen din på,
+    eller du har lagt til ny maskinvare eller nye program. Dei gamle
+    verdiane du kom fram til stemmer kanskje ikkje lenger. Dermed bør du gå
+    gjennom punkta ovanfor på nytt for å sjå om tala har forandra seg mykje.
   </para>
 
   <para lang='cs'>
@@ -631,12 +775,21 @@
 
   <para lang="ko">
     또다른 이유로는 다른 프로그램에 비해 김프가 너무 실행되기 때문도 있다.
-    이는 다른 프로그램에 영향을 주지않는 한도 내에서 김프에 더 많은 
-    메모리를 할당해 주어야 한다. 혹은 반대로 다른 프로그램에서 메모리 
-    부족을 호소한다면, 김프를 종료시키는 편이 좋을 것이다.    
+    이는 다른 프로그램에 영향을 주지않는 한도 내에서 김프에 더 많은
+    메모리를 할당해 주어야 한다. 혹은 반대로 다른 프로그램에서 메모리
+    부족을 호소한다면, 김프를 종료시키는 편이 좋을 것이다.
   </para>
 
-  <para lang="zh_CN"> 
+  <para lang="no">
+    Ein annan grunn til å revurdere tala dine, kan vere dersom du meiner
+    <acronym>GIMP</acronym> arbeider for sakte i forhold til andre program.
+    Dette betyr at <acronym>GIMP</acronym> kan bruke eit større minneområde
+    utan at dette går ut over andre program. På den andre sida, dersom dei
+    andre programma syner teikn på manglande minneplass, bør du vurdera å
+    redusera litt på mengda av RAM <acronym>GIMP</acronym> har til rådvelde.
+  </para>
+
+  <para lang="zh_CN">
    另一个改变其值的原因是 GIMP 好像运行得太慢，而改给别的程序却快：这意味着 GIMP 能使用更多内存而不会损害其它程序。另一方面，如果其它程序报怨没有足够内存，这就让您知道不该让 GIMP 浪费这么多了。
   </para>
 
@@ -670,7 +823,16 @@
     줄여야 한다.
   </para>
 
-  <para lang="zh_CN"> 
+  <para lang="no">
+    Bestemmer du deg for å bruke bare RAM og dette resulterer i at
+    <acronym>GIMP</acronym> køyrer for sakte, kan du vurdere å auke
+    RAM-området til <acronym>GIMP</acronym>, utan å bruke heile den ledige
+    diskbufferen. Dersom det er motsetningar mellom det å bruke RAM og å
+    bruke diskbuffer, kan du prøve å redusere på RAM-området
+    <acronym>GIMP</acronym> har tilgang til.
+  </para>
+
+  <para lang="zh_CN">
     如果您决定只用 RAM，却发现 GIMP 运行得很慢，您能尝试稍微增加点该值，而不要使用任何空想交换区。如果情况刚好相反，使用 RAM 和交换区，并减少 GIMP 可用的 RAM 的数量。
   </para>
 
@@ -685,7 +847,7 @@
   <para lang='en'>
     Another trick is to put the Swap Dir on a very fast disk, or on a
     different disk than the one where most of your files
-    reside. Spreading the operating 
+    reside. Spreading the operating
     system swap file over multiple disks is also a good way to speed
     things up, in general. And of course, you might have to buy more RAM
     or stop using lots of programs at the same time: you can not
@@ -702,9 +864,18 @@
   <para lang="ko">
     다른 방법으로 스왑 디렉토리를 매우 빠른 디스크로 설정하거나 자주 쓰는
     파일들이 있는 디스크와 다른 디스크로 설정하는 방법이 있다. 운영체제의
-    스왑이 여러 디스크에 걸쳐 있는 것은 이러한 방법이 속도를 증가시키는 
+    스왑이 여러 디스크에 걸쳐 있는 것은 이러한 방법이 속도를 증가시키는
     좋은 방법이기 때문이다. 그리고 물론 더 많은 메모리를 장착하거나 한번에
     여러 프로그램들을 사용하지 않는 것도 좋은 방법이다.
+  </para>
+  <para lang="no">
+    Eit anna triks kan vere å leggje bufferfilene på ein svært rask harddisk,
+    eller på ein annan harddisk enn den som dei fleste filene dine er
+    plasserte på. Dersom du har høve til det, kan du også prøve å spreie
+    diskbufferane til operativsystemet på fleire harddiskar. Kanskje bør du
+    vurdera å køyre færre program samstundes, eller å kjøpe meir RAM. Trass
+    alt kan du ikkje rekne med å kunne redigere ein stor plakat nokolunde
+    raskt på ein datamaskin med 16Mb ledig minne.
   </para>
   <para lang="zh_CN">
     另一个技巧就是将交换目录设在一个非常快的磁盘，或与您大部分文件所在磁盘不同的磁盘。将操作系统交换区放置在多个磁盘上也是一种加速的好方式。当然，也许您可以买更多的 RAM 或不要同时运行这么多程序：您不能指望在 16 MB 的电脑上编辑招贴画而运行迅速。
@@ -719,6 +890,7 @@
   </para>
   <para lang='en'>
     You can also check what memory requirements your images have. The larger
+
     the images, and the number of undos, the more resources you need. This is
     another way to choose a number, but it is only good if you always work
     with the same kind of images, and thus the real requirements do not vary.
@@ -732,9 +904,17 @@
   </para>
   <para lang="ko">
     이미지가 필요로 하는 메모리양을 확인해 볼 수도 있다. 큰 이미지일수록,
-    실행취소 횟수가 많을수록 더 많은 리소스가 필요하다. 비슷한 종류의 
+    실행취소 횟수가 많을수록 더 많은 리소스가 필요하다. 비슷한 종류의
     이미지로 자주 작업을 하는 경우, 이 숫자들을 고정시킬 수도 있다. 그리고
     필요한 램이나 디스크 공간을 확인하는데도 도움이 될 것이다.
+  </para>
+  <para lang="no">
+    Du bør kanskje også sjå litt på kor mykje minneplass bileta dine krev.
+    Dess større bilete, og dess fleire nivå du har på angreknappen, dess meir
+    plass treng du. Arbeider du mykje med store bilete, kan du stipulera
+    behovet for minneplass ut frå plassen bileta dine treng. I så tilfelle,
+    vil det vel oftast bety at du bør skaffe deg så mykje RAM som maskinen
+    og økonomien din tåler.
   </para>
   <para lang="zh_CN">
     您也能检查您的图像所需内存。更大的图像和撤消数需要更多的资源。这是另一种选取值的方法，不过这只适合一直处理同类的图像，这样其需求才不会改变。这对您是否需要更多的 RAM 或磁盘空间也很有用。

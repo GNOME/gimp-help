@@ -1,29 +1,38 @@
-<?xml version='1.0' encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE sect1
           PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
           "http://www.docbook.org/xml/4.3/docbookx.dtd">
 
-<sect1 id='gimp-using-script-fu-tutorial' lang="cs;en;fr">
-  <sect1info lang="fr">
+<sect1 id="gimp-using-script-fu-tutorial" lang="cs;en;fr;no">
+  <sect1info lang="fr;no">
     <revhistory>
-      <revision>
+      <revision lang="fr">
         <revnumber>$Revision$</revnumber>
-        <date lang="fr">2006-03-16</date>
-        <authorinitials lang="fr">j.h</authorinitials>
+        <date>2006-03-16</date>
+        <authorinitials>j.h</authorinitials>
+      </revision>
+      <revision lang="no">
+        <revnumber>$Revision$</revnumber>
+        <date>2006-04-10</date>
+        <authorinitials>KoSt</authorinitials>
       </revision>
     </revhistory>
   </sect1info>
-  
+
   <title>
     <phrase lang="en">A Script-Fu Tutorial</phrase>
     <phrase lang="cs">Zasvěcení do Script-Fu</phrase>
     <phrase lang='fr'>Didacticiel pour Script-Fu</phrase>
+    <phrase lang="no">Ei innføring i Script-Fu</phrase>
+
   </title>
-  
-  <indexterm lang="en;fr">
-    <primary lang="en;fr">Script-fu</primary>
+
+  <indexterm lang="en;fr;no">
+    <primary lang="en;fr;no">Script-fu</primary>
     <secondary lang="en">Tutorial</secondary>
     <secondary lang="fr">Didacticiel</secondary>
+
+    <secondary lang="no">Innføring</secondary>
   </indexterm>
 
   <para lang="en">
@@ -33,7 +42,7 @@
     prompts the user for some text, then creates a new image sized
     perfectly to the text. We will then enhance the script to allow
     for a buffer of space around the text. We will conclude with a few
-    suggestions for ways to ramp up your knowledge of Script-Fu. 
+    suggestions for ways to ramp up your knowledge of Script-Fu.
   </para>
   <note lang="en">
     <para>
@@ -52,33 +61,52 @@
     nadále prohlubovat.
   </para>
   <note lang="cs">
+
     <para>
       Tato část vychází z průvodce, který pro Gimp 1 napsal Mike Terry.
     </para>
   </note>
 
   <para lang='fr'>
-      Dans ce cours, nous commencerons par une introduction aux notions 
-      fondamentales indispensables à l'utilisation du langage de 
-      programmation Scheme. Puis nous programmerons un script-fu que vous 
-      pourrez ajouter à votre collection. Ce script demande un texte à 
-      l'utilisateur et l'affiche dans une nouvelle image dont la taille est 
-      parfaitement adaptée au texte. Ensuite, nous améliorerons ce script, en 
-      ajoutant un cadre autour du texte. Nous terminerons sur la façon 
+      Dans ce cours, nous commencerons par une introduction aux notions
+      fondamentales indispensables à l'utilisation du langage de
+      programmation Scheme. Puis nous programmerons un script-fu que vous
+      pourrez ajouter à votre collection. Ce script demande un texte à
+      l'utilisateur et l'affiche dans une nouvelle image dont la taille est
+      parfaitement adaptée au texte. Ensuite, nous améliorerons ce script, en
+      ajoutant un cadre autour du texte. Nous terminerons sur la façon
       d'augmenter vos connaissances sur les Script-fu.
   </para>
   <note lang='fr'>
     <para>
-      Ce chapitre a été adapté d'un didacticiel écrit par Mike Terry pour le 
+      Ce chapitre a été adapté d'un didacticiel écrit par Mike Terry pour le
       Gimp 1 user manual.
-    </para>   
+    </para>
   </note>
-  
+  <para lang="no">
+    Dette er eit kortkurs i bruk av programmeringsspråket Scheme, som blir
+    brukt for å skrive Script-Fu. I løpet av kurset vil du også laga eit
+    nyttig skript som du kan supplere skriptsamlinga di med. Skriptet lar
+    deg skrive inn ein tekst og lagar deretter eit bilete nøyaktig like
+    stort som teksten. Seinare vil skriptet bli utvida slik at du kan legge
+    litt luft rundt teksten. Til slutt vil du få noen tips om korleis du
+    kan bruke dei nye kunnskapane dine.
+  </para>
+  <note lang="no">
+    <para>
+      Denne leksjonen er tatt frå brukarhandboka til Gimp 1, skriven av
+      Mike Terry.
+    </para>
+  </note>
+
+
   <sect2>
     <title>
       <phrase lang='en'>Getting Acquainted With Scheme</phrase>
       <phrase lang='cs'>První krůčky s jazykem Scheme</phrase>
       <phrase lang='fr'>Faisons connaissance avec Scheme</phrase>
+      <phrase lang="no">Bli kjent med Scheme</phrase>
+
     </title>
 
     <sect3 lang='en'>
@@ -96,16 +124,17 @@
       <para lang='en'><emphasis role='bold'>
         The function name/operator is always the first item in the
         parentheses, and the rest of the items are parameters to the
-        function. 
+        function.
       </emphasis></para>
       <para lang='en'>
         However, not everything enclosed in parentheses is a function --
+
         they can also be items in a list -- but we'll get to that
         later. This notation is referred to as prefix notation, because
         the function prefixes everything else. If you're familiar with
         postfix notation, or own a calculator that uses Reverse Polish
         Notation (such as most HP calculators), you should have no
-        problem adapting to formulating expressions in Scheme. 
+        problem adapting to formulating expressions in Scheme.
       </para>
       <para lang='en'>
         The third thing to understand is that:
@@ -133,7 +162,7 @@
       </para>
       <para lang='cs'><emphasis role='bold'>
         Jméno funkce či operátor je v závorkách vždy na prvním místě,
-        zbylé položky jsou parametry funkce. 
+        zbylé položky jsou parametry funkce.
       </emphasis></para>
       <para lang='cs'>
         Nicméně, ne vše uzavřené v závorkách je funkce; závorky mohou
@@ -151,7 +180,7 @@
         jsou v matematických výrazech uváděny na začátku.
       </emphasis></para>
       <para lang='cs'>
-        Je to logický důsledek zmíněné prefixové notace. 
+        Je to logický důsledek zmíněné prefixové notace.
       </para>
     </sect3>
 
@@ -161,36 +190,77 @@
         Règle n°1:
       </para>
       <para> <emphasis role='bold'>
-        Chaque déclaration dans Scheme est entourée de parenthèses (). 
+        Chaque déclaration dans Scheme est entourée de parenthèses ().
         </emphasis>
       </para>
       <para>
-        Règle n°2: 
+        Règle n°2:
       </para>
       <para><emphasis role='bold'>
-        La fonction nom/opérateur est toujours le premier terme entre 
-        les parenthèses, et le reste constitue les paramètres pour la 
-        fonction. 
+        La fonction nom/opérateur est toujours le premier terme entre
+        les parenthèses, et le reste constitue les paramètres pour la
+        fonction.
       </emphasis></para>
       <para lang='fr'>
-        Néanmoins, tout ce qui est entre les parenthèses n'est pas toujours 
-        une fonction -- il peut s'agir des termes d'une liste -- mais nous 
-        y reviendrons plus tard. Cette notation est qualifiée de notation 
-        préfixée, parce que la fonction vient avant tout autre chose. Si 
-        vous êtes familier avec la notation postfixée, ou si vous possédez 
-        une calculatrice à notation Polonaise Inverse (comme la plupart des 
-        calculatrices HP), vous n'aurez pas de difficultés à vous adapter à 
-        la formulation des expressions dans Scheme. 
+        Néanmoins, tout ce qui est entre les parenthèses n'est pas toujours
+        une fonction -- il peut s'agir des termes d'une liste -- mais nous
+        y reviendrons plus tard. Cette notation est qualifiée de notation
+        préfixée, parce que la fonction vient avant tout autre chose. Si
+        vous êtes familier avec la notation postfixée, ou si vous possédez
+        une calculatrice à notation Polonaise Inverse (comme la plupart des
+
+        calculatrices HP), vous n'aurez pas de difficultés à vous adapter à
+        la formulation des expressions dans Scheme.
       </para>
       <para>
-        Règle n°3: 
+        Règle n°3:
       </para>
       <para><emphasis role='bold'>
-        Les opérateurs mathématiques sont aussi considérés comme des 
-        fonctions et viennent donc en premier quand vous écrivez des 
-        formules mathématiques. 
+        Les opérateurs mathématiques sont aussi considérés comme des
+        fonctions et viennent donc en premier quand vous écrivez des
+        formules mathématiques.
       </emphasis></para>
     </sect3>
+
+    <sect3 lang="no">
+      <title>La oss komme i gang</title>
+      <para>
+        Det første du må lære er at
+      </para>
+      <para><emphasis role='bold'>
+        Alle utsegner i Scheme er omgitt av parentesar ().</emphasis>
+      </para>
+      <para>
+        Det andre du må lære er at
+      </para>
+      <para><emphasis role='bold'>
+        Funksjonsnamnet eller funksjonsoperatøren er alltid det første
+        elementet i parentesen. Resten av elementa i parentesen er
+        parametrar til funksjonen.
+      </emphasis></para>
+      <para>
+        Ikkje alt som står i parentesar er ein funksjon, det kan også vere
+        element i ei liste. Meir om dette seinare. Denne måten å skriva
+        program på, blir kalla <quote>prefiksnotasjon</quote> fordi funksjonen
+        blir sett framføre alt anna. Dersom du er van med
+        <quote>etterskriftsnotasjon</quote>, eller har brukt ein kalkulator
+        med <quote>Reversert polsk notasjon</quote> (som mange større
+        HP-kalkulatorar bruker), burde ikkje dette bli noe stort problem
+        for deg.
+      </para>
+      <para>
+        Det tredje du må lære deg er at
+      </para>
+      <para><emphasis role='bold'>
+        Matematiske operandar er å sjå på som funksjonar. Difor skal
+        desse skrivast først i eit matematisk uttrykk.</emphasis>
+      </para>
+      <para>
+        Dette følgjer eigentleg logisk ut frå det som tidlegare er nemnd.
+      </para>
+    </sect3>
+
+
 
     <sect3 lang='en'>
       <title>Examples Of Prefix, Infix, And Postfix Notations</title>
@@ -198,7 +268,7 @@
         Here are some quick examples illustrating the differences
         between <emphasis>prefix</emphasis>,
         <emphasis>infix</emphasis>, and <emphasis>postfix</emphasis>
-        notations. We'll add a 1 and 3 together: 
+        notations. We'll add a 1 and 3 together:
       </para>
       <itemizedlist>
         <listitem><para>
@@ -229,7 +299,7 @@
           Infixová notace: 1 + 3 (tento způsob zápisu běžně používají lidé)
         </para></listitem>
         <listitem><para>
-          Postfixová notace: 1 3 + (tento způsob zápisu používají kalkulačky 
+          Postfixová notace: 1 3 + (tento způsob zápisu používají kalkulačky
           HP)
         </para></listitem>
       </itemizedlist>
@@ -238,7 +308,7 @@
     <sect3 lang='fr'>
       <title>Exemples de notations Préfixée, Infixée, et Postfixée</title>
       <para>
-        Voici quelques exemples rapides pour illustrer les différences    
+        Voici quelques exemples rapides pour illustrer les différences
         entre les notations <emphasis>préfixée</emphasis>,
         <emphasis>infixée</emphasis>, et <emphasis>postfixée</emphasis>
         Nous allons ajouter 1 et 3:
@@ -256,6 +326,25 @@
       </itemizedlist>
     </sect3>
 
+    <sect3 lang="no">
+      <title>Eksempel på <quote>Prefix-</quote>, <quote>Infix-</quote> og
+     <quote>Postfix-</quote>notasjonar</title>
+      <para>
+        Eksempel på innskriving med dei tre metodane. Eksemplet legg
+        saman tala 1 og 3.
+      </para>
+      <itemizedlist>
+        <listitem><para>
+          Prefix-notasjon: + 1 3 (slik Scheme vil ha det)
+        </para></listitem>
+        <listitem><para>
+          Infix-notasjon: 1 + 3 (slik vi skriv til vanleg)
+        </para></listitem>
+        <listitem><para>
+          Postfix-notasjon: 1 3 + (slik t.d. mange HP-kalkulatorar brukar)
+        </para></listitem>
+      </itemizedlist>
+    </sect3>
 
     <sect3 lang='en'>
       <title>Practicing In Scheme</title>
@@ -266,7 +355,7 @@
         <guimenuitem>Console</guimenuitem> </menuchoice>. This will start
         up the Script-Fu Console window, which allows us to work
         interactively in Scheme. In a matter of moments, the Script-Fu
-        Console will appear: 
+        Console will appear:
       </para>
     </sect3>
 
@@ -285,12 +374,29 @@
     <sect3 lang='fr'>
       <title>Pratiquons Scheme</title>
       <para>
-        Appliquons maintenant ce que nous venons d'apprendre. Démarrez Gimp, 
+        Appliquons maintenant ce que nous venons d'apprendre. Démarrez Gimp,
+
         si ce n'est pas déjà fait, et allez dans  <menuchoice>
         <guimenu>Xtns</guimenu> <guisubmenu>Script-Fu</guisubmenu>
-        <guimenuitem>Console</guimenuitem> </menuchoice>. Ceci lancera la 
-        fenêtre Console de Script-fu, qui va nous permettre de travailler 
+        <guimenuitem>Console</guimenuitem> </menuchoice>. Ceci lancera la
+        fenêtre Console de Script-fu, qui va nous permettre de travailler
         interactivement avec Scheme:
+      </para>
+    </sect3>
+
+    <sect3 lang="no">
+      <title>Praktiske øvingar i Scheme</title>
+      <para>
+        Dermed er vi klare for å praktisera kunnskapane våre. Start opp
+        <acronym>GIMP</acronym>, dersom du ikkje alt har gjort det, og finn
+        fram til
+        <menuchoice>
+          <guimenu>Utvid</guimenu>
+          <guimenuitem>Script-fu</guimenuitem>
+          <guimenuitem>Konsoll for Script-fu</guimenuitem>
+        </menuchoice>.
+        Klikk på denne, og vindauget <quote>Script-Fu konsoll</quote> vil
+        dukke opp på skjermen.
       </para>
     </sect3>
 
@@ -300,19 +406,20 @@
         At the bottom of this window is an entry-field entitled
         <guilabel>Current Command</guilabel>. Here, we can test out
         simple Scheme commands interactively. Let's start out easy,
-        and add some numbers: 
+        and add some numbers:
       </para>
       <programlisting>
         (+ 3 5)
       </programlisting>
       <para>
         Typing this in and hitting <keycap>Enter</keycap> yields the
-        expected answer of 8 in the center window. 
+        expected answer of 8 in the center window.
       </para>
       <para>
         Now, what if we wanted to add more than one number? The "+"
         function can take two or more arguments, so this is not a
-        problem: 
+
+        problem:
       </para>
       <programlisting>
         (+ 3 5 6)
@@ -323,7 +430,7 @@
       <para>
         So far, so good -- we type in a Scheme statement and it's
         executed immediately in the Script-Fu Console window. Now for
-        a word of caution.... 
+        a word of caution....
       </para>
     </sect3>
 
@@ -360,21 +467,21 @@
     <sect3 lang='fr'>
       <title>La fenêtre Console de Script-Fu</title>
       <para>
-        En bas de cette fenêtre se trouve un champ nommé 
-        <guilabel>Commande courante</guilabel>. Là, vous pouvez tester 
-        interactivement les commandes Scheme. Commençons par quelque chose 
-        de facile, l'addition de quelques nombres: 
+        En bas de cette fenêtre se trouve un champ nommé
+        <guilabel>Commande courante</guilabel>. Là, vous pouvez tester
+        interactivement les commandes Scheme. Commençons par quelque chose
+        de facile, l'addition de quelques nombres:
       </para>
       <programlisting>
         (+ 3 5)
       </programlisting>
       <para>
-        En tapant cette séquence et en appuyant sur <keycap>Entrée </keycap> 
-        vous obtenez le résultat attendu: 8, dans le panneau central. 
+        En tapant cette séquence et en appuyant sur <keycap>Entrée </keycap>
+        vous obtenez le résultat attendu: 8, dans le panneau central.
       </para>
       <para>
-        Maintenant, si nous voulons ajouter plus de deux nombres, pas de 
-        problème; La fonction «+» accepte plus de deux arguments: 
+        Maintenant, si nous voulons ajouter plus de deux nombres, pas de
+        problème; La fonction «+» accepte plus de deux arguments:
       </para>
       <programlisting>
         (+ 3 5 6)
@@ -383,9 +490,41 @@
         Et, comme prévu, vous obtenez 14.
       </para>
       <para>
-        Bon, nous avons tapé une déclaration Scheme, et elle a été exécutée 
-        immédiatement dans la fenêtre Console pour Script-Fu. Très 
-        bien. Mais certaines précautions sont à prendre... 
+        Bon, nous avons tapé une déclaration Scheme, et elle a été exécutée
+        immédiatement dans la fenêtre Console pour Script-Fu. Très
+        bien. Mais certaines précautions sont à prendre...
+      </para>
+    </sect3>
+
+    <sect3 lang="no">
+      <title>Script-Fu konsoll vindauget</title>
+      <para>
+        Nedst i dette vindauget finn du eit innskrivingsfelt kalla
+        <quote>Aktiv kommando</quote>. Her kan vi prøve ut enkle
+        Scheme-kommandoar direkte. La oss byrja svært enkelt med å legge
+        saman noen tal:
+      </para>
+      <programlisting>
+        (+ 3 5)
+      </programlisting>
+      <para>
+        Skriv du inn dette, og trykker <keycap>Enter</keycap>-tasten,
+        vil funksjonen dukka opp i det store vindauget saman med svaret 8.
+      </para>
+      <para>
+        Kva om vi ønskjer å leggja saman fleire enn to tal? Ingen problem.
+        Funksjonen <quote>+</quote> kan ta fleire argument:
+      </para>
+      <programlisting>
+
+        (+ 3 5 6)
+      </programlisting>
+      <para>
+        Fekk du svaret 14?
+      </para>
+      <para>
+        Fint. Vi har altså skrive inn ei utsegn i Scheme, og fått svar på
+        dette i Script-Fu vindauget. Nå ei lita åtvaring ...
       </para>
     </sect3>
 
@@ -398,14 +537,14 @@
         parts by parentheses to make it clearer when you read it. In
         Scheme, you have to be careful and not insert these extra
         parentheses incorrectly. For example, say we wanted to add 3
-        to the result of adding 5 and 6 together: 
+        to the result of adding 5 and 6 together:
       </para>
       <programlisting>
         3 + (5 + 6) + 7= ?
       </programlisting>
       <para>
         Knowing that the + operator can take a list of numbers to add,
-        you might be tempted to convert the above to the following: 
+        you might be tempted to convert the above to the following:
       </para>
       <programlisting>
         (+ 3 (5 6) 7)
@@ -415,7 +554,7 @@
         Scheme starts and ends with parens, so the Scheme interpreter
         will think that you're trying to call a function named "5" in
         the second group of parens, rather than summing those numbers
-        before adding them to 3. 
+        before adding them to 3.
       </para>
       <para>
         The correct way to write the above statement would be:
@@ -460,30 +599,67 @@
     <sect3 lang='fr'>
       <title>Faire attention aux parenthèses supplémentaires</title>
       <para>
-        Si vous êtes comme moi, vous avez certainement l'habitude 
-        d'utiliser des parenthèses supplémentaires pour rendre plus claires 
-        vos formules mathématiques. Dans Scheme, vous devez être prudent et 
-        ne pas utiliser ces parenthèses de façon incorrecte. Si, par 
-        exemple, nous voulons ajouter 3 au résultat de l'addition de 5 et 6: 
+        Si vous êtes comme moi, vous avez certainement l'habitude
+        d'utiliser des parenthèses supplémentaires pour rendre plus claires
+        vos formules mathématiques. Dans Scheme, vous devez être prudent et
+        ne pas utiliser ces parenthèses de façon incorrecte. Si, par
+        exemple, nous voulons ajouter 3 au résultat de l'addition de 5 et 6:
       </para>
       <programlisting>
         3 + (5 + 6) + 7= ?
       </programlisting>
       <para>
-        Sachant que l'opérateur + accepte une liste de nombre à additionner, 
-        vous pourriez être tenté d'écrire: 
+        Sachant que l'opérateur + accepte une liste de nombre à additionner,
+        vous pourriez être tenté d'écrire:
       </para>
       <programlisting>
         (+ 3 (5 6) 7)
       </programlisting>
       <para>
-        et ce serait une erreur. Rappelez-vous, chaque déclaration dans 
-        Scheme commence et finit par des parenthèses; Scheme considère que 
-        tout ce qu'entre deux parenthèses, il y a toujours une déclaration. 
-        Ici, il cherchera une fonction appelée 5... qui n'existe pas. 
+        et ce serait une erreur. Rappelez-vous, chaque déclaration dans
+        Scheme commence et finit par des parenthèses; Scheme considère que
+        tout ce qu'entre deux parenthèses, il y a toujours une déclaration.
+        Ici, il cherchera une fonction appelée 5... qui n'existe pas.
       </para>
       <para>
         Il faut donc écrire:
+      </para>
+      <programlisting>
+        (+ 3 (+ 5 6) 7)
+      </programlisting>
+    </sect3>
+
+    <sect3 lang="no">
+      <title>Sjå opp for ekstra parentesar</title>
+      <para>
+        Mange likar å kunne setje inn ekstra parentesar der det måtte
+        vera ønskeleg, t.d. for å gjere eit komplekst matematisk uttrykk
+        lettare å forstå. I Scheme må du vere nokså nøye med kvar og korleis
+        du brukar slike parentesar. Sett at du ønskjer å addera 3 til
+        resultatet av addisjonen 5 + 6:
+      </para>
+      <programlisting>
+
+        3 + (5 + 6) + 7= ?
+      </programlisting>
+      <para>
+        I og med at du nå har lært at operanden + kan addera ei heil liste
+        med tal, blir du kanskje freista til å skriva:
+      </para>
+      <programlisting>
+        (+ 3 (5 6) 7)
+      </programlisting>
+      <para>
+        Dette er feil. Hugs at kvart utsegn i Scheme er inneslutta i
+        parentesar. Omsetjaren i Scheme reknar med at du prøver å kalla opp
+        ein funksjon med namnet <quote>5</quote> i den andre parentesgruppa.
+        Det du eigentleg meinte, var at programmet først skulle rekne ut
+        den innarste parentesen og deretter addere resultatet til den yttarste
+        parentesen, slik du er van med frå <quote>vanleg</quote> matematikk.
+        Du og Scheme tenkjer altså litt ulikt her.
+      </para>
+      <para>
+        Den rette måten å skrive dette på i Scheme er
       </para>
       <programlisting>
         (+ 3 (+ 5 6) 7)
@@ -495,7 +671,7 @@
       <para>
         If you are familiar with other programming languages, like
         C/C++, Perl or Java, you know that you don't need white space
-        around mathematical operators to properly form an expression: 
+        around mathematical operators to properly form an expression:
       </para>
       <programlisting>
         <literal>3+5, 3 +5, 3+ 5</literal>
@@ -505,12 +681,12 @@
         compilers. However, the same is not true for Scheme. You must
         have a space after a mathematical operator (or any other
         function name or operator) in Scheme for it to be correctly
-        interpreted by the Scheme interpreter. 
+        interpreted by the Scheme interpreter.
       </para>
       <para>
         Practice a bit with simple mathematical equations in the
         Script-Fu Console until you're totally comfortable with these
-        initial concepts. 
+        initial concepts.
       </para>
     </sect3>
 
@@ -539,25 +715,45 @@
     <sect3 lang='fr'>
       <title>Assurez-vous que les espacements sont corrects</title>
       <para>
-        Si vous êtes familier avec d'autres langages de programmation tels 
-        que C/C++, Perl ou Java, vous savez que vous n'avez pas besoin de 
-        mettre un espace avant ou après un opérateur mathématique: 
+        Si vous êtes familier avec d'autres langages de programmation tels
+        que C/C++, Perl ou Java, vous savez que vous n'avez pas besoin de
+        mettre un espace avant ou après un opérateur mathématique:
       </para>
       <programlisting>
         <literal>3+5, 3 +5, 3+ 5</literal>
       </programlisting>
       <para>
-        Toutes ces formulations sont acceptées par C/C++, Java ou 
-        Perl. Mais ce n'est pas le cas de Sheme qui necessite 
-        obligatoirement un espace après toute fonction ou tout opérateur. 
+        Toutes ces formulations sont acceptées par C/C++, Java ou
+        Perl. Mais ce n'est pas le cas de Sheme qui necessite
+        obligatoirement un espace après toute fonction ou tout opérateur.
       </para>
       <para>
-        Essayez-vous avec de simple opérations mathématiques dans la 
-        Console pour Script-Fu jusqu'à ce que vous soyez parfaitement à 
-        l'aise avec ces premières notions. 
+        Essayez-vous avec de simple opérations mathématiques dans la
+        Console pour Script-Fu jusqu'à ce que vous soyez parfaitement à
+        l'aise avec ces premières notions.
       </para>
     </sect3>
 
+    <sect3 lang="no">
+      <title>Pass på mellomromma</title>
+      <para>
+        Dersom du har arbeidd med andre programmeringsspråk som t.d. C/C++,
+        Perl, Delphi eller Java, er du kanskje van med at det ikkje er
+        nødvendig med mellomrom rundt matematiske operandar:
+      </para>
+      <programlisting>
+        <literal>3+5, 3 +5, 3+ 5</literal>
+      </programlisting>
+      <para>
+        Alle desse blir oppfatta likt og slik du reknar med det skal vera
+        i dei nemnde språka. I Scheme må du derimot ha mellomrom etter desse,
+        og alle andre operandar og funksjonsnamn for den saks skuld.
+      </para>
+      <para>
+        Eksperimenter litt med det du har lært på denne sida før du går
+        vidare til neste leksjon. Skrivemåtane er svært viktige også i Scheme.
+      </para>
+    </sect3>
   </sect2>
 
   <sect2>
@@ -565,12 +761,14 @@
       <phrase lang='en'>Variables And Functions</phrase>
       <phrase lang='cs'>Proměnné a funkce</phrase>
       <phrase lang='fr'>Variables et fonctions</phrase>
+      <phrase lang="no">Variablar og funksjonar</phrase>
     </title>
     <para lang='en'>
       Now that we know that every Scheme statement is enclosed in
       parentheses, and that the function name/operator is listed first,
       we need to know how to create and use variables, and how to create
-      and use functions. We'll start with the variables. 
+
+      and use functions. We'll start with the variables.
     </para>
     <para lang='cs'>
       Nyní, když víte, že každý výrok ve Scheme je uzavřen v kulatých
@@ -579,11 +777,19 @@
       proměnnými.
     </para>
     <para lang='fr'>
-      Maintenant que nous savons que toute déclaration Scheme est incluse 
-      entre parenthèses, et que le nom de fonction ou l'opérateur vient en 
-      premier, nous devons apprendre à créer et utiliser les variables. 
+      Maintenant que nous savons que toute déclaration Scheme est incluse
+      entre parenthèses, et que le nom de fonction ou l'opérateur vient en
+
+      premier, nous devons apprendre à créer et utiliser les variables.
       Commençons par les variables.
     </para>
+    <para lang="no">
+      Nå som vi veit at alle utsegner i Scheme er omslutta av parentesar
+      og at alle funksjons- og operatornamna kjem først i lista, er vi klare
+      for å sjå på korleis vi kan lage og bruke variablar og funksjonar.
+      Vi byrjar med variablane.
+    </para>
+
     <sect3 lang='en'>
       <title>Declaring Variables</title>
       <para>
@@ -593,7 +799,7 @@
         languages, this construct is equivalent to defining a list of
         local variables and a scope in which they're active. As an
         example, to declare two variables, a and b, initialized to 1
-        and 2, respectively, you'd write: 
+        and 2, respectively, you'd write:
       </para>
       <programlisting>
          (let*  (
@@ -615,15 +821,14 @@
           console window. In general, however, you'll want to adopt a
           similar practice of indentation to help make your scripts more
           readable. We'll talk a bit more about this in the section on
-          White Space. 
+          White Space.
         </para>
       </note>
       <para>
         This declares two local variables, a and b, initializes them,
-        then prints the sum of the two variables. 
+        then prints the sum of the two variables.
       </para>
     </sect3>
-
 
     <sect3 lang='cs'>
       <title>Deklarace proměnných</title>
@@ -667,13 +872,13 @@
     <sect3 lang='fr'>
       <title>Déclaration de Variables</title>
       <para>
-        Bien qu'il existe deux méthodes pour déclarer des variables, la 
-        préférée est l'utilisation de la structure let*. Si vous 
-        connaissez d'autres langages de programmation, cette structure 
-        équivaut à définir une liste de variables locales et un champ 
-        d'application pour ces variables. Par exemple, pour déclarer deux 
-        variables, a et b, initialisées respectivement à 1 et 2, vous 
-        écrirez: 
+        Bien qu'il existe deux méthodes pour déclarer des variables, la
+        préférée est l'utilisation de la structure let*. Si vous
+        connaissez d'autres langages de programmation, cette structure
+        équivaut à définir une liste de variables locales et un champ
+        d'application pour ces variables. Par exemple, pour déclarer deux
+        variables, a et b, initialisées respectivement à 1 et 2, vous
+        écrirez:
       </para>
       <programlisting>
          (let*  (
@@ -691,15 +896,56 @@
       </programlisting>
       <note>
         <para>
-          Avec la Console pour Script-Fu, vous ne pourrez utiliser que 
-          l'écriture sur une ligne. Mais nous continuerons à employer les 
-          indentations pour que le script soit plus clair. Nous aurons plus 
-          de détails en abordant la section sur l'Espace Blanc. 
+
+          Avec la Console pour Script-Fu, vous ne pourrez utiliser que
+          l'écriture sur une ligne. Mais nous continuerons à employer les
+          indentations pour que le script soit plus clair. Nous aurons plus
+          de détails en abordant la section sur l'Espace Blanc.
         </para>
       </note>
       <para>
-        Ceci déclare deux variables locales, a et b, les initialise, puis 
-        affiche leur somme. 
+        Ceci déclare deux variables locales, a et b, les initialise, puis
+        affiche leur somme.
+      </para>
+    </sect3>
+
+    <sect3 lang="no">
+      <title>Deklarera variablar</title>
+      <para>
+        Den vanlegaste måten å deklarera variablar på, er ved hjelp av
+        konstruktøren let*. (I andre språk vil dette vere ekvivalenten til
+        å definera ei liste eller ein tabell med lokale variablar og områda
+        dei kan nyttast i). Som eit eksempel kan vi definera to variablar,
+        a og b, og tilordna dei verdiane 1 og 2. Å <quote>tilordna</quote>
+        vil seia å bestemme kva verdi variabelen skal ha. a blir tilordna 1,
+        dvs. blir gitt verdiinnhaldet 1. (<quote>a = 1</quote>). Dette kan
+        vi skrive slik:
+      </para>
+      <programlisting>
+         (let*  (
+                   (a 1)
+                   (b 2)
+                )
+                (+ a b)
+         )
+      </programlisting>
+      <para>
+        eller på ei linje:
+      </para>
+      <programlisting>
+        (let* ( (a 1) (b 2) ) (+ a b) )
+      </programlisting>
+      <note>
+        <para>
+          Når du bruker konsollvindauget, er du nøydd til å skriva alt på
+          ei linje. Elles kan du nytta den metoden du meiner gir best
+          oversyn over programmet. Meir om dette i under <quote>kvite
+          mellomrom</quote>.
+        </para>
+      </note>
+      <para>
+        Dette deklarerar to lokale variablar, a og b, legg verdiar i
+        variablane, her a = 1 og b = 2, og skriv ut summen av dei: 3.
       </para>
     </sect3>
 
@@ -707,15 +953,15 @@
       <title>What Is A Local Variable?</title>
       <para>
         You'll notice that we wrote the summation <code>(+ a b)</code>
-        within the parens of the <code>let*</code> expression, not after it. 
+        within the parens of the <code>let*</code> expression, not after it.
       </para>
       <para>
         This is because the <code>let*</code> statement defines an
         area in your script in which the declared variables are
         usable; if you type the (+ a b) statement after the (let* ...)
         statement, you'll get an error, because the declared variables
-        are only valid within the context of the <code>let*</code> 
-        statement; they are what programmers call local variables. 
+        are only valid within the context of the <code>let*</code>
+        statement; they are what programmers call local variables.
       </para>
     </sect3>
 
@@ -723,7 +969,7 @@
       <title>Co je lokální proměnná?</title>
       <para>
         Jistě jste si všimli, že součet <code>(+ a b)</code> byl zapsán
-        uvnitř závorek výrazu <code>let*</code>, nikoliv za nimi. 
+        uvnitř závorek výrazu <code>let*</code>, nikoliv za nimi.
       </para>
       <para>
         Je to tak, protože výrok <code>let*</code> definuje oblast skriptu, ve
@@ -737,17 +983,36 @@
     <sect3 lang='fr'>
       <title>Qu'est-ce qu'une Variable Locale?</title>
       <para>
-        Vous remarquerez que nos avons écrit l'addition <code>(+ a b)</code> 
-        à l'intérieur des parenthèses de l'expression <code>let*</code> 
+        Vous remarquerez que nos avons écrit l'addition <code>(+ a b)</code>
+        à l'intérieur des parenthèses de l'expression <code>let*</code>
+
         et non pas après elles.
       </para>
       <para>
-        C'est parce que la déclaration <code>let*</code> définit un 
-        domaine dans le script où ces variables sont utilisables; si vous 
-        aviez placé la déclaration (+ a b) après la déclaration (let*...) , 
-        vous auriez obtenu une erreur, car les variables déclarées ne sont 
-        valables qu'à l'intérieur de la déclaration <code>let*</code>. C'est 
-        ce que les programmeurs appellent des variables locales. 
+        C'est parce que la déclaration <code>let*</code> définit un
+        domaine dans le script où ces variables sont utilisables; si vous
+        aviez placé la déclaration (+ a b) après la déclaration (let*...) ,
+        vous auriez obtenu une erreur, car les variables déclarées ne sont
+        valables qu'à l'intérieur de la déclaration <code>let*</code>. C'est
+        ce que les programmeurs appellent des variables locales.
+      </para>
+
+    </sect3>
+
+
+    <sect3 lang="no">
+      <title>Kva er ein lokal variabel?</title>
+      <para>
+        Du la kanskje merke til at vi skreiv addisjonen <code>(+ a b)</code>
+        innføre parentesane til <code>let*</code>-uttrykket, og ikkje etter.
+      </para>
+      <para>
+        Dette er fordi <code>let*</code>-uttrykket definerer området i
+        skriptet der desse variablane er gyldige, altså der dei kan brukast.
+        Prøver du å skriva uttrykket (+ a b) etter uttrykket (let* ...), vil
+        du få ei feilmelding. Dei deklarerte variablane er bare gyldige
+        innføre det uttrykket dei er definerte inni. Dei er det
+        programmerarane kallar lokale variablar.
       </para>
     </sect3>
 
@@ -763,7 +1028,7 @@
         where variables are declared within parens, e.g., (a 2), and
         expressions are any valid Scheme expressions. Remember that
         the variables declared here are only valid within the
-        <code>let*</code> statement -- they're local variables. 
+        <code>let*</code> statement -- they're local variables.
       </para>
     </sect3>
 
@@ -790,15 +1055,34 @@
       </para>
       <programlisting>
         (let* ( <replaceable>variables</replaceable> ) <replaceable>expressions</replaceable> )
+
       </programlisting>
       <para>
-        où les variables sont déclarées entre parenthèses, p.e (a 2), et 
-        les expressions sont une des expressions Scheme valides. 
-        Rappelez-vous que les variables déclarées ne sont valables qu'à 
-        l'intérieur d'une déclaration <code>let*</code> statement -- ce     
+        où les variables sont déclarées entre parenthèses, p.e (a 2), et
+        les expressions sont une des expressions Scheme valides.
+        Rappelez-vous que les variables déclarées ne sont valables qu'à
+        l'intérieur d'une déclaration <code>let*</code> statement -- ce
         sont des variables locales.
       </para>
     </sect3>
+
+    <sect3 lang="no">
+      <title>Den generelle <code>let*</code>-syntaksen</title>
+      <para>
+        (Syntaks = skrivemåte) Den vanlege forma for eit
+        <code>let*</code>-utsegn er:
+      </para>
+      <programlisting>
+        (let* ( <replaceable>variablar</replaceable> ) <replaceable>uttrykk</replaceable> )
+      </programlisting>
+      <para>
+        der variablane er deklarerte innføre parentesar, t.d. (a 2), og
+        uttrykka er eit gyldig uttrykk i Scheme. Hugs at variablane som
+        blir definerte her er lokale variablar, og såleis ikkje gyldige
+        utføre <code>let*</code>-uttrykket.
+      </para>
+    </sect3>
+
 
     <sect3 lang='en'>
       <title>White Space</title>
@@ -812,7 +1096,7 @@
         Script-Fu's Console window, you'll have to enter an entire
         expression on one line; that is, everything between the
         opening and closing parens of an expression must come on one
-        line in the Script-Fu Console window. 
+        line in the Script-Fu Console window.
       </para>
     </sect3>
 
@@ -833,12 +1117,33 @@
     <sect3 lang='fr'>
       <title>Espace Blanc</title>
       <para>
-        Précédemment, nous avons mentionné le fait que vous voudriez 
-        certainement utiliser des indentations pour clarifier votre 
-        programme. Ce n'est pas un problème pour Scheme, car l'interpréteur 
-        ignore les espaces blanc. Mais si vous utilisez la Console pour 
-        Script-Fu, une expression devra tenir sur une seule ligne entre les 
-        parenthèses d'ouverture et de fermeture. 
+        Précédemment, nous avons mentionné le fait que vous voudriez
+        certainement utiliser des indentations pour clarifier votre
+        programme. Ce n'est pas un problème pour Scheme, car l'interpréteur
+        ignore les espaces blanc. Mais si vous utilisez la Console pour
+        Script-Fu, une expression devra tenir sur une seule ligne entre les
+        parenthèses d'ouverture et de fermeture.
+      </para>
+    </sect3>
+
+    <sect3 lang="no">
+      <title><quote>Kvite mellomrom</quote></title>
+      <para>
+        Tidlegare har vi nemnd at det er mogleg å bruke mellomrom og innrykk
+        for å gjere programmet tydelegare, dvs. lettare å lesa. Dette er ein
+        god vane å ta med seg, og er ikkje noe problem i Scheme. Du kan
+
+
+        altså setje inn <quote>kvite mellomrom</quote> så mykje du ønskjer.
+        (Opphavet til namnet <quote>kvite mellomrom</quote> kjenner eg ikkje,
+        men det er heilt alminnelege mellomrom som ikkje trengst i programmet,
+        men blir sett inn for å gjere det enklare for oss å lesa kva som står
+        på skjermen).
+      </para>
+      <para>
+        Arbeider du direkte i konsollvindauget for Script-Fu's må du skrive
+        alt på ei linje. Då er det ikkje mykje behov for mellomromma, utanom
+        dei som Schrimp krev skal vere der.
       </para>
     </sect3>
 
@@ -847,7 +1152,7 @@
       <para>
         Once you've initialized a variable, you might need to change
         its value later on in the script. Use the set! statement to
-        change the variable's value: 
+        change the variable's value:
       </para>
       <programlisting>
         (let* ( (theNum 10) ) (set! theNum (+ theNum \
@@ -855,7 +1160,7 @@
       </programlisting>
       <para>
         Try to guess what the above statement will do, then go ahead
-        and enter it in the Script-Fu Console window. 
+        and enter it in the Script-Fu Console window.
       </para>
       <note>
         <para>
@@ -892,28 +1197,57 @@
     <sect3 lang='fr'>
       <title>Attribuer une nouvelle valeur à une variable</title>
       <para>
-        Après avoir initialiser une variable, il se peut que vous ayiez 
-        besoin d'en changer la valeur plus loin dans le script. Utilisez la 
-        déclaration set! pour changer la valeur d'une variable: 
+        Après avoir initialiser une variable, il se peut que vous ayiez
+        besoin d'en changer la valeur plus loin dans le script. Utilisez la
+        déclaration set! pour changer la valeur d'une variable:
       </para>
       <programlisting>
         (let* ( (theNum 10) ) (set! theNum (+ theNum \
         theNum)) )
       </programlisting>
       <para>
-        Essayez de deviner ce que fait cette déclaration, puis entrez-la 
-        dans la console pour Script-Fu. 
+        Essayez de deviner ce que fait cette déclaration, puis entrez-la
+        dans la console pour Script-Fu.
       </para>
       <note>
         <para>
-          Le «\» indique qu'il n'y a pas de retour à la ligne. Ne l'écrivez 
-          pas dans la Console et n'appuyez pas sur Entrée, continuez 
-          simplement sur la ligne suivante. 
+          Le «\» indique qu'il n'y a pas de retour à la ligne. Ne l'écrivez
+          pas dans la Console et n'appuyez pas sur Entrée, continuez
+          simplement sur la ligne suivante.
         </para>
       </note>
     </sect3>
 
+    <sect3 lang="no">
+      <title>Å tilordna ein nye verdi til ein variabel</title>
+      <para>
+        Det er ofte behov for å endre innhaldet i ein variabel. Dette kan
+        gjerast med kommandoen <code>set!</code>. Eit eksempel:
+      </para>
+      <programlisting>
+        (let* ( (talet 10) ) (set! talet (+ talet
+        \ talet)) )
+      </programlisting>
+      <para>
+        Prøv å finna ut kva uttrykket gjer, og skriv det etterpå inn i
+        konsollvindauget.
+      </para>
+      <note>
+        <para>
+          Bakoverstreken <quote>\</quote> er ein vanleg måte å indikera at
+          det ikkje skal vere linjeskift her. Ikkje skriv bakoverstreken inn
+          i Script-Fu og ikkje trykk <keycap>Ctrl</keycap>. Bare fortsett
+          med neste linje dersom skriptet er delt på to linjer, eller på
+          same linja dersom alt er på ei linje. (<quote>\</quote> er sett
+          inn her i tilfelle du har så smal skjerm at uttrykket må delast
+          på to linjer).
+        </para>
+      </note>
+    </sect3>
+
+
     <sect3 lang='en'>
+
       <title>Functions</title>
       <para>
         Now that you've got the hang of variables, let's get to work
@@ -929,7 +1263,7 @@
         space-delimited list of parameter names, and
         <replaceable>expressions</replaceable> is a series of
         expressions that the function executes when it's called. For
-        example:  
+        example:
       </para>
       <programlisting>
         (define (AddXY inX inY) (+ inX inY) )
@@ -938,20 +1272,20 @@
         <varname>AddXY</varname> is the function's name and
         <varname>inX</varname> and <varname>inY</varname> are the
         variables. This function takes its two parameters and adds
-        them together. 
+        them together.
       </para>
       <para>
         If you've programmed in other imperative languages (like
         C/C++, Java, Pascal, etc.), you might notice that a couple of
         things are absent in this function definition when compared to
-        other programming languages. 
+        other programming languages.
       </para>
       <itemizedlist>
         <listitem><para>
           First, notice that the parameters don't have any "types"
           (that is, we didn't declare them as strings, or integers,
           etc.). Scheme is a type-less language. This is handy and
-          allows for quicker script writing. 
+          allows for quicker script writing.
         </para></listitem>
         <listitem><para>
             Second, notice that we don't need to worry about how to
@@ -1021,46 +1355,101 @@
     <sect3 lang='fr'>
       <title>Fonctions</title>
       <para>
-        Maintenent que nous savons manipuler les variables, passons aux 
-        fonctions. Vous déclarez une fonction avec la syntaxe suivante: 
+        Maintenent que nous savons manipuler les variables, passons aux
+        fonctions. Vous déclarez une fonction avec la syntaxe suivante:
       </para>
       <programlisting>
-        (define (<replaceable>nom</replaceable> <replaceable>liste de 
+        (define (<replaceable>nom</replaceable> <replaceable>liste de
+
         paramètres</replaceable>) <replaceable>expressions</replaceable>)
       </programlisting>
       <para>
-        où <replaceable>nom</replaceable> est le nom donné à la fonction, 
-        <replaceable>liste de paramètres</replaceable> est une liste 
-        délimitée de noms de paramètres, et 
-        <replaceable>expressions</replaceable> est une série d'expressions 
+        où <replaceable>nom</replaceable> est le nom donné à la fonction,
+        <replaceable>liste de paramètres</replaceable> est une liste
+        délimitée de noms de paramètres, et
+        <replaceable>expressions</replaceable> est une série d'expressions
         que la fonction exécute quand elle est appelée. Par exemple:
       </para>
       <programlisting>
         (define (AddXY inX inY) (+ inX inY) )
       </programlisting>
       <para>
-        <varname>AddXY</varname> est le nom de la fonction, 
-        <varname>inX</varname> et <varname>inY</varname> sont les variables 
-        Cette fonction prend ses deux paramètres et les additionne. 
+        <varname>AddXY</varname> est le nom de la fonction,
+        <varname>inX</varname> et <varname>inY</varname> sont les variables
+        Cette fonction prend ses deux paramètres et les additionne.
       </para>
       <para>
-        Si vous avez programmé dans d'autres langages (comme C/C++, Java, 
-        Pascal...etc), vous aurez noté que plusieurs choses sont absentes 
-        dans la définition de cette fonction comparée aux autres langages. 
+        Si vous avez programmé dans d'autres langages (comme C/C++, Java,
+        Pascal...etc), vous aurez noté que plusieurs choses sont absentes
+        dans la définition de cette fonction comparée aux autres langages.
       </para>
       <itemizedlist>
         <listitem><para>
-          Premièrement, notez que les paramètres n'ont pas de «type» 
-          (c-à-d que nous ne les avons pas déclarés comme chaîne, ou 
-          entiers... etc). Scheme est un langage sans-type. C'est pratique 
-          et cela permet une écriture rapide des scripts. 
+          Premièrement, notez que les paramètres n'ont pas de «type»
+          (c-à-d que nous ne les avons pas déclarés comme chaîne, ou
+          entiers... etc). Scheme est un langage sans-type. C'est pratique
+          et cela permet une écriture rapide des scripts.
         </para></listitem>
         <listitem><para>
-          Ensuite, que nous n'avons pas à nous préoccuper de la façon de 
-          «retourner» le résultat de notre fonction  -- la dernière 
-          déclaration est la valeur retournée quand on appelle la fonction. 
-          Tapez la définition de la fonction dans la console, puis essayez 
-          quequechose comme: 
+
+          Ensuite, que nous n'avons pas à nous préoccuper de la façon de
+          «retourner» le résultat de notre fonction  -- la dernière
+          déclaration est la valeur retournée quand on appelle la fonction.
+          Tapez la définition de la fonction dans la console, puis essayez
+          quequechose comme:
+          </para>
+          <programlisting>
+            (AddXY (AddXY 5 6) 4)
+          </programlisting>
+        </listitem>
+      </itemizedlist>
+    </sect3>
+
+    <sect3 lang="no">
+      <title>Funksjonar</title>
+      <para>
+        Når du nå har fått taket på dette med variablar, er det på tide å
+        gå vidare med funksjonar. Alle funksjonar blir definerte etter
+        dette mønsteret:
+      </para>
+      <programlisting>
+        (define (<replaceable>namn</replaceable>
+        <replaceable>parameterliste</replaceable>)
+        <replaceable>uttrykk</replaceable>)
+      </programlisting>
+      <para>
+        der <replaceable>namn</replaceable> er namnet på funksjonen,
+        <replaceable>parameterliste</replaceable> er ei liste med
+        parameternamn skilde med mellomrom, og
+        <replaceable>uttrykk</replaceable> er ein serie med uttrykk som
+        funksjonen utførar når han blir kalla opp. <quote>define</quote>
+        er eit ord som fortel Scheme at nå skal det definerast ein
+        funksjon. Eksempel:
+      </para>
+      <programlisting>
+        (define (AddXY inX inY) (+ inX inY) )
+      </programlisting>
+      <para>
+        <varname>AddXY</varname> er funksjonsnamnet og
+        <varname>inX</varname> og <varname>inY</varname> er variablane.
+        Denne funksjonen adderer verdiane som blir lagt i dei to parametra.
+      </para>
+      <para>
+        Dersom du er van med andre programmeringsspråk som C/C++, Java, Pascal
+        og liknande, kan det vere du saknar eit par ting i denne definisjonen:
+      </para>
+      <itemizedlist>
+        <listitem><para>
+          Parametra er ikkje definerte med <quote>type</quote>. Det betyr at
+          dei ikkje er definerte som type <quote>string</quote>,
+          <quote>integer</quote> osv. Scheme er eit <quote>typelaust</quote>
+          språk. Dette gjer det litt raskare å skrive skripta.
+        </para></listitem>
+        <listitem><para>
+            Du treng ikkje bekymra deg om korleis funksjonen skal returnera
+            resultatet. Funksjonen sender tilbake verdien av det siste
+            uttrykket. Skriv funksjonen ovanfor inn på konsollen og prøv ut
+            dette, eller noe liknande:
           </para>
           <programlisting>
             (AddXY (AddXY 5 6) 4)
@@ -1076,11 +1465,13 @@
       <phrase lang='en'>Lists, Lists And More Lists</phrase>
       <phrase lang='cs'>Seznamy, seznamy a zase seznamy</phrase>
       <phrase lang='fr'>Listes, des listes et encore des listes</phrase>
+      <phrase lang="no">Lister, lister og atter lister</phrase>
+
     </title>
 
     <para lang='en'>
       We've trained you in variables and functions, and now enter the
-      murky swamps of Scheme's lists. 
+      murky swamps of Scheme's lists.
     </para>
     <para lang='cs'>
       Již umíte pracovat s proměnnými a funkcemi, je na
@@ -1089,21 +1480,25 @@
       důležitou součást Scheme.
     </para>
     <para lang='fr'>
-      Après avoir vu les variables et les fonctions, abordons maintenant 
+      Après avoir vu les variables et les fonctions, abordons maintenant
       la difficile question des Listes Scheme.
+    </para>
+    <para lang="no">
+      Du er nå ferdig med variablar og funksjonar, og er klar for det
+      skumle området av Scheme som handlar om lister.
     </para>
 
     <sect3 lang='en'>
       <title>Defining A List</title>
       <para>
         Before we talk more about lists, it is necessary that you know
-        the difference between atomic values and lists.  
+        the difference between atomic values and lists.
       </para>
       <para>
         You've already seen atomic values when we initialized
         variables in the previous lesson. An atomic value is a single
         value. So, for example, we can assign the variable "x" the
-        single value of 8 in the following statement: 
+        single value of 8 in the following statement:
       </para>
       <programlisting>
         (let* ( (x 8) ) x)
@@ -1112,12 +1507,12 @@
         (We added the expression <varname>x</varname> at the end to print out the value
         assigned to <varname>x</varname>-- normally you won't need to do this. Notice how
         <code>let*</code> operates just like a function: The value of
-        the last statement is the value returned.) 
+        the last statement is the value returned.)
       </para>
       <para>
         A variable may also refer to a list of values, rather than a
         single value. To assign the variable <varname>x</varname> the
-        list of values 1, 3, 5, we'd type: 
+        list of values 1, 3, 5, we'd type:
       </para>
       <programlisting>
         (let* ( (x '(1 3 5))) x)
@@ -1125,14 +1520,14 @@
       <para>
         Try typing both statements into the Script-Fu Console and
         notice how it replies. When you type the first statement in,
-        it simply replies with the result: 
+        it simply replies with the result:
       </para>
       <programlisting>
         8
       </programlisting>
       <para>
         However, when you type in the other statement, it replies with
-        the following result: 
+        the following result:
       </para>
       <programlisting>
         (1 3 5)
@@ -1143,7 +1538,7 @@
          when it replies with (1 3 5), it is then informing you that
          <varname>x</varname> contains not a single value, but a list
          of values. Notice that there are no commas in our declaration
-         or assignment of the list, nor in the printed result. 
+         or assignment of the list, nor in the printed result.
       </para>
       <para>
          The syntax to define a list is:
@@ -1155,7 +1550,7 @@
         where <varname>a</varname>, <varname>b</varname>, and
         <varname>c</varname> are literals. We use the apostrophe (')
         to indicate that what follows in the parentheses is a list of
-        literal values, rather than a function or expression. 
+        literal values, rather than a function or expression.
       </para>
       <para>
         An empty list can be defined as such:
@@ -1172,6 +1567,7 @@
       <para>
         Lists can contain atomic values, as well as other lists:
       </para>
+
       <programlisting>
         (let*
            (
@@ -1195,6 +1591,7 @@
         Gimp")</code>, the list <code>(1 2 3)</code>, etc.
       </para>
     </sect3>
+
 
     <sect3 lang='cs'>
       <title>Definování seznamu</title>
@@ -1253,6 +1650,7 @@
       </programlisting>
       <para>
         kde <varname>a</varname>, <varname>b</varname> a
+
         <varname>c</varname> jsou literály. Apostrof (') značí,
         že v následujících závorkách je seznam literálů, nikoliv
         funkce či výraz.
@@ -1298,53 +1696,55 @@
     <sect3 lang='fr'>
       <title>Définir une Liste</title>
       <para>
-        Avant d'en dire plus sur les listes, vous devez connaître la 
-        différence entre les les valeurs atomiques et les listes. 
+        Avant d'en dire plus sur les listes, vous devez connaître la
+        différence entre les les valeurs atomiques et les listes.
       </para>
       <para>
-        Vous avez déjà vu des valeurs atomiques quand nous avons initialisé 
-        des variables précédemment. Une valeur atomique est une variable 
-        simple. Nous pouvons, par exemple, attribuer à la variable x la 
-        valeur 8 par la déclaration suivante: 
+        Vous avez déjà vu des valeurs atomiques quand nous avons initialisé
+        des variables précédemment. Une valeur atomique est une variable
+        simple. Nous pouvons, par exemple, attribuer à la variable x la
+        valeur 8 par la déclaration suivante:
       </para>
       <programlisting>
+
         (let* ( (x 8) ) x)
       </programlisting>
       <para>
-        (Nous avons ajouté l'expression  <varname>x</varname> à la fin pour 
-        afficher la valeur attribuée à x, mais vous n'avez pas 
-        normalement à le faire. Notez comment opère <code>let*</code> 
-        comme une fonction: la valeur de la dernière déclaration est 
+        (Nous avons ajouté l'expression  <varname>x</varname> à la fin pour
+        afficher la valeur attribuée à x, mais vous n'avez pas
+        normalement à le faire. Notez comment opère <code>let*</code>
+        comme une fonction: la valeur de la dernière déclaration est
         la valeur retournée.)
       </para>
       <para>
-        Une variable peut aussi se référer à une liste de valeurs, plutôt 
-        qu'à une valeur simple. Pour attribuer à la variable 
-        <varname>x</varname> la liste de valeurs 1, 3, 5, nous devons 
-        taper: 
+        Une variable peut aussi se référer à une liste de valeurs, plutôt
+        qu'à une valeur simple. Pour attribuer à la variable
+        <varname>x</varname> la liste de valeurs 1, 3, 5, nous devons
+        taper:
       </para>
       <programlisting>
         (let* ( (x '(1 3 5))) x)
       </programlisting>
       <para>
-        Essayez de taper les deux déclarations dans la Console de 
+        Essayez de taper les deux déclarations dans la Console de
         Script-Fu et voyez ce que ça donne. Avec la première, vous obtenez:
       </para>
       <programlisting>
         8
       </programlisting>
       <para>
-        Et avec l'autre déclaration: 
+        Et avec l'autre déclaration:
       </para>
+
       <programlisting>
         (1 3 5)
       </programlisting>
       <para>
-        Le premier résultat vous informe que la variable 
-        <varname>x</varname> contient la valeur atomique 8. Le deuxième 
-        résultat signifie que la variable contient une liste de valeurs. 
-        Noter qu'il n'y a pas de virgule, ni dans la déclaration, ni dans 
-        l'affichage. 
+        Le premier résultat vous informe que la variable
+        <varname>x</varname> contient la valeur atomique 8. Le deuxième
+        résultat signifie que la variable contient une liste de valeurs.
+        Noter qu'il n'y a pas de virgule, ni dans la déclaration, ni dans
+        l'affichage.
       </para>
       <para>
         La syntaxe pour définir une liste de valeurs est:
@@ -1354,16 +1754,18 @@
       </programlisting>
       <para>
         où <varname>a</varname>, <varname>b</varname>, et
-        <varname>c</varname> sont des littéraux. Nous avons utilisé 
-        l'apostrophe (') pour indiquer que ce qui suit dans les 
-        parenthèses est une liste de valeurs littérales, plutôt qu'une 
-        fonction ou une expression. 
+        <varname>c</varname> sont des littéraux. Nous avons utilisé
+        l'apostrophe (') pour indiquer que ce qui suit dans les
+        parenthèses est une liste de valeurs littérales, plutôt qu'une
+        fonction ou une expression.
       </para>
       <para>
         Une liste vide est définie comme suit:
       </para>
+
       <programlisting>
         '()
+
       </programlisting>
       <para>
         ou simplement:
@@ -1372,8 +1774,8 @@
         ()
       </programlisting>
       <para>
-        Outre les valeurs atomiques, les listes peuvent contenir d'autres 
-        listes: 
+        Outre les valeurs atomiques, les listes peuvent contenir d'autres
+        listes:
       </para>
       <programlisting>
         (let*
@@ -1387,14 +1789,113 @@
          )
       </programlisting>
       <para>
-        Notez qu'après la première apostrophe, vous n'avez plus besoin 
-        d'utiliser d'autres apostrophes lors de la définition des listes 
-        internes. Testez cette déclaration dans la Console de Script-Fu. 
+        Notez qu'après la première apostrophe, vous n'avez plus besoin
+        d'utiliser d'autres apostrophes lors de la définition des listes
+        internes. Testez cette déclaration dans la Console de Script-Fu.
       </para>
       <para>
-        Vous verrez que le résultat n'est pas une suite de valeurs simples, 
-        mais plutôt la liste d'un littéral <code>("The Gimp")</code>, 
+        Vous verrez que le résultat n'est pas une suite de valeurs simples,
+        mais plutôt la liste d'un littéral <code>("The Gimp")</code>,
         d'une liste <code>(1 2 3)</code>, etc.
+      </para>
+    </sect3>
+
+    <sect3 lang="no">
+      <title>Å definere ei liste</title>
+      <para>
+        Før vi ser meir på dette med lister, er det viktig at du kjenner
+        skilnaden på delverdiar (av og til i programmerarverda kalla
+        <quote>atomverdiar</quote>) og lister.
+      </para>
+      <para>
+        Ein delverdi er ein enkeltverdi. Vi brukte delverdiar då vi
+        definerte variablar og tileigna desse ein verdi tidlegare i kurset.
+        Som eit eksempel kan vi tileigna variabelen <quote>x</quote>
+        delverdien <quote>8</quote> i dette uttrykket:
+      </para>
+      <programlisting>
+        (let* ( (x 8) ) x)
+      </programlisting>
+      <para>
+        (Her er variabelen <varname>x</varname> lagt til på slutten av
+        uttrykket bare for å få skrive ut verdien av <varname>x</varname>.
+        Dette fordi <code>let*</code> arbeider akkurat som ein funksjon
+        og returnerer verdien i det siste uttrykket.
+      </para>
+      <para>
+        Ein variabel kan også referere til ei liste med verdiar i staden
+        for bare til ein enkelt verdi. For å tileigna verdilista 1, 3, 5 til
+        variabelen <varname>x</varname> skriv vi:
+      </para>
+      <programlisting>
+        (let* ( (x '(1 3 5))) x)
+      </programlisting>
+      <para>
+        Prøv begge setningane i Script-Fu konsollen og legg merke til svaret
+        du får. Når du skriv den første setning, blir svaret
+      </para>
+      <programlisting>
+        8
+      </programlisting>
+      <para>
+        Den andre setning vil gi svaret:
+      </para>
+      <programlisting>
+        (1 3 5)
+      </programlisting>
+      <para>
+        Svaret <quote>8</quote> fortel at x inneheld <quote>atomverdien</quote>
+        <quote>8</quote>. Svaret (1 3 5) viser at x ikkje inneheld ein enkelt
+        verdi, men ei liste med verdiar. Legg merke til at Scheme ikkje bruker
+        komma mellom verdiane, verken i den lista du skriv inn eller i det
+        svaret du får ut att.
+      </para>
+      <para>
+         For å definera ei liste, brukar du syntaksen:
+      </para>
+      <programlisting>
+         '(a b c)
+      </programlisting>
+      <para>
+        der <varname>a</varname>, <varname>b</varname> og
+        <varname>c</varname> er verdiane. Apostrofen (') blir nytta for å
+        fortelje at det som kjem etter inne i parentesen er ei liste med
+        verkelege verdiar, ikkje funksjonar eller uttrykk.
+      </para>
+      <para>
+        Du kan også definere ei tom liste:
+      </para>
+      <programlisting>
+        '()
+      </programlisting>
+      <para>
+        eller bare
+      </para>
+      <programlisting>
+        ()
+      </programlisting>
+      <para>
+        Ei liste kan innehalde direkteverdiar, eller nye lister:
+      </para>
+      <programlisting>
+        (let*
+           (
+                (x
+                   '("Gimp" (1 2 3) ("er" ("stor" () ) ) )
+                )
+            )
+
+            x
+         )
+      </programlisting>
+      <para>
+        Legg merke til at det er nok med den første apostrofen. Prøv
+        programmet i konsollen og sjå kva som kjem ut av det.
+      </para>
+      <para>
+        Du bør også merka deg at det resultatet som blir returnert ikkje er
+        ei liste med enkeltverdiar, men ei liste med samla verdiar.
+        <code>("Gimp")</code>, lista <code>(1 2 3)</code> osv.
       </para>
     </sect3>
 
@@ -1406,6 +1907,7 @@
         the rest of the list. You'll see why this is important when we
         discuss how to add to lists and how to access elements in the
         list.
+
       </para>
     </sect3>
 
@@ -1420,16 +1922,30 @@
       </para>
     </sect3>
 
+
     <sect3 lang='fr'>
       <title>Comment se représenter les listes?</title>
       <para>
-        Il est utile de penser que les listes sont composées d'une «tête» 
-        et d'une «queue». La tête est le premier élément de la liste et le 
-        reste constitue la queue. Vous verrez pourquoi c'est important quand 
-        nous envisagerons la façon d'ajouter à une liste et comment accéder 
+        Il est utile de penser que les listes sont composées d'une «tête»
+        et d'une «queue». La tête est le premier élément de la liste et le
+        reste constitue la queue. Vous verrez pourquoi c'est important quand
+        nous envisagerons la façon d'ajouter à une liste et comment accéder
         aux éléments de la liste.
       </para>
     </sect3>
+
+
+    <sect3 lang="no">
+      <title>Tenkt oppbygging av lister</title>
+      <para>
+        Ofte kan det vere greitt å sjå på listene som om dei er sett saman
+        av eit <quote>hovud</quote> og ein <quote>hale</quote>. Hovudet er
+        det første elementet i lista, medan halen er resten av lista.
+        Verkar kanskje noe merkeleg, men som du vil sjå seinare, er dette
+        ikkje noen dum tenkemåte.
+      </para>
+    </sect3>
+
 
     <sect3 lang='en'>
       <title>Creating Lists Through Concatenation (The Cons Function)</title>
@@ -1440,7 +1956,7 @@
         you think of a list as being composed of an element (the head)
         and the remainder of the list (the tail). This is exactly how
         cons functions -- it adds an element to the head of a
-        list. Thus, you could create a list as follows: 
+        list. Thus, you could create a list as follows:
       </para>
       <programlisting>
         (cons 1 '(2 3 4) )
@@ -1456,7 +1972,7 @@
       </programlisting>
       <para>
         You can use previously declared variables in place of any
-        literals, as you would expect. 
+        literals, as you would expect.
       </para>
     </sect3>
 
@@ -1473,6 +1989,7 @@
       </para>
       <programlisting>
         (cons 1 '(2 3 4) )
+
       </programlisting>
       <para>
         Výsledkem je seznam <code>(1 2 3 4)</code>.
@@ -1492,12 +2009,12 @@
     <sect3 lang='fr'>
       <title>Creation de listes par concaténation (la fonction cons)</title>
       <para>
-        Une des fonctions que vous rencontrerez le plus souvent est la 
-        fonction cons. Elle prend une valeur et la positionne en tête de son 
-        second élément, une liste. Dans la section précédente, nous avons 
-        conseillé d'imaginer les listes comme constituées d'une tête et 
-        d'une queue. Eh bien, la fonction cons ajoute un élément en tête de 
-        liste. Nous pouvons donc créer une liste comme suit: 
+        Une des fonctions que vous rencontrerez le plus souvent est la
+        fonction cons. Elle prend une valeur et la positionne en tête de son
+        second élément, une liste. Dans la section précédente, nous avons
+        conseillé d'imaginer les listes comme constituées d'une tête et
+        d'une queue. Eh bien, la fonction cons ajoute un élément en tête de
+        liste. Nous pouvons donc créer une liste comme suit:
       </para>
       <programlisting>
         (cons 1 '(2 3 4) )
@@ -1512,16 +2029,46 @@
         (cons 1 () )
       </programlisting>
       <para>
-        Vous pouvez utiliser des variables préalablement déclarées à la 
+        Vous pouvez utiliser des variables préalablement déclarées à la
         place de tout littéral.
       </para>
     </sect3>
+
+    <sect3 lang="no">
+      <title>Å lage lister ved samankjeding (funksjonen Cons)</title>
+      <para>
+        Ein av dei mest brukte innebygde funksjonane er funksjonen
+        <code>cons</code>. Denne tar ein verdi og kjedar han saman med
+        verdien frå det andre elementet, som er ei liste, og lagar ei ny
+        liste. Frå det som blei sagt tidlegare, kan du sjå på ei liste som
+        sett saman av eit element (hovudet) og resten av lista (halen).
+        Det er også slik <code>cons</code> gjer det. Funksjonen legg eit
+        element til hovudet på lista. Lagar du ei liste slik:
+      </para>
+      <programlisting>
+        (cons 1 '(2 3 4) )
+      </programlisting>
+      <para>
+        vil resultatet bli den nye lista <code>(1 2 3 4)</code>.
+      </para>
+      <para>
+        Du kan også lage ei liste med bare eitt element:
+      </para>
+      <programlisting>
+        (cons 1 () )
+      </programlisting>
+      <para>
+        Sjølvsagt kan du nytta tidlegare definerte variablar i listene i
+        staden for direkteverdiane.
+      </para>
+    </sect3>
+
 
     <sect3 lang='en'>
       <title>Defining A List Using The list Function</title>
       <para>
         To define a list composed of literals or previously declared
-        variables, use the list function: 
+        variables, use the list function:
       </para>
       <programlisting>
         (list 5 4 3 a b c)
@@ -1529,7 +2076,7 @@
       <para>
         This will compose and return a list containing the values held
         by the variables <varname>a</varname>, <varname>b</varname>
-        and <varname>c</varname>. For example:  
+        and <varname>c</varname>. For example:
       </para>
       <programlisting>
         (let*  (
@@ -1537,9 +2084,10 @@
                   (b 2)
                   (c 3)
                )
+
                (list 5 4 3 a b c)
         )
-      </programlisting>         
+      </programlisting>
       <para>
         This code creates the list <code>(5 4 3 1 2 3)</code>.
       </para>
@@ -1559,15 +2107,17 @@
         <varname>a</varname>, <varname>b</varname> a <varname>c</varname>.
         Například:
       </para>
+
       <programlisting>
         (let*  (
                   (a 1)
                   (b 2)
+
                   (c 3)
                )
                (list 5 4 3 a b c)
         )
-      </programlisting>         
+      </programlisting>
       <para>
         Tento kód vytvoří seznam <code>(5 4 3 1 2 3)</code>.
       </para>
@@ -1576,16 +2126,16 @@
     <sect3 lang='fr'>
       <title>Définir une liste en utilisant la fonction list</title>
       <para>
-        Pour définir une liste composée de littéraux ou de variables 
-        préalablement déclarées, utilisez la fonction list: 
+        Pour définir une liste composée de littéraux ou de variables
+        préalablement déclarées, utilisez la fonction list:
       </para>
       <programlisting>
         (list 5 4 3 a b c)
       </programlisting>
       <para>
-        Ceci composera et retournera une liste contenant les valeurs 
+        Ceci composera et retournera une liste contenant les valeurs
         portées par les variables <varname>a</varname>, <varname>b</varname>
-        et <varname>c</varname>. Par exemple:  
+        et <varname>c</varname>. Par exemple:
       </para>
       <programlisting>
         (let*  (
@@ -1595,11 +2145,41 @@
                )
                (list 5 4 3 a b c)
         )
-      </programlisting>         
+      </programlisting>
       <para>
         Ce code crée la liste <code>(5 4 3 1 2 3)</code>.
       </para>
     </sect3>
+
+    <sect3 lang="no">
+      <title>Å lage lister med funksjonen <code>list</code></title>
+      <para>
+        For å definera ei liste med ei blanding av direkteverdiar og
+        tidlegare deklarerte variablar, nyttar du funksjonen <code>list</code>:
+      </para>
+      <programlisting>
+        (list 5 4 3 a b c)
+      </programlisting>
+      <para>
+        Dette vil lage og returnera ei liste med ei blanding av direkteverdiane
+         <quote>5</quote>, <quote>4</quote> og <quote>3</quote>, og verdiane
+        som er tileigna variablane <varname>a</varname>,
+        <varname>b</varname> og <varname>c</varname>. Vi prøver med:
+      </para>
+      <programlisting>
+        (let*  (
+                  (a 1)
+                  (b 2)
+                  (c 3)
+               )
+               (list 5 4 3 a b c)
+        )
+      </programlisting>
+      <para>
+        Dette vil resultera i lista <code>(5 4 3 1 2 3)</code>.
+      </para>
+    </sect3>
+
 
     <sect3 lang='en'>
       <title>Accessing Values In A List</title>
@@ -1607,7 +2187,7 @@
         To access the values in a list, use the functions <code>car</code> and <code>cdr</code>,
         which return the first element of the list and the rest of the
         list, respectively. These functions break the list down into
-        the head::tail construct I mentioned earlier. 
+        the head::tail construct I mentioned earlier.
       </para>
     </sect3>
 
@@ -1623,10 +2203,21 @@
    <sect3 lang='fr'>
       <title>Accéder aux valeurs dans une liste</title>
       <para>
-        Pour accéder aux valeurs dans une liste, utilisez les fonctions 
-        <code>car</code> and <code>cdr</code>, qui retournent 
-        respectivement le premier élément et le reste la liste, selon la 
-        structure tête::queue mentionnée plus haut. 
+        Pour accéder aux valeurs dans une liste, utilisez les fonctions
+        <code>car</code> and <code>cdr</code>, qui retournent
+        respectivement le premier élément et le reste la liste, selon la
+        structure tête::queue mentionnée plus haut.
+      </para>
+    </sect3>
+
+    <sect3 lang="no">
+      <title>Tilgang til verdiane i ei liste</title>
+      <para>
+        Får å få tilgang til verdiane i ei liste bruker vi funksjonane
+        <code>car</code> og <code>cdr</code>. <code>car</code> returnerar
+        verdien av det første elementet i lista, hovudet, medan
+        <code>cdr</code> returnerar resten av lista, halen. Som nemnd
+        tidlegare kan ein sjå på ei liste som sett saman av hovud og hale.
       </para>
     </sect3>
 
@@ -1635,7 +2226,7 @@
       <para>
         <code>car</code> returns the first element of the list (the
         head of the list). The list needs to be non-null. Thus, the
-        following returns the first element of the list: 
+        following returns the first element of the list:
       </para>
       <programlisting>
         (car '("first" 2 "third"))
@@ -1647,6 +2238,7 @@
         "first"
       </programlisting>
     </sect3>
+
 
     <sect3 lang='cs'>
       <title>Funkce <code>car</code></title>
@@ -1664,13 +2256,13 @@
         "prvni"
       </programlisting>
     </sect3>
-    
+
     <sect3 lang='fr'>
       <title>La fonction <code>car</code></title>
       <para>
-        <code>car</code> retourne le premier élément de la liste (la tête). 
-        La liste ne doit pas être vide. Ce qui suit retourne donc le 
-        premier élément de la liste: 
+        <code>car</code> retourne le premier élément de la liste (la tête).
+        La liste ne doit pas être vide. Ce qui suit retourne donc le
+        premier élément de la liste:
       </para>
       <programlisting>
         (car '("premier" 2 "troisième"))
@@ -1683,12 +2275,30 @@
       </programlisting>
     </sect3>
 
+    <sect3 lang="no">
+      <title>Funksjonen <code>car</code></title>
+      <para>
+        <code>car</code>  returnerar det første elementet i ei liste,
+        altså listehovudet. Dersom lista er tom, vil returverdien bli ei
+        tom liste.
+      </para>
+      <programlisting>
+        (car '("første" 2 "tredje"))
+      </programlisting>
+      <para>
+        vil gi tilbake:
+      </para>
+      <programlisting>
+        "første"
+      </programlisting>
+    </sect3>
+
     <sect3 lang='en'>
       <title>The <code>cdr</code> function</title>
       <para>
         <code>cdr</code> returns the rest of the list after the first
         element (the tail of the list). If there is only one element
-        in the list, it returns an empty list. 
+        in the list, it returns an empty list.
       </para>
       <programlisting>
         (cdr '("first" 2 "third"))
@@ -1697,6 +2307,7 @@
         returns:
       </para>
       <programlisting>
+
         (2 "third")
       </programlisting>
       <para>
@@ -1746,9 +2357,9 @@
     <sect3 lang='fr'>
       <title>La fonction <code>cdr</code></title>
       <para>
-        <code>cdr</code> retourne le reste de la liste après le premier 
-        élément, c-à-d la queue de la liste. S'il n'y a qu'un seul élément 
-        dans la liste, elle retourne une liste vide. 
+        <code>cdr</code> retourne le reste de la liste après le premier
+        élément, c-à-d la queue de la liste. S'il n'y a qu'un seul élément
+        dans la liste, elle retourne une liste vide.
       </para>
       <programlisting>
         (cdr '("premier" 2 "troisième"))
@@ -1773,6 +2384,36 @@
       </programlisting>
     </sect3>
 
+    <sect3 lang="no">
+      <title>Funksjonen <code>cdr</code></title>
+      <para>
+        <code>cdr</code> returnerar resten av lista, halen. Dersom det
+        bare er eitt element i lista, vil returverdien bli ei tom liste.
+      </para>
+      <programlisting>
+        (cdr '("første" 2 "tredje"))
+      </programlisting>
+      <para>
+        returnerar:
+      </para>
+      <programlisting>
+        (2 "tredje")
+      </programlisting>
+      <para>
+        medan
+      </para>
+      <programlisting>
+        (cdr '("den einaste"))
+      </programlisting>
+      <para>
+        returnerar
+      </para>
+      <programlisting>
+        ()
+      </programlisting>
+    </sect3>
+
+
     <sect3 lang='en'>
       <title>Accessing Other Elements In A List</title>
       <para>
@@ -1781,11 +2422,11 @@
         or other elements of a list? There exist several "convenience"
         functions to access, for example, the head of the head of the
         tail of a list (<code>caadr</code>), the tail of the tail of a
-        list (<code>cddr</code>), etc. 
+        list (<code>cddr</code>), etc.
       </para>
       <para>
         The basic naming convention is easy: The a's and d's represent
-        the heads and tails of lists, so 
+        the heads and tails of lists, so
       </para>
       <programlisting>
         (car (cdr (car x) ) )
@@ -1799,13 +2440,13 @@
       <para>
         To view a full list of the list functions, refer to the
         Appendix, which lists the available functions for the version
-        of Scheme used by Script-Fu. 
+        of Scheme used by Script-Fu.
       </para>
       <para>
         To get some practice with list-accessing functions, try typing
         in the following (except all on one line if you're using the
         console); use different variations of car and cdr to access
-        the different elements of the list: 
+        the different elements of the list:
       </para>
       <programlisting>
         (let* (
@@ -1818,7 +2459,7 @@
       <para>
         Try accessing the number 3 in the list using only two function
         calls. If you can do that, you're on your way to becoming a
-        Script-Fu Master! 
+        Script-Fu Master!
       </para>
       <note>
         <para>
@@ -1880,6 +2521,7 @@
           Ve Scheme uvádí středník (";") komentář. Středník, a vše co za ním
           následuje, až do konce řádky, interpretr ignoruje. Do komentářů si
           můžete psát různé vysvětlující poznámky k funkci skriptu.
+
         </para>
       </note>
     </sect3>
@@ -1887,15 +2529,15 @@
     <sect3 lang='fr'>
       <title>Accéder à d'autres éléments d'une liste</title>
       <para>
-        Bon, d'accord, nous pouvons accéder au premier élément et au reste 
-        d'une liste, mais comment accéder au nième élément d'une liste? 
-        Il ya plusieurs façons d'accéder, par exemple, à la tête de la tête 
-        de la queue d'une liste (<code>caadr</code>), à la queue de la 
-        queue d'une liste (<code>cddr</code>), etc. 
+        Bon, d'accord, nous pouvons accéder au premier élément et au reste
+        d'une liste, mais comment accéder au nième élément d'une liste?
+        Il ya plusieurs façons d'accéder, par exemple, à la tête de la tête
+        de la queue d'une liste (<code>caadr</code>), à la queue de la
+        queue d'une liste (<code>cddr</code>), etc.
       </para>
       <para>
-        La convention de base est simple: a et d représentent la tête et la 
-        queue d'une liste. Ainsi 
+        La convention de base est simple: a et d représentent la tête et la
+        queue d'une liste. Ainsi
       </para>
       <programlisting>
         (car (cdr (car x) ) )
@@ -1906,16 +2548,18 @@
       <programlisting>
         (cadar x)
       </programlisting>
+
       <para>
-        Pour avoir la liste de toutes les conventions de liste, référez-vous 
-        à l'Appendice, qui donne la liste de toutes les fonctions disponibles 
-        dans la version de Scheme utilisée par les Script-Fu. 
+        Pour avoir la liste de toutes les conventions de liste, référez-vous
+        à l'Appendice, qui donne la liste de toutes les fonctions disponibles
+        dans la version de Scheme utilisée par les Script-Fu.
       </para>
       <para>
-        Afins d'acquérir quelque expérience des fonctions d'accession aux 
-        listes, essayez de taper ce qui suit (en une seule ligne si vous 
-        utilisez la console), et faites varier car et cdr pour accéder aux 
-        différents éléments de la liste: 
+        Afins d'acquérir quelque expérience des fonctions d'accession aux
+        listes, essayez de taper ce qui suit (en une seule ligne si vous
+
+        utilisez la console), et faites varier car et cdr pour accéder aux
+        différents éléments de la liste:
       </para>
       <programlisting>
         (let* (
@@ -1926,20 +2570,129 @@
         )
       </programlisting>
       <para>
-        Essayez d'accéder au troisième élément de la liste en utilisant 
-        seulement deux appels de fonction. Si vous faites ça, vous êtes en 
-        bonne voie pour devenir un Maître de Script-Fu! 
+        Essayez d'accéder au troisième élément de la liste en utilisant
+        seulement deux appels de fonction. Si vous faites ça, vous êtes en
+        bonne voie pour devenir un Maître de Script-Fu!
       </para>
+
       <note>
         <para>
-          Dans Scheme, un point-virgule (;) indique un commentaire. Il est 
-          ignoré, ainsi que tout ce qui suit sur la même ligne, par 
-          l'interpréteur de Script-Fu. N'hésitez pas à multiplier les 
-          commentaires dans vos programmes, ce qui facilitera leur 
-          compréhension quand vous y reviendrez plus tard. 
+          Dans Scheme, un point-virgule (;) indique un commentaire. Il est
+          ignoré, ainsi que tout ce qui suit sur la même ligne, par
+          l'interpréteur de Script-Fu. N'hésitez pas à multiplier les
+          commentaires dans vos programmes, ce qui facilitera leur
+          compréhension quand vous y reviendrez plus tard.
         </para>
       </note>
     </sect3>
+
+    <sect3 lang="no">
+      <title>Tilgang til andre element i ei liste</title>
+      <para>
+
+        Vi kan altså nokså enkelt plukke ut listehovudet og listehalen,
+        men kva om du ønskjer å ta ut verdien av det tredje elementet i
+        ei liste? Det er fullt mogleg, men Scheme har ein noe merkeleg,
+        og tungvindt, måte å gjere det på i høve til andre språk. Du må
+        rett og slett plukka ut hovudet til halen passeleg mange gonger
+        til du kjem fram til det elementet du ønskjer. Eksempel:
+      </para>
+      <para>
+        Vi har lista (<quote>ein</quote> <quote>to</quote>
+        <quote>tre</quote> <quote>fire</quote> <quote>fem</quote>) og
+        ønskjer å ta ut det tredje elementet, <quote>tre</quote>. Først
+        tar vi ut den siste delen av lista med
+     </para>
+     <programlisting>
+       (cdr '("ein" "to" "tre" "fire" "fem") )
+     </programlisting>
+     <para>
+       Resultatet blir den nye lista ("to" "tre" "fire" "fem").
+       Deretter tar vi ut den siste delen av denne nye lista:
+     </para>
+     <programlisting>
+       (cdr '("to" "tre" "fire" "fem") )
+     </programlisting>
+     <para>
+       og ender opp med lista ("tre" "fire" "fem").
+       Tar vi nå ut hovudet på denne siste lista,
+     </para>
+     <programlisting>
+       (car '("tre" "fire" "fem") )
+     </programlisting>
+     <para>
+       vil vi endeleg sitje att med det tredje elementet.
+       Køyrer vi dette saman på ei linje, får vi
+     </para>
+     <programlisting>
+       (car (cdr (cdr  '("ein" "to" "tre" "fire" "fem") ) ) )
+     </programlisting>
+     <para>
+       eller på ein <quote>enklare</quote> måte:
+     </para>
+     <programlisting>
+       (caddr '("ein" "to" "tre" "fire" "fem") )
+     </programlisting>
+
+     <para>
+        Dersom du framleis er med, skal eg gjere eit forsøk på å forklare
+        denne mystiske kommandoen. Ser vi på linja
+      </para>
+      <programlisting>
+        (car (cdr (cdr  '("ein" "to" "tre" "fire" "fem"))))
+      </programlisting>
+      <para>
+        er ho tilsynelatande sett saman av kommandoane <code>car</code>,
+        <code>cdr</code> og <code>cdr</code>. Den eigentlege kommandoen
+        er <code>c...r</code>. Innimellom desse bokstavane set du
+        bokstaven <quote>a</quote> for listehovudet og <quote>d</quote>
+        for listehalen. Ein <quote>a</quote> for det første hovudet,
+        <quote>d</quote> for halen og <quote>d</quote> for halen. Eit
+        anna eksempel. Uttrykket
+      </para>
+      <programlisting>
+        (car (cdr (car x) ) )
+      </programlisting>
+      <para>
+        kan altså trekkast saman til
+      </para>
+      <programlisting>
+        (cadar x) )
+      </programlisting>
+      <para>
+        Du kan finne meir om listefunksjonen i tillegg A, som også
+        inneheld ei liste over tilgjengelege funksjonar i den versjonen
+        av Scheme som blir brukt i Script-Fu.
+      </para>
+      <para>
+        Som ei trening, kan du prøve dette eksemplet. Bruker du
+        Script-Fu konsollen, må du skrive alt på ei linje. Bruk ulike
+        variasjonar av <code>car</code> og <code>cdr</code> for å plukke
+        ut ulike element frå lista.
+      </para>
+      <programlisting>
+        (let* (
+                 (x  '( (1 2 (3 4 5) 6)  7  8  (9 10) )
+                 )
+              )
+              ; plaser car/cdr koden di her
+        )
+      </programlisting>
+      <para>
+        Greier du å plukke ut talet 3 i lista med bare to funksjonskall,
+        er du langt på vegen til å bli ein meister i Script-Fu.
+      </para>
+      <note>
+        <para>
+          I Scheme kan du nytte semikolon (<quote>;</quote>) for å skrive
+          ein kommentar. Semikolonet, og alt som kjem etter dette på same
+          linja, blir ignorert av skriptomsetjaren. Bruk dette flittig.
+          Det er mykje enklare å finne fram i eit skript som er godt
+          kommentert, særleg når det har gått ei tid sidan du endra det.
+        </para>
+      </note>
+    </sect3>
+
 
   </sect2>
 
@@ -1948,6 +2701,7 @@
       <phrase lang='en'>Your First Script-Fu Script</phrase>
       <phrase lang='cs'>Váš první Script-Fu skript</phrase>
       <phrase lang='fr'>Votre premier script de Script-Fu</phrase>
+      <phrase lang="no">Det første Script-Fu skriptet ditt</phrase>
     </title>
     <para lang='cs'>
       Nepotřebujete se na chvíli zastavit a popadnout dech? Ne? Pak tedy
@@ -1959,8 +2713,13 @@
       Script.
     </para>
     <para lang='fr'>
-      Vous tirez la langue, non? Allez, entamons notre quatrième leçon: 
+      Vous tirez la langue, non? Allez, entamons notre quatrième leçon:
       votre premier script de Script-Fu!
+    </para>
+    <para lang="no">
+      Dersom du ikkje har behov for ein pause for å få igjen pusten, burde
+      du nå vere klar for den fjerde leksjonen — det første skriptet ditt i
+      Script-Fu.
     </para>
 
     <sect3 lang='en'>
@@ -1976,13 +2735,14 @@
       <para>
         The Script-Fu Master (and student) will quickly realize that
         this problem can easily be solved and automated with
-        Script-Fu. 
+        Script-Fu.
+
       </para>
       <para>
         We will, therefore, create a script, called Text Box, which
         creates an image correctly sized to fit snugly around a line
         of text the user inputs. We'll also let the user choose the
-        font, font size and text color. 
+        font, font size and text color.
       </para>
     </sect3>
 
@@ -2009,51 +2769,79 @@
     <sect3 lang='fr'>
       <title>Création d'un Script Boîte de Texte</title>
       <para>
-        L'une des opérations les plus fréquentes que je réalise avec Gimp, 
-        est la création d'une boîte contenant un texte pour une page Web ou 
-        un logo. Mais vous ne savez jamais bien quel taille donner à 
-        l'image au départ. Vous ne savez pas combien d'espace le texte 
-        occupera avec la taille de police que vous voulez. 
+        L'une des opérations les plus fréquentes que je réalise avec Gimp,
+        est la création d'une boîte contenant un texte pour une page Web ou
+        un logo. Mais vous ne savez jamais bien quel taille donner à
+
+        l'image au départ. Vous ne savez pas combien d'espace le texte
+        occupera avec la taille de police que vous voulez.
       </para>
       <para>
-        Le Maître en Script-Fu (et l'étudiant), se rend compte rapidement 
-        que ce problème peut être aisément résolu et automatisé avec un 
-        Script-Fu. 
+        Le Maître en Script-Fu (et l'étudiant), se rend compte rapidement
+        que ce problème peut être aisément résolu et automatisé avec un
+        Script-Fu.
       </para>
       <para>
-        Nous allons donc créer un script, appelé Text Box, qui crée 
-        une image dont la taille est parfaitement adaptée au texte que 
-        saisit l'utilisateur. Nous permettront aussi à l'utilisateur de 
-        choisir la police de caractères, sa taille, et la couleur du texte. 
+        Nous allons donc créer un script, appelé Text Box, qui crée
+        une image dont la taille est parfaitement adaptée au texte que
+        saisit l'utilisateur. Nous permettront aussi à l'utilisateur de
+        choisir la police de caractères, sa taille, et la couleur du texte.
+      </para>
+    </sect3>
+
+    <sect3 lang="no">
+      <title>Vi lager eit skript for å lage tekstvindauge</title>
+      <para>
+        Eg bruker gjerne <acronym>GIMP</acronym> for å lage boksar med
+        litt tekst og/eller bilete i for heimesidene mine. Ulempen er at
+        eg aldri veit på førehand kor stor denne boksen blir, og har
+        dermed problem med å vite kor stort startvindauge må vere. Alt er
+        avhengig av skrifttype, skriftstorleik og eventuelle andre ting
+        som skal vere med.
+      </para>
+      <para>
+        Script-Fu-meisteren, og kanskje også studenten hans, har sjølvsagt
+        oppdaga at dette problemet kan løysast og automatiserast ved hjelp
+        av Script-Fu.
+      </para>
+      <para>
+        Vi vill derfor lage eit skript som vi kallar <quote>Text Box</quote>,
+        og som lagar eit bilete i høveleg storleik for å passa pent rundt
+        ei tekstlinje som brukaren skriv inn. Sjølvsagt kan brukaren også
+        velja både type, storleik og farge for skrifta.
       </para>
     </sect3>
 
     <sect3 lang='en'>
+
+
       <title>Editing And Storing Your Scripts</title>
       <para>
+
         Up until now, we've been working in the Script-Fu
         Console. Now, however, we're going to switch to editing script
-        text files. 
+        text files.
       </para>
       <para>
         Where you place your scripts is a matter of preference -- if
         you have access to Gimp's default script directory, you can
         place your scripts there. However, I prefer keeping my
         personal scripts in my own script directory, to keep them
-        separate from the factory-installed scripts. 
+        separate from the factory-installed scripts.
       </para>
       <para>
         In the <filename>.gimp-2.2</filename> directory that Gimp made
         off of your home directory, you should find a directory called
         <filename>scripts</filename>. Gimp will automatically look in
         your <filename>.gimp-2.2</filename> directory for a scripts
-        directory, and add the 
+        directory, and add the
         scripts in this directory to the Script-Fu database. You
-        should place your personal scripts here. 
+        should place your personal scripts here.
       </para>
     </sect3>
 
     <sect3 lang='cs'>
+
       <title>Editace a ukládání skriptů</title>
       <para>
         Do této chvíle jsme pracovali se Script-Fu konzolí. Od této chvíle však
@@ -2077,37 +2865,69 @@
     <sect3 lang='fr'>
       <title>Éditer et enregistrer vos Scripts</title>
       <para>
-        Jusqu'à présent, nous avons travaillé avec la Console de Script-Fu. 
-        Mais nous allons maintenant à l'édition de fichiers textes de 
-        script. 
+        Jusqu'à présent, nous avons travaillé avec la Console de Script-Fu.
+        Mais nous allons maintenant à l'édition de fichiers textes de
+        script.
       </para>
       <para>
-        Là où vous stockez vos scripts est affaire de préférence -- si vous 
-        accès au répertoire de scripts par défaut de Gimp, vous pouvez 
-        placer là vos scripts. Néanmoins, je préfère avoir mes scripts dans 
-        mon propre répertoire de scripts, bien séparés des scripts installés 
-        par Gimp au départ. 
+        Là où vous stockez vos scripts est affaire de préférence -- si vous
+        accès au répertoire de scripts par défaut de Gimp, vous pouvez
+        placer là vos scripts. Néanmoins, je préfère avoir mes scripts dans
+        mon propre répertoire de scripts, bien séparés des scripts installés
+
+        par Gimp au départ.
       </para>
       <para>
-        Dans le répertoire <filename>.gimp-2.2</filename> que Gimp a créé 
-        dans votre répertoire home, vous devriez trouver un répertoire nommé 
-        <filename>scripts</filename>. Gimp recherchera systématiquement un 
-        répertoire pour les scripts dans votre répertoire 
-        <filename>.gimp-2.2</filename>, et ajoutera les scripts de ce 
-        répertoire dans la base des Script-Fu. C'est donc là que vous 
-        devriez placer vos scripts personnels. 
+        Dans le répertoire <filename>.gimp-2.2</filename> que Gimp a créé
+        dans votre répertoire home, vous devriez trouver un répertoire nommé
+        <filename>scripts</filename>. Gimp recherchera systématiquement un
+        répertoire pour les scripts dans votre répertoire
+        <filename>.gimp-2.2</filename>, et ajoutera les scripts de ce
+        répertoire dans la base des Script-Fu. C'est donc là que vous
+        devriez placer vos scripts personnels.
       </para>
+    </sect3>
+
+    <sect3 lang="no">
+      <title>Å redigere og lagre skripta dine</title>
+      <para>
+        Til nå har du arbeidd på Script-Fu konsollen. Nå går vi over til å
+        skriva dei som tekstfiler.
+      </para>
+      <para>
+        Kvar du lagrar filene, er eigentleg likegyldig. Har du tilgang til
+        <acronym>GIMP</acronym> sine skriptmapper, kan du legge skripta dine
+        der. Det beste er likevel å halde skripta dine langt borte frå dei
+        ferdiginstallerte skripta, og heller lagra dei i eigne skriptmapper.
+      </para>
+      <para>
+        I katalogen <filename>.gimp-2.2</filename> (eller kva versjon du
+        har) vil du finna ein underkatalog kalla <filename>scripts</filename>.
+        Dette er ein god plass å legge skripta dine fordi
+        <acronym>GIMP</acronym> søker gjennom denne katalogen og legg det
+        som måtte finnast der inn i databasen for Script-Fu.
+      </para>
+      <para>
+        Du har kanskje oppdaga at eg tilsynelatande er litt vinglande i
+        norsken i dette kapitlet. Grunnen er at det er vanleg, av omsyn til
+        brukarane over heile verda, å skrive skripta på engelsk. Dermed blir
+        det meste som går direkte inn i skriptet skrive på engelsk. Også ein
+        del filnamn, mapper osv har engelske namn ganske enkelt fordi det er
+        desse du finn i datamaskinen din.
+    </para>
+
+
     </sect3>
 
     <sect3 lang='en'>
       <title>The Bare Essentials</title>
       <para>
         Every Script-Fu script defines at least one function, which is
-        the script's main function. This is where you do the work. 
+        the script's main function. This is where you do the work.
       </para>
       <para>
         Every script must also register with the procedural database,
-        so you can access it within Gimp. 
+        so you can access it within Gimp.
       </para>
       <para>
        We'll define the main function first:
@@ -2120,7 +2940,7 @@
         that takes four parameters, which will later correspond to
         some text, a font, the font size, and the text's color. The
         function is currently empty and thus does nothing. So far, so
-        good -- nothing new, nothing fancy. 
+        good -- nothing new, nothing fancy.
       </para>
     </sect3>
 
@@ -2140,6 +2960,7 @@
       <programlisting>
         (define (script-fu-text-box inText inFont inFontSize inTextColor))
       </programlisting>
+
       <para>
         Takto jsme definovali funkci jménem <code>script-fu-text-box</code>
         se čtyřmi parametry, které se vztahují k textu, písmu, velikosti písma
@@ -2151,25 +2972,55 @@
     <sect3 lang='fr'>
       <title>Le strict nécessaire</title>
       <para>
-        Tout script de Script-Fu definit au moins une fonction, qui est la 
-        fonction principale du script. C'est là que vous travaillerez. 
+        Tout script de Script-Fu definit au moins une fonction, qui est la
+        fonction principale du script. C'est là que vous travaillerez.
       </para>
       <para>
-        Tout script doit également être connu de la base de données de 
-        procédures (PDB), de façon à ce que Gimp puisse y accéder. 
+        Tout script doit également être connu de la base de données de
+        procédures (PDB), de façon à ce que Gimp puisse y accéder.
       </para>
       <para>
-        Nous allons définir la fonction principale en premier: 
+        Nous allons définir la fonction principale en premier:
       </para>
       <programlisting>
         (define (script-fu-text-box inText inFont inFontSize inTextColor))
       </programlisting>
       <para>
-        Nous definissons ici une fonction appelée script-fu-text-box avec 
-        quatre paramètres qui correspondront plus tard à un texte, une 
-        police, la taille de la police et la couleur du texte. La fonction 
-        est actuellement vide et ne fait rien. Jusqu'ici ça va -- rien de 
-        neuf, rien de spécial. 
+        Nous definissons ici une fonction appelée script-fu-text-box avec
+        quatre paramètres qui correspondront plus tard à un texte, une
+        police, la taille de la police et la couleur du texte. La fonction
+        est actuellement vide et ne fait rien. Jusqu'ici ça va -- rien de
+        neuf, rien de spécial.
+      </para>
+    </sect3>
+
+    <sect3 lang="no">
+      <title>Det essensielle</title>
+      <para>
+        Kvart einaste Script-Fu skript må definera minst ein funksjon, og det
+        er hovudfunksjonen for skriptet. Det er her du definerer kva skriptet
+        skal gjere.
+      </para>
+      <para>
+        Alle skripta må også kunne registrerast i prosedyredatabasen slik at
+        dei er tilgjengelege for <acronym>GIMP</acronym>.
+      </para>
+      <para>
+       Vi må altså først definera hovudfunksjonen:
+      </para>
+      <programlisting>
+        (define (script-fu-text-box inText inFont inFontSize inTextColor))
+      </programlisting>
+      <para>
+        Setninga ovanfor definerer ein ny funksjon som vi har kalla
+        script-fu-text-box. Funksjonen har i tillegg fire parametrar, som
+        seinare vil bli tilordna noe tekst, (<quote>inText</quote>), ein
+        skrifttype (<quote>inFont</quote>), ein skriftstorleik
+        (<quote>inFontSize</quote>) og ein tekstfarge
+        (<quote>inTextColor</quote>). (Eigentleg kunne vi like gjerne ha
+        brukt norske namn her, men sjå ovanfor). Funksjonen vi har laga er
+        førebels tom og gjer ikkje noe som helst. Så langt inkje nytt eller
+        merkverdig.
       </para>
     </sect3>
 
@@ -2183,14 +3034,14 @@
         and variables, and thus add the "in" prefix to the parameters
         so I can quickly see that they're values passed into the
         script, rather than created within it. I use the prefix "the"
-        for variables defined within the script. 
+        for variables defined within the script.
       </para>
       <para>
         It's Gimp convention to name your script functions
         script-fu-abc, because then when they're listed in the
         procedural database, they'll all show up under script-fu when
         you're listing the functions. This also helps distinguish them
-        from plug-ins. 
+        from plug-ins.
       </para>
     </sect3>
 
@@ -2216,38 +3067,66 @@
     <sect3 lang='fr'>
       <title>Conventions de dénomination</title>
       <para>
-        Les conventions de dénomination de Scheme préfèrent les lettres 
-        minuscules avec traits d'union, ce que j'ai respecté dans la 
-        dénomination de la fonction. Toutefois, je me suis écarté de la 
-        convention en ce qui concerne les paramètres. Je préfère en effet 
-        les noms descriptifs pour mes paramètres et variables, c'est 
-        pourquoi j'ai ajouté le préfixe «in» aux paramètres, de façon à voir 
-        d'emblée qu'il s'agit de paramètres reçus par la fonction et non pas 
-        de paramètres émis par elle. Et j'utilise le prefixe «the» pour les 
-        variables définies au sein du script. 
+        Les conventions de dénomination de Scheme préfèrent les lettres
+        minuscules avec traits d'union, ce que j'ai respecté dans la
+        dénomination de la fonction. Toutefois, je me suis écarté de la
+        convention en ce qui concerne les paramètres. Je préfère en effet
+        les noms descriptifs pour mes paramètres et variables, c'est
+        pourquoi j'ai ajouté le préfixe «in» aux paramètres, de façon à voir
+        d'emblée qu'il s'agit de paramètres reçus par la fonction et non pas
+        de paramètres émis par elle. Et j'utilise le prefixe «the» pour les
+        variables définies au sein du script.
       </para>
       <para>
-        C'est une convention Gimp de nommer vos fonctions de script 
-        script-fu-..., parce qu'ainsi elle apparaîtront avec les script-fu 
-        quand elles seront listées dans la base de procédures. Cela permet 
-        aussi de les distinguer des greffons. 
+        C'est une convention Gimp de nommer vos fonctions de script
+        script-fu-..., parce qu'ainsi elle apparaîtront avec les script-fu
+        quand elles seront listées dans la base de procédures. Cela permet
+        aussi de les distinguer des greffons.
       </para>
     </sect3>
+
+    <sect3 lang="no">
+      <title>Namnereglar</title>
+
+
+      <para>
+        Eigentleg godtar Scheme fleire måtar å skriva namn på. Har du gode
+        vanar med deg frå andre språk, kan du stort sett nytta desse. Som i
+        alle (?) programmeringsspråk, kan du ikkje dele opp eit namn med
+        mellomrom. I Scheme er det difor vanleg praksis å gjere samansette
+        ord meir forståelege ved å dela dei opp med bindestrek (-) slik du
+        ser det er brukt i funksjonsnamnet. Dette blir av mange også brukt
+        i parameternamna. Her har eg likevel nytta ein annan metode, nemleg
+        å markera dei ulike orda med stor bokstav. I tillegg legg eg inn eit
+        <quote>in</quote> framføre for å markera at dette er inndata og
+        ikkje noe som er lagt til seinare. (Eg har lagt med til den vanen å
+        bruke prefikset <quote>the</quote> framføre variablar som blir
+        kreerte inne i skriptet).
+      </para>
+      <para>
+        For at programma dine skal bli lista ut i funksjonsdatabasen som
+        script-fu, og såleis ikkje bli blanda saman med tilleggsprogramma,
+        er det tilrådd i <acronym>GIMP</acronym> å gi alle skripta namnet
+        <quote>script-fu-uniktNamn</quote>. (Du forsto vel at
+        <quote>uniktNamn</quote> er namnet du gir programmet?)
+      </para>
+    </sect3>
+
 
     <sect3 lang='en'>
       <title>Registering The Function</title>
       <para>
         Now, let's register the function with Gimp. This is done by
         calling the function <code>script-fu-register</code>. When
-        Gimp reads in a 
+        Gimp reads in a
         script, it will execute this function, which registers the
         script with the procedural database. You can place this
         function call wherever you wish in your script, but I usually
-        place it at the end, after all my other code. 
+        place it at the end, after all my other code.
       </para>
       <para>
         Here's the listing for registering this function (I will
-        explain all its parameters in a minute): 
+        explain all its parameters in a minute):
       </para>
       <programlisting lang="en">
       <![CDATA[
@@ -2276,6 +3155,7 @@
         in your script directory, then choose
         <menuchoice>
           <guimenu>Xtns</guimenu>
+
           <guisubmenu>Script-Fu</guisubmenu>
           <guimenuitem>Refresh Scripts</guimenuitem>
         </menuchoice>,
@@ -2285,20 +3165,20 @@
           <guisubmenu>Script-Fu</guisubmenu>
           <guisubmenu>Text</guisubmenu>
           <guimenuitem>Text Box</guimenuitem>
-        </menuchoice>. 
+        </menuchoice>.
       </para>
       <para>
         If you invoke this new script, it won't do anything, of
         course, but you can view the prompts you created when
         registering the script (more information about what we did is
-        covered next). 
+        covered next).
       </para>
       <para>
-        Finally, if you invoke the Procedure Browser -- 
+        Finally, if you invoke the Procedure Browser --
         <menuchoice>
           <guimenu> Xtns</guimenu>
           <guimenuitem>Procedure Browser</guimenuitem>
-        </menuchoice>), 
+        </menuchoice>),
         you'll notice that our script now
         appears in the database.
       </para>
@@ -2319,6 +3199,7 @@
       </para>
       <programlisting lang="cs">
       <![CDATA[
+
         (script-fu-register
           "script-fu-text-box"                        ;func name
           "Text Box"                                  ;menu label
@@ -2349,6 +3230,7 @@
         </menuchoice>,
         objeví se nový skript jako
         <menuchoice>
+
           <guimenu>Rozš.</guimenu>
           <guisubmenu>Script-Fu</guisubmenu>
           <guisubmenu>Text</guisubmenu>
@@ -2374,16 +3256,16 @@
     <sect3 lang='fr'>
       <title>Enregistrement de la fonction</title>
       <para>
-        Maintenant, faisons connaître la fonction à Gimp. On réalise cela 
-        en appelant la fonction <code>script-fu-register</code>. Quand 
-        Gimp lira le script, il exécutera cette fonction qui enregistrera 
-        le script dans la base de procédures. Vous pouvez placer cette 
-        fonction où vous voulez dans votre script, mais personnellement je 
-        la mêt à la fin, après tout le reste de mon code. 
+        Maintenant, faisons connaître la fonction à Gimp. On réalise cela
+        en appelant la fonction <code>script-fu-register</code>. Quand
+        Gimp lira le script, il exécutera cette fonction qui enregistrera
+        le script dans la base de procédures. Vous pouvez placer cette
+        fonction où vous voulez dans votre script, mais personnellement je
+        la mêt à la fin, après tout le reste de mon code.
       </para>
       <para>
-        Voici le listing pour enregistrer cette fonction (j'expliquerai ses 
-        paramètres dans un instant): 
+        Voici le listing pour enregistrer cette fonction (j'expliquerai ses
+        paramètres dans un instant):
       </para>
       <programlisting lang="fr">
       <![CDATA[
@@ -2391,10 +3273,10 @@
           "script-fu-text-box"                        ;nom de la fonction
           "Text Box"                                  ;étiquette de menu
           "Crée une boîte de texte simple, adaptée\
-           à la taille du texte de l'utilisateur,\ 
+           à la taille du texte de l'utilisateur,\
            police, taille de police, couleur."        ;description
           "Michael Terry"                             ;auteur
-          "copyright 1997, Michael Terry"             ;mention de copyright 
+          "copyright 1997, Michael Terry"             ;mention de copyright
           "October 27, 1997"                          ;date de crétion
           ""                     ;type d'image sur lequel travaille le script
           SF-STRING      "Text:"         "Text Box"   ;variable chaîne
@@ -2407,42 +3289,111 @@
       ]]>
       </programlisting>
       <para>
-        Enregistrez ces fonctions dans un fichier texte avec le 
-        suffixe <filename>.scm</filename> dans votre répertoire de scripts, 
-        et choisissez 
+        Enregistrez ces fonctions dans un fichier texte avec le
+        suffixe <filename>.scm</filename> dans votre répertoire de scripts,
+        et choisissez
         <menuchoice>
           <guimenu>Exts</guimenu>
           <guisubmenu>Script-Fu</guisubmenu>
           <guimenuitem>Rafraîchir les Scripts</guimenuitem>
         </menuchoice>,
-        et ce nouveau script apparaîtra comme 
+        et ce nouveau script apparaîtra comme
         <menuchoice>
           <guimenu> Xtns</guimenu>
           <guisubmenu>Script-Fu</guisubmenu>
           <guisubmenu>Text</guisubmenu>
           <guimenuitem>Text Box</guimenuitem>
-        </menuchoice>. 
+        </menuchoice>.
       </para>
       <para>
-        Si vous lancez ce nouveau script, il ne fera rien bien sûr, mais 
-        vous pourrez voir les invites que vous avez créées quand vous avez 
-        enregistré le script (ça sera plus clair plus loin). 
+        Si vous lancez ce nouveau script, il ne fera rien bien sûr, mais
+        vous pourrez voir les invites que vous avez créées quand vous avez
+        enregistré le script (ça sera plus clair plus loin).
       </para>
       <para>
-        Finalement,si vous invoquez le Navigateur de Procédures: 
+        Finalement,si vous invoquez le Navigateur de Procédures:
         <menuchoice>
           <guimenu>Exts</guimenu>
           <guimenuitem>Navigateur de Procédures</guimenuitem>
-        </menuchoice>), 
-        vous verrez que votre script apparaît maintenant dans la base de 
-        procédures. 
+        </menuchoice>),
+        vous verrez que votre script apparaît maintenant dans la base de
+        procédures.
       </para>
     </sect3>
 
-    <sect3 lang="cs;en;fr">
+    <sect3 lang="no">
+      <title>Å registrere funksjonen</title>
+      <para>
+        Nå må vi registrera funksjonen vår i <acronym>GIMP</acronym>. Dette
+        gjer vi ved å kalle opp funksjonen <code>script-fu-register</code>.
+        Når <acronym>GIMP</acronym> les inn eit skript, vil denne funksjonen
+        legge skriptet inn i prosedyredatabasen. Du kan eigentleg skrive inn
+        dette funksjonsoppkallet kvar som helst i skriptet, men det er vanleg
+        å setje det heilt på slutten, etter alle dei andre kodane.
+      </para>
+      <para>
+        HerHer er utlistinga av programbiten som registrerer denne funksjonen
+       (forklaringa kjem etterpå):
+      </para>
+      <programlisting lang="no">
+      <![CDATA[
+        (script-fu-register
+          "script-fu-text-box"                        ;funksjonsnamn
+          "Text Box"                                  ;menyplassering
+          "Creates a simple text box, sized to fit\
+            around the user's choice of text,\
+            font, font size, and color."              ;beskriving
+          "Michael Terry"                             ;forfattar
+          "copyright 1997, Michael Terry"             ;copyright merknad
+          "October 27, 1997"                          ;dato laga
+          ""                     ; bilettype skriptet kan brukast på
+          SF-STRING      "Text:"         "Text Box"   ;ein tekstvariabel
+          SF-FONT        "Font:"         "Charter"    ;var for skrifttype
+          SF-ADJUSTMENT  "Font size"     '(50 1 1000 1 10 0 1)
+                                                      ;ein talboks
+          SF-COLOR       "Color:"        '(0 0 0)     ;fargevariabel
+        )
+        (script-fu-menu-register "script-fu-text-box" "<Toolbox>/Xtns/Script-Fu/Text")
+      ]]>
+      </programlisting>
+      <para>
+        Dersom du lagrar dette i skriptkatalogen som ei tekstfil med
+        filutvidinga <filename>.scm</filename> og deretter vel
+        <menuchoice>
+          <guimenu>Utvid</guimenu>
+          <guisubmenu>Script-Fu</guisubmenu>
+          <guimenuitem>Oppdater skript</guimenuitem>
+        </menuchoice>,
+        vil dette skriptet dukke opp i
+        <menuchoice>
+          <guimenu>Utvid</guimenu>
+
+          <guisubmenu>Script-Fu</guisubmenu>
+          <guisubmenu>Text</guisubmenu>
+          <guimenuitem>Text Box</guimenuitem>
+        </menuchoice>.
+      </para>
+      <para>
+        Førebels gjer dette skriptet naturleg nok ingenting. Einaste er at
+        du ser korleis skriptet blir registrert i <acronym>GIMP</acronym>
+        og få ein kontroll på at du har gjort alt rett så langt.
+      </para>
+      <para>
+        Dersom du aktiverer prosedyrelesaren --
+        <menuchoice>
+          <guimenu>Utvid</guimenu>
+          <guimenuitem>Prosedyrelesar</guimenuitem>
+        </menuchoice>)
+        vil du finna at scriptet ditt nå er registrert i databasen.
+      </para>
+    </sect3>
+
+
+    <sect3 lang="cs;en;fr;no">
       <title lang='cs'>Jednotlivé kroky registrace skriptu</title>
       <title lang='en'>Steps For Registering The Script</title>
       <title lang='fr'>Étapes pour enregistrer le script</title>
+      <title lang="no">Å registrere skriptet</title>
       <para lang='cs'>
         Aby byl náš skript v Gimpu zaregistrován, voláme funkci
         <code>script-fu-register</code>, zadáme sedm povinných parametrů,
@@ -2456,15 +3407,24 @@
         default value for each parameter.
       </para>
       <para lang='fr'>
-        Pour enregistrer notre script dans Gimp, nous appelons la fonction 
-        script-fu-register, remplissons les sept paramètres requis et nous 
-        ajoutons nos propres paramètres de script, ainsi qu'une description 
+        Pour enregistrer notre script dans Gimp, nous appelons la fonction
+        script-fu-register, remplissons les sept paramètres requis et nous
+        ajoutons nos propres paramètres de script, ainsi qu'une description
         et une valeur par défaut pour chaque paramètre.
+      </para>
+      <para lang="no">
+        For å registrera skriptet i <acronym>GIMP</acronym>, må vi skrive
+        inn dei sju obligatoriske parametra, legge til skriptet sine eigne
+        parametrar og ei beskriving av skriptet, og endeleg dei verdiane du
+        ønskjer skriptet skal opnast med i dei variable parametra. Deretter
+        kallar du opp funksjonen <quote>script-fu-register</quote> frå
+        skriptet ditt.
       </para>
       <itemizedlist>
         <title lang='cs'>Povinné parametry</title>
         <title lang='en'>The Required Parameters</title>
         <title lang='fr'>Les paramètres requis</title>
+        <title lang="no">Dei nødvendige parametra</title>
         <listitem>
           <para lang='en'>
            The <emphasis role='bold'>name</emphasis> of the function we
@@ -2482,13 +3442,22 @@
            funkci jedinou, text-box, kterou jsme také zaregistrovali.
          </para>
          <para lang='fr'>
-           Le <emphasis role='bold'>nom</emphasis> de la fonction que nous 
-           avons défini. C'est la fonction appelée quand notre script est 
-           invoqué, le point d'entrée dans notre script. C'est important 
-           parce que nous pourrons definir plusieurs autres fonctions dans le 
-           même fichier, et Gimp doit savoir quelle fonction appeler. Dans 
-           notre exemple, nous navons défini qu'une seule fonction, text-box, 
-           que nous avons enregistrée. 
+           Le <emphasis role='bold'>nom</emphasis> de la fonction que nous
+           avons défini. C'est la fonction appelée quand notre script est
+           invoqué, le point d'entrée dans notre script. C'est important
+           parce que nous pourrons definir plusieurs autres fonctions dans le
+           même fichier, et Gimp doit savoir quelle fonction appeler. Dans
+           notre exemple, nous navons défini qu'une seule fonction, text-box,
+           que nous avons enregistrée.
+          </para>
+          <para lang="no">
+           <emphasis role='bold'>Namnet</emphasis> på funksjonen. Dette er
+           funksjonen som blir aktivisert når du kallar opp skriptet.
+           Inngangen til skriptet, om du vil. Dette er heilt nødvendig fordi
+           du kan definera mange funksjonar innan same fila, og
+           <acronym>GIMP</acronym> må vita kva for funksjonar som skal kallast
+           opp. I eksemplet definerte vi bare ein funksjon,
+           <quote>text-box</quote>, som så blei registrert.
           </para>
         </listitem>
 
@@ -2497,7 +3466,7 @@
             The <emphasis role='bold'>location</emphasis> in the menu where
             the script will be inserted. The exact location of the script is
             specified like a path in Unix, with the root of the path being
-            either toolbox or right-click. 
+            either toolbox or right-click.
           </para>
           <para>
             If your script does not operate on an existing image (and
@@ -2524,7 +3493,7 @@
           <para lang='en'>
             If you notice, the Text sub-menu in the Script-Fu menu
             wasn't there when we began -- Gimp automatically creates any
-            menus not already existing. 
+            menus not already existing.
           </para>
         </listitem>
 
@@ -2555,6 +3524,7 @@
               <guisubmenu>Text</guisubmenu>
               <guimenuitem>Text Box</guimenuitem>
             </menuchoice>
+
             ).
           </para>
           <para lang='cs'>
@@ -2563,28 +3533,28 @@
             nabídky.
           </para>
         </listitem>
-        
+
         <listitem lang='fr'>
           <para>
-            L'<emphasis role='bold'>emplacement</emphasis> dans le menu où 
-            le script est inséré est spécifié comme un chemin dans Unix, avec 
-            la racine du chemin qui est soit la boîte à outils soit le clic 
-            droit. 
+            L'<emphasis role='bold'>emplacement</emphasis> dans le menu où
+            le script est inséré est spécifié comme un chemin dans Unix, avec
+            la racine du chemin qui est soit la boîte à outils soit le clic
+            droit.
           </para>
           <para>
-            Si votre script n'opère pas sur une image existante (et donc 
-            crée une nouvelle image, comme le fera notre script Text Box, 
-            vous voudrez l'insérer dans la fenêtre principale de Gimp (celle 
+            Si votre script n'opère pas sur une image existante (et donc
+            crée une nouvelle image, comme le fera notre script Text Box,
+            vous voudrez l'insérer dans la fenêtre principale de Gimp (celle
             où se trouvent tous les outils).
           </para>
           <para>
-            Si votre script est destiné à opérer sur une image présente à 
-            l'écran, vous voudrez l'insérer dans le menu d'image qui 
-            apparaît quand vous faites un clic droit sur une image. Le reste 
-            du chemin pointe sur les listes de menus, les menus et les 
-            sous-menus. Ainsi, nous avons enregistré notre script Text Box 
-            dans le menu Texte du menu Scrip-Fu du menu Exts de la Boîte à 
-            outils. 
+            Si votre script est destiné à opérer sur une image présente à
+            l'écran, vous voudrez l'insérer dans le menu d'image qui
+            apparaît quand vous faites un clic droit sur une image. Le reste
+            du chemin pointe sur les listes de menus, les menus et les
+            sous-menus. Ainsi, nous avons enregistré notre script Text Box
+            dans le menu Texte du menu Scrip-Fu du menu Exts de la Boîte à
+            outils.
             <menuchoice>
               <guimenu> Exts</guimenu>
               <guisubmenu>Script-Fu</guisubmenu>
@@ -2594,11 +3564,60 @@
             ).
           </para>
           <para>
-            Si vous avez remarqué, le sous-menu Texte dans le menu Script-Fu 
-            n'existait pas au départ: Gimp crée automatiquement les menus qui 
-            n'existent pas déjà. 
+            Si vous avez remarqué, le sous-menu Texte dans le menu Script-Fu
+            n'existait pas au départ: Gimp crée automatiquement les menus qui
+            n'existent pas déjà.
           </para>
         </listitem>
+
+        <listitem lang="no">
+          <para>
+            <emphasis role='bold'>Adresse</emphasis>. Dette bestemmer kvar
+            i menyen skriptet skal plasserast. Den eksakte adressa blir
+            spesifisert på same måten som i Unix, med rot (startpunkt) anten
+            i <quote>Toolbox</quote> eller i <quote>right-click</quote>.
+          </para>
+          <para>
+            Dersom skriptet ditt ikkje arbeider på eit eksisterande bilete,
+            men lagar sitt eige bilete slik <quote>Text Box</quote> kjem til
+            å gjere, må du legge skriptet i menyen til Verktøyskrinet
+            (<quote>Toolbox</quote>). Dette er hovudvindauget i
+            <acronym>GIMP</acronym> der alle dei ulike verktøya er plasserte.
+            Adressa blir altså slik vi har skrive ho inn i eksemplet.
+
+
+          </para>
+          <para>
+            Skal skriptet derimot operera på eit eksisterande bilete, må du
+            legge skriptet inn i ein meny som dukkar opp når du høgreklikkar
+            (<quote>right-click</quote>) på eit ope bilete. Adressa blir då
+            <quote>right-clic/Xtns/Script-Fu/Text/Text Box</quote>.
+          </para>
+          <para>
+            Går vi tilbake til eksemplet, kan du sjå at skriptet
+            <quote>Text Box</quote> blir registrert i
+            <quote>Text</quote>-menyen til <quote>Script-Fu</quote>-menyen
+            til menyen <quote>Xtns</quote> i <quote>Toolbox</quote>.
+            (puh!) Altså:
+            <menuchoice>
+              <guimenu> Exts</guimenu>
+              <guisubmenu>Script-Fu</guisubmenu>
+              <guisubmenu>Text</guisubmenu>
+              <guimenuitem>Text Box</guimenuitem>
+            </menuchoice>, eller på norsk:
+            <menuchoice>
+              <guimenu>Utvid</guimenu>
+              <guisubmenu>Script-Fu</guisubmenu>
+              <guisubmenu>Text</guisubmenu>
+              <guimenuitem>Text Box</guimenuitem>
+            </menuchoice>.
+            Ikkje store skilnaden. Dersom du la merke til det, fann du
+            kanskje ut at menyen <guisubmenu>Text</guisubmenu> ikkje fanst
+            før vi la inn <quote>Text Box</quote>. <acronym>GIMP</acronym>
+            lager automatisk nye menyar dersom det er behov for det.
+          </para>
+        </listitem>
+
 
         <listitem lang='en'>
           <para>
@@ -2614,11 +3633,17 @@
         </listitem>
         <listitem lang='fr'>
           <para>
-            Une <emphasis role='bold'>description</emphasis> de votre script, 
+            Une <emphasis role='bold'>description</emphasis> de votre script,
             qui sera affichée dans le Navigateur de Procédures.
           </para>
         </listitem>
-        
+        <listitem lang="no">
+          <para>
+            Ei <emphasis role='bold'>beskriving</emphasis> av skriptet slik
+            det skal visast i prosedyrelesarren.
+          </para>
+        </listitem>
+
         <listitem lang='en'>
           <para>
             <emphasis role='bold'>Your name</emphasis> (the author of
@@ -2636,7 +3661,13 @@
             <emphasis role='bold'>Votre nom</emphasis> (l'auteur du script)
           </para>
         </listitem>
-        
+        <listitem lang="no">
+          <para>
+            <emphasis role='bold'>Namnet ditt</emphasis> (dvs. forfattaren
+            av skriptet).
+          </para>
+        </listitem>
+
         <listitem lang='en'>
           <para>
             <emphasis role='bold'>Copyright</emphasis> information.
@@ -2653,11 +3684,16 @@
             Information de <emphasis role='bold'>Copyright</emphasis>.
           </para>
         </listitem>
-        
+        <listitem lang="no">
+          <para>
+            <emphasis role='bold'>Copyright</emphasis>-informasjon.
+          </para>
+        </listitem>
+
         <listitem lang='en'>
           <para>
             The <emphasis role='bold'>date</emphasis> the script was
-            made, or the last revision of the script. 
+            made, or the last revision of the script.
           </para>
         </listitem>
         <listitem lang='cs'>
@@ -2668,18 +3704,24 @@
         </listitem>
         <listitem lang='fr'>
           <para>
-            La <emphasis role='bold'>date</emphasis> où le script a été créé, 
+            La <emphasis role='bold'>date</emphasis> où le script a été créé,
             ou la date de dernière révision.
           </para>
         </listitem>
-        
+        <listitem lang="no">
+          <para>
+            <emphasis role='bold'>Datoen</emphasis> skriptet blei laga eller
+            sist revidert.
+          </para>
+        </listitem>
+
         <listitem>
           <para lang='en'>
             The <emphasis role='bold'>types</emphasis> of images the script
             works on. This may be any of the following: RGB, RGBA, GRAY,
             GRAYA, INDEXED, INDEXEDA. Or it may be none at all -- in our case,
             we're creating an image, and thus don't need to define the type of
-            image on which we work. 
+            image on which we work.
           </para>
           <para lang='cs'>
             <emphasis role='bold'>Typy</emphasis> obrázků, se kterými umí
@@ -2689,20 +3731,28 @@
             a tudíž nepracuje s žádným stávajícím obrázkem.
           </para>
           <para lang='fr'>
-            Les <emphasis role='bold'>types</emphasis> d'image sur lesquels 
-            travaille le script. Il peut s'agir de RGB, RGBA, GRAY, GRAYA, 
-            INDEXED, INDEXEDA. Ou aucun d'eux: dans notre cas, nous créons 
+            Les <emphasis role='bold'>types</emphasis> d'image sur lesquels
+            travaille le script. Il peut s'agir de RGB, RGBA, GRAY, GRAYA,
+            INDEXED, INDEXEDA. Ou aucun d'eux: dans notre cas, nous créons
             une image et nous n'avons pas besoin d'en définir le type.
           </para>
+          <para lang="no">
+            The <emphasis role='bold'>Bilettypar</emphasis> skriptet kan
+            brukast på. Dette kan vere RGB, RGBA, GRAY, GRAYA, INDEXED eller
+            INDEXEDA. Eller ingen i det heile. I eksemplet er bilettypen
+            ikkje definert fordi skriptet opnar sitt eige bilete.
+          </para>
         </listitem>
-        
+
       </itemizedlist>
     </sect3>
 
-    <sect3 lang="cs;en;fr">
+    <sect3 lang="cs;en;fr;no">
       <title lang='cs'>Registrace parametrů skriptu</title>
       <title lang='en'>Registering The Script's Parameters</title>
       <title lang='fr'>Enregistrement des paramètres du script</title>
+      <title lang="no">Registrering av skriptparametra</title>
+
       <para lang='en'>
         Once we have listed the required parameters, we then need to
         list the parameters that correspond to the parameters our
@@ -2719,13 +3769,22 @@
         parametrů.
       </para>
       <para lang='fr'>
-        Maintenant que nous avons vu la liste des paramètres requis, nous 
-        devons préciser ceux qui correspondent aux besoins de notre script. 
-        Nous devons fournir des précisions concernant leur type, pour la 
-        fenêtre de dialogue qui apparaît quand l'utilisateur choisit notre 
+        Maintenant que nous avons vu la liste des paramètres requis, nous
+        devons préciser ceux qui correspondent aux besoins de notre script.
+
+        Nous devons fournir des précisions concernant leur type, pour la
+        fenêtre de dialogue qui apparaît quand l'utilisateur choisit notre
         script. Nous devons aussi fournir une valeur par défaut.
       </para>
-      
+      <para lang="no">
+        Når vi endeleg er ferdige med dei obligatoriske parametra, er tida
+        komen for dei skriptavhengige parametra. Når vi listar opp parametra
+        for skriptet, tar vi også med kva for type dei er. Dette er for
+        dialogvindauget som sprett opp når noen vel skriptet ditt. I tillegg
+        treng vi også ein førehandsvald verdi for parametra. Den verdien
+        programmet vil nytte om brukaren ikkje gjer endringar.
+      </para>
+
       <para lang='en'>
         This section of the registration process has the following format:
       </para>
@@ -2735,7 +3794,10 @@
       <para lang='fr'>
         Cette section du processus d'enregistrement a le format suivant:
       </para>
-      
+      <para lang="no">
+        Dette avsnittet i registreringsprosessen har dette formatet:
+      </para>
+
       <informaltable rowsep='1' colsep='1' frame='all'>
         <tgroup cols='3'>
         <colspec colwidth='1in' />
@@ -2747,16 +3809,19 @@
               <para lang='en'>Param Type</para>
               <para lang='cs'>Typ parametru</para>
               <para lang='fr'>Type de paramètre</para>
+              <para lang="no">Parametertype</para>
             </entry>
             <entry>
               <para lang='en'>Description</para>
               <para lang='cs'>Popis</para>
               <para lang='fr'>Description</para>
+              <para lang="no">Beskriving</para>
             </entry>
             <entry>
               <para lang='en'>Example</para>
               <para lang='cs'>Příklad</para>
               <para lang='fr'>Exemple</para>
+              <para lang="no">Eksempel</para>
             </entry>
           </row>
         </thead>
@@ -2773,9 +3838,13 @@
                 escaped for default text, so better use SF-STRING.
               </para>
               <para lang='fr'>
-                Accepte les nombres et les chaînes de caractères. (NDT: pas 
-                clair: note that quotes must be escaped for default text, so 
-                better use SF-STRING). 
+                Accepte les nombres et les chaînes de caractères. (NDT: pas
+                clair: note that quotes must be escaped for default text, so
+                better use SF-STRING).
+              </para>
+              <para lang="no">
+                Godtar tal og strengar. Merk at hermeteikn må markerast
+                med \ framføre. Bruk heller SF-STRING.
               </para>
             </entry>
             <entry><para>42</para></entry>
@@ -2792,11 +3861,13 @@
               <para lang='fr'>
                 Accepte les chaînes de caractères.
               </para>
+              <para lang="no">Godtar tekststrenger.</para>
             </entry>
             <entry>
               <para lang='en'>"Some text"</para>
               <para lang='cs'>"Nějaký text"</para>
               <para lang='fr'>"Un texte"</para>
+              <para lang="no">"Ein tekst"</para>
             </entry>
           </row>
           <row>
@@ -2809,7 +3880,10 @@
                 Označuje parametr vyžadující barvu.
               </para>
               <para lang='fr'>
-                Indique qu'une couleur est nécessaire pour ce paramètre. 
+                Indique qu'une couleur est nécessaire pour ce paramètre.
+              </para>
+              <para lang="no">
+                Viser at her skal det vere ein fargeverdi
               </para>
             </entry>
             <entry><para>'(0 102 255)</para></entry>
@@ -2825,14 +3899,18 @@
                 V dialogu se zobrazuje jako zaškrtávací políčko, přepínač.
               </para>
               <para lang='fr'>
-                Une boîte de saisie est affichée, pour entrer une valeur 
-                Booléenne. 
+                Une boîte de saisie est affichée, pour entrer une valeur
+                Booléenne.
+              </para>
+              <para lang="no">
+                Viser ein avkryssingsboks for å lesa inn ein logisk verdi
               </para>
             </entry>
             <entry>
               <para lang='cs'>TRUE nebo FALSE</para>
               <para lang='en'>TRUE or FALSE</para>
               <para lang='fr'>TRUE ou FALSE (Vrai ou Faux)</para>
+              <para lang="no">TRUE eller FALSE (sant/usant)</para>
             </entry>
           </row>
           <row>
@@ -2849,9 +3927,15 @@
                 parametru předá odkaz na obrázek.
               </para>
               <para lang='fr'>
-                Si votre script opère sur une image ouverte, ceci doit être 
-                le premier paramètre après les paramètres requis. Gimp 
+                Si votre script opère sur une image ouverte, ceci doit être
+                le premier paramètre après les paramètres requis. Gimp
                 transmettra une référence à l'image dans ce paramètre.
+              </para>
+              <para lang="no">
+                Dersom skriptet skal arbeide på eit opna bilete, må dette
+                vere det første parameteret etter dei obligatoriske param.
+                <acronym>GIMP</acronym> vil legge inn referanse til biletet
+                i dette parameteret.
               </para>
             </entry>
             <entry><para>3</para></entry>
@@ -2871,10 +3955,16 @@
                 na aktivní vrstvu. Gimp na ni přes tento parametr předá odkaz.
               </para>
               <para lang='fr'>
-                Si votre script opère sur une image ouverte, ceci doit être 
-                le second paramètre, après le paramètre SF-IMAGE. Il se 
-                réfère au calque actif. Gimp transmettra une référence au 
-                calque actif dans ce paramètre. 
+                Si votre script opère sur une image ouverte, ceci doit être
+                le second paramètre, après le paramètre SF-IMAGE. Il se
+                réfère au calque actif. Gimp transmettra une référence au
+                calque actif dans ce paramètre.
+              </para>
+              <para lang="no">
+                Dersom skriptet skal arbeide på eit opna bilete, må dette
+                vere det andre parameteret etter parameteret SF-IMAGE.
+                Refererer til eit ope lag. <acronym>GIMP</acronym> vil
+                legge inn referanse til det aktive laget i dette parameteret.
               </para>
             </entry>
             <entry><para>17</para></entry>
@@ -2890,6 +3980,7 @@
       <phrase lang='cs'>Vytvoření střev skriptu</phrase>
       <phrase lang='en'>Giving Our Script Some Guts</phrase>
       <phrase lang="fr">Donner un peu plus de corps à votre script</phrase>
+      <phrase lang="no">Sprit opp skriptet</phrase>
     </title>
     <para lang='cs'>
       Pokračujme ve výcviku a naučme náš skript vykonávat
@@ -2900,8 +3991,11 @@
       our script.
     </para>
     <para lang="fr">
-      Poursuivons notre entraînement et ajoutons quelques fonctionnalités à 
+      Poursuivons notre entraînement et ajoutons quelques fonctionnalités à
       notre script.
+    </para>
+    <para lang="no">
+      Nå er det på tide å gjere noe brukbart ut av skriptet.
     </para>
 
     <sect3 lang='en'>
@@ -2923,7 +4017,7 @@
       <para lang='en'>
         Let's begin by making a new image. We'll create a new
         variable, <varname>theImage</varname>, set to the result of calling Gimp's
-        built-in function <code>gimp-image-new</code>. 
+        built-in function <code>gimp-image-new</code>.
       </para>
       <para lang='en'>
         As you can see from the DB Browser, the function
@@ -2942,7 +4036,7 @@
                  ; create a new image:
                  (theImageWidth  10)
                  (theImageHeight 10)
-                 (theImage (car 
+                 (theImage (car
                                 (gimp-image-new
                                  theImageWidth
                                  theImageHeight
@@ -2967,9 +4061,9 @@
         need to get the head of the list.
       </para>
     </sect3>
-    
+
     <sect3 lang='cs'>
-      <title lang='cs'>Vytvoření nového obrázku</title>  
+      <title lang='cs'>Vytvoření nového obrázku</title>
       <para lang='cs'>
         V předchozí lekci jsme vytvořili prázdnou funkci a zaregistrovali ji
         v Gimpu. V této lekci dodáme skriptu požadovanou funkcionalitu –
@@ -3009,6 +4103,7 @@
                                  theImageHeight
                                  RGB
                                 )
+
                            )
                  )
                  (theText)     ;deklarace pro text
@@ -3025,38 +4120,39 @@
         jedinou hodnotu – ID nově vytvořeného obrázku. Nicméně všechny funkce
         Gimpu vrací seznam, i když obsahuje jediný prvek. Proto je potřeba
         pracovat s halvičkou seznamu.
+
       </para>
     </sect3>
 
     <sect3 lang='fr'>
       <title>Création d'une nouvelle image</title>
       <para>
-        Dans la leçon précédente, nous avons créé une fonction vide et nous 
-        l'avons enregistrée dans Gimp. Dans la présente leçon, nous voulons 
-        donner quelque fonctionnalité à notre script: créer une nouvelle 
-        image, lui ajouter le texte de l'utilisateur et redimensionner 
-        l'image pour qu'elle s'adapte exactement au texte. 
+        Dans la leçon précédente, nous avons créé une fonction vide et nous
+        l'avons enregistrée dans Gimp. Dans la présente leçon, nous voulons
+        donner quelque fonctionnalité à notre script: créer une nouvelle
+        image, lui ajouter le texte de l'utilisateur et redimensionner
+        l'image pour qu'elle s'adapte exactement au texte.
       </para>
       <para>
-        Une fois que vous savez fixer les variables, définir les fonctions et 
-        accéder aux membres d'une liste, le reste va comme sur des roulettes. 
-        Tout ce que vous avez à faire est de vous familiariser avec les 
-        fonctions disponibles dans la base de données de procédures de Gimp 
-        et à les appeler directement. C'est parti!... 
+        Une fois que vous savez fixer les variables, définir les fonctions et
+        accéder aux membres d'une liste, le reste va comme sur des roulettes.
+        Tout ce que vous avez à faire est de vous familiariser avec les
+        fonctions disponibles dans la base de données de procédures de Gimp
+        et à les appeler directement. C'est parti!...
       </para>
       <para>
-        Commençons par fabriquer une nouvelle image. Nous créons pour cela 
-        une nouvelle variable <varname>theImage</varname>, réglée pour 
-        appeler la fonction <code>gimp-image-new</code> intégrée à Gimp. 
+        Commençons par fabriquer une nouvelle image. Nous créons pour cela
+        une nouvelle variable <varname>theImage</varname>, réglée pour
+        appeler la fonction <code>gimp-image-new</code> intégrée à Gimp.
       </para>
       <para>
-        Comme vous pouvez le voir dans le Navigateur de Procédures, la 
-        fonction <code>gimp-image-new</code> nécessite trois paramètres: la 
-        largeur de l'image, sa hauteur et son type. Puisque l'image sera 
-        redimensionnée pour s'adapter à la taille du texte, nous créerons 
-        arbitrairement une image RVB de 10x10 pixels. Nous stockerons les 
-        dimensions de l'image dans des variables, de façon à pouvoir les 
-        récupérer plus tard dans le script. 
+        Comme vous pouvez le voir dans le Navigateur de Procédures, la
+        fonction <code>gimp-image-new</code> nécessite trois paramètres: la
+        largeur de l'image, sa hauteur et son type. Puisque l'image sera
+        redimensionnée pour s'adapter à la taille du texte, nous créerons
+        arbitrairement une image RVB de 10x10 pixels. Nous stockerons les
+        dimensions de l'image dans des variables, de façon à pouvoir les
+        récupérer plus tard dans le script.
       </para>
       <programlisting lang='fr'>
         (define (script-fu-text-box inText inFont inFontSize inTextColor)
@@ -3066,7 +4162,7 @@
                  ; crée une nouvelle image:
                  (theImageWidth  10)
                  (theImageHeight 10)
-                 (theImage (car 
+                 (theImage (car
                                 (gimp-image-new
                                  theImageWidth
                                  theImageHeight
@@ -3074,30 +4170,93 @@
                                 )
                            )
                  )
-                 (theText)     ;déclaration pour le texte que nous créerons 
+                 (theText)     ;déclaration pour le texte que nous créerons
                                ;plus tard
       </programlisting>
       <para>
-        Note: Nous avons utilisé la valeur RGB pour spécifier que l'image 
-        est une image RVB. Nous aurions pu aussi utiliser 0, mais RGB est 
+        Note: Nous avons utilisé la valeur RGB pour spécifier que l'image
+        est une image RVB. Nous aurions pu aussi utiliser 0, mais RGB est
         nettement plus parlant.
       </para>
       <para>
-        Vous devriez aussi avoir remarqué que nous avons pris la tête du 
-        résultat de la fonction «call». cela peut paraître étrange parce que 
-        la base de donnée nous dit explicitement qu'elle ne retourne qu'une 
-        seule valeur -- l'ID (identification) de la nouvelle image créée. 
-        Mais toutes les fonctions Gimp retournent une liste, même s'il n'y a 
-        qu'un seul élément dans la liste. 
+        Vous devriez aussi avoir remarqué que nous avons pris la tête du
+        résultat de la fonction «call». cela peut paraître étrange parce que
+        la base de donnée nous dit explicitement qu'elle ne retourne qu'une
+        seule valeur -- l'ID (identification) de la nouvelle image créée.
+        Mais toutes les fonctions Gimp retournent une liste, même s'il n'y a
+        qu'un seul élément dans la liste.
       </para>
     </sect3>
 
+    <sect3 lang="no">
+      <title>Å lage eit nytt bilete</title>
+      <para>
+        Fram til nå har vi laga ein tom funksjon og registrert denne i
+        <acronym>GIMP</acronym>. Nå er det på tide å legge noe brukbart
+        inn i denne funksjonen. Vi skal lage eit nytt bilete med noen tekst
+        i. Deretter skal vi endra storleiken på biletet slik at det høver
+        nøyaktig til teksten.
+      </para>
+      <para>
+        Sidan du nå kjenner til korleis du kan tilordna variablar, definera
+        funksjonar og få tilgang til listeverdiar, er resten strake
+        landevegen. Det einaste du treng er å bli kjent med prosedyredatabasen
+        i <acronym>GIMP</acronym> og korleis du kan kalla opp prosedyrar
+        derifrå direkte. Fyr opp prosedyre-lesaren og la oss kome i gang med
+        noe nyttig.
+      </para>
+      <para>
+        Vi byrjar med å lage eit nytt bilete. Då må vi ha ein ny variabel,
+        <varname>theImage</varname>, som blir laga ved å kalla opp den
+        innebygde funksjonen <code>gimp-image-new</code>. Som du ser av
+        prosedyre-lesaren, treng denne funksjonen tre parametrar: Breidda
+        og høgda på biletet og bilettypen. Sidan vi likevel må endra storleiken
+        på biletet seinare, vel vi å lage eit RGB-bilete på 10 × 10.
+        Verdiane for høgde og breidde lagrar vi i eit par variablar til
+        seinare bruk.
+      </para>
+      <programlisting lang="no">
+        (define (script-fu-text-box inText inFont inFontSize inTextColor)
+        (let*
+              (
+                 ; define our local variables
+                 ; create a new image:
+                 (theImageWidth  10)
+                 (theImageHeight 10)
+                 (theImage (car
+                                (gimp-image-new
+                                 theImageWidth
+                                 theImageHeight
+                                 RGB
+                                )
+                           )
+                 )
+                 (theText)     ;a declaration for the text
+                               ;we create later
+      </programlisting>
+      <para>
+        Merk. Vi brukte verdien RGB for å spesifisera at vi ville lage eit
+        RGB-bilde. Vi kunne ha brukt <quote>0</quote> i staden, men
+        <quote>RGB</quote> er lettare å forstå.
+      </para>
+      <para>
+        Du bør også legge merke til at vi bruker listehovudet for å ta ut
+        resultatet av funksjonsoppkallet. Dette kan sjå litt merkeleg ut all
+        den tid databasen fortel oss at funksjonen returnerer bare ein verdi:
+        ID-en til det nye biletet. Forklaringa er at alle funksjonane i
+        <acronym>GIMP</acronym> returnerer ei liste, sjølv om denne lista
+        innehald bare eitt element. Derfor må vi ta ut listehovudet.
+      </para>
+    </sect3>
+
+
     <sect3 lang='en'>
+
       <title lang='en'>Adding A New Layer To The Image</title>
       <para lang='en'>
         Now that we have an image, we need to add a layer to it. We'll
         call the <code>gimp-layer-new</code> function to create the
-        layer, passing 
+        layer, passing
         in the ID of the image we just created. (From now on, instead
         of listing the complete function, we'll only list the lines
         we're adding to it. You can see the complete script here.)
@@ -3122,35 +4281,37 @@
             )
          ) ;end of our local variables
       </programlisting>
-      
+
       <para lang='en'>
         Once we have the new layer, we need to add it to the image:
       </para>
       <programlisting>
        (gimp-image-add-layer theImage theLayer 0)
       </programlisting>
-      
+
       <para lang='en'>
         Now, just for fun, let's see the fruits of our labors up until
-        this point, and add this line to show the new, empty image: 
+        this point, and add this line to show the new, empty image:
       </para>
       <programlisting>
         (gimp-display-new theImage)
+
       </programlisting>
-      
+
       <para lang='en'>
         Save your work, select
         <menuchoice>
+
           <guimenu>Xtns</guimenu>
           <guisubmenu>Script-Fu</guisubmenu>
           <guimenuitem>Refresh Scripts</guimenuitem>
         </menuchoice>,
         run the script and a new image should pop up. It will probably
         contain garbage (random colors), because we haven't erased
-        it. We'll get to that in a second. 
+        it. We'll get to that in a second.
       </para>
     </sect3>
-      
+
     <sect3 lang='cs'>
       <title lang='cs'>Přidání nové vrstvy do obrázku</title>
       <para lang='cs'>
@@ -3167,6 +4328,7 @@
                      (car
                           (gimp-layer-new
                            theImage
+
                            theImageWidth
                            theImageHeight
                            RGB-IMAGE
@@ -3178,23 +4340,25 @@
             )
          ) ;konec deklarací lokálních proměnných
       </programlisting>
-      
+
       <para lang='cs'>
         Jakmile máme novou vrstvu, je třeba ji přidat k obrázku:
-      </para>    
+      </para>
       <programlisting>
        (gimp-image-add-layer theImage theLayer 0)
       </programlisting>
-      
+
       <para lang='cs'>
+
         Nyní, jen z legrace, si prohlédneme plody naší dosavadní práce
         a přidáme proto následující řádku pro zobrazení nového, prázdného
+
         obrázku:
       </para>
       <programlisting>
         (gimp-display-new theImage)
       </programlisting>
-      
+
       <para lang='cs'>
         Uložte práci a zvolte
         <menuchoice>
@@ -3211,15 +4375,15 @@
     <sect3 lang='fr'>
       <title>Ajouter un nouveau calque à l'image</title>
       <para>
-        Maintenant que nous avons l'image, nous devons lui ajouter un calque. 
-        Nous ferons appel à la fonction <code>gimp-layer-new</code>  pour 
-        créer ce calque, en lui transmettant l'ID de l'image que nous venons 
-        juste de créer. (À   partir de maintenant, au lieu de lister 
-        l'ensemble de la fonction, nous ne listerons que les lignes que nous 
-        lui ajoutons. Vous pouvez voir ici le script complet). Et puisque 
-        nous avons déclaré toutes les variable locales dont nous aurons 
-        besoin, nous pouvons aussi fermer les parenthèses marquant la fin de 
-        nos déclarations de variables: 
+        Maintenant que nous avons l'image, nous devons lui ajouter un calque.
+        Nous ferons appel à la fonction <code>gimp-layer-new</code>  pour
+        créer ce calque, en lui transmettant l'ID de l'image que nous venons
+        juste de créer. (À   partir de maintenant, au lieu de lister
+        l'ensemble de la fonction, nous ne listerons que les lignes que nous
+        lui ajoutons. Vous pouvez voir ici le script complet). Et puisque
+        nous avons déclaré toutes les variable locales dont nous aurons
+        besoin, nous pouvons aussi fermer les parenthèses marquant la fin de
+        nos déclarations de variables:
       </para>
       <programlisting>
         ;crée une nouveau calque pour l'image:
@@ -3238,23 +4402,23 @@
             )
          ) ;fin de nos variables locales
       </programlisting>
-      
+
       <para>
         Ce nouveau calque obtenu, nous devons l'ajouter à l'image:
       </para>
       <programlisting>
        (gimp-image-add-layer theImage theLayer 0)
       </programlisting>
-      
+
       <para>
-        Et maintenant, juste pour le plaisir, admirons le fruit de notre 
-        travail jusqu'ici, en ajoutant cette ligne qui affichera la 
-        nouvelle image vide: 
+        Et maintenant, juste pour le plaisir, admirons le fruit de notre
+        travail jusqu'ici, en ajoutant cette ligne qui affichera la
+        nouvelle image vide:
       </para>
       <programlisting>
         (gimp-display-new theImage)
       </programlisting>
-      
+
       <para>
         Enregistrez votre travail, sélectionnez la commande suivant
         Save your work, select
@@ -3263,9 +4427,66 @@
           <guisubmenu>Script-Fu</guisubmenu>
           <guimenuitem>Rafraîchir les scripts</guimenuitem>
         </menuchoice>,
-        lancez le script et une nouvelle image s'affichera. Elle contiendra 
-        probablement quelques résidus (couleurs au hasard), parce que nous 
-        ne les avons pas effacés. Nous ferons ça plus tard. 
+        lancez le script et une nouvelle image s'affichera. Elle contiendra
+        probablement quelques résidus (couleurs au hasard), parce que nous
+        ne les avons pas effacés. Nous ferons ça plus tard.
+      </para>
+    </sect3>
+
+    <sect3 lang="no">
+      <title>Å legge eit nytt lag til biletet</title>
+      <para>
+        Nå når du endeleg har fått eit bilete, treng du også eit nytt lag
+        til dette biletet. Dette gjer du ved å kalla opp funksjonen
+        <code>gimp-layer-new</code> med ID-en til det nye biletet. (Frå nå
+        av blir bare dei nye linjene i programmet lista opp. Ikkje heile
+        programmet som tidlegare.) Sidan alle dei lokale variablane nå er
+        definerte, kan du avslutta deklarasjonen med nødvendige parentesar:
+      </para>
+      <programlisting>
+        ;create a new layer for the image:
+           (theLayer
+                     (car
+                          (gimp-layer-new
+                           theImage
+                           theImageWidth
+                           theImageHeight
+                           RGB-IMAGE
+                           "layer 1"
+                           100
+                           NORMAL
+                          )
+                      )
+            )
+         ) ;end of our local variables
+      </programlisting>
+
+      <para>
+        Vi må legge det nye laget til biletet:
+      </para>
+      <programlisting>
+       (gimp-image-add-layer theImage theLayer 0)
+      </programlisting>
+
+      <para>
+        For moro skuld, kan du nå sjå på fruktene av arbeidet så langt. Legg
+        til denne linja for å vise det nye, tomme biletet:
+      </para>
+      <programlisting>
+        (gimp-display-new theImage)
+      </programlisting>
+
+      <para>
+        Lagra arbeidet ditt og vel
+        <menuchoice>
+          <guimenu>Utvid</guimenu>
+          <guisubmenu>Script-Fu</guisubmenu>
+          <guimenuitem>Oppdater skript</guimenuitem>
+        </menuchoice>.
+        Dersom du nå køyrer skriptet, skal det dukka opp eit nytt bilete på
+        skjermen. Truleg vil det visa ei tilfeldig fargesamling, utan meining.
+        Dette er fordi biletet ikkje er reint. Vindauget er rett og slett
+        ikkje vaska. Vi kjem til det seinare.
       </para>
     </sect3>
 
@@ -3273,28 +4494,28 @@
       <title lang='en'>Adding The Text</title>
       <para lang='en'>
         Go ahead and remove the line to display the image (or comment
-        it out with a ; as the first character of the line). 
+        it out with a ; as the first character of the line).
       </para>
       <para lang='en'>
         Before we add text to the image, we need to set the background
         and foreground colors so that the text appears in the color
         the user specified. We'll use the
-        gimp-context-set-back/foreground functions: 
+        gimp-context-set-back/foreground functions:
       </para>
       <programlisting>
         (gimp-context-set-background '(255 255 255) )
         (gimp-context-set-foreground inTextColor)
       </programlisting>
-      
+
       <para lang='en'>
         With the colors properly set, let's now clean out the garbage
         currently in the image by filling the drawable with the background
         color:
       </para>
       <programlisting>
-        (gimp-drawable-fill theLayer BACKGROUND-FILL) 
+        (gimp-drawable-fill theLayer BACKGROUND-FILL)
       </programlisting>
-      
+
       <para lang='en'>
         With the image cleared, we're ready to add some text:
       </para>
@@ -3307,10 +4528,12 @@
                             inText
                             0
                             TRUE
+
+
                             inFontSize PIXELS
                             "Sans")
                        )
-        )  
+        )
       </programlisting>
       <para lang='en'>
         Although a long function call, it's fairly straightforward if
@@ -3319,7 +4542,7 @@
         layer and assigning it to the variable
         <varname>theText</varname>.
       </para>
-      
+
       <para lang='en'>
         Now that we have the text, we can grab its width and height
         and resize the image and the image's layer to the text's size:
@@ -3346,13 +4569,15 @@
       <programlisting>
         (gimp-display-new theImage)
       </programlisting>
-      
+
       <para lang='en'>
         Save your work, refresh the database and give your first
         script a run!
       </para>
     </sect3>
-      
+
+
+
     <sect3 lang='cs'>
       <title lang='cs'>Přidání textu</title>
       <para lang='cs'>
@@ -3363,20 +4588,20 @@
         Než text do obrázku přidáme, musíme nastavit barvu popředí a pozadí
         tak, aby se text objevil v uživatelem zadané barvě. použijeme k
         tomu funkce gimp-context-set-background/foreground:
-      </para>    
+      </para>
       <programlisting>
         (gimp-context-set-background '(255 255 255) )
         (gimp-context-set-foreground inTextColor)
       </programlisting>
-      
+
       <para lang='cs'>
         Barvy máme správně nastavedny, proto teď můžeme vyčistit
         nepořádek v obrázku vyplněním barvou pozadí:
       </para>
       <programlisting>
-        (gimp-drawable-fill theLayer BACKGROUND-FILL) 
+        (gimp-drawable-fill theLayer BACKGROUND-FILL)
       </programlisting>
-      
+
       <para lang='cs'>
         Do vyčištěného obrázku lze přidat text:
       </para>
@@ -3392,20 +4617,21 @@
                             inFontSize PIXELS
                             "Sans")
                        )
-        )  
+        )
       </programlisting>
       <para lang='cs'>
         Ačkoliv je volání funkce poměrně dlouhé, pokud se podíváte na popis
         funkce v prohlížeči procedur, je vše poměrně jasné. Tvoříme novou
         textovou vrstvu a přiřazujeme ji proměnné <varname>theText</varname>.
       </para>
-      
+
       <para lang='cs'>
         Nyní, když máme v obrázku text, můžeme zjistit jeho výšku a šířku a
         změnit podle něj velikost obrázku a vrstvy obrázku:
       </para>
       <programlisting>
         (set! theImageWidth   (car (gimp-drawable-width  theText) ) )
+
         (set! theImageHeight  (car (gimp-drawable-height theText) ) )
 
         (gimp-image-resize theImage theImageWidth theImageHeight 0 0)
@@ -3421,7 +4647,7 @@
         <foreignphrase>drawable</foreignphrase>. Ve většině případů se ale
         nemusíte rozdíly zabývat.
       </para>
-      
+
       <para lang='cs'>
         Nyní můžeme připravený obrázek zobrazit:
       </para>
@@ -3436,32 +4662,32 @@
     <sect3 lang='fr'>
       <title>Ajouter le texte</title>
       <para>
-        Supprimez la ligne d'affichage de l'image (ou mettez-la en 
-        commentaire en plaçant un ; en premier caractère de la ligne). 
+        Supprimez la ligne d'affichage de l'image (ou mettez-la en
+        commentaire en plaçant un ; en premier caractère de la ligne).
       </para>
       <para>
-        Avant d'ajoutet le texte à l'image, nous devons fixer les couleurs 
-        de premier-plan (foreground) et d'arrière-plan (background), de 
-        façon à ce que le texte apparaisse dans les couleurs que 
-        l'utilisateur a specifiées. Nous utiliserons pour cela les fonctions 
-        gimp-context-set-back/foreground: 
+        Avant d'ajoutet le texte à l'image, nous devons fixer les couleurs
+        de premier-plan (foreground) et d'arrière-plan (background), de
+        façon à ce que le texte apparaisse dans les couleurs que
+        l'utilisateur a specifiées. Nous utiliserons pour cela les fonctions
+        gimp-context-set-back/foreground:
       </para>
       <programlisting>
         (gimp-context-set-background '(255 255 255) )
         (gimp-context-set-foreground inTextColor)
       </programlisting>
-      
+
       <para>
-        Les couleurs étant correctement réglées, nettoyons les résidus 
-        présents dans l'image en remplissant le calque avec la couleur 
+        Les couleurs étant correctement réglées, nettoyons les résidus
+        présents dans l'image en remplissant le calque avec la couleur
         d'arrière-plan:
       </para>
       <programlisting>
-        (gimp-drawable-fill theLayer BACKGROUND-FILL) 
+        (gimp-drawable-fill theLayer BACKGROUND-FILL)
       </programlisting>
-      
+
       <para>
-        L'image nettoyée, nous sommes prêts à ajouter un texte: 
+        L'image nettoyée, nous sommes prêts à ajouter un texte:
       </para>
       <programlisting>
         (set! theText
@@ -3475,20 +4701,20 @@
                             inFontSize PIXELS
                             "Sans")
                        )
-        )  
+        )
       </programlisting>
       <para>
-        Malgré un appel de fonction un peu long, il est facile à 
-        comprendre si vous suivez les paramètres tout en consultant les 
-        entrées de la fonction dans le Navigateur de Procédures. À la base, 
-        nous créons un nouveau calque de texte et nous l'assignons à la 
+        Malgré un appel de fonction un peu long, il est facile à
+        comprendre si vous suivez les paramètres tout en consultant les
+        entrées de la fonction dans le Navigateur de Procédures. À la base,
+        nous créons un nouveau calque de texte et nous l'assignons à la
         variable <varname>theText</varname>.
       </para>
-      
+
       <para>
-        Maintenant que nous avons le texte, nous pouvons nous intéresser à 
-        sa hauteur et à sa largeur, et adapter l'image et le calque 
-        d'image à la taille du texte: 
+        Maintenant que nous avons le texte, nous pouvons nous intéresser à
+        sa hauteur et à sa largeur, et adapter l'image et le calque
+        d'image à la taille du texte:
       </para>
       <programlisting>
         (set! theImageWidth   (car (gimp-drawable-width  theText) ) )
@@ -3499,27 +4725,114 @@
         (gimp-layer-resize theLayer theImageWidth theImageHeight 0 0)
       </programlisting>
       <para>
-        Si vous êtes comme moi, vous vous demandez probablement quelle 
-        différence il y a entre un «drawable» et un calque (NdT: faute de 
-        mieux, je traduis «drawable» par "élément peignable", ce qui enlève 
-        pas mal d'intérêt à cette remarque de l'auteur) et un calque. Un 
-        élément peignable est tout objet de Gimp pouvant être peint: les 
-        sélections, les masques de calque, les masques de canaux et aussi 
+        Si vous êtes comme moi, vous vous demandez probablement quelle
+        différence il y a entre un «drawable» et un calque (NdT: faute de
+        mieux, je traduis «drawable» par "élément peignable", ce qui enlève
+        pas mal d'intérêt à cette remarque de l'auteur) et un calque. Un
+        élément peignable est tout objet de Gimp pouvant être peint: les
+        sélections, les masques de calque, les masques de canaux et aussi
         les calques. Les calques sont un type particulier d'élément peignable.
       </para>
       <para>
-        Notre image étant prête, nous pouvons rajouter notre ligne 
+        Notre image étant prête, nous pouvons rajouter notre ligne
         d'affichage de l'image:
       </para>
       <programlisting>
         (gimp-display-new theImage)
       </programlisting>
-      
+
       <para>
-        Enregistrez votre travail, rafraîchissez la base de données et 
-        tentez un démarrage de votre script! 
+        Enregistrez votre travail, rafraîchissez la base de données et
+        tentez un démarrage de votre script!
       </para>
     </sect3>
+
+    <sect3 lang="no">
+      <title>Legge til tekst</title>
+      <para>
+        Fjern linja som viser biletet på skjermen, eller betre, sett eit
+        semikolon (;) framføre for å gjere ho om til eit notat. Du kan då
+        seinare bare fjerne semikolonet for å gjere linja aktiv igjen dersom
+        du skulle ha bruk for det.
+      </para>
+      <para>
+        For å gjere teksten synleg, må vi legge inn bakgrunns- og
+        forgrunnsfargane. Også her nyttar vi ferdige funksjonar:
+      </para>
+      <programlisting>
+        (gimp-context-set-background '(255 255 255) ) ; kvit farge
+        (gimp-context-set-foreground inTextColor)
+      </programlisting>
+      <para>
+        Nå har vi fargane, og manglar bare litt reingjering av biletet.
+        Vel heile biletet og kall opp <code>clear</code>:
+      </para>
+      <programlisting>
+        (gimp-selection-all theImage)
+        (gimp-edit-clear theImage theLayer)
+        (gimp-selection-none theImage)
+      </programlisting>
+      <para>
+        eller (som det står i originalmanuset:)
+      </para>
+      <programlisting>
+        (gimp-drawable-fill theLayer BACKGROUND-FILL)
+      </programlisting>
+      <para>
+        Nå skulle biletet vere klar for å motta teksten:
+      </para>
+      <programlisting>
+        (set! theText
+                      (car
+                           (gimp-text-fontname
+                            theImage theLayer
+                            0 0
+                            inText
+                            0
+                            TRUE
+
+                            inFontSize PIXELS
+                            "Sans")
+                       )
+        )
+      </programlisting>
+      <para>
+        Dette var litt av ei lekse. Funksjonen skulle likevel vere forståeleg
+        dersom du studerer parametra samstundes som du tar ein kikk i
+        funksjonslesaren på kva parametrar som er nødvendige. Det som har
+        skjedd, er at vi har laga eit nytt tekstlag og tilordna det til
+        variabelen <varname>theText</varname>.
+      </para>
+      <para>
+        Sidan vi nå har teksten, er det bare å plukka ut høgda og breidda
+        på denne og utvida biletet og biletelaget slik at det passer til
+        teksten:
+      </para>
+      <programlisting>
+        (set! theImageWidth   (car (gimp-drawable-width  theText) ) )
+        (set! theImageHeight  (car (gimp-drawable-height theText) ) )
+        (gimp-image-resize theImage theImageWidth theImageHeight 0 0)
+        (gimp-layer-resize theLayer theImageWidth theImageHeight 0 0)
+      </programlisting>
+      <para>
+        Dersom du undrar på kva <quote>drawable</quote> betyr, er du ikkje
+        åleine. Det er eit ord som er definert i <acronym>GIMP</acronym> til
+        å bety alt som kan teiknast på, både lag, kanalar, lagmasker og det
+        du elles måtte kunne finna på. Eit lag er såleis bare ein
+        spesialversjon av <quote>drawable</quote>.
+      </para>
+      <para>
+        Nå skulle alt vere klart, og du kan gjenopna, eller skriva inn på
+        nytt, linja som sender biletet ditt til skjermen:
+      </para>
+      <programlisting>
+        (gimp-display-new theImage)
+      </programlisting>
+      <para>
+        Lagra arbeidet, oppdater databasen og prøv det første skriptet ditt.
+      </para>
+    </sect3>
+
 
     <sect3 lang='en'>
       <title lang='en'>Clearing The Dirty Flag</title>
@@ -3531,7 +4844,7 @@
         nuisance for the times when we simply give it a test run and
         don't add or change anything in the resulting image -- that
         is, our work is easily reproducible in such a simple script,
-        so it makes sense to get rid of this dirty flag. 
+        so it makes sense to get rid of this dirty flag.
       </para>
       <para lang='en'>
         To do this, we can clear the dirty flag after displaying the
@@ -3549,10 +4862,10 @@
         taste. I use it in scripts that produce new images, where the
         results are trivial, as in this case. If your script is very
         complicated, or if it works on an existing image, you will
-        probably not want to use this function. 
+        probably not want to use this function.
       </para>
     </sect3>
-      
+
     <sect3 lang='cs'>
       <title lang='cs'>Odstranění příznaku nečistoty</title>
       <para lang='cs'>
@@ -3581,35 +4894,67 @@
         existujícím obrázkem, není tato funkce vhodná.
       </para>
     </sect3>
-    
+
     <sect3 lang='fr'>
       <title>Annulons le drapeau de modification</title>
       <para>
-        Quand vous essayez de fermer une image modifiée sans l'avoir 
-        enregistrée au préalable, Gimp vous demande de l'enregistrer. 
-        L'image est en effet marquée par un drapeau de modification. Dans 
-        le cas de notre script, c'est une nuisance car nous ne faisons que 
-        tester nos modifications sans vouloir modifier définitivement 
-        l'image elle même -- nous pouvons reproduire l'effet du script 
-        comme nous voulons. Il est donc judicieux d'annuler ce drapeau de 
-        modification. 
+
+        Quand vous essayez de fermer une image modifiée sans l'avoir
+        enregistrée au préalable, Gimp vous demande de l'enregistrer.
+        L'image est en effet marquée par un drapeau de modification. Dans
+        le cas de notre script, c'est une nuisance car nous ne faisons que
+        tester nos modifications sans vouloir modifier définitivement
+        l'image elle même -- nous pouvons reproduire l'effet du script
+        comme nous voulons. Il est donc judicieux d'annuler ce drapeau de
+        modification.
       </para>
       <para>
-        Nous pouvons faire cela après l'affichage de l'image: 
+        Nous pouvons faire cela après l'affichage de l'image:
       </para>
       <programlisting>
         (gimp-image-clean-all theImage)
       </programlisting>
       <para>
-        Ceci mettra le drapeau de modification à 0, faisant comme si 
-        l'image n'avait pas été modifiée. 
+        Ceci mettra le drapeau de modification à 0, faisant comme si
+        l'image n'avait pas été modifiée.
       </para>
       <para>
-        Ajouter ou non cette ligne est affaire de goût personnel. Je 
-        l'utilise dans les scripts qui produisent une nouvelle image sans 
-        intérêt prononcé. Si votre script est très complexe, ou si vous 
-        travaillez sur une image existante, vous ne voudrez sûrement pas 
-        utiliser cette fonction. 
+        Ajouter ou non cette ligne est affaire de goût personnel. Je
+        l'utilise dans les scripts qui produisent une nouvelle image sans
+        intérêt prononcé. Si votre script est très complexe, ou si vous
+        travaillez sur une image existante, vous ne voudrez sûrement pas
+        utiliser cette fonction.
+      </para>
+    </sect3>
+
+    <sect3 lang="no">
+      <title>Stryk det skitne flagget</title>
+      <para>
+        Dersom du prøver å lukke biletet utan å lagra det først, vil
+        <acronym>GIMP</acronym> kome med eit spørsmål om du ønskjer å
+        lagra biletet. Dette fordi alle bilete det er gjort endringar i,
+        eller som ikkje er lagra, blir av <acronym>GIMP</acronym> definerte
+        til å vere <quote>skitne</quote>. Dette blir markert med eit (for
+        oss usynleg) flagg. For dette skriptet, som er lett å henta tilbake
+        igjen, er det liten vits i å lagra kvar gong du har sett på det. Du
+        kan likegodt fjerna dette flagget.
+      </para>
+      <para>
+        Du fjerner det skitne flagget med kommandoen
+      </para>
+      <programlisting>
+        (gimp-image-clean-all theImage)
+      </programlisting>
+      <para>
+        Dette vil setje flagget til 0 og vise at biletet er
+        <quote>reint</quote>.
+      </para>
+      <para>
+        Det er fritt fram om du vil bruke denne kommandoen. Eg nyttar det i
+        skript som lagar nye bilete og der innhaldet er enkelt, som i dette
+        skriptet. Lagar du skript med kompliserte resultat, eller skript som
+        skal nyttast på eksisterande bilete, vil det vere lurt å sløyfa denne
+        slettekommandoen.
       </para>
     </sect3>
   </sect2>
@@ -3619,20 +4964,21 @@
       <phrase lang='en'>Extending The Text Box Script</phrase>
       <phrase lang='cs'>Rozšíření skriptu Text Box</phrase>
       <phrase lang='fr'>Compléter le script Text Box</phrase>
+      <phrase lang="no">Utvid skriptet Text Box</phrase>
     </title>
-    
+
     <sect3 lang='en'>
       <title lang='en'>Handling Undo Correctly</title>
       <para lang='en'>
         When creating a script, you want to give your users the
         ability to undo their actions, should they make a
         mistake. This is easily accomplished by calling the functions
-        <code>gimp-undo-push-group-start</code> and 
+        <code>gimp-undo-push-group-start</code> and
         <code>gimp-undo-push-group-end</code> around
         the code that manipulates the image. You can think of them as
         matched statements that let Gimp know when to start and stop
         recording manipulations on the image, so that those
-        manipulations can later be undone. 
+        manipulations can later be undone.
       </para>
       <para lang='en'>
         If you are creating a new image entirely, it doesn't make
@@ -3642,10 +4988,11 @@
       </para>
       <para lang='en'>
         Undoing a script works nearly flawlessly when using these
+
         functions.
       </para>
     </sect3>
-      
+
     <sect3 lang='cs'>
       <title lang='cs'>Správné zacházení s historií změn</title>
       <para lang='cs'>
@@ -3672,30 +5019,55 @@
     <sect3 lang='fr'>
       <title lang='fr'>Gérer correctement l'annulation d'action</title>
       <para>
-        Quand vous créez un script, vous voulez donner à l'utilisateur la 
-        possibilité d'annuler ses actions, car il peut commettre des 
-        erreurs. Cela est facilement réalisé en appelant les fonctions 
-        <code>gimp-undo-push-group-start</code> et 
-        <code>gimp-undo-push-group-end</code> encadrant le code qui 
-        manipule l'image. Gimp connaîtra ainsi les parties de code dont 
-        l'action pourra être annulée. 
+        Quand vous créez un script, vous voulez donner à l'utilisateur la
+        possibilité d'annuler ses actions, car il peut commettre des
+        erreurs. Cela est facilement réalisé en appelant les fonctions
+        <code>gimp-undo-push-group-start</code> et
+        <code>gimp-undo-push-group-end</code> encadrant le code qui
+        manipule l'image. Gimp connaîtra ainsi les parties de code dont
+        l'action pourra être annulée.
       </para>
       <para>
-        Si vous créez une image entièrement, il est de peu d'intérêt 
-        d'utiliser ces fonctions, puique vous ne modifiez pas une image 
-        existante. Il en va tout autrement pour une image existante. 
+        Si vous créez une image entièrement, il est de peu d'intérêt
+        d'utiliser ces fonctions, puique vous ne modifiez pas une image
+        existante. Il en va tout autrement pour une image existante.
       </para>
       <para>
-        L'annulation d'un script marche presque parfaitement en utilisant 
-        ces fonctions. 
+        L'annulation d'un script marche presque parfaitement en utilisant
+        ces fonctions.
       </para>
     </sect3>
-    
+
+    <sect3 lang="no">
+      <title>Korrekt handtering av Angre</title>
+      <para>
+        Når du programmerer eit skript, er det ofte behov for å gi brukaren
+        ein sjanse til å angre dersom han gjer eit mistak. Dette kan du lett
+        få til ved å setje funksjonane <code>gimp-undo-push-group-start</code>
+        og <code>gimp-undo-push-group-end</code> rundt kodane som kan endra
+        biletet. Du kan sjå på funksjonane som kommandoar til
+        <acronym>GIMP</acronym> om å starte og stoppe registreringa av data
+        til angreloggen.
+      </para>
+      <para>
+        Dersom skriptet ditt opnar eit nytt vindauge, er desse funksjonane
+        unødvendige sidan du ikkje har behov for å endra i eit ferdig bilete.
+        Derimot kan det vere svært så nødvendig dersom skriptet arbeider på
+        eit eksisterande bilete.
+      </para>
+      <para>
+        Bruker du dei nemnde funksjonane, vil angrefunksjonen stort sett
+
+
+        arbeida feilfritt.
+      </para>
+    </sect3>
+
     <sect3 lang='en'>
       <title lang='en'>Extending The Script A Little More</title>
       <para lang='en'>
         Now that we have a very handy-dandy script to create text
-        boxes, let's add two features to it: 
+        boxes, let's add two features to it:
       </para>
       <itemizedlist>
         <listitem>
@@ -3708,19 +5080,20 @@
             add as a percentage of the size of the resultant text.
           </para>
         </listitem>
-        <listitem>      
+        <listitem>
           <para lang='en'>
             This script could easily be used in other scripts that work
             with text. Let's extend it so that it returns the image and
             the layers, so other scripts can call this script and use
-            the image and layers we create. 
+            the image and layers we create.
           </para>
         </listitem>
-      </itemizedlist>  
+      </itemizedlist>
     </sect3>
-    
+
     <sect3 lang='cs'>
-      <title lang='cs'>Další rozšíření skriptu</title> 
+
+      <title lang='cs'>Další rozšíření skriptu</title>
       <para lang='cs'>
         Nyní máme šikovný a funkční skript pro vytváření textových rámečků.
         Přidáme mu ale ještě dvě další funkce rozšiřující jeho možnosti.
@@ -3735,7 +5108,7 @@
             obrázku místo a dovolíme uživateli, aby jeho množství sám zadal
             jako procento z velikosti textu.
           </para>
-        </listitem>  
+        </listitem>
         <listitem>
           <para lang='cs'>
             Tento skript se dá snadno použít v rámci jiných skriptů
@@ -3750,50 +5123,87 @@
     <sect3 lang='fr'>
       <title>Compléter un peu plus notre script</title>
       <para>
-        Ajoutons encore quelques fonctionnalités à notre script: 
+        Ajoutons encore quelques fonctionnalités à notre script:
       </para>
       <itemizedlist>
         <listitem>
           <para>
-            Actuellement, l'image est redimensionnée pour coller exactement 
-            au texte, et il n'y a pas de place pour autre chose, comme une 
-            ombre portée ou un effet spécial. Ajoutons donc un tampon autour 
-            du texte et permettons même à l'utilisateur de fixer la taille 
-            du tampon à un pourcentage de la taille du texte. 
+            Actuellement, l'image est redimensionnée pour coller exactement
+            au texte, et il n'y a pas de place pour autre chose, comme une
+            ombre portée ou un effet spécial. Ajoutons donc un tampon autour
+            du texte et permettons même à l'utilisateur de fixer la taille
+            du tampon à un pourcentage de la taille du texte.
           </para>
         </listitem>
-        <listitem>      
+        <listitem>
           <para>
-            Ce script pourrait aisément être utilisé dans d'autres scripts 
-            travaillant sur du texte. Enrichissons-le donc aussi pour qu'il 
-            retourne l'image et les calques, de telle sorte que les autres 
-            scripts puissent les récupérer et les utiliser. 
+            Ce script pourrait aisément être utilisé dans d'autres scripts
+            travaillant sur du texte. Enrichissons-le donc aussi pour qu'il
+            retourne l'image et les calques, de telle sorte que les autres
+            scripts puissent les récupérer et les utiliser.
           </para>
         </listitem>
-      </itemizedlist>  
+      </itemizedlist>
     </sect3>
-    
-    <sect3 lang="cs;en;fr">
+
+    <sect3 lang="no">
+      <title>Enda ei skriptutviding</title>
+      <para>
+        Skriptet er nå blitt nokså brukbart, men vi ønskjer å legge inn to
+        nye og nyttige eigenskapar likevel:
+      </para>
+      <itemizedlist>
+        <listitem>
+          <para>
+            Slik skriptet er nå, blir biletet akkurat stort nok til å ta
+            inn teksten. Det er ikkje plass til andre ting, som t.d.
+            skyggelegging eller andre spesialeffektar. (Rett nok vil mange
+            skript ordna opp i dette sjølv dersom du bruker dei, men ikkje
+            alle). Difor er det ønskjeleg med litt luft kring teksten.
+            Brukaren kan sjølv bestemme storleiken på dette rommet i prosent
+            av tekststorleiken.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Sidan dette skriptet lett kan utvidast til nruk også i andre
+            skript, vil vi utvida det litt slik at det returnerar biletet og
+            laga. Dermed kan andre program kalla opp dette skriptet og nytta
+            seg av biletet og laga dette kreerer.
+          </para>
+        </listitem>
+      </itemizedlist>
+    </sect3>
+
+    <sect3 lang="cs;en;fr;no">
       <title lang='en'>Modifying The Parameters And The Registration Function</title>
       <title lang='cs'>Úprava parametrů a registrační funkce</title>
-      <title lang='fr'>Modifier les paramètres et la fonction 
+      <title lang='fr'>Modifier les paramètres et la fonction
       d'enregistrement</title>
-      
+      <title lang="no">Å endre parametra og registreringsfunksjonen</title>
+
       <para lang='en'>
         To let the user specify the amount of buffer, we'll add a
         parameter to our function and the registration function:
-      </para>     
+      </para>
       <para lang='cs'>
         Aby mohl uživatel zadat množství volného místa, přidáme parametr naší
         funkci i registrační funkci:
       </para>
       <para lang='fr'>
-        Pour permettre à l'utilisateur de spécifier la taille du tampon, 
-        nous ajouterons un paramètre à notre fonction et à la fonction 
+        Pour permettre à l'utilisateur de spécifier la taille du tampon,
+        nous ajouterons un paramètre à notre fonction et à la fonction
         d'enregistrement:
       </para>
-      
-      <programlisting lang="cs;en;fr">
+      <para lang="no">
+        For at brukaren skal få høve til å spesifisera storleiken på området
+        rundt teksten, må vi legge til eit parameter i programmet, og dermed
+        også i registreringsfunksjonen: (Hugs at det er vanleg skikk å lage
+        programma på engelsk, også merknadane. Det er likevel ingenting i
+        vegen for at du kan bruke norsk).
+      </para>
+
+      <programlisting lang="cs;en;fr;no">
         (define (script-fu-text-box inTest inFont inFontSize inTextColor inBufferAmount)
         (let*
               (
@@ -3801,7 +5211,7 @@
                  ; create a new image:
                  (theImageWidth  10)
                  (theImageHeight 10)
-                 (theImage (car 
+                 (theImage (car
                                 (gimp-image-new
                                  theImageWidth
                                  theImageHeight
@@ -3813,7 +5223,8 @@
                                     ;we create later
 
                  (theBuffer)        ;<emphasis role='bold'>added</emphasis>
-                 (theLayer 
+
+                 (theLayer
                            (car
                                (gimp-layer-new
                                 theImage
@@ -3831,7 +5242,7 @@
          <replaceable>[Code here]</replaceable>
        )
       </programlisting>
-      <programlisting lang="cs;en;fr">
+      <programlisting lang="cs;en;fr;no">
       <![CDATA[
         (script-fu-register
           "script-fu-text-box"                        ;func name
@@ -3861,7 +5272,7 @@
       <para lang='en'>
         We're going to add code in two places: right before we resize
         the image, and at the end of the script (to return the new
-        image, the layer and the text). 
+        image, the layer and the text).
       </para>
       <para lang='en'>
         After we get the text's height and width, we need to resize
@@ -3869,7 +5280,7 @@
         user. We won't do any error checking to make sure it's in the
         range of 0-100% because it's not life-threatening, and because
         there's no reason why the user can't enter a value like "200"
-        as the percent of buffer to add. 
+        as the percent of buffer to add.
       </para>
       <programlisting>
         (set! theBuffer (* theImageHeight (/ inBufferAmount 100) ) )
@@ -3881,14 +5292,15 @@
         All we're doing here is setting the buffer based on the height
         of the text, and adding it twice to both the height and width
         of our new image. (We add it twice to both dimensions because
-        the buffer needs to be added to both sides of the text.) 
+        the buffer needs to be added to both sides of the text.)
+
       </para>
       <para lang='en'>
         Now that we have resized the image to allow for a buffer, we
         need to center the text within the image. This is done by
         moving it to the (x, y) coordinates of (<varname>theBuffer</varname>,
         <varname>theBuffer</varname>). I added this line after
-        resizing the layer and the image: 
+        resizing the layer and the image:
       </para>
       <programlisting>
         (gimp-layer-set-offsets theText theBuffer theBuffer)
@@ -3899,7 +5311,7 @@
       </para>
       <para lang='en'>
         All that is left to do is return our image, the layer, and the
-        text layer. After displaying the image, we add this line: 
+        text layer. After displaying the image, we add this line:
       </para>
       <programlisting>
         (list theImage theLayer theText)
@@ -3910,11 +5322,11 @@
       </para>
       <para lang='en'>
         To use our new text box script in another script, we could
-        write something like the following: 
+        write something like the following:
       </para>
       <programlisting>
-        (set! theResult (script-fu-text-box 
-                         "Some text" 
+        (set! theResult (script-fu-text-box
+                         "Some text"
                          "Charter" "30"
                          '(0 0 0)
                          "35"
@@ -3927,7 +5339,7 @@
       </para>
     </sect3>
 
-    <sect3 lang='cs'>      
+    <sect3 lang='cs'>
       <title lang='cs'>Adding The New Code</title>
       <para lang='cs'>
         Kód musíme přidat na dvě místa: těsně před změnu velikosti obrázku a
@@ -3941,7 +5353,6 @@
       </para>
       <programlisting>
         (set! theBuffer (* theImageHeight (/ inBufferAmount 100) ) )
-
         (set! theImageHeight (+ theImageHeight theBuffer theBuffer) )
         (set! theImageWidth  (+ theImageWidth  theBuffer theBuffer) )
       </programlisting>
@@ -3980,8 +5391,8 @@
         něco podobného:
       </para>
       <programlisting>
-        (set! theResult (script-fu-text-box 
-                         "Some text" 
+        (set! theResult (script-fu-text-box
+                         "Some text"
                          "Charter" "30"
                          '(0 0 0)
                          "35"
@@ -3993,21 +5404,21 @@
         Výborně! Jste na cestě k černému pásku ve Script-Fu!
       </para>
     </sect3>
-    
+
     <sect3 lang='fr'>
       <title>Ajoutons ce nouveau code</title>
       <para>
-        Nous allons ajouter du code à deux endroits: juste avant de 
-        redimensionner l'image, et à la fin du script (pour retourner la 
-        nouvelle image, le calque et le texte). 
+        Nous allons ajouter du code à deux endroits: juste avant de
+        redimensionner l'image, et à la fin du script (pour retourner la
+        nouvelle image, le calque et le texte).
       </para>
       <para>
-        Après avoir obtenu la hauteur et la largeur du texte, nous devons 
-        changer ces valeurs sur la base de la taille du tampon spécifiée par 
-        l'utilisateur. Nous ne commettrons pas d'erreur en ne recherchant 
-        pas si la valeur est dans l'intervalle 0-100%, parce que ce n'est 
-        pas vital, et qu'il n'y a aucune raison que l'utilisateur ne puisse 
-        pas donner une valeur de 200% au tampon. 
+        Après avoir obtenu la hauteur et la largeur du texte, nous devons
+        changer ces valeurs sur la base de la taille du tampon spécifiée par
+        l'utilisateur. Nous ne commettrons pas d'erreur en ne recherchant
+        pas si la valeur est dans l'intervalle 0-100%, parce que ce n'est
+        pas vital, et qu'il n'y a aucune raison que l'utilisateur ne puisse
+        pas donner une valeur de 200% au tampon.
       </para>
       <programlisting>
         (set! theBuffer (* theImageHeight (/ inBufferAmount 100) ) )
@@ -4016,47 +5427,47 @@
         (set! theImageWidth  (+ theImageWidth  theBuffer theBuffer) )
       </programlisting>
       <para>
-        Tout ce que nous faisons ici est de régler le tampon sur la hauteur 
-        du texte, et de l'ajouter deux fois à la hauteur et à la largeur de 
-        notre nouvelle image (deux fois parce que le tampon doit être ajouté 
-        des deux côtés du texte). 
+        Tout ce que nous faisons ici est de régler le tampon sur la hauteur
+        du texte, et de l'ajouter deux fois à la hauteur et à la largeur de
+        notre nouvelle image (deux fois parce que le tampon doit être ajouté
+        des deux côtés du texte).
       </para>
-      
+
       <para>
-        maintenant que nous avons redimensionné l'image pour 
-        permettre une zone tampon, nous devons centrer le texte dans 
-        l'image. Nous le faisons en le déplaçant vers les coordonnées (x,y) 
-        de (<varname>theBuffer</varname>,<varname>theBuffer</varname>). J'ai 
-        ajouté cette ligne après le redimensionnement du calque et de 
-        l'image: 
+        maintenant que nous avons redimensionné l'image pour
+        permettre une zone tampon, nous devons centrer le texte dans
+        l'image. Nous le faisons en le déplaçant vers les coordonnées (x,y)
+        de (<varname>theBuffer</varname>,<varname>theBuffer</varname>). J'ai
+        ajouté cette ligne après le redimensionnement du calque et de
+        l'image:
       </para>
       <programlisting>
         (gimp-layer-set-offsets theText theBuffer theBuffer)
       </programlisting>
-      
+
       <para>
-        Poursuivez et enregistrez votre script, puis testez-le après avoir 
-        rafraîchi la base de données. 
+        Poursuivez et enregistrez votre script, puis testez-le après avoir
+        rafraîchi la base de données.
       </para>
       <para>
-        Tout ce qui reste à faire est de retourner notre image, le calque et 
-        le calque de texte. Après l'affichage de l'image, nous ajoutons 
-        cette ligne: 
+        Tout ce qui reste à faire est de retourner notre image, le calque et
+        le calque de texte. Après l'affichage de l'image, nous ajoutons
+        cette ligne:
       </para>
       <programlisting>
         (list theImage theLayer theText)
       </programlisting>
       <para>
-        C'est la dernière ligne de la fonction, qui rend cette liste 
-        disponible pour les autres scripts qui veulent l'utiliser. 
+        C'est la dernière ligne de la fonction, qui rend cette liste
+        disponible pour les autres scripts qui veulent l'utiliser.
       </para>
       <para>
-        pour utiliser notre nouveau script de boîte de texte dans un autre 
-        script, nous pourrions écrire quelque chose comme: 
+        pour utiliser notre nouveau script de boîte de texte dans un autre
+        script, nous pourrions écrire quelque chose comme:
       </para>
       <programlisting>
-        (set! theResult (script-fu-text-box 
-                         "Some text" 
+        (set! theResult (script-fu-text-box
+                         "Some text"
                          "Charter" "30"
                          '(0 0 0)
                          "35"
@@ -4065,8 +5476,81 @@
         (gimp-image-flatten (car theResult))
       </programlisting>
       <para>
-        Félicitations, vous êtes sur le chemin de votre Ceinture Noire de 
-        Scrip-Fu! 
+        Félicitations, vous êtes sur le chemin de votre Ceinture Noire de
+        Scrip-Fu!
+      </para>
+    </sect3>
+
+    <sect3 lang="no">
+      <title>Tilføy den nye koden</title>
+      <para>
+        Det må leggjast inn ny kode på to stader: Like før vi sett
+        storleiken på biletet på nytt, og heilt til slutt i programmet.
+        Dette siste for at programmet skal returnera det nye biletet, laget
+        og teksten. Hugs at Scheme alltid returnerar bare resultatet av den
+        siste funksjonen.
+      </para>
+      <para>
+        Når høgda og breidda på teksten er fastsett, må også data for margen
+        rundt teksten leggast til desse verdiane for å finna storleiken på
+        biletet. Det er ikkje lagt inn noen kontroll på om innskrivinga held
+        seg i området 0 - 100%. Dette både fordi det ikkje er livsviktig for
+        programmet, og fordi det finst ingen rimeleg grunn til å hindra
+        brukaren i å velja 200 som prosentsats.
+      </para>
+      <programlisting>
+        (set! theBuffer (* theImageHeight (/ inBufferAmount 100) ) )
+
+        (set! theImageHeight (+ theImageHeight theBuffer theBuffer) )
+        (set! theImageWidth  (+ theImageWidth  theBuffer theBuffer) )
+      </programlisting>
+      <para>
+        Det som skjer her er at verdiane for margen rundt teksten
+        (<code>theBuffer</code>) blir rekna ut i første linja. I dei to
+        neste linjene blir verdiane for sidekantane i bilete rekna ut.
+        (Grunnen til at verdien for <code>theBuffer</code> må leggast til
+        to goner, er at det skal vere marg rundt alle sidene).
+      </para>
+      <para>
+        Etter linja som bestemmer storleiken på biletet, set du inn ei linje
+        som sentrerer teksten. Dette blir gjort med ein innebygd funksjon,
+        og ser slik ut:
+      </para>
+      <programlisting>
+        (gimp-layer-set-offsets theText theBuffer theBuffer)
+      </programlisting>
+      <para>
+        Nå er det på tide å prøve skriptet. Lagra det, oppdater databasen
+        og gled deg over det nye skriptet ditt, eller plukk ut eventuelle
+        skrivefeil og prøv på nytt.
+      </para>
+      <para>
+        Nå står det bare igjen å setje returverdiane for biletet, laget og
+        tekstlaget. Etter linja som viser biletet på skjermen, set du inn
+      </para>
+      <programlisting>
+        (list theImage theLayer theText)
+      </programlisting>
+      <para>
+        Dette er den siste linja i funksjonen. Det er denne linja som gjer
+        at skriptet også kan brukast frå andre skript.
+      </para>
+      <para>
+        Du kan teste det ut ved å lage eit nytt skript som inneheld noe i
+        denne duren:
+      </para>
+      <programlisting>
+        (set! theResult (script-fu-text-box
+                         "Some text"
+                         "Charter" "30"
+                         '(0 0 0)
+                         "35"
+                        )
+        )
+        (gimp-image-flatten (car theResult))
+      </programlisting>
+      <para>
+        Gratulerer. Du er nå på god veg mot svart belte i Script-Fu!
       </para>
     </sect3>
   </sect2>
