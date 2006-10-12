@@ -78,6 +78,13 @@ if test -z "$XSLTPROC" && test "x$enable_build" = "xyes"; then
 ** See the file 'INSTALL' for more help.])
 fi
 
+AC_MSG_CHECKING([for stylesheet to build index])
+AUTOIDX=autoidx
+if test `$XSLTPROC -V | head -n 1| awk '{print $5}'` -gt 10116; then
+    AUTOIDX=autoidx-ng
+fi
+AC_MSG_RESULT([$AUTOIDX])
+AC_SUBST(AUTOIDX)
 
 #  Search for xmllint.
 
