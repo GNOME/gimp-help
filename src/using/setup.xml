@@ -7,7 +7,7 @@
   2006-08-19 Added Norwegian translation by KoSt
   2006-07-22 dust: added ko translation
 -->
-<sect1 id="gimp-using-setup-tile-cache" lang="cs;en;de;fr;ko;no;zh_CN">
+<sect1 id="gimp-using-setup-tile-cache" lang="cs;en;de;fr;it;ko;no;zh_CN">
   <sect1info lang="en;fr;ko">
     <revhistory>
       <revision lang="en;fr;ko;no">
@@ -29,6 +29,7 @@
     <phrase lang="en">How to Set Your Tile Cache</phrase>
     <phrase lang="de">Einstellen des Datenspeichers</phrase>
     <phrase lang="fr">Comment ajuster le cache d'image</phrase>
+    <phrase lang="it">Come impostare la cache tile</phrase>
     <phrase lang="ko">타일 캐쉬 설정하는 방법</phrase>
     <phrase lang="no">Korleis setje opp bufferlageret</phrase>
     <phrase lang="zh_CN">如何设置平铺缓存</phrase>
@@ -43,6 +44,9 @@
   <indexterm lang="fr">
     <primary lang="fr">Cache d'image</primary>
   </indexterm>
+  <indexterm lang="it">
+    <primary>Cache tile</primary>
+  </indexterm>
   <indexterm lang="ko">
     <primary>타일 캐쉬</primary>
   </indexterm>
@@ -51,6 +55,21 @@
   </indexterm>
 
   <!-- TODO: en please, translate this part to English -->
+  <!-- TODO: this is a bad translation, I know, please, check this English
+       part: ciampix -->
+  <para lang="en">
+    During the data processing and manipulation of pictures, GIMP becomes
+    in the need of much main memory. The more is available the better is.
+    <acronym>GIMP</acronym> uses the operating system memory available
+    resources as effectively as possible, striving to mantain the work on
+    the pictures fast and comfortable for the user. That Data memory,
+    during the treatment, is organized in buffered blocks of graphic data,
+    wich could exists in two different form of data memory: in the slow not
+    removable disk or in the fast main RAM memory. GIMP uses preferibly the
+    last one but, when it is scarse, the first is accessed for the
+    remaining data. These chunks of graphic data are commonly referred as
+    "tiles" and the entire system si called "tile cache".
+  </para>
   <para lang="cs">
     Zpracování obrázků může vyžadovat obrovské množství paměti. GIMP, do
     určitého okamžiku, používá ke správě paměti služby operačního systému.
@@ -85,6 +104,20 @@
     utilisée par les images au-delà de laquelle les données les plus anciennes
     seront envoyées sur le disque dur dans le répertoire d'échange.
   </para>
+  <para lang="it">
+    Durante l'elaborazione e la manipolazione delle immagini, GIMP
+    necessita di molta memoria. In generale è risaputo che, di memoria RAM,
+    più ce n'è e meglio è, perciò GIMP cerca di ottimizzare il consumo di
+    memoria, cercando nel contempo di mantenere il lavoro sulle immagini il
+    più veloce e confortevole possibile per l'utente. Questa memoria dati,
+    durante l'elaborazione, viene organizzata in blocchi bufferizzati di
+    dati grafici, che possono risiedere nei due tipi principali di memoria:
+    sul lento disco non rimuovibile o sulla veloce memoria RAM.
+    GIMP usa preferibilmente la seconda ma, quando questa scarseggia,
+    accede alla prima per i dati che non stanno in RAM. Questi blocchi di
+    dati grafici sono comunemente chiamati "tile" e il sistema globalmente
+    viene chiamato "cache tile".
+  </para>
   <para lang="no">
     Biletbehandling kan bruke store mengder maskinminne.
     <acronym>GIMP</acronym> bruker tenestene frå operativsystemet opp til ei
@@ -97,7 +130,10 @@
     mykje som må gjerast på harddisken.
   </para>
   <para lang="zh_CN">
-    图像处理需要大量的内存。GIMP 依赖操作系统来处理内存，直到超过一定数量时，它就使用自己的系统，这样就不会用光所有系统内存资源。该系统发送旧数据到磁盘文件上。该临界数量就由平铺缓存决定---能使用操作系统资源的最大值---用字节(或其倍数，象兆字节)。它不包括 GIMP 自身的内存，只是图像数据需求的空间。
+    图像处理需要大量的内存。GIMP 依赖操作系统来处理内存，直到超过一定数量时，
+    它就使用自己的系统，这样就不会用光所有系统内存资源。该系统发送旧数据到磁
+    盘文件上。该临界数量就由平铺缓存决定---能使用操作系统资源的最大值---用字
+    节(或其倍数，象兆字节)。它不包括 GIMP 自身的内存，只是图像数据需求的空间。
   </para>
 
   <para lang="cs">
@@ -135,8 +171,17 @@
     andere Programme, die zeitgleich ausgeführt werden, weniger Arbeitsspeicher
     zur Verfügung haben.
   </para>
+  <para lang="it">
+    Un valore basso per la cache tile significa che GIMP spedisce i dati su
+    disco molto velocemente, non facendo praticamente uso della RAM
+    disponibile e facendo lavorare il disco inutilmente. Un valore troppo
+    alto per la cache tile, avrà come conseguenza che le altre applicazioni
+    avranno meno risorse di sistema forzandole a fare un uso importante
+    dell'area di scambio, che a sua volta aumenterà anche in questo caso
+    molto l'uso del disco; alcune applicazioni potrebbero bloccarsi o
+    funzionare male a causa della poca RAM disponibile.
+  </para>
   <para lang="ko">
-
     낮은 값은 김프로 하여금 굳이 디스크를 사용하지 않아도 되는 경우에도
     램이 아닌 디스크를 사용하게 만든다. 그리고 너무 높은 값은 다른
     프로그램에 할당되는 시스템 리소스를 제한하게 되므로, 해당 프로그램들이
@@ -153,7 +198,10 @@
     på grunn av for lite minneplass.
   </para>
   <para lang="zh_CN">
-    一个低值意味着 GIMP 很快地发送数据到文件，并不真正使用可用到的 RAM，也不需要任何真正理由就使磁盘工作。太高的值意味着其它程序启动时使用更少的内存，使它们使用交换空间，而这也要使磁盘工作；或许一些会被杀掉或由于缺乏内存而发生故障。
+    一个低值意味着 GIMP 很快地发送数据到文件，并不真正使用可用到的 RAM，也不
+    需要任何真正理由就使磁盘工作。太高的值意味着其它程序启动时使用更少的内存，
+    使它们使用交换空间，而这也要使磁盘工作；或许一些会被杀掉或由于缺乏内存而
+    发生故障。
   </para>
 
   <para lang="cs">
@@ -171,6 +219,11 @@
   <para lang="fr">
     Comment choisir une valeur pour la mémoire virtuelle? Voici quelques trucs
     pour vous aider:
+  </para>
+  <para lang="it">
+    Come fare per impostare la dimensione della cache tile in maniera
+    appropriata? Ecco qualche trucco e alcuni suggerimenti che possono
+    aiutare a decidere il valore numerico da assegnare:
   </para>
   <para lang="ko">
     그러면 얼마 정도의 타일 캐쉬 크기가 적당할까? 다음 사항들을 참고하면
@@ -210,7 +263,6 @@
         groß sind, dass sich die Größe negativ auf den Arbeitsprozess am
         Computer auswirkt.
       </para>
-
       <para lang="fr">
         La méthode la plus simple est de ne pas y penser et d'espérer que la
         valeur par défaut conviendra. C'était valable quand les ordinateurs
@@ -219,9 +271,18 @@
         applications. Si vous utilisez GIMP simplement pour des logos ou des
         captures d'écran, ça peut aller.
       </para>
+      <para lang="it">
+        Il metodo più semplice consiste nel dimenticarsi del problema
+        sperando che il valore predefinito vada bene. Può funzionare per
+        computer con poca RAM e per chiunque intenda lavorare con immagini
+        piccole e contemporaneamente aprire diverse altre applicazioni. Se
+        si fa qualcosa di semplice come catturare schermate e logotipi,
+        questa è probabilmente la migliore soluzione.
+      </para>
       <para lang="ko">
-        사실 가장 속편한 방법은 그냥 기본값으로 사용하는 것이다. 이것은 컴퓨터에 메모리가 적을 경우에 필요한 항목이다. 따라서
-        일반적인 사용에서는 크게 신경을 쓰지 않아도 된다.
+        사실 가장 속편한 방법은 그냥 기본값으로 사용하는 것이다. 이것은
+        컴퓨터에 메모리가 적을 경우에 필요한 항목이다. 따라서 일반적인
+        사용에서는 크게 신경을 쓰지 않아도 된다.
       </para>
       <para lang="no">
         Den enklaste metoden er å gløyme alt om minnelageret og håpe på at
@@ -233,8 +294,9 @@
         og til, er dette framleis truleg den beste metoden.
       </para>
       <para lang="zh_CN">
-        最简单的办法就是不用管它，并希望默认值能工作。当电脑有少量内存时是个可行办法，大部分人只是用 GIMP
-        生成小图像同时运行一个或两个其它的程序。假如您只是使用 GIMP 来生成截图和标志，这可能是最好的解决办法。
+        最简单的办法就是不用管它，并希望默认值能工作。当电脑有少量内存时是个
+        可行办法，大部分人只是用 GIMP 生成小图像同时运行一个或两个其它的程序。
+        假如您只是使用 GIMP 来生成截图和标志，这可能是最好的解决办法。
       </para>
     </listitem>
 
@@ -258,20 +320,30 @@
         also auf 384 MegaByte.
       </para>
       <para lang="ko">
-        만약 512MB 이상의 메모리를 가진 컴퓨터를 소유하고 있다면, 그 절반을 타일 캐쉬로 할당하면 웬만한 상황에서도 다른
-        프로그램을 방해하지 않으면서도 좋은 성능을 체험할 수 있다. 그리고 메모리의 3/4 가량을 할당한다면 그보다 더 좋은 성능을
-        보일 것이다.
+        만약 512MB 이상의 메모리를 가진 컴퓨터를 소유하고 있다면, 그 절반을
+        타일 캐쉬로 할당하면 웬만한 상황에서도 다른 프로그램을 방해하지
+        않으면서도 좋은 성능을 체험할 수 있다. 그리고 메모리의 3/4 가량을
+        할당한다면 그보다 더 좋은 성능을 보일 것이다.
+      </para>
+      <para lang="it">
+        Se si possiede un moderno computer con tanta RAM, 512MiB o più,
+        impostare la cache tile ad un valore corrispondente a metà della
+        memoria di sistema fornisce in generale delle buone prestazioni
+        senza sottrarre troppa memoria alle altre applicazioni.
+        Probabilmente anche un valore di 3/4 della dimensione totale
+        potrebbe andare bene.
       </para>
       <para lang="no">
-        Har du ein nyare datamaskin med 512 Mb eller meir minneplass (RAM), vil
-        eit bufferlager på omkring halvparten av RAM som oftast vere høvande for
-        normal bruk av <acronym>GIMP</acronym>, utan å stressa andre program for
-        mykje. Kanskje kan til og med opp til 3/4 av RAM avsetjast til
-        bufferlageret utan å lage konfliktar.
+        Har du ein nyare datamaskin med 512 Mb eller meir minneplass (RAM),
+        vil eit bufferlager på omkring halvparten av RAM som oftast vere
+        høvande for normal bruk av <acronym>GIMP</acronym>, utan å stressa
+        andre program for mykje. Kanskje kan til og med opp til 3/4 av RAM
+        avsetjast til bufferlageret utan å lage konfliktar.
       </para>
       <para lang="zh_CN">
-        假如您有一个现代的电脑和大量内存---512 MB 或更多---设置平铺缓存为一半的内存可能将使 GIMP
-        在大多数情况下有个好的表现，而且不会使其它程序丧失使用内存的权利。或许甚至是 3/4 的 RAM 都很好。
+        假如您有一个现代的电脑和大量内存---512 MB 或更多---设置平铺缓存为一
+        半的内存可能将使 GIMP 在大多数情况下有个好的表现，而且不会使其它程序
+        丧失使用内存的权利。或许甚至是 3/4 的 RAM 都很好。
       </para>
       <para lang="fr">
         Si vous avez un ordinateur récent avec quantité de mémoire -- disons
@@ -282,7 +354,7 @@
       </para>
     </listitem>
 
-    <listitem lang="cs;de;en;fr;ko;no;zh_CN">
+    <listitem lang="cs;de;en;fr;it;ko;no;zh_CN">
       <para lang="cs">
         Můžete také požádat někoho zkušenějšího, aby vám GIMP nastavil. V
         případě, že počítač sdílíte s dalšími uživateli je to velmi dobrý
@@ -317,26 +389,39 @@
         parce que vous abusez de la machine. S'il s'agit de votre machine, ça
         vous vaudra l'obligation de payer une verre pour le service.
       </para>
+      <para lang="it">
+        Domandare a qualcuno nel caso di un computer che serva più utenti è
+        spesso una buona idea: in questo modo l'amministratore del computer
+        e gli altri utenti non vi assaliranno accusandovi di abusare della
+        macchina che vi è stata messa a disposizione né rischierete di far
+        funzionare GIMP troppo male. Se il computer è vostro o se serve
+        solo un utente alla volta, significa che avrete l'obbligo morale di
+        pagare un po' di soldi, pizza o bevute come pagamento per il
+        servizio.
+      </para>
       <para lang="ko">
-        누군가 여러 명의 사용자가 동시에 사용하는 컴퓨터에서 관리자나 다른 사용자들에게 불편을 주지 않으면서 김프를 원활하게 사용할
-        수 있는 방법을 요구할지도 모른다. 하지만 그 컴퓨터가 당신의 것이고, 특정 시간에 단일 사용자만 사용한다면 크게 문제가 될
-        것이 없을 것이다.
+        누군가 여러 명의 사용자가 동시에 사용하는 컴퓨터에서 관리자나 다른
+        사용자들에게 불편을 주지 않으면서 김프를 원활하게 사용할 수 있는
+        방법을 요구할지도 모른다. 하지만 그 컴퓨터가 당신의 것이고, 특정
+        시간에 단일 사용자만 사용한다면 크게 문제가 될 것이 없을 것이다.
       </para>
       <para lang="no">
         Be noen om å setje opp maskinen for deg. Særleg dersom datamaskinen
         blir brukt av fleire ulike brukarar samstundes, kan dette vere ein
-        god ide. På den måten unngår du at administratoren eller andre brukarar
-        blir sure på deg fordi du misbruker maskinen, og at du står att med ein
-        underytande <acronym>GIMP</acronym>. Er det din maskin, og han bare blir
-        brukt av ein brukar om gongen, kan det bety at du må ut med litt
-        småpengar eller ei venneteneste for jobben.
+        god ide. På den måten unngår du at administratoren eller andre
+        brukarar blir sure på deg fordi du misbruker maskinen, og at du
+        står att med ein underytande <acronym>GIMP</acronym>. Er det din
+        maskin, og han bare blir brukt av ein brukar om gongen, kan det
+        bety at du må ut med litt småpengar eller ei venneteneste for
+        jobben.
       </para>
       <para lang="zh_CN">
-        当电脑用于多用户环境中时，最好请别人帮您设置：这样管理员和其它用户就不会由于您错误的设置而发疯，也不会使 GIMP 表现地很差。
+        当电脑用于多用户环境中时，最好请别人帮您设置：这样管理员和其它用户就
+        不会由于您错误的设置而发疯，也不会使 GIMP 表现地很差。
       </para>
     </listitem>
 
-    <listitem lang="cs;de;en;fr;ko;no;zh_CN">
+    <listitem lang="cs;de;en;fr;it;ko;no;zh_CN">
       <para lang="cs">
         Můžete také vyrovnávací paměť dlaždic při každém spuštění Gimpu
         opatrně zvyšovat a dávat pozor, zda si operační systém nestěžuje na
@@ -364,9 +449,18 @@
         manque de mémoire peut apparaître subitement et que quelques
         applications peuvent être fermées pour faire de la place.
       </para>
+      <para lang="it">
+        Cominciare a cambiare leggermente il valore ad ogni avvio e
+        controllare se migliora di velocità e che il sistema non si lamenti
+        della mancanza di memoria. Tenere bene a mente che alle volte la
+        mancanza di memoria con alcune applicazioni si palesa con la loro
+        improvvisa chiusura per fare spazio alle altre.
+      </para>
       <para lang="ko">
-        타일 캐쉬값을 조절하는 것은 그 값을 하나씩 증가시켜가면서 시스템이 메모리 부족을 겪지 않으면서 최고의 성능을 발휘하는 값을
-        찾아내는 과정이다. 미리 경고하지만, 메모리 부족은 때때로 다른 응용 프로그램을 종료시킬 수도 있다.
+        타일 캐쉬값을 조절하는 것은 그 값을 하나씩 증가시켜가면서 시스템이
+        메모리 부족을 겪지 않으면서 최고의 성능을 발휘하는 값을 찾아내는
+        과정이다. 미리 경고하지만, 메모리 부족은 때때로 다른 응용 프로그램을
+        종료시킬 수도 있다.
       </para>
       <para lang="no">
         Start med å auka bufferverdien litt om gongen medan du kontrollerar
@@ -376,11 +470,13 @@
         slår av enkelte program for å halde dei andre programma i live.
       </para>
       <para lang="zh_CN">
-        每次稍微地改变其值，然后检查每次增加变得越来越快，而系统未报怨缺乏内存。预先警告您，有时突然出现的缺乏内存会使一些程序被杀掉来为其它腾出空间。
+        每次稍微地改变其值，然后检查每次增加变得越来越快，而系统未报怨缺乏内
+        存。预先警告您，有时突然出现的缺乏内存会使一些程序被杀掉来为其它腾出
+        空间。
       </para>
     </listitem>
 
-    <listitem lang="cs;de;en;fr;ko;no;zh_CN">
+    <listitem lang="cs;de;en;fr;it;ko;no;zh_CN">
       <para lang="cs">
         Další možností je vhodnou hodnotu vypočítat. Možná ji bude později
         nutné doladit, ale to se může stát i u předešlých metod. Výhodou
@@ -404,9 +500,18 @@
         Faire un petit calcul d'une valeur viable. Vous pourrez toujours
         utiliser les autres méthodes si ça ne marche pas.
       </para>
+      <para lang="it">
+        Fare qualche semplice calcolo per trovare un valore
+        accettabile. Forse sarà necessario regolarlo più avanti magari con
+        gli altri metodi sopra descritti. Con questo metodo è più rigoroso
+        e forse si è più consci di cosa si sta facendo per ottenere il
+        meglio dal proprio computer.
+      </para>
       <para lang="ko">
-        간단한 계산으로 정확한 값을 계산할 수도 있고, 나중에 조정할 수도 있다. 하지만 타일 캐쉬값을 언제 조정하든, 어떤 방법으로
-        하든 명심해야 할 것은 당신의 컴퓨터에 최적인 값을 택해야 한다라는 것이다.
+        간단한 계산으로 정확한 값을 계산할 수도 있고, 나중에 조정할 수도
+        있다. 하지만 타일 캐쉬값을 언제 조정하든, 어떤 방법으로 하든
+        명심해야 할 것은 당신의 컴퓨터에 최적인 값을 택해야 한다라는
+        것이다.
       </para>
       <para lang="no">
         Forsøk litt matematikk og rekn ut ein høvande verdi. Kanskje må du
@@ -415,7 +520,9 @@
         du kan få det beste ut av datamaskinen.
       </para>
       <para lang="zh_CN">
-        做一些简单的数学运算来计算一个可用的值。也许您需要以后再调整，但是务必要用其它以前的方法调整。至少您明白将发生什么并得到适合您电脑的最佳值。
+        做一些简单的数学运算来计算一个可用的值。也许您需要以后再调整，但是务
+        必要用其它以前的方法调整。至少您明白将发生什么并得到适合您电脑的最佳
+        值。
       </para>
     </listitem>
   </itemizedlist>
@@ -468,6 +575,19 @@
     pouvez changer le répertoire du fichier d'échange de GIMP dans la rubrique
     Dossiers des Préférences.
   </para>
+  <para lang="it">
+    Supponiamo di preferire l'ultima opzione e che si voglia ottenere un
+    buon valore di partenza. Prima di tutto è necessario raccogliere
+    qualche dato sul proprio computer. Questi riguardano principalmente la
+    quantità di memoria RAM installata, la disponibilità di memoria di
+    paginazione di sistema e il percorso usato per la paginazione di GIMP.
+    Non è necessario fare dei test sui dischi, né controllarne la velocità
+    di rotazione; basta capire quale disco (ndt: naturalmente se ce n'è
+    più d'uno...) appare chiaramente più veloce o se sembrano tutti uguali.
+    Nel caso è possibile agire sul percorso della cartella di scambio di
+    gimp impostandola sul disco più veloce nella finestra delle preferenze
+    di GIMP.
+  </para>
   <para lang="ko">
     마지막 방법을 선택하고 적정한 값으로 시작하기를 원한다면 먼저 당신의
     컴퓨터에 대해 알고 있어야 한다. 그것은 설치된 메모리의 총량, 운영
@@ -492,7 +612,11 @@
     </menuchoice>.
   </para>
   <para lang="zh_CN">
-    我们假设您喜欢最后一种方式，并想用一个好的值来启动。首先，您需要从您的电脑知道一些数据。您系统安装的内存大小，操作系统可用的交换空间，和存储操作系统交换区和 GIMP 交换目录的磁盘大致速度。您并不需要进行磁盘测试，或检查磁盘的转速，只需知道哪一个看起来要明显得快或慢，或完全相同。您可以在首选项对话框的文件夹页来改变 GIMP 的交换目录。
+    我们假设您喜欢最后一种方式，并想用一个好的值来启动。首先，您需要从您的电
+    脑知道一些数据。您系统安装的内存大小，操作系统可用的交换空间，和存储操作
+    系统交换区和 GIMP 交换目录的磁盘大致速度。您并不需要进行磁盘测试，或检查
+    磁盘的转速，只需知道哪一个看起来要明显得快或慢，或完全相同。您可以在首选
+    项对话框的文件夹页来改变 GIMP 的交换目录。
   </para>
 
   <para lang='cs'>
@@ -545,6 +669,22 @@
     données, en anglais. Avec free, notez la valeur free "-/+ buffers/cache"
     et le free swap.
   </para>
+  <para lang='it'>
+    Il passo successivo da effettuare è vedere quante risorse si rendono
+    necessarie per le altre applicazioni che si vogliono eseguire
+    contemporaneamente a GIMP. È necessario avviare tutti insieme i propri
+    strumenti e provare a lavorare con essi per un po', eccetto GIMP
+    naturalmente, controllandone l'usabilità. È possibile usare
+    applicazioni specifiche come free o top, a seconda del tipo di sistema
+    operativo in uso e dell'ambiente di lavoro. I numeri che servono
+    riguardano la memoria disponibile, inclusa la cache dei file. Gli Unix
+    moderni mantengono libera solo una piccola area di memoria, in maniera
+    da usare la memoria libera per grandi cache di file e di buffer. Il
+    comando Linux <emphasis>free</emphasis> esegue il calcolo per voi:
+    controllare la colonna con la dicitura <quote>free</quote>, e la riga
+    <quote>-/+ buffers/cache</quote>.  Tenere conto anche dello spazio
+    libero nella memoria di paginazione (swap).
+  </para>
   <para lang="ko">
     그 다음에 할 일은 김프와 동시에 사용할 프로그램들에 필요한 리소스양을
     확인하는 것이다. 이제 자주 쓰는 (김프를 제외한) 모든 프로그램을
@@ -569,7 +709,12 @@
     <quote>-/+ buffers/cache</quote>. Noter deg også ledig diskbufferplass.
   </para>
   <para lang="zh_CN">
-    下一件事就是看和 GIMP 一起运行的其它程序需要多少资源。因此启动您的所有工具并在上干些事，当然除了 GIMP，并检查使用率。您可使用 free 或 top 等程序，这和您使用何种 OS 和环境有关。您想知道的是剩余多少内存，包括文件缓冲。现代 Unix 只保留一小部分空闲，而为了保持大量的文件和缓存区缓存。Linux 的 <emphasis>free</emphasis> 命令帮您计算：查看“free”列，“-/+ buffers/cache”行。下面则是 free swap。
+    下一件事就是看和 GIMP 一起运行的其它程序需要多少资源。因此启动您的所有工
+    具并在上干些事，当然除了 GIMP，并检查使用率。您可使用 free 或 top 等程序，
+    这和您使用何种 OS 和环境有关。您想知道的是剩余多少内存，包括文件缓冲。现
+    代 Unix 只保留一小部分空闲，而为了保持大量的文件和缓存区缓存。Linux 的
+    <emphasis>free</emphasis> 命令帮您计算：查看“free”列，“-/+
+    buffers/cache”行。下面则是 free swap。
   </para>
 
   <para lang='cs'>
@@ -593,6 +738,11 @@
     base est de décider si vous voulez baser tout le cache d'image en RAM ou
     le partager entre la RAM et le fichier d'échange du système:
   </para>
+  <para lang='it'>
+    Ora è tempo di decisioni e di poca e semplice matematica. Il concetto
+    di base è decidere se si vuole allocare tutta la cache tile in RAM o in
+    RAM più lo spazio di paginazione del sistema operativo:
+  </para>
   <para lang="ko">
     이제 간단한 계산을 할 차례이다. 이는 램이나 운영체제 스왑 공간에 얼마
     만큼의 타일 캐쉬 공간을 할당할 것인가 하는 결정이다. :
@@ -602,10 +752,11 @@
     mellom å leggje heile bufferen i RAM eller i RAM pluss diskbuffaren.
   </para>
   <para lang="zh_CN">
-    现在是决定和进行一点简单数学计算的时候了，主要是决定是否想要基于 RAM 所有平铺缓存，或 RAM 加上操作系统交换区：
+    现在是决定和进行一点简单数学计算的时候了，主要是决定是否想要基于 RAM 所
+    有平铺缓存，或 RAM 加上操作系统交换区：
   </para>
 
-  <procedure lang="cs;de;en;fr;ko;no;zh_CN">
+  <procedure lang="cs;de;en;fr;it;ko;no;zh_CN">
     <step>
       <para lang="cs">
         Přecházíte hodně mezi jednotlivými aplikacemi? Nebo pracujete v Gimpu
@@ -643,10 +794,24 @@
         d'application, ne comptez que la free RAM et passez à la décision
         finale.
       </para>
+      <para lang="it">
+        Si cambia spesso applicazione? O piuttosto si lavora abitualmente
+        per lunghi periodi solo con GIMP? Se ci si accorge di passare gran
+        parte del tempo con GIMP, si può considerare come disponibile la
+        quantità di memoria della RAM più quella della di paginazione;
+        altrimenti è necessario compiere i passi seguenti (se non ci si
+        sente sicuri, controllare i passi successivi). Se si è sicuri di
+        passare spesso da un'applicazione all'altra, conteggiare solo la
+        dimensione della memoria RAM libera e basta; nient'altro da
+        controllare.
+      </para>
       <para lang="ko">
-        한번에 더 많은 프로그램을 사용할 것인가, 아니면 김프를 오래 사용할 것인가? 만약 김프를 오랫동안 사용한다면, 램이나 스왑의
-        여유분을 더 두어야 할 것이고, 그렇지 않다면 다음 과정을 따라해라.(이 부분에 대해 확신을 할 수 없다면 다음 과정을 확인해
-        보면 된다.) 그리고 만약 사용하는 프로그램들을 자주 교체한다면 여유 메모량만 체크한뒤 마지막 과정을 따라하면 된다.
+        한번에 더 많은 프로그램을 사용할 것인가, 아니면 김프를 오래 사용할
+        것인가? 만약 김프를 오랫동안 사용한다면, 램이나 스왑의 여유분을 더
+        두어야 할 것이고, 그렇지 않다면 다음 과정을 따라해라.(이 부분에 대해
+        확신을 할 수 없다면 다음 과정을 확인해 보면 된다.) 그리고 만약
+        사용하는 프로그램들을 자주 교체한다면 여유 메모량만 체크한뒤 마지막
+        과정을 따라하면 된다.
       </para>
       <para lang="no">
         Endrar du oppsettet stadig vekk eller arbeider lange økter med
@@ -659,9 +824,11 @@
         tilfelle ikkje nødvendig å kontrollera fleire ting.
       </para>
       <para lang="zh_CN">
-        您是否常常变换程序？或在一个很长时间保持 GIMP 工作？如果您在 GIMP 中花费许多时间，您可以考虑空闲 RAM
-        和可用的空闲交换区。否则，继续看下面步骤。(假如您对此不确定，也继续查看下面的步骤。)如果您确认每几分钟常常转换应用程序，就只把空闲 RAM
-        算在内，并到最后决定；无须检查更多东西。
+        您是否常常变换程序？或在一个很长时间保持 GIMP 工作？如果您在 GIMP 中
+        花费许多时间，您可以考虑空闲 RAM 和可用的空闲交换区。否则，继续看下
+        面步骤。(假如您对此不确定，也继续查看下面的步骤。)如果您确认每几分钟
+        常常转换应用程序，就只把空闲 RAM 算在内，并到最后决定；无须检查更多
+        东西。
       </para>
     </step>
 
@@ -686,8 +853,14 @@
         physique que le fichier d'échange de GIMP? Alors additionnez RAM et OS
         swap. Sinon, passez à l'étape suivante.
       </para>
+      <para lang="it">
+        Lo spazio di paginazione del sistema operativo risiede fisicamente
+        sullo stesso disco dei file di scambio di GIMP? Se si, aggiungere
+        RAM e swap, altrimenti andare al prossimo passo.
+      </para>
       <para lang="ko">
-        운영 체제의 스왑이 김프의 스왑과 같은 디스크 내에 있는가? 그렇다면 램과 스왑을 더하라. 그렇지 않다면 다음 과정으로..
+        운영 체제의 스왑이 김프의 스왑과 같은 디스크 내에 있는가? 그렇다면
+        램과 스왑을 더하라. 그렇지 않다면 다음 과정으로..
       </para>
       <para lang="no">
         Er operativsystemet og <acronym>GIMP</acronym> sine bufferfiler på
@@ -695,7 +868,8 @@
         Elles går du til neste punkt på lista.
       </para>
       <para lang="zh_CN">
-        操作系统交换区是否和 GIMP 交换目录在同一个物理磁盘上：如果是，加上 RAM 和交换区。否则，到下一步。
+        操作系统交换区是否和 GIMP 交换目录在同一个物理磁盘上：如果是，加上
+        RAM 和交换区。否则，到下一步。
       </para>
     </step>
 
@@ -722,9 +896,17 @@
         le disque portant le fichier d'échange de GIMP? Alors ne prenez que la
         free RAM. Sinon, additionnez free RAM et OS swap.
       </para>
+      <para lang="it">
+        Il disco su cui risiede il file di paginazione del sistema
+        operativo è più veloce o della stessa velocità del disco che
+        contiene i file di scambio di GIMP? Se è più lento, prendere solo
+        la dimensione della memoria RAM libera; se è circa uguale o più
+        veloce, aggiungere la RAM e lo spazio di scambio liberi.
+      </para>
       <para lang="ko">
-        OS 스왑이 있는 디스크가 김프 스왑이 있는 디스크보다 빠르거나 같은 속도인가? 김프 스왑이 있는 디스크보다 느리다면, 여유
-        메모리값만 취하고, 비슷하거나 빠르다면 램과 스왑의 각 여분을 더한다.
+        OS 스왑이 있는 디스크가 김프 스왑이 있는 디스크보다 빠르거나 같은
+        속도인가? 김프 스왑이 있는 디스크보다 느리다면, 여유 메모리값만
+        취하고, 비슷하거나 빠르다면 램과 스왑의 각 여분을 더한다.
       </para>
       <para lang="no">
         Er harddisken som operativsystemet ligg på raskare eller held same
@@ -733,7 +915,8 @@
         tregare, noter bare ledig RAM.
       </para>
       <para lang="zh_CN">
-        OS 交换区所在磁盘是否比包含 GIMP 交换目录的磁盘速度快或一样？如果更慢，只算空闲 RAM；如果更快或相等，加上 RAM 和交换区。
+        OS 交换区所在磁盘是否比包含 GIMP 交换目录的磁盘速度快或一样？如果更
+        慢，只算空闲 RAM；如果更快或相等，加上 RAM 和交换区。
       </para>
     </step>
 
@@ -760,9 +943,16 @@
         réduisez-le un peu par sécurité: c'est le cache d'image qu'il vous
         faut.
       </para>
+      <para lang="it">
+        Ora abbiamo un numero, sia che sia solo della RAM libera o della
+        RAM più lo spazio di scambio libero. Ridurlo un po' come misura
+        cautelativa ed ecco la dimensione della cache tile, almeno per
+        iniziare a lavorare. 
+      </para>
       <para lang="ko">
-        자 이제 램 여분이나, 램 여분과 OS 스왑 여분을 더한 값을 가지고 있을 것이다. 그 값에서 한 자리를 뺀 것이 안전하고
-        최적의 성능을 제공하는 타일 캐쉬값이다.
+        자 이제 램 여분이나, 램 여분과 OS 스왑 여분을 더한 값을 가지고 있을
+        것이다. 그 값에서 한 자리를 뺀 것이 안전하고 최적의 성능을 제공하는
+        타일 캐쉬값이다.
       </para>
       <para lang="no">
         Du skal nå ha eit tal som anten fortel kor mykje ledig RAM du har
@@ -772,7 +962,8 @@
         bruk for.
       </para>
       <para lang="zh_CN">
-        您现在有一个数字，它要么是空闲 RAM 或空闲 RAM 加上空闲 OS 交换区。为安全起见减少一点，那就是能够有个好的开始的平铺缓冲值。
+        您现在有一个数字，它要么是空闲 RAM 或空闲 RAM 加上空闲 OS 交换区。为
+        安全起见减少一点，那就是能够有个好的开始的平铺缓冲值。
       </para>
     </step>
   </procedure>
@@ -796,6 +987,12 @@
     libres et de savoir s'il vaut le coup d'utiliser l'OS swap ou si ça ne va
     pas causer encore plus de problèmes.
   </para>
+  <para lang="it">
+    Come si può vedere, l'operazione consiste solamente in un controllo
+    delle risorse libere disponibili e nel valutare se lo spazio di
+    paginazione del sistema operativo debba essere conteggiato oppure no
+    evitando che tale conteggio comporti più problemi che benefici.
+  </para>
   <para lang="ko">
     위에서 보았듯이 이 과정은 모두 여유 리소스를 확인하는 것이며, OS 스왑을
     사용할 가치가 있는지,  아니면 더 문제만 일으키는지 결정하는 것이다.
@@ -806,7 +1003,8 @@
     vil bli meir til ulempe enn til hjelp.
   </para>
   <para lang="zh_CN">
-    正如您看到的，所有这些都是关于检查空闲资源，并决定OS 交换区是否值得使用，是否比它的所带来的帮助产生更多问题。
+    正如您看到的，所有这些都是关于检查空闲资源，并决定OS 交换区是否值得使用，
+    是否比它的所带来的帮助产生更多问题。
   </para>
 
   <para lang='cs'>
@@ -840,6 +1038,17 @@
     Il y a néanmoins de bonnes raisons d'ajuster cetle valeur. La principale
     est une modification des capacités de votre ordinateur qui peuvent vous
     permettre d'améliorer la vitesse de GIMP en multi-tâches.
+  </para>
+
+  <para lang='it'>
+    Ci sono alcune ragioni per le quali si può decidere di ritoccare
+    ulteriormente questo valore. La principale potrebbe essere dovuta ad un
+    cambiamento nelle abitudini di utilizzo del sistema o nella
+    composizione hardware. Ciò significa che le assunzioni fatte nell'uso
+    del computer o nelle sue prestazioni, non sono più valide. Questo può
+    richiedere un'altro ciclo di valutazione dei passi precedenti, che
+    potrebbe portare alla stima di un valore simile o invece ad un valore
+    completamente differente rispetto a quanto calcolato in precedenza.
   </para>
 
   <para lang="ko">
@@ -890,6 +1099,16 @@
     L'inverse signifierait que GIMP est trop gourmand.
   </para>
 
+  <para lang='it'>
+    Un'altra ragione per il cambiamento di questo valore può essere la
+    valutazione di una performance troppo scarsa di GIMP, mentre passando
+    ad altre applicazioni si nota invece un'incremento di velocità: ciò
+    significa che GIMP potrebbe usare più memoria senza rallentare troppo
+    le altre applicazioni. D'altro canto, se si notano problemi con le altre
+    applicazioni che scarseggiano di memoria, può aiutare lasciare che GIMP
+    ne usi un po' di meno.
+  </para>
+
   <para lang="ko">
     또다른 이유로는 다른 프로그램에 비해 김프가 너무 실행되기 때문도 있다.
     이는 다른 프로그램에 영향을 주지않는 한도 내에서 김프에 더 많은
@@ -907,7 +1126,9 @@
   </para>
 
   <para lang="zh_CN">
-   另一个改变其值的原因是 GIMP 好像运行得太慢，而改给别的程序却快：这意味着 GIMP 能使用更多内存而不会损害其它程序。另一方面，如果其它程序报怨没有足够内存，这就让您知道不该让 GIMP 浪费这么多了。
+   另一个改变其值的原因是 GIMP 好像运行得太慢，而改给别的程序却快：这意味着
+   GIMP 能使用更多内存而不会损害其它程序。另一方面，如果其它程序报怨没有足够
+   内存，这就让您知道不该让 GIMP 浪费这么多了。
   </para>
 
   <para lang='cs'>
@@ -943,6 +1164,15 @@
     devez réduire le montant de RAM disponible pour GIMP.
   </para>
 
+  <para lang='it'>
+    Se si decide di usare solo la RAM e GIMP dovesse girare lentamente, è
+    possibile provare a incrementare di poco il valore, ma attenzione a non
+    usare tutta la memoria di scambio. Se si esagera utilizzando sia RAM
+    che la memoria di swap e si provocano problemi di mancanza di risorse,
+    è quindi consigliabile diminuire la dimensione della memoria
+    disponibile per GIMP.
+  </para>
+
   <para lang="ko">
     만약 램만 사용하는데에도 김프가 느린 경우, 할당된 램의 크기를 늘여야
     한다. 단, 스왑 공간은 사용하지 않는 것이 좋다. 그와 반대로 램과 스왑을
@@ -960,7 +1190,9 @@
   </para>
 
   <para lang="zh_CN">
-    如果您决定只用 RAM，却发现 GIMP 运行得很慢，您能尝试稍微增加点该值，而不要使用任何空想交换区。如果情况刚好相反，使用 RAM 和交换区，并减少 GIMP 可用的 RAM 的数量。
+    如果您决定只用 RAM，却发现 GIMP 运行得很慢，您能尝试稍微增加点该值，而不
+    要使用任何空想交换区。如果情况刚好相反，使用 RAM 和交换区，并减少 GIMP
+    可用的 RAM 的数量。
   </para>
 
   <para lang='cs'>
@@ -999,6 +1231,16 @@
     choses. Et bien sûr, vous pouvez acheter plus de mémoire ou éviter
     d'utiliser trop de programmes en même temps.
   </para>
+  <para lang='it'>
+    Un'altro trucco consiste nel mettere la memoria di scambio su un disco
+    molto veloce, o su un disco differente da quello su cui risiede la gran
+    parte dei nostri file. Sparpagliare il file di scambio del sistema
+    operativo su più dischi è, in generale, un altro ottimo metodo per
+    velocizzare le operazioni. E naturalmente si potrebbe anche comperare
+    più RAM o smettere di usare molti programmi contemporaneamente: non
+    pensiate di riuscire a lavorare velocemente sull'immagine di un poster
+    con un computer con 16MB di RAM.
+  </para>
   <para lang="ko">
     다른 방법으로 스왑 디렉토리를 매우 빠른 디스크로 설정하거나 자주 쓰는
     파일들이 있는 디스크와 다른 디스크로 설정하는 방법이 있다. 운영체제의
@@ -1016,7 +1258,10 @@
     raskt på ein datamaskin med 16Mb ledig minne.
   </para>
   <para lang="zh_CN">
-    另一个技巧就是将交换目录设在一个非常快的磁盘，或与您大部分文件所在磁盘不同的磁盘。将操作系统交换区放置在多个磁盘上也是一种加速的好方式。当然，也许您可以买更多的 RAM 或不要同时运行这么多程序：您不能指望在 16 MB 的电脑上编辑招贴画而运行迅速。
+    另一个技巧就是将交换目录设在一个非常快的磁盘，或与您大部分文件所在磁盘不
+    同的磁盘。将操作系统交换区放置在多个磁盘上也是一种加速的好方式。当然，也
+    许您可以买更多的 RAM 或不要同时运行这么多程序：您不能指望在 16 MB 的电脑
+    上编辑招贴画而运行迅速。
   </para>
 
   <para lang='cs'>
@@ -1048,6 +1293,15 @@
     choisir une valeur de cache d'image. Mais ce n'est valable que si vous
     utilisez à peu près toujours la même taille d'image.
   </para>
+  <para lang='it'>
+    Controllare le richieste di memoria che hanno le proprie immagini. Più
+    grandi sono le immagini e maggiore il numero di annullamenti, e più
+    saranno necessarie risorse. Questo è un'altro metodo per ottenere una
+    quantificazione, ma è valido solo se si lavora sempre con immagini
+    dello stesso tipo, per cui la stima non varia apprezzabilmente. È un
+    metodo utile anche per sapere se si necessita di più RAM e/o spazio su
+    disco.
+  </para>
   <para lang="ko">
     이미지가 필요로 하는 메모리양을 확인해 볼 수도 있다. 큰 이미지일수록,
     실행취소 횟수가 많을수록 더 많은 리소스가 필요하다. 비슷한 종류의
@@ -1063,7 +1317,9 @@
     og økonomien din tåler.
   </para>
   <para lang="zh_CN">
-    您也能检查您的图像所需内存。更大的图像和撤消数需要更多的资源。这是另一种选取值的方法，不过这只适合一直处理同类的图像，这样其需求才不会改变。这对您是否需要更多的 RAM 或磁盘空间也很有用。
+    您也能检查您的图像所需内存。更大的图像和撤消数需要更多的资源。这是另一种
+    选取值的方法，不过这只适合一直处理同类的图像，这样其需求才不会改变。这对
+    您是否需要更多的 RAM 或磁盘空间也很有用。
   </para>
 
 </sect1>
