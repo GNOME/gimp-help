@@ -8,13 +8,14 @@
   2005-12-07 replaced <simplesect> by <sect3> by lexa
   050930 de replaced informalfigure by axel.wernicke
   050829 de added by axel.wernicke -->
-<sect2 id='plug-in-dog' lang="en;cs;de;fr;it">
+<sect2 id='plug-in-dog' lang="en;cs;de;fr;it;ru">
   <title>
     <phrase lang="en">Difference of Gaussians</phrase>
     <phrase lang="cs">Rozdíl gaussovských rozostření</phrase>
     <phrase lang="de">Differenz der Mittelwerte</phrase>
     <phrase lang="fr">Différence gaussienne</phrase>
     <phrase lang="it">Differenza di gaussiane</phrase>
+    <phrase lang="ru">Разница по Гауссу</phrase>
   </title>
 
   <indexterm lang="en">
@@ -51,7 +52,15 @@
     <primary>Differenza di gaussiane</primary>
   </indexterm>
 
-  <mediaobject lang="en;cs;it">
+  <indexterm lang="ru">
+    <primary>Фильтры</primary>
+    <secondary>Выделение края</secondary>
+  </indexterm>
+  <indexterm lang="ru">
+    <primary>Разница по Гауссу</primary>
+  </indexterm>
+  
+  <mediaobject lang="en;cs;it;ru">
     <imageobject>
       <imagedata fileref='../images/filters/filters-edgedetect-dog.png' format="PNG"/>
     </imageobject>
@@ -69,6 +78,7 @@
       <phrase lang="de">Wirkungsweise</phrase>
       <phrase lang="fr">Généralités</phrase>
       <phrase lang="it">Panoramica</phrase>
+      <phrase lang="ru">Общая информация</phrase>
     </title>
 
     <figure lang="de">
@@ -125,6 +135,14 @@
         <guisubmenu>Rilevamen<accel>t</accel>o bordi</guisubmenu>
         <guimenuitem><accel>D</accel>ifferenza di gaussiane</guimenuitem>
       </menuchoice>.
+    </para>
+    <para lang="ru">
+      Этот фильтр находится в меню
+      <menuchoice>
+        <guimenu>Фильтры</guimenu>
+        <guisubmenu>Выделение края</guisubmenu>
+        <guimenuitem>Разница по Гауссу</guimenuitem>
+      </menuchoice>
     </para>
     
     <!-- FIXME en de fr it: for gimp 2.4 the filter is no more new -->
@@ -215,6 +233,20 @@
       soggetti chiari su sfondo scuro l'inversione può anzi migliorare il
       risultato.
     </para>
+    <para lang="ru">
+      Этот фильтр находит края с помощью алгоритма <quote>Разница по
+      Гауссу</quote>, который применяет к изображению два <quote>Гауссовых
+      размывания</quote> с разными значениями радиуса и находит разницу их
+      результатов. Этот алгоритм широко применяется в области искуственного
+      видения и работает достаточно быстро, благо существуют быстрые
+      выполнения <quote>Гауссова размывания</quote>. Наиболее важные
+      параметры фильтра - два радиуса. Их легче всего указать смотря на окно
+      просмотра. Стоит помнить, что увеличение малого радиуса приводит к
+      широким границам, а уменьшение большого радиуса увеличивает предел, по
+      которому определяется граница это или нет. В большинстве случаев лучшие
+      результаты получаются когда радиус 2 меньше радиуса 1. При светлых
+      изображениях с тёмным фоном обратные значения дают лучшие результаты.
+    </para>
   </sect3>
 
   <sect3 lang="de">
@@ -239,6 +271,7 @@
       <phrase lang="de">Eigenschaften</phrase>
       <phrase lang="fr">Options</phrase>
       <phrase lang="it">Opzioni</phrase>
+      <phrase lang="ru">Параметры</phrase>
     </title>
 
     <figure lang="de">
@@ -263,6 +296,7 @@
         <term lang="de">Parameter abgleichen</term>
         <term lang="fr">Paramètres d'adoucissement</term>
         <term lang="it">Parametri di arrotondamento</term>
+        <term lang="ru">Параметры сглаживания</term>
         <listitem>
           <para lang="en">
             Radius 1 and Radius 2 are the blurring radii for the two
@@ -302,6 +336,12 @@
             che assomigli ad un disegno a mano libera nella maggior parte dei
             casi impostando Raggio 2 minore di Raggio 1 darà risultati migliori.
           </para>
+          <para lang="ru">
+            Радиусы 1 и 2 определяют радиусы размывания для двух размываний
+            Гаусса. Они не могут быть равными, иначе результат будет пустое
+            изображение. Чтобы получить что-то вроде эскиза, укажите радиус 2
+            меньше чем радиус 1.
+          </para>
         </listitem>
       </varlistentry>
 
@@ -311,7 +351,7 @@
         <term lang="de">Normalisieren</term>
         <term lang="fr">Normaliser</term>
         <term lang="it">Normalizza</term>
-
+        <term lang="ru">Упорядочить</term>
         <listitem>
           <para lang="en">
             Checking this box causes the brightness range in the
@@ -348,6 +388,13 @@
             accurata (sebbene sia comunque accurata in termini di contrasto
             globale).
           </para>
+          <para lang="ru">
+            При выборе этого параметра диапазон яркости в конечном
+            изображении увеличивается до предела. Заметьте, что в окно
+            предварительного просмотра только видимая часть изображения
+            принимается во внимание. Поэтому результат в окне просмотра не
+            совсем верен для конечного изображения.
+          </para>
         </listitem>
       </varlistentry>
 
@@ -357,6 +404,7 @@
         <term lang="de">Invertieren</term>
         <term lang="fr">Inverser</term>
         <term lang="it">Inverti</term>
+        <term lang="ru">Инвертировать</term>
         <listitem>
           <para lang="en">
             Checking this box inverts the result, so that you see dark
@@ -383,6 +431,11 @@
             Impostando questa casella si inverte il risultato, si osserveranno
             lati scuri su sfondo chiaro ottenendo qualcosa che assomiglia ad
             un disegno a mano libera.
+          </para>
+          <para lang="ru">
+            При выборе этого параметра результат инвертируется, то
+            есть чёрные края рисуются на белом фоне. Это больше
+            напоминает рисунок.
           </para>
         </listitem>
       </varlistentry>

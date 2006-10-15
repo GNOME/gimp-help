@@ -6,13 +6,14 @@
 
 <!-- section history: -->
 <!-- 050829 de added by axel.wernicke -->
-<sect2 id="filters-edges-introduction" lang="en;cs;de;fr;it">
+<sect2 id="filters-edges-introduction" lang="en;cs;de;fr;it;ru">
   <title>
     <phrase lang="en">Edge-detect introduction</phrase>
     <phrase lang="cs">Úvod do detekování hran</phrase>
     <phrase lang="de">Einführung</phrase>
     <phrase lang="fr">Introduction à la détection des bords</phrase>
     <phrase lang="it">Introduzione al rilevamento bordi</phrase>
+    <phrase lang="ru">Введение в выделение края</phrase>
   </title>
   
   <indexterm lang="de">
@@ -27,6 +28,12 @@
   </indexterm>
   <indexterm lang="it"><primary>Introduzione</primary></indexterm>
   
+  <indexterm lang="ru">
+    <primary>Фильтр</primary>
+    <secondary>Выделение края</secondary>
+  </indexterm>
+  <indexterm lang="ru"><primary>Введение</primary></indexterm>
+
   <para lang="en">
     Edge detect filters search for borders between different colors
     and so can detect contours of objects.
@@ -70,7 +77,16 @@
     Sono utilizzati per creare selezioni e per scopi artistici.
   </para>
 
-  <mediaobject lang="en;de;it">
+  <para lang="ru">
+    Фильтры выделения края ищут границы между разными цветами, таким
+    образом находя контуры объектов.
+  </para>
+  <para lang="ru">
+    Они используются чтобы указать выделения и для других
+    художественных целей.
+  </para>
+
+  <mediaobject lang="en;de;it;ru">
     <imageobject>
       <imagedata fileref="../images/filters/filters-edgedetect-fig.png"
       format="PNG" />
@@ -215,4 +231,30 @@
     rilevamento dei bordi perchè attenua le piccole oscillazioni di colore e
     previene il rilevamento di falsi bordi.
   </para>
+
+  <para lang="ru">
+    Большинство из них использует методы вычисления градиента и даёт
+    толстые линии. На рис. 1 показаны изменения в интенсивности цвета.
+    Слева показан медленный градиент цвета, не составляющий границу.
+    Справа показано быстрое изменение цвета, составляющее границу.
+    Давайте вычислим градиент, или скорость изменения, этой границы, то
+    есть первую производную (рис 2). Мы должны решить что граница
+    считается найденой, если градиент превысит определённый предел
+    (точная граница находится вверху кривой, но этот верх зависит от
+    границы). В большинстве случаев, предел находится под верхом и
+    граница получается широкой.
+  </para> 
+  <para lang="ru">
+    Выделение края Лапласа использует вторую производную (рис. 3).
+    Верх кривой теперь на нуле и легко виден. Поэтому фильтр Лапласа
+    рисует тонкую границу, шириной всего в одну точку. Но эта
+    производная даёт несколько нулей, в результате чего получаются
+    ложные края.
+  </para>
+  <para lang="ru">
+    Обычно необходимо немного размывания до применения фильтров края:
+    размывание удаляет мелкие вариации в изображении и предохраняет от
+    выделения ложных краёв.
+  </para>
+
 </sect2>
