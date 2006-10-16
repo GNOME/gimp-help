@@ -215,6 +215,10 @@
         méthodes. Bien sûr, il existe des exceptions et il existe bien
         d'autres techniques utilisées de nos jours.
       </para>
+      <para>
+        L'outil Dégradé utilise le tramage. Vous pouvez choisir le tramage
+        quand vous créez une image indexée
+      </para>
     </glossdef>
   </glossentry>
 
@@ -223,9 +227,13 @@
     <glossterm lang="fr">Tramage couleur de Floyd-Steinberg</glossterm>
     <glossdef>
       <para lang="fr">
-        Cette méthode cherche les couleurs de la palette les plus proches de
-        celle du pixel courant. Ces couleurs sont alors réparties sur les
-        pixels juste en dessous et à droite du pixel originel.
+        Cette méthode de tramage commence l'étude par le coin en haut à
+        gauche de l'image. Pour chaque pixel, la couleur de la palette la
+        plus proche de celle du pixel est choisie. La différence entre
+        cette couleur et celle du pixel est calculée dans chaque canal RVB
+        et elle est répartie sur les pixels adjacents qui n'ont pas encore
+        été étudiés (en-dessous et à droite du pixel d'origine). Le
+        processus est effectué en une seule passe.
       </para>
     </glossdef>
   </glossentry>
@@ -233,13 +241,64 @@
 
   <glossentry id="glossary-hsv-fr" lang="fr">
     <glossterm lang="fr">TSV</glossterm>
+    <indexterm><primary>TSV</primary></indexterm>
+    <indexterm><primary>HSV</primary></indexterm>
     <glossdef>
-      <para lang="fr">
-        Teinte Saturation Valeur : représentation des couleurs.
-        La teinte représente la couleur (rouge, bleu...), la saturation est la
-        quantité de couleur et la valeur est la luminosité. Aussi appelé TSL
-        pour Teinte Saturation Luminosité.
+      <para>
+        Le mode RVB est bien adapté à l'écran d'ordinateur, mais
+        il ne permet pas de décrire ce que nous voyons dans la vie
+        courante: un vert clair, un rose pâle, un rouge
+        éclatant... Le mode TSV permet d'en rendre compte. TSV et
+        RVB ne sont pas indépendants.  Vous pouvez le voir avec la
+        Pipette à couleurs: quand vous modifiez l'un, l'autre se
+        modifie automatiquement. Pour les courageux,
+        <emphasis>Grokking the GIMP</emphasis> explique bien leurs
+        relations.
       </para>
+      <para>
+        Le terme anglais est <quote>HSV</quote>.
+      </para>
+      <itemizedlist>
+        <listitem>
+          <para>
+            <guilabel>La Teinte</guilabel>: c'est la couleur
+            elle-même, résultat de la combinaison des couleurs
+            primaires.  Toutes les nuances de couleurs (sauf les
+            niveaux de gris) sont représentées dans un cercle
+            chromatique, le jaune, le bleu, mais aussi le violet,
+            l'orange... Elle va de 0° à 360°.  (On emploie souvent
+            <quote>couleur</quote> à la place de <quote>teinte</quote>,
+            les trois couleurs
+            RVB étant les <quote>couleurs primaires</quote>).
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <guilabel>La Saturation</guilabel>: ce paramètre
+            décrit le degré de pâleur de la teinte, comme lorsque
+            vous ajoutez du blanc dans un pôt de peinture: un
+            teinte saturée au maximum sera pure, moins saturée
+            elle sera pastel, et, très peu saturée sera presque
+            blanche. La Saturation varie du blanc à la couleur la
+            plus pure, de 0 à 100.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <guilabel>La Valeur</guilabel>: c'est tout simplement
+            la luminosité, l'intensité lumineuse d'une couleur. On
+            peut dire aussi que c'est la quantité de lumière émise
+            par une couleur.  Elle rend compte de l'éclat d'une
+            couleur. Vous notez cette variation de luminosité
+            quand une couleur passe de l'ombre au soleil ou quand
+            vous augmentez la luminosité de votre moniteur.  Elle
+            varie de 0 à 100. Les valeurs des pixels dans les
+            trois canaux sont aussi des intensités lumineuses: la
+            Valeur est la somme vectorielle de ces valeurs
+            élémentaires dans l'espace RVB.
+          </para>
+        </listitem>
+      </itemizedlist>
     </glossdef>
   </glossentry>
 </glossdiv>
