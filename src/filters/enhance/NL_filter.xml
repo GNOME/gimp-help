@@ -8,12 +8,13 @@
   2005-12-07 replaced <simplesect> by <sect3> by lexa
   050930 de replaced informalfigure by axel.wernicke
   050830 de added by axel.wernicke -->
-<sect2 id='plug-in-nlfilt' lang="en;cs;de;fr;it">
+<sect2 id='plug-in-nlfilt' lang="en;cs;de;fr;it;ru">
   <title>
     <phrase lang="en;de">NL Filter</phrase>
     <phrase lang="cs">NL filtr</phrase>
     <phrase lang="fr">Filtre NL</phrase>
     <phrase lang="it">Filtro NL</phrase>
+    <phrase lang="ru">Нелинейный фильтр</phrase>
   </title>
 
   <indexterm lang="en">
@@ -38,7 +39,11 @@
     <primary>Filtro NL</primary>
   </indexterm>
 
-  <mediaobject lang="en;it">
+  <indexterm lang="ru">
+    <primary>Нелинейный фильтр</primary>
+  </indexterm>
+
+  <mediaobject lang="en;it;ru">
     <imageobject>
       <imagedata fileref='../images/filters/filters-enhance-nlfilter.png' format="PNG"/>
     </imageobject>
@@ -63,6 +68,7 @@
       <phrase lang="de">Wirkungsweise</phrase>
       <phrase lang="fr">Généralités</phrase>    
       <phrase lang="it">Panoramica</phrase>
+      <phrase lang="ru">Общая информация</phrase>
     </title>
 
     <figure lang="de;it">
@@ -199,6 +205,29 @@
       valore del raggio di 1.0 significa che i 7 esagoni occupano un blocco di
       3x3 pixel.
     </para>
+
+    <para lang="ru">
+      Этот фильтр находится в меню
+      <menuchoice>
+        <guimenu>Фильтры</guimenu>
+        <guisubmenu>Усилить</guisubmenu>
+        <guimenuitem>Нелинейный фильтр</guimenuitem>
+      </menuchoice>.
+    </para>
+    <para>
+      Фильтр <quote>Нелинейный фильтр</quote> основан на приложении
+      <command>pnmnlfilt</command> в операционной системе Unix. Он сочетает
+      в себе сглаживание, удаление пятен и шума и увеличение резкости. Он
+      работает над всем изображением, не над выделением.
+    </para> 
+    <para lang="ru">
+      У этого фильтра есть три режима работы. В каждом режиме фильтр работает
+      над одной точкой и преобразует её в зависимости от её значения и
+      значений окружающих точек. Фильтр делает 7 выборок по вершинам
+      шестиугольника, вместо обычных 9-ти точек в области 3x3. Размер
+      шестиугольника определяется параметром радиуса.
+    </para>
+
   </sect3>
 
   <sect3 lang="de">
@@ -223,6 +252,7 @@
       <phrase lang="de">Eigenschaften</phrase>
       <phrase lang="fr">Options</phrase>
       <phrase lang="it">Opzioni</phrase>
+      <phrase lang="ru">Параметры</phrase>
     </title>
 
     <figure lang="de">
@@ -246,6 +276,7 @@
         <term lang="de">Vorschau</term>
         <term lang="fr">Aperçu</term>
         <term lang="it">Anteprima</term>
+        <term lang="ru">Просмотр</term>
         <listitem>
           <para lang="en">
             When <guilabel>Do preview</guilabel> is checked, parameter
@@ -270,6 +301,10 @@
             cambiamenti provocati dalla regolazione dei parametri sono mostrati
             interattivamente.
           </para>
+          <para lang="ru">
+            При выборе <guilabel>Просмотр</guilabel> окно просмотра
+            обновляется по мере изменения параметров.
+          </para> 
         </listitem>
       </varlistentry>
   
@@ -279,6 +314,7 @@
         <term lang="de">Alpha, Radius</term>
         <term lang="fr">Réglage des paramètres</term>
         <term lang="it">Regolazione dei parametri</term>
+        <term lang="ru">Параметры</term>
         <listitem>
           <para lang="en">
             <itemizedlist>
@@ -366,6 +402,26 @@
               </listitem>
             </itemizedlist>
           </para>
+
+          <para lang="ru">
+            <itemizedlist>
+              <listitem> 
+                <para>
+                  <guilabel>Альфа</guilabel>: Значение этого параметра
+                  зависит от других параметров.
+                </para>
+              </listitem> 
+              <listitem>
+                <para>
+                  <guilabel>Радиус</guilabel>: Определяет размер области
+                  работы фильтра. При значении 0,3333 шестиугольники
+                  рабочей области полностью помещаются в центральную точку,
+                  т.е. не будет эффекта фильтровки. При значении 1,0
+                  7 шестиугольников помещаются в область 3x3 точек.
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
         </listitem>
       </varlistentry>
 
@@ -409,13 +465,14 @@
     </variablelist>
   </sect3>
 
-  <sect3 lang="en;cs;de;fr;it">
+  <sect3 lang="en;cs;de;fr;it;ru">
     <title>
       <phrase lang="en">Operating Modes</phrase>
       <phrase lang="cs">Operační režimy</phrase>
       <phrase lang="de">Filter</phrase>
       <phrase lang="fr">Modes opératoires</phrase>
       <phrase lang="it">Modalità operative</phrase>
+      <phrase lang="ru">Режимы работы</phrase>
     </title>
 
     <para lang="en">
@@ -438,6 +495,10 @@
      <para lang="it">
       Questo filtro può eseguire molteplici funzioni a seconda del valore del
       parametro <parameter>alfa</parameter>.
+    </para>
+    <para lang="ru">
+      Этот фильтр может исполнять три функции, в зависимости от значения
+      параметра <parameter>Альфа</parameter>.
     </para>
     
     <variablelist lang="en">
@@ -859,5 +920,121 @@
         </listitem>
       </varlistentry>
     </variablelist> 
+
+    <variablelist lang="ru">
+      <varlistentry>
+        <term>
+          Альфа-усечённое среднее (<parameter>Альфа</parameter> от 0 до 0,5)
+        </term> 
+        <listitem>
+          <para>
+            Значение центральной точки будет заменено на среднее значение
+            семи значений шестиугольника, но эти семь значений сначала
+            сортируются по альфа, а затем первое и последнее значения
+            удаляются из вычисления среднего. Это означает, что при 
+            <parameter>альфа</parameter> равном 0,0 фильтр становится
+            обычной свёрткой (т.е. фильтр усреднения и сглаживания), а
+            <parameter>радиус</parameter> определяет силу фильтра. Для
+            незаметного преобразования, лучше начать со значения
+            <parameter>альфа</parameter> равном 0,0, и
+            <parameter>радиуса</parameter> равном 0,55. Для более видимого
+            эффекта, выберите <parameter>альфа</parameter> 0,0 и
+            <parameter>радиус</parameter> 1,0.
+          </para>
+          <para>
+            При <parameter>альфа</parameter> равном 0,5 фильтр заменяет
+            значение точки на медиан семи шестиугольников. Это годится для
+            удаления отдельных точек-выскочек и шума в одну точку, не
+            распространяя шум и не смазывая деталей изображения. Аккуратное
+            использование параметра <parameter>радиуса</parameter> улучшит
+            работу фильтра. Промежуточные значения <parameter>альфа</parameter>
+            дадут результат между сглажеванием и удалением точек-выскочек.
+            Для незаметного преобразования лучше начать со значения
+            <parameter>альфа</parameter> равном 0,4, и
+            <parameter>радиуса</parameter> равном 0,6. Для более видимого
+            эффекта, выберите <parameter>альфа</parameter> 0,5 и
+            <parameter>радиус</parameter> 1,0.
+          </para>
+        </listitem>
+      </varlistentry>
+  
+      <varlistentry>
+        <term>
+          Оптимальный расчёт сглаживания (<parameter>альфа</parameter> от
+          1,0 до  2,0)
+        </term> 
+        <listitem>
+          <para>
+            Этот тип фильтра применяет фильтр сглаживания адаптивно по всему
+            изображению. Для каждой точки высчитывется разброс значений точек
+            окружающего шестиугольника, и применяется сглаживание, по силе
+            обратно пропорциональное разбросу значений. Фильтр считает, что
+            если разброс маленький, то это из-за шума, а если разброс большой,
+            то это детали изображения. <parameter>Радиус</parameter>
+            определяет размер рабочей области фильтра, но лучше держать его
+            в диапазоне от 0,8 до 1,0, иначе разброс значений не будет иметь
+            смысла. <parameter>Альфа</parameter> определяет шумовой порог,
+            сверх которого сглаживания не будет. Можно начать со значений
+            <code><parameter>alpha</parameter>  = 1,2</code>,
+            <code><parameter>radius</parameter> = 1,0</code>, с дальнейшим
+            увеличением и уменьшением параметра <parameter>альфа</parameter>,
+            чтобы получить нужный результат. Этот тип фильтра лучше всего
+            подходит для удаления шума смешения.
+          </para>
+        </listitem>
+      </varlistentry>
+  
+      <varlistentry>
+        <term>
+          Усиление края (<parameter>альфа</parameter> от -0,9 до -0,1)
+        </term>  
+        <listitem>
+        <para>
+          Этот фильтр противоположный фильтру сглаживания. Он усиливает края.
+          Параметра <parameter>альфа</parameter> определяет силу усиления, от
+          незаметного (-0.1) до очевидного (-0.9).
+          <parameter>Радиус</parameter>, как обычно, определяет рабочую
+          область фильтра, но полезные значения находятся в диапазоне от 0,5
+          до 0,9. Начните со значений
+          <code>
+            <parameter>альфа</parameter> = -  0.3
+          </code>,
+          <code>
+            <parameter>радиус</parameter> = 0.8
+          </code>.
+        </para>
+        </listitem>
+      </varlistentry>
+  
+      <varlistentry>
+        <term>Смешанное применение</term>
+        <listitem>
+          <para>
+            Разные режимы работы можно применить один за другим для получения
+            нужного результата. К примеру, чтобы получить серое изображение
+            из смешанного чёрно-белого, примените фильтр сглаживания раз или
+            два а потом незаметное усиление края. Заметьте, что усиление края
+            полезно обычно после одного из нелинейных фильтров (альфа-усечёное
+            среднее или оптимальный расчёт сглаживания), так как усиление края
+            протовоположно сглаживанию.
+          </para>
+          <para>
+            Чтобы уменьшить шум квантизации цвета (на пример, при
+            преобразовании .gif файлов в 24-битные файлы), можно применить
+            фильтр оптимального расчёта сглаживания
+            (<parameter>альфа</parameter> 1,2,
+            <parameter>радиус</parameter> 1,0), потом фильтр нахождения
+            медиана (<parameter>альфа</parameter> 0,5,
+            <parameter>радиус</parameter> 0,55) и возможно фильтр усиления
+            края. Несколько применений фильтра оптимального расчёта
+            сглаживания при уменьшающихся значениях
+            <parameter>альфа</parameter> более эффективно, чем одно
+            применение с большим значением <parameter>альфа</parameter>.
+            То есть, существует баланс между эффективностью фильтра и
+            потерей деталей.
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
   </sect3>
 </sect2>
