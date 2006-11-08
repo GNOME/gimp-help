@@ -3,7 +3,7 @@
           PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
           "http://www.docbook.org/xml/4.3/docbookx.dtd">
 
-<sect1 id="gimp-using-script-fu-tutorial" lang="cs;en;fr;no">
+<sect1 id="gimp-using-script-fu-tutorial" lang="cs;de;en;fr;no">
   <sect1info lang="fr;no">
     <revhistory>
       <revision lang="fr">
@@ -22,16 +22,17 @@
   <title>
     <phrase lang="en">A Script-Fu Tutorial</phrase>
     <phrase lang="cs">Zasvěcení do Script-Fu</phrase>
+    <phrase lang="de">Ein Script-Fu-Tutorium</phrase>
     <phrase lang='fr'>Didacticiel pour Script-Fu</phrase>
     <phrase lang="no">Ei innføring i Script-Fu</phrase>
 
   </title>
 
-  <indexterm lang="en;fr;no">
-    <primary lang="en;fr;no">Script-fu</primary>
+  <indexterm lang="de;en;fr;no">
+    <primary lang="de;en;fr;no">Script-fu</primary>
     <secondary lang="en">Tutorial</secondary>
+    <secondary lang="de">Tutorium</secondary>
     <secondary lang="fr">Didacticiel</secondary>
-
     <secondary lang="no">Innføring</secondary>
   </indexterm>
 
@@ -64,6 +65,24 @@
 
     <para>
       Tato část vychází z průvodce, který pro GIMP 1 napsal Mike Terry.
+    </para>
+  </note>
+
+  <para lang="de">
+    In diesem Übungskurs wollen wir Sie in die Grundlagen von Scheme
+    einführen, soweit sie für Script-Fu notwendig sind, und dann ein
+    nützliches Skript bauen, das Sie dann Ihrer Skriptsammlung hinzufügen
+    können. Das Skript wird den Benutzer auffordern, einen Text einzugeben,
+    und dann ein neues Bild genau in der passenden Größe zum Text
+    erstellen. Wir werden danach das Skript ausbauen, so dass der Benutzer
+    die Möglichkeit erhält, einen Puffer um den Text zu erstellen. Wir
+    schließen dann mit ein paar Vorschlägen, wie Sie Ihr Wissen über
+    Script-Fu erweitern können.
+  </para>
+  <note lang="de">
+    <para>
+      Dieses Kapitel wurde aus einem Tutorial von Mike Terry für das
+      <acronym>GIMP</acronym>1-Handbuch übernommen und angepaßt.
     </para>
   </note>
 
@@ -104,9 +123,9 @@
     <title>
       <phrase lang='en'>Getting Acquainted With Scheme</phrase>
       <phrase lang='cs'>První krůčky s jazykem Scheme</phrase>
+      <phrase lang="de">Der erste Kontakt mit Scheme</phrase>
       <phrase lang='fr'>Faisons connaissance avec Scheme</phrase>
       <phrase lang="no">Bli kjent med Scheme</phrase>
-
     </title>
 
     <sect3 lang='en'>
@@ -128,7 +147,6 @@
       </emphasis></para>
       <para lang='en'>
         However, not everything enclosed in parentheses is a function --
-
         they can also be items in a list -- but we'll get to that
         later. This notation is referred to as prefix notation, because
         the function prefixes everything else. If you're familiar with
@@ -184,6 +202,45 @@
       </para>
     </sect3>
 
+    <sect3 lang="de">
+      <title>Anfangen mit Scheme</title>
+      <para>
+        Das erste, was Sie lernen müssen, ist:
+      </para>
+      <para><emphasis role="bold">
+        Jede Anweisung in Scheme wird von runden Klammern () umgeben.
+      </emphasis> </para>
+      <para>
+        Als zweites müssen Sie wissen:
+      </para>
+      <para><emphasis role="bold">
+        Der Funktionsname/-operator ist immer das erste Element innerhalb
+        der Klammern, die anderen Elemente sind Parameter der Funktion.
+      </emphasis></para>
+      <para>
+        Allerdings ist nicht alles in runden Klammern eine Funktion -
+        es können auch Elemente in einer Liste sein -, aber dazu kommen wir
+        später. Diese Art der Notation wird übrigens Präfixnotation
+        genannt, da die Funktion vor (<emphasis>lat.</emphasis>
+        prae) allem anderen steht. Wenn Sie mit der Postfixnotation vertraut
+        sind oder einen Taschenrechner besitzen, der die umgekehrte polnische
+        Notation verwendet, sollten Sie keine Probleme haben, sich an die
+        Formulierung von Scheme-Ausdrücken anzupassen.
+      </para>
+      <para>
+        Das dritte, was Sie verstehen müssen, ist:
+      </para>
+      <para><emphasis role="bold">
+        Mathematische Operatoren werden ebenfalls als Funktionen betrachtet
+        und daher genauso am Anfang eines mathematischen Ausdrucks
+        aufgeführt.
+      </emphasis></para>
+      <para>
+        Das folgt ganz logisch aus der eben erwähnten Erklärung zur
+        Präfixnotation.
+      </para>
+    </sect3>
+
     <sect3 lang='fr'>
       <title>Premières notions de Scheme</title>
       <para>
@@ -208,7 +265,6 @@
         préfixée, parce que la fonction vient avant tout autre chose. Si
         vous êtes familier avec la notation postfixée, ou si vous possédez
         une calculatrice à notation Polonaise Inverse (comme la plupart des
-
         calculatrices HP), vous n'aurez pas de difficultés à vous adapter à
         la formulation des expressions dans Scheme.
       </para>
@@ -305,6 +361,28 @@
       </itemizedlist>
     </sect3>
 
+    <sect3 lang="de">
+      <title>Beispiele für Präfix-, Infix- und Postfixnotation</title>
+      <para>
+        Hier sind ein paar kuze Beispiele, die die Unterschiede zwischen
+        <emphasis>Präfix-</emphasis>, <emphasis>Infix-</emphasis> und
+        <emphasis>Postfix-</emphasis>Notation illustrieren.
+        Dazu addieren wir 1 und 3:
+      </para>
+      <itemizedlist>
+        <listitem><para>
+          Präfixnotation: + 1 3 (so will es Scheme haben)
+        </para></listitem>
+        <listitem><para>
+          Infixnotation: 1 + 3 (so schreiben wir es
+          <quote>normalerweise</quote>)
+        </para></listitem>
+        <listitem><para>
+          Postfixnotation: 1 3 + (so wollen es manche HP-Taschenrechner)
+        </para></listitem>
+      </itemizedlist>
+    </sect3>
+
     <sect3 lang='fr'>
       <title>Exemples de notations Préfixée, Infixée, et Postfixée</title>
       <para>
@@ -371,6 +449,22 @@
       </para>
     </sect3>
 
+    <sect3 lang="de">
+      <title>Mit Scheme üben</title>
+      <para>
+        Lassen Sie uns nun das üben, was wir gerade gelernt haben. Starten
+        Sie <acronym>GIMP</acronym>, falls Sie es noch nicht getan haben,
+        und wählen Sie
+        <menuchoice>
+          <guimenu>Xtns</guimenu>
+          <guisubmenu>Skript-Fu</guisubmenu>
+          <guimenuitem>Konsole</guimenuitem>
+        </menuchoice>.
+        Es öffnet sich das Fenster der Script-Fu-Konsole, wo Sie interaktiv
+        mit Scheme arbeiten können:
+      </para>
+    </sect3>
+
     <sect3 lang='fr'>
       <title>Pratiquons Scheme</title>
       <para>
@@ -418,7 +512,6 @@
       <para>
         Now, what if we wanted to add more than one number? The "+"
         function can take two or more arguments, so this is not a
-
         problem:
       </para>
       <programlisting>
@@ -461,6 +554,38 @@
       <para>
         Zatím to bylo snadné. Zapíšeme výraz ve Scheme, a ten je v konzoli
         okamžitě vyhodnocen. Ale pozor…
+      </para>
+    </sect3>
+
+    <sect3 lang="de">
+      <title>Die Script-Fu-Konsole</title>
+      <para>
+        Unten im Fenster ist ein Eingabenfeld, betitelt mit
+        <guilabel>Aktueller Befehl</guilabel>. Hier können wir interaktiv
+        einfache Scheme-Anweisungen ausprobieren. Fangen wir mit etwas ganz
+        Einfachem an und addieren einige Zahlen:
+      <programlisting>
+        (+ 3 5)
+      </programlisting>
+      </para>
+      <para>
+        Wenn Sie das eingeben und dann <keycap>Enter</keycap> drücken,
+        erhalten Sie die erwartete Antwort von 8 im Hauptfenster.
+      </para>
+      <para>
+        Was aber, wenn wir mehr als zwei Zahlen addieren wollen? Die
+        <quote><function>+</function></quote>-Funktion akzeptiert auch mehr
+        als zwei Argumente, das ist also kein Problem:
+      </para>
+      <programlisting>
+        (+ 3 5 6)
+      </programlisting>
+      <para>
+        Dies ergibt ebenfalls die erwartete Antwort von 14.
+      </para>
+      <para>
+        So weit, so gut - wir geben eine Scheme-Anweisung ein und sie wird
+        unverzüglich in der Script-Fu-Konsole ausgeführt. Aber Vorsicht...
       </para>
     </sect3>
 
@@ -596,6 +721,44 @@
       </programlisting>
     </sect3>
 
+    <sect3 lang="de">
+      <title>Vorsicht bei zusätzlichen Klammern</title>
+      <para>
+        Wenn es Ihnen wie mir geht, sind Sie es gewohnt, überall
+        zusätzliche Klammern einfügen zu dürfen - z.B. wenn Sie eine
+        komplexe mathematische Formel schreiben und der Übersichtlichkeit
+        wegen die einzelnen Teile durch Klammern voneinander trennen wollen.
+        In Scheme müssen Sie aufpassen, dass Sie diese zusätzlichen Klammern
+        nicht in fehlerhafter Weise einfügen. Sagen wir mal als Beispiel,
+        wir wollen die folgende Addition durchführen:
+      </para>
+      <programlisting>
+        3 + (5 + 6) + 7 = ?
+      </programlisting>
+      <para>
+        Mit dem Wissen, dass der
+        <quote><function>+</function></quote>-Operator mehr als
+        zwei Zahlen addieren kann, könnten Sie versucht sein, den obigen
+        Ausdruck folgendermaßen umzuformen:
+      </para>
+      <programlisting>
+        (+ 3 (5 6) 7)
+      </programlisting>
+      <para>
+        Allerdings ist dies nicht korrekt. Erinnern Sie sich, jede Anweisung
+        in Scheme beginnt und endet mit einer Klammer, der Scheme-Interpreter
+        wird annehmen, dass Sie in der zweiten Klammerngruppe eine Funktion
+        namens <quote>5</quote> aufzurufen versuchen, anstatt zuerst die Summe
+        dieser Zahlen zu bilden und sie dann zu 3 zu addieren.
+      </para>
+      <para>
+        Der korrekte Weg, die obige Anweisung zu schreiben, wäre:
+      </para>
+      <programlisting>
+        (+ 3 (+ 5 6) 7)
+      </programlisting>
+    </sect3>
+
     <sect3 lang='fr'>
       <title>Faire attention aux parenthèses supplémentaires</title>
       <para>
@@ -712,6 +875,31 @@
       </para>
     </sect3>
 
+    <sect3 lang="de">
+      <title>Achten Sie auch auf korrekte Leerzeichen</title>
+      <para>
+        Wenn Sie mit anderen Programmiersprachen vertraut sind, wie
+        C/C++, Perl oder Java, dann wissen Sie, dass vor und hinter
+        mathematischen Operatoren keine Leerzeichen stehen müssen,
+        damit der Ausdruck eine korrekte Form hat.
+      </para>
+      <programlisting>
+        <literal>3+5, 3 +5, 3+ 5</literal>
+      </programlisting>
+      <para>
+        Diese Ausdrücke werden alle von C/C++-, Perl- und Java-Compilern
+        akzepiert. Auf Scheme trifft das allerdings nicht zu. Sie müssen
+        in Scheme nach einem mathematischen Operator (oder irgendeinem anderen
+        Funktionsnamen oder Operator) ein Leerzeichen lassen, damit er vom
+        Scheme-Interpreter korrekt interpretiert wird.
+      </para>
+      <para>
+        Üben Sie ein wenig mit einfachen mathematischen Gleichungen in der
+        Script-Fu-Konsole, bis Sie mit diesen grundlegenden Konzepten
+        vollkommen vertraut sind.
+      </para>
+    </sect3>
+
     <sect3 lang='fr'>
       <title>Assurez-vous que les espacements sont corrects</title>
       <para>
@@ -760,6 +948,7 @@
     <title>
       <phrase lang='en'>Variables And Functions</phrase>
       <phrase lang='cs'>Proměnné a funkce</phrase>
+      <phrase lang="de">Variablen und Funktionen</phrase>
       <phrase lang='fr'>Variables et fonctions</phrase>
       <phrase lang="no">Variablar og funksjonar</phrase>
     </title>
@@ -767,7 +956,6 @@
       Now that we know that every Scheme statement is enclosed in
       parentheses, and that the function name/operator is listed first,
       we need to know how to create and use variables, and how to create
-
       and use functions. We'll start with the variables.
     </para>
     <para lang='cs'>
@@ -776,10 +964,15 @@
       místě, je třeba se naučit a vytvářet proměnné a funkce. Začneme
       proměnnými.
     </para>
+    <para lang="de">
+      Jetzt, wo wir wissen, dass jede Scheme-Anweisung von Klammern umgeben
+      ist und dass der Funktionsname/-operator als erstes aufgeführt wird,
+      müssen wir sehen, wie man Variablen oder Funktionen erzeugt und
+      benutzt. Wir fangen mit den Variablen an.
+    </para>
     <para lang='fr'>
       Maintenant que nous savons que toute déclaration Scheme est incluse
       entre parenthèses, et que le nom de fonction ou l'opérateur vient en
-
       premier, nous devons apprendre à créer et utiliser les variables.
       Commençons par les variables.
     </para>
@@ -867,6 +1060,47 @@
         <varname>a</varname> a <varname>b</varname>,
         inicializovány a je vypsán jejich součet.
       </para>
+    </sect3>
+
+    <sect3 lang="de">
+      <title>Variablen deklarieren</title>
+      <para>
+        Es gibt mehrere verschiedene Methoden, um Variablen zu
+        deklarieren, aber die bevorzugte Methode ist das
+        <code>let*</code>-Konstrukt. Wenn Sie mit anderen
+        Programmiersprachen vertraut sind: Dieses Konstrukt ist äquivalent
+        dazu, eine Liste lokaler Variablen mit zugehörigem
+        Gültigkeitsbereich zu definieren. Um beispielsweise zwei Variablen
+        a und b zu deklarieren und mit den Werten 1 bzw. 2 zu initialisieren,
+        würden Sie folgendes schreiben:
+      </para>
+      <programlisting>
+         (let*  (
+                   (a 1)
+                   (b 2)
+                )
+                (+ a b)
+         )
+      </programlisting>
+      <para>
+        oder, als Einzeiler:
+      </para>
+      <programlisting>
+        (let* ( (a 1) (b 2) ) (+ a b) )
+      </programlisting>
+      <para>
+        Das deklariert zwei lokale Variablen a und b, initialisiert sie,
+        und gibt dann die Summe der beiden Variablen aus.
+      </para>
+      <note>
+        <para>
+          Sie müssen dies alles in eine Zeile schreiben, wenn Sie das
+          Konsolenfenster benutzen. Im allgemeinen sollten Sie allerdings
+          einen ähnlichen Einrückungsstil wie oben übernehmen, um Ihre
+          Skripte lesbarer zu gestalten. Wir werden im Abschnitt über
+          Leerzeichen noch ein wenig mehr dazu sagen.
+        </para>
+      </note>
     </sect3>
 
     <sect3 lang='fr'>
@@ -980,6 +1214,24 @@
       </para>
     </sect3>
 
+    <sect3 lang="de">
+      <title>Was ist eine lokale Variable?</title>
+      <para>
+        Sie werden bemerkt haben, dass wir die Summe <code>(+ a b)</code>
+        innnerhalb der Klammern des <code>let*</code>-Ausdrucks und nicht
+        außerhalb geschrieben haben.
+      </para>
+      <para>
+        Das kommt daher, weil die <code>let*</code>-Anweisung einen Bereich
+        in Ihrem Skript definiert, in dem die deklarierten Variablen
+        verwendet werden können. Wenn Sie die Anweisung <code>(+ a b)</code>
+        nach dem Ausdruck <code>(let* ...)</code> schreiben, erhalten Sie
+        eine Fehlermeldung, da die deklarierten Variablen nur innerhalb des
+        Kontexts der <code>let*</code>-Anweisung gültig sind. Sie sind das,
+        was Programmierer <quote>lokale Variablen</quote> nennen.
+      </para>
+    </sect3>
+
     <sect3 lang='fr'>
       <title>Qu'est-ce qu'une Variable Locale?</title>
       <para>
@@ -1048,6 +1300,23 @@
       </para>
     </sect3>
 
+    <sect3 lang="de">
+      <title>Die allgemeine Syntax von <code>let*</code></title>
+      <para>
+        Die allgemeine Form der <code>let*</code>-Anweisung ist:
+      </para>
+      <programlisting>
+        (let* ( <replaceable>variablen</replaceable> ) <replaceable>ausdrücke</replaceable> )
+      </programlisting>
+      <para>
+        wobei Variablen innerhalb von Klammern deklariert werden, z.B.
+        <quote>(a 2)</quote>, und Ausdrücke beliebige gültige
+        Scheme-Ausdrücke sind. Denken Sie daran, dass die hier deklarierten
+        Variablen nur innerhalb der <code>let*</code>-Anweisung gültig
+        sind - sie sind lokale Variablen.
+      </para>
+    </sect3>
+
     <sect3 lang='fr'>
       <title>Syntaxe générale de <code>let*</code></title>
       <para>
@@ -1111,6 +1380,29 @@
         používat. Ve Script-Fu konzoli ale musíte psát vždy celý výraz
         na jeden řádek; vše mezi otevírací a uzavírací závorkou výrazu
         musí být ve Script-Fu konzoli na jednom řádku.
+      </para>
+    </sect3>
+
+    <sect3 lang="de">
+      <title>Leerzeichen</title>
+      <para>
+        Wir haben bereits vorher erwähnt, dass Sie Ihre Skripte
+        mit Einrückungen lesbarer gestalten sollten. Das ist eine gute
+        Vorgehensweise und überhaupt kein Problem in Scheme - Leerzeichen
+        <footnote>
+          <!-- cf. "man isspace" -->
+          <para>
+            A.d.Ü.: Gemeint sind Leerzeichen im erweiterten Sinne
+           (<quote>Freizeichen</quote>), also auch Zeilenvorschub und -umbruch,
+            Seitenvorschub, horizontaler und vertikaler Tabulator.
+          </para>
+        </footnote>
+        werden vom Scheme-Interpreter ignoriert und können daher großzügig
+        eingesetzt werden, um den Code in Ihrem Skript zu organisieren und
+        zu verdeutlichen. Wenn Sie allerdings im Script-Fu-Konsolenfenster
+        arbeiten, müssen Sie jeden Ausdruck in eine Zeile schreiben, d.h.
+        alles zwischen der öffnenden und der korrespondierenden
+        schließenden Klammer eines Ausdrucks.
       </para>
     </sect3>
 
@@ -1190,6 +1482,31 @@
           Znak <literal>\</literal> značí pouze, že na jeho místě není
           konec řádky. Nezadávejte ho do konzoly, netiskněte na jeho místě
           <keycap>Enter</keycap>, prostě pokračujte další řádkou.
+        </para>
+      </note>
+    </sect3>
+
+    <sect3 lang="de">
+      <title>Einer Variablen  einen neuen Wert zuweisen</title>
+      <para>
+        Wenn Sie eine Variable initialisiert haben, müssen Sie ihren Wert
+        vielleicht später im Skript verändern. Verwenden Sie dafür die
+        <code>set!</code>-Anweisung:
+      </para>
+      <programlisting>
+        (let* ( (theNum 10) ) (set! theNum (+ theNum \
+        theNum)) )
+      </programlisting>
+      <para>
+        Überlegen Sie sich, was die obige Anweisung tun wird, und dann
+        probieren Sie es aus und geben Sie sie in der Script-Fu-Konsole ein.
+      </para>
+      <note>
+        <para>
+          Das <quote>\</quote> zeigt an, dass dort kein Zeilenumbruch ist.
+          Ignorieren Sie es (tippen Sie es nicht in Ihrer Script-Fu-Konsole
+          ein und drücken Sie nicht auf <quote>Enter</quote>), machen Sie
+          einfach mit der nächsten Zeile weiter.
         </para>
       </note>
     </sect3>
@@ -1352,6 +1669,59 @@
       </itemizedlist>
     </sect3>
 
+    <sect3 lang="de">
+      <title>Funktionen</title>
+      <para>
+        Nachdem Sie nun den Dreh mit den Variablen raushaben, lassen Sie uns
+        ein wenig mit Funktionen arbeiten. Sie deklarieren eine Funktion
+        gemäß der folgenden Syntax:
+      </para>
+      <programlisting>
+        (define (<replaceable>name</replaceable> <replaceable>param-list</replaceable>) <replaceable>ausdrücke</replaceable>)
+      </programlisting>
+      <para>
+        wobei <replaceable>name</replaceable> der der Funktion zugewiesene
+        Name ist, <replaceable>param-list</replaceable> eine durch
+        Leerzeichen getrennte Liste von Paramternamen und
+        <replaceable>ausdrücke</replaceable> eine Folge von Ausdrücken,
+        die die Funktion bei ihrem Aufruf ausführt. Zum Beispiel:
+      </para>
+      <programlisting>
+        (define (AddXY inX inY) (+ inX inY) )
+      </programlisting>
+      <para>
+        <varname>AddXY</varname> ist der Funktionsname, und
+        <varname>inX</varname> und <varname>inY</varname> sind die
+        Variablen. Die Funktion erwartet zwei Parameter und addiert sie.
+      </para>
+      <para>
+        Wenn Sie bereits in anderen imperativen Sprachen programmiert haben
+        (z.B. in C/C++, Java, Pascal, etc.), dann werden Sie vielleicht
+        bemerkt haben, dass im Vergleich zu anderen Programmiersprachen
+        einige Dinge in dieser Funktionsdefinition fehlen.
+      </para>
+      <itemizedlist>
+        <listitem><para>
+          Als erstes beachten Sie, dass die Parameter keinen
+          <quote>Typ</quote> haben (d.h. wir haben sie nicht als
+          Zeichenketten, Ganzzahlen etc. deklariert). Scheme ist eine
+          typfreie Sprache. Das ist ganz praktisch und erlaubt es uns,
+          Skripte sehr viel schneller zu schreiben.
+        </para></listitem>
+        <listitem><para>
+            Als zweites notieren Sie, dass wir uns keine Gedanken darüber
+            machen müssen, wie wir das Ergebnis unserer Funktion
+            zurückgeben - die letzte Anweisung ist der Wert, der beim Aufruf
+            der Funktion zurückgegeben wird. Tippen Sie die Funktion in der
+            Konsole ein, und dann versuchen Sie so etwas wie:
+          </para>
+          <programlisting>
+            (AddXY (AddXY 5 6) 4)
+          </programlisting>
+        </listitem>
+      </itemizedlist>
+    </sect3>
+
     <sect3 lang='fr'>
       <title>Fonctions</title>
       <para>
@@ -1464,6 +1834,7 @@
     <title>
       <phrase lang='en'>Lists, Lists And More Lists</phrase>
       <phrase lang='cs'>Seznamy, seznamy a zase seznamy</phrase>
+      <phrase lang="de">Listen, Listen und noch mehr Listen</phrase>
       <phrase lang='fr'>Listes, des listes et encore des listes</phrase>
       <phrase lang="no">Lister, lister og atter lister</phrase>
 
@@ -1478,6 +1849,10 @@
       čase vydat se za tajemstvím seznamů (anglicky
       <foreignphrase>lists</foreignphrase>, které tvoří
       důležitou součást Scheme.
+    </para>
+    <para lang="de">
+      Wir haben Ihnen etwas über Variablen und Funktionen erklärt, und nun
+      betreten wir die düsteren Sümpfe von Schemes Listen...
     </para>
     <para lang='fr'>
       Après avoir vu les variables et les fonctions, abordons maintenant
@@ -1690,6 +2065,113 @@
         Vrácený výsledek není seznam jednotlivých atomických hodnot, ale
         obsahuje literál <code>("The Gimp")</code>, seznam
         <code>(1 2 3)</code> atd.
+      </para>
+    </sect3>
+
+    <sect3 lang="de">
+      <title>Eine Liste definieren</title>
+      <para>
+        Bevor wir mehr über Listen erzählen, müssen Sie den Unterschied
+        zwischen atomaren Werten und Listen kennen.
+      </para>
+      <para>
+        Sie haben bereits atomare Werte gesehen, als wir im vorherigen
+        Abschnitt Variablen initialisiert hatten. Ein atomarer Wert ist
+        ein einzelner Wert. Zum Beispiel können wir in der folgenden
+        Anweisung der Variablen <quote>x</quote> den Wert 8 zuweisen:
+      </para>
+      <programlisting>
+        (let* ( (x 8) ) x)
+      </programlisting>
+      <para>
+        (Wir haben den Ausdruck <varname>x</varname> am Ende hinzugefügt, um
+        den zugewiesen Wert auszugeben - normalerweise brauchen Sie das
+        nicht. Beachten Sie, dass sich <code>let*</code> genau wie eine
+        Funktion verhält: Der Wert der letzten Anweisung ist der
+        Rückgabewert.)
+      </para>
+      <para>
+        Eine Variable kann sich auch auf eine Liste von Werten statt auf
+        einen einzelnen Wert beziehen. Um der Variablen <varname>x</varname>
+        die Liste der Werte 1, 3, 5 zuzuweisen, schreiben wir:
+      </para>
+      <programlisting>
+        (let* ( (x '(1 3 5))) x)
+      </programlisting>
+      <para>
+        Probieren Sie beide Anweisungen in der Script-Fu-Konsole aus und
+        achten Sie auf die Antworten. Bei der ersten Anweisung lautet sie
+        einfach:
+      </para>
+      <programlisting>
+        8
+      </programlisting>
+      <para>
+        Wenn Sie aber die andere Anweisung eingeben, ist die Antwort das
+        folgende Ergebnis:
+      </para>
+      <programlisting>
+        (1 3 5)
+      </programlisting>
+      <para>
+         Die erste Antwort sagt Ihnen, dass <varname>x</varname> den
+         atomaren Wert 8 enthält. Aber wenn die Antwort (1 3 5) lautet,
+         dann heißt das, dass <varname>x</varname> keinen atomaren Wert,
+         sondern eine Liste von Werten enthält. Beachten Sie, dass weder in
+         unserer Deklaration oder Zuweisung der Liste noch im ausgebenen
+         Resultat Kommas stehen.
+      </para>
+      <para>
+         Die Syntax, um eine Liste zu definieren, lautet:
+      </para>
+      <programlisting>
+         '(a b c)
+      </programlisting>
+      <para>
+        wobei <varname>a</varname>, <varname>b</varname> und
+        <varname>c</varname> Literale (buchstabengetreu einzugeben) sind. Wir
+        verwenden den Apostroph (') um anzuzeigen, dass der nachfolgende
+        Klammerausdruck eine Liste literaler Werte ist und nicht eine
+        Funktion oder ein Ausdruck.
+      </para>
+      <para>
+        Eine leere Liste kann wie folgt definiert werden:
+      </para>
+      <programlisting>
+        '()
+      </programlisting>
+      <para>
+        oder einfach:
+      </para>
+      <programlisting>
+        ()
+      </programlisting>
+      <para>
+        Listen können sowohl atomare Werte als auch andere Listen enthalten:
+      </para>
+
+      <programlisting>
+        (let*
+           (
+                (x
+                   '("The GIMP" (1 2 3) ("is" ("great" () ) ) )
+                )
+            )
+
+            x
+         )
+      </programlisting>
+      <para>
+        Beachten Sie, dass Sie nach dem ersten Apostroph keine weiteren
+        Apostrophe mehr brauchen, wenn Sie innere Listen definieren.
+        Probieren Sie es nun aus, kopieren Sie die Anweisung in die
+        Script-Fu-Konsole und schauen Sie, was sie zurückliefert.
+      </para>
+      <para>
+        Sie sollten bemerkt haben, dass das zurückgelieferte Ergebnis keine
+        Liste einzelner, atomarer Werte ist. Statt dessen ist es eine Liste
+        eines Literals <code>"The GIMP"</code>, der Liste <code>(1 2
+        3)</code> etc.
       </para>
     </sect3>
 
@@ -1907,7 +2389,6 @@
         the rest of the list. You'll see why this is important when we
         discuss how to add to lists and how to access elements in the
         list.
-
       </para>
     </sect3>
 
@@ -1919,6 +2400,23 @@
         <foreignphrase>tail</foreignphrase>). Hlavička je první položka
         seznamu, zbývající položky tvoří ocásek. Bude to užitečné, až budeme
         mluvit o spojování seznamů a přístupu k jednotlivým prvkům seznamu.
+      </para>
+    </sect3>
+
+    <sect3 lang="de">
+      <title>Wie man sich Listen vorstellen sollte</title>
+      <para>
+        Es ist hilfreich, sich Listen zusammengesetzt aus einem
+        <quote>Kopf</quote> (<foreignphrase>head</foreignphrase>) und einem
+        <quote>Rest</quote>
+        <footnote><para>
+          bzw. (wörtlich) <quote>Schwanz</quote> oder <quote>Ende</quote>
+        </para></footnote>
+        (<foreignphrase>tail</foreignphrase>) vorzustellen. Der Kopf
+        ist das erste Element der Liste, der Rest alle folgenden Elemente. Sie
+        werden gleich sehen, warum das wichtig ist, wenn wir besprechen, wie
+        man zu Listen etwas hinzufügt und wie man auf Elemente der Liste
+        zugreift.
       </para>
     </sect3>
 
@@ -2003,6 +2501,38 @@
       <para>
         Místo kteréhokoliv literálu můžete samozřejmě použít dříve
         deklarovanou proměnnou.
+      </para>
+    </sect3>
+
+    <sect3 lang="de">
+      <title>
+        Listen durch Konkatenation (Verkettung) erstellen
+        (die <code>cons</code>-Funktion)
+      </title>
+      <para>
+        Eine der üblichen Funktionen, auf die Sie treffen werden, ist die
+        <code>cons</code>-Funktion. Sie nimmt einen Wert und fügt ihn vor
+        dem zweiten Argument (eine Liste) ein. Im vorigen Abschnitt habe ich
+        vorgeschlagen, sich die Liste aus einem Element (head) und dem Rest
+        (tail) zusammengesetzt vorzustellen. Genau so funktioniert
+        <code>cons</code> - sie fügt ein Element als Listenkopf ein. Somit
+        können Sie eine Liste wie folgt erstellen:
+      </para>
+      <programlisting>
+        (cons 1 '(2 3 4) )
+      </programlisting>
+      <para>
+        Das Ergebnis ist die Liste <code>(1 2 3 4)</code>.
+      </para>
+      <para>
+        Sie könnten auch eine Liste mit nur einem Element erstellen:
+      </para>
+      <programlisting>
+        (cons 1 () )
+      </programlisting>
+      <para>
+        Sie können vorher deklarierte Variablen anstelle irgendwelcher
+        Literale verwenden, genau so, wie man es erwarten würde.
       </para>
     </sect3>
 
@@ -2123,6 +2653,35 @@
       </para>
     </sect3>
 
+    <sect3 lang="de">
+      <title>Eine Liste mit der <code>list</code>-Funktion definieren</title>
+      <para>
+        Um eine Liste aus Literalen oder vorher deklarierten Variablen
+        zu definieren, verwenden Sie die <code>list</code>-Funktion:
+      </para>
+      <programlisting>
+        (list 5 4 3 a b c)
+      </programlisting>
+      <para>
+        Das wird eine Liste erstellen, die die Werte der Variablen
+        <varname>a</varname>, <varname>b</varname> und <varname>c</varname>
+        enthält, und diese zurückgeben. Beispiel:
+      </para>
+      <programlisting>
+        (let*  (
+                  (a 1)
+                  (b 2)
+                  (c 3)
+               )
+
+               (list 5 4 3 a b c)
+        )
+      </programlisting>
+      <para>
+        Dieser Code erzeugt die Liste <code>(5 4 3 1 2 3)</code>.
+      </para>
+    </sect3>
+
     <sect3 lang='fr'>
       <title>Définir une liste en utilisant la fonction list</title>
       <para>
@@ -2200,6 +2759,17 @@
       </para>
     </sect3>
 
+    <sect3 lang="de">
+      <title>Auf Werte in einer Liste zugreifen</title>
+      <para>
+        Um auf Werte in einer Liste zuzugreifen, verwenden Sie die Funktionen
+        <code>car</code> und <code>cdr</code>, die das erste Element resp.
+        den Rest einer Liste liefern. Diese Funktionen gliedern die Liste in
+        die vorher erwähnte Struktur aus <foreignphrase>head</foreignphrase>
+        (Kopf) und <foreignphrase>tail</foreignphrase> (Rest) auf.
+      </para>
+    </sect3>
+
    <sect3 lang='fr'>
       <title>Accéder aux valeurs dans une liste</title>
       <para>
@@ -2254,6 +2824,24 @@
       </para>
       <programlisting>
         "prvni"
+      </programlisting>
+    </sect3>
+
+    <sect3 lang="de">
+      <title>Die <code>car</code>-Funktion</title>
+      <para>
+        <code>car</code> liefert das erste Element (den Kopf) einer
+        nicht-leeren Liste.  Folgende Anweisung liefert also das erste
+        Element der Liste:
+      </para>
+      <programlisting>
+        (car '("eins" 2 "drei"))
+      </programlisting>
+      <para>
+        nämlich:
+      </para>
+      <programlisting>
+        "eins"
       </programlisting>
     </sect3>
 
@@ -2348,6 +2936,36 @@
       </programlisting>
       <para>
         vrací:
+      </para>
+      <programlisting>
+        ()
+      </programlisting>
+    </sect3>
+
+    <sect3 lang="de">
+      <title>Die <code>cdr</code>-Funktion</title>
+      <para>
+        <code>cdr</code> liefert den Rest der Liste nach dem ersten Element.
+        Wenn die Liste nur ein Element enthält, liefert <code>cdr</code>
+        eine leere Liste.
+      </para>
+      <programlisting>
+        (cdr '("eins" 2 "drei"))
+      </programlisting>
+      <para>
+        liefert:
+      </para>
+      <programlisting>
+        (2 "drei")
+      </programlisting>
+      <para>
+        während folgende Anweisung:
+      </para>
+      <programlisting>
+        (cdr '("ein einziger"))
+      </programlisting>
+      <para>
+        das liefert:
       </para>
       <programlisting>
         ()
@@ -2526,6 +3144,68 @@
       </note>
     </sect3>
 
+    <sect3 lang="de">
+      <title>Auf andere Elemente der Liste zugreifen</title>
+      <para>
+        Na schön, wir können sowohl auf das erste Element als auch auf den
+        Rest der Liste zugreifen, aber wie kommen wir an das zweite, dritte
+        oder irgendein anderes Element der Liste?
+        Aus praktischen Gründen gibt es einige Zugriffsfunktionen, um
+        beispielsweise auf den Kopf eines Kopfes eines Rests
+        (<code>caadr</code>) oder den Rest eines Restes (<code>cddr</code>)
+        einer Liste zuzugreifen.
+      </para>
+      <para>
+        Die zugrundeliegende Namenskonvention ist einfach: Die
+        <quote>a</quote>s und <quote>d</quote>s repräsentieren Köpfe
+        bzw. Reste von Listen, d.h.
+      </para>
+      <programlisting>
+        (car (cdr (car x) ) )
+      </programlisting>
+      <para>
+        kann geschrieben werden als:
+      </para>
+      <programlisting>
+        (cadar x)
+      </programlisting>
+      <!-- FIXME: de: Wo ist der Fisch?
+      <para>
+        Die vollständige Liste der verfügbaren Funktionen der von
+        Script-Fu verwendeten Scheme-Version finden Sie im Anhang.
+      </para>
+      -->
+      <para>
+        Um mit den Listenzugriffsfunktionen etwas Übung zu bekommen,
+        versuchen Sie mal, folgendes einzugeben (alles in einer Zeile,
+        falls Sie die Konsole benutzen) und verschiedene Variationen
+        von <code>car</code>s und <code>cdr</code>s auszuprobieren,
+        um auf verschiedene Elemente der Liste zuzugreifen:
+      </para>
+      <programlisting>
+        (let* (
+                 (x  '( (1 2 (3 4 5) 6)  7  8  (9 10) )
+                 )
+              )
+              ; fügen Sie hier Ihren car/cdr-Code ein
+        )
+      </programlisting>
+      <para>
+        Versuchen Sie, mit nur zwei Funktionsaufrufen auf die Zahl 3
+        zuzugreifen. Wenn Sie das schaffen, sind Sie auf dem besten Wege,
+        ein Script-Fu-Meister zu werden.
+      </para>
+      <note>
+        <para>
+          In Scheme kennzeichnet ein Semikolon ("<code>;</code>") einen
+          Kommentar. Das Semikolon und alles folgende in derselben Zeile wird
+          vom Scheme-Interpreter ignoriert. Sie können das also verwenden,
+          um Kommentare hinzuzufügen und Ihrem Gedächtnis auf die Sprünge
+          zu helfen, wenn Sie sich das Skript später anschauen.
+        </para>
+      </note>
+    </sect3>
+
     <sect3 lang='fr'>
       <title>Accéder à d'autres éléments d'une liste</title>
       <para>
@@ -2693,13 +3373,13 @@
       </note>
     </sect3>
 
-
   </sect2>
 
   <sect2>
     <title>
       <phrase lang='en'>Your First Script-Fu Script</phrase>
       <phrase lang='cs'>Váš první Script-Fu skript</phrase>
+      <phrase lang="de">Ihr erstes Script-Fu-Skript</phrase>
       <phrase lang='fr'>Votre premier script de Script-Fu</phrase>
       <phrase lang="no">Det første Script-Fu skriptet ditt</phrase>
     </title>
@@ -2711,6 +3391,11 @@
       Do you not need to stop and catch your breath? No? Well then,
       let's proceed with your fourth lesson -- your first Script-Fu
       Script.
+    </para>
+    <para lang="de">
+      Müssen Sie erstmal anhalten und luftholen? Nein? Na gut, dann lassen
+      Sie uns mit der vierten Lektion fortfahren - Ihrem ersten
+      Script-Fu-Skript.
     </para>
     <para lang='fr'>
       Vous tirez la langue, non? Allez, entamons notre quatrième leçon:
@@ -2766,13 +3451,36 @@
       </para>
     </sect3>
 
+    <sect3 lang="de">
+      <title>Ein Textbox-Skript erstellen</title>
+      <para>
+        Eine der häufigsten Operationen, die ich in <acronym>GIMP</acronym>
+        durchführe, ist das Erstellen einer Box mit Text für eine Webseite,
+        ein Logo oder was auch immer. Allerdings weiß man nie genau, wie
+        groß das anfängliche Bild sein muß, denn man weiß nicht, wieviel
+        Platz der Text bei der gewünschten Schriftart und -größe benötigen
+        wird.
+      </para>
+      <para>
+        Der Script-Fu-Meister (und auch der Schüler) wird schnell bemerken,
+        dass dieses Problem mit Script-Fu leicht gelöst und automatisiert
+        werden kann.
+      </para>
+      <para>
+        Wir werden daher ein Skript namens <quote>Text Box</quote> erstellen,
+        welches ein Bild in genau der Größe erstellt, so dass eine
+        Textzeile, die der Benutzer eingibt, bequem hineinpaßt. Wir werden
+        außerdem den Benutzer die Schrift, die Schriftgröße und die
+        Textfarbe auswählen lassen.
+      </para>
+    </sect3>
+
     <sect3 lang='fr'>
       <title>Création d'un Script Boîte de Texte</title>
       <para>
         L'une des opérations les plus fréquentes que je réalise avec Gimp,
         est la création d'une boîte contenant un texte pour une page Web ou
         un logo. Mais vous ne savez jamais bien quel taille donner à
-
         l'image au départ. Vous ne savez pas combien d'espace le texte
         occupera avec la taille de police que vous voulez.
       </para>
@@ -2814,10 +3522,8 @@
 
     <sect3 lang='en'>
 
-
       <title>Editing And Storing Your Scripts</title>
       <para>
-
         Up until now, we've been working in the Script-Fu
         Console. Now, however, we're going to switch to editing script
         text files.
@@ -2862,6 +3568,32 @@
       </para>
     </sect3>
 
+    <sect3 lang="de">
+      <title>Ihre Skripte bearbeiten und speichern</title>
+      <para>
+        Bis jetzt haben wir in der Script-Fu-Konsole gearbeitet, aber jetzt
+        gehen wir dazu über, Skripte in Form von Textdateien zu bearbeiten.
+      </para>
+      <para>
+        Wo Sie Ihre Skripte speichern bleibt Ihnen überlassen - wenn Sie
+        Zugriff auf <acronym>GIMP</acronym>s systemweites Skriptverzeichnis
+        haben, können Sie Ihre Skripte dort plazieren. Ich bevorzuge es
+        allerdings, meine persönlichen Skripte in meinem eigenen
+        Skriptverzeichnis zu haben, getrennt von den vorinstallierten
+        Skripten.
+      </para>
+      <para>
+        Im Verzeichnis <filename>.gimp-2.2</filename>, das
+        <acronym>GIMP</acronym> in Ihrem persönlichen Verzeichnis erstellt,
+        sollten Sie einen Ordner namens <filename>scripts</filename> finden.
+        <acronym>GIMP</acronym> sucht automatisch in Ihrem
+        <filename>.gimp-2.2</filename>-Verzeichnis nach einem
+        Skriptverzeichnis und fügt die dort gefundenen Skripte zur
+        Script-Fu-Datenbank hinzu. Sie sollten also Ihre Skripte dort
+        speichern.
+      </para>
+    </sect3>
+
     <sect3 lang='fr'>
       <title>Éditer et enregistrer vos Scripts</title>
       <para>
@@ -2874,7 +3606,6 @@
         accès au répertoire de scripts par défaut de Gimp, vous pouvez
         placer là vos scripts. Néanmoins, je préfère avoir mes scripts dans
         mon propre répertoire de scripts, bien séparés des scripts installés
-
         par GIMP au départ.
       </para>
       <para>
@@ -2966,6 +3697,32 @@
         se čtyřmi parametry, které se vztahují k textu, písmu, velikosti písma
         a jeho barvě. Funkce je zatím prázdná a proto nic nedělá. Zatím nic
         zajímavého ani složitého.
+      </para>
+    </sect3>
+
+    <sect3 lang="de">
+      <title>Das Allernötigste</title>
+      <para>
+        Jedes Script-Fu-Skript definiert mindestens eine Funktion, die
+        Hauptfunktion des Skripts. Das ist der Ort, wo Sie arbeiten müssen.
+      </para>
+      <para>
+        Jedes Skript muß sich auch bei der Prozedurendatenbank registrieren,
+        so dass Sie von <acronym>GIMP</acronym> aus darauf zugreifen können.
+      </para>
+      <para>
+       Wir definieren zuerst die Hauptfunktion:
+      </para>
+      <programlisting>
+        (define (script-fu-text-box inText inFont inFontSize inTextColor))
+      </programlisting>
+      <para>
+        Hier haben wir eine neue Funktion namens
+        <code>script-fu-text-box</code> mit vier Paramentern definiert, die
+        später einem Text, einer Schriftart, der Schriftgröße und der
+        Textfarbe entsprechen. Die Funktion ist jetzt noch leer und macht
+        daher überhaupt nichts. So weit, so gut - nichts Neues, nichts
+        Außergewöhnliches.
       </para>
     </sect3>
 
@@ -3064,6 +3821,28 @@
       </para>
     </sect3>
 
+    <sect3 lang="de">
+      <title>Namenskonventionen</title>
+      <para>
+        Schemes Namenskonventionen scheinen kleingeschriebene Namen mit
+        Bindestrichen zu bevorzugen, dem bin ich beim Funktionsnamen
+        gefolgt. Allerdings bin ich bei den Parametern von dieser Konvention
+        abgewichen. Ich bevorzuge für meine Parameter und Variablen
+        beschreibende (sprechende) Namen und habe daher den Paramtern die
+        Vorsilbe <quote>in</quote> vorangestellt, so dass ich sofort erkennen
+        kann, dass sie Eingabewerte fürs Skript enthalten und nicht
+        innerhalb des Skriptes erzeugt wurden. Für letztere verwende ich
+        die Vorsilbe <quote>the</quote>.
+      </para>
+      <para>
+        Es ist <acronym>GIMP</acronym>s Konvention, die Skriptfunktionen
+        <quote>script-fu-irgendwas</quote> zu nennen, da sie dann, wenn sie
+        in der Datenbank für Prozeduren aufgelistet werden, alle unter
+        <quote>script-fu</quote> erscheinen. Das hilft auch, sie von
+        Plugins zu unterscheiden.
+      </para>
+    </sect3>
+
     <sect3 lang='fr'>
       <title>Conventions de dénomination</title>
       <para>
@@ -3155,7 +3934,6 @@
         in your script directory, then choose
         <menuchoice>
           <guimenu>Xtns</guimenu>
-
           <guisubmenu>Script-Fu</guisubmenu>
           <guimenuitem>Refresh Scripts</guimenuitem>
         </menuchoice>,
@@ -3250,6 +4028,75 @@
         </menuchoice>),
         zjistíte, že náš nový skript je skutečně uveden
         v databázi.
+      </para>
+    </sect3>
+
+    <sect3 lang="de">
+      <title>Die Funktion registrieren</title>
+      <para>
+        Nun wollen wir die Funktion bei <acronym>GIMP</acronym> registrieren.
+        Das wird durch Aufrufen der Funktion <code>script-fu-register</code>
+        getan. Wenn <acronym>GIMP</acronym> ein Skript einliest, führt es
+        diese Funktion aus, die das Skript bei der der Prozedurendatenbank
+        registriert. Sie können diese Funktion irgendwo innerhalb des
+        Skripts plazieren, ich stelle sie ganz ans Ende, hinter meinen
+        anderen Code.
+      </para>
+      <para>
+        Hier ist das Programmlisting, um die Funktion zu registrieren (ich
+        erkläre alle Parameter in einer Minute):
+      </para>
+      <programlisting>
+      <![CDATA[
+        (script-fu-register
+          "script-fu-text-box"                        ;Funktionsname
+          "Text Box"                                  ;Menüoption
+          "Creates a simple text box, sized to fit\
+            around the user's choice of text,\
+            font, font size, and color."              ;Beschreibung
+          "Michael Terry"                             ;Autor
+          "copyright 1997, Michael Terry"             ;Copyright
+          "October 27, 1997"                          ;Erstellungsdatum
+          ""                     ;Bildtyp, auf dem das Skript arbeitet
+          SF-STRING      "Text"          "Text Box"   ;Eine Stringvariable
+          SF-FONT        "Font"          "Charter"    ;Eine Fontvariable
+          SF-ADJUSTMENT  "Font size"     '(50 1 1000 1 10 0 1)
+                                                      ;Ein Drehfeld
+          SF-COLOR       "Color"         '(0 0 0)     ;Farbvariable
+        )
+        (script-fu-menu-register "script-fu-text-box" "<Toolbox>/Xtns/Script-Fu/Text")
+      ]]>
+      </programlisting>
+      <para>
+        Wenn Sie diese Funktionen in einer Textdatei mit Dateiendung
+        <filename>.scm</filename> in Ihrem Skriptverzeichnis speichern
+        und dann
+        <menuchoice>
+          <guimenu>Xtns</guimenu>
+          <guisubmenu>Skript-Fu</guisubmenu>
+          <guimenuitem>Auffrischen</guimenuitem>
+        </menuchoice>
+        wählen, wird dieses neue Skript als
+        <menuchoice>
+          <guimenu> Xtns</guimenu>
+          <guisubmenu>Skript-Fu</guisubmenu>
+          <guisubmenu>Text</guisubmenu>
+          <guimenuitem>Text Box</guimenuitem>
+        </menuchoice>
+        erscheinen.
+      </para>
+      <para>
+        Rufen Sie dieses neue Skript auf, macht es natürlich gar nichts,
+        aber Sie können die Eingabeaufforderungen sehen, die Sie mit dem
+        Registrieren erstellt haben (mehr darüber, was wir eigentlich
+        gemacht haben, folgt gleich).
+      </para>
+      <para>
+        Zum guter Letzt: wenn Sie den Prozeduren-Browser aufrufen
+        (<menuchoice><guimenu>Xtns</guimenu>
+        <guimenuitem>Prozeduren-Browser</guimenuitem></menuchoice>),
+        werden Sie feststellen, dass unser Skript jetzt in der Datenbank
+        auftaucht.
       </para>
     </sect3>
 
@@ -3389,9 +4236,10 @@
     </sect3>
 
 
-    <sect3 lang="cs;en;fr;no">
+    <sect3 lang="cs;de;en;fr;no">
       <title lang='cs'>Jednotlivé kroky registrace skriptu</title>
       <title lang='en'>Steps For Registering The Script</title>
+      <title lang="de">Skriptregistrierung Schritt für Schritt</title>
       <title lang='fr'>Étapes pour enregistrer le script</title>
       <title lang="no">Å registrere skriptet</title>
       <para lang='cs'>
@@ -3405,6 +4253,12 @@
         script-fu-register, fill in the seven required parameters and
         add our script's own parameters, along with a description and
         default value for each parameter.
+      </para>
+      <para lang="de">
+        Um das Skript bei <acronym>GIMP</acronym> zu registrieren, rufen wir
+        die Funktion <code>script-fu-register</code> auf, geben die sieben
+        erforderlichen Parameter an und fügen unsere eigenen Parameter noch
+        hinzu, jeweils mit Beschreibung und Standardwert.
       </para>
       <para lang='fr'>
         Pour enregistrer notre script dans Gimp, nous appelons la fonction
@@ -3423,6 +4277,7 @@
       <itemizedlist>
         <title lang='cs'>Povinné parametry</title>
         <title lang='en'>The Required Parameters</title>
+        <title lang="de">Die erforderlichen Parameter</title>
         <title lang='fr'>Les paramètres requis</title>
         <title lang="no">Dei nødvendige parametra</title>
         <listitem>
@@ -3434,30 +4289,40 @@
            know which of these functions to call. In our example, we only
            defined one function, text-box, which we registered.
           </para>
-         <para lang='cs'>
-           <emphasis role='bold'>Jméno</emphasis> funkce, která se volá
-           při spuštění skriptu (vstupní bod skriptu). Je to nutné, neboť
-           v souboru skriptu může být definováno funkcí více. Gimpu musí být
-           jasné, kterou z nich má zavolat. V našem příkladu jsme definovali
-           funkci jedinou, text-box, kterou jsme také zaregistrovali.
-         </para>
-         <para lang='fr'>
-           Le <emphasis role='bold'>nom</emphasis> de la fonction que nous
-           avons défini. C'est la fonction appelée quand notre script est
-           invoqué, le point d'entrée dans notre script. C'est important
-           parce que nous pourrons definir plusieurs autres fonctions dans le
-           même fichier, et GIMP doit savoir quelle fonction appeler. Dans
-           notre exemple, nous navons défini qu'une seule fonction, text-box,
-           que nous avons enregistrée.
+          <para lang='cs'>
+            <emphasis role='bold'>Jméno</emphasis> funkce, která se volá
+            při spuštění skriptu (vstupní bod skriptu). Je to nutné, neboť
+            v souboru skriptu může být definováno funkcí více. Gimpu musí být
+            jasné, kterou z nich má zavolat. V našem příkladu jsme definovali
+            funkci jedinou, text-box, kterou jsme také zaregistrovali.
+          </para>
+          <para lang="de">
+            Der <emphasis role="bold">Name</emphasis> der von uns definierten
+            Funktion. Das ist die Funktion, die beim Aufruf unseres Skripts
+            ausgeführt wird (der Eintrittspunkt in unser Skript). Das ist
+            deshalb notwendig, weil wir innerhalb derselben Datei weitere
+            Funktionen definieren können und <acronym>GIMP</acronym> wissen
+            muß, welche von diesen Funktionen es aufrufen muß. In unserem
+            Beispiel haben wir nur eine Funktion definiert,
+            <code>script-fu-text-box</code>, die wir gerade registriert haben.
+          </para>
+          <para lang='fr'>
+            Le <emphasis role='bold'>nom</emphasis> de la fonction que nous
+            avons défini. C'est la fonction appelée quand notre script est
+            invoqué, le point d'entrée dans notre script. C'est important
+            parce que nous pourrons definir plusieurs autres fonctions dans le
+            même fichier, et GIMP doit savoir quelle fonction appeler. Dans
+            notre exemple, nous navons défini qu'une seule fonction, text-box,
+            que nous avons enregistrée.
           </para>
           <para lang="no">
-           <emphasis role='bold'>Namnet</emphasis> på funksjonen. Dette er
-           funksjonen som blir aktivisert når du kallar opp skriptet.
-           Inngangen til skriptet, om du vil. Dette er heilt nødvendig fordi
-           du kan definera mange funksjonar innan same fila, og
-           <acronym>GIMP</acronym> må vita kva for funksjonar som skal kallast
-           opp. I eksemplet definerte vi bare ein funksjon,
-           <quote>text-box</quote>, som så blei registrert.
+            <emphasis role='bold'>Namnet</emphasis> på funksjonen. Dette er
+            funksjonen som blir aktivisert når du kallar opp skriptet.
+            Inngangen til skriptet, om du vil. Dette er heilt nødvendig fordi
+            du kan definera mange funksjonar innan same fila, og
+            <acronym>GIMP</acronym> må vita kva for funksjonar som skal kallast
+            opp. I eksemplet definerte vi bare ein funksjon,
+            <quote>text-box</quote>, som så blei registrert.
           </para>
         </listitem>
 
@@ -3534,6 +4399,44 @@
           </para>
         </listitem>
 
+        <listitem lang="de">
+          <para>
+            Die <emphasis role="bold">Position</emphasis> in dem Menü, wo
+            das Skript eingefügt wird. Die exakte Position des Skripts wird
+            wie ein Pfad in Unix angegeben, wobei das Wurzelelement entweder
+            <quote>&lt;Toolbox&gt;</quote> oder <quote>&lt;Image&gt;</quote>
+            ist.
+          </para>
+          <para>
+            Wenn Ihr Skript nicht auf einem existierenden Bild arbeitet
+            (und daher ein neues Bild erzeugt, so wie unser Skript es tut),
+            dann werden Sie es im Werkzeugmenü (<quote>toolbox</quote>)
+            einfügen wollen - das ist das Menü in <acronym>GIMP</acronym>s
+            Hauptfenster (wo sich alle Werkzeuge befinden: die
+            Auswahlwerkzeuge, das Vergrößerungsglas usw.).
+          </para>
+          <para><!-- PENDING: de: "en" needs a review -->
+            Wenn Ihr Skript auf einem zu editierenden Bild arbeitet, werden
+            Sie es in dem Menü einfügen wollen, das bei einem Rechtsklick
+            auf das geöffnete Bild erscheint. Der Rest des Pfades zeigt auf
+            die Menüliste, Menüs und Untermenüs. Daher haben wir unser
+            Textbox-Skript im Text-Menü des Skript-Fu-Menüs des Xtns-Menüs
+            des Werkzeugkastens registriert:
+            <menuchoice>
+              <guimenu> Xtns</guimenu>
+              <guisubmenu>Skript-Fu</guisubmenu>
+              <guisubmenu>Text</guisubmenu>
+              <guimenuitem>Text Box</guimenuitem>
+            </menuchoice>.
+          </para>
+          <para>
+            Vielleicht haben Sie es bemerkt, das Untermenü
+            <quote>Text</quote> im Skript-Fu-Menü war noch gar nicht
+            vorhanden, als wir anfingen - <acronym>GIMP</acronym> erstellt
+            automatisch alle noch nicht existierenden Menüs.
+          </para>
+        </listitem>
+
         <listitem lang='fr'>
           <para>
             L'<emphasis role='bold'>emplacement</emphasis> dans le menu où
@@ -3584,8 +4487,6 @@
             (<quote>Toolbox</quote>). Dette er hovudvindauget i
             <acronym>GIMP</acronym> der alle dei ulike verktøya er plasserte.
             Adressa blir altså slik vi har skrive ho inn i eksemplet.
-
-
           </para>
           <para>
             Skal skriptet derimot operera på eit eksisterande bilete, må du
@@ -3631,6 +4532,12 @@
             v Prohlížeči procedur.
           </para>
         </listitem>
+        <listitem lang="de">
+          <para>
+            Eine <emphasis role="bold">Beschreibung</emphasis> Ihres
+            Skripts, die dann im Prozeduren-Browser erscheint.
+          </para>
+        </listitem>
         <listitem lang='fr'>
           <para>
             Une <emphasis role='bold'>description</emphasis> de votre script,
@@ -3656,6 +4563,11 @@
             skriptu).
           </para>
         </listitem>
+        <listitem lang="de">
+          <para>
+            <emphasis role="bold">Ihr Name</emphasis> (Autor des Skripts)
+          </para>
+        </listitem>
         <listitem lang='fr'>
           <para>
             <emphasis role='bold'>Votre nom</emphasis> (l'auteur du script)
@@ -3679,6 +4591,11 @@
             právech.
           </para>
         </listitem>
+        <listitem lang="de">
+          <para>
+            <emphasis role="bold">Copyright</emphasis>-Information.
+          </para>
+        </listitem>
         <listitem lang='fr'>
           <para>
             Information de <emphasis role='bold'>Copyright</emphasis>.
@@ -3700,6 +4617,12 @@
           <para>
             <emphasis role='bold'>Datum</emphasis>, kdy byl skript napsán
             nebo naposledy revidován.
+          </para>
+        </listitem>
+        <listitem lang="de">
+          <para>
+            Das <emphasis role="bold">Datum</emphasis>, an dem das Skript
+            erstellt oder zuletzt überarbeitet wurde.
           </para>
         </listitem>
         <listitem lang='fr'>
@@ -3730,6 +4653,13 @@
             žádný, jako v případě našeho skriptu, který vytváří nový obrázek
             a tudíž nepracuje s žádným stávajícím obrázkem.
           </para>
+          <para lang="de">
+            Der <emphasis role="bold">Typ</emphasis> des Bildes, auf dem das
+            Skript arbeitet. Das kann einer der folgenden Typen sein:
+            RGB, RGBA, GRAY, GRAYA, INDEXED, INDEXEDA. Oder auch überhaupt
+            kein Typ: in unserem Fall erstellen wir ein Bild und brauchen
+            daher auch keinen Typ zu definieren.
+          </para>
           <para lang='fr'>
             Les <emphasis role='bold'>types</emphasis> d'image sur lesquels
             travaille le script. Il peut s'agir de RGB, RGBA, GRAY, GRAYA,
@@ -3747,9 +4677,10 @@
       </itemizedlist>
     </sect3>
 
-    <sect3 lang="cs;en;fr;no">
+    <sect3 lang="cs;de;en;fr;no">
       <title lang='cs'>Registrace parametrů skriptu</title>
       <title lang='en'>Registering The Script's Parameters</title>
+      <title lang="de">Die Skriptparameter registrieren</title>
       <title lang='fr'>Enregistrement des paramètres du script</title>
       <title lang="no">Registrering av skriptparametra</title>
 
@@ -3767,6 +4698,13 @@
         uvést jejich typ, což umožní správně zobrazit dialog, ve kterém
         uživatel parametry nastavuje. Také zadáme výchozí hodnoty těchto
         parametrů.
+      </para>
+      <para lang="de">
+        Nachdem wir die erforderlichen Parameter aufgelistet haben, müssen
+        wir die Parameter aufführen, die den von unserem Skript benötigten
+        Parametern entsprechen. Wir werden dabei auch Hinweise zu ihrem
+        jeweiligen Typ für den Dialog, der sich beim Aufruf unseres Skripts
+        öffnet, geben. Außerdem geben wir einen Standardwert vor.
       </para>
       <para lang='fr'>
         Maintenant que nous avons vu la liste des paramètres requis, nous
@@ -3791,6 +4729,9 @@
       <para lang='cs'>
         Tato část registračního procesu používá následující formát:
       </para>
+      <para lang="de">
+        Dieser Abschnitt des Registrierungsprozesses hat das folgende Format:
+      </para>
       <para lang='fr'>
         Cette section du processus d'enregistrement a le format suivant:
       </para>
@@ -3808,18 +4749,21 @@
             <entry>
               <para lang='en'>Param Type</para>
               <para lang='cs'>Typ parametru</para>
+              <para lang="de">Parametertyp</para>
               <para lang='fr'>Type de paramètre</para>
               <para lang="no">Parametertype</para>
             </entry>
             <entry>
               <para lang='en'>Description</para>
               <para lang='cs'>Popis</para>
+              <para lang="de">Beschreibung</para>
               <para lang='fr'>Description</para>
               <para lang="no">Beskriving</para>
             </entry>
             <entry>
               <para lang='en'>Example</para>
               <para lang='cs'>Příklad</para>
+              <para lang="de">Beispiel</para>
               <para lang='fr'>Exemple</para>
               <para lang="no">Eksempel</para>
             </entry>
@@ -3836,6 +4780,11 @@
               <para lang='en'>
                 Accepts numbers and strings. Note that quotes must be
                 escaped for default text, so better use SF-STRING.
+              </para>
+              <para lang="de">
+                Akzeptiert Zahlen und Zeichenketten. Beachten Sie, dass
+                Anführungszeichen im Standardtext maskiert werden müssen,
+                nehmen Sie also besser SF-STRING.
               </para>
               <para lang='fr'>
                 Accepte les nombres et les chaînes de caractères. (NDT: pas
@@ -3858,6 +4807,9 @@
               <para lang='cs'>
                 Přijímá řetězce.
               </para>
+              <para lang="de">
+                Akzeptiert Zeichenketten.
+              </para>
               <para lang='fr'>
                 Accepte les chaînes de caractères.
               </para>
@@ -3866,6 +4818,7 @@
             <entry>
               <para lang='en'>"Some text"</para>
               <para lang='cs'>"Nějaký text"</para>
+              <para lang="de"><literal>"Irgendein Text"</literal></para>
               <para lang='fr'>"Un texte"</para>
               <para lang="no">"Ein tekst"</para>
             </entry>
@@ -3878,6 +4831,9 @@
               </para>
               <para lang='cs'>
                 Označuje parametr vyžadující barvu.
+              </para>
+              <para lang="de">
+                Zeigt an, dass dieser Parameter eine Farbe erfordert.
               </para>
               <para lang='fr'>
                 Indique qu'une couleur est nécessaire pour ce paramètre.
@@ -3898,6 +4854,10 @@
                 Přijímá booleovskou hodnotu (pravda či nepravda).
                 V dialogu se zobrazuje jako zaškrtávací políčko, přepínač.
               </para>
+              <para lang="de">
+                Ein Kontrollkästchen für einen Booleschen Wert wird
+                angezeigt.
+              </para>
               <para lang='fr'>
                 Une boîte de saisie est affichée, pour entrer une valeur
                 Booléenne.
@@ -3909,6 +4869,7 @@
             <entry>
               <para lang='cs'>TRUE nebo FALSE</para>
               <para lang='en'>TRUE or FALSE</para>
+              <para lang="de">TRUE oder FALSE (wahr oder falsch)</para>
               <para lang='fr'>TRUE ou FALSE (Vrai ou Faux)</para>
               <para lang="no">TRUE eller FALSE (sant/usant)</para>
             </entry>
@@ -3925,6 +4886,12 @@
                 Pokud skript pracuje s otevřeným obrázkem, měl by toto být
                 první parametr uvedený po povinných parametrech. GIMP v tomto
                 parametru předá odkaz na obrázek.
+              </para>
+              <para lang="de">
+                Wenn Ihr Skript auf einem geöffneten Bild operiert, sollte
+                dieser Parameter der erste nach den zwingend erforderlichen
+                Parametern sein. <acronym>GIMP</acronym> übergibt in diesem
+                Parameter eine Referenz auf das Bild.
               </para>
               <para lang='fr'>
                 Si votre script opère sur une image ouverte, ceci doit être
@@ -3954,6 +4921,12 @@
                 parametr následovat ihned za parametrem SF-IMAGE. Odkazuje
                 na aktivní vrstvu. GIMP na ni přes tento parametr předá odkaz.
               </para>
+              <para lang="de">
+                Wenn Ihr Skript auf einem geöffneten Bild operiert, sollte
+                dieser Parameter der nächste nach dem SF-IMAGE-Parameter
+                sein.  <acronym>GIMP</acronym> übergibt in diesem Parameter
+                eine Referenz auf die aktive Ebene.
+              </para>
               <para lang='fr'>
                 Si votre script opère sur une image ouverte, ceci doit être
                 le second paramètre, après le paramètre SF-IMAGE. Il se
@@ -3979,6 +4952,7 @@
     <title>
       <phrase lang='cs'>Vytvoření střev skriptu</phrase>
       <phrase lang='en'>Giving Our Script Some Guts</phrase>
+      <phrase lang="de">Unserem Skript etwas Inhalt geben</phrase>
       <phrase lang="fr">Donner un peu plus de corps à votre script</phrase>
       <phrase lang="no">Sprit opp skriptet</phrase>
     </title>
@@ -3989,6 +4963,10 @@
     <para lang='en'>
       Let us continue with our training and add some functionality to
       our script.
+    </para>
+    <para lang="de">
+      Lassen Sie uns mit unseren Übungen fortfahren und unserem Skript
+      etwas Funktionalität hinzufügen.
     </para>
     <para lang="fr">
       Poursuivons notre entraînement et ajoutons quelques fonctionnalités à
@@ -4121,6 +5099,74 @@
         Gimpu vrací seznam, i když obsahuje jediný prvek. Proto je potřeba
         pracovat s halvičkou seznamu.
 
+      </para>
+    </sect3>
+
+    <sect3 lang="de">
+      <title>Ein neues Bild erstellen</title>
+      <para>
+        In der vorigen Lektion haben wir eine leere Funktion geschaffen und
+        Sie bei <acronym>GIMP</acronym> registriert. Nun wollen wir unserem
+        Skript Funktionalität verschaffen - wir wollen ein neues Bild
+        erstellen, den Text des Benutzers hinzufügen und das Bild skalieren,
+        so dass der Text genau hineinpaßt.
+      </para>
+      <para>
+        Wenn Sie erst wissen, wie man Variablen benutzt, Funktionen definiert
+        und auf Listenelemente zugreift, ist der Rest eigentlich einfach -
+        Sie müssen sich nur mit den Funktionen, die in
+        <acronym>GIMP</acronym>s Prozedurendatenbank zur Verfügung stehen,
+        vertraut machen und sie anwenden. Also öffnen Sie den
+        Prozeduren-Browser und lassen Sie uns loslegen!
+      </para>
+      <para>
+        Lassen Sie uns damit anfangen, ein neues Bild zu erstellen. Wir legen
+        eine neue Variable an, <varname>theImage</varname>, und weisen ihr
+        das Ergebnis der internen <acronym>GIMP</acronym>-Funktion
+        <code>gimp-image-new</code> zu.
+      </para>
+      <para>
+        Wie Sie im Prozeduren-Browser sehen können, erwartet die Funktion
+        <code>gimp-image-new</code> drei Parameter: Breite, Höhe und Typ des
+        Bildes. Da wir die Bildgröße später an den Text anpassen,
+        erstellen wir zunächst nur ein 10x10 Pixel großes RGB-Bild. Wir
+        speichern außerdem die Bildbreite und -höhe in einigen Variablen,
+        da wir später im Skript auf sie zurückgreifen und sie verändern
+        werden.
+      </para>
+      <programlisting>
+        (define (script-fu-text-box inText inFont inFontSize inTextColor)
+        (let*
+              (
+                 ; lokale Variablen definieren
+                 ; ein neues Bild erstellen:
+                 (theImageWidth  10)
+                 (theImageHeight 10)
+                 (theImage (car
+                                (gimp-image-new
+                                 theImageWidth
+                                 theImageHeight
+                                 RGB
+                                )
+                           )
+                 )
+                 (theText)     ;Deklaration für den Text,
+                               ;den wir später erstellen
+      </programlisting>
+      <para>
+        Beachten Sie, dass wir den Wert <code>RGB</code> verwendet haben,
+        um das Bild als RGB-Bild zu spezifizieren. Wir hätten auch einfach
+        <quote>0</quote> nehmen können, aber <code>RGB</code> ist viel
+        aussagefähiger, wenn man sich den Code ansieht.
+      </para>
+      <para>
+        Sie sollten auch beachten, dass wir vom Ergebnis des Funktionsaufrufes
+        den Kopf genommen haben. Das mag seltsam aussehen, da die Datenbank
+        uns explizit sagt, dass die Funktion nur einen Wert zurückgibt - die
+        ID des neu erstellten Bildes. Allerdings liefern alle
+        <acronym>GIMP</acronym>-Funktionen eine Liste zurück, selbst wenn in
+        dieser Liste nur ein Element ist, daher müssen wir auf den Kopf der
+        Liste zugreifen.
       </para>
     </sect3>
 
@@ -4260,6 +5306,7 @@
         in the ID of the image we just created. (From now on, instead
         of listing the complete function, we'll only list the lines
         we're adding to it. You can see the complete script here.)
+        <!-- FIXME: where?? -->
         Because we've declared all of the local variables we'll use,
         we'll also close the parentheses marking the end of our
         variable declarations:
@@ -4301,7 +5348,6 @@
       <para lang='en'>
         Save your work, select
         <menuchoice>
-
           <guimenu>Xtns</guimenu>
           <guisubmenu>Script-Fu</guisubmenu>
           <guimenuitem>Refresh Scripts</guimenuitem>
@@ -4369,6 +5415,64 @@
         a spusťte skript. Měl by se objevit nový obrázek. Pravděpodobně bude
         obsahovat plno smetí (náhodných barev), neboť jsme obrázek nevymazali.
         Uděláme to za okamžik.
+      </para>
+    </sect3>
+
+    <sect3 lang="de">
+      <title>Eine neue Ebene zum Bild hinzufügen</title>
+      <para>
+        Jetzt, wo wir ein Bild haben, müssen wir eine Ebene hinzufügen.
+        Wir rufen die Funktion <function>gimp-layer-new</function> auf, um
+        die Ebene zu erstellen, wobei wir die ID des gerade erstellten Bildes
+        übergeben.
+        (Von nun an werden wir nur die Zeilen anführen, die wir hinzufügen,
+        anstatt die vollständige Funktion anzugeben.)
+        Da wir alle lokalen Variablen, die wir verwenden, deklariert haben,
+        werden wir auch das Klammernpaar schließen, welches das Ende unserer
+        lokalen Variablen markiert:
+      </para>
+      <programlisting>
+        ; eine neue Ebene für das Bild erstellen:
+           (theLayer
+                     (car
+                          (gimp-layer-new
+                           theImage
+                           theImageWidth
+                           theImageHeight
+                           RGB-IMAGE
+                           "layer 1"
+                           100
+                           NORMAL
+                          )
+                      )
+            )
+         ) ; Ende unserer lokalen Variablen
+      </programlisting>
+      <para>
+        Wenn wir eine neue Ebene haben, müssen wir sie dem Bild hinzufügen:
+      </para>
+      <programlisting>
+       (gimp-image-add-layer theImage theLayer 0)
+      </programlisting>
+      <para>
+        Und jetzt, nur so zum Spaß, wollen wir uns die Früchte unserer
+        Arbeit bis zu diesem Punkt anschauen. Wir fügen diese Zeile hinzu,
+        um das neue, leere Bild darzustellen:
+      </para>
+      <programlisting>
+        (gimp-display-new theImage)
+      </programlisting>
+      <para>
+        Speichern Sie Ihr Skript, wählen Sie
+        <menuchoice>
+          <guimenu>Xtns</guimenu>
+          <guisubmenu>Skript-Fu</guisubmenu>
+          <guimenuitem>Auffrischen</guimenuitem>
+        </menuchoice>
+        und rufen Sie das Skript auf: ein neues Bild sollte erscheinen.
+        Es wird vermutlich irgendwelchen Datenmüll enthalten (zufällige
+        Farben), da wir es bis jetzt noch nicht geleert haben. Dazu werden
+        wir gleich kommen.
       </para>
     </sect3>
 
@@ -4659,6 +5763,91 @@
       </para>
     </sect3>
 
+    <sect3 lang="de">
+      <title>Den Text hinzufügen</title>
+      <para>
+        Weiter geht's, löschen Sie zuerst die Zeile, um das Bild
+        darzustellen (oder kommentieren Sie sie mit einem <code>;</code>
+        als erstem Zeichen der Zeile aus).
+      </para>
+      <para>
+        Bevor wir Text zum Bild hinzufügen, müssen wir die Vorder- und
+        Hintergrundfarbe festlegen, so dass der Text in der vom Benutzer
+        angegebenen Farbe erscheint. Wir verwenden dafür die Funktionen
+        <function>gimp-context-set-background</function> und
+        <function>gimp-context-set-foreground</function>:
+      </para>
+      <programlisting>
+        (gimp-context-set-background '(255 255 255) )
+        (gimp-context-set-foreground inTextColor)
+      </programlisting>
+      <para>
+        Mit den korrekt gesetzten Farben können wir nun den Datenmüll im
+        Bild entfernen, indem wir die Zeichenfläche mit der Hintergrundfarbe
+        füllen:
+      </para>
+      <programlisting>
+        (gimp-drawable-fill theLayer BACKGROUND-FILL)
+      </programlisting>
+      <para>
+        Nach den Löschen des Bildes sind wir bereit, einen Text
+        hinzuzufügen:
+      </para>
+      <programlisting>
+        (set! theText
+                      (car
+                           (gimp-text-fontname
+                            theImage theLayer
+                            0 0
+                            inText
+                            0
+                            TRUE
+                            inFontSize PIXELS
+                            "Sans")
+                       )
+        )
+      </programlisting>
+      <para>
+        Obgleich lang ist der Funktionsaufruf doch ziemlich klar, wenn Sie
+        die Parameter durchgehen und dabei gleichzeitig einen Blick auf den
+        entsprechenden Eintrag im Prozeduren-Browser werfen. Im Grunde
+        erstellen wir nur eine neue Textebene und weisen sie der Variablen
+        <varname>theText</varname> zu.
+      </para>
+      <para>
+        Nachdem wir nun den Text haben, können wir seine Breite und Höhe
+        bestimmen und das Bild sowie die Bildebene entsprechend skalieren.
+      </para>
+      <programlisting>
+        (set! theImageWidth   (car (gimp-drawable-width  theText) ) )
+        (set! theImageHeight  (car (gimp-drawable-height theText) ) )
+
+        (gimp-image-resize theImage theImageWidth theImageHeight 0 0)
+
+        (gimp-layer-resize theLayer theImageWidth theImageHeight 0 0)
+      </programlisting>
+      <para>
+        Wenn es Ihnen wir mir geht, fragen Sie sich vermutlich, was eine
+        Zeichenfläche im Vergleich zu einer Ebene ist. Der Unterschied
+        zwischen diesen beiden ist, dass die Zeichenfläche irgend etwas ist,
+        in das man zeichnen kann, einschließlich Ebenen, aber auch Kanäle,
+        Ebenenmasken, die Auswahl etc. Eine Ebene ist eine spezielle Version
+        einer Zeichenfläche. In den meisten Fällen ist der Unterschied
+        allerdings völlig unwichtig.
+      </para>
+      <para>
+        Mit dem fertigen Bild können wir nun unsere Ausgabezeile wieder
+        hinzufügen:
+      </para>
+      <programlisting>
+        (gimp-display-new theImage)
+      </programlisting>
+      <para>
+        Sichern Sie Ihre Arbeit, frischen Sie die Datenbank wieder auf
+        und probieren Sie Ihr erstes Skript aus!
+      </para>
+    </sect3>
+
     <sect3 lang='fr'>
       <title>Ajouter le texte</title>
       <para>
@@ -4895,10 +6084,43 @@
       </para>
     </sect3>
 
+    <sect3 lang="de">
+      <title>Das Geändert-Kennzeichen löschen</title>
+      <para>
+        Wenn Sie versuchen, das erstellte Bild zu schließen ohne es vorher
+        zu speichern, wird <acronym>GIMP</acronym> Sie fragen, ob Sie Ihre
+        Arbeit sichern wollen, bevor Sie das Bild schließen. Das fragt es
+        deshalb, weil das Bild als <quote>geändert</quote> bzw.
+        <quote>ungesichert</quote> markiert ist. Bei unserem Skript ist das
+        für die Fälle störend, wo wir nur einen Test machen und im
+        erstellten Bild nichts hinzufügen oder verändern. Bei so einem
+        einfachen Skript ist die Ausgabe leicht reproduzierbar, es ist also
+        sinnvoll, dieses Geändert-Kennzeichen zu entfernen.
+      </para>
+      <para>
+        Um das zu tun, können wir das Geändert-Kennzeichen löschen, nachdem
+        wir das Bild dargestellt haben:
+      </para>
+      <programlisting>
+        (gimp-image-clean-all theImage)
+      </programlisting>
+      <para>
+        Dies setzt das Änderungenzähler auf 0 und läßt das Bild als
+        unverändert erscheinen.
+      </para>
+      <para>
+        Ob Sie diese Zeile hinzufügen oder nicht ist eine Frage des
+        persönlichen Geschmacks. Ich verwende sie in Skripten, die neue
+        Bilder produzieren und wo die Ergebnisse trivial ist, so wie in
+        diesem Fall. Wenn Ihr Skript sehr kompliziert ist oder wenn es auf
+        einem existierenden Bild arbeitet, werden Sie diese Funktion
+        vermutlich nicht verwenden wollen.
+      </para>
+    </sect3>
+
     <sect3 lang='fr'>
       <title>Annulons le drapeau de modification</title>
       <para>
-
         Quand vous essayez de fermer une image modifiée sans l'avoir
         enregistrée au préalable, GIMP vous demande de l'enregistrer.
         L'image est en effet marquée par un drapeau de modification. Dans
@@ -4963,6 +6185,7 @@
     <title>
       <phrase lang='en'>Extending The Text Box Script</phrase>
       <phrase lang='cs'>Rozšíření skriptu Text Box</phrase>
+      <phrase lang="de">Das Textbox-Skript erweitern</phrase>
       <phrase lang='fr'>Compléter le script Text Box</phrase>
       <phrase lang="no">Utvid skriptet Text Box</phrase>
     </title>
@@ -5013,6 +6236,32 @@
       <para lang='cs'>
         Pokud jsou tyto funkce použity, nečiní vracení změn provedených
         skripty žádné potíže.
+      </para>
+    </sect3>
+
+    <sect3 lang="de">
+      <title>Rückgängig machen korrekt handhaben</title>
+      <para>
+        Wenn Sie ein Skript erstellen, wollen Sie vielleicht den Benutzern
+        die Möglichkeit geben, ihre Aktionen nach einem Fehler wieder
+        zurückzunehmen. Das können Sie ganz leicht erreichen, indem Sie die
+        Funktionen <code>gimp-undo-push-group-start</code> und
+        <code>gimp-undo-push-group-end</code> vor bzw. nach dem Code, der
+        das Bild manipuliert, aufrufen. Sie können sie sich als ein
+        zusammengehörendes Anweisungspaar vorstellen, das
+        <acronym>GIMP</acronym> wissen läßt, wann es das Aufzeichnen von
+        Bildmanipulationen starten oder beenden soll, so dass diese
+        Änderungen später rückgängig gemacht werden können.
+      </para>
+      <para>
+        Wenn Sie ein völlig neues Bild erstellen, ist das Verwenden dieser
+        Funktionen sinnlos, da Sie kein existierendes Bild verändern. Wenn
+        Sie das allerding tun, dann sollten Sie diese Funktionen ganz
+        bestimmt verwenden.
+      </para>
+      <para>
+        Mit Hilfe dieser Funktionen klappt das Zurücknehmen eines Skriptes
+        praktisch ohne Probleme.
       </para>
     </sect3>
 
@@ -5120,6 +6369,36 @@
       </itemizedlist>
     </sect3>
 
+    <sect3 lang="de">
+      <title>Das Skript noch etwas mehr erweitern</title>
+      <para>
+        Nachdem wir nun ein wirklich nettes Skript zur Texterzeugung haben,
+        lassen Sie uns noch zwei Möglichkeiten hinzufügen:
+      </para>
+      <itemizedlist>
+        <listitem>
+          <para>
+            Im Moment wird das Bild so skaliert, dass der Text genau
+            hineinpaßt - es ist also kein Platz für irgendetwas anderes,
+            etwa Schlagschatten oder spezielle Effekte (auch wenn viele
+            Skripte das Bild bei Bedarf automatisch skalieren). Lassen Sie
+            uns daher einen Puffer um den Text erstellen und obendrein den
+            Benutzer festlegen, wie groß der Puffer (in Prozent der
+            Textgröße) sein soll.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Dieses Skript könnte leicht von anderen Skripten, die mit Text
+            arbeiten verwendet werden. Lassen Sie es uns so erweitern, dass
+            es das Bild und die Ebenen zurückliefert, so dass andere Skripte
+            dieses Skript aufrufen können und das von uns erstellte Bild und
+            die Ebenen verwenden können.
+          </para>
+        </listitem>
+      </itemizedlist>
+    </sect3>
+
     <sect3 lang='fr'>
       <title>Compléter un peu plus notre script</title>
       <para>
@@ -5175,9 +6454,10 @@
       </itemizedlist>
     </sect3>
 
-    <sect3 lang="cs;en;fr;no">
+    <sect3 lang="cs;de;en;fr;no">
       <title lang='en'>Modifying The Parameters And The Registration Function</title>
       <title lang='cs'>Úprava parametrů a registrační funkce</title>
+      <title lang="de">Die Parameter und die Registrierungsfunktion modifizieren</title>
       <title lang='fr'>Modifier les paramètres et la fonction
       d'enregistrement</title>
       <title lang="no">Å endre parametra og registreringsfunksjonen</title>
@@ -5189,6 +6469,11 @@
       <para lang='cs'>
         Aby mohl uživatel zadat množství volného místa, přidáme parametr naší
         funkci i registrační funkci:
+      </para>
+      <para lang="de">
+        Damit der Benutzer die Puffergröße festlegen kann, fügen wir
+        unserer Funktion und der Registrierungsfunktion einen Parameter
+        hinzu:
       </para>
       <para lang='fr'>
         Pour permettre à l'utilisateur de spécifier la taille du tampon,
@@ -5242,6 +6527,45 @@
          <replaceable>[Code here]</replaceable>
        )
       </programlisting>
+      <programlisting lang="de">
+        (define (script-fu-text-box inTest inFont inFontSize inTextColor inBufferAmount)
+        (let*
+              (
+                 ; lokale Variablen definieren
+                 ; ein neues Bild erstellen:
+                 (theImageWidth  10)
+                 (theImageHeight 10)
+                 (theImage (car
+                                (gimp-image-new
+                                 theImageWidth
+                                 theImageHeight
+                                 RGB
+                                )
+                           )
+                 )
+                 (theText)          ;Deklaration für den Text,
+                                    ;den wir später erstellen
+
+                 (theBuffer)        ;<emphasis role="bold">NEU</emphasis>
+
+                 (theLayer
+                           (car
+                               (gimp-layer-new
+                                theImage
+                                theImageWidth
+                                theImageHeight
+                                RGB-IMAGE
+                                "layer 1"
+                                100
+                                NORMAL
+                               )
+                           )
+                 )
+              ) ; Ende unserer lokalen Variablen
+
+         <replaceable>[Code hier]</replaceable>
+       )
+      </programlisting>
       <programlisting lang="cs;en;fr;no">
       <![CDATA[
         (script-fu-register
@@ -5261,6 +6585,29 @@
           SF-COLOR       "Color:"        '(0 0 0)     ;color variable
           SF-ADJUSTMENT  "Buffer amount" '(35 0 100 1 10 1 0)
                                                       ;a slider
+        )
+        (script-fu-menu-register "script-fu-text-box" "<Toolbox>/Xtns/Script-Fu/Text")
+      ]]>
+      </programlisting>
+      <programlisting lang="de">
+      <![CDATA[
+        (script-fu-register
+          "script-fu-text-box"                        ;Funktionsname
+          "Text Box"                                  ;Menüoption
+          "Creates a simple text box, sized to fit\
+            around the user's choice of text,\
+            font, font size, and color."              ;Beschreibung
+          "Michael Terry"                             ;Autor
+          "copyright 1997, Michael Terry"             ;Copyright
+          "October 27, 1997"                          ;Erstellungsdatum
+          ""                     ;Bildtyp, auf dem das Skript arbeitet
+          SF-STRING      "Text"          "Text Box"   ;Eine Stringvariable
+          SF-FONT        "Font"          "Charter"    ;Eine Fontvariable
+          SF-ADJUSTMENT  "Font size"     '(50 1 1000 1 10 0 1)
+                                                      ;Ein Drehfeld
+          SF-COLOR       "Color"         '(0 0 0)     ;Farbvariable
+          SF-ADJUSTMENT  "Buffer amount" '(35 0 100 1 10 1 0)
+                                                      ;Ein Schieberegler
         )
         (script-fu-menu-register "script-fu-text-box" "<Toolbox>/Xtns/Script-Fu/Text")
       ]]>
@@ -5402,6 +6749,81 @@
       </programlisting>
       <para lang='cs'>
         Výborně! Jste na cestě k černému pásku ve Script-Fu!
+      </para>
+    </sect3>
+
+    <sect3 lang="de">
+      <title>Den neuen Code hinzufügen</title>
+      <para>
+        Wir fügen den Code an zwei Stellen ein: unmittelbar, bevor wir die
+        Größe des Bildes anpassen, und am Ende des Skripts (um das neue
+        Bild, die Ebene und den Text zurückzugeben).
+      </para>
+      <para>
+        Nachdem die Textbreite und -höhe ermittelt haben, müssen wir diese
+        Werte auf der vom Nutzer spezifizierten Puffergröße basierend
+        anpassen. Wir führen hier keine Fehlerprüfung durch um
+        sicherzustellen, dass sie im Bereich 0-100% liegt, da es zum einen
+        nicht gefährlich wäre und es zum anderen keinen Grund gibt, warum
+        der Benutzer nicht einen Wert wie <quote>200</quote> als Prozentwert
+        für den Puffer eingeben sollte.
+      </para>
+      <programlisting>
+        (set! theBuffer (* theImageHeight (/ inBufferAmount 100) ) )
+
+        (set! theImageHeight (+ theImageHeight theBuffer theBuffer) )
+        (set! theImageWidth  (+ theImageWidth  theBuffer theBuffer) )
+      </programlisting>
+      <para>
+        Wir machen hier nichts weiter, als den Puffer gemäß der Texthöhe
+        zu setzen und ihn dann jeweils zweimal zur Bildhöhe und -breite zu
+        addieren. (Wir addieren ihn zweimal in beide Richtungen, da der
+        Puffer zu beiden Seiten des Textes hinzugefügt werden muß.)
+      </para>
+      <para>
+        Jetzt, wo wir die Größe des Bildes geändert haben, um einen Puffer
+        zu erlauben, müssen wir den Text innerhalb des Bildes zentrieren.
+        Das machen wir, indem wir ihn zur (x,y)-Koordinate von
+        (<varname>theBuffer</varname>, <varname>theBuffer</varname>)
+        verschieben. Ich habe diese Zeile hinter der Skalierung von Ebene
+        und Bild eingefügt:
+      </para>
+      <programlisting>
+        (gimp-layer-set-offsets theText theBuffer theBuffer)
+      </programlisting>
+      <para>
+        Sichern Sie nun Ihr Skript und probieren Sie es aus, nachdem Sie
+        die (Prozeduren-)Datenbank aufgefrischt haben.
+      </para>
+      <para>
+        Was noch zu tun bleibt ist, das Bild, die Ebene und die Textebene
+        zurückzugeben. Nach dem Anzeigen des Bildes fügen wir diese Zeile
+        ein:
+      </para>
+      <programlisting>
+        (list theImage theLayer theText)
+      </programlisting>
+      <para>
+        Das ist die letzte Zeile unserer Funktion und macht diese Liste
+        anderen Skripten, die sie verwenden wollen, verfügbar.
+      </para>
+      <para>
+        Um unser neues Textbox-Skript in anderen Skripten zu verwenden,
+        könnten wir etwa folgendes schreiben:
+      </para>
+      <programlisting>
+        (set! theResult (script-fu-text-box
+                         "Some text"
+                         "Charter" "30"
+                         '(0 0 0)
+                         "35"
+                        )
+        )
+        (gimp-image-flatten (car theResult))
+      </programlisting>
+      <para>
+        Gratuliere, Sie sind nun auf dem besten Wege zu Ihrem
+        Schwarzen Gürtel in Script-Fu!
       </para>
     </sect3>
 
