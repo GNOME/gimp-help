@@ -24,6 +24,8 @@
       //-->
       <xsl:when test="@element='area'">
       </xsl:when>
+      <xsl:when test="@element='figure'">
+      </xsl:when>
       <xsl:when test="@targetptr">
         <help-item>
           <xsl:attribute name="id"> 
