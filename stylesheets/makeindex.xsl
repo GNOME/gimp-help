@@ -35,7 +35,14 @@
             <xsl:value-of select="@href"/>
           </xsl:attribute>
           <xsl:attribute name="title">
-            <xsl:value-of select="concat(@number, '. ', normalize-space(ttl))" />
+	    <xsl:choose>
+	      <xsl:when test="@number=''">
+	        <xsl:value-of select="normalize-space(ttl)" />
+	      </xsl:when>
+	      <xsl:otherwise>
+	        <xsl:value-of select="concat(@number, '. ', normalize-space(ttl))" />
+	      </xsl:otherwise>
+	    </xsl:choose>  
           </xsl:attribute>
           <xsl:attribute name="parent">
             <xsl:value-of select="../@targetptr" />
