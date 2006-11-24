@@ -78,9 +78,13 @@ if test -z "$XSLTPROC" && test "x$enable_build" = "xyes"; then
 ** See the file 'INSTALL' for more help.])
 fi
 
+AC_MSG_CHECKING([libxslt version])
+LIBXSLT_VERSION=`$XSLTPROC -V | head -n 1| awk '{print $5}'`
+AC_MSG_RESULT([$LIBXSLT_VERSION])
+
 AC_MSG_CHECKING([for stylesheet to build index])
 AUTOIDX=autoidx
-if test `$XSLTPROC -V | head -n 1| awk '{print $5}'` -gt "10116-CVS"; then
+if test `echo $LIBXSLT_VERSION | sed "s/\([0-9.]*\).*$/\1/"` -ge "10117"; then
     AUTOIDX=autoidx-ng
 fi
 AC_MSG_RESULT([$AUTOIDX])
