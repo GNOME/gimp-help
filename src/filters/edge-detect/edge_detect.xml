@@ -1,19 +1,30 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
-                "http://www.docbook.org/xml/4.3/docbookx.dtd">
+          "http://www.docbook.org/xml/4.3/docbookx.dtd">
 
 <!-- section history:
-  2005-12-07 replaced <simplesect> by <sect3> by lexa
-  050930 de replaced informalfigure by axel.wernicke
-  050829 de added by axel.wernicke
+     2006-11-19 Change in Parameter Settings en;fr by j.h
+     2005-12-07 replaced <simplesect> by <sect3> by lexa
+     050930 de replaced informalfigure by axel.wernicke
+     050829 de added by axel.wernicke
 -->
-<sect2 id='plug-in-edge' lang="en;cs;de;fr;it;ru">
-  <sect2info lang="de" role="cvs">
+<sect2 id="plug-in-edge" lang="en;cs;de;fr;it;ru">
+  <sect2info lang="en;de;fr" role="cvs">
     <revhistory>
+      <revision lang="en">
+        <revnumber>$Revision$</revnumber>
+        <date>2006-11-19</date>
+        <authorinitials>j.h</authorinitials>
+      </revision>
       <revision lang="de">
         <revnumber>$Revision$</revnumber>
         <date>2006-11-04</date>
         <authorinitials>lexa</authorinitials>
+      </revision>
+      <revision lang="fr">
+        <revnumber>$Revision$</revnumber>
+        <date>2006-11-19</date>
+        <authorinitials>j.h</authorinitials>
       </revision>
     </revhistory>
   </sect2info>
@@ -28,9 +39,16 @@
   </title>
 
   <indexterm lang="en">
-    <primary>Edge</primary>
+    <primary>Filters</primary>
+    <secondary>Edge Detect</secondary>
   </indexterm>
-  
+  <indexterm lang="en"><primary>Sobel</primary></indexterm>
+  <indexterm lang="en"><primary>Laplace</primary></indexterm>
+  <indexterm lang="en"><primary>Roberts</primary></indexterm>
+  <indexterm lang="en"><primary>Gradient</primary></indexterm>
+  <indexterm lang="en"><primary>Prewitt</primary></indexterm>
+  <indexterm lang="en"><primary>Differentiel</primary></indexterm>
+
   <indexterm lang="cs">
     <primary>Hrana</primary>
   </indexterm>
@@ -47,8 +65,15 @@
   <indexterm lang="de"><primary>Differentiell</primary></indexterm>
 
   <indexterm lang="fr">
-    <primary>Contours</primary>
+    <primary>Filtres</primary>
+    <secondary>Détection de bords</secondary>
   </indexterm>
+  <indexterm lang="fr"><primary>Sobel</primary></indexterm>
+  <indexterm lang="fr"><primary>Laplace</primary></indexterm>
+  <indexterm lang="fr"><primary>Roberts</primary></indexterm>
+  <indexterm lang="fr"><primary>Dégradé</primary></indexterm>
+  <indexterm lang="fr"><primary>Prewitt</primary></indexterm>
+  <indexterm lang="fr"><primary>Différentiel</primary></indexterm>
 
   <indexterm lang="it">
     <primary>Filtri</primary>
@@ -67,16 +92,10 @@
   <indexterm lang="ru"><primary>Градиент</primary></indexterm>
   <indexterm lang="ru"><primary>Превитт</primary></indexterm>
   <indexterm lang="ru"><primary>Дифференциальный</primary></indexterm>
-  
-  <mediaobject lang="en;cs;it;ru">
-    <imageobject>
-      <imagedata fileref='../images/filters/filters-edgedetect-edge.png' format="PNG"/>
-    </imageobject>
-  </mediaobject>
 
-  <mediaobject lang="fr">
+  <mediaobject lang="cs;it;ru">
     <imageobject>
-      <imagedata fileref='../images/filters/fr/filters-edgedetect-edge.png' format="PNG"/>
+      <imagedata fileref="../images/filters/edge-options.png" format="PNG"/>
     </imageobject>
   </mediaobject>
 
@@ -91,13 +110,25 @@
     </title>
 
     <para lang="en">
-      This filter is found in
-      <guimenuitem>Image&gt;/Filters/Edge-Detect/<accel>E</accel>dge</guimenuitem>
+      You can find this filter through
+      <menuchoice>
+        <guimenu>Filters</guimenu>
+        <guisubmenu>Edge Detect</guisubmenu>
+        <guimenuitem>Edge...</guimenuitem>
+      </menuchoice>.
     </para>
     <para lang="cs">
       Tento filtr lze spustit volbou
       <guimenuitem>Obrázek&gt;/Filtry/Detekce hran/Hrana</guimenuitem>
       z nabídky okna obrázku.
+    </para>
+    <para lang="fr">
+      On accède à ce filtre par
+      <menuchoice>
+        <guimenu>Filtres</guimenu>
+        <guisubmenu>Détection de bord</guisubmenu>
+        <guimenuitem>Contour...</guimenuitem>
+      </menuchoice>.
     </para>
     <para lang="it">
       Questo filtro si trova nel menu immagine:
@@ -115,11 +146,17 @@
         <guimenuitem>Край</guimenuitem>
       </menuchoice>.
     </para>
-    
-    <figure lang="de;it;ru">
+
+    <figure lang="en;de;fr;it;ru">
       <title>
+        <phrase lang="en">
+          Applying example for the Edge filter
+        </phrase>
         <phrase lang="de">
           Beispiele für Kantenerkennungsfilter
+        </phrase>
+        <phrase lang="fr">
+          Exemple d'application du filtre Contour
         </phrase>
         <phrase lang="it">
           Esempio di applicazione del filtro Spigoli
@@ -131,11 +168,17 @@
       <mediaobject>
         <imageobject>
           <imagedata fileref="../images/filters/examples/taj_orig.jpg"
-          format="JPG"/>
+                    format="JPG"/>
         </imageobject>
         <caption>
+          <para lang="en">
+            Original image
+          </para>
           <para lang="de">
             Originalbild
+          </para>
+          <para lang="fr">
+            Image d'origine
           </para>
           <para lang="it">
             Originale
@@ -148,11 +191,17 @@
       <mediaobject>
         <imageobject>
           <imagedata fileref="../images/filters/examples/edge-taj-edge-sobel.jpg"
-          format="JPG"/>
+                    format="JPG"/>
         </imageobject>
         <caption>
+          <para lang="en">
+            After applying the filter (Sobel option)
+          </para>
           <para lang="de">
             Kantenerkennung (Sobel)
+          </para>
+          <para lang="fr">
+            Après application du filtre (option Sobel)
           </para>
           <para lang="it">
             Applicazione del filtro (Sobel)
@@ -163,11 +212,17 @@
         </caption>
       </mediaobject>
     </figure>
-    
-    <figure lang="de;it;ru">
+
+    <figure lang="en;de;fr;it;ru">
       <title>
+        <phrase lang="en">
+          Applying examples for the Edge filter
+        </phrase>
         <phrase lang="de">
           Beispiele für Kantenerkennungsfilter
+        </phrase>
+        <phrase lang="fr">
+          Exemples d'application du filtre Contour
         </phrase>
         <phrase lang="it">
           Esempio di applicazione del filtro Spigoli
@@ -179,11 +234,17 @@
       <mediaobject>
         <imageobject>
           <imagedata fileref="../images/filters/examples/edge-taj-edge-prewitt.jpg"
-          format="JPG"/>
+                    format="JPG"/>
         </imageobject>
         <caption>
+          <para lang="en">
+            After applying the filter (Prewitt option)
+          </para>
           <para lang="de">
             Kantenerkennung (Prewitt)
+          </para>
+          <para lang="fr">
+            Après application du filtre (option Prewitt)
           </para>
           <para lang="it">
             Applicazione del filtro (Prewitt)
@@ -196,11 +257,17 @@
       <mediaobject>
         <imageobject>
           <imagedata fileref="../images/filters/examples/edge-taj-edge-gradient.jpg"
-          format="JPG"/>
+                    format="JPG"/>
         </imageobject>
         <caption>
+          <para lang="en">
+            After applying the filter (Gradient option)
+          </para>
           <para lang="de">
             Kantenerkennung (Verlauf)
+          </para>
+          <para lang="fr">
+            Après application du filtre (option Dégradé)
           </para>
           <para lang="it">
             Applicazione del filtro (Gradiente)
@@ -211,11 +278,17 @@
         </caption>
       </mediaobject>
     </figure>
-    
-    <figure lang="de;it;ru">
+
+    <figure lang="en;de;fr;it;ru">
       <title>
+        <phrase lang="en">
+          Applying example for the Edge filter
+        </phrase>
         <phrase lang="de">
           Beispiele für Kantenerkennungsfilter
+        </phrase>
+        <phrase lang="fr">
+          Exemple d'application du filtre Contour
         </phrase>
         <phrase lang="it">
           Esempio di applicazione del filtro Spigoli
@@ -227,11 +300,17 @@
       <mediaobject>
         <imageobject>
           <imagedata fileref="../images/filters/examples/edge-taj-edge-roberts.jpg"
-          format="JPG"/>
+                    format="JPG"/>
         </imageobject>
         <caption>
+          <para lang="en">
+            After applying the filter (Roberts option)
+          </para>
           <para lang="de">
             Kantenerkennung (Roberts)
+          </para>
+          <para lang="fr">
+            Après application du filtre (option Roberts)
           </para>
           <para lang="it">
             Applicazione del filtro (Roberts)
@@ -244,7 +323,7 @@
       <mediaobject>
         <imageobject>
           <imagedata fileref="../images/filters/examples/edge-taj-edge-differential.jpg"
-          format="JPG"/>
+                    format="JPG"/>
         </imageobject>
         <caption>
           <para lang="de">
@@ -259,11 +338,17 @@
         </caption>
       </mediaobject>
     </figure>
-    
-    <figure lang="de;it;ru">
+
+    <figure lang="en;de;fr;it;ru">
       <title>
+        <phrase lang="en">
+          Applying example for the Edge filter
+        </phrase>
         <phrase lang="de">
           Beispiele für Kantenerkennungsfilter
+        </phrase>
+        <phrase lang="fr">
+          Exemple d'application du filtre Contour
         </phrase>
         <phrase lang="it">
           Esempio di applicazione del filtro Spigoli
@@ -275,11 +360,17 @@
       <mediaobject>
         <imageobject>
           <imagedata fileref="../images/filters/examples/edge-taj-edge-laplace.jpg"
-          format="JPG"/>
+                    format="JPG"/>
         </imageobject>
         <caption>
+          <para lang="en">
+            After applying the filter (Laplace option)
+          </para>
           <para lang="de">
             Kantenerkennung (Laplace)
+          </para>
+          <para lang="fr">
+            Après application du filtre (option Laplace)
           </para>
           <para lang="it">
             Applicazione del filtro (Laplace)
@@ -290,15 +381,11 @@
         </caption>
       </mediaobject>
     </figure>
-    
+
     <para lang="de">
       Dieses Filter stellt Ihnen verschiedene Kantenerkennungsalgorithmen zur
       Verfügung. Diese sind mit ihren Eigenschaften in den nächsten
       Abschnitten detailliert erklärt.
-    </para>
-    <para lang="fr">
-      Ce filtre se trouve à 
-      <guimenuitem>Image&gt;Filtre/Détection de bords/<accel>Contours</accel></guimenuitem>
     </para>
   </sect3>
 
@@ -327,16 +414,30 @@
       <phrase lang="ru">Параметры</phrase>
     </title>
 
-    <figure lang="de">
+    <figure lang="en;de;fr">
       <title>
+        <phrase lang="en">
+          Edge filter options
+        </phrase>
         <phrase lang="de">
           Eigenschaften für das Filter <quote>Kanten</quote>
         </phrase>
+        <phrase lang="fr">
+          Options du filtre Contours
+        </phrase>
       </title>
       <mediaobject>
+        <imageobject lang="en">
+          <imagedata fileref="../images/filters/edge-options.png"
+                    format="PNG"/>
+        </imageobject>
         <imageobject lang="de">
           <imagedata fileref="../images/filters/de/options-edge-edge.png"
-          format="PNG"/>
+                     format="PNG"/>
+        </imageobject>
+        <imageobject lang="fr">
+          <imagedata fileref="../images/filters/fr/edge-options.png"
+                     format="PNG"/>
         </imageobject>
       </mediaobject>
     </figure>
@@ -374,9 +475,9 @@
           <itemizedlist>
             <listitem>
               <para lang="en">
-                <guilabel>Sobel</guilabel>: Here, this method has no options 
-               and so is less interesting than the specific Sobel.
-              </para> 
+                <guilabel>Sobel</guilabel>: Here, this method has no options
+                and so is less interesting than the specific Sobel.
+              </para>
               <para lang="cs">
                 <guilabel>Sobel</guilabel>: Tato verze Sobelovy metody nemá
                 tolik nastavení jako samostatný modul Sobelova metoda a proto
@@ -386,23 +487,23 @@
                 <guilabel>Sobel</guilabel>: Im Kontext dieses Filters wird
                 der Sobeloperator nur mit den Vorgabe-Einstellungen angeboten.
                 Er ist aber als separates Filter zusätzlich verfügbar.
-              </para> 
+              </para>
               <para lang="fr">
-                <guilabel>Sobel</guilabel>: Ici, cette méthode est moins 
-                intéressante que le Sobel spécifique. 
+                <guilabel>Sobel</guilabel>: Ici, cette méthode est moins
+                intéressante que le Sobel spécifique.
               </para>
               <para lang="it">
                 <guilabel>Sobel</guilabel>: Questo metodo non ha opzioni ed è
                 quindi meno interessante del filtro specifico Sobel.
-              </para> 
+              </para>
               <para lang="ru">
                 <guilabel>По Собелу</guilabel>: У этого метода нет параметров, и
                 он менее интересный чем специальный фильтр по Собелу.
-              </para> 
+              </para>
             </listitem>
             <listitem>
               <para lang="en">
-                <guilabel>Prewitt</guilabel>: Result doesn't look different 
+                <guilabel>Prewitt</guilabel>: Result doesn't look different
                 from Sobel.
               </para>
               <para lang="cs">
@@ -414,8 +515,8 @@
                 nicht wesentlich von Sobel.
               </para>
               <para lang="fr">
-                <guilabel>Prewitt</guilabel>: Le résultat ne semble pas 
-                    différent du Sobel.
+                <guilabel>Prewitt</guilabel>: Le résultat ne semble pas
+                différent du Sobel.
               </para>
               <para lang="it">
                 <guilabel>Prewitt</guilabel>: Non differisce molto dal risultato
@@ -428,7 +529,7 @@
             </listitem>
             <listitem>
               <para lang="en">
-                <guilabel>Gradient</guilabel>: Edges are thiner, less 
+                <guilabel>Gradient</guilabel>: Edges are thiner, less
                 contrasted and more blurred than Sobel.
               </para>
               <para lang="cs">
@@ -440,8 +541,8 @@
                 weniger Kontrast und unschärfer dargestellt als bei Sobel.
               </para>
               <para lang="fr">
-                <guilabel>Gradient</guilabel>: Les bords sont plus fins, 
-                 moins contrastés, plus flous qu'avec le Sobel.
+                <guilabel>Gradient</guilabel>: Les bords sont plus fins,
+                moins contrastés, plus flous qu'avec le Sobel.
               </para>
               <para lang="it">
                 <guilabel>Gradiente</guilabel>: I bordi sono più sottili, meno
@@ -465,7 +566,7 @@
                 Sobel.
               </para>
               <para lang="fr">
-                <guilabel>Roberts</guilabel>: Pas de différence évidente 
+                <guilabel>Roberts</guilabel>: Pas de différence évidente
                 avec le Sobel.
               </para>
               <para lang="it">
@@ -480,27 +581,27 @@
             <listitem>
               <para lang="en">
                 <guilabel>Differential</guilabel>: Edges less bright.
-              </para>   
+              </para>
               <para lang="cs">
                 <guilabel>Diferenciální</guilabel>: Méně jasné hrany.
               </para>
               <para lang="de">
                 <guilabel>Differentiell</guilabel>: Die Kanten sind weniger
                 hell als bei Sobel.
-              </para>   
+              </para>
               <para lang="fr">
                 <guilabel>Differentiel</guilabel>: Bords moins clairs.
-              </para>   
+              </para>
               <para lang="it">
                 <guilabel>Differenziale</guilabel>: I bordi sono meno chiari.
               </para>
               <para lang="ru">
                 <guilabel>Дифференциальный</guilabel>: Края менее яркие.
-              </para>   
+              </para>
             </listitem>
             <listitem>
               <para lang="en">
-                <guilabel>Laplace</guilabel>: Less interesting than the 
+                <guilabel>Laplace</guilabel>: Less interesting than the
                 specific one.
               </para>
               <para lang="cs">
@@ -514,7 +615,7 @@
                 verfügbar.
               </para>
               <para lang="fr">
-                <guilabel>Laplace</guilabel>: Moins intéressant que le 
+                <guilabel>Laplace</guilabel>: Moins intéressant que le
                 Laplace spécifique.
               </para>
               <para lang="it">
@@ -541,13 +642,12 @@
           <para lang="en">
             <guilabel>Amount</guilabel>:
             a low value results in black, high-contrasted image with thin
-            edges. A high value results in thick edges with low contrast and 
+            edges. A high value results in thick edges with low contrast and
             many colors in dark areas.
-          </para> 
-          <para lang="en">
-            <guilabel>Wrap, Smear, Black</guilabel>:
-            is the Wrapmode like &quot;Displace&quot; plug-in. It's useful 
-            for tileable image.
+          </para>
+          <para lang="en"> <!--TODO cs de it ru-->
+            <guilabel>Wrap, Smear, Black</guilabel>: These options are not
+            operational.
           </para>
 
           <para lang="cs">
@@ -567,18 +667,17 @@
             einstellen. Ein niedriger Wert führt zu einem Bild in dem nur
             wenige Kanten erkannt werden, ein hoher zu einem Ergebnis, in dem
             aus kleinste Kanten dargestellt sind.
-          </para> 
-          
+          </para>
+
           <para lang="fr">
             <guilabel>Quantité</guilabel>:
-            Une valeur faible donne une image noire, bien contrastée avec des 
-             bords fins. Une valeur forte donne des bords épais et de 
-             multiples couleurs dans les zones sombres.   
+            Une valeur faible donne une image noire, bien contrastée avec des
+            bords fins. Une valeur forte donne des bords épais et de
+            multiples couleurs dans les zones sombres.
           </para>
           <para lang="fr">
-            <guilabel>Enrouler, Étaler, Noir</guilabel>:           
-            est le mode de recouvrement des cotés de l'image comme pour le 
-            greffon «Déplacer». C'est utile pour les images à bords jointifs. 
+            <guilabel>Enrouler, Étaler, Noir</guilabel>: Ces options ne sont
+            pas opérationnelles.
           </para>
 
           <para lang="it">
@@ -586,7 +685,7 @@
             un valore basso produce un'immagine nera, molto contrastata con
             bordi sottili. Un valore alto produce bordi spessi con basso
             contrasto e molti colori nelle aree scure.
-          </para> 
+          </para>
           <para lang="it">
             <guilabel>Wrap, Macchia, Nero</guilabel>: è la modalità di
             ripetizione come nel filtro &quot;Spostamento&quot;.
@@ -598,7 +697,7 @@
             контрастное изображение с тонкими краями. Высокие значения
             приводят к широким краям, низкому контрасту и многим цветам в
             тёмных областях.
-          </para> 
+          </para>
           <para lang="ru">
             <guilabel>Завернуть, Размазать, Чёрный</guilabel>: похож на режим
             <quote>Заворачивать</quote> дополнения <quote>Замещение</quote>.
@@ -607,7 +706,7 @@
 
         </listitem>
       </varlistentry>
-      
+
       <varlistentry lang="de">
         <term lang="de">Umfalten, Verwischen, Schwarz</term>
         <listitem>

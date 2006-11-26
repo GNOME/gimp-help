@@ -1,20 +1,30 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
-                "http://www.docbook.org/xml/4.3/docbookx.dtd">
+          "http://www.docbook.org/xml/4.3/docbookx.dtd">
 
 <!-- section history:
-  2005-12-07 replaced <simplesect> by <sect3> by lexa
-  2005-11-30 replaced informalfigure by axel.wernicke
-  050930 de replaced informalfigure by axel.wernicke
-  050829 de added by axel.wernicke
+     2005-12-07 replaced <simplesect> by <sect3> by lexa
+     2005-11-30 replaced informalfigure by axel.wernicke
+     050930 de replaced informalfigure by axel.wernicke
+     050829 de added by axel.wernicke
 -->
-<sect2 id='plug-in-sobel' lang="en;cs;de;fr;it;ru;zh_CN">
-  <sect2info lang="de" role="cvs">
+<sect2 id="plug-in-sobel" lang="en;cs;de;fr;it;ru;zh_CN">
+  <sect2info lang="en;de;fr" role="cvs">
     <revhistory>
+      <revision lang="en">
+        <revnumber>$Revision$</revnumber>
+        <date>2006-11-20</date>
+        <authorinitials>j.h</authorinitials>
+      </revision>
       <revision lang="de">
         <revnumber>$Revision$</revnumber>
         <date>2006-11-04</date>
         <authorinitials>lexa</authorinitials>
+      </revision>
+      <revision lang="fr">
+        <revnumber>$Revision$</revnumber>
+        <date>2006-11-20</date>
+        <authorinitials>j.h</authorinitials>
       </revision>
     </revhistory>
   </sect2info>
@@ -24,7 +34,7 @@
     <phrase lang="cs">Sobelova metoda</phrase>
     <phrase lang="ru">Собел</phrase>
   </title>
- 
+
   <indexterm lang="en;fr;de;it;zh_CN"><primary>Sobel</primary></indexterm>
 
   <indexterm lang="cs"><primary>Sobelova metoda</primary></indexterm>
@@ -33,7 +43,12 @@
     <primary>Filter</primary>
     <secondary>Kantenerkennung</secondary>
   </indexterm>
-  
+
+  <indexterm lang="fr">
+    <primary>Filtres</primary>
+    <secondary>Détection de bord</secondary>
+  </indexterm>
+
   <indexterm lang="it">
     <primary>Filtri</primary>
     <secondary>Rilevamento bordi</secondary>
@@ -45,24 +60,19 @@
   </indexterm>
   <indexterm lang="ru"><primary>Собел</primary></indexterm>
 
-  <mediaobject lang="en;it;ru">
+  <mediaobject lang="it;ru">
     <imageobject>
-      <imagedata fileref='../images/filters/filters-edgedetect-sobel.png' format="PNG"/>
+      <imagedata fileref="../images/filters/sobel-options.png" format="PNG"/>
     </imageobject>
   </mediaobject>
   <mediaobject lang="cs">
     <imageobject>
-      <imagedata fileref='../images/filters/filters-edgedetect-sobel.png' format="PNG"/>
-    </imageobject>
-  </mediaobject>
-  <mediaobject lang="fr">
-    <imageobject>
-      <imagedata fileref='../images/filters/fr/filters-edgedetect-sobel.png' format="PNG"/>
+      <imagedata fileref="../images/filters/filters-edgedetect-sobel.png" format="PNG"/>
     </imageobject>
   </mediaobject>
   <mediaobject lang="zh_CN">
     <imageobject>
-      <imagedata fileref='../images/filters/zh_CN/filters-edgedetect-sobel.png' format="PNG"/>
+      <imagedata fileref="../images/filters/zh_CN/filters-edgedetect-sobel.png" format="PNG"/>
     </imageobject>
   </mediaobject>
 
@@ -77,10 +87,16 @@
       <phrase lang="zh_CN">概述</phrase>
     </title>
 
-    <figure lang="de;it;ru">
+    <figure lang="en;de;fr;it;ru">
       <title>
+        <phrase lang="en">
+          Applying example of the Sobel filter
+        </phrase>
         <phrase lang="de">
           v.l.n.r.: Originalbild, Sobel angewandt
+        </phrase>
+        <phrase lang="fr">
+          Exemple d'application du filtre Sobel
         </phrase>
         <phrase lang="it">
           Esempio di applicazione del filtro Sobel
@@ -92,19 +108,19 @@
       <mediaobject>
         <imageobject>
           <imagedata fileref="../images/filters/examples/taj_orig.jpg"
-                     format="JPG"/>
+                    format="JPG"/>
         </imageobject>
       </mediaobject>
       <mediaobject>
         <imageobject>
           <imagedata fileref="../images/filters/examples/edge-taj-sobel.jpg"
-                     format="JPG"/>
+                    format="JPG"/>
         </imageobject>
       </mediaobject>
     </figure>
 
     <para lang="en">
-      This filter is found in
+      You can find this filter through
       <menuchoice>
         <guimenu>Filters</guimenu>
         <guisubmenu>Edge detect</guisubmenu>
@@ -112,8 +128,10 @@
       </menuchoice>.
     </para>
     <para lang="en">
-      Sobel's filter detects horizontal and vertical edges separately on a 
-      grey-level image. Color images are turned into grey-levels.
+      Sobel's filter detects horizontal and vertical edges separately on a
+      scaled image. Color images are turned into RGB scaled images. As with
+      the Laplace filter, the result is a transparent image with black lines
+      and some rest of colors.
     </para>
 
     <para lang="cs">
@@ -132,7 +150,7 @@
       Sie im Internet in der <ulink
       url="http://de.wikipedia.org/wiki/Sobel-Operator">Wikipedia</ulink>.
     </para>
-    
+
     <para lang="fr">
       On accède à ce filtre par le menu d'image en suivant
       <menuchoice>
@@ -142,9 +160,12 @@
       </menuchoice>.
     </para>
     <para lang="fr">
-      Le filtre de Sobel détecte séparément les bords horizontaux et 
-      verticaux sur une image en niveaux de gris. Les images en couleurs 
-      sont transformées en niveaux de gris.
+      Le filtre de Sobel détecte séparément les bords horizontaux et
+      verticaux sur une image en niveaux de gris. Les images en couleurs
+      sont transformées RVB en niveaux de gris. L'application du filtre
+      aboutit à une image transparente avec de fines lignes noires et
+      quelques restes de couleurs, comme avec le filtre Laplace, mais les
+      lignes sont plus épaisses et plus noires.
     </para>
 
     <para lang="it">
@@ -208,17 +229,31 @@
       <phrase lang="zh_CN">选项</phrase>
     </title>
 
-    <figure lang="de">
+    <figure lang="en;de;fr">
       <title>
+        <phrase lang="en">
+          Sobel filter options
+        </phrase>
         <phrase lang="de">
           Eigenschaften für das Filter
           <quote>Sobel</quote>
         </phrase>
+        <phrase lang="fr">
+          Options du filtre Sobel
+        </phrase>
       </title>
       <mediaobject>
+        <imageobject lang="en">
+          <imagedata fileref="../images/filters/sobel-options.png"
+                    format="PNG" />
+        </imageobject>
         <imageobject lang="de">
           <imagedata fileref="../images/filters/de/options-edge-sobel.png"
-            format="PNG" />
+                     format="PNG" />
+        </imageobject>
+        <imageobject lang="fr">
+          <imagedata fileref="../images/filters/fr/sobel-options.png"
+                     format="PNG" />
         </imageobject>
       </mediaobject>
     </figure>
@@ -232,7 +267,7 @@
         <term lang="it">Impostazione delle opzioni</term>
         <term lang="ru">Настройки</term>
         <term lang="zh_CN">参数设定</term>
-        
+
         <listitem>
           <para lang="de">
             Mit diesen Eigenschaften legen Sie fest, in welche Richtungen der
@@ -253,9 +288,9 @@
                 jsou více méně vodorovné.
               </para>
               <para lang="fr">
-                <guilabel>Sobel horizontal</guilabel>: Seuls les bords 
+                <guilabel>Sobel horizontal</guilabel>: Seuls les bords
                 proches de l'horizontale sont affichés.
-              </para> 
+              </para>
               <para lang="it">
                 <guilabel>Sobel orizzontale</guilabel>: Restituisce i bordi
                 pressochè orizzontali.
@@ -266,7 +301,7 @@
               </para>
               <para lang="zh_CN">
                 <guilabel>水平</guilabel>：只显示接近水平的边缘。
-              </para> 
+              </para>
             </listitem>
             <listitem>
               <para lang="en">
@@ -278,7 +313,7 @@
                 jsou více méně svislé.
               </para>
               <para lang="fr">
-                <guilabel>Sobel vertical</guilabel>: Seuls les bords proches 
+                <guilabel>Sobel vertical</guilabel>: Seuls les bords proches
                 de la verticale sont affichés.
               </para>
               <para lang="it">
@@ -295,8 +330,8 @@
             </listitem>
             <listitem>
               <para lang="en">
-                <guilabel>Keep sign of result</guilabel>: This option works 
-                when only one direction is selected: it gives a flat relief 
+                <guilabel>Keep sign of result</guilabel>: This option works
+                when only one direction is selected: it gives a flat relief
                 with bumps and hollows to the image.
               </para>
               <para lang="cs">
@@ -306,14 +341,14 @@
                 barvou.<!--FIXME-->
               </para>
               <para lang="fr">
-                <guilabel>Garder le signe du résultat</guilabel>: Disponible 
-                seulement si une seule direction a été sélectionnée. Cette 
-                option donne à l'image un aspect de relief en creux et en 
-                bosses. 
+                <guilabel>Garder le signe du résultat</guilabel>: Disponible
+                seulement si une seule direction a été sélectionnée. Cette
+                option donne à l'image un aspect de relief en creux et en
+                bosses.
               </para>
               <para lang="it">
                 <guilabel>Mantieni il segno del risultato (solo una
-                direzione)</guilabel>: Questa opzione funziona quando solo una
+                  direzione)</guilabel>: Questa opzione funziona quando solo una
                 direzione è selezionata, restituisce un bassorilievo
                 dell'immagine.
               </para>
@@ -329,7 +364,7 @@
           </itemizedlist>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry lang="de">
         <term lang="de">Vorzeichen des Ergebnisses beibehalten</term>
         <listitem lang="de">
