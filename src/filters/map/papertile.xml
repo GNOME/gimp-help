@@ -8,10 +8,11 @@
 <!-- 
   de PENDING: translation missing
  -->
-<sect2 id='plug-in-papertile' lang="en;fr">
+<sect2 id='plug-in-papertile' lang="en;fr;ru">
   <title> 
     <phrase lang="en">Paper Tile</phrase>
     <phrase lang="fr">Morceaux de papier</phrase>
+    <phrase lang="ru">Разрез бумаги</phrase>
   </title>
 
   <indexterm lang="en">
@@ -26,10 +27,17 @@
   </indexterm>
   <indexterm lang="fr"><primary>Morceaux de papier</primary></indexterm>
   
+  <indexterm lang="ru">
+    <primary>Filters</primary>
+    <secondary>Map</secondary>
+  </indexterm>
+  <indexterm lang="ru"><primary>Разрез бумаги</primary></indexterm>
+
   <sect3>
     <title>
       <phrase lang="en">Overview</phrase>
       <phrase lang="fr">Généralités</phrase>
+      <phrase lang="ru">Общая информация</phrase>
     </title>
       
     <para lang="en">
@@ -37,7 +45,7 @@
       <menuchoice>
         <guimenu>Filters</guimenu>
         <guisubmenu>Map</guisubmenu>
-        <guimenuitem><accel>P</accel>aper Tile</guimenuitem>
+        <guimenuitem>Разрез бумаги</guimenuitem>
       </menuchoice>.
     </para>
     <para lang="en">
@@ -61,15 +69,35 @@
       cadre de l'image.
     </para>
     
-    <figure lang="en;fr">
+    <para lang="ru">
+      Этот фильтр находится в меню
+      <menuchoice>
+        <guimenu>Фильтры</guimenu>
+        <guisubmenu>Карта</guisubmenu>
+        <guimenuitem>Разрез бумаги</guimenuitem>
+      </menuchoice>.
+    </para>
+    <para lang="ru">
+      Этот фильтр разрезает текущий слой или выделение на несколько частей,
+      прямоугольных по форме, и перемещает их так, что они частично
+      перекрывают друг друга или отодвигаются друг от друга. При этом
+      некоторые части могут выйти за пределы изображения.
+    </para>
+    
+    <figure lang="en;fr;ru">
       <title>
         <phrase lang="en">
           From left to right: original image, after applying 
-          <quote>Paper Tile</quote> filter (division = 5)</phrase> 
+          <quote>Paper Tile</quote> filter (division = 5)
+        </phrase> 
         <phrase lang="fr">
           De gauche à droite: image d'origine, après application du filtre
           (division = 5)
         </phrase>
+        <phrase lang="ru">
+          Изображение до и после применения фильтра
+          <quote>Разрез бумаги</quote> (5 сегментов)
+        </phrase> 
       </title>
       <mediaobject>
         <imageobject>
@@ -86,18 +114,22 @@
     </figure>      
   </sect3>
   
-  <sect3 lang="en;fr">
+  <sect3 lang="en;fr;ru">
     <title>
-      <phrase lang="en;fr">Options</phrase>
+      <phrase lang="en;fr;ru">Options</phrase>
+      <phrase lang="ru">Параметры</phrase>
     </title>
       
-    <figure lang="en;fr">
+    <figure lang="en;fr;ru">
       <title>
         <phrase lang="en"><quote>Paper Tile</quote> filter options</phrase>
         <phrase lang="fr">Options du filtre «Morceaux de papier»</phrase>
+        <phrase lang="ru">
+          Параметры фильтра <quote>Разрез бумаги</quote>
+        </phrase>
       </title>
       <mediaobject>
-        <imageobject lang="en">
+        <imageobject lang="en;ru">
           <imagedata fileref="../images/filters/options-map-papertile.png"
                    format="PNG"/>
         </imageobject>
@@ -112,6 +144,7 @@
       <varlistentry>
         <term>
           <phrase lang="en;fr">Division</phrase>
+          <phrase lang="ru">Сегменты</phrase>
         </term>
         <listitem>
           <para lang="en">
@@ -128,6 +161,13 @@
             des morceaux dans les directions horizontale (X) et verticale 
             (Y) doivent donc convenir à la taille de l'image.
           </para>
+          <para lang="ru">
+            Параметры <guilabel>X</guilabel>, <guilabel>Y</guilabel> and <guilabel>
+            Размер</guilabel> связаны, потому что фильтр сначала разрезает
+            изображение а затем двигает элементы; поэтому число элементов по
+            горизонтали (X) и вертикали (Y) должно выбираться с учётом
+            размеров изображения.
+          </para>
         </listitem>
       </varlistentry>
         
@@ -135,6 +175,7 @@
         <term>
           <phrase lang="en">Movement</phrase>
           <phrase lang="fr">Mouvement</phrase>
+          <phrase lang="ru">Движение</phrase>
         </term>
         <listitem>
           <para lang="en">
@@ -156,6 +197,15 @@
             morceaux, certains peuvent déborder de l'image. Si cette option 
             est cochée, ce qui sort d'un côté ressort du côté opposé.
           </para>
+
+          <para lang="ru">
+            <guilabel>Макс.%</guilabel>: Максимальное смещение, выраженное
+            в процентах от длины стороны квадратов.
+          </para>
+          <para lang="ru">
+            <guilabel>Безшовное изображение</guilabel>: Элементы разреза,
+            уходящие за край изображения, появятся с противоположного края.
+          </para>
         </listitem>
       </varlistentry>
 
@@ -163,6 +213,7 @@
         <term>
           <phrase lang="en">Fractional Pixels</phrase>
           <phrase lang="fr">Pixels fractionnels</phrase>
+          <phrase lang="ru">Дробные пикселы</phrase>
         </term>
         <listitem>
           <para lang="en">
@@ -216,6 +267,30 @@
               </listitem>
             </itemizedlist>
           </para>
+          <para lang="ru">
+            Из-за разреза изображения, некоторые искомые точки могут остаться.
+            С ними можно сделать следующее:
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <guilabel>Фон</guilabel>: Оставшиеся точки заменятся на
+                  фон, тип которого можно будет указать позже.
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <guilabel>Игнорировать</guilabel>: Искомые точки останутся
+                  как были.
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <guilabel>Усиливать</guilabel>: Оставшиеся точки будут
+                  также разрезаны.
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
         </listitem>
       </varlistentry>
       
@@ -223,6 +298,7 @@
         <term>
           <phrase lang="en">Background Type</phrase>
           <phrase lang="fr">Type d'Arrière-plan</phrase>
+          <phrase lang="ru">Тип фона</phrase>
         </term>
         <listitem>
           <para lang="en">
@@ -307,6 +383,42 @@
               </listitem>
             </itemizedlist>
           </para>
+
+          <para lang="ru">
+            Позволяет выбрать тип фона, если выбран параметр
+            <guilabel>фон</guilabel>. Даётся следующий выбор:
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <guilabel>Прозрачный</guilabel>: делает фон прозрачным.
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <guilabel>Инвертированное изображение</guilabel>: фон будет
+                  инвертирован (255-значение для каждого цветового канала).
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <guilabel>Цвет переднего плана</guilabel>: Оставшиеся точки
+                  будут заменены на цвет переднего плана панели инструментов.
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <guilabel>Цвет фона</guilabel>: Оставшиеся точки
+                  будут заменены на фона панели инструментов.
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <guilabel>Выбрать</guilabel>: При выборе этого параметра
+                  даётся возможность выбрать цвет фона.
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
         </listitem>
       </varlistentry>
       
@@ -314,6 +426,7 @@
         <term>
           <phrase lang="en">Centering</phrase>
           <phrase lang="fr">Centrage</phrase>
+          <phrase lang="ru">Центрирование</phrase>
         </term>
         <listitem>
           <para lang="en">
@@ -323,6 +436,10 @@
           <para lang="fr">
             Si cette option est cochée, les morceaux seront plutôt regroupés 
             autour du centre de l'image.
+          </para>
+          <para lang="ru">
+            При выборе этого параметра, элементы будут собраны в центре
+            изображения.
           </para>
         </listitem>
       </varlistentry>

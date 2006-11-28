@@ -9,7 +9,7 @@
 <!-- 
   de PENDING: translation missing
  -->
-<sect2 id='plug-in-displace' lang="en;fr">
+<sect2 id='plug-in-displace' lang="en;fr;ru">
   <sect2info lang="de" role="cvs">
     <revhistory>
       <revision lang="de">
@@ -23,6 +23,7 @@
   <title>
     <phrase lang="en">Displace</phrase>
     <phrase lang="fr">Déplacement d'après une carte</phrase>
+    <phrase lang="ru">Смещение</phrase>
   </title>
   
   <indexterm lang="en">
@@ -37,8 +38,14 @@
   </indexterm>
   <indexterm lang="fr"><primary>Déplacement d'après une carte</primary></indexterm>
   
-  <mediaobject lang="en;fr">
-    <imageobject lang="en">
+  <indexterm lang="ru">
+    <primary>Фильтры</primary>
+    <secondary>Карта</secondary>
+  </indexterm>
+  <indexterm lang="ru"><primary>Смещение</primary></indexterm>
+
+  <mediaobject lang="en;fr;ru">
+    <imageobject lang="en;ru">
       <imagedata fileref='../images/filters/filters-map-displace.png'
         format='PNG' />
     </imageobject>
@@ -53,6 +60,7 @@
     <title>
       <phrase lang="en">Overview</phrase>
       <phrase lang="fr">Généralités</phrase>
+      <phrase lang="ru">Общая информация</phrase>
     </title>
  
     <para lang="en">
@@ -70,6 +78,15 @@
         <guimenu>Filt<accel>r</accel>es</guimenu>
         <guisubmenu><accel>C</accel>arte</guisubmenu>
         <guimenuitem><accel>D</accel>éplacer selon une carte</guimenuitem>
+      </menuchoice>
+    </para>
+
+    <para lang="ru">
+      Этот фильтр находится в меню
+      <menuchoice>
+        <guimenu>Фильтры</guimenu>
+        <guisubmenu>Карта</guisubmenu>
+        <guimenuitem>Смещение</guimenuitem>
       </menuchoice>
     </para>
 
@@ -93,6 +110,15 @@
       même taille que le calque actif ou la sélection</emphasis>. Ce filtre 
       permet d'intéressants effets de déformation.
     </para>
+
+    <para lang="ru">
+      Этот фильтр создаёт интересные эффекты искажения. Он использует карту
+      смещения чтобы сместить соответствующие точки текущего слоя или
+      выделения. Величина смещения по горизонтали и вертикали зависит от
+      интенсивности точек в карте смещения и вводимого коэффициента.
+      <emphasis role='bold'>Катры смещения по X и Y должны быть серые и того
+      же размера, что и искомое изображение.</emphasis>.
+    </para>
   </sect3>
 
 
@@ -100,12 +126,14 @@
     <title>
       <phrase lang="en">Options</phrase>
       <phrase lang="fr">Options</phrase>
+      <phrase lang="ru">Параметры</phrase>
     </title>
 
     <variablelist>
-      <varlistentry lang="en;fr">
+      <varlistentry lang="en;fr;ru">
         <term lang="en">Preview</term>
         <term lang="fr">Aperçu</term>
+        <term lang="ru">Просмотр</term>
         
         <listitem>
           <para lang="en">
@@ -114,12 +142,16 @@
           <para lang="fr">
             Décochez cette option si votre ordinateur est trop lent.
           </para> 
+          <para lang="ru">
+            Не выбирайте этот параметр, если процессор медленный.
+          </para> 
         </listitem>
       </varlistentry>
 
       <varlistentry>
         <term lang="en">X/Y Displacements</term>
         <term lang="fr">Déplacements X/Y</term>
+        <term lang="ru">Смещение по X/Y</term>
 
         <listitem>
           <para lang="en">
@@ -156,12 +188,28 @@
             inférieure à 128</emphasis> dans la carte de déplacement, dans 
             l'autre sens, vers la droite pour X et vers le bas pour Y.
           </para>
+
+          <para lang="ru">
+            Когда вы выбираете эти параметры, точки активного слоя
+            со значением, отличающегося от 128 в карте смещения, будут
+            смещены горизонтально или вертикально.
+          </para>
+          <para lang="ru">
+            Почему 128? Потому что карта должна быть серая, т.е. с 256-ю
+            уровнями интенсивности: 128 соответствует <emphasis>среднему
+            серому</emphasis> (красный 128, зелёный 128, синий 128). Фильтр
+            смещает влево по X и вправо по Y те точки, значения которых
+            <emphasis>выше, чем 128</emphasis> в карте. Фильтр перемещает
+            точки в противоположном направлении, если они
+            <emphasis>меньше, чем 128</emphasis> в карте. 
+          </para>
         </listitem>
       </varlistentry>
         
       <varlistentry>
         <term lang="en">Input boxes</term>
         <term lang="fr">Boîtes de saisie</term>
+        <term lang="ru">Поля ввода</term>
         
         <listitem>  
           <para lang="en">
@@ -232,12 +280,42 @@
             bien un déplacement de (128x75)/128=75 pixels. Et un pixel noir 
             (0) donne un déplacement de -75 pixels.
           </para>
+
+          <para lang="ru">
+            Параметр <quote>Смещение по X/Y</quote> должен называться
+            <emphasis>Коэффициент смещения по X/Y</emphasis>. Значение, вводимое
+            в поле ввода, используется в формуле
+            <emphasis role='bold'>смещение = (интенсивность x коэффициент)
+            /128</emphasis>, которая даёт действительное смещение согласно
+            интенсивности точки на карте и введённому коэффициенту.
+            Коэффициент важен потому, что он позволяет использовать
+            градиентную карту для прогрессивного смещения.
+          </para>
+          <para lang="ru">
+            Предел этого значения установлен на растояние, в два раза
+            превышающее размеры изображения. Это соответствует максимальному
+            смещению, от одного края до другого.
+          </para>
+          <para lang="ru">
+            Это значение может быть положительным и отрицательным.
+            Отрицательные значения смещают в противоположную сторону.
+          </para>
+          <para lang="ru">
+            Используемая в формуле интенсивность не есть интенсивность точек.
+            Интенсивность точек нормализуется по шкале от -128 до +128, где
+            0 представляет отсутствие замещения, как описано выше. При
+            преобразовании 127 вычитается из интенсивности точки. Так, в
+            предыдущем примере, замещение 75 для белой точки (преобразованной
+            в 255-128+1=128) даёт (128*75)/128=75 точек смещения. Чёрная
+            точка (0) даёт -75 точек смещения.
+          </para>
         </listitem>
       </varlistentry>
             
       <varlistentry>  
         <term lang="en">Selecting displacement maps</term>
         <term lang="fr">Sélection des cartes de déplacement</term>
+        <term lang="ru">Выбор карты замещения</term>
 
         <listitem>
           <para lang="en">
@@ -274,10 +352,28 @@
             vertical, et vertical pour un déplacement horizontal.
           </para>
           
+          <para lang="ru">
+            После нажатия на кнопку списка, вы можете выбрать карту
+            замещения. Для того, чтобы появиться в этом списке, изображение
+            долно отвечать двум условиям. Во-первых, изображение должно быть
+            открыто на момент активации фильтра. Во-вторых, размер
+            изображения должен быть тот же, что и у искомого изображения.
+            Наиболее вероятно, это будет копия искомого изображения,
+            преобразованная в серое и с градиентом. Возможно использовать
+            изображения RGB, но из-за того, как яркость представлена в
+            изображении, трудно предсказать результат. Горизонтальная карта
+            может отличатся от вертикальной.
+          </para>
+          <para lang="ru">
+            Карта градиента должна быть горизонтальная для вертикального
+            замещения, и вертикальная для горизонтального замещения.
+          </para>
+
           <figure>
             <title>
-              <phrase lang='en'>Displacement examples</phrase>
-              <phrase lang='fr'>Exemples de déplacement</phrase>
+              <phrase lang="en">Displacement examples</phrase>
+              <phrase lang="fr">Exemples de déplacement</phrase>
+              <phrase lang="ru">Примеры замещения</phrase>
             </title>
   
             <mediaobject>
@@ -317,15 +413,31 @@
                   l'image correspondant à la bande de gris foncé (&lt;128)
                   s'est déplacée vers la droite de 15 pixels.
                 </para>
+
+                <para lang="ru">
+                  Коэффициент замещения по X равен 30-ти (с отрицательным
+                  коэффициентом замещение будет в обратную сторону).
+                  Замещённые точки становятся чёрными. У карты замещения
+                  три полосы, с верху вниз: средне-серая (128), светло-серая
+                  (200) и тёмно-серая (60).
+                </para>
+                <para lang="ru">
+                  Можно видеть, что области, соответствующие среднему серому
+                  на карте, не заместятся. Области, соответствующие
+                  светло-серому (&gt;128) сместились на 17 точек влево.
+                  Области, соответствующие тёмно-серому (&lt;128) сместились
+                  на 15 точек вправо.
+                </para>
               </caption>
             </mediaobject>
           </figure>
         </listitem>        
       </varlistentry> 
              
-      <varlistentry lang="en;fr">
+      <varlistentry lang="en;fr;ru">
         <term lang="en">On Edges</term>
         <term lang="fr">Sur les bords</term>
+        <term lang="ru">На краях</term>
         
         <listitem>
           <para lang="en">
@@ -335,6 +447,10 @@
           <para lang="fr">
             Ces options vous permettent de régler le comportement du 
             déplacement sur les bords du calque actif ou de la sélection:
+          </para>
+          <para lang="ru">
+            Эти параметры определяют поведение замещения в активном слое или
+            в выделенных краях:
           </para>
 
           <itemizedlist>
@@ -349,6 +465,10 @@
                 Avec cette option, ce qui disparaît d'un côté du fait du
                 déplacement réapparaît de l'autre côté.
               </para>
+              <para lang="ru">
+                <emphasis>Завернуть</emphasis>: С этим параметром, что
+                исчезло на одном краю, появится на противоположном.
+              </para>
             </listitem>
 
             <listitem>
@@ -361,6 +481,10 @@
                 <emphasis>Étaler</emphasis>:
                 Avec cette option, la partie libérée par le déplacement est
                 remplacée par un étirement de la partie adjacente de l'image.
+              </para>
+              <para lang="ru">
+                <emphasis>Размазать</emphasis>: С этим параметром, замещённые
+                точки заполняются растянутыми точками окружения.
               </para>
             </listitem>
 
@@ -375,6 +499,10 @@
                 Avec cette option, la partie libérée par le déplacement est
                 remplacée par du noir.
               </para>
+              <para lang="ru">
+                <emphasis>Чёрный</emphasis>: С этим параметром, замещённые
+                точки заполняются чёрным.
+              </para>
             </listitem>
           </itemizedlist>
         </listitem>
@@ -386,15 +514,18 @@
     <title>
       <phrase lang="en">Using gradient to bend a text</phrase>
       <phrase lang="fr">Utiliser un dégradé pour courber un texte</phrase>
+      <phrase lang="ru">Искривить текст при помощи градиента</phrase>
     </title>
 
     <para lang="en">Follow following steps:</para>
     <para lang="fr">Suivez les étapes suivantes:</para>
+    <para lang="ru">Следуйте следующим шагам:</para>
 
     <procedure>
       <step>
         <para lang="en">Start with opening your image.</para>
         <para lang="fr">Commencez par ouvrir votre image.</para>
+        <para lang="ru">Начните с открытия изображения.</para>
       </step>
 
       <step>
@@ -411,6 +542,17 @@
           Remplissez-le avec le dégradé voulu. Cette image constituera 
           votre <emphasis>carte de déplacement</emphasis>, aux dimensions de 
           l'image d'origine.
+        </para>
+        <para lang="ru">
+          Скопируйте это изображение. Активируйте копию и сделайте его
+          серым.(
+          <menuchoice>
+            <guimenu>Изображение</guimenu>
+            <guisubmenu>Режим</guisubmenu>
+            <guimenuitem>Серый</guimenuitem>
+          </menuchoice>). Заполните его нужным градиентом. Это изображение
+          станет <emphasis>картой замещения</emphasis> с размером искомого
+          изображения.
         </para>
         <mediaobject>
           <imageobject>
@@ -438,6 +580,15 @@
           fond transparent; or, le filtre ne déplace pas les pixels 
           transparents: seules les lettres seront donc décalées. 
         </para>
+        <para lang="ru">
+          Активируйте искомое изображение. Создайте
+          <emphasis>Текстовый слой</emphasis> с нужным текстом. Установите
+          слой по размеру с изображением: нажмите правой кнопкой на диалоге
+          слоёв, выберите пункт <quote>Слой к размеру изображения</quote>.
+          Заметьте, что буквы текста находятся на прозрачном фоне; теперь
+          этот фильтр не замещает прозрачные точки. Только буквы будут
+          замещены.
+        </para>
         <mediaobject>
           <imageobject>
             <imagedata fileref='../images/filters/examples/2zinnias-i.png'
@@ -458,6 +609,12 @@
           coefficient de déplacement en fonction de l'aspect obtenu dans 
           l'Aperçu. Validez.
         </para>
+        <para lang="ru">
+          Активируйте текстовый слой. Откройте окно фильтра
+          <quote>Замещение</quote>. Укажите значения параметров, особенно
+          коэффициент замещения согласно результату просмотра. Нажмите кнопку
+          <guibutton>OK</guibutton>.
+        </para>
       </step>         
     </procedure>
     
@@ -473,6 +630,9 @@
     </para>
     <para lang="fr">
       Bien entendu, cette méthode s'applique aussi aux calques standards:
+    </para>
+    <para lang="ru">
+      Этот метод также применим к обычным слоям:
     </para>
     <mediaobject>
       <imageobject>
@@ -492,6 +652,12 @@
         tracez un dégradé de noir vers blanc. Puis, 
         avec l'outil <link linkend='gimp-tool-curves'>Courbes</link>, 
         modifiez la courbe du dégradé.
+      </para>
+      <para lang="ru">
+        Чтобы получить нужный градиент, сначала нарисуйте градиент от чёрного
+        до белого. Затем с помощью инструмента 
+        <!--TODO: <link linkend='gimp-tool-curves'>-->Кривые<!--</link>-->
+        измените кривую градиента.
       </para>
     </note>
     
