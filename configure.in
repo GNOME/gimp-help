@@ -82,12 +82,12 @@ AC_MSG_CHECKING([libxslt version])
 LIBXSLT_VERSION=`$XSLTPROC -V | head -n 1| awk '{print $5}'`
 AC_MSG_RESULT([$LIBXSLT_VERSION])
 
-AC_MSG_CHECKING([for stylesheet to build index])
 AUTOIDX=autoidx
-if test `echo $LIBXSLT_VERSION | sed "s/\([0-9.]*\).*$/\1/"` -ge "10117"; then
+AC_ARG_ENABLE(autoidx-ng,
+  	[AC_HELP_STRING([--enable-autoidx-ng], [Use autoidx-ng for index generation])],enable_autoidx_ng=$enableval,enable_autoidx_ng="no")
+if test "x$enable_autoidx_ng" == "xyes"; then
     AUTOIDX=autoidx-ng
 fi
-AC_MSG_RESULT([$AUTOIDX])
 AC_SUBST(AUTOIDX)
 
 #  Search for xmllint.
