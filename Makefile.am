@@ -223,7 +223,6 @@ $(patsubst %,$(STAMP_DIR)/html.%.stamp,$(ALL_LINGUAS)): $(STAMP_DIR)/html.%.stam
 	(cd $(top_srcdir)/html/$* && \
 	  $(XSLTPROC) $(XSLTFLAGS) --xinclude \
 	     --stringparam l10n.gentext.default.language $* \
-	     --stringparam profile.lang $* \
 	     @abs_top_builddir@/stylesheets/plainhtml.xsl ../../xml/$*.xml);
 
 	@touch $@
