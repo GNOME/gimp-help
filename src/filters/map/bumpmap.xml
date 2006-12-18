@@ -2,18 +2,18 @@
 <!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
                 "http://www.docbook.org/xml/4.3/docbookx.dtd">
 
-<!-- section history: 
+<!-- section history:
+  2006-12-12 lexa: added german translation
   2005-12-07 replaced <simplesect> by <sect3> by lexa
   2005-11-30 replaced informalfigure by axel.wernicke
   050930: created by julien hardelin 
 -->
-<!-- TODO: de  translation missing -->
-<sect2 id='plugin-bump-map' lang="en;fr;ru">
+<sect2 id="plugin-bump-map" lang="en;de;fr;ru">
   <sect2info lang="de" role="cvs">
     <revhistory>
       <revision lang="de">
         <revnumber>$Revision$</revnumber>
-        <date>2006-11-04</date>
+        <date>2006-12-12</date>
         <authorinitials>lexa</authorinitials>
       </revision>
     </revhistory>
@@ -21,6 +21,7 @@
 
   <title> 
     <phrase lang="en">Bump Map</phrase>
+    <phrase lang="de">Bumpmap</phrase>
     <phrase lang="fr">Repoussage d'après une carte</phrase>
     <phrase lang="ru">Карта рельефа</phrase>
   </title>
@@ -31,6 +32,12 @@
   </indexterm>
   <indexterm lang="en"><primary>Bump Map</primary></indexterm>
   
+  <indexterm lang="de">
+    <primary>Filter</primary>
+    <secondary>Bumpmap</secondary>
+  </indexterm>
+  <indexterm lang="de"><primary>Bumpmap</primary></indexterm>
+
   <indexterm lang="fr">
     <primary>Filtres</primary>
     <secondary>Carte</secondary>
@@ -48,10 +55,37 @@
   <sect3>
     <title>
       <phrase lang="en">Overview</phrase>
+      <phrase lang="de">Wirkungsweise</phrase>
       <phrase lang="fr">Généralités</phrase>
       <phrase lang="ru">Общая информация</phrase>
     </title>
     
+    <figure lang="en;de">
+      <title>
+        <phrase lang="en">
+          From left to right: original image, bump map, bumpmapped image
+        </phrase>
+        <phrase lang="de">
+          v.l.n.r.: Originalbild, Karte, Filter angewandt
+        </phrase>
+        <phrase lang="fr">
+          De gauche à droite: image d'origine, carte de relief, repoussage
+          d'après la carte
+        </phrase>
+        <phrase lang="ru">
+          Изображение до и после применения фильтра <quote>Рельеф</quote>
+        </phrase>
+      </title>
+
+      <mediaobject>
+        <imageobject>
+          <imagedata
+            fileref="../images/filters/examples/example-map-bumpmap.png"
+            format="PNG" />
+        </imageobject>
+      </mediaobject>
+    </figure>
+
     <para lang="en">
       This filter is found in the image window menu under
       <menuchoice>
@@ -60,15 +94,6 @@
         <guimenuitem><accel>B</accel>ump Map</guimenuitem>
       </menuchoice>.
     </para>
-    <para lang="en">
-      This filter creates a 3D effect by embossing an image (the card) and 
-      then mapping it to another image. Bump heigth depends on pixel 
-      luminosity and you can set light direction. See 
-      <link linkend='plug-in-emboss'>Emboss</link> for more informations 
-      about embossing. You can bump map any type of image, unlike the Emboss 
-      filter.
-    </para>
-    
     <para lang="fr">
       On accède à ce filtre par le menu d'image en suivant:
       <menuchoice>
@@ -77,6 +102,36 @@
         <guimenuitem>Repou<accel>s</accel>sage d'après une carte</guimenuitem>
       </menuchoice>.
     </para>
+    <para lang="ru">
+      Этот фильтр находится в меню
+      <menuchoice>
+        <guimenu>Фильтры</guimenu>
+        <guisubmenu>Карта</guisubmenu>
+        <guimenuitem>Карта рельефа</guimenuitem>
+      </menuchoice>.
+    </para>
+
+    <para lang="en">
+      This filter creates a 3D effect by embossing an image (the card) and 
+      then mapping it to another image. Bump height depends on pixel 
+      luminosity and you can set light direction. See 
+      <link linkend='plug-in-emboss'>Emboss</link> for more informations 
+      about embossing. You can bump map any type of image, unlike the Emboss 
+      filter.
+    </para>
+
+    <para lang="de">
+      Mit diesem Filter erzeugen können Sie einen 3D Effekt erzeugen, indem
+      ein geprägtes Bild (die Karte) auf ein anderes Bild abgebildet wird. Die
+      Höhe der Beulen ( <quote>Bumps</quote>
+      ) hängt von der Helligkeit der Pixel ab. Ausserdem können Sie die
+      Richtung bestimmen, aus der das Licht kommt. Weitere Informationen über
+      das Prägen eines Bildes finden Sie im Kapitel
+      <xref linkend="plug-in-emboss" />. Im Gegensatz zum Filter
+      <quote>Relief</quote>, können Sie diesen Filter auf jeden Bildtyp
+      anwenden.
+    </para>
+
     <para lang="fr">
       Ce filtre crée un effet 3D en repoussant une image (la carte) puis en   
       la plaquant sur une autre image. La hauteur des bosses dépend de la 
@@ -95,14 +150,6 @@
     </para>
 
     <para lang="ru">
-      Этот фильтр находится в меню
-      <menuchoice>
-        <guimenu>Фильтры</guimenu>
-        <guisubmenu>Карта</guisubmenu>
-        <guimenuitem>Карта рельефа</guimenuitem>
-      </menuchoice>.
-    </para>
-    <para lang="ru">
       Этот фильтр создаёт трёхмерный эффект рельефа, взяв рельеф с одного
       изображения и применив его к другому. Высота рельефа зависит от
       яркости точек. Направление освещения можно выбрать. Обратитесь к фильтру
@@ -112,9 +159,28 @@
     </para>
   </sect3>  
   
-  <sect3 lang="en;fr;ru">
+
+  <sect3 lang="de">
+    <title>
+      <phrase lang="de">Filteraufruf</phrase>
+    </title>
+
+    <para lang="de">
+      Dieses Filter lässt sich über das Menü
+      <menuchoice>
+        <guimenu><accel>F</accel>ilter</guimenu>
+        <guisubmenu><accel>A</accel>bbilden</guisubmenu>
+        <guimenuitem><accel>B</accel>umpmap</guimenuitem>
+      </menuchoice>
+      im Bildfenster aufrufen.
+    </para>
+  </sect3>
+
+
+  <sect3 lang="en;de;fr;ru">
     <title>
       <phrase lang="en;fr">Options</phrase>
+      <phrase lang="de">Eigenschaften</phrase>
       <phrase lang="ru">Параметры</phrase>
     </title>
       
@@ -123,6 +189,9 @@
         <phrase lang="en">
           <quote>Bump Map</quote> filter options
         </phrase>
+        <phrase lang="de">
+          Eigenschaften für das Filter <quote>Bumpmap</quote>
+        </phrase>
         <phrase lang="fr">
           Options du filtre <quote>Repoussage d'après une carte </quote>
         </phrase>
@@ -130,8 +199,9 @@
           Параметры фильтра <quote>Карта рельефа</quote>
         </phrase>
       </title>
+
       <mediaobject>
-        <imageobject lang="en;ru">
+        <imageobject lang="en;de;ru">
           <imagedata fileref="../images/filters/options-map-bumpmap.png"
                    format="PNG"/>
         </imageobject>
@@ -144,25 +214,72 @@
     
     <variablelist>
       <varlistentry>
+        <term lang="en">Preview</term>
+        <term lang="cs">Náhled</term>
+        <term lang="de">Vorschau</term>
+        <term lang="fr">Aperçu</term>
+        <term lang="it">Anteprima</term>
+        <term lang="ru">Просмотр</term>
+
+        <listitem>
+          <para lang="en">
+            Parameter setting results are interactively displayed in preview.
+            Scroll bars allow you to move around the image.
+          </para>
+          <para lang="cs">
+            Nastavení parametrů filtru se interaktivně zobrazují v náhledu.
+            Pomocí posuvníků můžete přesouvat náhled do jiných částí obrázku.
+          </para>
+          <para lang="de">
+            In der Vorschau wird ein Ausschnitt des Bildes so dargestellt,
+            als wäre das Filter mit den aktuellen Einstellungen auf das Bild
+            angewandt worden.
+          </para>
+          <para lang="fr">
+            Le résultat du réglage des paramètres est affiché en temps réel
+            dans l'aperçu. Les glissières de déplacement permettent de
+            naviguer dans l'image.
+          </para>
+          <para lang="it">
+            Questa anteprima mostra interattivamente i cambiamenti provocati
+            dalla regolazione dei parametri prima che essi vengano applicati
+            all'immagine. Le barre di scorrimento consentono di muoversi
+            sull'immagine.
+          </para>
+          <para lang="ru">
+            Окно просмотра обновляется по мере изменения параметров. Полосы
+            прокрутки позволяют двигаться по изображению.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
         <term>
           <phrase lang="en">Bump Map</phrase>
+          <phrase lang="de">Bumpmap</phrase>
           <phrase lang="fr">Repoussage d'après une carte</phrase>
           <phrase lang="ru">Карта рельефа</phrase>
         </term>
+
         <listitem>
           <para lang="en">
-            This drop-down list allows you to select the image that will 
-            be used as a map for bumpmapping. This list contains images 
-            that are present on your screen when you launch the filter. 
-            Images opened after starting filter are not present in this 
-            list.
+            This drop-down list allows you to select the image that will be
+            used as a map for bumpmapping. This list contains images that are
+            present on your screen when you launch the filter. Images opened
+            after starting filter are not present in this list.
+          </para>
+          <para lang="de">
+            Dieses Klappmenü erlaubt es Ihnen ein Bild auszuwählen, welches
+            als Karte (<quote>Bumpmap</quote>) für den Filter verwendet wird.
+            Hierzu beinhaltet die Auswahlliste alle aktuell in GIMP geöffneten
+            Bilder. Bilder, welche Sie erst nach dem Aufruf des Filters 
+            geöffnet haben, werden nicht in der Liste angezeigt.
           </para>
           <para lang="fr">
-            Cette option devrait s'appeler «Carte de repoussage» ou 
-            «Carte de relief». La liste déroulante fournit la liste des 
-            images présentes sur votre écran lors du lancement du filtre. 
-            Les images ouvertes après lancement du filtre n'apparaissent 
-            pas dans cette liste.
+            Cette option devrait s'appeler «Carte de repoussage» ou «Carte de
+            relief». La liste déroulante fournit la liste des images présentes
+            sur votre écran lors du lancement du filtre. Les images ouvertes
+            après lancement du filtre n'apparaissent pas dans cette liste.
           </para>
           <para lang="ru">
             Этот список позволяет выбрать изображение, которое будет
@@ -176,6 +293,7 @@
       <varlistentry>
         <term>
           <phrase lang="en">Map Type</phrase>
+          <phrase lang="de">Map-Typ</phrase>
           <phrase lang="fr">Type de carte</phrase>
           <phrase lang="ru">Тип карты</phrase>
         </term>
@@ -185,6 +303,10 @@
             This option allows you to define the method that will be used 
             when creating the map image:
           </para>
+          <para lang="de">
+            Diese Eigenschaft erlaubt es Ihnen eine Methode festzulegen, die
+            verwendet wird, um das Abbild zu erstellen:
+          </para>
           <para lang="fr">
             Cette option permet de définir la méthode qui sera utilisée 
             lors de la création de la carte de relief:
@@ -193,11 +315,16 @@
             Этот параметра позволяет выбрать метод, по которому будет создано
             изображение карты.
           </para>
+
           <itemizedlist>
             <listitem>
               <para lang="en">
-                <emphasis role="bold">Linear</emphasis>: bump heigth is a 
+                <guilabel>Linear</guilabel>: bump height is a 
                 direct function of luminosity.
+              </para>
+              <para lang="de">
+                <guilabel>Linear</guilabel>: Die Höhe der Beulen ist eine
+                lineare Funktion der Helligkeit.
               </para>
               <para lang="fr">
                 <emphasis role="bold">Linéaire</emphasis>: La hauteur 
@@ -208,10 +335,15 @@
                 выступов - линейная функция яркости.
               </para>
             </listitem>
+
             <listitem>
               <para lang="en">
-                <emphasis role="bold">Sinusoidal</emphasis>: bump heigth 
+                <guilabel>Sinusoidal</guilabel>: bump height 
                 is a sinusoidal function of luminosity.
+              </para>
+              <para lang="de">
+                <guilabel>Sinusförmig</guilabel>: Die Höhe der Beulen ist
+                eine sinusartige Funktion der Helligkeit.
               </para>
               <para lang="fr">
                 <emphasis role="bold">Sinusoïdal</emphasis>: La hauteur 
@@ -222,10 +354,15 @@
                 выступов - синусоидальная функция яркости.
               </para>
             </listitem>
+
             <listitem>
               <para lang="en">
-                <emphasis role="bold">Spheric</emphasis>: bump heigth is 
+                <guilabel>Spheric</guilabel>: bump height is 
                 a spheric function of luminosity.
+              </para>
+              <para lang="de">
+                <guilabel>Sphärisch</guilabel>: Die Höhe der Beulen ist eine
+                sphärische Funktion der Helligkeit.
               </para>
               <para lang="fr">
                 <emphasis role="bold">Sphérique</emphasis>: La hauteur des 
@@ -243,17 +380,24 @@
       <varlistentry>
         <term>
           <phrase lang="en">Compensate for darkening</phrase>
+          <phrase lang="de">Verdunklung kompensieren</phrase>
           <phrase lang="fr">Compenser l'assombrissement</phrase>
           <phrase lang="ru">Компенсировать затемнение</phrase>
         </term>
+
         <listitem>
           <para lang="en">
-            Bumpmapping tends to darken image. You can compensate this 
+            Bumpmapping tends to darken image. You can compensate this
             darkening by checking this option.
           </para>
+          <para lang="de">
+            Die Anwendung des Filters kann zu einer Verdunklung des Bildes
+            führen. Dieses Verhalten können Sie durch das Aktivieren dieser
+            Eigenschaft kompensieren.
+          </para>
           <para lang="fr">
-            Le repoussage a tendance à assombrir l'image. Cette option 
-            vous permet de compenser cet assombrissement. 
+            Le repoussage a tendance à assombrir l'image. Cette option vous
+            permet de compenser cet assombrissement.
           </para>
           <para lang="ru">
             Рельеф обычно делает изображение более тёмным. Это можно
@@ -261,22 +405,28 @@
           </para>
         </listitem>
       </varlistentry>
-        
+
       <varlistentry>
         <term>
           <phrase lang="en">Invert Bumpmap</phrase>
+          <phrase lang="de">Bumpmap invertieren</phrase>
           <phrase lang="fr">Inverser le relief</phrase>
           <phrase lang="ru">Инвертировать рельеф</phrase>
         </term>
+
         <listitem>
           <para lang="en">
-            Bright pixels default to bumps and dark pixels to hollows. You 
-            can invert this effect by checking this option.
+            Bright pixels default to bumps and dark pixels to hollows. You can
+            invert this effect by checking this option.
+          </para>
+          <para lang="de">
+            Aus hellen Pixeln der Karte werden normalerweise Beulen, aus den
+            dunklen Kuhlen. Wenn Sie diese Eigenschaft aktivieren, wird dieses
+            Verhalten umgekehrt.
           </para>
           <para lang="fr">
-            Par défaut, les pixels clairs apparaissent en bosse et les 
-            pixels sombres en creux. Cette option vous permet d'inverser 
-            cet effet.
+            Par défaut, les pixels clairs apparaissent en bosse et les pixels
+            sombres en creux. Cette option vous permet d'inverser cet effet.
           </para>
           <para lang="ru">
             По умолчанию, светлые точки становятся выступами, тёмные -
@@ -288,20 +438,27 @@
       <varlistentry>
         <term>
           <phrase lang="en">Tile bumpmap</phrase>
+          <phrase lang="de">Bumpmap kacheln</phrase>
           <phrase lang="fr">Carte de relief raccordable</phrase>
           <phrase lang="ru">Повторяющийся рельеф</phrase>
         </term>
+
         <listitem>
           <para lang="en">
             If you check this option, there will be no relief break if 
             you use your image as a pattern for a web page: patterns will 
             be placed side by side without any visible joins.
           </para>
+          <para lang="de">
+            Wenn Sie diese Eigenschaft aktivieren, wird der Filter so
+            angewandt, dass die Kanten nahtlos aneinander passen, wenn Sie 
+            das Bild als Muster verwenden.
+          </para>
           <para lang="fr">
             Si cette option est cochée, il n'y aura pas de rupture de 
             relief si vous utilisez votre image comme motif de fond de 
             page Web: les motifs seront accolés sans raccord visible.
-            <!--Rendre racordable l'image repoussée-->
+            <!-- TODO: fr Rendre racordable l'image repoussée-->
           </para>
           <para lang="ru">
             При выборе этого параметра не будет шва в рельефе, если
@@ -312,16 +469,25 @@
         
       <varlistentry>
         <term>
-          <phrase lang="en">Azimut</phrase>
-          <phrase lang="fr">Azimut</phrase>
+          <phrase lang="en;fr">Azimut</phrase>
+          <phrase lang="de">Längengrad (Azimut)</phrase>
           <phrase lang="ru">Азимут</phrase>
         </term>
+
         <listitem>
           <para lang="en">
             <guilabel>Azimut</guilabel>: This is about lighting 
             according to the points of the compass (0 - 360). If you 
             suppose South is at the top of your image, then East (0°) is 
-            on the left. Increasing value goes counter-clockwise. 
+            on the left. Increasing value goes counter-clockwise.
+            <!-- TODO: please check that - south at the top is, aehm, unusual... --> 
+          </para>
+          <para lang="de">
+            Mit dieser Eigenschaft können Sie die Richtung einstellen, aus der
+            das Licht kommt, welches den 3D Effekt erzeugt. Die Einstellung
+            können Sie mit Hilfe eines Schiebereglers im Bereich von 0.0 bis
+            360.0 vornehmen. Dabei entspricht 0 <quote>Osten</quote> und eine
+            Erhöhung des Wertes wirkt entgegen dem Uhrzeigersinn.
           </para>
           <para lang="fr">
             <guilabel>Azimut</guilabel>: Concerne l'éclairage selon les 
@@ -340,14 +506,24 @@
       <varlistentry>
         <term>
           <phrase lang="en">Elevation</phrase>
+          <phrase lang="de">Elevation (Breitengrad)</phrase>
           <phrase lang="fr">Élévation</phrase>
           <phrase lang="ru">Возвышение</phrase>
         </term>
+
         <listitem>
           <para lang="en">
-            <guilabel>Elevation</guilabel>: That's heighth from 
+            <guilabel>Elevation</guilabel>: That's height from 
             horizon (0°), in principle up to zenith (90°), but here up 
-            to the opposite horizon (180°). 
+            to the opposite horizon (180°).
+            <!-- FIXME: en in GIMP 2.4 the max value is 90.0 not 180.0 ! -->
+          </para>
+          <para lang="de">
+            Mit dieser Eigenschaft können Sie die Höhe einstellen, aus der
+            das Licht kommt, welches den 3D Effekt erzeugt. Die Einstellung
+            können Sie mit Hilfen eines Schiebereglers im Bereich von 0.0 bis
+            90.0 vornehmen. Dabei entspricht 0° der Höhe des Horizonts und
+            90° dem Zenith.
           </para>
           <para lang="fr">
             <guilabel>Élévation</guilabel>: C'est la hauteur au dessus 
@@ -364,40 +540,55 @@
       <varlistentry>
         <term>
           <phrase lang="en">Depth</phrase>
+          <phrase lang="de">Tiefe</phrase>
           <phrase lang="fr">Profondeur</phrase>
           <phrase lang="ru">Глубина</phrase>
         </term>
+
         <listitem>
           <para lang="en">
-            With this slider, you can vary bump heigth and hollow depth. 
-            The higher the value, the higher the difference between both. 
-            Values vary from 0 to 100. 
+            With this slider, you can vary bump height and hollow depth. The
+            higher the value, the higher the difference between both. Values
+            vary from 0 to 100.
+          </para>
+          <para lang="de">
+            Mit dieser Eigenschaft können Sie die Höhe der Beulen und die
+            Tiefe der Kuhlen einstellen. Die Einstellung können Sie im Bereich
+            von 0 bis 100 vornehmen. Je größer der Wert, desto größer ist der
+            Höhenunterschied zwischen Beulen und Kuhlen.
           </para>
           <para lang="fr">
-            Avec cette option, vous pouvez faire varier la hauteur des 
-            bosses et la profondeur des creux. Plus la valeur est élevée et 
-            plus la différence entre les deux est importante. Les valeurs 
-            vont de 0 à 100. 
+            Avec cette option, vous pouvez faire varier la hauteur des bosses
+            et la profondeur des creux. Plus la valeur est élevée et plus la
+            différence entre les deux est importante. Les valeurs vont de 0 à
+            100.
           </para>
           <para lang="ru">
             Ползунок и поле ввода опредедяют высоту рельефа и глубину впадин.
             Чем выше значение, тем больше разница между ними. Диапазон
-            значений от 0 до 100. 
+            значений от 0 до 100.
           </para>
         </listitem>
       </varlistentry>
-        
+
       <varlistentry>
         <term>
           <phrase lang="en">X/Y offsets</phrase>
+          <phrase lang="de">X-Versatz; Y-Versatz</phrase>
           <phrase lang="fr">Décalage X/Y</phrase>
           <phrase lang="ru">Смещение X/Y</phrase>
         </term>
+
         <listitem>
           <para lang="en">
             With this slider, you can adjust the map image position 
             compared with the image, horizontally (X) and/or vertically 
             (Y).
+          </para>
+          <para lang="de">
+            Mit dieser Eigenschaft können Sie die Position der Karte auf dem
+            Bild einstellen. Hierzu stehen Ihnen zwei Schieberegler zur
+            Verfügung.
           </para>
           <para lang="fr">
             Avec ce curseur, vous pouvez décaler la position de la carte 
@@ -411,59 +602,78 @@
           </para>
         </listitem>
       </varlistentry>
-        
+
       <varlistentry>
         <term>
           <phrase lang="en">Sea Level</phrase>
+          <phrase lang="de">Wasserhöhe</phrase>
           <phrase lang="fr">Niveau de la mer</phrase>
           <phrase lang="ru">Уровень моря</phrase>
         </term>
+
         <listitem>
           <para lang="en">
-            If your image has transparent areas, they will be treated like 
-            dark areas and will appear as hollows after bumpmapping. With 
-            this slider, you can reduce hollows as if sea level was raising. 
-            This hollows will disapear when sea level value reaches 255. 
-            If the Invert Bumpmap option is checked, transparent areas will 
-            be treated as bright areas, and then Sea Level slider will 
-            plane bumps down.
+            If your image has transparent areas, they will be treated like
+            dark areas and will appear as hollows after bumpmapping. With this
+            slider, you can reduce hollows as if sea level was raising. This
+            hollows will disappear when sea level value reaches 255. If the
+            Invert Bumpmap option is checked, transparent areas will be
+            treated as bright areas, and then Sea Level slider will plane
+            bumps down.
+          </para>
+          <para lang="de">
+            Falls das Bild transparente Bereiche enthält, so werden diese
+            durch das Filter wie dunkle Flächen behandelt. Nach der Anwendung
+            des Filters entstehen an diesen Stellen also tiefe Kuhlen. Mit
+            dieser Eigenschaft können Sie die Tiefe reduzieren, so als würde
+            die Wasserhöhe steigen. Die Kuhlen sind vollständig verschwunden,
+            wenn die Eigenschaft mit 255.0 ihren maximalen Wert annimmt.
+            Sollte die Eigenschaft <guilabel>Bumpmap invertieren</guilabel>
+            eingeschaltet sein, so entstehen statt der Kuhlen Beulen und diese
+            werden nicht aufgefüllt, sondern <quote>wegplaniert</quote>.
           </para>
           <para lang="fr">
-            Si votre carte de relief possède des zones transparentes, 
-            elles seront traitées comme des zones noires et apparaîtront 
-            donc très en creux après repoussage. Avec ce curseur, vous 
-            pouvez atténuer ces creux progressivement, comme si le niveau 
-            de la mer montait, jusqu'à les faire disparaître complètement 
-            pour la valeur 255. Si l'option Inverser le relief est 
-            cochée, les zones transparentes seront traitées comme des 
-            zones claires, et le curseur rabotera ces bosses.
+            Si votre carte de relief possède des zones transparentes, elles
+            seront traitées comme des zones noires et apparaîtront donc très
+            en creux après repoussage. Avec ce curseur, vous pouvez atténuer
+            ces creux progressivement, comme si le niveau de la mer montait,
+            jusqu'à les faire disparaître complètement pour la valeur 255. Si
+            l'option Inverser le relief est cochée, les zones transparentes
+            seront traitées comme des zones claires, et le curseur rabotera
+            ces bosses.
           </para>
           <para lang="ru">
-            Если в изображении есть прозрачные области, то фильтр примет их
-            за чёрные области и они будут выглядеть как пустые. Этим
-            параметром можно уменьшить эти пустоты как при повышении уровня
-            моря. Эти пустоты исчезнут когда уровень моря достигнет 255-ти. 
-            Если выбрана Инверсия, прозрачные области будут приняты за
-            светлые области, и этот параметр будет срезать выступы сверху.
+            Если в изображении есть прозрачные области, то фильтр примет их за
+            чёрные области и они будут выглядеть как пустые. Этим параметром
+            можно уменьшить эти пустоты как при повышении уровня моря. Эти
+            пустоты исчезнут когда уровень моря достигнет 255-ти. Если выбрана
+            Инверсия, прозрачные области будут приняты за светлые области, и
+            этот параметр будет срезать выступы сверху.
           </para>
         </listitem>
       </varlistentry>
         
       <varlistentry>
         <term>
-          <phrase lang="en">Ambient</phrase>
+          <phrase lang="en;de">Ambient</phrase>
           <phrase lang="fr">Ambiant</phrase>
           <phrase lang="ru">Освещение</phrase>
         </term>
+
         <listitem>
           <para lang="en">
-            This slider controls the intensity of ambient light. With 
-            high values, shadows will fade and relief lessen.
+            This slider controls the intensity of ambient light. With high
+            values, shadows will fade and relief lessen.
+          </para>
+          <para lang="de">
+            Mit dieser Eigenschaft können Sie die Stärke des Lichtes
+            beeinflussen. Durch die Einstellung von großen Werten werden die
+            Schatten blasser und der Effekt insgesamt gemildert.
           </para>
           <para lang="fr">
-            Ce curseur règle l'intensité de la lumière ambiante. Les 
-            valeurs élevées atténueront les zones d'ombres et le relief 
-            apparaîtra moins marqué.
+            Ce curseur règle l'intensité de la lumière ambiante. Les valeurs
+            élevées atténueront les zones d'ombres et le relief apparaîtra
+            moins marqué.
           </para>
           <para lang="ru">
             Ползунок и поле ввода опредедяют интенсивность освещения. При
@@ -471,36 +681,6 @@
           </para>
         </listitem>
       </varlistentry>
-      
-      <varlistentry>
-        <term>
-          <phrase lang="en">An example</phrase>
-          <phrase lang="fr">Un exemple</phrase>
-          <phrase lang="ru">Пример</phrase>
-        </term>
-        <listitem>
-          <figure>
-            <title>
-              <phrase lang="en">
-               From left to right: original image, bump map, bumpmapped image
-              </phrase>
-              <phrase lang="fr">
-               De gauche à droite: image d'origine, carte de relief, repoussage d'après la carte
-              </phrase>
-              <phrase lang="ru">
-                Изображение до и после применения фильтра
-                <quote>Рельеф</quote>
-              </phrase>
-            </title>
-            <mediaobject>
-              <imageobject>
-                <imagedata fileref="../images/filters/examples/example-map-bumpmap.png"
-                   format="PNG"/>
-              </imageobject>
-            </mediaobject>
-          </figure>  
-        </listitem>
-      </varlistentry>  
     </variablelist>
   </sect3>
 </sect2>
