@@ -7,7 +7,7 @@
   2005-12-07 replaced <simplesect> by <sect3> by lexa
   2005-10-14 ceated by julien hardelin
 -->
-<sect2 id="plug-in-displace" lang="en;de;fr;ru">
+<sect2 id='plug-in-displace' lang="en;de;fr;it;ru">
   <sect2info lang="de" role="cvs">
     <revhistory>
       <revision lang="de">
@@ -22,6 +22,7 @@
     <phrase lang="en">Displace</phrase>
     <phrase lang="de">Verschieben</phrase>
     <phrase lang="fr">Déplacement d'après une carte</phrase>
+    <phrase lang="it">Sposta</phrase>
     <phrase lang="ru">Смещение</phrase>
   </title>
   
@@ -45,6 +46,12 @@
     <primary>Déplacement d'après une carte</primary>
   </indexterm>
 
+  <indexterm lang="it">
+    <primary>Filtri</primary>
+    <secondary>Mappa</secondary>
+  </indexterm>
+  <indexterm lang="it"><primary>Sposta</primary></indexterm>
+  
   <indexterm lang="ru">
     <primary>Фильтры</primary>
     <secondary>Карта</secondary>
@@ -52,11 +59,13 @@
   <indexterm lang="ru"><primary>Смещение</primary></indexterm>
 
 
+
   <sect3>
     <title>
       <phrase lang="en">Overview</phrase>
       <phrase lang="de">Wirkungsweise</phrase>
       <phrase lang="fr">Généralités</phrase>
+      <phrase lang="it">Panoramica</phrase>
       <phrase lang="ru">Общая информация</phrase>
     </title>
  
@@ -67,6 +76,7 @@
           v.l.n.r.: Originalbild, Filter angewandt
         </phrase>
         <phrase lang="fr">Exemples de déplacement</phrase>
+        <phrase lang="it">Esempi di spostamento</phrase>
         <phrase lang="ru">Примеры замещения</phrase>
       </title>
 
@@ -77,7 +87,7 @@
         </imageobject>
 
         <caption>
-          <para lang="en">
+    <para lang="en">
             X displacement coefficient is 30 (with a negative coefficient
             displacement would be inverse). Vacated pixels are black.
             Displacement map has three grey stripes, from top to bottom:
@@ -122,6 +132,20 @@
             15 pixels.
           </para>
 
+         <para lang="it">
+            Il coefficiente di spostamento X è 30 (con un coefficiente negativo 
+            lo spostamento sarebbe opposto). I pixel mancanti sono neri.
+            Displacement map has three grey stripes, from top to bottom:
+            medium gray (128), light gray 200), dark gray (60).
+          </para>
+          <para lang="it">
+            You can see that the image area corresponding to medium gray in
+            map was not displaced. The image area corresponding to light gray
+            (&gt;128) was displaced 17 pixels to the left. The image area
+            corresponding to dark gray (&lt;128) was displaced -15 pixels, to
+            the right.
+          </para>
+
           <para lang="ru">
             Коэффициент замещения по X равен 30-ти (с отрицательным
             коэффициентом замещение будет в обратную сторону). Замещённые
@@ -154,6 +178,15 @@
         <guisubmenu><accel>C</accel>arte</guisubmenu>
         <guimenuitem><accel>D</accel>éplacer selon une carte</guimenuitem>
       </menuchoice>
+    </para>
+
+    <para lang="it">
+      Questo filtro si trova nel menu immagine:
+      <menuchoice>
+        <guimenu>Filtri</guimenu>
+        <guisubmenu><accel>M</accel>appa</guisubmenu>
+        <guisubmenu><accel>S</accel>posta...</guisubmenu>
+      </menuchoice>.
     </para>
 
     <para lang="ru">
@@ -199,6 +232,17 @@
       permet d'intéressants effets de déformation.
     </para>
 
+    <para lang="it">
+      Questo filtro utilizza una 'mappa a sbalzo' per spostare i pixel
+      corrispondenti dell'immagine. Questo filtro sposta il contenuto
+      dell'immagine (livello corrente o selezione) dei valori specificati
+      in Spostamento X e Y moltiplicati per l'intensità del pixel corrispondente
+      nell'immagine che agisce da 'mappa a sbalzo'.
+      <emphasis role='bold'>Entrambe le mappe a sbalzo per la X e la Y devono
+      essere immagini a scala di grigio e devono avere le stesse dimensioni
+      dell'immagine</emphasis>. Questo filtro produce distorsioni interessanti.
+    </para>
+
     <para lang="ru">
       Этот фильтр создаёт интересные эффекты искажения. Он использует карту
       смещения чтобы сместить соответствующие точки текущего слоя или
@@ -232,6 +276,7 @@
       <phrase lang="en">Options</phrase>
       <phrase lang="de">Eigenschaften</phrase>
       <phrase lang="fr">Options</phrase>
+      <phrase lang="it">Opzioni</phrase>
       <phrase lang="ru">Параметры</phrase>
     </title>
 
@@ -242,6 +287,7 @@
           Eigenschaften für das Filter <quote>Verschieben</quote>
         </phrase>
       <phrase lang="fr">Options</phrase>
+      <phrase lang="it">Opzioni</phrase>
       <phrase lang="ru">Параметры</phrase>
       </title>
       
@@ -255,6 +301,10 @@
             fileref='../images/filters/fr/filters-map-displace-fr.png'
             format='PNG' />
         </imageobject>
+        <imageobject lang="it">
+          <imagedata fileref='../images/filters/filters-map-displace.png'
+            format='PNG' />
+        </imageobject>
       </mediaobject>
     </figure>
 
@@ -263,12 +313,13 @@
         <term lang="en">Preview</term>
         <term lang="de">Vorschau</term>
         <term lang="fr">Aperçu</term>
+        <term lang="it">Anteprima</term>
         <term lang="ru">Просмотр</term>
         
         <listitem>
           <para lang="en">
             Uncheck this option if your processor is slow.
-          </para>
+          </para> 
           <para lang="de">
             In der Vorschau wird ein Ausschnitt des Bildes so dargestellt,
             als wäre das Filter mit den aktuellen Einstellungen auf das Bild
@@ -276,10 +327,13 @@
           </para>
           <para lang="fr">
             Décochez cette option si votre ordinateur est trop lent.
-          </para>
+          </para> 
+          <para lang="it">
+            Deselezionate questa opzione se il vostro processore è lento.
+          </para> 
           <para lang="ru">
             Не выбирайте этот параметр, если процессор медленный.
-          </para>
+          </para> 
         </listitem>
       </varlistentry>
 
@@ -287,6 +341,7 @@
         <term lang="en">X/Y Displacements</term>
         <term lang="de">X-Verschiebung; Y-Verschiebung</term>
         <term lang="fr">Déplacements X/Y</term>
+        <term lang="it">Spostamento X/Y</term>
         <term lang="ru">Смещение по X/Y</term>
 
         <listitem>
@@ -344,6 +399,22 @@
             l'autre sens, vers la droite pour X et vers le bas pour Y.
           </para>
 
+          <para lang="it">
+            Selezionando una opzione o entrambe, i pixel del livello corrente
+            corrispondenti ai pixel di valore diverso da 128 nella mappa a
+            sbalzo saranno spostati orizzontalmente (X) e/o verticalmente (Y),
+          </para>
+          <para lang="it">
+            Perchè 128? Perchè la mappa, che deve essere a scala di grigio, ha
+            256 livelli di grigio: l'intensità pari a  128 corrisponde ad un
+            <emphasis>grigio medio</emphasis> (R128, G128, B128). Il filtro
+            sposta i pixel dell'immagine corrispondenti a <emphasis>pixel nella
+            mappa di valore più alto di 128</emphasis> a sinistra per le X ed
+            in alto per le Y. In maniera simile il filtro sposta i pixel
+            dell'immagine corrispondenti a <emphasis>pixel nella mappa di valore
+            più basso di 128</emphasis> a destra per le X e in alto per le Y. 
+          </para>
+
           <para lang="ru">
             Когда вы выбираете эти параметры, точки активного слоя
             со значением, отличающегося от 128 в карте смещения, будут
@@ -365,6 +436,7 @@
         <term lang="en">Input boxes</term>
         <term lang="de">Eingabefelder</term>
         <term lang="fr">Boîtes de saisie</term>
+        <term lang="it">Caselle di testo</term>
         <term lang="ru">Поля ввода</term>
         
         <listitem>  
@@ -391,14 +463,15 @@
             reverse of a positive one.
           </para>
           <para lang="en">
-            To complicate stuff, intensity used in formula is not directly
-            pixel intensity. Actual intensity is plotted on a -128 +128 scale,
-            where 0 corresponds to null displacement as we have seen higher.
-            Transformation is done by subtracting 128 from the pixel intensity
-            and adding +1. So, in previous example, 75 associated to a white
-            pixel (value 255 reported to 255-128+1= 128) gives a
-            (128*75)/128=75 pixels displacement. And a black (0) pixel gives a
-            -75 pixels displacement.
+            To complicate stuff, intensity used in formula is not 
+            directly pixel intensity. Actual intensity is plotted on a 
+            -128 +128 scale, where 0 corresponds to null displacement as 
+            we have seen above. Transformation is done by subtracting 
+            128 from the pixel intensity and adding +1. So, in previous 
+            example, 75 associated to a white pixel (value 255 reported 
+            to 255-128+1= 128) gives a (128*75)/128=75 pixels 
+            displacement. And a black (0) pixel gives a -75 pixels 
+            displacement.
           </para>
 
           <para lang="de">
@@ -415,17 +488,17 @@
           </para>
 
           <para lang="fr">
-            «Déplacement X/Y» devrait s'appeler <emphasis>Coefficient de 
-            déplacement</emphasis>. En effet, ce que vous entrez, en pixels, 
-            directement ou à l'aide des boutons-mollettes dans les boîtes 
-            de saisie, n'est pas le déplacement lui-même. Ce coefficient 
-            est utilisé dans la formule <emphasis role='bold'>
-            déplacement=(intensité * coefficient)/128</emphasis>
-            qui donne le déplacement effectif du pixel en fonction de 
-            l'intensité du pixel correspondant dans la carte, modulé par le 
-            coefficient que vous avez introduit. L'introduction de 
-            l'intensité dans la formule est importante: elle permet 
-            d'obtenir un déplacement progressif avec une carte de dégradé. 
+          «Déplacement X/Y» devrait s'appeler <emphasis>Coefficient de 
+          déplacement</emphasis>. En effet, ce que vous entrez, en pixels, 
+          directement ou à l'aide des boutons-mollettes dans les boîtes 
+          de saisie, n'est pas le déplacement lui-même. Ce coefficient 
+          est utilisé dans la formule <emphasis role='bold'>
+          déplacement=(intensité * coefficient)/128</emphasis>
+          qui donne le déplacement effectif du pixel en fonction de 
+          l'intensité du pixel correspondant dans la carte, modulé par le 
+          coefficient que vous avez introduit. L'introduction de 
+          l'intensité dans la formule est importante: elle permet 
+          d'obtenir un déplacement progressif avec une carte de dégradé. 
           </para>
           <para lang="fr">
             Cette valeur varie dans des limites égales au double des 
@@ -448,6 +521,40 @@
             un pixel blanc (intensité 255 rapportée à 255-128+1=128) donne 
             bien un déplacement de (128x75)/128=75 pixels. Et un pixel noir 
             (0) donne un déplacement de -75 pixels.
+          </para>
+
+          <para lang="it">
+            <quote>Spostamento X/Y</quote> dovrebbe chiamarsi 
+            <emphasis>Coefficiente di spostamento X/Y</emphasis>. Il valore
+            immesso nelle caselle di testo, direttamente o tramite i pulsanti
+            con le frecce, non è lo spostamento reale. Questo coefficiente è
+            utilizzato nella formula <emphasis role='bold'>spostamento =
+            (intensità x coefficiente) / 128</emphasis> che restituisce lo
+            spostamento reale del pixel secondo l'intensità del pixel
+            corrispondente nella mappa modulato dal coefficente immesso.
+            L'introduzione dell'intensità nella formula è importante poichè
+            consente uno spostamento progressivo utilizzando una mappa con
+            un gradiente.
+          </para>
+          <para lang="it">
+            Questo valore varia in un intervallo pari al doppio delle dimensioni
+            dell'immagine. Ciò corrisponde allo spostamento massimo da un
+            bordo all'altro dell'immagine.
+          </para>
+          <para lang="it">
+            Questo valore può essere positivo o negativo. Uno spostamento
+            negativo è opposto ad uno positivo.
+          </para>
+          <para lang="it">
+            A complicare le cose l'intensità utilizzata nella formula non è
+            direttamente l'intensità del pixel. In realtà l'intensità è
+            riportata su una scala da -128 a 128 dove 0 corrisponde a nessuno
+            spostamento come visto sopra. La trasformazione è effettuata
+            sottraendo 128 dall'intensità del pixel e aggiungendo 1. Quindi
+            75 associato ad un pixel bianco (valore 255 trasformato in
+            255-128+1=128) restituisce uno spostamento di (128*75)/128=75
+            pixel. Un pixel nero (valore 0) restituisce uno spostamento di
+            -75 pixel.
           </para>
 
           <para lang="ru">
@@ -485,6 +592,7 @@
         <term lang="en">Selecting displacement maps</term>
         <term lang="de">Verschiebungs-Karten auswählen</term>
         <term lang="fr">Sélection des cartes de déplacement</term>
+        <term lang="it">Selezione delle mappe a sbalzo</term>
         <term lang="ru">Выбор карты замещения</term>
 
         <listitem>
@@ -536,6 +644,23 @@
             vertical, et vertical pour un déplacement horizontal.
           </para>
           
+          <para lang="it">
+            Premendo la casella a discesa compare una lista dove si può
+            scegliere la mappa a sbalzo. Una immagine è presente in questa
+            lista se soddisfa due condizioni. Per prima cosa l'immagine
+            deve essere caricata al momento dell'invocazione del filtro, quindi
+            l'immagine deve avere le stesse dimensioni dell'immagine originale.
+            Spesso sarà una copia dell'immagine originale trasformata in scala
+            di grigio e modificata in maniera appropriata con un gradiente. E'
+            possibile utilizzare immagini RGB ma in tal caso viene utilizzata
+            la luminosità rendendo l'effetto difficile da prevedere. La mappa
+            può essere diversa nelle direzioni orizzontali e verticali.
+          </para>
+          <para lang="it">
+            Il gradiente della mappa deve essere orizzontale per uno
+            spostamento verticale e verticale per uno spostamento orizzontale.
+          </para>
+
           <para lang="ru">
             После нажатия на кнопку списка, вы можете выбрать карту
             замещения. Для того, чтобы появиться в этом списке, изображение
@@ -559,6 +684,7 @@
         <term lang="en">On Edges</term>
         <term lang="de">Kantenverhalten</term>
         <term lang="fr">Sur les bords</term>
+        <term lang="it">Comportamento bordi</term>
         <term lang="ru">На краях</term>
         
         <listitem>
@@ -574,6 +700,10 @@
           <para lang="fr">
             Ces options vous permettent de régler le comportement du 
             déplacement sur les bords du calque actif ou de la sélection:
+          </para>
+          <para lang="it">
+            Queste opzioni consentono di impostare il comportamento dello
+            spostamento sui bordi del livello corrente o della selezione:
           </para>
           <para lang="ru">
             Эти параметры определяют поведение замещения в активном слое или
@@ -598,6 +728,10 @@
                 Avec cette option, ce qui disparaît d'un côté du fait du
                 déplacement réapparaît de l'autre côté.
               </para>
+              <para lang="it">
+                <emphasis>Avvolgi</emphasis>: Con questa opzione ciò che esce
+                da un lato ricompare dal lato opposto.
+              </para>
               <para lang="ru">
                 <guilabel>Завернуть</guilabel>: С этим параметром, что
                 исчезло на одном краю, появится на противоположном.
@@ -620,6 +754,11 @@
                 <guilabel>Étaler</guilabel>:
                 Avec cette option, la partie libérée par le déplacement est
                 remplacée par un étirement de la partie adjacente de l'image.
+              </para>
+              <para lang="it">
+                <emphasis>Macchia</emphasis>: Con questa opzione i pixel
+                mancanti dopo lo spostamento sono rimpiazzati da pixel stirati
+                da parti adiacenti dell'immagine.
               </para>
               <para lang="ru">
                 <guilabel>Размазать</guilabel>: С этим параметром, замещённые
@@ -644,6 +783,11 @@
                 Avec cette option, la partie libérée par le déplacement est
                 remplacée par du noir.
               </para>
+              <para lang="it">
+                <emphasis>Nero</emphasis>:
+                Con questa opzione i pixel mancanti dopo lo spostamento sono
+                rimpiazzati da pixel di colore nero.
+              </para>
               <para lang="ru">
                 <guilabel>Чёрный</guilabel>: С этим параметром, замещённые
                 точки заполняются чёрным.
@@ -655,17 +799,18 @@
     </variablelist>
   </sect3>
   
-
   <sect3>
     <title>
       <phrase lang="en">Using gradient to bend a text</phrase>
       <phrase lang="de">Anwendung des Filters zur Verzerrung von Text</phrase>
       <phrase lang="fr">Utiliser un dégradé pour courber un texte</phrase>
+      <phrase lang="it">Utilizzare un gradiente per piegare un testo</phrase>
       <phrase lang="ru">Искривить текст при помощи градиента</phrase>
     </title>
 
     <para lang="en">Follow following steps:</para>
     <para lang="fr">Suivez les étapes suivantes:</para>
+    <para lang="it">Si seguano le istruzioni seguenti:</para>
     <para lang="ru">Следуйте следующим шагам:</para>
 
     <procedure>
@@ -675,6 +820,7 @@
           Beginnen Sie das Beispiel mit dem Öffnen eines Bildes
         </para>
         <para lang="fr">Commencez par ouvrir votre image.</para>
+        <para lang="it">Iniziare aprendo l'immagine.</para>
         <para lang="ru">Начните с открытия изображения.</para>
       </step>
 
@@ -705,6 +851,13 @@
           votre <emphasis>carte de déplacement</emphasis>, aux dimensions de 
           l'image d'origine.
         </para>
+        <para lang="it">
+          Duplicare l'immagine. Rendere attivo il duplicato e convertirlo a
+          scala di grigio (menu Immagine/Modalità/Scala di grigi). Riempirlo
+          con il gradiente voluto. Questa nuova immagine costituirà la 
+          <emphasis>mappa a sbalzo</emphasis>, delle stesse dimensioni
+          dell'immagine originale.
+        </para>
         <para lang="ru">
           Скопируйте это изображение. Активируйте копию и сделайте его
           серым.(
@@ -716,7 +869,6 @@
           станет <emphasis>картой замещения</emphasis> с размером искомого
           изображения.
         </para>
-
         <mediaobject>
           <imageobject>
             <imagedata fileref='../images/filters/examples/2zinnias-c.png'
@@ -755,6 +907,15 @@
           fond transparent; or, le filtre ne déplace pas les pixels 
           transparents: seules les lettres seront donc décalées. 
         </para>
+        <para lang="it">
+          Rendere attiva l'immagine originale. Creare un <emphasis>Livello di
+          testo</emphasis> contenente il testo desiderato. Impostare il livello
+          alla dimensione dell'immagine: fare clic con il tasto destro sul
+          livello nel pannello dei livelli e nel menu contestuale scegliere
+          <quote>Livello a dimensione immagine</quote>. Si noti che le lettere
+          nel livello di testo sono su uno sfondo trasparente, questo filtro
+          non sposta pixel trasparenti. Solo le lettere vengono spostate.
+        </para>
         <para lang="ru">
           Активируйте искомое изображение. Создайте
           <emphasis>Текстовый слой</emphasis> с нужным текстом. Установите
@@ -764,7 +925,6 @@
           этот фильтр не замещает прозрачные точки. Только буквы будут
           замещены.
         </para>
-
         <mediaobject>
           <imageobject>
             <imagedata fileref='../images/filters/examples/2zinnias-i.png'
@@ -792,6 +952,12 @@
           coefficient de déplacement en fonction de l'aspect obtenu dans 
           l'Aperçu. Validez.
         </para>
+        <para lang="it">
+          Rendere attivo il livello di testo. Richiamare il filtro Sposta.
+          Impostare i parametri, e in particolar modo il coefficiente di
+          spostamento osservando il risultato nell'anteprima. Premere il
+          pulsante <guibutton>OK</guibutton>.
+        </para>
         <para lang="ru">
           Активируйте текстовый слой. Откройте окно фильтра
           <quote>Замещение</quote>. Укажите значения параметров, особенно
@@ -804,7 +970,7 @@
     <mediaobject>
       <imageobject>
         <imagedata fileref='../images/filters/examples/map-displace5.png'
-          format='PNG' />
+                   format='PNG'/> 
       </imageobject>
     </mediaobject>
 
@@ -816,8 +982,12 @@
     <para lang="fr">
       Bien entendu, cette méthode s'applique aussi aux calques standards:
     </para>
-    <para lang="ru">Этот метод также применим к обычным слоям:</para>
-
+    <para lang="it">
+      Questo metodo si applica anche a livelli standard:
+    </para>
+    <para lang="ru">
+      Этот метод также применим к обычным слоям:
+    </para>
     <mediaobject>
       <imageobject>
         <imagedata fileref='../images/filters/examples/map-displace6.png'
@@ -843,6 +1013,12 @@
         tracez un dégradé de noir vers blanc. Puis, 
         avec l'outil <link linkend='gimp-tool-curves'>Courbes</link>, 
         modifiez la courbe du dégradé.
+      </para>
+      <para lang="it">
+        Per ottenere il gradiente desiderato disegnare dapprima un gradiente
+        dal nero al bianco, quindi utilizzare lo strumento
+        <link linkend='gimp-tool-curves'>Curve</link> per modificare la curva
+        del gradiente.
       </para>
       <para lang="ru">
         Чтобы получить нужный градиент, сначала нарисуйте градиент от чёрного
