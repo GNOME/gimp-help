@@ -5,6 +5,7 @@
           "http://www.docbook.org/xml/4.3/docbookx.dtd">
 
 <!-- section history:
+ 2006-12-20 de adapted description by ude
  2006-11-01 Changes in the description of the action and Number of colors by j.h
  2005-12-07 replaced <simplesect> by <sect3> by lexa
  2005-08-30 de replaced informalfigure by axel.wernicke
@@ -20,8 +21,8 @@
       </revision>
       <revision lang="de">
         <revnumber>$Revision$</revnumber>
-        <date>2005-08-24</date>
-        <authorinitials>lexa</authorinitials>
+        <date>2006-12-20</date>
+        <authorinitials>ude</authorinitials>
       </revision>
       <revision lang="fr">
         <revnumber>$Revision$</revnumber>
@@ -139,6 +140,8 @@
       Vordergrundfarbe. Dieses Filter kann sehr hilfreich sein, wenn Sie zum
       Beispiel ein Bild vor einen farbigen Hintergrund bringen möchten, der
       möglichst wenig von der Farbe des Bildrandes abweicht.
+      Die Anwendung dieses Filters wird nicht im Rücknahmesystem registriert
+      und kann daher nicht mit Strg-Z umgekehrt werden.
     </para>
 
     <para lang="fr">
@@ -216,7 +219,7 @@
     <title>
       <phrase lang="en">Options</phrase>
       <phrase lang="cs">Volby</phrase>
-      <phrase lang="de">Eienschaften</phrase>
+      <phrase lang="de">Eigenschaften</phrase>
       <phrase lang="fr">Options</phrase>
       <phrase lang="it">Opzioni</phrase>
       <phrase lang="ru">Параметры</phrase>
@@ -257,7 +260,7 @@
       <varlistentry>
         <term lang="en">Border Size</term>
         <term lang="cs">Velikost okraje</term>
-        <term lang="de">Randgrösse</term>
+        <term lang="de">Randgröße</term>
         <term lang="fr">Taille du bord</term>
         <term lang="it">Dimensione bordo</term>
         <term lang="ru">Размер рамки</term>
@@ -297,7 +300,7 @@
         <term lang="it">Numero di colori</term>
         <term lang="ru">Количество цветов</term>
         <listitem>
-          <!--TODO cs de it ru-->
+          <!--TODO cs it ru-->
           <para lang="en">
             You can set there the <guilabel>Bucket Size</guilabel>, i.e a
             number of color levels added to, or subtracted from, every RGB
@@ -308,11 +311,10 @@
             uvažovaných při výpočtu průměrné barvy (1 - 256).
           </para>
           <para lang="de">
-            <!-- de CHECK: can please somebody check that - doesn't seem to
-                make any sense to me. How is that average calculated? -->
-            Hier können Sie die <guilabel>Eimergrösse</guilabel>, also die
-            Anzahl der Farben im Bereich zwischen 1 und 256 festlegen, die zur
-            Berechnung der Durchschnittsfarbe benutzt werden.
+            Hier können Sie die <guilabel>Eimergröße</guilabel> festlegen,
+            d.h. die Anzahl an Farbniveaus, die zu jedem RGB-Kanal (1-256)
+            addiert bzw. davon subtrahiert werden, so dass die berechnete
+            Farbe zu grau tendiert.
           </para>
           <para lang="fr">
             Vous pouvez régler ici la <guilabel>Taille du pot de
@@ -334,17 +336,17 @@
           <para lang="en">
             Examples illustrating the <quote>Border Average</quote> border:
           </para>
+          <para lang="de">
+            Beispiele zur Illustration des <quote>Randmittels</quote>:
+          </para>
           <para lang="fr">
             Exemples illustrant le filtre <quote>Moyenne du bord</quote>:
           </para>
-          <figure lang="en;fr">
+          <figure lang="en;de;fr">
             <title>
-              <phrase lang="en">
-                Original image
-              </phrase>
-              <phrase lang="fr">
-                Image d'origine
-              </phrase>
+              <phrase lang="en">Original image</phrase>
+              <phrase lang="de">Originalbild</phrase>
+              <phrase lang="fr">Image d'origine</phrase>
             </title>
             <mediaobject>
               <imageobject>
@@ -357,6 +359,10 @@
                   Original image: colors are pure Red (255;0;0), pure Green
                   (0;255;0) and pure Blue (0;0;255).
                 </para>
+                <para lang="de">
+                  Originalbild: die Farben sind reines Rot (255;0;0), Grün
+                  (0;255;0) und Blau (0;0;255).
+                </para>
                 <para lang="fr">
                   Image d'origine: les couleurs sont Rouge pur (255;0;0),
                   Vert pur (0;255;0) et Bleu pur (0;0;255).
@@ -364,10 +370,13 @@
               </caption>
             </mediaobject>
           </figure>
-          <figure lang="en;fr">
+          <figure lang="en;de;fr">
             <title>
               <phrase lang="en">
                 <quote>Number of Colors</quote> is set to 4:
+              </phrase>
+              <phrase lang="de">
+                <quote>Anzahl der Farben</quote> auf 4 gesetzt:
               </phrase>
               <phrase lang="fr">
                 Le <quote>Nombre de couleurs</quote> est fixé à 4:
@@ -377,6 +386,11 @@
               <imageobject lang="en">
                 <imagedata
                           fileref="../images/filters/average-color-ex2.png"
+                          format="PNG" />
+              </imageobject>
+              <imageobject lang="de">
+                <imagedata
+                          fileref="../images/filters/de/average-color-ex2.png"
                           format="PNG" />
               </imageobject>
               <imageobject lang="fr">
@@ -389,13 +403,24 @@
                   The green color has been choosed by the filter because it is
                   the most frequent on the image border. The Number of Colors
                   set to 4 has subtracted 4 levels from the Green Channel and
+<!-- FIXME: en:  obviously 2 levels subtracted (see average-color-ex2.png) -->
                   distributed to the other both channels. The resulting color
                   became the foreground color of the Toolbox.
+                </para>
+                <para lang="de">
+                  Die Farbe Grün wurde für das Filter gewählt, weil sie am
+                  häufigsten am Bildrand vorkommt. Da <quote>Anzahl der
+                  Farben</quote> auf 4 gesetzt ist, wird ein Wert von 4 auf
+                  die beiden anderen Kanäle verteilt (also jeweils 2 addiert)
+                  und der gleiche Wert (wieder 2) vom grünen Kanal abgezogen.
+                  Die resultierende Farbe wird im Werkzeugfenster zur
+                  Vordergrundfarbe.
                 </para>
                 <para lang="fr">
                   La couleur verte a été choisie par le filtre car c'est la
                   plus représentée sur le bord de l'image. L'option Nombre de
                   Couleurs fixée à 4 a soustrait 4 niveaux dans le canal Vert
+<!-- FIXME: fr:  .. a soustrait 2 niveaux (see above) -->
                   et les a répartis dans les deux autres canaux. La couleur
                   résultante est devenue la couleur de premier-plan de la
                   Boîte à Outils.
@@ -403,17 +428,24 @@
               </caption>
             </mediaobject>
           </figure>
-          <figure lang="en;fr">
+          <figure lang="en;de;fr">
             <title>
               <phrase lang="en">
                 <quote>Number of Colors</quote> is set to 128:
               </phrase>
-
+              <phrase lang="de">
+                <quote>Anzahl der Farben</quote> auf 128 gesetzt:
+              </phrase>
             </title>
             <mediaobject>
               <imageobject lang="en">
                 <imagedata
                           fileref="../images/filters/average-color-ex3.png"
+                          format="PNG" />
+              </imageobject>
+              <imageobject lang="de">
+                <imagedata
+                          fileref="../images/filters/de/average-color-ex3.png"
                           format="PNG" />
               </imageobject>
               <imageobject lang="fr">
@@ -425,6 +457,10 @@
                 <para lang="en">
                   Result on the Foreground color of the Toolbox and values
                   of this color.
+                </para>
+                <para lang="de">
+                  Ergebnis als Vordergundfarbe im Werkzeugfenster und die
+                  entsprechenden Werte dieser Farbe.
                 </para>
                 <para lang="fr">
                   Résultat sur la couleur de premier-plan de la Boîte à
