@@ -3,6 +3,7 @@
                 "http://www.docbook.org/xml/4.3/docbookx.dtd">
 
 <!-- section history:
+  2006-12-17 Added a sect3 to explain Unsharp Mask by j.h
   2005-12-07 replaced <simplesect> by <sect3> by lexa
   050901 de added by axel.wernicke
   050716 en added sect "more information"
@@ -674,5 +675,232 @@
       получится искомое изображение, но с большей резкостью компонента
       яркости.
     </para>
+  </sect3>
+
+  <sect3 lang="en;fr">
+    <title>
+      <phrase lang="en">How does an unsharp mask work?</phrase>
+      <phrase lang="fr">Comment fonctionne un masque de flou ?</phrase>
+    </title>
+
+    <para lang="en">
+      Using an unsharp mask to sharpen an image can seem rather weird.
+      Here is the explanation:
+    </para>
+    <para lang="en">
+      Think of an image with a contrast in some place. The intensity
+      curve of the pixels on a line going through this contrast will
+      show an abrupt increase of intensity: like a stair if contrast
+      is perfectly sharp, like a S if there is some blur.
+    </para>
+
+    <para lang="fr">
+      Le filtre Renforcer la Netteté, qui en anglais s'appelle
+      <quote>Unsharp Mask</quote> utilise la technique du
+      <emphasis>masque flou</emphasis>. Il peut paraître bizarre que,
+      pour obtenir de la netteté, on utilise du flou. Voici
+      l'explication :
+    </para>
+    <para lang="fr">
+      Imaginez une image avec un contraste à un endroit. La courbe des
+      intensités des pixels d'une ligne passant par ce contraste montrera
+      une montée d'intensité en marche d'escalier si la limite est
+      parfaitement nette. Si la limite est floue, la courbe aura une
+      forme en S. Plus la limite sera floue et plus ce S sera allongé.
+    </para>
+
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref="../images/filters/examples/unsharp-mask-1.png" />
+      </imageobject>
+    </mediaobject>
+
+    <para lang="en">
+      Now, we have an image with some blur we want to sharpen
+      (black curve). We apply some more blur: the intensity variation
+      will be more gradual (green curve).
+    </para>
+    <para lang="en">
+      Let us substract the blurredness intensity from the intensity of
+      the image. We get the red curve, which is more abrupt :
+      contrast and sharpness are increased. QED.
+    </para>
+
+    <para lang="fr">
+      Nous avons donc une image un peu floue dont nous voulons améliorer
+      la netteté (courbe noire). Si nous appliquons un léger flou
+      supplémentaire à cette image, nous obtenons la courbe verte.
+    </para>
+    <para lang="fr">
+      Soustrayons l'intensité du flou de l'intensité de l'image
+      d'origine. Nous obtenons la courbe rouge, plus abrupte : le
+      contraste a été augmenté et la netteté renforcée. C.Q.F.D.
+    </para>
+
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref="../images/filters/examples/unsharp-mask-2.png" />
+      </imageobject>
+    </mediaobject>
+
+    <para lang="en">
+      Unsharp mask has first been used in silver photography. The
+      photograph fist creates a copy of the original negative by contact,
+      on a film, placing a thin glass plate between both; that will
+      produce a blurred copy because of light diffusion. Then he places
+      both films, exactly corresponding, in a photo enlarger, to
+      reproduce them on paper. The dark areas of the positive blurred
+      film, opposed to the clear areas of the original negative will
+      prevent light to go through and so will be substracted from the
+      light going through the original film.
+    </para>
+    <para lang="fr">
+      Le masque de flou a d'abord été utilisé en photographie argentique.
+      On commence par créer, par contact, sur pellicule, une copie
+      positive du négatif d'origine, en plaçant une fine lame de verre
+      entre les deux ce qui induira un flou de la copie du fait de la
+      diffusion de la lumière (la simple épaisseur des film peut suffire.
+      On place ensuite les deux pellicules dans l'agrandisseur en faisant
+      correspondre exactement les deux images, et on reproduit l'ensemble
+      sur papier. Les parties sombres du film positif flou, opposées aux
+      parties claires du film d'origine, empêcheront la lumière de
+      l'agrandisseur de passer et donc seront soustraites des intensités
+      que laisse passer le film d'origine.
+    </para>
+
+    <para lang="en">
+      In digital photography, with GIMP, you will go through the
+      following steps:
+      <orderedlist>
+        <listitem>
+          <para>
+            Open your image and duplicate it
+            <menuchoice>
+              <guimenu>Image</guimenu>
+              <guimenuitem>Duplicate</guimenuitem>
+            </menuchoice>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            In the copy, duplicate the layer
+            <menuchoice>
+              <guimenu>Layer</guimenu>
+              <guimenuitem>Duplicate layer</guimenuitem>
+            </menuchoice>,
+            then drop the Filters menu down and apply
+            <menuchoice>
+              <guimenu>Blur</guimenu>
+              <guimenuitem>Gaussian Blur</guimenuitem>
+            </menuchoice>
+            to the duplicated layer with the default IIR option and
+            radius 5.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            In the layer dialog of the duplicated image, change Mode to
+            <quote>Subtract</quote>, and, in the right-clic menu, select
+            <quote>Merge down</quote>.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Click and drag the only layer you got into the original
+            image, where it appears as a new layer.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Change the Mode in this layer dialog to
+            <quote>Addition</quote>.
+          </para>
+        </listitem>
+      </orderedlist>
+      Voilà. The <link linkend="plug-in-unsharp-mask">Unsharp Mask
+      </link> plug-in does the same for you.
+    </para>
+
+    <para lang="fr">
+      En photographie numérique, avec GIMP, vous passerez par les étapes
+      suivantes:
+      <orderedlist>
+        <listitem>
+          <para>
+            Ouvrez votre image et dupliquez-la:
+            <menuchoice>
+              <guimenu>Image</guimenu>
+              <guimenuitem>Dupliquer</guimenuitem>
+            </menuchoice>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Dans l'image dupliquée, dupliquez le calque
+            <menuchoice>
+              <guimenu>Calque</guimenu>
+              <guimenuitem>Dupliquer le calque</guimenuitem>
+            </menuchoice>,
+            puis déroulez le menu Filtres et sélectionnez
+            <menuchoice>
+              <guimenu>Flou</guimenu>
+              <guimenuitem>Flou Gaussien</guimenuitem>
+            </menuchoice>
+            avec l'option IIR et un rayon de 5 (options par défaut) sur
+            le calque dupliqué.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Dans le dialogue des calques de l'image dupliquée, changez le
+            mode de fusion en <quote>Soustraction</quote>, et, dans le
+            menu local obtenu par clic droit, sélectionnez
+            <quote>Fusionner vers le bas</quote>.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Faites glisser le calque unique obtenu dans l'image
+            d'origine, où il apparaît comme nouveau calque.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Changez le mode de fusion de ce calque en
+            <quote>Addition</quote>
+          </para>
+        </listitem>
+      </orderedlist>
+      Et voilà. Le filtre <link linkend='plug-in-unsharp-mask'>Renforcer
+        la netteté</link> fait la même chose.
+    </para>
+
+    <para lang="en">
+      At the beginning of the curve, you can see a dip. If blurring is
+      important, this dip is very deep; the result of the subtraction
+      can be negative, and a complementary color stripe will appear
+      along the contrast, or a black halo around a star on the light
+      background of a nebula (black eye effect).
+    </para>
+    <para lang="fr">
+      Sur la courbe, vous remarquez un creux au début et une bosse à la
+      fin de la montée. Si le flou est important (si le paramètre
+      Quantité est élevé), ces encoches seront très marquées et si le
+      résultat de la soustraction tombe en dessous de zéro, une bande de
+      couleurs complémentaires apparaîtra en bordure de contraste, ou un
+      halo noir autour d'une étoile isolée sur le fond plus clair d'une
+      nébuleuse (effet d'œil noir).
+    </para>
+    <figure>
+      <title>
+        <phrase lang="en">Black eye effect</phrase>
+        <phrase lang="fr">Effet d'œil noir</phrase>
+      </title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/unsharp-mask-3.png" />
+        </imageobject>
+      </mediaobject>
+    </figure>
   </sect3>
 </sect2>
