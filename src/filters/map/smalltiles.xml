@@ -5,10 +5,10 @@
 <!-- section history: 
   2005-11-15: created by julien hardelin 
 -->
-<!-- TODO: de  translation missing -->
-<sect2 id='plug-in-small-tiles' lang="en;fr;it;ru">
+<sect2 id="plug-in-small-tiles" lang="en;de;fr;it;ru">
   <title> 
     <phrase lang="en">Small Tiles</phrase>
+    <phrase lang="de">Kleine Kacheln</phrase>
     <phrase lang="fr">Petits raccords</phrase>
     <phrase lang="it">Piastrelle piccole</phrase>
     <phrase lang="ru">Маленькая черепица</phrase>
@@ -19,7 +19,13 @@
     <secondary>Map</secondary>
   </indexterm>
   <indexterm lang="en"><primary>Small Tiles</primary></indexterm>
-  
+
+  <indexterm lang="de">
+    <primary>Filter</primary>
+    <secondary>Abbilden</secondary>
+  </indexterm>
+  <indexterm lang="de"><primary>Kleine Kacheln</primary></indexterm>
+
   <indexterm lang="fr">
     <primary>Filtres</primary>
     <secondary>Carte</secondary>
@@ -41,6 +47,7 @@
   <sect3>
     <title>
       <phrase lang="en">Overview</phrase>
+      <phrase lang="de">Übersicht</phrase>
       <phrase lang="fr">Généralités</phrase>
       <phrase lang="it">Panoramica</phrase>    
       <phrase lang="ru">Общая информация</phrase>
@@ -57,7 +64,20 @@
       This filter reduces the image (active layer or selection) and 
       displays it in many copies inside the original image.
     </para>
-    
+
+    <para lang="de">
+      Dieses Filter finden Sie im Bildfenstermenü unter
+      <menuchoice>
+        <guimenu>Filter</guimenu>
+        <guisubmenu>Abbilden</guisubmenu>
+        <guimenuitem>Klein<accel>e</accel> Kacheln</guimenuitem>
+      </menuchoice>.
+    </para>
+    <para lang="de">
+      Es verkleinert das Bild (aktive Ebenen oder Auswahl) und stellt
+      es in vielen Kopien innerhalb des Originalbildes dar.
+    </para>
+
     <para lang="fr">
       On accède à ce filtre par le menu d'image en suivant:
       <menuchoice>
@@ -103,6 +123,7 @@
   <sect3>
     <title>
       <phrase lang="en;fr">Options</phrase>
+      <phrase lang="de">Optionen</phrase>
       <phrase lang="it">Opzioni</phrase>
       <phrase lang="ru">Параметры</phrase>
     </title>
@@ -110,6 +131,7 @@
     <figure>
       <title>
         <phrase lang="en"><quote>Small Tiles</quote> filter options</phrase>
+        <phrase lang="de">Filteroptionen für <quote>Kleine Kacheln</quote></phrase>
         <phrase lang="fr">Options du filtre «Petits raccords»</phrase>
         <phrase lang="it">
           Opzioni del filtro <quote>Piastrelle piccole</quote>
@@ -123,6 +145,10 @@
           <imagedata fileref="../images/filters/options-map-smalltiles.png"
                    format="PNG"/>
         </imageobject>
+        <imageobject lang="de">
+          <imagedata fileref="../images/filters/de/options-map-smalltiles.png"
+                   format="PNG"/>
+        </imageobject>
         <imageobject lang="fr">
           <imagedata fileref="../images/filters/fr/options-map-smalltiles.png"
                      format="PNG"/>
@@ -134,15 +160,34 @@
       <varlistentry>
         <term>
           <phrase lang="en">Number of Segments</phrase>
+          <phrase lang="de">Segmentanzahl</phrase>
           <phrase lang="fr">Nombre de segments</phrase>
           <phrase lang="it">Numero di segmenti</phrase>
           <phrase lang="ru">Число секторов</phrase>
         </term>
         <listitem>
+          <!-- FIXME: fr en it ru
+            a) it should read "1/(2**n)" [see screen shot]
+            b) actually it should read "1/(n**2)" [try n != 2],
+               n = 3 will make 9 tiles
+            c) but "number of segments" is n**2, not "1/(n**2)"
+            d) :-(
+          -->
           <para lang="en">
             <guilabel>1/(2*n)</guilabel> means "the image into 2*n tiles" 
             where "n" is the number you set with the slider or its input 
             box. n = 3 will make six tiles in the image.
+          </para>
+          <para lang="de">
+            <guilabel>n**2</guilabel> (<quote>n hoch 2</quote>) ist die Anzahl
+            der Segmente (Kacheln), durch die das Bild ersetzt wird, wobei
+            <quote>n</quote> die Zahl ist, die Sie durch den Schieberegler
+            einstellen können. Beispielsweise wird für n = 3 ein neues Bild
+            aus 3 x 3 = 9 Kacheln konstruiert.
+            <footnote><para>
+              Falls bei Ihnen <quote>1/(2**n)</quote> steht: das ist ein
+              Schreibfehler.
+            </para></footnote>
           </para>
           <para lang="fr">
             <guilabel>1/(2*n)</guilabel> signifie «l'image en 2*n copies» où 
@@ -166,6 +211,7 @@
       <varlistentry>
         <term>
           <phrase lang="en">Opacity</phrase>
+          <phrase lang="de">Deckkraft</phrase>
           <phrase lang="fr">Opacité</phrase>
           <phrase lang="it">Opacità</phrase>
           <phrase lang="ru">Непрозрачность</phrase>
@@ -175,6 +221,11 @@
             With this slider and its input box, you can set the opacity of 
             the resulting image. This option is valid only if your image has 
             an Alpha channel.
+          </para>
+          <para lang="de">
+            Mit diesem Schieberegler oder dem Eingabefeld regeln Sie die
+            Deckkraft des resultierenden Bildes, allerding nur, falls Ihr
+            Bild einen Alphakanal hat.
           </para>
           <para lang="fr">
             Avec ce curseur et sa boîte de saisie, vous pouvez fixer 
@@ -197,6 +248,7 @@
       <varlistentry>
         <term>
           <phrase lang="en">Flip</phrase>
+          <phrase lang="de">Spiegeln</phrase>
           <phrase lang="fr">Retourner</phrase>
           <phrase lang="it">Inverti</phrase>
           <phrase lang="ru">Отражение</phrase>
@@ -228,6 +280,40 @@
                   particular tile by using both <guilabel>Line</guilabel> 
                   and <guilabel>Column</guilabel> input boxes. This tile 
                   will be marked with a box in Preview. 
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+
+          <para lang="de">
+            Sie können Kacheln
+            <guilabel>Horizontal</guilabel> und/oder
+            <guilabel>Vertikal</guilabel> spiegeln, wenn Sie das jeweilige
+            Kontrollkästchen aktiviert haben.
+          </para>
+          <para lang="de">
+            Außerdem haben Sie noch die Wahl, welche Kacheln gespiegelt
+            werden:
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <guilabel>Alle Kacheln</guilabel>: Selbsterklärend...
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <guilabel>Alternierend</guilabel>: Nur die
+                  <quote>ungeraden</quote> Kacheln werden gespiegelt, genauer
+                  gesagt: schachbrettartig jede zweite Kachel.
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <guilabel>Explizite Kachel</guilabel>: Sie können eine
+                  Kachel explizit durch Angabe der <guilabel>Zeile</guilabel>
+                  und <guilabel>Spalte</guilabel> in den entsprechenden
+                  Eingabefeldern bestimmen. Diese Kachel wird in der Vorschau
+                  mit einem Rahmen gekennzeichnet.
                 </para>
               </listitem>
             </itemizedlist>
