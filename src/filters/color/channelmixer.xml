@@ -11,7 +11,7 @@
      2005-09-30 de replaced informalfigure by axel.wernicke
      2005-08-26 de added by axel.wernicke
 -->
-<!-- TODO: cs de it zh_CN need a review -->
+<!-- TODO: cs it zh_CN need a review -->
 <sect2 id="plug-in-colors-channel-mixer" lang="en;cs;de;fr;it;ru;zh_CN">
 
   <sect2info lang="en;de;fr">
@@ -23,8 +23,8 @@
       </revision>
       <revision lang="de">
         <revnumber>$Revision$</revnumber>
-        <date>2005-08-26</date>
-        <authorinitials>lexa</authorinitials>
+        <date>2006-12-27</date>
+        <authorinitials>ude</authorinitials>
       </revision>
       <revision lang="fr">
         <revnumber>$Revision$</revnumber>
@@ -114,7 +114,7 @@
           filter
         </phrase>
         <phrase lang="de">
-          v.l.n.r.: Originalbild, Kanalmixer angewandt
+          Anwendungsbeispiel für das Filter <quote>Kanalmixer</quote>
         </phrase>
         <phrase lang="fr">
           De gauche à droite: image d'origine, après application du filtre
@@ -128,18 +128,26 @@
             каналов</quote>
         </phrase>
       </title>
+
       <mediaobject>
         <imageobject>
           <imagedata fileref="../images/filters/examples/taj_orig.jpg"
             format="JPG" />
         </imageobject>
+        <caption lang="de">
+          <para lang="de">Originalbild</para>
+        </caption>
       </mediaobject>
+
       <mediaobject>
         <imageobject>
           <imagedata
             fileref="../images/filters/examples/color-taj-channelmixer.jpg"
             format="JPG" />
         </imageobject>
+        <caption lang="de">
+          <para lang="de">Filter <quote>Kanalmixer</quote> angewandt</para>
+        </caption>
       </mediaobject>
     </figure>
 
@@ -171,7 +179,7 @@
     </para>
 
     <para lang="de">
-      Dieses Filter kombiniert die Werte der RGB Farbkanäle.
+      Dieses Filter kombiniert die Werte der RGB-Farbkanäle.
     </para>
 
     <para lang="fr">
@@ -222,6 +230,7 @@
     </para>
   </sect3>
 
+
   <sect3 lang="de">
     <title>
       <phrase lang="de">Filteraufruf</phrase>
@@ -236,6 +245,7 @@
       im Bildfenster aufrufen.
     </para>
   </sect3>
+
 
   <sect3>
     <title>
@@ -360,11 +370,14 @@
             směsi. Lze použít i záporné hodnoty.
           </para>
           <para lang="de">
-            <!-- de CHECK: What is the meaning of the numbers? -->
             Diese drei Schieberegler ermöglichen es, den Beitrag der einzelnen
             Farben zum Ergebnis zu steuern. Die Werte können im Bereich von
-            -200 bis 200 eingestellt werden. Alternativ zu den Schiebereglern
-            stehen Ihnen Eingabefelder zur Verfügung.
+            -200 bis 200 eingestellt werden, sie repräsentieren den
+            Prozentsatz (jeweiligen Kanalwerts), der dem Ausgabekanal
+            zugeschrieben wird. 100 entspricht dem Wert dieses Farbkanals
+            eines betrachteten Pixels. (Unten finden Sie ein ausführliches
+            Beispiel dazu.) Alternativ zu den Schiebereglern stehen Ihnen
+            Eingabefelder zur Verfügung.
           </para>
           <para lang="fr">
             Ces trois curseurs déterminent la contribution du canal rouge,
@@ -463,7 +476,7 @@
             Nezávisle na nastavení kanálů uchovává 100% jas.
           </para>
           <para lang="de">
-            Wenn diese Eigenschaf aktiviert ist, sorgt das Filter dafür, dass
+            Wenn diese Eigenschaft aktiviert ist, sorgt das Filter dafür, dass
             die Helligkeit des Bildes unabhängig von der Einstellung der
             Kanäle konstant gehalten wird.
           </para>
@@ -573,9 +586,11 @@
     </variablelist>
   </sect3>
 
-  <sect3 lang="en;fr">
+  <sect3 lang="en;de;fr">
+    <!--FIXME ru:  intentional no lang attribute?-->
     <title>
       <phrase lang="en">How does Channel Mixer work?</phrase>
+      <phrase lang="de">Wie arbeitet der Kanalmixer?</phrase>
       <phrase lang="fr">Comment le Mixeur de Canaux travaille-t-il?</phrase>
       <phrase lang="ru">Как работает микшер каналов?</phrase>
     </title>
@@ -583,6 +598,7 @@
     <variablelist>
       <varlistentry>
         <term lang="en">In RGB mode</term>
+        <term lang="de">Im RGB-Modus</term>
         <term lang="fr">En mode RVB</term>
         <term lang="ru">В режиме RGB</term>
 
@@ -599,6 +615,22 @@
             every pixel in the image, the sum of the calculated values for
             every channel from these percentages will be given to the Output
             Channel. Here is an example:
+          </para>
+
+          <para lang="de">
+            In diesem Modus müssen Sie einen
+            <guilabel>Ausgabekanal</guilabel> wählen. Das ist derjenige, der
+            modifiziert wird. Im Dialogfenster ist die Voreinstellung für
+            diesen Kanal 100, was 100% seines Wertes im Originalbild
+            entspricht. Entsprechend ist die Voreinstellung für die beiden
+            anderen Farbkanäle 0. Diese Werte können nun im Bereich von -200
+            bis 200 variiert werden.
+          </para>
+          <para lang="de">
+            Über die drei RGB-Schieberegler (oder die zugeordneten
+            Eingabefelder) teilen Sie nun jedem Kanal einen Prozentsatz zu.
+            Für jedes Pixel im Bild wird die Summe der daraus berechneten
+            Werte jedes Kanals dem Ausgabekanal zugeordnet. Beispiel:
           </para>
 
           <para lang="fr">
@@ -634,6 +666,7 @@
           <figure>
             <title>
               <phrase lang="en">The original image and its channels</phrase>
+              <phrase lang="de">Das Originalbild und seine Kanäle.</phrase>
               <phrase lang="fr">L'image d'origine et ses canaux</phrase>
               <phrase lang="ru">Исходное изображение и его каналы</phrase>
             </title>
@@ -641,6 +674,11 @@
             <mediaobject>
               <imageobject lang="en">
                 <imagedata fileref="../images/filters/channel-mixer-ex1.png"
+                  format="PNG" />
+              </imageobject>
+              <imageobject lang="de">
+                <imagedata
+                  fileref="../images/filters/examples/de/channel-mixer-ex1.png"
                   format="PNG" />
               </imageobject>
               <imageobject lang="fr">
@@ -660,6 +698,14 @@
                   (0;0;0) is not concerned by filter (0 multiplied by any
                   percentage always gives 0). The result cann't exceed 255 nor
                   be negative.
+                </para>
+                <para lang="de">
+                  Für die vier Quadrate (rot, grün, blau und grau) sind die
+                  RGB-Werte der Pixel angegeben. Das schwarze Rechteck ist
+                  etwas Besonderes, da Schwarz (0,0,0) durch den Filter nicht
+                  betroffen ist (0 mal irgendein Prozentwert ergibt 0). Das
+                  Ergebnis der Berechnung kann nicht größer als 255 oder
+                  kleiner als 0 sein.
                 </para>
                 <para lang="fr">
                   Les valeurs RVB des pixels des carrés rouge, vert, bleu et
@@ -685,6 +731,9 @@
               <phrase lang="en">
                 Output channel is red. Green Channel +50
               </phrase>
+              <phrase lang="de">
+                Ausgabekanal ist Rot. Grüner Kanal +50.
+              </phrase>
               <phrase lang="fr">
                 Canal de sortie: rouge. Canal Vert +50%
               </phrase>
@@ -696,6 +745,11 @@
             <mediaobject>
               <imageobject lang="en">
                 <imagedata fileref="../images/filters/channel-mixer-ex2.png"
+                  format="PNG" />
+              </imageobject>
+              <imageobject lang="de">
+                <imagedata
+                  fileref="../images/filters/examples/de/channel-mixer-ex2.png"
                   format="PNG" />
               </imageobject>
               <imageobject lang="fr">
@@ -719,6 +773,20 @@
                   In the gray square, which contains red color, the
                   calculation result is above 255. It is reduced to 255. A
                   negative value would be reduced to 0.
+                </para>
+
+                <para lang="de">
+                  Im roten Quadrat sind die Pixelwerte 230,10,10, die zur
+                  Berechnung zu verwendenden Prozentwerte sind 100,50,0. Der
+                  berechnete neue Farbwert ist ist somit (230*100%) + (10 *
+                  50%) + (10 * 0%) = 235. Analog berechnet man die Werte für
+                  das grüne und das blaue Quadrat.
+                </para>
+                <para lang="de">
+                  Im grauen Quadrat, das ebenfalls rote Farbanteile enthält,
+                  ist der berechnete Farbwert größer als 255 und wird auf
+                  255 reduziert. Ein negativer Wert würde auf 0 gesetzt
+                  werden.
                 </para>
 
                 <para lang="fr">
@@ -754,6 +822,10 @@
                 Output channel is red. Green Channel +50%. The Preserve
                 Luminosity option is checked.
               </phrase>
+              <phrase lang="de">
+                Ausgabekanal ist Rot. Grüner Kanal +50. Option
+                <quote>Helligkeit erhalten</quote> aktiviert.
+              </phrase>
               <phrase lang="fr">
                 Canal de sortie: rouge. Canal Vert +50%. L'option Préserver la
                 Luminosité est cochée.
@@ -767,6 +839,11 @@
             <mediaobject>
               <imageobject lang="en">
                 <imagedata fileref="../images/filters/channel-mixer-ex3.png"
+                  format="PNG" />
+              </imageobject>
+              <imageobject lang="de">
+                <imagedata
+                  fileref="../images/filters/examples/de/channel-mixer-ex3.png"
                   format="PNG" />
               </imageobject>
               <imageobject lang="fr">
@@ -783,6 +860,10 @@
                 <para lang="en">
                   The values attributed to the Red Output channel are lower,
                   preventing a too much clear image.
+                </para>
+                <para lang="de">
+                  Die dem roten Kanal zugeschriebenen Werte sind kleiner, so
+                  dass ein zu helles Bild vermieden wird.
                 </para>
                 <para lang="fr">
                   Les valeurs attibuées au canal de sortie Rouge sont plus
@@ -801,6 +882,7 @@
 
       <varlistentry>
         <term lang="en">In Monochrome mode</term>
+        <term lang="de">Im Monochrome-Modus</term>
         <term lang="fr">En mode Monochrome</term>
         <term lang="ru">В монохромном режиме</term>
 
@@ -809,6 +891,11 @@
             When this option is checked, the image preview turns to grayscale,
             but the image is still a RGB image with three channels, until the
             filter action is validated.
+          </para>
+          <para lang="de">
+            Wenn diese Option aktiviert ist, wird die Vorschau zu einem
+            Graustufenbild, das Bild selbst bleibt aber ein RGB-Bild mit drei
+            Farbkanälen, solange die Filteraktion nicht ausgeführt wird.
           </para>
           <para lang="fr">
             Quand cette option est cochée, l'aperçu de l'image passe en
@@ -827,6 +914,10 @@
                 Monochrome option checked. Red:100% Green: 50% Blue: 0%.
                 Preserve Luminosity unchecked.
               </phrase>
+              <phrase lang="de">
+                Monochrom-Option aktiviert. Rot: 100, Grün: 50,
+                Blau: 0. <quote>Helligkeit erhalten </quote> nicht aktiviert.
+              </phrase>
               <phrase lang="fr">
                 Option Monochrome cochée. Rouge:100% Vert:50% Bleu: 0%
                 Préserver la luminosité non cochée
@@ -840,7 +931,13 @@
 
             <mediaobject>
               <imageobject lang="en">
+                <!-- FIXME en:  wrong image (cf. fr/channel-mixer-ex4.png -->
                 <imagedata fileref="../images/filters/channel-mixer-ex4.png"
+                  format="PNG" />
+              </imageobject>
+              <imageobject lang="de">
+                <imagedata
+                  fileref="../images/filters/examples/de/channel-mixer-ex4.png"
                   format="PNG" />
               </imageobject>
               <imageobject lang="fr">
@@ -859,6 +956,12 @@
                   level equal to the value of the Red channel in the original
                   image (The background has been painted with pink afterwards
                   to make white squares visible).
+                </para>
+                <para lang="de">
+                  In jedem Quadrat wurden die Pixel in eine Graustufe gleich
+                  dem Wert des roten Kanals dieser Pixel umgewandelt. (Der
+                  Hintergrund wurde eingefärbt, um das weiße Quadrat
+                  sichtbar zu machen.)
                 </para>
                 <para lang="fr">
                   Les pixels des différents carrés ont été transformés en un
@@ -895,6 +998,27 @@
               sliders have large negative values
             </quote>
             (from the plug-in author himself).
+          </para>
+
+          <para lang="de">
+            Und so arbeitet <guilabel>Helligkeit erhalten</guilabel> im
+            Monochrom-Modus:
+          </para>
+          <para lang="de">
+            <quote>Angenommen, die Einstellungen der Schieberegler wären
+            Rot:75, Grün:75, Blau:0. Mit aktiviertem
+            <guilabel>Monochrom</guilabel> und deaktiviertem
+            <guilabel>Helligkeit erhalten</guilabel> wäre das Ergebnis
+            75%+75%+0% = 150%, in der Tat sehr hell. Ein Pixel mit dem Wert
+            von beispielsweise R,G,B=127,100,80 würde für jeden Kanal auf
+            127*0,75 + 100*0,75 + 80*0 = 170 abgebildet werden. Mit
+            aktivierter Option <quote>Helligkeit erhalten</quote> würden die
+            Regler so skaliert, dass ihre Summe immer 100 ergibt. In diesem
+            Beispiel wäre der Skalierungsfaktor 1/(75%+75%+0%) = 0,667. Die
+            Pixelwerte lägen also bei etwa 113. Die Option stellt einfach
+            nur sicher, dass die Summe der Reglerwerte immer 100 ergibt.
+            Natürlich passieren seltsame Dinge, falls einer der Regler einen
+            stark negativen Wert hat.</quote> (Zitat vom Plugin-Autor)
           </para>
 
           <para lang="fr">
@@ -951,6 +1075,15 @@
               <link linkend="plug-in-decompose">Decompose</link>
               filter.
             </para>
+            <para lang="de">
+              <emphasis role="bold">Welchen Kanal sollten Sie
+              modifizieren?</emphasis>: Das kommt darauf an, was Sie machen
+              wollen. Grundsätzlich ist der rote Kanal gut geeignet, um
+              Kontraste zu verändern. Der grüne Kanal eignet sich gut für
+              Detailveränderungen, der blaue für Änderungen von Körnigkeit
+              und Rauschen. Schauen Sie sich dazu auch den Filter
+              <link linkend="plug-in-decompose">Zerlegen</link> einmal an.
+            </para>
             <para lang="fr">
               <emphasis role="bold">Quel canal modifier?</emphasis>
               : cela dépend de ce que vous voulez faire. En principe, le canal
@@ -976,6 +1109,12 @@
               The 30%, 59%, 11% gives you the same gray levels as the
               Grayscale command in Image/Mode. This wil no longer be valid
               with GIMP-2.4.
+            </para>
+            <para lang="de">
+              Die Einstellung 30,59,11 ergibt dieselben Graustufen wie die
+              Funktion <quote>Graustufen</quote> unter
+              <quote>Bild/Modus</quote>. Für <acronym>GIMP</acronym>-2.4 wird
+              dies nicht mehr gelten.
             </para>
             <para lang="fr">
               Le réglage 30%, 59%, 11% vous donne les mêmes niveaux de gris
