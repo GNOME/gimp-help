@@ -3,8 +3,8 @@
     <revhistory>
       <revision lang="de">
         <revnumber>$Revision$</revnumber>
-        <date>2005-05-20</date>
-        <authorinitials>a.w</authorinitials>
+        <date>2007-01-03</date>
+        <authorinitials>ude</authorinitials>
       </revision>
       <revision lang="en">
         <revnumber>$Revision$</revnumber>
@@ -303,6 +303,7 @@
           </para>
 
           <para lang="de">
+            <!-- FIXME: de  vergl. toolbox/tool-brush.xml: Tastenkombinationen -->
             Mit der <keycap>Strg</keycap> Taste wird die <link linkend="gimp-tool-color-picker">Pipette</link> aufgerufen. Wenn
             Sie die Taste gedrückt halten und klicken, wird die Farbe des
             angeklickten Pixels zur aktuellen Vordergrundfarbe, mit der Sie
@@ -347,7 +348,7 @@
     </variablelist>
   </sect3>
   
-  <sect3>
+  <sect3 id="gimp-tool-painting-options">
     <title lang="cs">Volby</title>
     <title lang="de">Eigenschaften</title>
     <title lang="en">Options</title>
@@ -358,7 +359,7 @@
 
     <variablelist>
 
-    <varlistentry>
+    <varlistentry id="gimp-tool-painting-modes">
       <term lang="cs">Režim</term>
       <term lang="de">Modus</term>
       <term lang="en">Mode</term>
@@ -385,7 +386,8 @@
           <title>Vymazání barev</title>
           <para>
             Tento režim maže barvu popředí a nahrazuje ji částečnou
-            průhledností. Funguje stejně jako filtr <link linkend="plug-in-colortoalpha">Barva do alfy</link>, pouze
+            průhledností. Funguje stejně jako filtr <link
+            linkend="plug-in-colortoalpha">Barva do alfy</link>, pouze
             se aplikuje jen na oblast aplikace nástroje. Tento režim funguje
             pouze na vrstvách s alfa kanálem, pokud vrstva alfa kanál nemá,
             chová se stejně jako normální režim.
@@ -433,27 +435,15 @@
         <para>
           Durch die Einstellung des Modus bestimmen Sie, wie das Werkzeug auf
           den behandelten Bildbereich wirkt. Wenn Sie sich die Liste der
-          verfügbaren Modi anschauen wird Ihnen sicher der Eine oder Andere
+          verfügbaren Modi anschauen, wird Ihnen sicher der eine oder andere
           davon aus dem Ebenendialog bekanntvorkommen. In der Tat sind die
           Modi nicht nur vom Namen, sondern auch von der Wirkungsweise her
           identisch. Weitere Informationen über die Modi, welche
-          <acronym>GIMP</acronym> zur Verfügung stellt, können Sie im
-          <link linkend="glossary-modes">Glossar</link> nachlesen.
+          <acronym>GIMP</acronym> zur Verfügung stellt, finden Sie beim
+          <link linkend="gimp-layer-modes">Modus</link> des Ebenendialogs.
           Zusätzlich zu den Standardmodi verfügen die Malwerkzeuge über drei
-          zusätzliche:
+          weitere:
         </para>
-        <formalpara>
-          <title>Vernichtend</title>
-          <para>
-            Dieser Modus entfernt die Vordergrundfarbe und ersetzt sie durch
-            eine teilweise Transparenz. Der Modus verhält sich ähnlich wie das
-            Filter <link linkend="plug-in-colortoalpha">Farbe zu
-            Transparenz</link>, nur eben auf den Bildbereich unter dem
-            gezeichneten Strich beschränkt. Bitte beachten Sie, dass der Modus
-            nur auf Ebenen mit Alphakanal arbeiten kann. Andernfalls ist der
-            Modus identisch mit dem Modus <quote>Normal</quote>.
-           </para>
-        </formalpara>
         <formalpara>
           <title>Hinter</title>
           <para>
@@ -461,10 +451,20 @@
             Ebene auf. Je geringer die Deckkraft der Ebene, um so mehr Farbe
             wird aufgetragen. Daher hat zeichnen auf undurchsichtigen
             Bildteilen keine sichtbaren Auswirkungen, während das Zeichnen auf
-            (teil-) transparenten Flächen die gleiche Wirkung hat, wie ein
+            (teil-) transparenten Flächen die gleiche Wirkung hat wie ein
             Zeichnen im Modus <quote>Normal</quote>. Natürlich funktioniert
-            das Beschriebene nur dann sinnvoll, wenn es für die Ebene  einen
+            das Beschriebene nur dann sinnvoll, wenn es für die Ebene einen
             Alphakanal gibt.
+          </para>
+        </formalpara>
+        <formalpara>
+          <title>Farbe entfernen</title>
+          <para>
+            Wenn Sie mit einem Werkzeug im Modus <guilabel>Farbe
+            entfernen</guilabel> malen, löscht es die Bereiche in der
+            aktuellen Vordergrundfarbe, macht sie also transparent. Wie beim
+            Modus <quote>Hinter</quote> muß die Ebene einen Alphakanal haben,
+            damit man den Effekt sehen kann.
           </para>
         </formalpara>
         <figure>
@@ -486,13 +486,22 @@
           </mediaobject>
         </figure>
         <formalpara>
-          <title>Farbe entfernen</title>
+          <!-- CHECK: de:  das ist auch ein Ebenenmodus --> 
+          <title>Vernichtend</title>
           <para>
-            Dies ist ein sehr nützlicher Modus - für unscharfe Pinsel bestimmt
-            die Graustufe nicht die Farbdichte, sondern die Wahrscheinlichkeit
-            mit der überhaupt Farbe aufgetragen wrid. Dies ergibt einen
-            interessanten Weg sehr rauh und unfertig wirkende Pinselstriche zu
-            zeichnen.
+            Dieser Modus entfernt die Vordergrundfarbe und ersetzt sie durch
+            eine teilweise Transparenz. Der Modus verhält sich ähnlich wie das
+            Filter <link linkend="plug-in-colortoalpha">Farbe zu
+            Transparenz</link>, nur eben auf den Bildbereich unter dem
+            gezeichneten Strich beschränkt. Bitte beachten Sie, dass der Modus
+            nur auf Ebenen mit Alphakanal arbeiten kann. Andernfalls ist der
+            Modus identisch mit dem Modus <quote>Normal</quote>.
+
+            Der Modus ist sehr nützlich - für unscharfe Pinsel bestimmt die
+            Graustufe nicht die Farbdichte, sondern die Wahrscheinlichkeit,
+            mit der überhaupt Farbe aufgetragen wird. Dies ergibt einen
+            interessanten Weg, sehr rauh und unfertig wirkende Pinselstriche
+            zu zeichnen.
           </para>
         </formalpara>
       </listitem>
@@ -503,7 +512,8 @@
           modes. This setting appears in the Tool Options for all
           brush tools, but it is grayed out for all except the tools
           in this group, the Ink tool, and the Clone tool.  A list of
-          possible modes can be found in the <link linkend="glossary-modes">Glossary</link>.  For the most part
+          possible modes can be found in the <link
+          linkend="glossary-modes">Glossary</link>.  For the most part
           these modes are the same as the layer combination modes
           available in the Layers dialog, and you can understand their
           effects by imagining that the paint is applied to a separate
@@ -514,7 +524,8 @@
           <title>Color Erase</title>
           <para>
             This mode erases the foreground color, replacing it with
-            partial transparency.  It acts like the <link linkend="plug-in-colortoalpha">Color to Alpha</link>
+            partial transparency.  It acts like the <link
+            linkend="plug-in-colortoalpha">Color to Alpha</link>
             filter, applied to the area under the brushstroke.  Note
             that this only works on layers that possess an alpha
             channel; otherwise, this mode is identical to Normal.
