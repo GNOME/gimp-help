@@ -1,0 +1,1714 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+                "http://www.docbook.org/xml/4.3/docbookx.dtd">
+
+<!--Section History
+  2007-01-13: relocated from the layer dialog and added examples and equations
+-->
+<!-- TODO: en es fr it ko nl no ru zh_CN -->
+<sect2 id="gimp-concepts-layer-modes" lang="de">
+  <sect2info role="cvs">
+    <revhistory>
+      <revision lang="de">
+        <revnumber>$Revision: 1658 $</revnumber>
+        <date>2007-01-13</date>
+        <authorinitials>lexa</authorinitials>
+      </revision>
+    </revhistory>
+  </sect2info>
+
+  <title>
+    <phrase lang="en">Layer modes</phrase>
+    <phrase lang="cs">Režim</phrase>
+    <phrase lang="de">Ebenenmodus</phrase>
+    <phrase lang="es">Modo de la capa</phrase>
+    <phrase lang="fr">Modes de fusion</phrase>
+    <phrase lang="it">Modalità del livello</phrase>
+    <phrase lang="ru">Режим слоя</phrase>
+    <phrase lang="zh_CN">图层模式</phrase>
+  </title>
+
+  <para lang="de">
+    Mit den Ebenenmodi können Sie einstellen, wie die übereinander liegenenden
+    Ebenen ineinander geblendet werden, daher werden diese gelegentlich auch
+    als <quote>Blendenmodi</quote>
+    bezeichnet. GIMP stellt 21 verschiedene Ebenenmodi zur Verfügung. Der
+    Modus wird auf die Ebenen angewendet, die sich unterhalb der Ebene
+    befindet, welcher der Ebenenmodus zugeordnet wird. Gibt es nur eine Ebene,
+    hat der Ebenenmodus keinen Effekt. Kurz gesagt verwendet GIMP den
+    Ebenenmodus, um festzulegen, wie jedes Pixel einer Ebene (Maske) mit dem
+    entsprechenden Pixel der darunter liegenden Ebene kombiniert wird.
+  </para>
+  <para lang="de">
+    Die einzelnen Modi werden in den folgenden Abschnitten jeweils mit einem
+    Beispiel dargestellt. Für die verschiedenen Beispiele werden zwei
+    unterschiedliche Bilder als Hintergrundebene und zwei weitere Bilder als
+    Masken verwenden. Die jeweils zum Einsatz kommende obere Ebene, auf die
+    der Ebenenmodus angewendet wird, wird jeweils für die einzelnen Beispiele
+    angegeben.
+  </para>
+
+
+  <figure>
+    <title>
+      <phrase lang="en">Imges (masks) for layer mode examples</phrase>
+      <phrase lang="de">
+        Masken für die Anwendungsbeispiele der Ebenenmodi
+      </phrase>
+    </title>
+
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref="../images/using/layer-mode-mask1.jpg" format="JPG" />
+      </imageobject>
+      <caption>
+        <para lang="en">Mask 1</para>
+        <para lang="de">Maske 1</para>
+      </caption>
+    </mediaobject>
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref="../images/using/layer-mode-mask2.jpg" format="JPG" />
+      </imageobject>
+      <caption>
+        <para lang="en">Mask 2</para>
+        <para lang="de">Maske 2</para>
+      </caption>
+    </mediaobject>
+  </figure>
+
+  <figure>
+    <title>
+      <phrase lang="en">Imges (backgrounds) for layer mode examples</phrase>
+      <phrase lang="de">
+        Bilder für die Anwendungsbeispiele der Ebenenmodi
+      </phrase>
+    </title>
+
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref="../images/using/keyfob_orig.png" format="PNG" />
+      </imageobject>
+      <caption>
+        <para lang="en">Key fob</para>
+        <para lang="de">Schlüsselanhänger</para>
+      </caption>
+    </mediaobject>
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref="../images/using/duck_orig.png" format="PNG" />
+      </imageobject>
+      <caption>
+        <para lang="en">Ducks</para>
+        <para lang="de">Enten</para>
+      </caption>
+    </mediaobject>
+  </figure>
+
+  <para lang="de">
+    In den Beschreibungen der einzelnen Modi sind zum Teil auch Formeln
+    angegeben, wie die Pixel berechnet werden. Sie sind für diejenigen
+    gedacht, die neugierig auf die den Ebenenmodi zugrunde liegenden
+    Berechnungen sind. Sie müssen diese Formeln nicht verstehen, um die
+    verschiedenen Modi effektiv einsetzen zu können.
+  </para>
+  <para lang="de">
+    Die angegebenen Formeln beschreiben die Wirkungsweisen der der Modi in
+    einer Kurznotation. Beispielsweise bedeutet folgende Formel:
+  </para>
+
+  <equation lang="de">
+    <alt role="latex">$E = B + H$</alt>
+    <graphic fileref="../images/math/layer-mode-example.png" format="PNG" />
+  </equation>
+
+  <para lang="de">
+    Für jedes Pixel addiere die Werte der oberen Ebene (
+    <emphasis>B</emphasis>lende) und der darunter liegenden Ebene (
+    <emphasis>H</emphasis>intergrund). Die Summe bildet die resultierende
+    Pixelwerte ( <emphasis>E</emphasis>rgebnis). Da die Komponenten der Pixel
+    in der Regel Werte aus dem Bereich 0 bis 255 sein müssen, sorgen die
+    Ebenenmodi dafür, dass das Ergebnis der Berechnung in diesem Bereich
+    bleibt.
+  </para>
+  <!-- TODO: de we are about to change that
+    <para lang="de">
+    Die Beispielbilder zeigen die Auswirkungen bei Anwendung des
+    jeweiligen Modus. Das linke Bild ist der normale Zustand,
+    das rechte gibt das Blendergebnis wieder. In diesem Bild ist
+    Wilber auf der oberen Ebene mit transparentem Hintergrund,
+    während die untere Ebene einfarbig hellblau ist.
+    </para>
+  -->
+  <para lang="de">
+    Da die Ergebnisse der Ebenenmodi sehr stark von den Farben der
+    betreffenden Ebenen abhängen, können diese Bilder Ihnen nur eine ungefähre
+    Vorstellung über die Funktionsweise der jeweiligen Modi geben. Haben Sie
+    ruhig etwas Mut und probieren Sie sie einfach aus. Sie könnten
+    beispielsweise mit zwei ähnlichen Ebenen anfangen, wobei die eine eine
+    leicht veränderte Kopie der anderen ist (weichgezeichnet, verschoben,
+    gedreht, skaliert, invertiert usw.) und dann schauen, was bei der
+    Anwendung den einzelnen Ebenenmodi passiert.
+  </para>
+
+
+  <!-- TODO: es fr it ru zh_CN description from glossary moved in here for de. You might follow :) -->
+  <variablelist lang="de">
+    <varlistentry>
+      <term lang="en">Normal</term>
+      <term lang="de">Normal</term>
+
+      <listitem>
+        <indexterm lang="en">
+          <primary>Layer Mode</primary>
+          <secondary>Normal</secondary>
+        </indexterm>
+        <indexterm lang="de">
+          <primary>Ebenenmodus</primary>
+          <secondary>Normal</secondary>
+        </indexterm>
+
+        <figure>
+          <title>
+            <phrase lang="en">
+              Example for layer mode <quote>normal</quote>
+            </phrase>
+            <phrase lang="de">
+              Beispiel für den Ebenenmodus <quote>Normal</quote>
+            </phrase>
+          </title>
+
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="../images/using/layer-mode-normal-50.jpg"
+                format="JPG" />
+            </imageobject>
+
+            <caption>
+              <para lang="en">
+                Both images are blended into eachother with the same
+                intensity.
+              </para>
+              <para lang="de">
+                Beider Bilder sind mit 50% Deckkraft eineinander geblendet.
+              </para>
+            </caption>
+          </mediaobject>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="../images/using/layer-mode-normal-100.jpg"
+                format="JPG" />
+            </imageobject>
+
+            <caption>
+              <para lang="en">
+                With 100% opacity only the upper layer is shown when blending
+                with <quote>normal</quote>.
+              </para>
+              <para lang="de">
+                Bei 100% Deckkraft ist nur noch die obere Ebene sichtbar.
+              </para>
+            </caption>
+          </mediaobject>
+        </figure>
+
+        <para lang="de">
+          Das ist der Standard-Blendenmodus für Ebenen. Die oberste Ebene
+          verdeckt alle unteren Ebenen je nach eingestellter Deckkraft mehr
+          oder weniger.
+        </para>
+        <para lang="de">Die zugehörige Formel ist ganz einfach:</para>
+
+        <equation>
+          <alt role="latex">$E = B$</alt>
+          <graphic fileref="../images/math/layer-mode-normal.png"
+            format="PNG" />
+        </equation>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term lang="en">Dissolve</term>
+      <term lang="de">Vernichtend</term>
+
+      <listitem>
+        <indexterm lang="de">
+          <primary>Ebenenmodus</primary>
+          <secondary>Vernichtend</secondary>
+        </indexterm>
+
+        <figure>
+          <title>
+            <phrase lang="en">
+              Example for layer mode <quote>Dissolve</quote>
+            </phrase>
+            <phrase lang="de">
+              Beispiel für den Ebenenmodus <quote>Vernichtend</quote>
+            </phrase>
+          </title>
+
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="../images/using/layer-mode-dissolve-50.jpg"
+                format="JPG" />
+            </imageobject>
+
+            <caption>
+              <para lang="en">
+                Both images are blended into eachother with the same
+                intensity.
+              </para>
+              <para lang="de">
+                Beider Bilder sind mit 50% Deckkraft eineinander geblendet.
+              </para>
+            </caption>
+          </mediaobject>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="../images/using/layer-mode-dissolve-100.jpg"
+                format="JPG" />
+            </imageobject>
+
+            <caption>
+              <para lang="en">
+                With 100% opacity only the upper layer is shown when blending
+                with <quote>dissolve</quote>.
+              </para>
+              <para lang="de">
+                Bei 100% Deckkraft ist nur noch die obere Ebene sichtbar.
+              </para>
+            </caption>
+          </mediaobject>
+        </figure>
+
+        <para lang="de">
+          <!-- TODO: de: wirklich "Vernichtend"? (Auflösen(d), Streuen, Sprenkeln(!) -->
+          Dieser Modus ist dem Modus <quote>Normal</quote>
+          sehr ähnlich, allerdings erfolgt der Übergang bei einer Deckkraft
+          kleiner als 100% nicht gleichmäßig, sondern sehr körnig. Hierzu wird
+          ein Zufallsmuster verwendet, welchse um so mehr Pixel aus der oberen
+          Ebene enthält, je höher die Deckkraft ist. Der Modus wird häufig für
+          Malwerkzeuge verwendet.
+        </para>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term lang="en">Multiply</term>
+      <term lang="de">Multiplizieren</term>
+      <listitem>
+        <indexterm lang="de">
+          <primary>Ebenenmodus</primary>
+          <secondary>Multiplizieren</secondary>
+        </indexterm>
+
+        <figure>
+          <title>
+            <phrase lang="en">
+              Example for layer mode <quote>Multiply</quote>
+            </phrase>
+            <phrase lang="de">
+              Beispiel für den Ebenenmodus <quote>Multiplizieren</quote>
+            </phrase>
+          </title>
+
+          <mediaobject>
+            <imageobject>
+              <imagedata
+                fileref="../images/using/layer-mode-multiply-mask1.jpg"
+                format="JPG" />
+            </imageobject>
+            <caption>
+              <para lang="en">
+                Mask 1 is used as upper layer with 100% opacity.
+              </para>
+              <para lang="de">
+                Die Maske 1 wird als obere Ebene mit einer Deckkraft von 100%
+                verwendet.
+              </para>
+            </caption>
+          </mediaobject>
+
+          <mediaobject>
+            <imageobject>
+              <imagedata
+                fileref="../images/using/layer-mode-multiply-mask2.jpg"
+                format="JPG" />
+            </imageobject>
+            <caption>
+              <para lang="en">
+                Mask 2 is used as upper layer with 100% opacity.
+              </para>
+              <para lang="de">
+                Die Maske 2 wird als obere Ebene mit einer Deckkraft von 100%
+                verwendet.
+              </para>
+            </caption>
+          </mediaobject>
+        </figure>
+
+        <para lang="de">
+          Dieser Blendenmodus multipliziert alle Farbwerte der oberen und
+          unteren Ebene und dividiert das Resultat durch 255. Das Ergebnis ist
+          meist ein dunkleres Bild. Weiße Bereiche in der Maske verändern den
+          Hintergrund nicht (1*I=I), schwarze hingegen ergeben ein komplett
+          schwarzes Bild (0*I=0).
+        </para>
+        <para lang="de">Die zugehörige Formel lautet:</para>
+
+        <equation>
+          <alt role="latex">$E = \frac {M * I}{255}$</alt>
+          <graphic fileref="../images/math/layer-mode-multiply.png"
+            format="PNG" />
+        </equation>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term lang="en">Divide</term>
+      <term lang="de">Division</term>
+
+      <listitem>
+        <indexterm lang="de">
+          <primary>Ebenenmodus</primary>
+          <secondary>Division</secondary>
+        </indexterm>
+
+        <figure>
+          <title>
+            <phrase lang="en">
+              Example for layer mode <quote>Divide</quote>
+            </phrase>
+            <phrase lang="de">
+              Beispiel für den Ebenenmodus <quote>Division</quote>
+            </phrase>
+          </title>
+
+          <mediaobject>
+            <imageobject>
+              <imagedata
+                fileref="../images/using/layer-mode-divide-mask1.jpg"
+                format="JPG" />
+            </imageobject>
+            <caption>
+              <para lang="en">
+                Mask 1 is used as upper layer with 100% opacity.
+              </para>
+              <para lang="de">
+                Die Maske 1 wird als obere Ebene mit einer Deckkraft von 100%
+                verwendet.
+              </para>
+            </caption>
+          </mediaobject>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="../images/using/layer-mode-divide-mask2.jpg"
+                format="JPG" />
+            </imageobject>
+
+            <caption>
+              <para lang="en">
+                Mask 2 is used as upper layer with 100% opacity.
+              </para>
+              <para lang="de">
+                Die Maske 2 wird als obere Ebene mit einer Deckkraft von 100%
+                verwendet.
+              </para>
+            </caption>
+          </mediaobject>
+        </figure>
+
+        <para lang="de">
+          Bei diesem Modus werden die Farbwerte der Pixel dividiert. Das
+          resultierende Bild ist meist heller, manchmal sieht es,
+          insebesondere in den Bereichen, in denen die Maske sehr dunkel ist,
+          auch überbelichtet aus.
+        </para>
+        <para lang="de">
+          Die Formel lautet:
+          <footnote>
+            <para>
+              Das mysteriöse <quote>+ 1</quote>, das in einigen Formeln
+              auftaucht, dient dazu, eine Division durch Null zu verhindern.
+            </para>
+          </footnote>
+        </para>
+
+        <equation>
+          <alt role="latex">$E = \frac {I * 256}{M + 1}$</alt>
+          <graphic fileref="../images/math/layer-mode-divide.png"
+            format="JPG" />
+        </equation>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term lang="en">Screen</term>
+      <term lang="de">Bildschirm</term>
+
+      <listitem>
+        <indexterm lang="de">
+          <primary>Ebenenmodus</primary>
+          <secondary>Bildschirm</secondary>
+        </indexterm>
+
+        <figure>
+          <title>
+            <phrase lang="en">
+              Example for layer mode <quote>Screen</quote>
+            </phrase>
+            <phrase lang="de">
+              Beispiel für den Ebenenmodus <quote>Bildschirm</quote>
+            </phrase>
+          </title>
+
+          <mediaobject>
+            <imageobject>
+              <imagedata
+                fileref="../images/using/layer-mode-screen-mask1.jpg"
+                format="JPG" />
+            </imageobject>
+            <caption>
+              <para lang="en">
+                Mask 1 is used as upper layer with 100% opacity.
+              </para>
+              <para lang="de">
+                Die Maske 1 wird als obere Ebene mit einer Deckkraft von 100%
+                verwendet.
+              </para>
+            </caption>
+          </mediaobject>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="../images/using/layer-mode-screen-mask2.jpg"
+                format="JPG" />
+            </imageobject>
+
+            <caption>
+              <para lang="en">
+                Mask 2 is used as upper layer with 100% opacity.
+              </para>
+              <para lang="de">
+                Die Maske 2 wird als obere Ebene mit einer Deckkraft von 100%
+                verwendet.
+              </para>
+            </caption>
+          </mediaobject>
+        </figure>
+
+        <para lang="de">
+          Dieser Modus ist mit dem Modus Multiplizieren verwandt. Allerdings
+          werden die Farbwerte beider Ebenen invertiert (das heisst von 255
+          abgezogen), dann multipliziert. Das Ergebnis wird dann wiederum
+          invertiert. Das resultierende Bild ist meist heller und wirkt
+          manchmal etwas <quote>verwaschen</quote>. Ausnahmen bilden hierbei
+          schwarze Bereiche in der Maske, die den Hintergrund nicht verändern,
+          sowie weiße Bereiche, die ein weißes Bild ergeben. Dunkle Farben im
+          Bild erscheinen transparenter.
+        </para>
+        <para lang="de">Die Formel lautet:</para>
+
+        <equation>
+          <alt role="latex">$E=\frac{(255-((255-I)*(255-M)))}{255}$</alt>
+          <graphic fileref="../images/math/layer-mode-screen.png" />
+        </equation>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term lang="en">Overlay</term>
+      <term lang="de">Überlagern</term>
+
+      <listitem>
+        <indexterm lang="de">
+          <primary>Ebenenmodus</primary>
+          <secondary>Überlagern</secondary>
+        </indexterm>
+
+        <figure>
+          <title>
+            <phrase lang="en">
+              Example for layer mode <quote>Overlay</quote>
+            </phrase>
+            <phrase lang="de">
+              Beispiel für den Ebenenmodus <quote>Überlagern</quote>
+            </phrase>
+          </title>
+
+          <mediaobject>
+            <imageobject>
+              <imagedata
+                fileref="../images/using/layer-mode-overlay-mask1.jpg"
+                format="JPG" />
+            </imageobject>
+            <caption>
+              <para lang="en">
+                Mask 1 is used as upper layer with 100% opacity.
+              </para>
+              <para lang="de">
+                Die Maske 1 wird als obere Ebene mit einer Deckkraft von 100%
+                verwendet.
+              </para>
+            </caption>
+          </mediaobject>
+          <mediaobject>
+            <imageobject>
+              <imagedata
+                fileref="../images/using/layer-mode-overlay-mask2.jpg"
+                format="JPG" />
+            </imageobject>
+
+            <caption>
+              <para lang="en">
+                Mask 2 is used as upper layer with 100% opacity.
+              </para>
+              <para lang="de">
+                Die Maske 2 wird als obere Ebene mit einer Deckkraft von 100%
+                verwendet.
+              </para>
+            </caption>
+          </mediaobject>
+        </figure>
+
+        <para lang="de">
+          Im Modus <quote>Überlagern</quote>
+          werden für die Berechnung die Werte der Pixel der unteren Ebene
+          invertiert und mit dem doppelten der Werte der oberen Ebene
+          mulitipliziert. Dieser Wert wird mit 255 gewichtet zum Origialwert
+          der unteren Ebene addiert und erneut mit 255 gewichtet. Dieser Modus
+          verdunkelt das Bild, allerdings nicht so stark wie der
+          Multiplikationsmodus.
+        </para>
+        <para lang="de">
+          Die Formel lautet:
+          <footnote id="gimp-layer-mode-bug162395">
+            <para lang="de">
+              So sollte diese Formel eigentlich aussehen. Aufgrund eines
+              Programmierfehlers ist die tatsächlich verwendete Formel
+              äquivalent zu der des Modus
+              <quote>Weiche Kanten</quote>
+              und somit dieser Modus mit jenem identisch. Da eine Korrektur
+              dieses Fehlers Auswirkungen auf Bilder haben kann, bei denen der
+              Überlagernmodus angewandt wurde und die als XCF-Datei
+              gespeichert wurden, ist unklar, ob bzw. wann der Modus
+              korrigiert wird. Siehe auch
+              <ulink url="http://bugzilla.gnome.org/show_bug.cgi?id=162395">
+                Bug #162395
+              </ulink>
+              .
+            </para>
+          </footnote>
+        </para>
+
+        <!-- Note: the equation is the *theoretical* equation. Due
+          to bug 162395, the actual equation is equivalent to Soft Light.
+          It is difficult to fix this bug without changing the appearance
+          of existing images. scb in "glossary/m.xml"
+        -->
+        <equation>
+          <alt role="latex">
+            $E = I* \frac{(I+ \frac{2*M*(255-I)}{255}}{255}$
+          </alt>
+          <graphic fileref="../images/math/layer-mode-overlay.png" />
+        </equation>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term lang="en">Dodge</term>
+      <term lang="de">Abwedeln</term>
+
+      <listitem>
+        <indexterm lang="de">
+          <primary>Ebenenmodus</primary>
+          <secondary>Abwedeln</secondary>
+        </indexterm>
+
+        <figure>
+          <title>
+            <phrase lang="en">
+              Example for layer mode <quote>Dodge</quote>
+            </phrase>
+            <phrase lang="de">
+              Beispiel für den Ebenenmodus <quote>Abwedeln</quote>
+            </phrase>
+          </title>
+
+          <mediaobject>
+            <imageobject>
+              <imagedata
+                fileref="../images/using/layer-mode-dodge-mask1.jpg"
+                format="JPG" />
+            </imageobject>
+            <caption>
+              <para lang="en">
+                Mask 1 is used as upper layer with 100% opacity.
+              </para>
+              <para lang="de">
+                Die Maske 1 wird als obere Ebene mit einer Deckkraft von 100%
+                verwendet.
+              </para>
+            </caption>
+          </mediaobject>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="../images/using/layer-mode-dodge-mask2.jpg"
+                format="JPG" />
+            </imageobject>
+
+            <caption>
+              <para lang="en">
+                Mask 2 is used as upper layer with 100% opacity.
+              </para>
+              <para lang="de">
+                Die Maske 2 wird als obere Ebene mit einer Deckkraft von 100%
+                verwendet.
+              </para>
+            </caption>
+          </mediaobject>
+        </figure>
+
+        <para lang="de">
+          In der Fotografie ist Abwedeln eine Technik, bei der in bestimmten
+          Bildbereichen bei der Entwicklung von Bildern die Belichtung erhöht
+          wird, wodurch die Detaildarstellung in den Schatten des Bildes
+          verbessert wird. Wenn der Modus für diesen Zweck verwendet wird,
+          empfiehlt sich die Verwendung als Malwerkzeug, optimaler Weise auf
+          einem Graustufenbild. Beachten Sie auch den zugehörigen Eintrag
+          <xref linkend="glossary-dodge"/> im Glossar.
+        </para>
+        <para lang="de">Die Formel ähnelt der des Divisionsmodus:</para>
+
+        <equation>
+          <alt role="latex">$E = \frac{I*256}{(255-M)+1}$</alt>
+          <graphic fileref="../images/math/layer-mode-dodge.png" />
+        </equation>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term lang="en">Burn</term>
+      <term lang="de">Nachbelichten</term>
+
+      <listitem>
+        <indexterm lang="de">
+          <primary>Ebenenmodus</primary>
+          <secondary>Nachbelichten</secondary>
+        </indexterm>
+
+        <figure>
+          <title>
+            <phrase lang="en">
+              Example for layer mode <quote>Burn</quote>
+            </phrase>
+            <phrase lang="de">
+              Beispiel für den Ebenenmodus <quote>Nachbelichten</quote>
+            </phrase>
+          </title>
+
+
+          <mediaobject>
+            <imageobject>
+              <imagedata
+                fileref="../images/using/layer-mode-burn-mask1.jpg"
+                format="JPG" />
+            </imageobject>
+            <caption>
+              <para lang="en">
+                Mask 1 is used as upper layer with 100% opacity.
+              </para>
+              <para lang="de">
+                Die Maske 1 wird als obere Ebene mit einer Deckkraft von 100%
+                verwendet.
+              </para>
+            </caption>
+          </mediaobject>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="../images/using/layer-mode-burn-mask2.jpg"
+                format="JPG" />
+            </imageobject>
+
+            <caption>
+              <para lang="en">
+                Mask 2 is used as upper layer with 100% opacity.
+              </para>
+              <para lang="de">
+                Die Maske 2 wird als obere Ebene mit einer Deckkraft von 100%
+                verwendet.
+              </para>
+            </caption>
+          </mediaobject>
+        </figure>
+
+        <para lang="de">
+          In der Fotografie ist Nachbelichten eine Technik, bei der in
+          bestimmten Bildbereichen bei der Entwicklung von Bildern die
+          Belichtung reduziert wird, wodurch die Detaildarstellung in den
+          Lichtern (sehr hellen Bereichen) des Bildes verbessert wird. Wenn
+          der Modus für diesen Zweck verwendet wird, empfiehlt sich die
+          Verwendung als Malwerkzeug, optimaler Weise auf einem
+          Graustufenbild. Beachten Sie auch den zugehörigen Eintrag
+          <xref linkend="glossary-burn"/> im Glossar.
+        </para>
+        <para lang="de">
+          Die Formel entspricht der des Abwedelns mit invertierten Werten:
+        </para>
+
+        <equation>
+          <alt role="latex">$E=255- \frac{(255-I)*256}{M+1}$</alt>
+          <graphic fileref="../images/math/layer-mode-burn.png" />
+        </equation>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term lang="en">Hard Light</term>
+      <term lang="de">Harte Kanten</term>
+
+      <listitem>
+        <indexterm lang="de">
+          <primary>Ebenenmodus</primary>
+          <secondary>Harte Kanten</secondary>
+        </indexterm>
+
+        <figure>
+          <title>
+            <phrase lang="en">
+              Example for layer mode <quote>Hard Light</quote>
+            </phrase>
+            <phrase lang="de">
+              Beispiel für den Ebenenmodus <quote>Harte Kanten</quote>
+            </phrase>
+          </title>
+
+          <mediaobject>
+            <imageobject>
+              <imagedata
+                fileref="../images/using/layer-mode-hard-light-mask1.jpg"
+                format="JPG" />
+            </imageobject>
+            <caption>
+              <para lang="en">
+                Mask 1 is used as upper layer with 100% opacity.
+              </para>
+              <para lang="de">
+                Die Maske 1 wird als obere Ebene mit einer Deckkraft von 100%
+                verwendet.
+              </para>
+            </caption>
+          </mediaobject>
+          <mediaobject>
+            <imageobject>
+              <imagedata
+                fileref="../images/using/layer-mode-hard-light-mask2.jpg"
+                format="JPG" />
+            </imageobject>
+
+            <caption>
+              <para lang="en">
+                Mask 2 is used as upper layer with 100% opacity.
+              </para>
+              <para lang="de">
+                Die Maske 2 wird als obere Ebene mit einer Deckkraft von 100%
+                verwendet.
+              </para>
+            </caption>
+          </mediaobject>
+        </figure>
+
+        <para lang="de">
+          Diesen Blendenmodus können Sie verwenden, um zwei Fotos zu
+          kombinieren und helle Farben und scharfe Kanten zu erhalten.
+        </para>
+        <para lang="de">
+          Die Formel besteht aus zwei Teilen, einen für die Pixel der Maske,
+          welche überduchschnittlich hell sind (&gt;128) und einem für
+          dunklere (&le;128) Pixel. Das Ganze sieht komplizierter aus,
+          als es ist, die Formel ähnelt stark der des Bildschirmmodus:
+        </para>
+
+        <equation>
+          <alt role="latex">
+            $M > 128: E=255- \frac{(255-I)*(255-(2*(M-128)))}{256}$
+          </alt>
+          <graphic fileref="../images/math/layer-mode-hard-light1.png" />
+        </equation>
+        <equation>
+          <alt role="latex">$ M \leq 128: E= \frac{I*M*2}{256}$</alt>
+          <graphic fileref="../images/math/layer-mode-hard-light2.png" />
+        </equation>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term lang="en">Soft Light</term>
+      <term lang="de">Weiche Kanten</term>
+
+      <listitem>
+        <indexterm lang="de">
+          <primary>Ebenenmodus</primary>
+          <secondary></secondary>
+        </indexterm>
+
+        <figure>
+          <title>
+            <phrase lang="en">
+              Example for layer mode <quote>Soft Light</quote>
+            </phrase>
+            <phrase lang="de">
+              Beispiel für den Ebenenmodus <quote>Weiche Kanten</quote>
+            </phrase>
+          </title>
+
+          <mediaobject>
+            <imageobject>
+              <imagedata
+                fileref="../images/using/layer-mode-soft-light-mask1.jpg"
+                format="JPG" />
+            </imageobject>
+            <caption>
+              <para lang="en">
+                Mask 1 is used as upper layer with 100% opacity.
+              </para>
+              <para lang="de">
+                Die Maske 1 wird als obere Ebene mit einer Deckkraft von 100%
+                verwendet.
+              </para>
+            </caption>
+          </mediaobject>
+          <mediaobject>
+            <imageobject>
+              <imagedata
+                fileref="../images/using/layer-mode-soft-light-mask2.jpg"
+                format="JPG" />
+            </imageobject>
+
+            <caption>
+              <para lang="en">
+                Mask 2 is used as upper layer with 100% opacity.
+              </para>
+              <para lang="de">
+                Die Maske 2 wird als obere Ebene mit einer Deckkraft von 100%
+                verwendet.
+              </para>
+            </caption>
+          </mediaobject>
+        </figure>
+
+        <para lang="de">
+          Die Anwendung dieses Blendenmodus neigt dazu, Kanten weicher
+          und Farben nicht ganz so hell zu machen. Er ähnelt dem
+          <quote>Überlagern</quote>-Modus, in einigen
+          <acronym>GIMP</acronym>-Versionen sind beide Modi identisch.
+          <footnote>
+            <para>
+              Aufgrund eines Programmierfehlers sind die Formeln beider Modi
+              äquivalent. Wegen der Auswirkungen auf ältere Bilder ist
+              ungewiß, ob der Fehler überhaupt korrigiert wird. Vergl.
+              <footnoteref linkend="gimp-layer-mode-bug162395" />.
+            </para>
+          </footnote>
+          Übrigens hat der Modus bis auf seinem Namen nichts mit dem Modus
+          <quote>Harte Kanten</quote> gemeinsam.
+        </para>
+        <para lang="de">Die Formel lautet:</para>
+
+        <!-- Note: The equation given above turns out to be mathematically
+          equivalent to the "mistaken" one for Overlay (see note above
+          about bug 162395). It is not certain if this will ever be fixed.
+          scb in "glossary/m.xml" -->
+        <equation>
+          <alt role="latex">$R_{s}= \frac {255-((255-U)*(255-O))}{256}$</alt>
+          <graphic fileref="../images/math/layer-mode-soft-light1.png" />
+        </equation>
+        <equation>
+          <alt role="latex">$E= \frac {((255-H)*B*H)+(H*R_{s})}{255}$</alt>
+          <graphic fileref="../images/math/layer-mode-soft-light2.png" />
+        </equation>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term lang="en">Grain Extract</term>
+      <term lang="de">
+        Faser extrahieren
+        <!-- PENDING de: remove foreignphrase for GIMP 2.4 -->
+        ( <foreignphrase>Grain Extract</foreignphrase> )
+      </term>
+
+      <listitem>
+        <indexterm lang="de">
+          <primary>Ebenenmodus</primary>
+          <secondary>Faser extrahieren</secondary>
+        </indexterm>
+
+        <figure>
+          <title>
+            <phrase lang="en">
+              Example for layer mode <quote>Grain Extract</quote>
+            </phrase>
+            <phrase lang="de">
+              Beispiel für den Ebenenmodus <quote>Faser extrahieren</quote>
+            </phrase>
+          </title>
+
+          <mediaobject>
+            <imageobject>
+              <imagedata
+                fileref="../images/using/layer-mode-grain-extract-mask1.jpg"
+                format="JPG" />
+            </imageobject>
+            <caption>
+              <para lang="en">
+                Mask 1 is used as upper layer with 100% opacity.
+              </para>
+              <para lang="de">
+                Die Maske 1 wird als obere Ebene mit einer Deckkraft von 100%
+                verwendet.
+              </para>
+            </caption>
+          </mediaobject>
+          <mediaobject>
+            <imageobject>
+              <imagedata
+                fileref="../images/using/layer-mode-grain-extract-mask2.jpg"
+                format="JPG" />
+            </imageobject>
+
+            <caption>
+              <para lang="en">
+                Mask 2 is used as upper layer with 100% opacity.
+              </para>
+              <para lang="de">
+                Die Maske 2 wird als obere Ebene mit einer Deckkraft von 100%
+                verwendet.
+              </para>
+            </caption>
+          </mediaobject>
+        </figure>
+
+        <para lang="de">
+          <!-- CHECK: de  translation of "grain" and how the mode is used at all-->
+          Dieser Modus soll die <quote>Filmkörnigkeit</quote>
+          aus einer Ebene entfernen, um eine neue Ebene zu erstellen, die
+          allein aus dieser Struktur besteht. Er kann aber auch nützlich sein,
+          um Bildern ein relief-artiges Aussehen zu verleihen.
+        </para>
+        <para lang="de">Die Formel ist einfach:</para>
+
+        <equation>
+          <alt role="latex">$E = I - M + 128$</alt>
+          <graphic fileref="../images/math/layer-mode-grainextract.png" />
+        </equation>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term lang="en">Grain Merge</term>
+      <term lang="de">
+        Faser mischen
+        <!-- PENDING de: remove foreignphrase for GIMP 2.4 -->
+        ( <foreignphrase>Grain Merge</foreignphrase> )
+      </term>
+
+      <listitem>
+        <indexterm lang="de">
+          <primary>Ebenenmodus</primary>
+          <secondary>Faser mischen</secondary>
+        </indexterm>
+
+        <figure>
+          <title>
+            <phrase lang="en">
+              Example for layer mode <quote>Grain Merge</quote>
+            </phrase>
+            <phrase lang="de">
+              Beispiel für den Ebenenmodus <quote>Faser mischen</quote>
+            </phrase>
+          </title>
+
+          <mediaobject>
+            <imageobject>
+              <imagedata
+                fileref="../images/using/layer-mode-grain-merge-mask1.jpg"
+                format="JPG" />
+            </imageobject>
+            <caption>
+              <para lang="en">
+                Mask 1 is used as upper layer with 100% opacity.
+              </para>
+              <para lang="de">
+                Die Maske 1 wird als obere Ebene mit einer Deckkraft von 100%
+                verwendet.
+              </para>
+            </caption>
+          </mediaobject>
+          <mediaobject>
+            <imageobject>
+              <imagedata
+                fileref="../images/using/layer-mode-grain-merge-mask2.jpg"
+                format="JPG" />
+            </imageobject>
+
+            <caption>
+              <para lang="en">
+                Mask 2 is used as upper layer with 100% opacity.
+              </para>
+              <para lang="de">
+                Die Maske 2 wird als obere Ebene mit einer Deckkraft von 100%
+                verwendet.
+              </para>
+            </caption>
+          </mediaobject>
+        </figure>
+
+        <para lang="de">
+          <!-- CHECK: de:  translation of "grain"/"grainy" and how the mode works at all -->
+          Dieser Modus mischt eine körnige Struktur (möglicherweise mit dem
+          Modus <quote>Faser extrahieren</quote> erstellt) in die aktuelle
+          Ebene und erzeugt so eine faserige Version der Originalebene.
+        </para>
+        <para lang="de">
+          Die Formel ist eine direkte Umkehrung des Modus
+          <quote>Faser extrahieren</quote>:
+        </para>
+
+        <equation>
+          <alt role="latex">$E = I + M - 128$</alt>
+          <graphic fileref="../images/math/layer-mode-grainmerge.png" />
+        </equation>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term lang="en">Difference</term>
+      <term lang="de">Unterschied</term>
+
+      <listitem>
+        <indexterm lang="de">
+          <primary>Ebenenmodus</primary>
+          <secondary>Unterschied</secondary>
+        </indexterm>
+
+        <figure>
+          <title>
+            <phrase lang="en">
+              Example for layer mode <quote>Difference</quote>
+            </phrase>
+            <phrase lang="de">
+              Beispiel für den Ebenenmodus <quote>Unterschied</quote>
+            </phrase>
+          </title>
+
+          <mediaobject>
+            <imageobject>
+              <imagedata
+                fileref="../images/using/layer-mode-difference-mask1.jpg"
+                format="JPG" />
+            </imageobject>
+            <caption>
+              <para lang="en">
+                Mask 1 is used as upper layer with 100% opacity.
+              </para>
+              <para lang="de">
+                Die Maske 1 wird als obere Ebene mit einer Deckkraft von 100%
+                verwendet.
+              </para>
+            </caption>
+          </mediaobject>
+          <mediaobject>
+            <imageobject>
+              <imagedata
+                fileref="../images/using/layer-mode-difference-mask2.jpg"
+                format="JPG" />
+            </imageobject>
+
+            <caption>
+              <para lang="en">
+                Mask 2 is used as upper layer with 100% opacity.
+              </para>
+              <para lang="de">
+                Die Maske 2 wird als obere Ebene mit einer Deckkraft von 100%
+                verwendet.
+              </para>
+            </caption>
+          </mediaobject>
+        </figure>
+
+        <para lang="de">
+          Bei diesem Ebenemodus werden die Farbwerte voneinander subtrahiert
+          und ein Absolutwert gebildet. Unabhängig von den Ausgangsebenen
+          sieht das Ergebnis meist etwas merkwürdig aus. Anwendung findet
+          dieser Modus vor allem zum Umkehren von Bildbereichen. Dieser Modus
+          ist übrigens kommutativ, das heisst die Ebenen können beliebig
+          vertauscht werden.
+        </para>
+        <para lang="de">Die Formel lautet:</para>
+        <equation>
+          <alt role="latex">$E = |I - M|$</alt>
+          <graphic fileref="../images/math/layer-mode-difference.png" />
+        </equation>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term lang="en">Addition</term>
+      <term lang="de">Addition</term>
+
+      <listitem>
+        <indexterm lang="de">
+          <primary>Ebenenmodus</primary>
+          <secondary>Addition</secondary>
+        </indexterm>
+
+        <figure>
+          <title>
+            <phrase lang="en">
+              Example for layer mode <quote>Addition</quote>
+            </phrase>
+            <phrase lang="de">
+              Beispiel für den Ebenenmodus <quote>Addition</quote>
+            </phrase>
+          </title>
+
+          <mediaobject>
+            <imageobject>
+              <imagedata
+                fileref="../images/using/layer-mode-addition-mask1.jpg"
+                format="JPG" />
+            </imageobject>
+            <caption>
+              <para lang="en">
+                Mask 1 is used as upper layer with 100% opacity.
+              </para>
+              <para lang="de">
+                Die Maske 1 wird als obere Ebene mit einer Deckkraft von 100%
+                verwendet.
+              </para>
+            </caption>
+          </mediaobject>
+          <mediaobject>
+            <imageobject>
+              <imagedata
+                fileref="../images/using/layer-mode-addition-mask2.jpg"
+                format="JPG" />
+            </imageobject>
+
+            <caption>
+              <para lang="en">
+                Mask 2 is used as upper layer with 100% opacity.
+              </para>
+              <para lang="de">
+                Die Maske 2 wird als obere Ebene mit einer Deckkraft von 100%
+                verwendet.
+              </para>
+            </caption>
+          </mediaobject>
+        </figure>
+
+        <para lang="de">
+          Bei diesem Ebenenmodus handelt es sich um einen eher einfachen
+          Vertreter seiner Klasse. Die Pixelwerte beider Ebenen werden einfach
+          addiert. Das Ergebnis wird ein helleres Bild sein. Möglicherweise
+          sind einige Bildbereiche auch einfach nur noch weiß, da das Ergebnis
+          bei 255 begrenzt wird.
+        </para>
+        <para lang="de">Die Formel lautet:</para>
+
+        <equation>
+          <alt role="latex">$E = min((M + I), 255)$</alt>
+          <graphic fileref="../images/math/layer-mode-addition.png" />
+        </equation>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term lang="en">Subtract</term>
+      <term lang="de">Subtraktion</term>
+
+      <listitem>
+        <indexterm lang="de">
+          <primary>Ebenenmodus</primary>
+          <secondary>Subtraktion</secondary>
+        </indexterm>
+
+        <figure>
+          <title>
+            <phrase lang="en">
+              Example for layer mode <quote>Subtract</quote>
+            </phrase>
+            <phrase lang="de">
+              Beispiel für den Ebenenmodus <quote>Subtraktion</quote>
+            </phrase>
+          </title>
+
+          <mediaobject>
+            <imageobject>
+              <imagedata
+                fileref="../images/using/layer-mode-subtract-mask1.jpg"
+                format="JPG" />
+            </imageobject>
+            <caption>
+              <para lang="en">
+                Mask 1 is used as upper layer with 100% opacity.
+              </para>
+              <para lang="de">
+                Die Maske 1 wird als obere Ebene mit einer Deckkraft von 100%
+                verwendet.
+              </para>
+            </caption>
+          </mediaobject>
+          <mediaobject>
+            <imageobject>
+              <imagedata
+                fileref="../images/using/layer-mode-subtract-mask2.jpg"
+                format="JPG" />
+            </imageobject>
+
+            <caption>
+              <para lang="en">
+                Mask 2 is used as upper layer with 100% opacity.
+              </para>
+              <para lang="de">
+                Die Maske 2 wird als obere Ebene mit einer Deckkraft von 100%
+                verwendet.
+              </para>
+            </caption>
+          </mediaobject>
+        </figure>
+
+        <para lang="de">
+          Bei diesem Ebenemodus werden die Pixelwerte der oberen Ebene von
+          denen der unteren abgezogen. Das Ergebnis ist gewöhnlich ein
+          dunkleres Bild. Manchmal werden Sie auch sehr viele schwarze oder
+          sehr dunkle Bereiche im Bild erhalten. Da bei der Berechnung
+          negative Werte auftreten können, ist es nötig das Ergebnis auf 0 zu
+          begrenzen.
+        </para>
+        <para lang="de">Die Formel lautet:</para>
+
+        <equation>
+          <alt role="latex">$E = max((I - M),0)$</alt>
+          <graphic fileref="../images/math/layer-mode-subtract.png" />
+        </equation>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term lang="en">Darken Only</term>
+      <term lang="de">Nur Abdunkeln</term>
+
+      <listitem>
+        <indexterm lang="de">
+          <primary>Ebenenmodus</primary>
+          <secondary>Abdunkeln</secondary>
+        </indexterm>
+
+        <figure>
+          <title>
+            <phrase lang="en">
+              Example for layer mode <quote>Darken Only</quote>
+            </phrase>
+            <phrase lang="de">
+              Beispiel für den Ebenenmodus <quote>Nur Abdunkeln</quote>
+            </phrase>
+          </title>
+
+          <mediaobject>
+            <imageobject>
+              <imagedata
+                fileref="../images/using/layer-mode-darken-only-mask1.jpg"
+                format="JPG" />
+            </imageobject>
+            <caption>
+              <para lang="en">
+                Mask 1 is used as upper layer with 100% opacity.
+              </para>
+              <para lang="de">
+                Die Maske 1 wird als obere Ebene mit einer Deckkraft von 100%
+                verwendet.
+              </para>
+            </caption>
+          </mediaobject>
+          <mediaobject>
+            <imageobject>
+              <imagedata
+                fileref="../images/using/layer-mode-darken-only-mask2.jpg"
+                format="JPG" />
+            </imageobject>
+
+            <caption>
+              <para lang="en">
+                Mask 2 is used as upper layer with 100% opacity.
+              </para>
+              <para lang="de">
+                Die Maske 2 wird als obere Ebene mit einer Deckkraft von 100%
+                verwendet.
+              </para>
+            </caption>
+          </mediaobject>
+        </figure>
+
+        <para lang="de">
+          Dieser Modus vergleicht jede Farbkomponente jedes Pixels der oberen
+          und unteren Ebene. Das Ergebnis besteht aus den jeweils kleinsten
+          Werten. Weiße Bereiche in den Ebenen verändern nichts an dem
+          Ergebnisbild, schwarze ergeben einen schwarzen Bereich im Bild. Auch
+          dieser Modus ist kommutiativ, das heißt welche Ebene oben und welche
+          unten ist, hat keinen Einfluß auf das Ergebnis.
+        </para>
+        <para lang="de">Die Formel lautet:</para>
+        <equation>
+          <alt role="latex">$E = min(M,I)$</alt>
+          <graphic fileref="../images/math/layer-mode-darken.png" />
+        </equation>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term lang="en">Lighten Only</term>
+      <term lang="de">Nur Aufhellen</term>
+
+      <listitem>
+        <indexterm lang="de">
+          <primary>Ebenenmodus</primary>
+          <secondary>Aufhellen</secondary>
+        </indexterm>
+
+        <figure>
+          <title>
+            <phrase lang="en">
+              Example for layer mode <quote>Lighten Only</quote>
+            </phrase>
+            <phrase lang="de">
+              Beispiel für den Ebenenmodus <quote>Nur Aufhellen</quote>
+            </phrase>
+          </title>
+
+
+          <mediaobject>
+            <imageobject>
+              <imagedata
+                fileref="../images/using/layer-mode-lighten-only-mask1.jpg"
+                format="JPG" />
+            </imageobject>
+            <caption>
+              <para lang="en">
+                Mask 1 is used as upper layer with 100% opacity.
+              </para>
+              <para lang="de">
+                Die Maske 1 wird als obere Ebene mit einer Deckkraft von 100%
+                verwendet.
+              </para>
+            </caption>
+          </mediaobject>
+          <mediaobject>
+            <imageobject>
+              <imagedata
+                fileref="../images/using/layer-mode-lighten-only-mask2.jpg"
+                format="JPG" />
+            </imageobject>
+
+            <caption>
+              <para lang="en">
+                Mask 2 is used as upper layer with 100% opacity.
+              </para>
+              <para lang="de">
+                Die Maske 2 wird als obere Ebene mit einer Deckkraft von 100%
+                verwendet.
+              </para>
+            </caption>
+          </mediaobject>
+        </figure>
+
+        <para lang="de">
+          Dieser Modus vergleicht jede Farbkomponente jedes Pixels der oberen
+          und unteren Ebene. Das Ergebnis besteht aus den jeweils größten
+          Werten. Schwarze Bereiche in den Ebenen verändern nichts an dem
+          Ergebnisbild, weiße ergeben einen weißen Bereich im Bild. Auch
+          dieser Modus ist kommutiativ, das heißt welche Ebene oben und welche
+          unten ist, hat keinen Einfluß auf das Ergebnis.
+        </para>
+        <para lang="de">Die Formel lautet:</para>
+
+        <equation>
+          <alt role="latex">$E = max(M,I)$</alt>
+          <graphic fileref="../images/math/layer-mode-lighten.png" />
+        </equation>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term lang="en">Hue</term>
+      <term lang="de">Farbton</term>
+
+      <listitem>
+        <indexterm lang="de">
+          <primary>Ebenenmodus</primary>
+          <secondary>Farbton</secondary>
+        </indexterm>
+
+        <figure>
+          <title>
+            <phrase lang="en">
+              Example for layer mode <quote>Hue</quote>
+            </phrase>
+            <phrase lang="de">
+              Beispiel für den Ebenenmodus <quote>Farbton</quote>
+            </phrase>
+          </title>
+
+          <mediaobject>
+            <imageobject>
+              <imagedata
+                fileref="../images/using/layer-mode-hue-mask1.jpg"
+                format="JPG" />
+            </imageobject>
+            <caption>
+              <para lang="en">
+                Mask 1 is used as upper layer with 100% opacity.
+              </para>
+              <para lang="de">
+                Die Maske 1 wird als obere Ebene mit einer Deckkraft von 100%
+                verwendet.
+              </para>
+            </caption>
+          </mediaobject>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="../images/using/layer-mode-hue-mask2.jpg"
+                format="JPG" />
+            </imageobject>
+
+            <caption>
+              <para lang="en">
+                Mask 2 is used as upper layer with 100% opacity.
+              </para>
+              <para lang="de">
+                Die Maske 2 wird als obere Ebene mit einer Deckkraft von 100%
+                verwendet.
+              </para>
+            </caption>
+          </mediaobject>
+        </figure>
+
+        <para lang="de">
+          Bei diesem Ebenenmodus wird der Farbton der oberen Ebene mit der
+          Sättigung und der Helligkeit der unteren Ebene zum Ergebnis
+          verknüpft.
+        </para>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term lang="en">Saturation</term>
+      <term lang="de">Sättigung</term>
+
+      <listitem>
+        <indexterm lang="de">
+          <primary>Ebenenmodus</primary>
+          <secondary>Sättigung</secondary>
+        </indexterm>
+
+        <figure>
+          <title>
+            <phrase lang="en">
+              Example for layer mode <quote>Saturation</quote>
+            </phrase>
+            <phrase lang="de">
+              Beispiel für den Ebenenmodus <quote>Sättigung</quote>
+            </phrase>
+          </title>
+
+          <mediaobject>
+            <imageobject>
+              <imagedata
+                fileref="../images/using/layer-mode-saturation-mask1.jpg"
+                format="JPG" />
+            </imageobject>
+            <caption>
+              <para lang="en">
+                Mask 1 is used as upper layer with 100% opacity.
+              </para>
+              <para lang="de">
+                Die Maske 1 wird als obere Ebene mit einer Deckkraft von 100%
+                verwendet.
+              </para>
+            </caption>
+          </mediaobject>
+          <mediaobject>
+            <imageobject>
+              <imagedata
+                fileref="../images/using/layer-mode-saturation-mask2.jpg"
+                format="JPG" />
+            </imageobject>
+
+            <caption>
+              <para lang="en">
+                Mask 2 is used as upper layer with 100% opacity.
+              </para>
+              <para lang="de">
+                Die Maske 2 wird als obere Ebene mit einer Deckkraft von 100%
+                verwendet.
+              </para>
+            </caption>
+          </mediaobject>
+        </figure>
+
+        <para lang="de">
+          Bei diesem Ebenenmodus wird die Sättigung der oberen Ebene mit dem Farbton und der Helligkeit der unteren Ebene zum Ergebnis
+          verknüpft.
+        </para>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term lang="en">Color</term>
+      <term lang="de">Farbe</term>
+
+      <listitem>
+        <indexterm lang="de">
+          <primary>Ebenenmodus</primary>
+          <secondary>Farbe</secondary>
+        </indexterm>
+
+        <figure>
+          <title>
+            <phrase lang="en">
+              Example for layer mode <quote>Color</quote>
+            </phrase>
+            <phrase lang="de">
+              Beispiel für den Ebenenmodus <quote>Farbe</quote>
+            </phrase>
+          </title>
+
+          <mediaobject>
+            <imageobject>
+              <imagedata
+                fileref="../images/using/layer-mode-color-mask1.jpg"
+                format="JPG" />
+            </imageobject>
+            <caption>
+              <para lang="en">
+                Mask 1 is used as upper layer with 100% opacity.
+              </para>
+              <para lang="de">
+                Die Maske 1 wird als obere Ebene mit einer Deckkraft von 100%
+                verwendet.
+              </para>
+            </caption>
+          </mediaobject>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="../images/using/layer-mode-color-mask2.jpg"
+                format="JPG" />
+            </imageobject>
+
+            <caption>
+              <para lang="en">
+                Mask 2 is used as upper layer with 100% opacity.
+              </para>
+              <para lang="de">
+                Die Maske 2 wird als obere Ebene mit einer Deckkraft von 100%
+                verwendet.
+              </para>
+            </caption>
+          </mediaobject>
+        </figure>
+
+        <para lang="de">
+          Hier wird bei der Überblendung der Farbton und die Sättigung der
+          oberen Ebene sowie die Helligkeit der unteren Ebene zum Ergebnis
+          verknüpft.
+        </para>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term lang="en">Value</term>
+      <term lang="de">Wert</term>
+
+      <listitem>
+        <indexterm lang="de">
+          <primary>Ebenenmodus</primary>
+          <secondary>Wert</secondary>
+        </indexterm>
+
+        <figure>
+          <title>
+            <phrase lang="en">
+              Example for layer mode <quote>Value</quote>
+            </phrase>
+            <phrase lang="de">
+              Beispiel für den Ebenenmodus <quote>Wert</quote>
+            </phrase>
+          </title>
+
+          <mediaobject>
+            <imageobject>
+              <imagedata
+                fileref="../images/using/layer-mode-value-mask1.jpg"
+                format="JPG" />
+            </imageobject>
+            <caption>
+              <para lang="en">
+                Mask 1 is used as upper layer with 100% opacity.
+              </para>
+              <para lang="de">
+                Die Maske 1 wird als obere Ebene mit einer Deckkraft von 100%
+                verwendet.
+              </para>
+            </caption>
+          </mediaobject>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="../images/using/layer-mode-value-mask2.jpg"
+                format="JPG" />
+            </imageobject>
+
+            <caption>
+              <para lang="en">
+                Mask 2 is used as upper layer with 100% opacity.
+              </para>
+              <para lang="de">
+                Die Maske 2 wird als obere Ebene mit einer Deckkraft von 100%
+                verwendet.
+              </para>
+            </caption>
+          </mediaobject>
+        </figure>
+
+        <para lang="de">
+          Hier wird bei der Überblendung die Helligkeit der oberen Ebene sowie
+          Farbton und Sättigung der unteren Ebene zum Ergebnis verknüpft.
+        </para>
+      </listitem>
+    </varlistentry>
+  </variablelist>
+
+  <para lang="de">
+    Die Ebenen eines Bildes können unterschiedliche Modi haben. (Der
+    Ebenenmodus der untersten Ebene hat natürlich keine Wirkung.) Die Effekte
+    dieser Ebenenmodi sind kumulativ. Das folgende Bild besteht aus drei
+    Ebenen. Die oberste enthält Wilber auf transparentem Hintergrund und hat
+    den Ebenenmodus <quote>Differenz</quote>. Die zweite Ebene ist einfarbig
+    hellblau mit Ebenenmodus <quote>Addition</quote>.
+    Die unterste Ebene ist mit dem Muster <quote>Red Cubes</quote> gefüllt.
+  </para>
+  <para lang="de">
+    <!-- TODO: de make new example -->
+    <inlinemediaobject>
+      <imageobject>
+        <imagedata fileref="../images/glossary/modes-multilayer.png"
+          format="PNG" />
+      </imageobject>
+    </inlinemediaobject>
+  </para>
+
+  <para lang="de">
+    <acronym>GIMP</acronym> verwendet die selben 21 Modi sowie zwei weitere
+    auch für Malwerkzeuge, siehe <xref linkend="gimp-tool-painting" />.
+  </para>
+</sect2>
