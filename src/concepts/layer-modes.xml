@@ -21,7 +21,7 @@
   <title>
     <phrase lang="en">Layer modes</phrase>
     <phrase lang="cs">Režim</phrase>
-    <phrase lang="de">Ebenenmodus</phrase>
+    <phrase lang="de">Ebenenmodi</phrase>
     <phrase lang="es">Modo de la capa</phrase>
     <phrase lang="fr">Modes de fusion</phrase>
     <phrase lang="it">Modalità del livello</phrase>
@@ -30,7 +30,7 @@
   </title>
 
   <para lang="de">
-    Mit den Ebenenmodi können Sie einstellen, wie die übereinander liegenenden
+    Mit den Ebenenmodi können Sie einstellen, wie die übereinander liegenden
     Ebenen ineinander geblendet werden, daher werden diese gelegentlich auch
     als <quote>Blendenmodi</quote>
     bezeichnet. GIMP stellt 21 verschiedene Ebenenmodi zur Verfügung. Der
@@ -119,28 +119,21 @@
   </para>
 
   <equation lang="de">
-    <alt role="latex">$E = B + H$</alt>
+    <title>Beispiel</title>
+    <alt role="latex">$E = M + I$</alt>
     <graphic fileref="../images/math/layer-mode-example.png" format="PNG" />
   </equation>
 
   <para lang="de">
-    Für jedes Pixel addiere die Werte der oberen Ebene (
-    <emphasis>B</emphasis>lende) und der darunter liegenden Ebene (
-    <emphasis>H</emphasis>intergrund). Die Summe bildet die resultierende
-    Pixelwerte ( <emphasis>E</emphasis>rgebnis). Da die Komponenten der Pixel
-    in der Regel Werte aus dem Bereich 0 bis 255 sein müssen, sorgen die
+    Für jede Komponente jedes Pixels addiere die Werte der oberen Ebene
+    (<emphasis>M</emphasis>aske) und der darunter liegenden Ebene
+    (B<emphasis>i</emphasis>ld). Die Summen bilden die resultierende
+    Pixelwerte (<emphasis>E</emphasis>rgebnis). Da die Komponenten der Pixel
+    Werte aus dem Bereich 0 bis 255 sein müssen, sorgen die
     Ebenenmodi dafür, dass das Ergebnis der Berechnung in diesem Bereich
     bleibt.
   </para>
-  <!-- TODO: de we are about to change that
-    <para lang="de">
-    Die Beispielbilder zeigen die Auswirkungen bei Anwendung des
-    jeweiligen Modus. Das linke Bild ist der normale Zustand,
-    das rechte gibt das Blendergebnis wieder. In diesem Bild ist
-    Wilber auf der oberen Ebene mit transparentem Hintergrund,
-    während die untere Ebene einfarbig hellblau ist.
-    </para>
-  -->
+
   <para lang="de">
     Da die Ergebnisse der Ebenenmodi sehr stark von den Farben der
     betreffenden Ebenen abhängen, können diese Bilder Ihnen nur eine ungefähre
@@ -191,7 +184,7 @@
                 intensity.
               </para>
               <para lang="de">
-                Beider Bilder sind mit 50% Deckkraft eineinander geblendet.
+                Beider Bilder sind mit 50% Deckkraft ineinander geblendet.
               </para>
             </caption>
           </mediaobject>
@@ -221,7 +214,8 @@
         <para lang="de">Die zugehörige Formel ist ganz einfach:</para>
 
         <equation>
-          <alt role="latex">$E = B$</alt>
+          <title>Formel für den Normalmodus</title>
+          <alt role="latex">$E = M$</alt>
           <graphic fileref="../images/math/layer-mode-normal.png"
             format="PNG" />
         </equation>
@@ -287,7 +281,7 @@
           Dieser Modus ist dem Modus <quote>Normal</quote>
           sehr ähnlich, allerdings erfolgt der Übergang bei einer Deckkraft
           kleiner als 100% nicht gleichmäßig, sondern sehr körnig. Hierzu wird
-          ein Zufallsmuster verwendet, welchse um so mehr Pixel aus der oberen
+          ein Zufallsmuster verwendet, welches um so mehr Pixel aus der oberen
           Ebene enthält, je höher die Deckkraft ist. Der Modus wird häufig für
           Malwerkzeuge verwendet.
         </para>
@@ -352,13 +346,14 @@
           Dieser Blendenmodus multipliziert alle Farbwerte der oberen und
           unteren Ebene und dividiert das Resultat durch 255. Das Ergebnis ist
           meist ein dunkleres Bild. Weiße Bereiche in der Maske verändern den
-          Hintergrund nicht (1*I=I), schwarze hingegen ergeben ein komplett
-          schwarzes Bild (0*I=0).
+          Hintergrund nicht (1 * I = I), schwarze hingegen ergeben ein komplett
+          schwarzes Bild (0 * I = 0).
         </para>
         <para lang="de">Die zugehörige Formel lautet:</para>
 
         <equation>
-          <alt role="latex">$E = \frac {M * I}{255}$</alt>
+          <title>Formel für den Multiplikationsmodus</title>
+          <alt role="latex">$E = \frac {1}{255} (M * I)$</alt>
           <graphic fileref="../images/math/layer-mode-multiply.png"
             format="PNG" />
         </equation>
@@ -422,7 +417,7 @@
         <para lang="de">
           Bei diesem Modus werden die Farbwerte der Pixel dividiert. Das
           resultierende Bild ist meist heller, manchmal sieht es,
-          insebesondere in den Bereichen, in denen die Maske sehr dunkel ist,
+          insbesondere in den Bereichen, in denen die Maske sehr dunkel ist,
           auch überbelichtet aus.
         </para>
         <para lang="de">
@@ -436,7 +431,8 @@
         </para>
 
         <equation>
-          <alt role="latex">$E = \frac {I * 256}{M + 1}$</alt>
+          <title>Formel für den Divisonsmodus</title>
+          <alt role="latex">$E = 256 \frac {I}{M + 1}$</alt>
           <graphic fileref="../images/math/layer-mode-divide.png"
             format="JPG" />
         </equation>
@@ -498,19 +494,20 @@
         </figure>
 
         <para lang="de">
-          Dieser Modus ist mit dem Modus Multiplizieren verwandt. Allerdings
-          werden die Farbwerte beider Ebenen invertiert (das heisst von 255
-          abgezogen), dann multipliziert. Das Ergebnis wird dann wiederum
-          invertiert. Das resultierende Bild ist meist heller und wirkt
-          manchmal etwas <quote>verwaschen</quote>. Ausnahmen bilden hierbei
-          schwarze Bereiche in der Maske, die den Hintergrund nicht verändern,
-          sowie weiße Bereiche, die ein weißes Bild ergeben. Dunkle Farben im
-          Bild erscheinen transparenter.
+          Dieser Modus ist mit dem Modus <quote>Multiplizieren</quote>
+          verwandt. Allerdings werden die Farbwerte beider Ebenen invertiert
+          (das heißt von 255 abgezogen), dann multipliziert. Das Ergebnis
+          wird dann wiederum invertiert. Das resultierende Bild ist meist
+          heller und wirkt manchmal etwas <quote>verwaschen</quote>. Ausnahmen
+          bilden hierbei schwarze Bereiche in der Maske, die den Hintergrund
+          nicht verändern, sowie weiße Bereiche, die ein weißes Bild
+          ergeben. Dunkle Farben im Bild erscheinen transparenter.
         </para>
         <para lang="de">Die Formel lautet:</para>
 
         <equation>
-          <alt role="latex">$E=\frac{(255-((255-I)*(255-M)))}{255}$</alt>
+          <title>Formel für den Bildschirmmodus</title>
+          <alt role="latex">$E = 1 - \frac {(255-M)*(255-I)}{255}$</alt>
           <graphic fileref="../images/math/layer-mode-screen.png" />
         </equation>
       </listitem>
@@ -572,10 +569,12 @@
         </figure>
 
         <para lang="de">
+          <!-- CHECK: de:  Die verbale Beschreibung der Formel ist m.E.
+          nicht sinnvoll, sondern eher störend. ude -->
           Im Modus <quote>Überlagern</quote>
           werden für die Berechnung die Werte der Pixel der unteren Ebene
           invertiert und mit dem doppelten der Werte der oberen Ebene
-          mulitipliziert. Dieser Wert wird mit 255 gewichtet zum Origialwert
+          mulitipliziert. Dieser Wert wird mit 255 gewichtet zum Originalwert
           der unteren Ebene addiert und erneut mit 255 gewichtet. Dieser Modus
           verdunkelt das Bild, allerdings nicht so stark wie der
           Multiplikationsmodus.
@@ -595,8 +594,7 @@
               korrigiert wird. Siehe auch
               <ulink url="http://bugzilla.gnome.org/show_bug.cgi?id=162395">
                 Bug #162395
-              </ulink>
-              .
+              </ulink>.
             </para>
           </footnote>
         </para>
@@ -607,8 +605,9 @@
           of existing images. scb in "glossary/m.xml"
         -->
         <equation>
+          <title>Formel für den Modus <quote>Überlagern</quote></title>
           <alt role="latex">
-            $E = I* \frac{(I+ \frac{2*M*(255-I)}{255}}{255}$
+            $E = \frac{1I}{255} * (I+ \frac{2M}{255} * (255 - I))$
           </alt>
           <graphic fileref="../images/math/layer-mode-overlay.png" />
         </equation>
@@ -681,6 +680,7 @@
         <para lang="de">Die Formel ähnelt der des Divisionsmodus:</para>
 
         <equation>
+          <title>Formel für den Modus <quote>Abwedeln</quote></title>
           <alt role="latex">$E = \frac{I*256}{(255-M)+1}$</alt>
           <graphic fileref="../images/math/layer-mode-dodge.png" />
         </equation>
@@ -748,7 +748,7 @@
           Belichtung reduziert wird, wodurch die Detaildarstellung in den
           Lichtern (sehr hellen Bereichen) des Bildes verbessert wird. Wenn
           der Modus für diesen Zweck verwendet wird, empfiehlt sich die
-          Verwendung als Malwerkzeug, optimaler Weise auf einem
+          Verwendung als Malwerkzeug, am besten auf einem
           Graustufenbild. Beachten Sie auch den zugehörigen Eintrag
           <xref linkend="glossary-burn"/> im Glossar.
         </para>
@@ -757,7 +757,8 @@
         </para>
 
         <equation>
-          <alt role="latex">$E=255- \frac{(255-I)*256}{M+1}$</alt>
+          <title>Formel für den Modus <quote>Nachbelichten</quote></title>
+          <alt role="latex">$E = 255 - \frac{(255-I)*256}{M+1}$</alt>
           <graphic fileref="../images/math/layer-mode-burn.png" />
         </equation>
       </listitem>
@@ -824,19 +825,25 @@
         </para>
         <para lang="de">
           Die Formel besteht aus zwei Teilen, einen für die Pixel der Maske,
-          welche überduchschnittlich hell sind (&gt;128) und einem für
+          welche überdurchschnittlich hell sind (&gt;128), und einen für
           dunklere (&le;128) Pixel. Das Ganze sieht komplizierter aus,
           als es ist, die Formel ähnelt stark der des Bildschirmmodus:
         </para>
 
         <equation>
+          <title>
+            Formel für den Modus <quote>Harte Kanten</quote>, M &gt; 128
+          </title>
           <alt role="latex">
-            $M > 128: E=255- \frac{(255-I)*(255-(2*(M-128)))}{256}$
+            $M > 128: E = 255- \frac{(255-I)*(255-(2*(M-128)))}{256}$
           </alt>
           <graphic fileref="../images/math/layer-mode-hard-light1.png" />
         </equation>
         <equation>
-          <alt role="latex">$ M \leq 128: E= \frac{I*M*2}{256}$</alt>
+          <title>
+            Formel für den Modus <quote>Harte Kanten</quote>, M &le; 128
+          </title>
+          <alt role="latex">$M \leq 128: E = \frac{I*M*2}{256}$</alt>
           <graphic fileref="../images/math/layer-mode-hard-light2.png" />
         </equation>
       </listitem>
@@ -920,11 +927,13 @@
           about bug 162395). It is not certain if this will ever be fixed.
           scb in "glossary/m.xml" -->
         <equation>
-          <alt role="latex">$R_{s}= \frac {255-((255-U)*(255-O))}{256}$</alt>
+          <title>Formel für Bildschirmmodus</title>
+          <alt role="latex">$R_{s} = \frac {255-((255-I)*(255-M))}{256}$</alt>
           <graphic fileref="../images/math/layer-mode-soft-light1.png" />
         </equation>
         <equation>
-          <alt role="latex">$E= \frac {((255-H)*B*H)+(H*R_{s})}{255}$</alt>
+          <title>Formel für den Modus <quote>Weiche Kanten</quote></title>
+          <alt role="latex">$E = \frac {((255-I)*M*I)+(I*R_{s})}{255}$</alt>
           <graphic fileref="../images/math/layer-mode-soft-light2.png" />
         </equation>
       </listitem>
@@ -999,6 +1008,7 @@
         <para lang="de">Die Formel ist einfach:</para>
 
         <equation>
+          <title>Formel für den Modus <quote>Faser extrahieren</quote></title>
           <alt role="latex">$E = I - M + 128$</alt>
           <graphic fileref="../images/math/layer-mode-grainextract.png" />
         </equation>
@@ -1076,6 +1086,7 @@
         </para>
 
         <equation>
+          <title>Formel für den Modus <quote>Faser mischen</quote></title>
           <alt role="latex">$E = I + M - 128$</alt>
           <graphic fileref="../images/math/layer-mode-grainmerge.png" />
         </equation>
@@ -1142,11 +1153,12 @@
           und ein Absolutwert gebildet. Unabhängig von den Ausgangsebenen
           sieht das Ergebnis meist etwas merkwürdig aus. Anwendung findet
           dieser Modus vor allem zum Umkehren von Bildbereichen. Dieser Modus
-          ist übrigens kommutativ, das heisst die Ebenen können beliebig
+          ist übrigens kommutativ, das heißt die Ebenen können beliebig
           vertauscht werden.
         </para>
         <para lang="de">Die Formel lautet:</para>
         <equation>
+          <title>Formel für den Differenzmodus</title>
           <alt role="latex">$E = |I - M|$</alt>
           <graphic fileref="../images/math/layer-mode-difference.png" />
         </equation>
@@ -1218,7 +1230,8 @@
         <para lang="de">Die Formel lautet:</para>
 
         <equation>
-          <alt role="latex">$E = min((M + I), 255)$</alt>
+          <title>Formel für den Additionsmodus</title>
+          <alt role="latex">$E = min( (M + I), 255)$</alt>
           <graphic fileref="../images/math/layer-mode-addition.png" />
         </equation>
       </listitem>
@@ -1284,13 +1297,14 @@
           denen der unteren abgezogen. Das Ergebnis ist gewöhnlich ein
           dunkleres Bild. Manchmal werden Sie auch sehr viele schwarze oder
           sehr dunkle Bereiche im Bild erhalten. Da bei der Berechnung
-          negative Werte auftreten können, ist es nötig das Ergebnis auf 0 zu
-          begrenzen.
+          negative Werte auftreten können, ist es nötig, das Ergebnis auf 0
+          zu begrenzen.
         </para>
         <para lang="de">Die Formel lautet:</para>
 
         <equation>
-          <alt role="latex">$E = max((I - M),0)$</alt>
+          <title>Formel für den Subtraktionsmodus</title>
+          <alt role="latex">$E = max( (I - M),0)$</alt>
           <graphic fileref="../images/math/layer-mode-subtract.png" />
         </equation>
       </listitem>
@@ -1356,11 +1370,12 @@
           und unteren Ebene. Das Ergebnis besteht aus den jeweils kleinsten
           Werten. Weiße Bereiche in den Ebenen verändern nichts an dem
           Ergebnisbild, schwarze ergeben einen schwarzen Bereich im Bild. Auch
-          dieser Modus ist kommutiativ, das heißt welche Ebene oben und welche
+          dieser Modus ist kommutativ, das heißt welche Ebene oben und welche
           unten ist, hat keinen Einfluß auf das Ergebnis.
         </para>
         <para lang="de">Die Formel lautet:</para>
         <equation>
+          <title>Formel für den Modus <quote>Abdunkeln</quote></title>
           <alt role="latex">$E = min(M,I)$</alt>
           <graphic fileref="../images/math/layer-mode-darken.png" />
         </equation>
@@ -1428,12 +1443,13 @@
           und unteren Ebene. Das Ergebnis besteht aus den jeweils größten
           Werten. Schwarze Bereiche in den Ebenen verändern nichts an dem
           Ergebnisbild, weiße ergeben einen weißen Bereich im Bild. Auch
-          dieser Modus ist kommutiativ, das heißt welche Ebene oben und welche
+          dieser Modus ist kommutativ, das heißt welche Ebene oben und welche
           unten ist, hat keinen Einfluß auf das Ergebnis.
         </para>
         <para lang="de">Die Formel lautet:</para>
 
         <equation>
+          <title>Formel für den Modus <quote>Aufhellen</quote></title>
           <alt role="latex">$E = max(M,I)$</alt>
           <graphic fileref="../images/math/layer-mode-lighten.png" />
         </equation>
@@ -1558,7 +1574,8 @@
         </figure>
 
         <para lang="de">
-          Bei diesem Ebenenmodus wird die Sättigung der oberen Ebene mit dem Farbton und der Helligkeit der unteren Ebene zum Ergebnis
+          Bei diesem Ebenenmodus wird die Sättigung der oberen Ebene mit dem
+          Farbton und der Helligkeit der unteren Ebene zum Ergebnis
           verknüpft.
         </para>
       </listitem>
