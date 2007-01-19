@@ -4,12 +4,18 @@
                 "http://www.docbook.org/xml/4.3/docbookx.dtd">
 
 <!--Section History
+  2007-01-19: moved en over from the glossary
   2007-01-13: relocated from the layer dialog and added examples and equations
 -->
-<!-- TODO: en es fr it ko nl no ru zh_CN -->
-<sect2 id="gimp-concepts-layer-modes" lang="de">
+<!-- TODO: es fr it ko nl no ru zh_CN -->
+<sect2 id="gimp-concepts-layer-modes" lang="de;en">
   <sect2info role="cvs">
     <revhistory>
+      <revision lang="en">
+        <revnumber>$Revision: 1658 $</revnumber>
+        <date>2007-01-19</date>
+        <authorinitials>lexa</authorinitials>
+      </revision>
       <revision lang="de">
         <revnumber>$Revision: 1658 $</revnumber>
         <date>2007-01-13</date>
@@ -29,6 +35,14 @@
     <phrase lang="zh_CN">图层模式</phrase>
   </title>
 
+  <para lang="en">
+    <acronym>GIMP</acronym> has twenty-one layer modes. Layer modes are also
+    sometimes called <quote>blending modes</quote>.
+    Selecting a layer mode changes the appearance of the layer or image,
+    based on the layer or layers beneath it. If there is only one layer, the
+    layer mode has no effect. There must therefore be at least two layers in
+    the image to be able to use layer modes.
+  </para>
   <para lang="de">
     Mit den Ebenenmodi können Sie einstellen, wie die übereinander liegenden
     Ebenen ineinander geblendet werden, daher werden diese gelegentlich auch
@@ -39,6 +53,39 @@
     hat der Ebenenmodus keinen Effekt. Kurz gesagt verwendet GIMP den
     Ebenenmodus, um festzulegen, wie jedes Pixel einer Ebene (Maske) mit dem
     entsprechenden Pixel der darunter liegenden Ebene kombiniert wird.
+  </para>
+
+  <para lang="en">
+    You can set the layer mode in the <guilabel>Mode</guilabel>
+    menu in the Layers dialog. <acronym>GIMP</acronym>
+    uses the layer mode to determine how to combine each pixel in the top
+    layer with the pixel in the same location in the layer below it.
+  </para>
+
+  <para>
+    <note>
+      <para lang="en">
+        There is a drop-down list in the Toolbox options box which contains
+        modes that affect the painting tools in a similar way to the layer
+        modes. You can use all of the same modes for painting that are
+        available for layers, and there are two additional modes just for the
+        painting tools, which are described here at the end of the list of
+        layer modes.
+      </para>
+      <para lang="de">
+        <acronym>GIMP</acronym>
+        verwendet die selben 21 Modi sowie zwei weitere auch für Malwerkzeuge,
+        siehe <xref linkend="gimp-tool-painting" />.
+      </para>
+    </note>
+  </para>
+
+  <para lang="en">
+    Layer modes permit complex color changes in the image. They are often used
+    with a new layer which acts as a kind of mask. For example, if you put a
+    solid white layer over an image and set the layer mode of the new layer to
+    <quote>Saturation</quote>, the underlying visible layers will appear in
+    shades of gray.
   </para>
   <para lang="de">
     Die einzelnen Modi werden in den folgenden Abschnitten jeweils mit einem
@@ -52,7 +99,7 @@
 
   <figure>
     <title>
-      <phrase lang="en">Imges (masks) for layer mode examples</phrase>
+      <phrase lang="en">Images (masks) for layer mode examples</phrase>
       <phrase lang="de">
         Masken für die Anwendungsbeispiele der Ebenenmodi
       </phrase>
@@ -80,7 +127,7 @@
 
   <figure>
     <title>
-      <phrase lang="en">Imges (backgrounds) for layer mode examples</phrase>
+      <phrase lang="en">Images (backgrounds) for layer mode examples</phrase>
       <phrase lang="de">
         Bilder für die Anwendungsbeispiele der Ebenenmodi
       </phrase>
@@ -106,6 +153,12 @@
     </mediaobject>
   </figure>
 
+  <para lang="en">
+    In the descriptions of the layer modes below, the equations are also
+    shown. This is for those who are curious about the mathematics of the
+    layer modes. You do not need to understand the equations in order to use
+    the layer modes effectively, however.
+  </para>
   <para lang="de">
     In den Beschreibungen der einzelnen Modi sind zum Teil auch Formeln
     angegeben, wie die Pixel berechnet werden. Sie sind für diejenigen
@@ -113,17 +166,36 @@
     Berechnungen sind. Sie müssen diese Formeln nicht verstehen, um die
     verschiedenen Modi effektiv einsetzen zu können.
   </para>
+
+  <para lang="en">
+    The equations are in a shorthand notation. For example, the equation
+  </para>
   <para lang="de">
     Die angegebenen Formeln beschreiben die Wirkungsweisen der der Modi in
     einer Kurznotation. Beispielsweise bedeutet folgende Formel:
   </para>
 
-  <equation lang="de">
-    <title>Beispiel</title>
+  <equation>
+    <title>
+      <phrase lang="de">Beispiel</phrase>
+      <phrase lang="en">Example</phrase>
+    </title>
+
     <alt role="latex">$E = M + I$</alt>
     <graphic fileref="../images/math/layer-mode-example.png" format="PNG" />
   </equation>
 
+  <para lang="en">
+    means,
+    <quote>
+      For each pixel in the upper and lower layer, add each of the
+      corresponding color components together to form the resulting pixel's
+      color.
+    </quote>
+    Pixel color components must always be between 0 and 255. Unless the
+    description below says otherwise, a negative color component is set to 0
+    and a color component larger than 255 is set to 255.
+  </para>
   <para lang="de">
     Für jede Komponente jedes Pixels addiere die Werte der oberen Ebene
     (<emphasis>M</emphasis>aske) und der darunter liegenden Ebene
@@ -132,6 +204,21 @@
     Werte aus dem Bereich 0 bis 255 sein müssen, sorgen die
     Ebenenmodi dafür, dass das Ergebnis der Berechnung in diesem Bereich
     bleibt.
+  </para>
+
+  <para lang="en">
+    The examples below show the effects of each of the modes. The image on the
+    left is the normal state and the image on the right shows the results of
+    the layer mode. In this image, Wilber is on the upper layer, surrounded by
+    transparency, and the lower layer is solid light blue.
+  </para>
+  <para lang="en">
+    Since the results of each mode vary greatly depending upon the colors on
+    the layers, these images can only give you a general idea of how the modes
+    work. You are encouraged to try them out yourself. You might start with
+    two similar layers, where one is a copy of the other, but slightly
+    modified (by being blurred, moved, rotated, scaled, color-inverted, etc.)
+    and seeing what happens with the layer modes.
   </para>
 
   <para lang="de">
@@ -147,7 +234,7 @@
 
 
   <!-- TODO: es fr it ru zh_CN description from glossary moved in here for de. You might follow :) -->
-  <variablelist lang="de">
+  <variablelist>
     <varlistentry>
       <term lang="en">Normal</term>
       <term lang="de">Normal</term>
@@ -211,10 +298,26 @@
           verdeckt alle unteren Ebenen je nach eingestellter Deckkraft mehr
           oder weniger.
         </para>
+        <para lang="en">
+          <guilabel>Normal</guilabel>
+          mode is the default layer mode. The layer on top covers the layers
+          below it. If you want to see anything below the top layer when you
+          use this mode, the layer must have some transparent areas.
+        </para>
+
+        <para lang="en">The equation is:</para>
         <para lang="de">Die zugehörige Formel ist ganz einfach:</para>
 
         <equation>
-          <title>Formel für den Normalmodus</title>
+          <title>
+            <phrase lang="en">
+              Equation for layer mode <quote>normal</quote>
+            </phrase>
+            <phrase lang="de">
+              Formel für den Ebenenmodus <quote>Normal</quote>
+            </phrase>
+          </title>
+
           <alt role="latex">$E = M$</alt>
           <graphic fileref="../images/math/layer-mode-normal.png"
             format="PNG" />
@@ -227,6 +330,7 @@
       <term lang="de">Vernichtend</term>
 
       <listitem>
+        <indexterm lang="en"><primary>Dissolve</primary></indexterm>
         <indexterm lang="de">
           <primary>Ebenenmodus</primary>
           <secondary>Vernichtend</secondary>
@@ -276,6 +380,21 @@
           </mediaobject>
         </figure>
 
+        <para lang="en">
+          <guilabel>Dissolve</guilabel>
+          mode dissolves the upper layer into the layer beneath it by drawing
+          a random pattern of pixels in areas of partial transparency. It is
+          useful as a layer mode, but it is also often useful as a painting
+          mode.
+        </para>
+        <para lang="en">
+          This is especially visible along the edges within an image. It is
+          easiest to see in an enlarged screenshot. The image on the left
+          illustrates <quote>Normal</quote>
+          layer mode (enlarged) and the image on the right shows the same two
+          layers in <quote>Dissolve</quote>
+          mode, where it can be clearly seen how the pixels are dispersed.
+        </para>
         <para lang="de">
           <!-- TODO: de: wirklich "Vernichtend"? (Auflösen(d), Streuen, Sprenkeln(!) -->
           Dieser Modus ist dem Modus <quote>Normal</quote>
@@ -291,7 +410,9 @@
     <varlistentry>
       <term lang="en">Multiply</term>
       <term lang="de">Multiplizieren</term>
+
       <listitem>
+        <indexterm lang="en"><primary>Multiply</primary></indexterm>
         <indexterm lang="de">
           <primary>Ebenenmodus</primary>
           <secondary>Multiplizieren</secondary>
@@ -342,6 +463,14 @@
           </mediaobject>
         </figure>
 
+        <para lang="en">
+          <guilabel>Multiply</guilabel>
+          mode multiplies the pixel values of the upper layer with those of
+          the layer below it and then divides the result by 255. The result is
+          usually a darker image. If either layer is white, the resulting
+          image is the same as the other layer. If either layer is black, the
+          resulting image is completely black.
+        </para>
         <para lang="de">
           Dieser Blendenmodus multipliziert alle Farbwerte der oberen und
           unteren Ebene und dividiert das Resultat durch 255. Das Ergebnis ist
@@ -349,14 +478,27 @@
           Hintergrund nicht (1 * I = I), schwarze hingegen ergeben ein komplett
           schwarzes Bild (0 * I = 0).
         </para>
+
+        <para lang="en">The equation is:</para>
         <para lang="de">Die zugehörige Formel lautet:</para>
 
         <equation>
-          <title>Formel für den Multiplikationsmodus</title>
+          <title>
+            <phrase lang="en">
+              Equation for layer mode <quote>multiply</quote>
+            </phrase>
+            <phrase lang="de">
+              Formel für den Ebenenmodus <quote>Multiplizieren</quote>
+            </phrase>
+          </title>
           <alt role="latex">$E = \frac {1}{255} (M * I)$</alt>
           <graphic fileref="../images/math/layer-mode-multiply.png"
             format="PNG" />
         </equation>
+
+        <para lang="en">
+          The mode is commutative; the order of the two layers doesn't matter.
+        </para>
       </listitem>
     </varlistentry>
 
@@ -365,6 +507,7 @@
       <term lang="de">Division</term>
 
       <listitem>
+        <indexterm lang="en"><primary>Divide</primary></indexterm>
         <indexterm lang="de">
           <primary>Ebenenmodus</primary>
           <secondary>Division</secondary>
@@ -414,12 +557,22 @@
           </mediaobject>
         </figure>
 
+        <para lang="en">
+          <guilabel>Divide</guilabel>
+          mode multiplies each pixel value in the lower layer by 256 and then
+          divides that by the corresponding pixel value of the upper layer
+          plus one. (Adding one to the denominator avoids dividing by zero.)
+          The resulting image is often lighter, and sometimes looks
+          <quote>burned out</quote>.
+        </para>
         <para lang="de">
           Bei diesem Modus werden die Farbwerte der Pixel dividiert. Das
           resultierende Bild ist meist heller, manchmal sieht es,
           insbesondere in den Bereichen, in denen die Maske sehr dunkel ist,
           auch überbelichtet aus.
         </para>
+
+        <para lang="en">The equation is:</para>
         <para lang="de">
           Die Formel lautet:
           <footnote>
@@ -431,7 +584,15 @@
         </para>
 
         <equation>
-          <title>Formel für den Divisonsmodus</title>
+          <title>
+            <phrase lang="en">
+              Equation for layer mode <quote>divide</quote>
+            </phrase>
+            <phrase lang="de">
+              Formel für den Ebenenmodus <quote>Division</quote>
+            </phrase>
+          </title>
+
           <alt role="latex">$E = 256 \frac {I}{M + 1}$</alt>
           <graphic fileref="../images/math/layer-mode-divide.png"
             format="JPG" />
@@ -444,6 +605,7 @@
       <term lang="de">Bildschirm</term>
 
       <listitem>
+        <indexterm lang="en"><primary>Screen</primary></indexterm>
         <indexterm lang="de">
           <primary>Ebenenmodus</primary>
           <secondary>Bildschirm</secondary>
@@ -493,6 +655,18 @@
           </mediaobject>
         </figure>
 
+        <para lang="en">
+          <guilabel>Screen</guilabel>
+          mode inverts the values of each of the visible pixels in the two
+          layers of the image. (That is, it subtracts each of them from 255.)
+          Then it multiplies them together, inverts this value again and
+          divides by 255. The resulting image is usually brighter, and
+          sometimes <quote>washed out</quote>
+          in appearance. The exceptions to this are a black layer, which does
+          not change the other layer, and a white layer, which results in a
+          white image. Darker colors in the image appear to be more
+          transparent.
+        </para>
         <para lang="de">
           Dieser Modus ist mit dem Modus <quote>Multiplizieren</quote>
           verwandt. Allerdings werden die Farbwerte beider Ebenen invertiert
@@ -503,13 +677,27 @@
           nicht verändern, sowie weiße Bereiche, die ein weißes Bild
           ergeben. Dunkle Farben im Bild erscheinen transparenter.
         </para>
+
+        <para lang="en">The equation is:</para>
         <para lang="de">Die Formel lautet:</para>
 
         <equation>
-          <title>Formel für den Bildschirmmodus</title>
+          <title>
+            <phrase lang="en">
+              Equation for layer mode <quote>screen</quote>
+            </phrase>
+            <phrase lang="de">
+              Formel für den Ebenenmodus <quote>Bildschirm</quote>
+            </phrase>
+          </title>
+
           <alt role="latex">$E = 1 - \frac {(255-M)*(255-I)}{255}$</alt>
           <graphic fileref="../images/math/layer-mode-screen.png" />
         </equation>
+
+        <para lang="en">
+          The mode is commutative; the order of the two layers doesn't matter.
+        </para>
       </listitem>
     </varlistentry>
 
@@ -518,6 +706,7 @@
       <term lang="de">Überlagern</term>
 
       <listitem>
+        <indexterm lang="en"><primary>Overlay</primary></indexterm>
         <indexterm lang="de">
           <primary>Ebenenmodus</primary>
           <secondary>Überlagern</secondary>
@@ -568,6 +757,15 @@
           </mediaobject>
         </figure>
 
+        <para lang="en">
+          <guilabel>Overlay</guilabel>
+          mode inverts the pixel value of the lower layer, multiplies it by
+          two times the pixel value of the upper layer, adds that to the
+          original pixel value of the lower layer, divides by 255, and then
+          multiplies by the pixel value of the original lower layer and
+          divides by 255 again. It darkens the image, but not as much as with
+          <quote>Multiply</quote> mode.
+        </para>
         <para lang="de">
           <!-- CHECK: de:  Die verbale Beschreibung der Formel ist m.E.
           nicht sinnvoll, sondern eher störend. ude -->
@@ -579,6 +777,8 @@
           verdunkelt das Bild, allerdings nicht so stark wie der
           Multiplikationsmodus.
         </para>
+
+        <para lang="en">The equation is:</para>
         <para lang="de">
           Die Formel lautet:
           <footnote id="gimp-layer-mode-bug162395">
@@ -605,7 +805,14 @@
           of existing images. scb in "glossary/m.xml"
         -->
         <equation>
-          <title>Formel für den Modus <quote>Überlagern</quote></title>
+          <title>
+            <phrase lang="en">
+              Equation for layer mode <quote>overlay</quote>
+            </phrase>
+            <phrase lang="de">
+              Formel für den Ebenenmodus <quote>Überlagern</quote>
+            </phrase>
+          </title>
           <alt role="latex">
             $E = \frac{1I}{255} * (I+ \frac{2M}{255} * (255 - I))$
           </alt>
@@ -619,6 +826,7 @@
       <term lang="de">Abwedeln</term>
 
       <listitem>
+        <indexterm lang="en"><primary>Dodge</primary></indexterm>
         <indexterm lang="de">
           <primary>Ebenenmodus</primary>
           <secondary>Abwedeln</secondary>
@@ -668,6 +876,20 @@
           </mediaobject>
         </figure>
 
+        <para lang="en">
+          <guilabel>Dodge</guilabel>
+          mode multiplies the pixel value of the lower layer by 256, then
+          divides that by the inverse of the pixel value of the top layer. The
+          resulting image is usually lighter, but some colors may be inverted.
+        </para>
+        <para lang="en">
+          In photography, dodging is a technique used in a darkroom to
+          increase the exposure in particular areas of the image. This brings
+          out details in the shadows. When used for this purpose, dodge may
+          work best on Grayscale images and with a painting tool, rather than
+          as a layer mode.
+        </para>
+
         <para lang="de">
           In der Fotografie ist Abwedeln eine Technik, bei der in bestimmten
           Bildbereichen bei der Entwicklung von Bildern die Belichtung erhöht
@@ -677,10 +899,19 @@
           einem Graustufenbild. Beachten Sie auch den zugehörigen Eintrag
           <xref linkend="glossary-dodge"/> im Glossar.
         </para>
+
+        <para lang="en">The equation is:</para>
         <para lang="de">Die Formel ähnelt der des Divisionsmodus:</para>
 
         <equation>
-          <title>Formel für den Modus <quote>Abwedeln</quote></title>
+          <title>
+            <phrase lang="en">
+              Equation for layer mode <quote>dodge</quote>
+            </phrase>
+            <phrase lang="de">
+              Formel für den Ebenenmodus <quote>Abwedeln</quote>
+            </phrase>
+          </title>
           <alt role="latex">$E = \frac{I*256}{(255-M)+1}$</alt>
           <graphic fileref="../images/math/layer-mode-dodge.png" />
         </equation>
@@ -692,6 +923,7 @@
       <term lang="de">Nachbelichten</term>
 
       <listitem>
+        <indexterm lang="en"><primary>Burn</primary></indexterm>
         <indexterm lang="de">
           <primary>Ebenenmodus</primary>
           <secondary>Nachbelichten</secondary>
@@ -706,7 +938,6 @@
               Beispiel für den Ebenenmodus <quote>Nachbelichten</quote>
             </phrase>
           </title>
-
 
           <mediaobject>
             <imageobject>
@@ -742,6 +973,21 @@
           </mediaobject>
         </figure>
 
+        <para lang="en">
+          <guilabel>Burn</guilabel>
+          mode inverts the pixel value of the lower layer, multiplies it by
+          256, divides that by one plus the pixel value of the upper layer,
+          then inverts the result. It tends to make the image darker, somewhat
+          similar to <quote>Multiply</quote> mode.
+        </para>
+        <para lang="en">
+          In photography, burning is a technique used in a darkroom to
+          decrease the exposure in particular areas of the image. This brings
+          out details in the highlights. When used for this purpose, burn may
+          work best on Grayscale images and with a painting tool, rather than
+          as a layer mode.
+        </para>
+
         <para lang="de">
           In der Fotografie ist Nachbelichten eine Technik, bei der in
           bestimmten Bildbereichen bei der Entwicklung von Bildern die
@@ -752,12 +998,21 @@
           Graustufenbild. Beachten Sie auch den zugehörigen Eintrag
           <xref linkend="glossary-burn"/> im Glossar.
         </para>
+
+        <para lang="en">The equation is:</para>
         <para lang="de">
           Die Formel entspricht der des Abwedelns mit invertierten Werten:
         </para>
 
         <equation>
-          <title>Formel für den Modus <quote>Nachbelichten</quote></title>
+          <title>
+            <phrase lang="en">
+              Equation for layer mode <quote>burn</quote>
+            </phrase>
+            <phrase lang="de">
+              Formel für den Ebenenmodus <quote>Nachbelichten</quote>
+            </phrase>
+          </title>
           <alt role="latex">$E = 255 - \frac{(255-I)*256}{M+1}$</alt>
           <graphic fileref="../images/math/layer-mode-burn.png" />
         </equation>
@@ -769,6 +1024,7 @@
       <term lang="de">Harte Kanten</term>
 
       <listitem>
+        <indexterm lang="en"><primary>Hard Light</primary></indexterm>
         <indexterm lang="de">
           <primary>Ebenenmodus</primary>
           <secondary>Harte Kanten</secondary>
@@ -819,10 +1075,23 @@
           </mediaobject>
         </figure>
 
+        <para lang="en">
+          <guilabel>Hard Light</guilabel>
+          mode is rather complicated because the equation consists of two
+          parts, one for darker colors and one for brighter colors. If the
+          pixel color of the upper layer is greater than 128, the layers are
+          combined according to the first formula shown below. Otherwise, the
+          pixel values of the upper and lower layers are multiplied together
+          and multiplied by two, then divided by 256. You might use this mode
+          to combine two photographs and obtain bright colors and sharp edges.
+        </para>
+
         <para lang="de">
           Diesen Blendenmodus können Sie verwenden, um zwei Fotos zu
           kombinieren und helle Farben und scharfe Kanten zu erhalten.
         </para>
+
+        <para lang="en">The equation is:</para>
         <para lang="de">
           Die Formel besteht aus zwei Teilen, einen für die Pixel der Maske,
           welche überdurchschnittlich hell sind (&gt;128), und einen für
@@ -832,8 +1101,15 @@
 
         <equation>
           <title>
-            Formel für den Modus <quote>Harte Kanten</quote>, M &gt; 128
+            <phrase lang="en">
+              Equation for layer mode <quote>hard light</quote>, M &gt; 128
+            </phrase>
+            <phrase lang="de">
+              Formel für den Ebenenmodus <quote>Harte Kanten</quote>,
+              M &gt; 128
+            </phrase>
           </title>
+
           <alt role="latex">
             $M > 128: E = 255- \frac{(255-I)*(255-(2*(M-128)))}{256}$
           </alt>
@@ -841,8 +1117,15 @@
         </equation>
         <equation>
           <title>
-            Formel für den Modus <quote>Harte Kanten</quote>, M &le; 128
+            <phrase lang="en">
+              Equation for layer mode <quote>hard light</quote>, M &le; 128
+            </phrase>
+            <phrase lang="de">
+              Formel für den Ebenenmodus <quote>Harte Kanten</quote>,
+              M &le; 128
+            </phrase>
           </title>
+
           <alt role="latex">$M \leq 128: E = \frac{I*M*2}{256}$</alt>
           <graphic fileref="../images/math/layer-mode-hard-light2.png" />
         </equation>
@@ -854,6 +1137,7 @@
       <term lang="de">Weiche Kanten</term>
 
       <listitem>
+        <indexterm lang="en"><primary>Soft Light</primary></indexterm>
         <indexterm lang="de">
           <primary>Ebenenmodus</primary>
           <secondary></secondary>
@@ -904,6 +1188,14 @@
           </mediaobject>
         </figure>
 
+        <para lang="en">
+          <guilabel>Soft Light</guilabel> is not related to
+          <quote>Hard Light</quote> in anything but the name, but it
+          does tend to make the edges softer and the colors not so
+          bright. It is similar to <quote>Overlay</quote> mode. In some
+          versions of <acronym>GIMP</acronym>, <quote>Overlay</quote>
+          mode and <quote>Soft Light</quote> mode are identical.
+        </para>
         <para lang="de">
           Die Anwendung dieses Blendenmodus neigt dazu, Kanten weicher
           und Farben nicht ganz so hell zu machen. Er ähnelt dem
@@ -920,6 +1212,8 @@
           Übrigens hat der Modus bis auf seinem Namen nichts mit dem Modus
           <quote>Harte Kanten</quote> gemeinsam.
         </para>
+
+        <para lang="en">The equation is:</para>
         <para lang="de">Die Formel lautet:</para>
 
         <!-- Note: The equation given above turns out to be mathematically
@@ -927,12 +1221,27 @@
           about bug 162395). It is not certain if this will ever be fixed.
           scb in "glossary/m.xml" -->
         <equation>
-          <title>Formel für Bildschirmmodus</title>
+          <title>
+            <phrase lang="en">
+              Equation for layer mode <quote>screen</quote>
+            </phrase>
+            <phrase lang="de">
+              Formel für den Ebenenmodus <quote>Bildschirm</quote>
+            </phrase>
+          </title>
           <alt role="latex">$R_{s} = \frac {255-((255-I)*(255-M))}{256}$</alt>
           <graphic fileref="../images/math/layer-mode-soft-light1.png" />
         </equation>
         <equation>
-          <title>Formel für den Modus <quote>Weiche Kanten</quote></title>
+          <title>
+            <phrase lang="en">
+              Equation for layer mode <quote>soft light</quote>
+            </phrase>
+            <phrase lang="de">
+              Formel für den Ebenenmodus <quote>Weiche Kanten</quote>
+            </phrase>
+          </title>
+
           <alt role="latex">$E = \frac {((255-I)*M*I)+(I*R_{s})}{255}$</alt>
           <graphic fileref="../images/math/layer-mode-soft-light2.png" />
         </equation>
@@ -948,6 +1257,7 @@
       </term>
 
       <listitem>
+        <indexterm lang="en"><primary>Grain</primary></indexterm>
         <indexterm lang="de">
           <primary>Ebenenmodus</primary>
           <secondary>Faser extrahieren</secondary>
@@ -998,6 +1308,14 @@
           </mediaobject>
         </figure>
 
+        <para lang="en">
+          <guilabel>Grain Extract</guilabel>
+          mode is supposed to extract the <quote>film grain</quote>
+          from a layer to produce a new layer that is pure grain, but it can
+          also be useful for giving images an embossed appearance. It
+          subtracts the pixel value of the upper layer from that of the lower
+          layer and adds 128.
+        </para>
         <para lang="de">
           <!-- CHECK: de  translation of "grain" and how the mode is used at all-->
           Dieser Modus soll die <quote>Filmkörnigkeit</quote>
@@ -1005,10 +1323,19 @@
           allein aus dieser Struktur besteht. Er kann aber auch nützlich sein,
           um Bildern ein relief-artiges Aussehen zu verleihen.
         </para>
+
+        <para lang="en">The equation is:</para>
         <para lang="de">Die Formel ist einfach:</para>
 
         <equation>
-          <title>Formel für den Modus <quote>Faser extrahieren</quote></title>
+          <title>
+            <phrase lang="en">
+              Equation for layer mode <quote>grain extract</quote>
+            </phrase>
+            <phrase lang="de">
+              Formel für den Ebenenmodus <quote>Faser extrahieren</quote>
+            </phrase>
+          </title>
           <alt role="latex">$E = I - M + 128$</alt>
           <graphic fileref="../images/math/layer-mode-grainextract.png" />
         </equation>
@@ -1024,6 +1351,7 @@
       </term>
 
       <listitem>
+        <indexterm lang="en;fr"><primary>Grain</primary></indexterm>
         <indexterm lang="de">
           <primary>Ebenenmodus</primary>
           <secondary>Faser mischen</secondary>
@@ -1074,19 +1402,36 @@
           </mediaobject>
         </figure>
 
+        <para lang="en">
+          <guilabel>Grain Merge</guilabel> mode merges a grain layer
+          (possibly one created from the <quote>Grain Extract</quote>
+          mode) into the current layer, leaving a grainy version of the
+          original layer. It does just the opposite of
+          <quote>Grain Extract</quote>. It adds the pixel values of the
+          upper and lower layers together and subtracts 128.
+        </para>
         <para lang="de">
           <!-- CHECK: de:  translation of "grain"/"grainy" and how the mode works at all -->
           Dieser Modus mischt eine körnige Struktur (möglicherweise mit dem
           Modus <quote>Faser extrahieren</quote> erstellt) in die aktuelle
           Ebene und erzeugt so eine faserige Version der Originalebene.
         </para>
+
+        <para lang="en">The equation is:</para>
         <para lang="de">
           Die Formel ist eine direkte Umkehrung des Modus
           <quote>Faser extrahieren</quote>:
         </para>
 
         <equation>
-          <title>Formel für den Modus <quote>Faser mischen</quote></title>
+          <title>
+            <phrase lang="en">
+              Equation for layer mode <quote>grain merge</quote>
+            </phrase>
+            <phrase lang="de">
+              Formel für den Ebenenmodus <quote>Faser mischen</quote>
+            </phrase>
+          </title>
           <alt role="latex">$E = I + M - 128$</alt>
           <graphic fileref="../images/math/layer-mode-grainmerge.png" />
         </equation>
@@ -1098,6 +1443,7 @@
       <term lang="de">Unterschied</term>
 
       <listitem>
+        <indexterm lang="en"><primary>Difference</primary></indexterm>
         <indexterm lang="de">
           <primary>Ebenenmodus</primary>
           <secondary>Unterschied</secondary>
@@ -1148,6 +1494,13 @@
           </mediaobject>
         </figure>
 
+        <para lang="en">
+          <guilabel>Difference</guilabel>
+          mode subtracts the pixel value of the upper layer from that of the
+          lower layer and then takes the absolute value of the result. No
+          matter what the original two layers look like, the result looks
+          rather odd. You can use it to invert elements of an image.
+        </para>
         <para lang="de">
           Bei diesem Ebenemodus werden die Farbwerte voneinander subtrahiert
           und ein Absolutwert gebildet. Unabhängig von den Ausgangsebenen
@@ -1156,12 +1509,27 @@
           ist übrigens kommutativ, das heißt die Ebenen können beliebig
           vertauscht werden.
         </para>
+
+        <para lang="en">The equation is:</para>
         <para lang="de">Die Formel lautet:</para>
+
         <equation>
-          <title>Formel für den Differenzmodus</title>
+          <title>
+            <phrase lang="en">
+              Equation for layer mode <quote>difference</quote>
+            </phrase>
+            <phrase lang="de">
+              Formel für den Ebenenmodus <quote>Unterschied</quote>
+            </phrase>
+          </title>
+
           <alt role="latex">$E = |I - M|$</alt>
           <graphic fileref="../images/math/layer-mode-difference.png" />
         </equation>
+
+        <para lang="en">
+          The mode is commutative; the order of the two layers doesn't matter.
+        </para>
       </listitem>
     </varlistentry>
 
@@ -1170,6 +1538,7 @@
       <term lang="de">Addition</term>
 
       <listitem>
+        <indexterm lang="en"><primary>Addition</primary></indexterm>
         <indexterm lang="de">
           <primary>Ebenenmodus</primary>
           <secondary>Addition</secondary>
@@ -1220,6 +1589,13 @@
           </mediaobject>
         </figure>
 
+        <para lang="en">
+          <guilabel>Addition</guilabel>
+          mode is very simple. The pixel values of the upper and lower layers
+          are added to each other. The resulting image is usually lighter. The
+          equation can result in color values greater than 255, so some of the
+          light colors may be set to the maximum value of 255.
+        </para>
         <para lang="de">
           Bei diesem Ebenenmodus handelt es sich um einen eher einfachen
           Vertreter seiner Klasse. Die Pixelwerte beider Ebenen werden einfach
@@ -1227,13 +1603,27 @@
           sind einige Bildbereiche auch einfach nur noch weiß, da das Ergebnis
           bei 255 begrenzt wird.
         </para>
+
+        <para lang="en">The equation is:</para>
         <para lang="de">Die Formel lautet:</para>
 
         <equation>
-          <title>Formel für den Additionsmodus</title>
+          <title>
+            <phrase lang="en">
+              Equation for layer mode <quote>addition</quote>
+            </phrase>
+            <phrase lang="de">
+              Formel für den Ebenenmodus <quote>Addition</quote>
+            </phrase>
+          </title>
+
           <alt role="latex">$E = min( (M + I), 255)$</alt>
           <graphic fileref="../images/math/layer-mode-addition.png" />
         </equation>
+
+        <para lang="en">
+          The mode is commutative; the order of the two layers doesn't matter.
+        </para>
       </listitem>
     </varlistentry>
 
@@ -1242,6 +1632,7 @@
       <term lang="de">Subtraktion</term>
 
       <listitem>
+        <indexterm lang="en"><primary>Subtract</primary></indexterm>
         <indexterm lang="de">
           <primary>Ebenenmodus</primary>
           <secondary>Subtraktion</secondary>
@@ -1292,6 +1683,14 @@
           </mediaobject>
         </figure>
 
+        <para lang="en">
+          <guilabel>Subtract</guilabel>
+          mode subtracts the pixel values of the upper layer from the pixel
+          values of the lower layer. The resulting image is normally darker.
+          You might get a lot of black or near-black in the resulting image.
+          The equation can result in negative color values, so some of the
+          dark colors may be set to the minimum value of 0.
+        </para>
         <para lang="de">
           Bei diesem Ebenemodus werden die Pixelwerte der oberen Ebene von
           denen der unteren abgezogen. Das Ergebnis ist gewöhnlich ein
@@ -1300,10 +1699,20 @@
           negative Werte auftreten können, ist es nötig, das Ergebnis auf 0
           zu begrenzen.
         </para>
+
+        <para lang="en">The equation is:</para>
         <para lang="de">Die Formel lautet:</para>
 
         <equation>
-          <title>Formel für den Subtraktionsmodus</title>
+          <title>
+            <phrase lang="en">
+              Equation for layer mode <quote>subtraction</quote>
+            </phrase>
+            <phrase lang="de">
+              Formel für den Ebenenmodus <quote>Subtraktion</quote>
+            </phrase>
+          </title>
+
           <alt role="latex">$E = max( (I - M),0)$</alt>
           <graphic fileref="../images/math/layer-mode-subtract.png" />
         </equation>
@@ -1365,6 +1774,13 @@
           </mediaobject>
         </figure>
 
+        <para lang="en">
+          <guimenuitem>Darken Only</guimenuitem>
+          mode compares each component of each pixel in the upper layer with
+          the corresponding one in the lower layer and uses the smaller value
+          in the resulting image. Completely white layers have no effect on
+          the final image and completely black layers result in a black image.
+        </para>
         <para lang="de">
           Dieser Modus vergleicht jede Farbkomponente jedes Pixels der oberen
           und unteren Ebene. Das Ergebnis besteht aus den jeweils kleinsten
@@ -1373,12 +1789,26 @@
           dieser Modus ist kommutativ, das heißt welche Ebene oben und welche
           unten ist, hat keinen Einfluß auf das Ergebnis.
         </para>
+
+        <para lang="en">The equation is:</para>
         <para lang="de">Die Formel lautet:</para>
+
         <equation>
-          <title>Formel für den Modus <quote>Abdunkeln</quote></title>
+          <title>
+            <phrase lang="en">
+              Equation for layer mode <quote>darken only</quote>
+            </phrase>
+            <phrase lang="de">
+              Formel für den Ebenenmodus <quote>Nur Abdunkeln</quote>
+            </phrase>
+          </title>
           <alt role="latex">$E = min(M,I)$</alt>
           <graphic fileref="../images/math/layer-mode-darken.png" />
         </equation>
+
+        <para lang="en">
+          The mode is commutative; the order of the two layers doesn't matter.
+        </para>
       </listitem>
     </varlistentry>
 
@@ -1387,6 +1817,7 @@
       <term lang="de">Nur Aufhellen</term>
 
       <listitem>
+        <indexterm lang="en"><primary>Lighten</primary></indexterm>
         <indexterm lang="de">
           <primary>Ebenenmodus</primary>
           <secondary>Aufhellen</secondary>
@@ -1438,6 +1869,13 @@
           </mediaobject>
         </figure>
 
+        <para lang="en">
+          <guimenuitem>Lighten Only</guimenuitem>
+          mode compares each component of each pixel in the upper layer with
+          the corresponding one in the lower layer and uses the larger value
+          in the resulting image. Completely black layers have no effect on
+          the final image and completely white layers result in a white image.
+        </para>
         <para lang="de">
           Dieser Modus vergleicht jede Farbkomponente jedes Pixels der oberen
           und unteren Ebene. Das Ergebnis besteht aus den jeweils größten
@@ -1446,13 +1884,26 @@
           dieser Modus ist kommutativ, das heißt welche Ebene oben und welche
           unten ist, hat keinen Einfluß auf das Ergebnis.
         </para>
+
+        <para lang="en">The equation is:</para>
         <para lang="de">Die Formel lautet:</para>
 
         <equation>
-          <title>Formel für den Modus <quote>Aufhellen</quote></title>
+          <title>
+            <phrase lang="en">
+              Equation for layer mode <quote>lighten only</quote>
+            </phrase>
+            <phrase lang="de">
+              Formel für den Ebenenmodus <quote>Nur Aufhellen</quote>
+            </phrase>
+          </title>
           <alt role="latex">$E = max(M,I)$</alt>
           <graphic fileref="../images/math/layer-mode-lighten.png" />
         </equation>
+
+        <para lang="en">
+          The mode is commutative; the order of the two layers doesn't matter.
+        </para>
       </listitem>
     </varlistentry>
 
@@ -1461,6 +1912,7 @@
       <term lang="de">Farbton</term>
 
       <listitem>
+        <indexterm lang="en"><primary>Hue</primary></indexterm>
         <indexterm lang="de">
           <primary>Ebenenmodus</primary>
           <secondary>Farbton</secondary>
@@ -1510,6 +1962,13 @@
           </mediaobject>
         </figure>
 
+        <para lang="en">
+          <guilabel>Hue</guilabel>
+          mode uses the hue of the upper layer and the saturation and value of
+          the lower layer to form the resulting image. However, if the
+          saturation of the upper layer is zero, the hue is taken from the
+          lower layer, too.
+        </para>
         <para lang="de">
           Bei diesem Ebenenmodus wird der Farbton der oberen Ebene mit der
           Sättigung und der Helligkeit der unteren Ebene zum Ergebnis
@@ -1523,6 +1982,7 @@
       <term lang="de">Sättigung</term>
 
       <listitem>
+        <indexterm lang="en"><primary>Saturation</primary></indexterm>
         <indexterm lang="de">
           <primary>Ebenenmodus</primary>
           <secondary>Sättigung</secondary>
@@ -1573,6 +2033,11 @@
           </mediaobject>
         </figure>
 
+        <para lang="en">
+          <guilabel>Saturation</guilabel>
+          mode uses the saturation of the upper layer and the hue and value of
+          the lower layer to form the resulting image.
+        </para>
         <para lang="de">
           Bei diesem Ebenenmodus wird die Sättigung der oberen Ebene mit dem
           Farbton und der Helligkeit der unteren Ebene zum Ergebnis
@@ -1586,6 +2051,7 @@
       <term lang="de">Farbe</term>
 
       <listitem>
+        <indexterm lang="en"><primary>Color</primary></indexterm>
         <indexterm lang="de">
           <primary>Ebenenmodus</primary>
           <secondary>Farbe</secondary>
@@ -1635,6 +2101,11 @@
           </mediaobject>
         </figure>
 
+        <para lang="en">
+          <guilabel>Color</guilabel>
+          mode uses the hue and saturation of the upper layer and the value of
+          the lower layer to form the resulting image.
+        </para>
         <para lang="de">
           Hier wird bei der Überblendung der Farbton und die Sättigung der
           oberen Ebene sowie die Helligkeit der unteren Ebene zum Ergebnis
@@ -1648,6 +2119,7 @@
       <term lang="de">Wert</term>
 
       <listitem>
+        <indexterm lang="en"><primary>Value</primary></indexterm>
         <indexterm lang="de">
           <primary>Ebenenmodus</primary>
           <secondary>Wert</secondary>
@@ -1697,6 +2169,13 @@
           </mediaobject>
         </figure>
 
+        <para lang="en">
+          <guilabel>Value</guilabel>
+          mode uses the value of the upper layer and the saturation and hue of
+          the lower layer to form the resulting image. You can use this mode
+          to reveal details in dark and light areas of an image without
+          changing the saturation.
+        </para>
         <para lang="de">
           Hier wird bei der Überblendung die Helligkeit der oberen Ebene sowie
           Farbton und Sättigung der unteren Ebene zum Ergebnis verknüpft.
@@ -1705,6 +2184,16 @@
     </varlistentry>
   </variablelist>
 
+  <para lang="en">
+    Each layer in an image can have a different layer mode. (Of course, the
+    layer mode of the bottom layer of an image has no effect.) The effects of
+    these layer modes are cumulative. The image shown below has three layers.
+    The top layer consists of Wilber surrounded by transparency and has a
+    layer mode of <quote>Difference</quote>.
+    The second layer is solid light blue and has a layer mode of
+    <quote>Addition</quote>. The bottom layer is filled with the
+    <quote>Red Cubes</quote> pattern.
+  </para>
   <para lang="de">
     Die Ebenen eines Bildes können unterschiedliche Modi haben. (Der
     Ebenenmodus der untersten Ebene hat natürlich keine Wirkung.) Die Effekte
@@ -1714,18 +2203,120 @@
     hellblau mit Ebenenmodus <quote>Addition</quote>.
     Die unterste Ebene ist mit dem Muster <quote>Red Cubes</quote> gefüllt.
   </para>
-  <para lang="de">
-    <!-- TODO: de make new example -->
-    <inlinemediaobject>
+
+  <!-- TODO: make new example -->
+  <figure>
+    <title>
+      <phrase lang="en">Multi layer example</phrase>
+      <phrase lang="de">Anwendungsbeispiel für mehrere Ebenen</phrase>
+    </title>
+
+    <mediaobject>
       <imageobject>
         <imagedata fileref="../images/glossary/modes-multilayer.png"
           format="PNG" />
       </imageobject>
-    </inlinemediaobject>
+    </mediaobject>
+  </figure>
+
+  <para lang="en">
+    <acronym>GIMP</acronym>
+    also has similar modes which are used for the painting tools. These are
+    the same twenty-one modes as the layer modes, plus an additional two modes
+    which are specific to the painting tools. You can set these modes from the
+    <guilabel>Mode</guilabel>
+    menu in the Tools option dialog. In the equations shown above, the layer
+    you are painting on is the <quote>lower layer</quote>
+    and the pixels painted by the tool are the <quote>upper layer</quote>.
+    Naturally, you do not need more than one layer in the image to use these
+    modes, since they only operate on the current layer and the selected
+    painting tool. The two additional painting modes are described here.
   </para>
 
-  <para lang="de">
-    <acronym>GIMP</acronym> verwendet die selben 21 Modi sowie zwei weitere
-    auch für Malwerkzeuge, siehe <xref linkend="gimp-tool-painting" />.
-  </para>
+  <variablelist lang="en">
+    <varlistentry>
+      <term lang="en">Behind</term>
+
+      <listitem>
+        <para>
+          <indexterm lang="en">
+            <primary>Behind (paint mode)</primary>
+          </indexterm>
+        </para>
+        <para>
+          <inlinemediaobject>
+            <imageobject>
+              <imagedata fileref="../images/glossary/modes-normal2.png"
+                format="PNG" />
+            </imageobject>
+          </inlinemediaobject>
+          <inlinemediaobject>
+            <imageobject>
+              <imagedata fileref="../images/glossary/modes-behind.png"
+                format="PNG" />
+            </imageobject>
+          </inlinemediaobject>
+        </para>
+
+        <para lang="en">
+          The <guilabel>Behind</guilabel>
+          mode is only available from the Toolbox options, not as a layer mode
+          from the Layers dialog. When you paint with a tool in
+          <quote>Behind</quote> mode, it paints <emphasis>behind</emphasis>
+          objects that are already painted on the layer. That means that this
+          mode only makes sense when you are painting on a layer that has
+          transparent areas, otherwise you wouldn't be able to see any
+          difference in the resulting image.
+        </para>
+
+        <para lang="en">
+          In the example image, Wilber is on the top layer, surrounded by
+          transparency. The lower layer is solid light blue. The Bucket Fill
+          tool was used, with an <guilabel>Affect</guilabel>
+          mode of <quote>Selection</quote>,
+          and the entire layer was selected. A pattern was used to paint
+          with the Bucket Fill tool.
+        </para>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term lang="en">Color Erase</term>
+
+      <listitem>
+        <para>
+          <inlinemediaobject>
+            <imageobject>
+              <imagedata fileref="../images/glossary/modes-normal2.png"
+                format="PNG" />
+            </imageobject>
+          </inlinemediaobject>
+          <inlinemediaobject>
+            <imageobject>
+              <imagedata fileref="../images/glossary/modes-colorerase.png"
+                format="PNG" />
+            </imageobject>
+          </inlinemediaobject>
+        </para>
+
+        <para lang="en">
+          The <guilabel>Color Erase</guilabel>
+          mode is only available from the Toolbox options, not as a layer mode
+          from the Layers dialog. When you paint with a tool in
+          <quote>Color Erase</quote>
+          mode, it finds areas in the layer which have the current painting
+          color and erases them, turning those areas transparent. Like
+          <quote>Behind</quote>
+          mode, the layer must have a layer mask (so that transparency is
+          allowed) for an effect to be seen.
+        </para>
+
+        <para lang="en">
+          In the example image, the color of the Bucket Fill tool was white,
+          so white parts of Wilber were erased and the blue background shows
+          through.
+        </para>
+      </listitem>
+    </varlistentry>
+  </variablelist>
 </sect2>
