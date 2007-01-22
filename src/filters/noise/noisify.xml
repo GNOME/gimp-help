@@ -18,8 +18,8 @@
       </revision>
       <revision lang="de">
         <revnumber>$Revision$</revnumber>
-        <date>2006-11-04</date>
-        <authorinitials>lexa</authorinitials>
+        <date>2007-01-18</date>
+        <authorinitials>ude</authorinitials>
       </revision>
       <revision lang="fr">
         <revnumber>$Revision$</revnumber>
@@ -412,6 +412,14 @@
         <term lang="it">Disturbo correlato</term>
         <term lang="ru">Согласованный шум</term>
         <listitem>
+          <!-- FIXME: en es it ru:  correlated, not independent -->
+          <!-- From plug-ins/common/noisify.c:
+                   "Noise may be additive (uncorrelated) or multiplicative
+                   (correlated - also known as speckle noise)."
+               Noise is computed more or less as follows:
+                   correlated:      dest = src * (1 + noise),   -2 < noise < 2
+                   not correlated:  dest = src + noise,       -255 < noise < 255
+          -->
           <para lang="en">
             When checked, this radio button makes sliders R, G and B to move
             all together. The same relative noise will be added to all
@@ -419,12 +427,10 @@
           </para>
           <para lang="cs"></para>
           <para lang="de">
-            <!--CHECK: de  it doesn't work that way for me, please doublecheck -->
-            Wenn diese Eigenschaft aktiviert ist, haben werden die drei
-            Schieberegler für Rot, Grün und Blau alle den gleichen Wert haben.
-            Das gleich relative Rauschen wird damit auf alle Kanäle jedes
-            Pixels angewendet. Daher ändert sich der Farbton der Pixel nicht
-            sehr.
+            Wenn diese Eigenschaft aktiviert ist, ist für jeden Kanal der
+            Rauschanteil von der Höhe des Pixelwertes abhängig: ein höherer
+            Wert führt zu einem höheren Rauschen. Insbesondere bleiben
+            dunkle Bildbereiche tendenziell dunkel.
           </para>
           <para lang="es">
             Cuando está activa esta casilla, hace que los deslizadores R, G y
@@ -475,9 +481,12 @@
             Zachová se tak vyvážení barev.
           </para>
           <para lang="de">
-            <!--CHECK: de  it doesn't work that way for me, please doublecheck -->
             Wenn diese Eigenschaft aktiviert ist, können die Schieberegler
-            unabhängig voneinander bewegt werden.
+            unabhängig voneinander bewegt werden. Andernfalls werden die drei
+            Schieberegler für Rot, Grün und Blau alle den gleichen Wert haben.
+            Das gleiche relative Rauschen wird damit auf alle Kanäle jedes
+            Pixels angewendet. Daher ändert sich der Farbton der Pixel nicht
+            sehr.
           </para>
           <para lang="fr">
             Quand ce bouton radio est coché, les trois curseurs RVB sont
@@ -542,9 +551,9 @@
             Stelle der RGB-Felder <guilabel>Grau</guilabel> angezeigt.
           </para>
           <para lang="de">
-            Der Wert, der durch die Schieberegler eingestellt wird ist die
-            Standardabweichung von der Normalverteilung des aufgebrachten
-            Rauschens. Die benutzte Standardabweichung ist die Hälfte des hier
+            Der Wert, der durch die Schieberegler eingestellt wird, ist die
+            Standardabweichung des normalverteilten aufgebrachten Rauschens.
+            Die benutzte Standardabweichung ist die Hälfte des hier
             eingetragenen Wertes. Dabei ist 1 der Abstand zwischen dem
             höchsten und dem niedrigsten möglichen Wert in einem Kanal.
           </para>
