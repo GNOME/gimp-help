@@ -3,17 +3,19 @@
 STAMP_DIR = stamps
 
 IMAGE_DIRS = \
+	.		\
+	callouts	\
 	dialogs		\
 	dialogs/examples\
 	filters		\
 	filters/examples\
 	glossary	\
+	math		\
+	menus		\
+	preferences	\
 	tool-options	\
 	toolbox		\
-	callouts	\
-	preferences	\
-	using           \
-	menus
+	using
 
 IMAGE_FILES = \
 	$(wildcard $(top_srcdir)/images/*.png)		\
@@ -93,9 +95,21 @@ $(STAMP_DIR)/mkdirs.stamp: $(patsubst %,$(STAMP_DIR)/mkdirs.%.stamp,$(ALL_LINGUA
 	@echo '*** Creating directories ***'
 
     # we care only for HTML here
-	@for name in `find $(top_srcdir)/images/ -name "*.png" -o -name "*.jpg"`;\
-		do $(mkinstalldirs) `dirname html/$$name`; \
+	@for lang in $(ALL_LINGUAS); do \
+	  echo 'Language: '$$lang; \
+	  if test $$lang = "en"; then \
+	    for dir in $(IMAGE_DIRS); do \
+	      for file in `echo $(top_srcdir)/images/$$dir/*.png` `echo $(top_srcdir)/images/$$dir/*.jpg`; do \
+		$(mkinstalldirs) `dirname html/$$file`; \
+	      done; \
+	    done; \
+	  else \
+	    for file in `find images/ -wholename "*/$$lang/*.png" -o -wholename "*/$$lang/*.jpg"`; do \
+	      $(mkinstalldirs) `dirname html/$$file`; \
+	    done; \
+	  fi; \
 	done;
+
   # only create a link in the PDF directory, because image files are
   # included in the PDF anyways
 	@echo '*** Creating link in PDF directory to images ***'
@@ -133,8 +147,19 @@ $(STAMP_DIR)/images.stamp : $(STAMP_DIR)/mkdirs.stamp $(IMAGE_FILES)
 	@echo '*** Copying images ***'
 
   # copy the image files to html directory
-	@for name in `find $(top_srcdir)/images/ -name "*.png" -o -name "*.jpg"`;\
-    do cp $$name html/$$name; \
+	@for lang in $(ALL_LINGUAS); do \
+	  echo 'Language: '$$lang; \
+	  if test $$lang = "en"; then \
+	    for dir in $(IMAGE_DIRS); do \
+	      for file in `echo $(top_srcdir)/images/$$dir/*.png` `echo $(top_srcdir)/images/$$dir/*.jpg`; do \
+		test -f $$file && cp $$file html/$$file; \
+	      done; \
+	    done; \
+	  else \
+	    for file in `find images/ -wholename "*/$$lang/*.png" -o -wholename "*/$$lang/*.jpg"`; do \
+	      cp $$file html/$$file; \
+	    done; \
+	  fi; \
 	done;
 
 	@touch $@
