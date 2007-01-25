@@ -4,12 +4,13 @@
                 "http://www.docbook.org/xml/4.3/docbookx.dtd">
 
 <!-- section history:
+  2007-01-22 revised it by alessandro falappa
   2006-12-11 rewrote text; added an example by j.h
   2005-12-07 replaced <simplesect> by <sect3> by lexa
   2005/09/29 translated to german by axel.wernicke
 -->
 <sect2 id="plug-in-depth-merge" lang="en;cs;de;fr;it;ru;zh_CN">
-  <sect2info lang="en;de;fr" role="cvs">
+  <sect2info lang="en;de;fr;it" role="cvs">
     <revhistory>
       <revision lang="en">
         <revnumber>$Revision$</revnumber>
@@ -25,6 +26,11 @@
         <revnumber>$Revision$</revnumber>
         <date>2006-12-09</date>
         <authorinitials>j.h</authorinitials>
+      </revision>
+      <revision lang="it">
+        <revnumber>$Revision$</revnumber>
+        <date>2007-01-22</date>
+        <authorinitials>a.f</authorinitials>
       </revision>
     </revhistory>
   </sect2info>
@@ -125,7 +131,8 @@
 
   <para lang="it">
     Fusione profonda è un filtro di combinazione utile per fondere due immagini
-    differenti.
+    o livelli differenti. Si può decidere quale parte dell'immagine o del
+    livello rimarrà visibile.
   </para>
 
   <para lang="ru">
@@ -182,7 +189,7 @@
     </figure>
 
     <para lang="en">
-      <!--TODO cs it ru zh_CN-->
+      <!--TODO cs ru zh_CN-->
       Every image is associated with a map which works as a mask. Simply
       create this map as a grayscale gradient: when applied onto the image,
       dark areas of the mask will show the underlying image and bright areas
@@ -207,10 +214,10 @@
       masqueront l'image.
     </para>
     <para lang="it">
-      Combina le due immagini selezionate come "sorgenti" mescolandole. I toni
-      scuri sono predominanti nell'immagine risultante. Lo stesso risultato si
-      potrebbe ottenere con le modalità di miscelazione dei livelli ma in quel
-      caso non si possono specificare parametri di fusione.
+      Ogni immagine è associata con una mappa che funziona da maschera.
+      Creando questa maschera come un gradiente a scala di grigi, quando la
+      si applica ad una immagine le aree scure della maschera riveleranno
+      l'immagine sottostante mentre le aree chiare la maschereranno.
     </para>
     <para lang="ru">
       Фильтр объединяет два рисунка, выбранных как "источники", смешивая
@@ -224,7 +231,7 @@
     </para>
 
     <note>
-      <!--TODO cs it ru zh_CN"-->
+      <!--TODO cs ru zh_CN"-->
       <para lang="en">
         To work with this filter, images and maps must have the same size.
         All images to be selected must be present on screen.
@@ -265,8 +272,14 @@
       </para>
 
       <para lang="it">
-        Per funzionare questo filtro necessita di almeno due immagini che
-        devono essere delle stesse dimensioni.
+        Per funzionare questo filtro l'immagine e la maschera devono essere
+        delle stesse dimensioni. Le immagini da selezionare devono essere
+        state precedentemente caricate
+      </para>
+      <para lang="it">
+        Si può anche utilizzare questo filtro su un'immagine con più livelli.
+        Tutti i livelli compariranno nelle caselle a discesa utilizzate per
+        scegliere le immagini. I livelli devono avere le stesse dimensioni.
       </para>
 
       <para lang="ru">
@@ -470,7 +483,7 @@
       </varlistentry>
 
       <varlistentry>
-        <!--TODO: cs it ru zh_CN translation missing -->
+        <!--TODO: cs ru zh_CN translation missing -->
         <term lang="en;it">Offset</term>
         <term lang="cs">Posun</term>
         <term lang="de">Versatz</term>
@@ -502,7 +515,8 @@
             d'importance à une image par rapport à l'autre.
           </para>
           <para lang="it">
-            Specifica l'ammontare di scurimento che sarà applicato alle mappe.
+            Questa opzione sposta la soglia di fusione conferendo più o meno
+            importanza ad una immagine piuttosto che all'altra.
           </para>
           <para lang="ru">
             Определяет значение затемнения, которое будет применено к картам
@@ -522,7 +536,7 @@
         <term lang="zh_CN">缩放 1，缩放 2</term>
 
         <listitem>
-          <!--FIXME: cs it ru zh_CN translation missing -->
+          <!--FIXME: cs ru zh_CN translation missing -->
           <para lang="en">
             Same as above for Offset, but more sensitive and applied to each
             map separatly. When you scale to a lower value, it will affect
@@ -548,8 +562,11 @@
             plus de l'image lors de la fusion.
           </para>
           <para lang="it">
-            Come sopra ma più sensibile e applicato separatamente a ciascuna
-            mappa.
+            Come sopra per Offset ma più sensibile e applicato separatamente a
+            ciascuna mappa. Quando si scala ad un valore più basso si modifica
+            il valore dell'immagine mappata rendendolo più scuro. Di
+            conseguenza il nero domina nella fusione e l'immagine sarà più
+            visibile.
           </para>
           <para lang="ru">
             Тоже что и выше, но дают возможность более тонкой настройки и
@@ -561,12 +578,13 @@
     </variablelist>
   </sect3>
 
-  <sect3 lang="en;de;fr">
-    <!--TODO: cs it ru zh_CN translation missing-->
+  <sect3 lang="en;de;fr;it">
+    <!--TODO: cs ru zh_CN translation missing-->
     <title>
       <phrase lang="en">Using example</phrase>
       <phrase lang="de">Anwendungsbeispiel für das Filter</phrase>
       <phrase lang="fr">Exemple d'utilisation</phrase>
+      <phrase lang="it">Esempio d'uso</phrase>
     </title>
 
     <para lang="en">
@@ -585,12 +603,18 @@
       <link linkend="gimp-tool-blend">Dégradé</link> et modifiés avec l'
       <link linkend="gimp-tool-curves">outil Courbes</link>.
     </para>
+    <para lang="it">
+      Le mappe sono gradienti a scala di grigio creati con lo 
+      <link linkend="gimp-tool-blend">strumento Gradiente</link> e modificati
+      con lo <link linkend="gimp-tool-curves">strumento Curve</link>.
+    </para>
 
     <figure>
       <title>
         <phrase lang="en">Source images and their maps</phrase>
         <phrase lang="de">Quellbilder und ihre Tiefenkarten</phrase>
         <phrase lang="fr">Les images sources et leur cartes</phrase>
+        <phrase lang="it">Immagini sorgenti e le loro mappe</phrase>
       </title>
 
       <mediaobject>
@@ -604,6 +628,7 @@
           <para lang="de">Quelle 1</para>
           <!-- FIXME: fr translation of caption missing -->
             <para lang="fr">Source image 1</para>
+          <para lang="it">Immagine sorgente 1</para>
         </caption>
       </mediaobject>
 
@@ -618,6 +643,7 @@
           <para lang="de">Quelle 2</para>
           <!-- FIXME: fr translation of caption missing -->
             <para lang="fr">Source image 2</para>
+          <para lang="it">Immagine sorgente 2</para>
         </caption>
       </mediaobject>
 
@@ -628,10 +654,11 @@
             format="PNG" />
         </imageobject>
         <caption>
-          <para lang="en">Map1</para>
+          <para lang="en">Map 1</para>
           <para lang="de">Tiefenkarte1</para>
             <!-- FIXME: fr translation of caption missing -->
             <para lang="fr">Map 1</para>
+          <para lang="it">Mappa 1</para>
         </caption>
       </mediaobject>
 
@@ -646,6 +673,7 @@
           <para lang="de">Tiefenkarte 2</para>
             <!-- FIXME: fr translation of caption missing -->
             <para lang="fr">Map 2</para>
+          <para lang="it">Mappa 2</para>
         </caption>
       </mediaobject>
     </figure>
@@ -668,12 +696,20 @@
       map-2: le rond rouge est masqué, le rond vert reste visible. Au total,
       le rond vert et le carré jaune restent visibles.
     </para>
+    <para lang="it">
+      Si può immaginare come il tutto funzioni. L'immagine 1 è processata
+      attraverso la mappa 1: il quadrato rosso viene mascherato e il quadrato
+      giallo rimane visibile. L'immagine 2 è processata dalla mappa 2: il
+      cerchio rosso viene mascherato e rimane visibile il cerchio verde.
+      Nel complesso il cerchio verde e il quadrato rimangono visibili.
+    </para>
 
     <figure>
       <title>
         <phrase lang="en">Results</phrase>
         <phrase lang="de">Ergebnisse</phrase>
         <phrase lang="fr">Résultats</phrase>
+        <phrase lang="it">Risultati</phrase>
       </title>
 
       <mediaobject>
@@ -698,6 +734,11 @@
             La limite entre les deux images est nette et située au
             milieu du dégradé du masque.
           </para>
+          <para lang="it">
+            <emphasis>Nessun offset e nessuna sovrapposizione</emphasis>.
+            Il bordo tra entrambe le immagini è netto e si trova nel mezzo
+            del gradiente della maschera.
+          </para>
         </caption>
       </mediaobject>
 
@@ -721,6 +762,10 @@
             <emphasis>Décalage</emphasis> = 0.980 : la limite, nette, est
             décalée de telle sorte que l'aire de image2 est accrue.
           </para>
+          <para lang="it">
+            <emphasis>Offset</emphasis> = 0.980 : il bordo, netto, viene
+            spostato cosicchè l'area dell'immagine 2 aumenta.
+          </para>
         </caption>
       </mediaobject>
 
@@ -740,6 +785,9 @@
           </para>
           <para lang="fr">
             <emphasis>Superposition</emphasis> : la limite est floue.
+          </para>
+          <para lang="it">
+            <emphasis>Sovrapponi</emphasis>: il bordo è sfumato.
           </para>
         </caption>
       </mediaobject>
@@ -765,6 +813,10 @@
             <emphasis>Échelle 1</emphasis>
             = 0.056 : comme avec Décalage, la limite nette a été décalée. La
             surface occupée par image-1 est augmentée.
+          </para>
+          <para lang="it">
+            <emphasis>Scala 1</emphasis> ridotta a 0.056: come con Offset il
+            bordo viene spostato. L'area dell'immagine 1 viene aumentata.
           </para>
         </caption>
       </mediaobject>
