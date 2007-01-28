@@ -95,19 +95,18 @@ $(STAMP_DIR)/mkdirs.stamp: $(patsubst %,$(STAMP_DIR)/mkdirs.%.stamp,$(ALL_LINGUA
 	@echo '*** Creating directories ***'
 
     # we care only for HTML here
+    # I suppose IMAGE_DIRS to be updated each time whenever you add new image directory
+    # and it should not list empty directories
+	@echo 'Creating base image dirrectories.'; \
+	for dir in $(IMAGE_DIRS); do \
+	  $(mkinstalldirs) html/images/$$dir; \
+	done
+
 	@for lang in $(ALL_LINGUAS); do \
-	  echo 'Language: '$$lang; \
-	  if test $$lang = "en"; then \
-	    for dir in $(IMAGE_DIRS); do \
-	      for file in `echo $(top_srcdir)/images/$$dir/*.png` `echo $(top_srcdir)/images/$$dir/*.jpg`; do \
-		$(mkinstalldirs) `dirname html/$$file`; \
-	      done; \
-	    done; \
-	  else \
-	    for file in `find images/ -wholename "*/$$lang/*.png" -o -wholename "*/$$lang/*.jpg"`; do \
-	      $(mkinstalldirs) `dirname html/$$file`; \
-	    done; \
-	  fi; \
+	  echo 'Creating image dirrectories for language: '$$lang; \
+	  for file in `find images/ -name "*.png" -o -name "*.jpg" | grep "/$$lang/"`; do \
+	    $(mkinstalldirs) `dirname html/$$file`; \
+	  done; \
 	done;
 
   # only create a link in the PDF directory, because image files are
@@ -147,19 +146,20 @@ $(STAMP_DIR)/images.stamp : $(STAMP_DIR)/mkdirs.stamp $(IMAGE_FILES)
 	@echo '*** Copying images ***'
 
   # copy the image files to html directory
+	@echo 'Copying common images.'; \
+	for dir in $(IMAGE_DIRS); do \
+	  for file in `echo $(top_srcdir)/images/$$dir/*.png` `echo $(top_srcdir)/images/$$dir/*.jpg`; do \
+	    if test -f $$file ; then \
+	      cp $$file html/$$file || exit $$?; \
+	    fi; \
+	  done; \
+	done;
+
 	@for lang in $(ALL_LINGUAS); do \
-	  echo 'Language: '$$lang; \
-	  if test $$lang = "en"; then \
-	    for dir in $(IMAGE_DIRS); do \
-	      for file in `echo $(top_srcdir)/images/$$dir/*.png` `echo $(top_srcdir)/images/$$dir/*.jpg`; do \
-		test -f $$file && cp $$file html/$$file; \
-	      done; \
-	    done; \
-	  else \
-	    for file in `find images/ -wholename "*/$$lang/*.png" -o -wholename "*/$$lang/*.jpg"`; do \
-	      cp $$file html/$$file; \
-	    done; \
-	  fi; \
+	  echo 'Copying images for '$$lang ; \
+	  for file in `find images/ -name "*.png" -o -name "*.jpg" | grep "/$$lang/"`; do \
+	    cp $$file html/$$file || exit $$?; \
+	  done; \
 	done;
 
 	@touch $@
