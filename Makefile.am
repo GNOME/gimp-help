@@ -49,7 +49,6 @@ MAKEINDEX = $(top_srcdir)/stylesheets/makeindex.xsl
 
 HELP_STAMPS = \
 	$(STAMP_DIR)/css.stamp		\
-	$(STAMP_DIR)/latex.stamp	\
 	$(STAMP_DIR)/pdf.stamp		\
 	$(STAMP_DIR)/html.stamp		\
 	$(STAMP_DIR)/images.stamp	\
@@ -108,11 +107,6 @@ $(STAMP_DIR)/mkdirs.stamp: $(patsubst %,$(STAMP_DIR)/mkdirs.%.stamp,$(ALL_LINGUA
 	    $(mkinstalldirs) `dirname html/$$file`; \
 	  done; \
 	done;
-
-  # only create a link in the PDF directory, because image files are
-  # included in the PDF anyways
-	@echo '*** Creating link in PDF directory to images ***'
-	@cd $(srcdir)/pdf && ln -fs ../images;
 
 	@touch $@
 
@@ -195,47 +189,22 @@ $(patsubst %,$(STAMP_DIR)/profile.%.stamp,$(ALL_LINGUAS)): $(STAMP_DIR)/profile.
 	   ../stylesheets/profile.xsl \
 	   ../src/gimp.xml | \
 	   sed -e "s/xmlns[:a-z]*\=\"[^\"]*\" //" | \
-	   sed -e "s/lang=[\"'][A-Za-z_;]*[\"']/lang=\"$*\"/" >$*.xml
+	   sed -e "s/lang=[\"'][A-Za-z_;]*[\"']/lang=\"$*\"/" | \
+	   sed -e "/^[ \t]*$$/d" >$*.xml
 
 	@touch $@
 
 profile: $(STAMP_DIR)/profile.stamp 
 
 
-$(STAMP_DIR)/latex.stamp: $(STAMP_DIR)/mkdirs.stamp $(STAMP_DIR)/profile.stamp
-	@echo '*** Building LaTeX files ***'
-	@for lang in $(ALL_LINGUAS); do \
-	  echo '-- Building LaTeX for '$$lang; \
-	  if test $$lang = "zh_CN"; then \
-	    stylesheet=$$lang/plainprint.xsl; \stylesheet=plainprint.xsl; \
-	  else \
-	    stylesheet=plainprint.xsl; \
-	  fi; \
-	  (cd $(top_srcdir)/pdf/$$lang && \
-	    $(XSLTPROC) $(XSLTFLAGS) --noout -o $$lang.tex --xinclude \
-		--stringparam l10n.gentext.default.language $$lang \
-		--stringparam profile.lang $$lang \
-		../../stylesheets/$$stylesheet ../../xml/$$lang.xml); \
-	done
-
-	@touch $@
-
-latex: $(STAMP_DIR)/latex.stamp
-
-
-$(STAMP_DIR)/pdf.stamp: $(STAMP_DIR)/latex.stamp 
+$(STAMP_DIR)/pdf.stamp: $(STAMP_DIR)/mkdirs.stamp $(STAMP_DIR)/profile.stamp
 	@echo '*** Building PDF files ***'
-	@cd $(top_srcdir)/pdf;
 	@for lang in $(ALL_LINGUAS); do \
 	  echo '-- Building PDF for '$$lang; \
-	  (cd $(top_srcdir)/pdf/$$lang && \
-	    pdflatex  $$lang.tex; \
-	    makeindex $$lang.idx && \
-	    pdflatex $$lang.tex); \
+	  (dblatex -p stylesheets/plainprint.xsl xml/$$lang.xml -o pdf/$$lang.pdf); \
 	done
 
 	@touch $@
-
 pdf: $(STAMP_DIR)/pdf.stamp
 
 
