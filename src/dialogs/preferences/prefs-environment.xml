@@ -62,7 +62,7 @@
     <title>
       <phrase lang="en">Environment Preferences</phrase>
       <phrase lang="cs">Předvolby prostředí</phrase>
-      <phrase lang="de">Die Einstellungsansicht für die GIMP Umgebung</phrase>
+      <phrase lang="de">Die Einstellungsansicht für die GIMP-Umgebung</phrase>
       <phrase lang="fr">Préférences pour l'environnement</phrase>
       <phrase lang="it">Preferenze ambiente</phrase>
       <phrase lang="ru">Параметры окружения</phrase>
@@ -79,8 +79,8 @@
           format="PNG" />
       </imageobject>
       <imageobject lang="de">
-        <imagedata fileref='../images/preferences/de/prefs-environment.png'
-          format="PNG" />
+        <imagedata fileref="../images/preferences/de/prefs-environment.jpg"
+          format="JPG" />
       </imageobject>
       <imageobject lang="fr">
         <imagedata fileref='../images/preferences/fr/prefs-environment.png'
@@ -113,8 +113,9 @@
           nastavit velikost náhledů, které GIMP vytváří.
         </para>
         <para lang="de">
-          Beeinflussen Sie den Ressourcenverbrauch, sowie das Verhalten beim
-          Speichern von Dateien von GIMP in dieser Einstellungsansicht.
+          In dieser Einstellungsansicht können Sie den Ressourcenverbrauch
+          sowie das Verhalten beim Speichern von Dateien von GIMP festlegen.
+          Außerdem können Sie hier die Größe der Vorschaubilder einstellen.
         </para>
         <para lang="fr">
           Cette page permet de configurer la quantité de ressources utilisée
@@ -170,7 +171,7 @@
       <varlistentry>
         <term lang="en">Minimal number of undo levels</term>
         <term lang="cs">Minimální počet kroků zpět</term>
-        <term lang="de">Minimale Anzahl an Schritten</term>
+        <term lang="de">Minimale Anzahl an Journalschritten</term>
         <term lang="fr">Nombre minimal de niveaux d'annulation</term>
         <term lang="it">Numero minimo di annullamenti</term>
         <term lang="ru">Минимальное число уровней отмен</term>
@@ -196,7 +197,14 @@
             <link linkend='gimp-concepts-undo'>Vracení zpět</link>.
           </para>
           <para lang="de">
-            Verändern sie wie oft sie Operationen rückgängig machen möchten.
+            <acronym>GIMP</acronym> verwaltet für jedes Bild eine Liste
+            (<quote>Journal</quote>) von Aktionen, die rückgängig gemacht
+            werden können. Dafür wird eine gewisse Menge Arbeitsspeicher
+            reserviert. Unabhängig davon gibt es eine minimale Anzahl der
+            letzten Aktionen, die Sie auf jeden Fall zurücknehmen können.
+            Diese Anzahl können Sie hier festlegen. Weitere Informationen
+            zu <acronym>GIMP</acronym>s Rücknahmekonzept finden Sie in
+            <xref linkend="gimp-concepts-undo" />.
           </para>
           <para lang="fr">
             Ce nombre indique le nombre minimum d'opérations qui pourront
@@ -240,7 +248,7 @@
       <varlistentry>
         <term lang="en">Maximum undo memory</term>
         <term lang="cs">Maximální paměť vracení</term>
-        <term lang="de">Maximaler Speicher für Rückgängigmachung</term>
+        <term lang="de">Maximaler Speicher für das Journal</term>
         <term lang="fr">Mémoire maximale pour l'annulation</term>
         <term lang="it">Memoria massima annullamenti</term>
         <term lang="ru">Максимально памяти для отката</term>
@@ -260,9 +268,12 @@
             uložení menšího počtu záznamů, než jaký je nastaven ve volbě výše.
           </para>
           <para lang="de">
-            Beeinflussen sie die Bereitstellung von Speicher, um die
-            <guilabel>Minimale Anzahl an Schritten</guilabel> rückgängig
-            zu machen.
+            Dies ist die Größe der Arbeitsspeichers, der für jedes Bild
+            reserviert wird, um die Rücknahmeinformationen zu speichern.
+            Falls das Rücknahmejournal diese Größe überschreitet, werden
+            die ältesten Einträge gelöscht, es sei denn, dadurch würde die
+            oben beschriebene minimale Anzahl an zurücknehmbaren Aktionen
+            unterschritten.
           </para>
           <para lang="fr">
             Ce nombre fixe la limite supérieure de la mémoire utilisée par
@@ -295,7 +306,7 @@
       <varlistentry>
         <term lang="en">Tile cache size</term>
         <term lang="cs">Velikost vyrovnávací paměti dlaždic</term>
-        <term lang="de">Größe des Datenspeichers</term>
+        <term lang="de">Größe des gesamten Speichers</term>
         <term lang="fr">Taille du cache d'image</term>
         <term lang="it">Dimensione cache immagine</term>
         <term lang="ru">Размер кэша</term>
@@ -321,8 +332,14 @@
             vyrovnávací paměť dlaždic</link>.
           </para>
           <para lang="de">
-            Beeinflussen sie die Größe des Speichers, welcher für ein
-            geladenes Bild zur Verfügung steht.
+            Dies ist die Größe des Systemspeichers, der für Bilder
+            reserviert wird. Wenn <acronym>GIMP</acronym> mehr Speicher
+            benötigt, werden Daten auf Festplatte ausgelagert, was unter
+            Umständen zu dramatischen Geschwindigkeitseinbußen führt. Sie
+            haben bei der Installation von <acronym>GIMP</acronym> die
+            Möglichkeit, diesen Wert festzulegen, aber hier können Sie ihn
+            jederzeit ändern. Weitere Informationen finden Sie in
+            <xref linkend="gimp-using-setup-tile-cache" />.
           </para>
           <para lang="fr">
             C'est la quantité de mémoire dans le système que GIMP réservera
@@ -369,7 +386,7 @@
       <varlistentry>
         <term lang="en">Maximum new image size</term>
         <term lang="cs">Maximální velikost nového obrázku</term>
-        <term lang="de">Zurückhaltende Speichernutzung</term>
+        <term lang="de">Maximale Größe neuer Bilder</term>
         <term lang="fr">Taille maximale des nouvelles images</term>
         <term lang="it">Dimensione massima nuova immagine</term>
         <term lang="ru">Максимальный размер нового изображения</term>
@@ -394,7 +411,10 @@
             Hier stellen sie die Größe in Megabyte ein, die ein neues Bild
             maximal benutzen darf. Wird das neue Bild mehr als ihr
             eingetragener Wert an Hauptspeicher belegen, wird GIMP nochmals
-            nachfragen.
+            nachfragen. Mit dieser Vorgehensweise wird verhindert, dass Sie
+            versehentlich ein Bild erstellen, das sehr viel größer als
+            beabsichtigt ist, was einen Absturz oder eine extreme
+            Verlangsamung des Programms zur Folge haben könnte.
           </para>
           <para lang="fr">
             Cette valeur n'est pas une contrainte forte: si vous essayez de
@@ -432,7 +452,8 @@
         <title>
           <phrase lang="en">Image Thumbnails</phrase>
           <phrase lang="cs">Miniatury obrázků</phrase>
-          <phrase lang="de">Bild Vorschau</phrase>
+          <phrase lang="de">Bildvorschau</phrase>
+          <!-- PENDING de  phrase lang="de">Vorschaubilder</phrase-->
           <phrase lang="fr">Vignettes d'image</phrase>
           <phrase lang="it">Miniature immagini</phrase>
           <phrase lang="ru">Миниатюры изображений</phrase>
@@ -463,7 +484,7 @@
               a Velké (256x256).
             </para>
             <para lang="de">
-              Die Standardbildgröße die verwendet werden soll, um
+              Die Standardbildgröße, die verwendet werden soll, um
               Miniaturbilder im Öffnendialog anzuzeigen.
             </para>
             <para lang="fr">
@@ -517,8 +538,11 @@
               Gimpu.
             </para>
             <para lang="de">
-              Legt fest, ab welcher Dateigrösse ein Miniaturbild im
-              Öffnendialog aktualisiert wird.
+              Wenn eine Bilddatei die hier festgelegte Größe überschreitet,
+              erstellt <acronym>GIMP</acronym> für dieses Bild keine
+              Miniaturansicht. Damit können Sie Vorschauen für extrem große
+              Bilder verhindern, die das Programm übermäßig verlangsamen
+              würden.
             </para>
             <para lang="fr">
               Déterminez ici la taille maximale en Méga-Octets que vous
@@ -621,29 +645,34 @@
       </variablelist>
 
 <!-- PENDING: en cs it added 15-08-2006 by ciampix: new in GIMP 2.4 -->
+<!-- PENDING: de  added 25-01-2007: new in GIMP 2.4 -->
 <!--
       <variablelist>
         <title lang="en">Document history</title>
-        <title lang="cs;de;fr;ru;zh_CN">
-
-        </title>
+        <title lang="cs;de;fr;ru;zh_CN">FIXME</title>
+        <title lang="de">Dokumentenindex</title>
         <title lang="it">Cronologia documenti</title>
 
         <varlistentry>
           <term lang="en">Save document history on exit</term>
-          <term lang="cs;de;fr;ru;zh_CN">FIXME</term>
+          <term lang="cs;fr;ru;zh_CN">FIXME</term>
+          <term lang="de">Dokumentenindex beim Beenden speichern</term>
           <term lang="it">Salva la cronologia dei documenti all'uscita</term>
 
           <listitem>
-            <para lang="en">
-
+            <para lang="en">FIXME</para>
+            <para lang="cs;fr;ru;zh_CN">FIXME</para>
+            <para lang="de">
+              Wenn aktiviert, werden alle geöffneten und gespeicherten
+              Dateien im Dokumentenindex gespeichert, auf den Sie über
+              <menuchoice>
+                <guimenu>Datei</guimenu>
+                <guisubmenu>Zuletzt geöffnet</guisubmenu>
+                <guimenuitem>Dokumentenindex</guimenuitem>
+              </menuchoice>
+              zugreifen können.
             </para>
-            <para lang="cs;de;fr;ru;zh_CN">
-
-            </para>
-            <para lang="it">
-
-            </para>
+            <para lang="it">FIXME</para>
           </listitem>
         </varlistentry>
       </variablelist>
