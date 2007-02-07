@@ -4,6 +4,7 @@
                 "http://www.docbook.org/xml/4.3/docbookx.dtd">
 
 <!--Section History
+  2007-02-04: rebuilt Alpha channel section en;fr by j.h
   2006-09-06: added norwegian translation by KoSt
   2006-02-17: added italian translation by ciampix
   2005-12-26: added german translation and made the file docbook compliant by lexa
@@ -11,6 +12,11 @@
 <sect2 id="gimp-concepts-layers" lang="en;de;es;fr;it;ko;nl;no;ru;zh_CN">
   <sect2info lang="de;es;fr;it;no" role="cvs">
     <revhistory>
+      <revision lang="en">
+        <revnumber>$Revision$</revnumber>
+        <date>200è-02-04</date>
+        <authorinitials>j.h</authorinitials>
+      </revision>
       <revision lang="de">
         <revnumber>$Revision$</revnumber>
         <date>2005-12-12</date>
@@ -23,7 +29,7 @@
       </revision>
       <revision lang="fr">
         <revnumber>$Revision : 1.20 $</revnumber>
-        <date>2006-03-27</date>
+        <date>2007-02-04</date>
         <authorinitials>j.h</authorinitials>
       </revision>
       <revision lang="it">
@@ -67,7 +73,7 @@
     <primary>Capas</primary>
   </indexterm>
   <indexterm lang="fr">
-    <primary>Calques</primary>  <!--050509-->
+    <primary>Calques</primary>
   </indexterm>
   <indexterm lang="nl">
     <primary>Lagen</primary>
@@ -283,7 +289,7 @@
     also several
     other types of things, such as channels, layer masks, and the selection
     mask. (Basically, a <quote>drawable</quote> is anything that can be
-    drawn on with painting tools.) If a layer is currently active, it is
+    drawn on with painting tools). If a layer is currently active, it is
     shown highlighted in the Layers dialog, and its name is shown in the
     status area of the image window. If not, you can activate it by clicking
     on it. If none of the layers are highlighted, it means the active
@@ -539,7 +545,7 @@
         <term lang="ko">이름</term>
         <term lang="no">Namn</term>
         <term lang="ru">Имя</term>
-	<term lang="zh_CN">名字</term>
+  <term lang="zh_CN">名字</term>
 
         <listitem>
           <para lang="en">
@@ -620,9 +626,9 @@
             Каждый слой имеет собственное название. Оно назначается
             автоматически при создании слоя, но вы можете его изменить.
             Имя слоя изменяется с помощью двойного щелчка на нём  в
-	    диалоге "Слои", или с помощью щелчка правой кнопкой мыши
+      диалоге "Слои", или с помощью щелчка правой кнопкой мыши
             там же и затем выбора  пунка  <guimenuitem>Правка атрибутов
-	    слоя</guimenuitem> в  появившемся меню.
+      слоя</guimenuitem> в  появившемся меню.
           </para>
 
           <para lang="zh_CN">
@@ -645,24 +651,25 @@
         <term lang="zh_CN">存在或不存在一个 Alpha 通道</term>
 
         <listitem>
-          <para lang="en"><!--changed 041022-->
+          <!--Todo all languages : en;fr done-->
+          <para lang="en"><!--changed 07-02-04-->
             As explained in the previous section, an alpha channel encodes
             information about how transparent a layer is at each pixel. It is
             visible in the Channel Dialog: white is complete opacity, black is
             complete transparency and grey levels are partial transparencies.
-            Not every layer is required to have an alpha channel, though. In
-            many cases, the bottom layer of an image (often named
-            <quote>Background</quote>) lacks any alpha channel: this means
-            that it is
-            completely opaque at every point. Alphaless layers are created
-            when you open an image from a file format that does not support
-            transparency, or when you create a new image using
-            <menuchoice>
-              <guimenu>File</guimenu>
-              <guimenuitem>New</guimenuitem>
-            </menuchoice>
-            with a transparent Fill Type, or when you flatten an image into a
-            single layer.
+          </para>
+          <para lang="en">
+            <indexterm><primary>Background layer</primary></indexterm>
+            The background layer is particular. If you have just created a
+            new image, it has still only one layer which is a background
+            layer. If the image has been created with an opaque Fill type,
+            this one layer has no Alpha channel. If you add a new layer,
+            even with an opaque Fill type, an Alpha channel is automatically
+            created, which applies to all layers apart from the background
+            layer. To get a background layer with transparency, either you
+            create your new image with a transparent Fill type, or you use
+            the
+            <link linkend="gimp-layer-alpha-add">Add an Alpha Channel</link>.
           </para>
 
           <para lang="de">
@@ -694,7 +701,7 @@
               <guimenu>Archivo</guimenu>
               <guimenuitem>Nuevo</guimenuitem>
             </menuchoice>
-            sin un tipo de relleno transparente, o cuando aplana una
+            sin un tipo de relleno opaco, o cuando aplana una
             imagen en una sola capa.
           </para>
 
@@ -702,21 +709,27 @@
             Comme expliqué précédemment, un canal alpha encode l'information
             sur le degré de transparence de chaque pixel du calque. Il est
             visible dans le Dialogue des Canaux. Le blanc représente une
-            opacité complète, le noir une transparence complète et les tons de
-            gris les transparences partielles. Mais tous les calques n'ont pas
-            besoin d'avoir un canal alpha. Souvent, le calque du bas dans une
-            image (appelé <quote>Arrière-plan</quote>) n'en a pas, ce qui
-            signifie qu'il
-            est totalement opaque en tous ses points. Les calques sans canal
-            alpha sont créés quand vous ouvrez une image dans un format qui
-            n'accepte pas la transparence, ou quand vous créez une nouvelle
-            image en utilisant
-            <menuchoice>
-              <guimenu>Fichier</guimenu>
-              <guimenuitem>Nouveau</guimenuitem>
-            </menuchoice>
-            avec un Type de remplissage transparent, ou quand vous aplatissez
-            une image en un seul calque.
+            opacité complète, le noir une transparence complète et les tons
+            de gris les transparences partielles. Un canal Alpha est
+            automatiquement créé dès que votre image a plus d'un calque ou si
+            vous venez de créer une nouvelle image avec un remplissage
+            transparent.
+          </para>
+          <para lang="fr">
+            <indexterm><primary>Calque d'arrière-plan</primary></indexterm>
+            <indexterm><primary>Calque de fond</primary></indexterm>
+            Le calque du bas, ou calque d'arrière-plan, ou calque de fond,
+            est particulier. Si vous venez de créer une nouvelle image, elle
+            n'a encore qu'un seul calque qui est un calque de fond. Si
+            l'image a été créée avec un remplissage opaque, ce calque unique
+            ne possède pas de canal Alpha. Si vous ajoutez un nouveau calque,
+            même avec un remplissage opaque, un canal Alpha est
+            automatiquemnt créé, qui s'appliquera à tous les nouveaux
+            calques, mais pas au calque de fond. Pour avoir un calque de
+            fond doté de transparence, soit vous créez votre nouvelle
+            image avec un remplissage transparent, soit vous utilisez la
+            commande <link linkend="gimp-layer-alpha-add">Ajouter un canal
+            Alpha</link>.
           </para>
 
           <para lang="nl">
@@ -778,45 +791,23 @@
             gjennomsiktige. Ikkje alle laga treng ha ein alfakanal. Som regel
             manglar alfakanalen i botnlaget (oftast kalla bakgrunnen) til eit
             bilete. Dette betyr at dette laget, bakgrunnen, er fullstendig
-            ugjennomsiktig på kvart punkt. Det blir heller ikkje laga alfakanal
-            når du opnar eit bilete i eit format som ikkje kan vise
-            transparente fargar, når du lager eit nytt bilete frå
-            <menuchoice>
-              <guimenu>Fil</guimenu>
-              <guimenuitem>Ny</guimenuitem>
-            </menuchoice>
-            i eit ikkje-transparent format eller når du flater ut eit bilete
-            til eit enkelt lag.
+            ugjennomsiktig på kvart punkt.
           </para>
 
          <para lang="ru">
            Как было объяснено в предыдущем разделе, альфа канал
            кодирует информацию о том, насколько насколько прозрачен слой
            в каждом пикселе. Это видно в диалоге каналов: белый это
-	   полностью  непрозрачный, чёрный полностью прозрачный, и
-	   оттенки серого  отображают частичную прозрачность.  Не
-	   каждому слою необходим альфа канал. В большинстве случаев,
+     полностью  непрозрачный, чёрный полностью прозрачный, и
+     оттенки серого  отображают частичную прозрачность.  Не
+     каждому слою необходим альфа канал. В большинстве случаев,
            нижний слой изображения (Чаще всего имеющий название "Фон")
-	   не имеет  альфа канала: это означает, что он полностью
-	   непрозрачен  в любой точке. Слои без альфа каналов создаются
-           когда вы открываете изображение из файла, формат которого  не
-	   поддерживает прозрачность, или когда вы создаёте новое
-           изображение с помощью
-           <menuchoice>
-             <guimenu>Файл</guimenu>
-             <guimenuitem>Новый</guimenuitem>
-           </menuchoice> с прозрачным типом заливки, или
-           когда объединяете изображение в один слой.
+     не имеет  альфа канала: это означает, что он полностью
+     непрозрачен  в любой точке.
            </para>
           <para lang="zh_CN">
             正如前面章节所讲述的，一个 Alpha 通道保存一个图层在每个像素处的透明程度信息，虽然并不是每个图层都需要一个 Alpha
-            通道。在大部分情况下，图像的最底层图层(通常叫作“背景”)缺乏 Alpha 通道：这就意味着其每个点都是不透明的。没有 Alpha
-            通道的图层在读取一个不支持透明的图像时，或使用
-            <menuchoice>
-              <guimenu>文件</guimenu>
-              <guimenuitem>新建</guimenuitem>
-            </menuchoice>
-            来创建新图像时，或平整一个图像到单一图层时就会出现。
+            通道。在大部分情况下，图像的最底层图层(通常叫作“背景”)缺乏 Alpha 通道：这就意味着其每个点都是不透明的。
           </para>
 
           <para lang="en">
@@ -835,14 +826,7 @@
             </menuchoice>,
             or by right-clicking in the Layers dialog and selecting
             <guimenuitem>Add Alpha Channel</guimenuitem>
-            from the popup menu that appears. To remove an alpha channel,
-            activate the bottom layer by clicking on it in the Layers dialog,
-            and then select
-            <menuchoice>
-              <guimenu>Layer</guimenu>
-              <guisubmenu>Transparency</guisubmenu>
-              <guimenuitem>Semi-Flatten</guimenuitem>
-            </menuchoice>.
+            from the popup menu that appears.
           </para>
 
           <para lang="de">
@@ -876,15 +860,7 @@
             o haciendo clic derecho en el diálogo de capas y
             seleccionando
             <guimenuitem>Añadir canal alfa</guimenuitem>
-
-            desde el menú que aparece.  Para eliminar el canal alfa,
-            active la capa inferior haciendo clic en la misma en el
-            diálogo de capas, y luego escoja
-            <menuchoice>
-              <guimenu>Capa</guimenu>
-              <guisubmenu>Transparencia</guisubmenu>
-              <guimenuitem>Semi-Aplanar</guimenuitem>
-            </menuchoice>.
+            desde el menú que aparece.
           </para>
 
           <para lang="fr">
@@ -902,13 +878,6 @@
             ou par un clic droit sur le Dialogue des calques pour ouvrir le
             menu local et choisir
             <guimenuitem>Ajouter un canal Alpha</guimenuitem>.
-            Pour supprimer un canal Alpha, activez le calque du bas en
-            cliquant dessus dans le Dialogue des Calques et choisissez
-            <menuchoice>
-              <guimenu>Calque</guimenu>
-              <guisubmenu>Transparence</guisubmenu>
-              <guimenuitem>Aplatir à moitié</guimenuitem>
-            </menuchoice>.
           </para>
 
           <para lang="nl">
@@ -930,15 +899,7 @@
             of door de rechtermuisknop in te drukken op de bewuste laag in
             het Lagen-dialoogvenster en de muisknop op
             <guimenuitem>Al<accel>p</accel>hakanaal toevoegen</guimenuitem>
-            in het opgekomen keuzemenu los te laten. Om het alfakanaal te
-            verwijderen uit de onderste laag (De enige waar dit dus kan) dient
-            u deze als de actieve aan te klikken en vervolgens de menukeuzes
-            <menuchoice>
-              <guimenu><accel>L</accel>aag</guimenu>
-              <guisubmenu>Tr<accel>a</accel>nsparantie</guisubmenu>
-              <guimenuitem><accel>S</accel>emi-Flatten</guimenuitem>
-            </menuchoice>
-            te volgen.
+            in het opgekomen keuzemenu los te laten.
           </para>
 
           <para lang="it">
@@ -959,14 +920,7 @@
             o facendo clic con il tasto destro nella finestra di dialogo
             dei livelli e selezionando
             <guimenuitem>Aggiungi canale alfa</guimenuitem>
-            dal menu a tendina che appare di conseguenza. Per eliminare il
-            canale alfa, attivare il livello di sfondo facendo clic su di
-            esso nella finestra di dialogo dei livelli e selezionare
-            <menuchoice>
-              <guimenu>Livello</guimenu>
-              <guisubmenu>Trasparenza</guisubmenu>
-              <guimenuitem>Semi-appiattisci</guimenuitem>
-            </menuchoice>.
+            dal menu a tendina che appare di conseguenza.
           </para>
 
           <para lang="ko">
@@ -1123,8 +1077,8 @@
           </para>
           <para lang="ru">
             Тип слоя определяется типом изображения  (см. предыдущий
-	    раздел) и наличием или отсутствием  альфа канала. Возможны
-	    следующие типы слоёв:
+      раздел) и наличием или отсутствием  альфа канала. Возможны
+      следующие типы слоёв:
           </para>
           <para lang="zh_CN">
             图层类型由图像类型(看前一节)和是否存在一个 Alpha 通道决定。这有三种可能的类型：
@@ -1217,12 +1171,12 @@
             canal alfa.
           </para>
           <para lang="fr">
-            La raison en est que la plupart des filtres (dans le menu
-            <guimenu>Filtres</guimenu>
-            ) n'acceptent qu'un sous-ensemble de types de calques, et
-            apparaissent en grisé si le calque actif n'a pas le type voulu. Le
-            plus souvent vous pouvez rectifier cela en changeant le mode
-            d'image ou en ajoutant ou supprimant un canal Alpha.
+            La raison pour les mentionner est que la plupart des filtres
+            (dans le menu <guimenu>Filtres</guimenu>) n'acceptent qu'un
+            sous-ensemble de types de calques, et apparaissent en grisé si
+            le calque actif n'a pas le type voulu. Le plus souvent vous
+            pouvez rectifier cela en changeant le mode d'image ou en
+            ajoutant un canal Alpha.
           </para>
           <para lang="it">
             La ragione è che molti filtri (nel menu
@@ -1249,11 +1203,11 @@
           </para>
           <para lang="ru">
             Главная причина в том, что большинство фильтров (в меню
-	    <guimenu>Фильтры</guimenu>) требуют слои  определённых
-	    типов, и отображаются в меню серым цветом,  если активный
-	    слой не соответствует допустимому типу.  Часто вы можете это
-	    исправить сменой режима изображения  или добавлением или
-	    удалением альфа канала.
+      <guimenu>Фильтры</guimenu>) требуют слои  определённых
+      типов, и отображаются в меню серым цветом,  если активный
+      слой не соответствует допустимому типу.  Часто вы можете это
+      исправить сменой режима изображения  или добавлением или
+      удалением альфа канала.
           </para>
           <para lang="zh_CN">
             讲这些的主要原因是，大部分滤镜(在<guimenu>滤镜</guimenu>
@@ -1278,9 +1232,13 @@
         <listitem>
           <para lang="en">
             It is possible to temporarily remove a layer from an image,
-            without destroying it, by clicking on the "open eye" symbol in the
-            Layers dialog. This is called "toggling the visibility" of the
-            layer. Most operations on an image treat toggled-off layers as if
+            without destroying it, by clicking on the
+            <guiicon>
+            <inlinegraphic fileref="../images/dialogs/dialogs-icon-eye.png" />
+            </guiicon>
+            symbol in the Layers dialog. This is called <quote>toggling the
+            visibility</quote> of the layer.
+            Most operations on an image treat toggled-off layers as if
             they did not exist. When you work with images containing many
             layers, with varying opacity, you often can get a better picture
             of the contents of the layer you want to work on by hiding some of
@@ -1322,12 +1280,15 @@
 
           <para lang="fr">
             Il est possible d'enlever temporairement le calque d'une image
-            sans le détruire, en cliquant sur le symbole <quote>œil ouvert</quote> dans le
-            Dialogue des Calques. On dit qu'on rend le calque visible ou
-            invisible. Quand vous travaillez sur des images comportant
-            plusieurs calques avec des opacités variables, vous aurez une
-            meilleure vision d'un calque particulier en rendant les autres
-            invisibles.
+            sans le détruire, en cliquant sur le symbole
+            <guiicon>
+            <inlinegraphic fileref="../images/dialogs/dialogs-icon-eye.png" />
+            </guiicon>
+            dans le Dialogue des Calques. On dit qu'on rend le calque
+            visible  ou invisible. Quand vous travaillez sur des images
+            comportant plusieurs calques avec des opacités variables, vous
+            aurez une meilleure vision d'un calque particulier en rendant
+            les autres invisibles.
           </para>
 
           <para lang="it">
@@ -1376,13 +1337,13 @@
           <para lang="ru">
             Существует возможность временно убрать слой с изображения
             без его уничтожения, с помощью щелчка по символу  "открытого
-	    глаза" в диалоге "Слои". Это называется "переключением
+      глаза" в диалоге "Слои". Это называется "переключением
             видимости" слоя. Для большинства операций над изображением
             отключение видимости равносильно отсутствию слоя. Когда вы
             работаете с изображением, содержащим множество слоёв  с
-	    разной прозрачностью, чаще вам будет проще получить лучший
+      разной прозрачностью, чаще вам будет проще получить лучший
             вид слоя, на котором вы в данный момент работаете
-	    отключением  видимости других слоёв.
+      отключением  видимости других слоёв.
           </para>
 
           <para lang="zh_CN">
@@ -1437,7 +1398,7 @@
             <para lang="ru">
               Щелчок по символу глаза с нажатой клавишей
               <emphasis>Shift</emphasis> скроет все слои <emphasis>за
-	      исключением</emphasis> того,  по которому вы щёлкнули.
+        исключением</emphasis> того,  по которому вы щёлкнули.
             </para>
             <para lang="zh_CN">
               当您 <emphasis>Shift</emphasis>-左键点击眼睛标志，
@@ -1593,8 +1554,8 @@
           <para lang="ru">
             Если вы щёлкните между пиктограммой глаза и миниатюрой
             слоя, вы увидите пиктограмму цепочки, которая позволяет  вам
-	    группировать слои для операций с несколькими слоями  (к
-	    примеру с инструментом "Перемещение" или трансформации)
+      группировать слои для операций с несколькими слоями  (к
+      примеру с инструментом "Перемещение" или трансформации)
           </para>
 
           <para lang="zh_CN">
@@ -1705,14 +1666,14 @@
 
           <para lang="ru">
             В GIMP границы слоя необязательно равны границам  его
-	    содержащего изображения. Когда вы создаёте текст,  к
-	    примеру, каждый текстовый элемент располагается  в своём
-	    отдельном слое, и слой равен размеру текста,  не больше.
-	    Также когда вы создаёте новый слой  с помощью вырезания и
-	    вставки, новый слой создаётся  достаточного размера для
-	    размещения вставленного  содержимого. В окне изображения
-	    границы текущего  активного слоя показаны черно-жёлтой
-	    пунктирной линией.
+      содержащего изображения. Когда вы создаёте текст,  к
+      примеру, каждый текстовый элемент располагается  в своём
+      отдельном слое, и слой равен размеру текста,  не больше.
+      Также когда вы создаёте новый слой  с помощью вырезания и
+      вставки, новый слой создаётся  достаточного размера для
+      размещения вставленного  содержимого. В окне изображения
+      границы текущего  активного слоя показаны черно-жёлтой
+      пунктирной линией.
           </para>
 
           <para lang="zh_CN">
@@ -1789,11 +1750,11 @@
 
           <para lang="ru">
             Основная причина значимости этого, это то, что  вы не
-	    сможете ничего сделать со слоем за пределами его  границ: вы
-	    не можете работать на том, что не существует.  Если это
-	    вызывает проблемы, вы можете изменить рамзер  слоя с помощью
-	    нескольких команд, которые вы можете  найти в меню
-	    <guimenu>Слой</guimenu>.
+      сможете ничего сделать со слоем за пределами его  границ: вы
+      не можете работать на том, что не существует.  Если это
+      вызывает проблемы, вы можете изменить рамзер  слоя с помощью
+      нескольких команд, которые вы можете  найти в меню
+      <guimenu>Слой</guimenu>.
           </para>
 
           <para lang="zh_CN">
@@ -1858,10 +1819,10 @@
             </para>
             <para lang="ru">
               Количество занимаемой слоем памяти определется  его
-	      размером, а не содержимым. Поэтому если вы  работаете с
-	      большими изображениями, или с  изображениями, содержащими
-	      множество слоёв,  имеет смысл сократить слои до минимально
-	      возможного  размера.
+        размером, а не содержимым. Поэтому если вы  работаете с
+        большими изображениями, или с  изображениями, содержащими
+        множество слоёв,  имеет смысл сократить слои до минимально
+        возможного  размера.
             </para>
             <para lang="zh_CN">
               一个图层消耗的内存数量由它的尺寸而不是其内存决定。因此，当您处理大图像或包括许多图层的图像时，裁剪图层到尽可能小的尺寸是有效的。
@@ -1933,9 +1894,9 @@
           </para>
           <para lang="ru">
             Прозрачность слоя определяется степенью доступных  цветов из
-	    нижних отображаемых слоёв списка.  Непрозрачность
-	    определяется диапазоном от 0 до 100,  где 0 означает полную
-	    прозрачность, и 100 означает  полную непрозраность.
+      нижних отображаемых слоёв списка.  Непрозрачность
+      определяется диапазоном от 0 до 100,  где 0 означает полную
+      прозрачность, и 100 означает  полную непрозраность.
            </para>
            <para lang="zh_CN">
             不透明度决定堆栈中显示在其下的图层颜色的允许扩展范围。不透明度从 0 到 100，0 表示完全透明，而 100 表示完全不透明。
@@ -2129,10 +2090,10 @@
             В дополнение к альфа каналу существует другой способ
             контроля прозрачности слоя: с помощью добавления
             <emphasis>Маски слоя</emphasis>, которая  представляет собой
-	    дополнительный холст в градациях серого, привязаный к слою.
-	    По умолчанию слой не имеет маски слоя: она может быть
-	    добавлена специально. Маски слоя, и способы работы с ними
-	    описаны более подробно в  последующем разделе этой главы.
+      дополнительный холст в градациях серого, привязаный к слою.
+      По умолчанию слой не имеет маски слоя: она может быть
+      добавлена специально. Маски слоя, и способы работы с ними
+      описаны более подробно в  последующем разделе этой главы.
           </para>
 
           <para lang="zh_CN">
@@ -2227,11 +2188,11 @@
 
           <para lang="ru">
             В правом верхнем углу диалога "Слои" расположен  небольшой
-	    переключатель, контролирующий настройку  слоя "сохранять
-	    прозрачность". Если переключатель  отмечен, альфа канал слоя
-	    заблокирован и любые  манипуляции с ним не дадут никакого
-	    эффекта.  В частности, всё, что вы будете делать с
-	    прозрачной  частью слоя не не даст никакого эффекта.
+      переключатель, контролирующий настройку  слоя "сохранять
+      прозрачность". Если переключатель  отмечен, альфа канал слоя
+      заблокирован и любые  манипуляции с ним не дадут никакого
+      эффекта.  В частности, всё, что вы будете делать с
+      прозрачной  частью слоя не не даст никакого эффекта.
           </para>
 
           <para lang="zh_CN">
