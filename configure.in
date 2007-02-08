@@ -41,15 +41,6 @@ AC_ARG_ENABLE(build,
 
 AM_CONDITIONAL(GIMP_HELP_BUILD, test "x$enable_build" = "xyes")
 
-
-#  Using convert for optimizing screenshots for the html version is optional.
-
-AC_ARG_ENABLE(convert,
-              [  --enable-convert        optimize the PNGs for the Web in file size (needs convert)],, enable_convert=no)
-
-AM_CONDITIONAL(USE_CONVERT, test "x$enable_convert" = "xyes")
-
-
 #  Check for GNU make.
 
 AC_MSG_CHECKING([whether ${MAKE-make} is GNU make])
@@ -95,15 +86,6 @@ AC_SUBST(AUTOIDX)
 AC_PATH_PROG(XMLLINT, xmllint)
 if test -z "$XMLLINT" && test "x$enable_build" = "xyes"; then
   AC_MSG_WARN([Couldn't find xmllint, won't be able to validate the XML.])
-fi
-
-
-#  Search for image magic convert.
-
-AC_PATH_PROG(CONVERT, convert)
-if test -z "$CONVERT" && test "x$enable_convert" = "xyes"; then
-  AC_MSG_ERROR([
-** Couldn't find the tool convert from ImageMagick.])
 fi
 
 
@@ -174,5 +156,4 @@ AC_MSG_RESULT([
  Rebuild the help files:         $enable_build
  Languages:                      $ALL_LINGUAS
  Installation prefix:            $GIMP_DATADIR
- Optimize PNGs for HTML files:   $enable_convert 
 ])

@@ -161,21 +161,6 @@ $(STAMP_DIR)/images.stamp : $(STAMP_DIR)/mkdirs.stamp $(IMAGE_FILES)
 images: $(STAMP_DIR)/images.stamp
 
 
-$(STAMP_DIR)/convert.stamp: $(STAMP_DIR)/images.stamp
-if USE_CONVERT
-	@echo '*** Converting Images to 8bit depth ***'
-
-	@cd html/images/; \
-	for i in `find $(top_srcdir) -name '*.png' -type f`; do \
-	  echo "Converting" $$i && \
-	  $(CONVERT) -colors 128 $$i $$i; \
-	done
-endif
-	@touch $@
-
-convert: $(STAMP_DIR)/convert.stamp
-
-
 $(STAMP_DIR)/profile.stamp: $(patsubst %,$(STAMP_DIR)/profile.%.stamp,$(ALL_LINGUAS))
 	@echo '*** Profiling XML files ***'
 	@touch $@
@@ -212,7 +197,7 @@ $(STAMP_DIR)/html.stamp: $(patsubst %,$(STAMP_DIR)/html.%.stamp,$(ALL_LINGUAS))
 	@echo '*** Building HTML ***'
 	@touch $@
 
-$(patsubst %,$(STAMP_DIR)/html.%.stamp,$(ALL_LINGUAS)): $(STAMP_DIR)/html.%.stamp : $(STAMP_DIR)/profile.%.stamp $(STAMP_DIR)/css.%.stamp $(STAMP_DIR)/images.stamp $(STAMP_DIR)/convert.stamp
+$(patsubst %,$(STAMP_DIR)/html.%.stamp,$(ALL_LINGUAS)): $(STAMP_DIR)/html.%.stamp : $(STAMP_DIR)/profile.%.stamp $(STAMP_DIR)/css.%.stamp $(STAMP_DIR)/images.stamp
 	@echo '-- Building HTML for '$*;\
 	(cd $(top_srcdir)/html/$* && \
 	  $(XSLTPROC) $(XSLTFLAGS) --xinclude \
