@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!DOCTYPE sect2
-          PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
-          "http://www.docbook.org/xml/4.3/docbookx.dtd">
+<!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+                "http://www.docbook.org/xml/4.3/docbookx.dtd">
 
 <!-- section history:
   2005-05-31 en Addition
 -->
-<sect2 id="gimp-edit-undo" lang="en;cs;de;fr;it;zh_CN">
-  <sect2info lang="en;cs;de;fr" role="cvs">
+<sect2 id="gimp-edit-undo" lang="en;cs;de;fr;it;no;zh_CN">
+  <sect2info lang="en;cs;de;fr;no" role="cvs">
     <revhistory>
       <revision lang="en">
         <revnumber>$Revision$</revnumber>
@@ -30,23 +29,30 @@
         <date>2006-07-03</date>
         <authorinitials>j.h</authorinitials>
       </revision>
+      <revision lang="no">
+        <revnumber>$Revision$</revnumber>
+        <date>2007-02-09</date>
+        <authorinitials>KoSt</authorinitials>
+      </revision>
     </revhistory>
   </sect2info>
-  
+
   <title>
     <phrase lang="en">Undo</phrase>
     <phrase lang="cs">Zpět</phrase>
     <phrase lang="de">Rückgängig</phrase>
     <phrase lang="fr">Annuler</phrase>
     <phrase lang="it">Annulla</phrase>
+    <phrase lang="no">Angre</phrase>
     <phrase lang="zh_CN">撤销</phrase>
   </title>
-  
+
   <indexterm lang="en"><primary>Undo</primary></indexterm>
   <indexterm lang="cs"><primary>Zpět</primary></indexterm>
   <indexterm lang="de"><primary>Rückgängig</primary></indexterm>
   <indexterm lang="fr"><primary>Annuler</primary></indexterm>
   <indexterm lang="it"><primary>Annulla</primary></indexterm>
+  <indexterm lang="en"><primary>Angre (kommando)</primary></indexterm>
   <indexterm lang="zh_CN"><primary>撤销</primary></indexterm>
 
   <para lang="en">
@@ -70,7 +76,7 @@
     if you perform another operation, the <quote>Undo</quote> will be
     irretrievably lost.
   </para>
-  
+
   <para lang="cs">
     "Zpět" umožňuje vrátit obrázek o jeden krok zpět v historii úprav. Lze tak
     vrátit vpodstatě vše, co s obrázkem uděláte. Za sebou lze provádět více
@@ -83,7 +89,7 @@
     pomocí příkazu <link linkend="gimp-edit-redo">Znovu</link>. Pokud však po
     vrácení provedete jinou operaci, nelze znovu již použít.
   </para>
-  
+
   <para lang="de">
     Dieses Kommando erlaubt es Ihnen, einzelne auf ein Bild angewandte
     Operationen wieder zurück zu nehmen. Fast jeder Bearbeitungsschritt, den
@@ -100,7 +106,7 @@
     zum <quote>Rückgängig machen</quote> finden Sie im
     <xref linkend="gimp-concepts-undo" />.
   </para>
-  
+
   <para lang="fr">
     La fonction Annuler permet à l'utilisateur d'annuler la dernière opération
     effectuée sur l'image et donc de revenir un pas en arrière dans le
@@ -142,15 +148,36 @@
     all'annullamento si esegue un'altra operazione,
     l'<quote>annullamento</quote> viene irrimediabilmente perso.
   </para>
-  
+
+<para lang="no">
+    Dersom du har gjort eitt eller anna med biletet ditt som du eigentleg
+    ikkje ønskjer å behalda, kan du tilbakeføre biletet til slik det var før
+    endringane ved å trykka på <guimenu>Angre</guimenu>. Nesten alt du
+    gjer kan angrast på denne måten. Unntaket er operasjonar utførte av
+    skript som koplar bort denne funksjonen. Kor langt tilbake du kan angra,
+    blir bestemt av innstillingane i
+    <!--PENDING:no <link
+    linkend="gimp-prefs-environment"-->Omgivnader<!--/link--> i
+    Innstillingsdialogen. Sjå meir om <application>GIMP</application> sine
+    svært så sofistikerte angrefunksjonar  i avsnittet
+    <link linkend="gimp-concepts-undo">Angre</link>.
+  </para>
+  <para lang="no">
+    Oprasjonar som du har angra forsvinn ikkje sånn med ein gong. Du
+    kan faktisk angra angringa ved hjelp av kommandoen
+    <link linkend="gimp-edit-redo">Gjenta</link>. Dette under føresetnad
+    av at du ikkje har gjort andre ting med biletet etter at du utførte
+    <quote>Angre</quote>.
+  </para>
+
   <para lang="zh_CN">
     “撤销”让图像回到上一步涂画或编辑过程。几乎所有对图像的动作都可以用这种方
     法撤销。能被撤销的操作数量则需要在首选项对话框的<link
     linkend="gimp-prefs-environment">环境</link>页中设置，关于 GIMP 复杂的“
     撤销”功能的更多信息请看<link linkend="gimp-concepts-undo">撤销</link>。
   </para>
-  
-  
+
+
   <sect3>
     <title>
       <phrase lang="en">Activating the Command</phrase>
@@ -158,9 +185,10 @@
       <phrase lang="de">Aufruf des Kommandos</phrase>
       <phrase lang="fr">Appel de la commande</phrase>
       <phrase lang="it">Attivazione del comando</phrase>
+      <phrase lang="no">Aktivering</phrase>
       <phrase lang="zh_CN">开启对话框</phrase>
     </title>
-    
+
     <itemizedlist>
       <listitem>
         <para lang="en">
@@ -201,6 +229,13 @@
           <menuchoice>
             <guimenu><accel>M</accel>odifica</guimenu>
             <guimenuitem>Ann<accel>u</accel>lla</guimenuitem>
+          </menuchoice>,
+        </para>
+        <para lang="no">
+          Du får tilgang til denne undermenyen på biletmenyen via
+          <menuchoice>
+            <guimenu>Rediger</guimenu>
+            <guimenuitem>Angre</guimenuitem>
           </menuchoice>,
         </para>
         <para lang="zh_CN">
@@ -247,6 +282,13 @@
             <keycap>Z</keycap>
           </keycombo>,
         </para>
+        <para lang="no">
+          eller med snarvegen
+          <keycombo>
+            <keycap>Ctrl</keycap>
+            <keycap>Z</keycap>
+          </keycombo>
+        </para>
         <para lang="zh_CN">
           或使用快捷键
           <keycombo>
@@ -255,7 +297,7 @@
           </keycombo>。
         </para>
       </listitem>
-      <listitem lang="en;it">
+      <listitem lang="en;it;no">
         <para lang="en">
           or by simply clicking on the status you want in the Undo
           History dialog.
@@ -264,6 +306,9 @@
           oppure semplicemente facendo clic sulla miniatura dell'immagine
           che rispecchia lo stato che si desidera ripristinare, nella
           finestra di dialogo degli annullamenti.
+        </para>
+        <para lang="no">
+          eller ved å klikke på ønskt linje i angreloggen.
         </para>
       </listitem>
     </itemizedlist>
