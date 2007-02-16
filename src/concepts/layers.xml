@@ -28,7 +28,7 @@
         <authorinitials>manuelq</authorinitials>
       </revision>
       <revision lang="fr">
-        <revnumber>$Revision : 1.20 $</revnumber>
+        <revnumber>$Revision$</revnumber>
         <date>2007-02-04</date>
         <authorinitials>j.h</authorinitials>
       </revision>
@@ -63,37 +63,18 @@
     <phrase lang="zh_CN">图层</phrase>
   </title>
 
-  <indexterm lang="en">
-    <primary>Layers</primary>
-  </indexterm>
-  <indexterm lang="de">
-    <primary>Ebene</primary>
-  </indexterm>
-  <indexterm lang="es">
-    <primary>Capas</primary>
-  </indexterm>
-  <indexterm lang="fr">
-    <primary>Calques</primary>
-  </indexterm>
-  <indexterm lang="nl">
-    <primary>Lagen</primary>
-  </indexterm>
-  <indexterm lang="it">
-    <primary>Livelli</primary>
-  </indexterm>
-  <indexterm lang="ko">
-    <primary>레이어</primary>
-  </indexterm>
+  <indexterm lang="en"><primary>Layers</primary></indexterm>
+  <indexterm lang="de"><primary>Ebene</primary></indexterm>
+  <indexterm lang="es"><primary>Capas</primary></indexterm>
+  <indexterm lang="fr"><primary>Calques</primary></indexterm>
+  <indexterm lang="nl"><primary>Lagen</primary></indexterm>
+  <indexterm lang="it"><primary>Livelli</primary></indexterm>
+  <indexterm lang="ko"><primary>레이어</primary></indexterm>
   <indexterm lang="no">
-    <primary>Bilete</primary>
-    <secondary>Lag</secondary>
+    <primary>Bilete</primary><secondary>Lag</secondary>
   </indexterm>
-  <indexterm lang="ru">
-    <primary>Слои</primary>
-  </indexterm>
-  <indexterm lang="zh_CN">
-    <primary>图层</primary>
-  </indexterm>
+  <indexterm lang="ru"><primary>Слои</primary></indexterm>
+  <indexterm lang="zh_CN"><primary>图层</primary></indexterm>
 
   <para lang="en">
     A good way to visualize a GIMP image is as a stack of transparencies: in
@@ -548,7 +529,7 @@
             solange der Name noch nicht für eine andere Ebene verwendet wird.
             Um den Namen zu ändern, können Sie entweder mit einem Doppelklick
             auf den Eintrag der Ebene im Ebenendialog ein Texteingabefeld
-            aktivieren, oder das Kommando
+            aktivieren oder das Kommando
             <guimenuitem>Ebenenei<accel>g</accel>enschaften</guimenuitem> im
             Kontextmenü des Ebenendialoges aufrufen.
           </para>
@@ -643,7 +624,7 @@
           <indexterm lang="fr"><primary>Calque de fond</primary></indexterm>
           <indexterm lang="no"><primary>Bakgrunnslaget</primary></indexterm>
 
-          <!--Todo all languages : en;fr done-->
+          <!--TODO es fr nl it ko ru zh_CN: en;fr changed-->
           <para lang="en"><!--changed 07-02-04-->
             As explained in the previous section, an alpha channel encodes
             information about how transparent a layer is at each pixel. It is
@@ -672,6 +653,19 @@
             vollständig transparent, an den weißen Stellen hat die Ebene die
             volle Deckkraft. Die Grautöne symbolisieren halbtransparente
             Bildbereiche.
+          </para>
+          <para lang="de">
+            Die Hintergrundebene ist etwas Besonderes. Wenn Sie ein neues Bild
+            erstellen, hat es nur eine Ebene - eine Hintergrundebene. Falls
+            bei der Erstellung eine nicht-transparente Füllung gewählt
+            wurde, besitzt diese eine Ebene keinen Alphakanal. Fügen Sie nun
+            eine neue Ebene hinzu, wird automatisch, auch bei
+            nicht-transparenter Füllung ein Alphakanal erstellt, der auf
+            alle Ebenen außer der Hintergrundebene wirkt. Um eine
+            Hintergrundebene mit Transparenz zu erhalten, müssen Sie entweder
+            beim Erstellen des Bildes als Füllung
+            <guimenuitem>Transparenz</guimenuitem> wählen oder einen <link
+            linkend="gimp-layer-alpha-add">Alphakanal hinzufügen</link>.
           </para>
 
           <para lang="es">
@@ -837,17 +831,25 @@
           </para>
 
           <para lang="de">
-            Jede Ebene, außer der Hintergrundebene eines Bildes, muss über
-            einen Alphakanal verfügen. Für die Hintergrundebene kann, muss
-            aber kein Alphakanal vorhanden sein. Sollte eine Ebene noch nicht
-            über einen Alphakanal verfügen, so können Sie diesen über das
-            entsprechende Kommando im Kontextmenüs des Ebenendialoges
-            hinzufügen. Alternativ können Sie das Kommando
+            Jede Ebene außer der Hintergrundebene eines Bildes
+            <emphasis>muss</emphasis> also über einen Alphakanal verfügen,
+            für die Hintergrundebene <emphasis>kann</emphasis> ein Alphakanal
+            vorhanden sein. Viele Operationen können auf Ebenen ohne
+            Alphakanal gar nicht ausgeführt werden. Eine Ebene innerhalb der
+            Ebenenliste zu verschieben ist ein offensichtliches Beispiel (da
+            nur die Hintergrundebene ohne Alphakanal sein darf), aber
+            letztlich betrifft es alle Operationen, die Auswirkungen auf die
+            Transparenz haben. Sollte eine Ebene noch nicht über einen
+            Alphakanal verfügen, so können Sie diesen außer mit dem
+            erwähnten Kommando
             <menuchoice>
               <guimenu><accel>E</accel>bene</guimenu>
               <guisubmenu>Tr<accel>a</accel>nsparenz</guisubmenu>
               <guimenuitem>Alphakanal hin<accel>z</accel>ufügen</guimenuitem>
-            </menuchoice> verwenden.
+            </menuchoice>
+            auch im Kontextmenü der Ebene hinzufügen: Rechtsklick auf die
+            entsprechende Ebene im Ebenendialog und dann
+            <guimenuitem>Alphakanal hinzufügen</guimenuitem> wählen.
           </para>
 
           <para lang="es">
@@ -1254,7 +1256,7 @@
             Die Sichtbarkeit ist eine der wichtigsten Eigenschaften von
             Ebenen. Sie ermöglicht es Ihnen, Ebenen vorübergehend
             auszublenden, ohne sie zu löschen. Die meisten Kommandos in GIMP
-            behandeln ausgeblendete Ebene so, als wären diese gar nicht
+            behandeln ausgeblendete Ebenen so, als wären diese gar nicht
             vorhanden. Die Sichtbarkeit von Ebenen können Sie mit Hilfe die
             Schaltfläche
             <inlinemediaobject>
@@ -1360,8 +1362,8 @@
             </para>
             <para lang="de">
               Wenn Sie auf die Schaltfläche zum Ein- und Ausblenden von Ebenen
-              klicken, während Sie die <keycap>Umschalt</keycap>
-              Taste gedrückt halten, können Sie die Sichtbarkeit aller Ebenen
+              klicken, während Sie die <keycap>Umschalt</keycap>-Taste
+              gedrückt halten, können Sie die Sichtbarkeit aller Ebenen
               außer der, auf deren Symbol Sie geklickt haben, gleichzeitig
               ändern. Dies ist ist insbesondere dann sehr hilfreich, wenn Sie
               alle Ebenen außer einer ausblenden möchten.
@@ -1692,7 +1694,7 @@
             Der Grund, weshalb die Ebenengröße wichtig ist, liegt darin, dass
             Sie in GIMP keinerlei Aktionen außerhalb der Ebene vornehmen
             können. Sie können ja nichts bearbeiten, was nicht vorhanden ist.
-            Was Sie aber tun können, ist, eine Ebene zu vergrößern. Hierzu
+            Allerdings können Sie die Größe einer Ebene verändern. Hierzu
             stehen Ihnen verschiedene Kommandos im unteren Teil des Menüs
             <guimenu><accel>E</accel>bene</guimenu> zur Verfügung.
           </para>
