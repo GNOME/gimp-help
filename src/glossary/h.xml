@@ -4,12 +4,13 @@
                    "http://www.docbook.org/xml/4.3/docbookx.dtd">
 
 <!-- section history:
+  2007-03-06 de new translation of supersampling by ude
   2006-09-06 scb: thorough review and/or rewrite of English
   2006-05-19 added Korean translation by Dust
   2006-03-15 norwegian added by kolbjørn
-  050826 de reviewed hsv by axel.wernicke
-  050808 de added histogram by axel.wernicke
-  050614 de added Hilfslinien by axel.wernicke
+  2005-08-26 de reviewed hsv by axel.wernicke
+  2005-08-08 de added histogram by axel.wernicke
+  2005-06-14 de added Hilfslinien by axel.wernicke
 -->
 <glossdiv lang="en;de;es;fr;it;ko;no;ru;zh_CN">
   <title><anchor id="glossary-h" />H</title>
@@ -162,7 +163,7 @@
           <guimenuitem><accel>H</accel>ilfslinien anzeigen</guimenuitem>
         </menuchoice>
         alle Hilfslinien gleichzeitig ein- und ausblenden. Diese Funktion ist
-        so nützlich, dass Sie zusätzlich über das Tastenkürzel
+        so nützlich, dass sie zusätzlich über das Tastenkürzel
         <keycombo>
           <keycap>Umschalt</keycap><keycap>Strg</keycap><keycap>T</keycap>
         </keycombo>
@@ -235,13 +236,44 @@
   </glossentry>
 
   <glossentry id="glossary-supersampling-de" lang="de">
-    <glossterm lang="de">Hochrechnung (Anpassende)</glossterm>
+    <glossterm>Hochrechnung</glossterm>
+    <indexterm><primary>Hochrechnung</primary></indexterm>
+    <indexterm><primary>Supersampling</primary></indexterm>
     <glossdef>
-      <para lang="de">
-        Bei der Hochrechnung (engl.
-        <foreignphrase>Supersampling</foreignphrase>) werden umliegende Pixel
-        zur Berechnung eines Farbverlaufs mit einbezogen. Das Resultat wird
-        dabei verbessert, jedoch wird für die Berechnung mehr Zeit benötigt.
+      <para>
+        Hochrechnung (engl.<foreignphrase>supersampling</foreignphrase>) ist
+        eine fortgeschrittene <xref linkend="glossary-antialiasing" />-Technik,
+        also eine Methode, um ausgefranste Kanten und Treppeneffekte an
+        Schrägen oder Kurven zu reduzieren. Bei der Hochrechnung werden
+        umliegende Pixel (<emphasis>Samples</emphasis>) zur Berechnung eines
+        Farbverlaufs mit einbezogen.  Indem man das Bild intern in einer sehr
+        viel höheren als der tatsächlichen Auflösung berechnet, kann man
+        Samples von verschiedenen Stellen <emphasis>innerhalb</emphasis> jedes
+        Pixels benutzen, nicht nur aus der Mitte, und daraus eine
+        durchschnittliche Farbe berechnen.  Dazu wird das Bild auf die
+        erforderliche Größe reduziert, wobei die zusätzlichen Pixel dann zur
+        Berechnung herangezogen werden. Das Ergebnis ist ein weicherer
+        Farbübergang von einer Pixelreihe zur nächsten entlang der Kanten
+        eines Objekts.
+      </para>
+      <para>
+        Die Qualität des Ergebnisses hängt von der Anzahl der Samples ab.
+        Hochrechnung wird oft mit 2 bis 16 Samples durchgeführt, was deutlich
+        mehr Zeit für die Berechnung des Bildes erfordert und auch mehr Platz
+        im Arbeitsseicher.
+      </para>
+      <para>
+        Eine Möglichkeit, um den Speicher- und Zeitbedarf zu verringern, ist
+        das <emphasis>adaptive Supersampling</emphasis>
+        (<quote>anpassende Hochrechnung</quote>). Diese Methode macht sich
+        die Tatsache zunutze, dass tatsächlich nur sehr wenige Pixel an den
+        Grenzen eines Objekts liegen, also nur diese Pixel durch Hochrechnug
+        ermittelt werden müssen. Zunächst werden nur wenige Samples innerhalb
+        eines Pixels genommen. Falls die Farben sehr ähnlich sind, werden
+        nur diese wenigen Samples zur Berechnung der endgültigen Farbe
+        verwendet, andernfalls werden weitere Samples benutzt. Das heißt,
+        dass eine größere Anzahl von Samples nur bei Bedarf berechnet
+        werden, was die Leistung deutlich erhöht.
       </para>
     </glossdef>
   </glossentry>
