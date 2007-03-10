@@ -6,29 +6,55 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
   <xsl:import href="@STYLEBASE@/xhtml/chunk.xsl" />
   <!--<xsl:import href="@STYLEBASE@/html/@AUTOIDX@.xsl"/>-->
-  <xsl:param name="html.stylesheet">gimp-help-plain.css
-    gimp-help-screen.css gimp-help-custom.css</xsl:param>
-  <xsl:param name="generate.index">1</xsl:param>
-  <xsl:param name="use.id.as.filename">1</xsl:param>
+
   <xsl:param name="admon.graphics" select="1" />
   <xsl:param name="admon.graphics.path">../images/</xsl:param>
   <xsl:param name="callout.graphics.path">../images/callouts/</xsl:param>
-  <xsl:param name="section.autolabel" select="1" />
-  <xsl:param name="make.valid.html" select="1" />
   <xsl:param name="collect.xref.targets" select="'yes'" />
-  <xsl:param name="targets.filename" select="'gimp-xrefs.xml'" />
-  <xsl:param name="toc.section.depth" select="2" />
+
   <xsl:param name="chunk.section.depth" select="2" />
-  <xsl:param name="id.warnings" select="0" />
   <!-- doesn't work correctly currently
   <xsl:param name="chunk.tocs.and.lots" select="1" />
   <xsl:param name="chunk.seperate.lots" select="1" /> 
   -->
   <xsl:param name="chunker.output.indent" select="'yes'" />
+
+  <xsl:param name="generate.index">1</xsl:param>
+  <xsl:param name="generate.toc">
+    appendix  toc,title
+    article/appendix  nop
+    article   toc,title
+    book      toc,title
+    chapter   toc,title
+    part      toc,title
+    preface   toc,title
+    qandadiv  toc
+    qandaset  toc
+    reference toc,title
+    sect1     toc
+    sect2     toc
+    sect3     toc
+    sect4     toc
+    sect5     toc
+    section   toc
+    set       toc,title
+  </xsl:param>
+
+  <xsl:param name="html.stylesheet">
+  	gimp-help-plain.css gimp-help-screen.css gimp-help-custom.css
+ 	</xsl:param>
+  <xsl:param name="id.warnings" select="0" />
+  <xsl:param name="make.valid.html" select="1" />
+
   <xsl:param name="navig.showtitles" select="1" />
   <xsl:param name="navig.graphics" select="1" />
   <xsl:param name="navig.graphics.extension">.png</xsl:param>
   <xsl:param name="navig.graphics.path">../images/</xsl:param>
+
+  <xsl:param name="section.autolabel" select="1" />
+  <xsl:param name="targets.filename" select="'gimp-xrefs.xml'" />
+  <xsl:param name="toc.section.depth" select="2" />
+  <xsl:param name="use.id.as.filename">1</xsl:param>
 
   <!-- Add NotInToc role to simplesect, which is using in fdl.xml to
        deal with FDL-In-TOC issue.
@@ -51,7 +77,7 @@
     <xsl:variable name="home" select="/*[1]"/>
     <xsl:variable name="up" select="parent::*"/>
 
-    <xsl:variable name="row1" select="count($prev) &gt; 0                                                             or count($up) &gt; 0
+    <xsl:variable name="row1" select="count($prev) &gt; 0 or count($up) &gt; 0
                                       or count($next) &gt; 0"/>
 
     <xsl:variable name="row2" select="($prev and $navig.showtitles != 0)
