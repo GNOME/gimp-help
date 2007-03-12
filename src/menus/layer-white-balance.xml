@@ -3,12 +3,13 @@
 <!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
                 "http://www.docbook.org/xml/4.3/docbookx.dtd">
 
-<!--
+<!-- section history:
+  2007-03-12 Kolbjørn: added no translation
   2007-03-07 The name is no longer "White Balance" but "Color Balance"
   2006-09-21 lexa: added de translation
   2006-08-08: created by scb; example by j.h
 -->
-<sect2 id="gimp-layer-white-balance" lang="en;de;fr">
+<sect2 id="gimp-layer-white-balance" lang="en;de;fr;no">
   <sect2info role="cvs">
     <revhistory>
       <revision lang="en">
@@ -26,6 +27,11 @@
         <date>2006-09-05</date>
         <authorinitials>j.h</authorinitials>
       </revision>
+      <revision lang="no">
+        <revnumber>$Revision$</revnumber>
+        <date>2007-02-22</date>
+        <authorinitials>KoSt</authorinitials>
+      </revision>
     </revhistory>
   </sect2info>
 
@@ -33,6 +39,7 @@
     <phrase lang="en">Color Balance</phrase>
     <phrase lang="de">Weißabgleich</phrase>
     <phrase lang="fr">Balance des couleurs</phrase>
+    <phrase lang="no">Fargebalanse</phrase>
   </title>
 
   <indexterm lang="en">
@@ -56,6 +63,12 @@
   <indexterm lang="fr">
     <primary>Balance des couleurs</primary>
   </indexterm>
+  
+  <indexterm lang="no">
+    <primary>Lagmenyen</primary>
+    <secondary>Fargebalanse</secondary>
+  </indexterm>
+  <indexterm lang="no"><primary>Fargebalanse</primary></indexterm>
 
   <para lang="en">
     The <guimenuitem>White Balance</guimenuitem>
@@ -100,12 +113,29 @@
     images RVB. Si l'image est indexée ou en niveaux de gris, la commande
     est désactivée et grisée.
   </para>
+  <para lang="no">
+    Kommandoen <guimenuitem>Fargebalanse</guimenuitem> justerer
+    automatisk fargane i det aktive laget ved å strekke ut kanalane for
+    raud, grøn og blå kvar for seg. Dette blir gjort ved at fargar som blir
+    brukte av mindre enn 0,05 % av pikslane i laget blir fjerna frå kvar ende
+    av kvart av histogramma for raud, grøn og blå. Dei resterande pikslane
+    blir best mogleg fordelte i det ledige området. Resultatet blir at fargar
+    som bare finst i små mengder i ytterpunkta av histogramma (dette er
+    kanskje støvflekkar o.l.) ikkje har noen negativ påverknad på
+    maksimums- og minimumsverdiane som bli brukte for å strekke
+    histogrammet. På same måten som for 
+    <link linkend="plug-in-c-stretch">Strekk kontrast</link>, kan du oppleva 
+    kulørskifte i det ferdige biletet. <quote>Kvitbalanse</quote> verkar
+    på lag frå RGB- og gråskalabilete. Er biletet indeksert, er 
+    kommandoen uverksam.    
+  </para>
 
   <sect3>
     <title>
       <phrase lang="en">Activating the Command</phrase>
       <phrase lang="de">Aufruf des Kommandos</phrase>
       <phrase lang="fr">Activer le Dialogue</phrase>
+      <phrase lang="no">Aktivering</phrase>
     </title>
 
     <itemizedlist>
@@ -140,6 +170,15 @@
             <guimenuitem>Balance des <accel>b</accel>lancs</guimenuitem>
           </menuchoice>.
         </para>
+        <para lang="no">
+          Du har tilgang til denne undermenyen på biletmenyen via
+          <menuchoice>
+            <guimenu>Lag</guimenu>
+            <guisubmenu>Fargar</guisubmenu>
+            <guisubmenu>Auto</guisubmenu>
+            <guimenuitem>Fargebalanse</guimenuitem>
+          </menuchoice>
+        </para>
       </listitem>
     </itemizedlist>
   </sect3>
@@ -147,11 +186,14 @@
   <sect3>
     <title>
       <phrase lang="en">
-        <quote>White Balance</quote> example
+        <quote>Color Balance</quote> example
       </phrase>
       <phrase lang="de">Ein Beispiel für den Weißabgleich</phrase>
       <phrase lang="fr">
         Exemple de <quote>Balance des blancs</quote>
+      </phrase>
+      <phrase lang="no">
+        Eksempel på bruk av <quote>Fargebalanse</quote>
       </phrase>
     </title>
 
@@ -160,6 +202,7 @@
         <phrase lang="en">Original image</phrase>
         <phrase lang="de">Originalbild</phrase>
         <phrase lang="fr">Image d'origine</phrase>
+        <phrase lang="no">Originalbiletet</phrase>
       </title>
 
       <mediaobject>
@@ -170,7 +213,7 @@
         <caption>
           <para lang="en">
             The active layer and its Red, Green and Blue histograms
-            before <quote>White Balance</quote>.
+            before <quote>Color Balance</quote>.
           </para>
           <para lang="de">
             Die aktive Ebene und die zugehörigen Histogramme für den roten,
@@ -179,6 +222,10 @@
           <para lang="fr">
             Le calque actif et ses histogrammes Rouge, Vert, Bleu avant
             traitement.
+          </para>
+          <para lang="no">
+            Det aktive laget og histogrammet for raud, grøn og blå før
+            bruk av <quote>Fargebalanse</quote>.
           </para>
         </caption>
       </mediaobject>
@@ -189,6 +236,7 @@
         <phrase lang="en">Image after the command</phrase>
         <phrase lang="de">Bild nach Anwendung des Weißabgleiches</phrase>
         <phrase lang="fr">Image traitée</phrase>
+        <phrase lang="no">Biletet etter utføringa</phrase>
       </title>
 
       <mediaobject>
@@ -199,7 +247,7 @@
         <caption>
           <para lang="en">
             The active layer and its Red, Green and Blue histograms after
-            <quote>White Balance</quote>.
+            <quote>Color Balance</quote>.
             The pixel columns reach the right end of the histogram (255):
             pure white is created (255, 255, 255).
           </para>
@@ -221,6 +269,14 @@
           <para lang="fr">
             L'étalement des histogrammes crée des vides entre les colonnes
             de pixels, lui donnant un aspect strié.
+          </para>
+          <para lang="no">
+            Det aktive laget og histogrammet for raud, grøn og blå etter
+            bruk av <quote>Fargebalanse</quote>.
+          </para>
+          <para lang="no">
+            Strekkinga av histogrammet lagar opningar mellom kolonnene. Difor
+            stripene.
           </para>
         </caption>
       </mediaobject>
