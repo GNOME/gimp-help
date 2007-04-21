@@ -15,29 +15,25 @@
   <xsl:param name="latex.unicode.use">1</xsl:param>
 
   <!-- define what to show in the toc -->
-  <xsl:param name="doc.lot.show">table,example</xsl:param>
-
-  <!-- show dblatex logo - the project deserves it! -->
-  <xsl:param name="doc.publisher.show">0</xsl:param>
+  <xsl:param name="doc.lot.show">example</xsl:param>
 
   <!-- hide image-object callouts -->
   <xsl:param name="imageobjectco.hide">1</xsl:param>
 
-  <!-- old values, taken over from db2latex -->
-  <xsl:param name="admon.graphics" select="1" />
-  <xsl:param name="admon.graphics.path">../images</xsl:param>
-  <xsl:param name="callout.graphics">1</xsl:param>
-  <xsl:param name="callout.graphics.path">../images/callouts/</xsl:param>
-  <xsl:param name="generate.callout.arearefs">1</xsl:param>
-  <xsl:param name="generate.index">1</xsl:param>
-  <xsl:param name="insert.xref.page.number">1</xsl:param>
-  <xsl:param name="latex.document.font">palatino</xsl:param>
-  <xsl:param name="latex.documentclass">scrreprt</xsl:param>
-  <xsl:param name="latex.is.draft">0</xsl:param>
-  <xsl:param name="latex.use.ltxtable">0</xsl:param>
-  <xsl:param name="latex.use.overpic">1</xsl:param>
-  <xsl:param name="latex.use.tabularx">0</xsl:param>
-  <xsl:param name="section.autolabel" select="1" />
+  <!-- limit the toc depth to sect2 headings -->
   <xsl:param name="toc.section.depth">2</xsl:param>
+
+  <!-- create links to glossterms automatically -->
+  <xsl:param name="glossterm.auto.link">1</xsl:param>
+
+  <!-- put titles above the elements -->
+  <xsl:param name="equation.title.top">1</xsl:param>
+  <xsl:param name="figure.title.top">1</xsl:param>
+  <xsl:param name="table.title.top">1</xsl:param>
+
+  <!-- use the following adminition images -->
+  <xsl:param name="figure.tip">../images/tip.png</xsl:param>
+  <xsl:param name="figure.note">../images/note.png</xsl:param>
+  <xsl:param name="figure.caution">../images/caution.png</xsl:param>
 
 </xsl:stylesheet>
