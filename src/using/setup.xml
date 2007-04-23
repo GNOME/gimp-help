@@ -9,13 +9,18 @@
   2006-08-19 Added Norwegian translation by KoSt
   2006-07-22 dust: added ko translation
 -->
-<sect1 id="gimp-using-setup-tile-cache" lang="cs;en;de;fr;it;ko;no;zh_CN">
-  <sect1info lang="de;fr;ko;no">
+<sect1 id="gimp-using-setup-tile-cache" lang="cs;en;es;de;fr;it;ko;no;zh_CN">
+  <sect1info lang="de;es;fr;ko;no">
     <revhistory>
       <revision lang="de">
         <revnumber>$Revision$</revnumber>
         <date>2006-12-10</date>
         <authorinitials>lexa</authorinitials>
+      </revision>
+      <revision lang="es">
+        <revnumber>$Revision$</revnumber>
+        <date>2007-04-14</date>
+        <authorinitials>AntI</authorinitials>
       </revision>
       <revision lang="fr">
         <revnumber>$Revision$</revnumber>
@@ -39,6 +44,7 @@
     <phrase lang="cs">Jak nastavit vyrovnávací paměť dlaždic</phrase>
     <phrase lang="en">How to Set Your Tile Cache</phrase>
     <phrase lang="de">Einstellen des Datenspeichers</phrase>
+    <phrase lang="es">Como ajustar el cache de bloques</phrase>
     <phrase lang="fr">Comment ajuster le cache d'image</phrase>
     <phrase lang="it">Come impostare la cache tile</phrase>
     <phrase lang="ko">타일 캐쉬 설정하는 방법</phrase>
@@ -51,6 +57,9 @@
   </indexterm>
   <indexterm lang="de">
     <primary>Datenspeicher</primary>
+  </indexterm>
+  <indexterm lang="es">
+    <primary>Cache de bloques</primary>
   </indexterm>
   <indexterm lang="fr">
     <primary lang="fr">Cache d'image</primary>
@@ -100,6 +109,20 @@
     sind, zwischenzuspeichern. Dabei besteht ein Unterschied, welche
     Form des Datenspeichers benutzt wird: die langsame Festplatte oder
     der schnelle Arbeitsspeicher.
+  </para>
+  <para lang="es">
+    Durante el proceso de datos y la manipulación de imágenes, el GIMP 
+    necesita mucha memoria RAM. A mayor cantidad mejor.
+    <acronym>GIMP</acronym> utiliza la memoria,  de los recursos 
+    disponibles por el sistema, tan eficazmentente como sea posible, con
+    tal de mantener el trabajo sobre las imágenes rápido y cómodo para el 
+    usuario. Esa memoria de datos, durante el tratamiento, se organiza en
+    bloques de búferes de datos gráficos, que podrían existir en dos 
+    formas diferentes de memoria de datos: lento, en el disco duro, o 
+    rápido, en la memoria RAM. El Gimp utiliza, preferiblemente la 
+    segunda, y cuando es escasa, accede al disco a por los datos restantes. 
+    A estos pedazos de datos gráficos se les llama "bloques (tile)" y a este 
+    sistema uso de memoria se le llama de "cache de bloques".
   </para>
   <para lang="fr">
     Le traitement d'image peut nécessiter beaucoup de mémoire vive. GIMP
@@ -193,6 +216,15 @@
     andere Programme, die zeitgleich ausgeführt werden, weniger Arbeitsspeicher
     zur Verfügung haben.
   </para>
+  <para lang="es">
+    Con un valor bajo del cache de bloques, el GIMP envia datos al disco 
+    muy rapidamente, sin hacer un uso real de la RAM disponible, y 
+    haciendo que el disco trabaje sin una razón real. Con un valor 
+    demasiado alto del cache de bloques, otras aplicaciones tendrán 
+    menos recursos, forzándolas a usar el espacio de intercambio, 
+    aumentando el trabajo del disco; alguna aplicación podría fallar o 
+    bloquearse debido a la poca disponibilidad de RAM.
+  </para>
   <para lang="it">
     Un valore basso per la cache tile significa che GIMP spedisce i dati su
     disco molto velocemente, non facendo praticamente uso della RAM
@@ -238,6 +270,11 @@
   <para lang="de">
     Nachfolgend ein paar Tips für die Entscheidung, eine gute Größe des
     Datenspeichers einzustellen:
+  </para>
+  <para lang="es">
+    ¿Como encontrar un número para el tamaño del cache de bloques?. Aquí
+    hay algunos consejos para ayudarle a decidir que valor usar y unos 
+    trucos:
   </para>
   <para lang="fr">
     Comment choisir une valeur pour la mémoire virtuelle ? Voici quelques trucs
@@ -285,6 +322,14 @@
         Einstellung ausreichend, da keine Bilder bearbeitet werden, die so
         groß sind, dass sich die Größe negativ auf den Arbeitsprozess am
         Computer auswirkt.
+      </para>
+      <para lang="es">
+        El método más fácil es no pensar en ello y esperar que el valor
+        predefinido vaya bien. Es un método útil con ordenadores con poca 
+        RAM, manipulando imágenes pequeñas con el GIMP, mientras, se 
+        utiliza alguna otra aplicación. Si solo usa el GIMP para 
+        hacer capturas de pantalla y logos, probablemente, esta será la 
+        mejor solución.
       </para>
       <para lang="fr">
         La méthode la plus simple est de ne pas y penser et d'espérer que la
@@ -345,6 +390,12 @@
         Datenspeichers auf ca. ¾ des zur Verfügung stehenden Arbeitspeichers;
         also auf 384 MegaByte.
       </para>
+      <para lang="es">
+        Si tiene un ordenador moderno con bastante memoria, 512 Mb o más, 
+        configurar el cache de bloques a la mitad de la RAM dará buenas 
+        prestaciones al GIMP sin perjudicar a otras aplicaciones. Con 3/4 
+        de su RAM, probablemente, el GIMP andará muy bien.
+      </para>
       <para lang="ko">
         만약 512MB 이상의 메모리를 가진 컴퓨터를 소유하고 있거나, 메모리
         총량의 절반 정도를 타일 캐쉬로 할당한 덩도라면, 웬만한 상황에서도
@@ -380,7 +431,7 @@
       </para>
     </listitem>
 
-    <listitem lang="cs;de;en;fr;it;ko;no;zh_CN">
+    <listitem lang="cs;de;en;es;fr;it;ko;no;zh_CN">
       <para lang="cs">
         Můžete také požádat někoho zkušenějšího, aby vám GIMP nastavil. V
         případě, že počítač sdílíte s dalšími uživateli je to velmi dobrý
@@ -404,6 +455,14 @@
         ein anderer Benutzer sauer auf Sie werden, weil Sie den Rechner
         missbrauchen, und Sie erhalten auch kein schlecht eingestelltes
         <acronym>GIMP</acronym>.
+      </para>
+      <para lang="es">
+        Pedir a alguien que lo haga por ústed, lo que en un ordenador con
+        múltiples usuarios puede ser una buena idea: de esa manera, el
+        administrador y otros usuarios no se enfadarán con ústed por abusar
+        de la máquina, ni tendrá un bajo rendimiento con el GIMP. Si es su
+        ordenador y solo tiene un usuario, le podría suponer un pequeño 
+        desembolso como pago por el servicio.
       </para>
       <para lang="fr">
         Demander à quelqu'un de le faire pour vous, dans le cas d'un
@@ -445,7 +504,7 @@
       </para>
     </listitem>
 
-    <listitem lang="cs;de;en;fr;it;ko;no;zh_CN">
+    <listitem lang="cs;de;en;es;fr;it;ko;no;zh_CN">
       <para lang="cs">
         Můžete také vyrovnávací paměť dlaždic při každém spuštění Gimpu
         opatrně zvyšovat a dávat pozor, zda si operační systém nestěžuje na
@@ -466,6 +525,12 @@
         manchmal wird bei irgendeiner Anwendung plötzlich fehlender
         Speicherplatz gemeldet und diese Anwendung dann abgebrochen, um Platz
         für andere zu schaffen.
+      </para>
+      <para lang="es">
+        Aumentar el valor un poco cada vez y comprobar que va más rápido con
+        cada incremento, y que el sistema no falla por la falta de memoria.
+        Hay que tener en cuenta que la falta de memoria podría parar alguna
+        aplicación, repentinamente, para dar espacio a otra.
       </para>
       <para lang="fr">
         Augmenter un peu la valeur à chaque fois et voir si GIMP augmente sa
@@ -500,7 +565,7 @@
       </para>
     </listitem>
 
-    <listitem lang="cs;de;en;fr;it;ko;no;zh_CN">
+    <listitem lang="cs;de;en;es;fr;it;ko;no;zh_CN">
       <para lang="cs">
         Další možností je vhodnou hodnotu vypočítat. Možná ji bude později
         nutné doladit, ale to se může stát i u předešlých metod. Výhodou
@@ -519,6 +584,12 @@
         das müssen Sie unter Umständen auch bei den anderen Methoden.
         Jedenfalls wissen Sie dann genau, was vor sich geht, und können das
         Beste aus Ihrem Computer herausholen.
+      </para>
+      <para lang="es">
+        Hacer matemáticas sencillas y calcular un valor apropiado. Se podría
+        afinar más tarde, pero, de todos modos, se podría afinar con los 
+        método anteriores. Al menos sabrá lo que ocurre y podrá conseguir lo 
+        mejor de su ordenador.
       </para>
       <para lang="fr">
         Faire un petit calcul d'une valeur viable. Vous pourrez toujours
@@ -587,6 +658,18 @@
     offensichtlich schneller oder langsamer ist oder ob sie alle etwa gleich
     schnell sind. <acronym>GIMP</acronym>s Auslagerungsordner können Sie
     übrigens im Einstellungendialog ändern.
+  </para>
+  <para lang="es">
+    Suponiendo que prefiere la última opción, y que quiere obtener un buen 
+    valor para comenzar. Lo primero, necesita conocer algunos datos de su 
+    ordenador. Estos datos son la cantidad de RAM instalada en su sistema,
+    el espacio disponible de intercambio de su sistema operativo y una idea
+    general sobre la velocidad del disco que almacena el intercambio del 
+    sistema operativo y el directorio usado para el intercambio del GIMP. 
+    No necesita testear el disco, ni chequear sus revoluciones, sino ver si
+    parece, claramente, más lento o más rápido, o similar. Puede cambiar el
+    directoro de intercambio del GIMP en carpetas, en la página del diálogo
+    de preferencias.
   </para>
   <para lang="fr">
     Supposons que vous préfériez la dernière option et que vous vouliez
@@ -686,6 +769,19 @@
     <quote>-/+ buffers/cache</quote> an. Notieren Sie auch den freien
     Swapspeicher.
   </para>
+  <para lang="es">
+    Lo siguiente, es mirar cuantos recursos necesita para ejecutar otras
+    aplicaciones al mismo tiempo que el GIMP. Así que arranque sus 
+    aplicaciones, y trabaje con ellas, excepto el GIMP, claro, y 
+    compruebe el uso de la memoria.     
+    Puede utilizar aplicaciones como free o top, dependiendo del sistema 
+    operativo y el entorno que use. Los números que interesan son los de 
+    memoria incluyendo la fila de cache. Los Unix modernos mantienen libre,
+    un area muy pequeña, para poder manejar grandes caches de archivo y 
+    de bufer. El comando de linux, <emphasis>free</emphasis>, hace las 
+    cuentas por ústed: mire la columna <quote>free</quote>, y las lineas 
+   <quote>-/+ buffers/cache</quote> y <quote>swap</quote>
+  </para>
   <para lang="fr">
     Ensuite, vous devez déterminer la quantité de mémoire nécessaire pour
     les applications que vous voulez faire tourner en même temps que GIMP.
@@ -760,6 +856,11 @@
     Datenspeicher im RAM oder im RAM plus Systemsauslagerungsspeicher
     unterbringen wollen:
   </para>
+  <para lang="es">
+    Ahora es hora de tomar decisiones y  de calculos sencillos. El concepto 
+    de base es decidir si quiere basar todo el cache de bloques en RAM, o
+    repartido entre RAM y el espacio de intercambio del sistema operativo:
+  </para>
   <para lang="fr">
     C'est maintenant le temps de la décision et d'un peu de math. L'idée de
     base est de décider si vous voulez baser tout le cache d'image en RAM ou
@@ -783,7 +884,7 @@
     有平铺缓存，或 RAM 加上操作系统交换区：
   </para>
 
-  <procedure lang="cs;de;en;fr;it;ko;no;zh_CN">
+  <procedure lang="cs;de;en;es;fr;it;ko;no;zh_CN">
     <step>
       <para lang="cs">
         Přecházíte hodně mezi jednotlivými aplikacemi? Nebo pracujete v Gimpu
@@ -811,6 +912,15 @@
         unsicher sind.) Wenn Sie sicher sind, dass Sie Ihre Anwendungen
         alle paar Minuten wechseln, nehmen Sie nur den freien
         Arbeitsspeicher (RAM).
+      </para>
+      <para lang="es">
+        ¿Cambia mucho de aplicaciones?. O ¿mantiene el GIMP trabajando 
+        durante mucho tiempo?. Si pasa mucho tiempo con el GIMP, puede 
+        considerar como disponible la RAM y el espacio de intercambio; 
+        sino, necesita ir al siguiente paso. (Si no está seguro, valore 
+        los pasos siguientes). Si está seguro, cambie de aplicación cada 
+        pocos minutos , bastará con mirar la RAM libre y tomar la 
+        decisión final; no hay nada más que chequear. 
       </para>
       <para lang="fr">
         Vous changez souvent d'application ? Ou vous travaillez longtemps sur
@@ -875,6 +985,11 @@
         wie der <acronym>GIMP</acronym>-Auslagerungsordner? Falls ja, addieren
         Sie RAM plus Swap, andernfalls gehen Sie zum nächsten Punkt.
       </para>
+      <para lang="es">
+        ¿Reside el espacio de intercambio del sistema operativo, en el mismo
+        disco, que el del GIMP?. Si es así, añada RAM y espacio de intercambio.
+        Sino, pase al paso siguiente.
+      </para>
       <para lang="fr">
         Le fichier d'échange du système d'exploitation réside sur le même
         disque physique que le fichier d'échange de GIMP ? Alors additionnez
@@ -918,6 +1033,12 @@
         mindestens genauso schnell wie die mit dem
         <acronym>GIMP</acronym>-Auslagerungsordner? Falls nicht, nehmen Sie
         nur den freien Hauptspeicher, ansonsten addieren Sie RAM und Swap.
+      </para>
+      <para lang="es">
+        ¿El disco que tiene el espacio de intercambio del sistema operativo, 
+        es más rápido o de la misma velocidad que el del intercambio del 
+        GIMP?. Es más lento, tome solo la RAM libre; es más rápido o similar,
+        añada la RAM e el intercambio libres.
       </para>
       <para lang="fr">
         Le disque portant le fichier d'échange du système est moins rapide que
@@ -965,6 +1086,12 @@
         wenig davon ab, um ganz sicher zu gehen, und das Ergebnis ist dann
         ein guter Anfangswert für Ihren Datenspeicher.
       </para>
+      <para lang="es">
+        Ahora, tiene un número, la RAM lbre o la RAM libre y el espacio de
+        intercambio libre del sistema operativo. Reducirlo un poco, es lo 
+        más seguro, y un buen comienzo para que sea el que use como cache 
+        de bloques.
+      </para>
       <para lang="fr">
         Vous avez maintenant un nombre, qu'il s'agisse seulement de la RAM
         libre ou de la RAM libre plus le fichier d'échange libre du système.
@@ -1009,6 +1136,11 @@
     Wie Sie sehen, ist alles, was Sie tun müssen, die freien Ressourcen zu
     ermitteln und zu entscheiden, ob der System-Auslagerungsspeicher es Wert
     ist, einbezogen zu werden, oder ob es mehr schaden als nützen würde.
+  </para>
+  <para lang="es">
+    Como puede ver, todo se basa en chequear los recursos libres, y decidir 
+    si el espacio de intercambio del sistemas es el óptimo o que causará mas
+    problemas que ayuda.
   </para>
   <para lang="fr">
     Comme vous le voyez, tout tourne autour de la question des ressources
@@ -1060,6 +1192,15 @@
     Das würde eine Neuberechnung gemäß den oben beschriebenen Schritten
     erfordern, was dann zu einem ähnlichen oder auch ganz anderem Wert
     führt.
+  </para>
+
+  <para lang="es">
+    Hay algunas razones para querer ajustar este valor. Las principales son
+    un cambio en los patrones de uso del ordenador o el cambio de hardware. 
+    Podría significar que sus pensamientos sobre como usa su ordenador, o 
+    la velocidad del ordenador, no son válidos. Lo que requeriría una 
+    reevaluación de los pasos anteriores, obteniendo un valor similar o uno
+    completamente nuevo.
   </para>
 
   <para lang="fr">
@@ -1117,6 +1258,15 @@
     beeinträchtigen. Wenn sich andererseits andere Programme über fehlenden
     Speicherplatz beschweren, dann kann es für Sie am besten sein,
     <acronym>GIMP</acronym>s Speicherverbrauch etwas einzuschränken.
+  </para>
+
+  <para lang="es">
+    Otra razón para cambiar el valor es que parezca que el GIMP va más 
+    lento, mientras otras aplicaciones van rápidas: significa que el 
+    GIMP podría usar más memoria sin perjudicar a otras aplicaciones. 
+    Por otra parte, si se notan problemas con otras aplicaciones por 
+    la escasez de memoria, podría ser beneficioso no dejar que el GIMP 
+    acapare mucha.
   </para>
 
   <para lang="fr">
@@ -1185,6 +1335,14 @@
     <acronym>GIMP</acronym> reduzieren.
   </para>
 
+  <para lang="es">
+    Si decide usar solo RAM y el GIMP va lento, podría intentar aumentar 
+    el valor un poco, pero nunca, para usarlo con todo el espacio de 
+    intercambio libre. Si es al contrario, usando ambos, RAM e intercambio,
+    y tiene problemas por la falta de recursos, debería reducir la cantidad 
+    de RAM para el GIMP.
+  </para>
+
   <para lang="fr">
     Si vous avez décidé de n'utiliser que la RAM et que GIMP est lent, essayez
     d'augmenter un peu la valeur mais sans jamais utiliser aussi tout le free
@@ -1248,6 +1406,14 @@
     gleichzeitig laufen zu lassen. Sie können nicht ein Poster auf einem
     Rechner mit 16MB Hauptspeicher bearbeiten und gleichzeitig erwarten,
     dass er dann noch schnell ist.
+  </para>
+  <para lang="es">
+    Otro truco es poner el directorio del espacio de intercambio en un 
+    disco muy rápido o en un disco distinto del de donde están la mayoria 
+    de sus archivos. Repartir el archivo de intercambio del sistema es, 
+    también, una manera de acelerar las cosas. Y desde luego, comprar más 
+    RAM o dejar de usar muchas aplicaciones a la vez: no puede esperar 
+    editar un poster con un ordenador con 16 Mb y ser rápido.
   </para>
   <para lang="fr">
     Une autre astuce consiste à placer le répertoire d'échange sur un disque
@@ -1314,6 +1480,14 @@
     mit derselben Art Bilder arbeiten, Ihr Bedarf also nicht variiert.
     Sie ist im übrigen auch hilfreich um festzustellen, ob Sie mehr
     Hauptspeicher und/oder Festplattenkapazität benötigen.
+  </para>
+  <para lang="es">
+    Puede comprobar las necesidades de memoria que tienen sus imágenes. 
+    Cuanto mas grandes son las imágenes y mayor el número de deshacer, más
+    recursos se necesitan. Esta es otra manera de escoger un número, pero,
+    solo, si se trabaja con el mismo tipo de imágenes y los requisitos 
+    apenas varian. Es útil, también, saber si se necesitará más RAM y/o 
+    espacio de disco.
   </para>
   <para lang="fr">
     Vous pouvez aussi faire le point sur le besoin en mémoire de vos images,
