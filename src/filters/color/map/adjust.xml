@@ -4,6 +4,7 @@
                 "http://www.docbook.org/xml/4.3/docbookx.dtd">
 
 <!-- section history:
+  2007-04-25 ude: added comment on how it works
   2007-03-31 KoSt: added 'no'
   2005-12-07 replaced <simplesect> by <sect3> by lexa
   2005-08-30 de replaced informalfigure by axel.wernicke
@@ -96,7 +97,7 @@
           (FG:blue, BG:red)
         </phrase>
         <phrase lang="de">
-          Anwendungsbeispiel für das Filter <quote>VG-HG anpassen</quote>
+          Anwendungsbeispiel für das Filter <quote>VG/HG anpassen</quote>
         </phrase>
         <phrase lang="fr">
           De gauche à droite: image d'origine, après application de Ajuster
@@ -139,6 +140,22 @@
       </mediaobject>
     </figure>
 
+    <!--
+      This is how the filter works:
+      For every color channel (red, green, blue), the value x is replaced by
+                      (     0      if f(x) < 0,
+          adjust(x) ≝ ( int(f(x))  if 0 ≤ f(x) ≤ 255,
+                      (    255     if f(x> > 255,
+      where
+                           x - foreground       
+          f(x) ≝ 255 * ———————————————————————  if background ≠ foreground,
+                       background - foreground
+          f(x) ≝ 255 * (x - foreground)         otherwise.
+      Note that
+          adjust(foreground) = 0     [( 0,  0,  0 ) = black],
+          adjust(background) = 255   [(255,255,255) = white], 
+          adjust(x) = x  if foreground = 0 and background = 255.
+    -->
     <para lang="en">
       You can find this filter through
       <menuchoice>
@@ -148,17 +165,17 @@
         <guimenuitem>Adjust <accel>F</accel>G-BG</guimenuitem>
       </menuchoice>.
     </para>
-    <!--FIXME all:  Obviously other colors will *not* "turn to their
-    complementary color" (don't know what's going on here, though). -->
-    <para lang="en">
+    <para lang="en"> <!--changed 2007-04-25-->
       <guilabel>Adjust FG-BG</guilabel> belongs to color map filters which
       make connection between a color source and an image. Here, image pixels
       having ForeGround color will turn to black while pixels having
-      BackGround color will turn to white. Other colors will turn to their
-      complementary  color. There will be no change if FG is black and BG is
-      white.
+      BackGround color will turn to white. Other colors are interpolated.
+      There will be no change if FG is black and BG is white.
     </para>
 
+    <!--FIXME cs fr it no ru: Other colors will *not* "turn to their
+      complementary color".  According to the source code,
+      "intermediate colors are interpolated." (See comment above.)-->
     <para lang="cs">
       Tento filtr lze spustit z nabídky okna obrázku volbou
       <menuchoice>
@@ -181,8 +198,6 @@
       Bild herstellen. In diesem Fall werden die Pixel des Bildes, welche die
       aktuelle Vordergrundfarbe (VG) haben, schwarz, während die Pixel im
       Bild, welche die aktuelle Hintergrundfarbe (HG) haben, weiß werden.
-      <!--TODO de:  Was passiert hier wirklich?
-      Die anderen Farben werden in ihre Komplementärfarben umgewandelt. -->
       Die anderen Farben werden interpoliert, d.h. in Zwischenfarben
       umgewandelt.
     </para>
