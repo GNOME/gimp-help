@@ -45,8 +45,9 @@
   </title>
 
   <indexterm lang="en">
-    <primary>Filter</primary>
-    <secondary>Color</secondary>
+    <primary>Filters</primary>
+    <secondary>Colors</secondary>
+    <tertiary>Border Average</tertiary>
   </indexterm>
   <indexterm lang="en"><primary>Border Average</primary></indexterm>
 
@@ -63,8 +64,9 @@
   <indexterm lang="de"><primary>Randmittelwert</primary></indexterm>
 
   <indexterm lang="fr">
-    <primary>Filtre</primary>
-    <secondary>Couleur</secondary>
+    <primary>Filtres</primary>
+    <secondary>Couleurs</secondary>
+    <tertiary>Moyenne du bord</tertiary>
   </indexterm>
   <indexterm lang="fr"><primary>Moyenne du bord</primary></indexterm>
 
@@ -80,7 +82,7 @@
     <tertiary>Kantgjennomsnitt</tertiary>
   </indexterm>
   <indexterm lang="no"><primary>Kantgjennomsnitt</primary></indexterm>
-  
+
   <indexterm lang="ru">
     <primary>Фильтр</primary>
     <secondary>Цвет</secondary>
@@ -207,7 +209,7 @@
       frå biletfargen, t.d. for ei nettside. Bruken av filteret blir ikkje
       registrert i angreloggen og kan heller ikkje angrast på andre måtar.
     </para>
-    
+
     <para lang="ru">
       Этот фильтр находится в меню
       <menuchoice>
@@ -391,6 +393,9 @@
     </variablelist>
   </sect3>
 
+<!-- This explanation is valid only for this example : I couldn't find
+     the algorithm by testing several examples...:-( j.h
+
   <sect3 lang="en;de;fr;no">
     <title>
       <phrase lang="en">
@@ -480,10 +485,11 @@
           <para lang="en">
             The green color has been choosed by the filter because it is
             the most frequent on the image border. The Number of Colors
-            set to 4 has subtracted 4 levels from the Green Channel and
-            <!-- FIXME: en:  obviously 2 levels subtracted (see average-color-ex2.png) -->
-            distributed to the other both channels. The resulting color
-            became the foreground color of the Toolbox.
+            set to 4 has added 2 levels to the other both channels. 2 levels
+            are added to the Green channel also and, as the result is
+            above 255, the excess is subtracted from 256:
+            (255 + 2 = 257 ; excss is 257 - 255 = 2 ; 256 - 2 = 254).
+            The resulting color became the foreground color of the Toolbox.
           </para>
           <para lang="de">
             Die Farbe Grün wurde für das Filter gewählt, weil sie am
@@ -498,11 +504,12 @@
           <para lang="fr">
             La couleur verte a été choisie par le filtre car c'est la
             plus représentée sur le bord de l'image. L'option Nombre de
-            Couleurs fixée à 4 a soustrait 4 niveaux dans le canal Vert
-            <!-- FIXME: fr:  .. a soustrait 2 niveaux (see above) -->
-            et les a répartis dans les deux autres canaux. La couleur
-            résultante est devenue la couleur de premier-plan de la
-            Boîte à Outils.
+            Couleurs fixée à 4 a ajouté 2 niveaux sur les deux autres canaux.
+            2 niveaux sont également ajoutés au canal Vert et comme le
+            résultat dépasse 255, l'excès est retranché de 256
+            (255 + 2 = 257 ; l'excès est de 257 - 255 = 2 ; 256 - 2 = 254).
+            La couleur résultante est devenue la couleur de premier-plan de
+            la Boîte à Outils.
           </para>
           <para lang="no">
             Filteret har vald å ta utgangspunkt i grønt sidan det er denne
@@ -512,10 +519,10 @@
             Den same verdien, altså 2, blir også trekt i frå grønkanalen.
             Difor blir den endelege fargen sett saman av 2 deler raudt
             (256 + 2 = 2), 254 deler grønt (256 - 2 = 254) og 2 deler
-            blått (256 + 2 = 2). (Matematikken er ikkje feil. At 256 + 
+            blått (256 + 2 = 2). (Matematikken er ikkje feil. At 256 +
             2 = 2 kjem av at operasjonen eigentleg føregår i 8 bits
             digitalkode men her omtalt i desimaltal). Den endelege fargen
-            blir lagt inn i verktøyskrinet som forgrunnsfarge.                  
+            blir lagt inn i verktøyskrinet som forgrunnsfarge.
           </para>
         </caption>
       </mediaobject>
@@ -523,12 +530,14 @@
 
     <figure>
       <title>
-        <!-- FIXME: fr title missing -->
-        <phrase lang="en;fr">
+        <phrase lang="en">
           <quote>Number of Colors</quote> is set to 128:
         </phrase>
         <phrase lang="de">
           <quote>Anzahl der Farben</quote> auf 128 gesetzt:
+        </phrase>
+        <phrase lang="fr">
+          <quote>Nombre de couleurs</quote> est fixé à 128:
         </phrase>
         <phrase lang="no">
           <quote>Talet på fargar</quote> sett til 128:
@@ -555,11 +564,13 @@
             fileref="../images/filters/no/average-color-ex3.png"
             format="PNG" />
         </imageobject>
-        
+
         <caption>
           <para lang="en">
             Result on the Foreground color of the Toolbox and values of
-            this color.
+            this color. The calculation for the green channel is:
+            255 + 128/2 = 329 ; excess is 329 - 255 = 64 ; the Green channel
+            value is 256 -64 = 192.
           </para>
           <para lang="de">
             Ergebnis als Vordergrundfarbe im Werkzeugfenster und die
@@ -567,7 +578,9 @@
           </para>
           <para lang="fr">
             Résultat sur la couleur de premier-plan de la Boîte à Outils
-            et valeurs de cette couleur.
+            et valeurs de cette couleur. Le calcul pour le canal vert est :
+            255 + 128/2 = 329 ; l'excès est 329 - 255 = 64 ; la valeur du
+            canal vert est 256 -64 = 192.
           </para>
           <para lang="no">
             Resultatet slik det kjem fram i verktøyskrinet og verdiane
@@ -577,4 +590,5 @@
       </mediaobject>
     </figure>
   </sect3>
+-->
 </sect2>

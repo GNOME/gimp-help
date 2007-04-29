@@ -14,7 +14,7 @@
     <revhistory>
       <revision lang="en">
         <revnumber>$Revision$</revnumber>
-        <date>2006-10-24</date>
+        <date>2007-04-28</date>
         <authorinitials>j.h</authorinitials>
       </revision>
       <revision lang="de">
@@ -24,7 +24,7 @@
       </revision>
       <revision lang="fr">
         <revnumber>$Revision$</revnumber>
-        <date>2006-10-24</date>
+        <date>2007-04-28</date>
         <authorinitials>j.h</authorinitials>
       </revision>
     </revhistory>
@@ -42,7 +42,9 @@
   </title>
 
   <indexterm lang="en">
-    <primary>Filters</primary><secondary>Colors</secondary>
+    <primary>Filters</primary>
+    <secondary>Colors</secondary>
+    <tertiary>Adjust FG-BG</tertiary>
   </indexterm>
   <indexterm lang="en"><primary>Adjust FG BG</primary></indexterm>
 
@@ -58,7 +60,9 @@
   <indexterm lang="de"><primary>VG/HG anpassen</primary></indexterm>
 
   <indexterm lang="fr">
-    <primary>Filtre</primary><secondary>Color</secondary>
+    <primary>Filtre</primary>
+    <secondary>Color</secondary>
+    <tertiary>Ajuster PP-AP</tertiary>
   </indexterm>
   <indexterm lang="fr"><primary>Ajuster PP AP</primary></indexterm>
 
@@ -73,7 +77,7 @@
     <tertiary>Tilpass FG-BG</tertiary>
   </indexterm>
   <indexterm lang="no"><primary>Tilpass FG-BG</primary></indexterm>
-  
+
   <indexterm lang="ru">
     <primary>Фильтры</primary><secondary>Цвета</secondary>
   </indexterm>
@@ -93,15 +97,13 @@
     <figure lang="en;de;fr;it;no;ru">
       <title>
         <phrase lang="en">
-          From left to right: original image, after applying Adjust FG BG
-          (FG:blue, BG:red)
+          Applying example for the <quote>Adjust FG-BG</quote> filter
         </phrase>
         <phrase lang="de">
           Anwendungsbeispiel für das Filter <quote>VG/HG anpassen</quote>
         </phrase>
         <phrase lang="fr">
-          De gauche à droite: image d'origine, après application de Ajuster
-          PP AP (PP:Bleu, AP:rouge)
+          Exemple d'application du filtre <quote>Ajuster PP-AP</quote>
         </phrase>
         <phrase lang="it">
           Esempio di applicazione del filtro Imposta PP-SF
@@ -118,9 +120,10 @@
           <imagedata fileref="../images/filters/examples/taj_orig.jpg"
                      format="JPG"/>
         </imageobject>
-        <caption lang="en;de">
+        <caption lang="en;de;fr;no">
           <para lang="en">Original image</para>
           <para lang="de">Originalbild</para>
+          <para lang="fr">Image d'origine</para>
           <para lang="no">Originalbilete</para>
         </caption>
       </mediaobject>
@@ -129,12 +132,13 @@
           <imagedata fileref="../images/filters/examples/color-taj-adjust.jpg"
                      format="JPG"/>
         </imageobject>
-        <caption lang="en;de">
+        <caption lang="en;de;fr;no">
           <para lang="en">Filter <quote>Adjust FG-BG</quote> applied</para>
           <para lang="de">
             Filter <quote>VG/HG anpassen</quote> mit Vordergrundfarbe Blau
             und Hintergrundfarbe Rot angewandt
           </para>
+          <para lang="fr">Après application du filtre</para>
           <para lang="no">Verknad av filteret <quote>Tilpass FG-BG</quote></para>
         </caption>
       </mediaobject>
@@ -147,13 +151,13 @@
           adjust(x) ≝ ( int(f(x))  if 0 ≤ f(x) ≤ 255,
                       (    255     if f(x> > 255,
       where
-                           x - foreground       
+                           x - foreground
           f(x) ≝ 255 * ———————————————————————  if background ≠ foreground,
                        background - foreground
           f(x) ≝ 255 * (x - foreground)         otherwise.
       Note that
           adjust(foreground) = 0     [( 0,  0,  0 ) = black],
-          adjust(background) = 255   [(255,255,255) = white], 
+          adjust(background) = 255   [(255,255,255) = white],
           adjust(x) = x  if foreground = 0 and background = 255.
     -->
     <para lang="en">
@@ -214,12 +218,10 @@
     <para lang="fr">
       Le filtre <guilabel>Ajuster PP-AP</guilabel> appartient aux filtres de
       mappage de couleurs qui établissent une connexion entre une source de
-      couleurs et une image. Ici, les pixels de l'image ayant la même couleur
-      que le Premier-Plan de la boîte à outils prendront la couleur noire
-      tandis que les pixels ayant la couleur de l'Arrière-Plan prendront la
-      couleur blanche. Les autres pixels prendront leur couleur
-      complémentaire. Il n'y aura aucun changement si le PP est noir et si
-      l'AP est blanc.
+      couleurs et une image. Ici, les pixels ayant la couleur de premier-plan
+      deviendront noirs et ceux ayant la couleur d'Arrière-plan deviendront
+      blancs. Les autres couleurs sont interpolées. Il n'y aura pas de
+      changement si le PP est noir et l'AP blanc.
     </para>
 
     <para lang="it">
@@ -258,7 +260,7 @@
       biletet blir sette til komplimentærfargen. Det blir ingen endringar
       dersom forgrunnen er svart og bakgrunnen er kvit frå før.
     </para>
-    
+
     <para lang="ru">
       Этот фильтр нахофится в меню
       <menuchoice>
