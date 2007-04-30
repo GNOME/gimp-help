@@ -4,10 +4,11 @@
                 "http://www.docbook.org/xml/4.3/docbookx.dtd">
 
 <!-- section history:
+  2007-04-24 KoSt: added 'no'
   2005-12-07 replaced <simplesect> by <sect3> by lexa
   050909 de added by axel.wernicke
 -->
-<sect2 id='plug-in-newsprint' lang="en;cs;de;fr;it;ru">
+<sect2 id='plug-in-newsprint' lang="en;cs;de;fr;it;no;ru">
   <sect2info lang="de" role="cvs">
     <revhistory>
       <revision lang="de">
@@ -24,6 +25,7 @@
     <phrase lang="de">Zeitungsdruck</phrase>
     <phrase lang="fr">Trame d&apos;imprimerie</phrase>
     <phrase lang="it">Effetto giornale</phrase>
+    <phrase lang="no">Avistrykk</phrase>
     <phrase lang="ru">Газетная бумага</phrase>
   </title>
 
@@ -44,6 +46,13 @@
   </indexterm>
   <indexterm lang="it"><primary>Effetto giornale</primary></indexterm>
 
+  <indexterm lang="no">
+    <primary>Filter</primary>
+    <secondary>Forvrengningar</secondary>
+    <tertiary>Avistrykk</tertiary>
+  </indexterm>
+  <indexterm lang="no"><primary>Avistrykk (filter)</primary></indexterm>
+  
   <indexterm lang="ru"><primary>Газетная бумага</primary></indexterm>
 
   <mediaobject lang="en;it">
@@ -78,10 +87,11 @@
       <phrase lang="de">Wirkungsweise</phrase>
       <phrase lang="fr">Généralités</phrase>
       <phrase lang="it">Panoramica</phrase>
+      <phrase lang="no">Oversyn</phrase>
       <phrase lang="ru">Общая информация</phrase>
     </title>
 
-    <figure lang="de;it;ru">
+    <figure lang="de;it;no;ru">
       <title>
         <phrase lang="de">
           Anwendungsbeispiel für das Filter <quote>Zeitungsdruck</quote>
@@ -89,6 +99,7 @@
         <phrase lang="it">
           Esempio di applicazione del filtro Effetto giornale
         </phrase>
+        <phrase lang="no">Eksempel på bruk av filteret</phrase>
         <phrase lang="ru">
           То же изображение до применения фильтра <quote>Газетная бумага</quote>
         </phrase>
@@ -99,9 +110,10 @@
           <imagedata fileref="../images/filters/examples/taj_orig.jpg"
             format="JPG" />
         </imageobject>
-        <caption lang="en;de">
+        <caption lang="en;de;no">
           <para lang="en">Original image</para>
           <para lang="de">Originalbild</para>
+          <para lang="no">Originalbiletet</para>
         </caption>
       </mediaobject>
       <mediaobject>
@@ -110,9 +122,12 @@
             fileref="../images/filters/examples/distort-taj-newsprint.jpg"
             format="JPG" />
         </imageobject>
-        <caption lang="en;de">
+        <caption lang="en;de;no">
           <para lang="en">Filter <quote>Newsprint</quote> applied</para>
           <para lang="de">Filter <quote>Zeitungsdruck</quote> angewandt</para>
+          <para lang="no">
+            Etter bruk av filteret <quote>Avistrykk</quote>
+          </para>
         </caption>
       </mediaobject>
     </figure>
@@ -314,6 +329,52 @@
       completo al bianco completo.
     </para>
 
+    <para lang="no">
+      Du har tilgang til filteret frå biletmenyen via
+      <menuchoice>
+        <guimenu>Filter</guimenu>
+        <guisubmenu>Forvrengningar</guisubmenu>
+        <guimenuitem>Avistrykk</guimenuitem>
+      </menuchoice>
+    </para>
+    <para lang="no">
+      Dette filteret rasterer biletet og gir ein effekt ikkje ulik den som blir
+      brukt på avisbilete. Difor namnet. Rastering er ein prosess der bilete
+      med mange ulike fargar blir omforma slik at dei kan trykkast på
+      maskiner med få fargar og likevel sjå tilnerma ut som originalen.
+    </para>
+    <para lang="no">
+      Det grunnleggande i denne prosesse er å minska oppløysinga for 
+      å oppnå ein tilsynelatande betre fargedjupn. (Såkalla
+      <quote>spatiell utjamning</quote> ).
+    </para>
+    <para lang="no">
+      Det er mange måtar å gjere dette på. Den enklaste er rett og slett å
+      fjerna dei minst viktige informasjonane om tonestyrke, slik
+      verktøyet <!--PENDING:no
+      <link linkend="gimp-tool-posterize"-->Posterisering<!--/link-->
+      gjer det. Denne metoden gir ikkje alltid like godt resultat, men 
+      biletoppløysinga blir i alle fall uendra.
+    </para>   
+    <para lang="no">
+      Dette filteret bruker ein metode som går ut på å redusera 
+      biletoppløysinga ved å omforma biletmceller til større eller mindre
+      punkt, avhengig av intensiteten punktet skal representere.
+    </para>    
+    <para lang="no">
+      Tenk deg at det blir lagt eit rutenett over biletet. Dette rutenettet
+      vil dele biletet opp i celler som kvar inneheld eit fargepunkt sett 
+      saman av gjennomsnittet av pikslane i cella. Storleiken på cella
+      blir bestemt ut frå intensiteten i originalbiletet.
+    </para>
+    <para lang="no">
+      Dersom desse cellen er store, vil dette sjølvsagt føre til merkbar
+      dårlegare oppløysing i biletet. Punkta i cellene er som oftast frå
+      først av sirklar, men blir meir rombeforma når dei blir større. 
+      Denne endringa av utsjånaden kan kontrollerast av kontrollen
+      <guilabel>Punktfunksjon</guilabel>.
+    </para>
+
     <para lang="ru">
       Этот фильтр находится в
       <menuchoice>
@@ -384,19 +445,28 @@
       <phrase lang="de">Eigenschaften</phrase>
       <phrase lang="fr">Options</phrase>
       <phrase lang="it">Opzioni</phrase>
+      <phrase lang="no">Innstillingar</phrase>
       <phrase lang="ru">Параметры</phrase>
     </title>
 
-    <figure lang="de">
+    <figure lang="de;no">
       <title>
         <phrase lang="de">
             Eigenschaften für das Filter <quote>Zeitungsdruck</quote>
         </phrase>
+        <phrase lang="no">
+          Innstillingane for filteret <quote>Avistrykk</quote>
+        </phrase>
       </title>
       <mediaobject>
-        <imageobject>
+        <imageobject lang="de">
           <imagedata
             fileref="../images/filters/de/options-distort-newsprint.png"
+            format="PNG" />
+        </imageobject>
+        <imageobject lang="no">
+          <imagedata
+            fileref="../images/filters/no/options-distort-newsprint.png"
             format="PNG" />
         </imageobject>
       </mediaobject>
@@ -409,6 +479,7 @@
         <term lang="de">Vorschau</term>
         <term lang="fr">Aperçu</term>
         <term lang="it">Anteprima</term>
+        <term lang="no">Førehandsvising</term>
         <term lang="ru">Просмотр</term>
         <listitem>
           <para lang="en">
@@ -448,6 +519,13 @@
             la selezione. Non si selezioni l'opzione <emphasis>Anteprima</emphasis>
             se si possiede un computer particolarmente lento.
           </para>
+          <para lang="no">
+            Førehandsvisinga syner endringane i biletet etter kvart som du
+            endrar parametra. Endringane blir ikkje lagt inn i biletet før du
+            trykker på knappen <guilabel>OK</guilabel>. Legg merke til at
+            førehandsvisinga i dette filteret i noen oppsett viser heile biletet
+            sjølv om du bare arbeider på ein del av det.
+          </para>
           <para lang="ru">
             Результат изменения настроек появится в <quote>Просмотре</quote>,
             не изменяя изображение пока вы не нажмёте кнопку
@@ -465,6 +543,7 @@
         <term lang="de">Auflösung</term>
         <term lang="fr">Résolution</term>
         <term lang="it">Risoluzione</term>
+        <term lang="no">Oppløysing</term>
         <term lang="ru">Разрешение</term>
 
         <listitem>
@@ -486,17 +565,23 @@
             Questo gruppo controlla la dimensione delle celle impostando la
             risoluzione di ingresso e di uscita oppure in maniera diretta.
           </para>
+          <para lang="no">
+            Denne gruppa kontrollerer cellestorleiken, anten ved å setje 
+            storleiken direkte eller ved å setje verdiar for oppløysinga for
+            inngang og utgang.
+          </para>
           <para lang="ru">
             Эта группа определяет размер ячейки, либо задавая вводное или
             выходное разрешение, либо напрямую.
           </para>
 
-          <variablelist lang="en;de;fr;it;ru">
+          <variablelist lang="en;de;fr;it;no;ru">
             <varlistentry>
               <term lang="en">Input SPI</term>
               <term lang="de">Eingabe-SPI</term>
               <term lang="fr">D'entrée (EPP)</term>
               <term lang="it">SPI in ingresso</term>
+              <term lang="no">Inngangs-SPI</term>
               <term lang="ru">SPI на входе</term>
 
               <listitem>
@@ -524,6 +609,12 @@
                   SPI in inglese).  Questo valore è automaticamente impostato
                   alla risoluzione propria dell'immagine.
                 </para>
+                <para lang="no">
+                  <guilabel>Inngangs-SPI</guilabel>:
+                  <quote>SPI</quote> er eit mål for oppløysing. (Forkorting for
+                  det engelske <quote>Samples Per Inch</quote>. Denne verdien
+                  blir sett automatisk ut frå oppløysinga til originalbiletet.
+                </para>
                 <para lang="ru">
                   <guilabel>SPI на входе</guilabel>: Разрешение начального
                   изображения, в Замерах на дюйм (Samples Per Inch SPI).
@@ -538,6 +629,7 @@
               <term lang="de">Ausgabe-LPI</term>
               <term lang="fr">De sortie (LPP)</term>
               <term lang="it">LPP in uscita</term>
+              <term lang="no">Utgangs-LPI</term>
               <term lang="ru">LPI на выходе</term>
 
               <listitem>
@@ -557,6 +649,13 @@
                   <guilabel>LPP in uscita</guilabel>: Desired output
                   resolution, in Lines Per Inch (LPI).
                 </para>
+                <para lang="no">
+                  <guilabel>Utgangs-LPI</guilabel>:
+                  <quote>LPI</quote> er eit anna mål for oppløysing.
+                  (Forkorting for det engelske <quote>Lines Per
+                  Inch</quote>. Her kan du setje ønskt oppløysing for
+                  utgangen, dvs. det ferdige biletet.
+                </para>
                 <para lang="ru">
                   <guilabel>LPI на выходе</guilabel>: выходное разрешение,
                   в линиях на дюйм (Lines Per Inch LPI).
@@ -569,6 +668,7 @@
               <term lang="de">Zellgröße</term>
               <term lang="fr">Taille des cellules</term>
               <term lang="it">Dimensione cella</term>
+              <term lang="no">Cellestorleik</term>
               <term lang="ru">Размер ячейки</term>
 
               <listitem>
@@ -592,6 +692,11 @@
                   delle celle in pixel. Il più delle volte questo è il valore
                   da regolare.
                 </para>
+                <para lang="no">
+                  <guilabel>Cellestorleik</guilabel>: Dette er den vanlegaste
+                  måten å bestemma oppløysinga på. Set du cellestorleiken
+                  direkte, vil oppløysinga stille seg inn automatisk.
+                </para>
                 <para lang="ru">
                   <guilabel>Размер ячейки</guilabel>: конечный размер ячейки,
                   в пикселях. Обычно рамер параметра устанавливается напрямую.
@@ -608,6 +713,7 @@
         <term lang="de">Schirm</term>
         <term lang="fr">Trames</term>
         <term lang="it">Schermo</term>
+        <term lang="no">Skjerm</term>
         <term lang="ru">Экран</term>
 
         <listitem>
@@ -615,12 +721,13 @@
             Určuje způsob separace.
           </para>
 
-          <variablelist lang="en;de;fr;it;ru">
+          <variablelist lang="en;de;fr;it;no;ru">
             <varlistentry>
               <term lang="en">Separate To RGB, CMYK, Intensity</term>
               <term lang="de">Separiere nach RGB; CMYK; Intensität</term>
               <term lang="fr">Séparer en RVB, CMJN, Intensité</term>
               <term lang="it">Separa in RGB, CMYK, Intensità</term>
+              <term lang="no">Separer til RGB, CMYK, Intensitet</term>
               <term lang="ru">Разделить на RGB, CMYK, Интенсивность</term>
 
               <listitem>
@@ -689,6 +796,21 @@
                   interessanti. Si suggerisce di utilizzare la modalità CMYK
                   per iniziare.
                 </para>
+                <para lang="no">
+                  <guilabel>Separer til RGB, CMYK, Intensitet</guilabel>:
+                  Her bestemmer du kva for fargemodell biletet skal lagast
+                  i. I <emphasis>RGB</emphasis>-modus blir biletet ikkje
+                  forandra. Vel du <emphasis>CMYK</emphasis> vil biletet
+                  først bli omforma til CMYK, deretter blir kvar fargekanal
+                  gjort om til halvtoner og endeleg sett saman igjen til
+                  eit RGB-bilete. Desse omformingane skjer internt i filteret.
+                  I modus <emphasis>Intensitet</emphasis> blir biletet
+                  omforma internt i filteret til gråskala, halvtoner, og
+                  resultatet blir brukt som ein alfakanal for inngangsbiletet.
+                  Denne metoden kan gi ein del spesielle effektar, men krev
+                  ein del eksperimentering. Er du usikker på kva metode
+                  du skal velje, er det sikraste å byrja med CMYK.
+                </para>
                 <para lang="ru">
                   <guilabel>Разделить на RGB, CMYK, Интенсивность</guilabel>:
                   Определяет цветовую модель для работы. В режиме
@@ -713,6 +835,7 @@
               <term lang="de">Schwarz-Auszug (%)</term>
               <term lang="fr">Retirer du noir (%)</term>
               <term lang="it">Estrazione del nero (%)</term>
+              <term lang="no">Svartandel (%)</term>
               <term lang="ru">Черная составляющая (%)</term>
 
               <listitem>
@@ -741,6 +864,15 @@
                   del nero (K) da utilizzare durante la conversione da RGB a
                   CMYK.
                 </para>
+                <para lang="no">
+                  Når du omformar eit bilete til CMYK vil teorien ikkje stemme
+                  heilt med praksis. Ei blanding av grunnfargane Cyan, Magenta
+                  og Gul (Y) skal i teorien bli svart, men dette skjer ikkje. Difor
+                  må det setjast til ein større eller mindre del svart (K i CMYK)
+                  for å få same svartmengda som i RGB-biletet. (Det er same
+                  fenomenet som er årsak til at blekkskrivaren har ein ekstra
+                  patron for svart).
+                </para>
                 <para lang="ru">
                   <guilabel>Черная составляющая (%)</guilabel>: определяет,
                   сколько чёрного (К) использовать при преобразовании
@@ -754,6 +886,7 @@
               <term lang="de">Kanäle verbinden</term>
               <term lang="fr">Bloquer les canaux</term>
               <term lang="it">Blocca canali</term>
+              <term lang="no">Lås kanalane</term>
               <term lang="ru">Фиксировать каналы</term>
 
               <listitem>
@@ -774,6 +907,10 @@
                   <guilabel>Blocca canali</guilabel>: Le modifiche ad un canale
                   si applicano a tutti i canali.
                 </para>
+                <para lang="no">
+                  <guilabel>Lås kanalane</guilabel>: Gjer at endringar på ein
+                  kanal også blir gjort gjeldande for dei andre kanalane.
+                </para>
                 <para lang="ru">
                   <guilabel>Фиксировать каналы</guilabel>: преобразования
                   будут применятся ко всем каналам.
@@ -786,6 +923,7 @@
               <term lang="de">Fabrikeinstellungen</term>
               <term lang="fr">Réglages par défaut</term>
               <term lang="it">Valori predefiniti</term>
+              <term lang="no">Fabrikkinnstillingar</term>
               <term lang="ru">По умолчанию</term>
 
               <listitem>
@@ -806,6 +944,10 @@
                   <guilabel>Valori predefiniti</guilabel>: Reimposta i valori
                   predefiniti che dovrebbero fornire buoni risultati.
                 </para>
+                <para lang="no">
+                  <guilabel>Fabrikkinnstillingar</guilabel>: Trykk på denne
+                  for å setje alle innstillingane tilbake til utgangspunktet.
+                </para>
                 <para lang="ru">
                   <guilabel>По умолчанию</guilabel>: востанавливает начальные
                   настройки для приемлимых результатов.
@@ -818,6 +960,7 @@
               <term lang="de">Winkel</term>
               <term lang="fr">Angle</term>
               <term lang="it">Angolo</term>
+              <term lang="no">Vinkel</term>
               <term lang="ru">Угол</term>
 
               <listitem>
@@ -840,6 +983,15 @@
                   <guilabel>Angolo</guilabel>: Angolo della griglia di celle
                   per il rispettivo canale.
                 </para>
+                <para lang="no">
+                  Dette er rastervinkelen, eller vinkelen på
+                  <quote>rutenettet</quote> du la over biletet. Ut frå
+                  DIN 16 547 er brukbare rastervinklar for eit firefargetrykk
+                  for eksempel: Cyan = 75°, Magenta = 15°, Gul = 0°,
+                  Svart = 135° (-45°) eller Cyan = 15°, Magenta = 75°,
+                  Gul = 0°, Svart = 45°.
+                </para> 
+               
                 <para lang="ru">
                   <guilabel>Угол</guilabel>: угол сетки для этого канала.
                 </para>
@@ -851,6 +1003,7 @@
               <term lang="de">Punktfunktion</term>
               <term lang="fr">Fonction point</term>
               <term lang="it">Funzione spot</term>
+              <term lang="no">Punktfunksjon</term>
               <term lang="ru">Капельная функция</term>
 
               <listitem>
@@ -873,6 +1026,11 @@
                   utilizzare per il rispettivo canale (si osservi l'anteprima
                   nelle caselle blu a lato).
                 </para>
+                <para lang="no">
+                  <guilabel>Punktfunksjon</guilabel>: Her bestemmer du 
+                  kva form punkta skal ha for denne kanalen. Sjå
+                  førehandsvisinga i celleboksane.
+                </para>
                 <para lang="ru">
                   <guilabel>Капельная функция</guilabel>: определяет форму
                   капли для ячейки.
@@ -889,6 +1047,7 @@
         <term lang="de">Kantenglättung</term>
         <term lang="fr">Lissage</term>
         <term lang="it">Antialiasing</term>
+        <term lang="no">Kantutjamning</term>
         <term lang="ru">Сглаживание</term>
 
         <listitem>
@@ -927,6 +1086,14 @@
             stampare l'immagine risultante si imposti l'antialiasing a 1
             (cioè disattivato).
           </para>
+          <para lang="no">
+            Kantutjamninga blir ikkje brukt, og er heller ikkje nødvendig for
+            utskriving av papirkopi. Denne funksjonen er lagt inn for å lage
+            spesielle effektar på bilete som skal visast på skjermen. Legg
+            du til lite grann kantutjamning, vil dette kunne simulere t.d. uklare
+            blekkutskrifter. Ønskjer du å skrive ut eit bilete som har
+            kantutjamning, sett utjamningsgraden til 1, dvs. avslått.
+          </para>
           <para lang="ru">
             Правильное полутонирование не нуждается в сглаживании: задача-то
             уменьшить глубину цвета. Однако, поскольку этот фильтр
@@ -936,12 +1103,13 @@
             чернила на бумаге. Значение 1 отключает сглаживание.
           </para>
 
-          <variablelist lang="en;de;fr;it;ru">
+          <variablelist lang="en;de;fr;it;no;ru">
             <varlistentry>
              <term lang="en">Oversample</term>
              <term lang="de">Oversample</term>
              <term lang="fr">Sur-échantillonnage</term>
              <term lang="it">Sovracampionamento</term>
+             <term lang="no">Utjamningsgrad</term>
              <term lang="ru">Перекрывание</term>
 
              <listitem>
@@ -972,6 +1140,13 @@
                   risultante. Si imposti il numero a 1 per disabilitare questa
                   caratteristica. Attenzione: grandi valori renderanno il tempo
                   di esecuzione del filtro molto lungo!
+                </para>
+                <para lang="no">
+                  <guilabel>Utjamningsgrad</guilabel>: Denne glidebrytaren
+                  bestemmer kor mange subpikslar som skal brukast for 
+                  kantutjamninga. Sett til 1 for å kopla frå denne funksjonen.
+                  Skriv du inn høge tal her, kan dette føre til at datamaskinen
+                  bruker svært lang tid på operasjonen.
                 </para>
                 <para lang="ru">
                   <guilabel>Перекрывание</guilabel>: определяет, сколько
@@ -1009,8 +1184,9 @@
     <para lang="cs">Malá ukázka použití filtru z galérie autora:</para>
     <para lang="fr">Voici un exemple, tiré de la galerie de l'auteur:</para>
     <para lang="it">Segue un esempio tratto dalla galleria dell'autore:</para>
+    <para lang="no">Her er eit eksempel frå forfattaren si samling:</para>
     <para lang="ru">Вот пример из галлереи автора:</para>
-    <mediaobject lang="en;cs;fr;it;ru">
+    <mediaobject lang="en;cs;fr;it;no;ru">
       <imageobject>
         <imagedata fileref='../images/filters/examples/newsprint.png'
           format='PNG' />
