@@ -51,6 +51,7 @@ HELP_STAMPS = \
 	$(STAMP_DIR)/css.stamp		\
 	$(STAMP_DIR)/pdf.stamp		\
 	$(STAMP_DIR)/html.stamp		\
+	$(STAMP_DIR)/odf.stamp		\
 	$(STAMP_DIR)/images.stamp	\
 	$(STAMP_DIR)/index.stamp	\
 	$(STAMP_DIR)/mkdirs.stamp	\
@@ -80,6 +81,7 @@ $(STAMP_DIR)/clean.stamp: Makefile
 	@rm -rf html
 	@rm -rf pdf 
 	@rm -rf xml
+	@rm -rf odf
 
 	@echo '*** Removing temporary files ***'
 	@rm -rf `find . -name "*~"`
@@ -191,6 +193,23 @@ $(STAMP_DIR)/pdf.stamp: $(STAMP_DIR)/mkdirs.stamp $(STAMP_DIR)/profile.stamp
 
 	@touch $@
 pdf: $(STAMP_DIR)/pdf.stamp
+
+$(STAMP_DIR)/odf.stamp: $(patsubst %,$(STAMP_DIR)/odf.%.stamp,$(ALL_LINGUAS))
+	@echo '*** Building ODF files ***'
+	@touch $@
+	
+
+$(patsubst %,$(STAMP_DIR)/odf.%.stamp,$(ALL_LINGUAS)): $(STAMP_DIR)/odf.%.stamp : $(STAMP_DIR)/profile.%.stamp $(XML_FILES)
+	@echo '*** Building ODF files ***'
+	@cd $(top_srcdir) && \
+	$(mkinstalldirs) odf && cd odf && \
+	for lang in $(ALL_LINGUAS); do \
+	  echo '-- Building ODF for '$$lang; \
+	    $(DOCBOOK2ODF) --input-file ../xml/$$lang.xml --output-file ../odf/$$lang.odf; \
+	done
+	@touch $@
+
+odf: $(STAMP_DIR)/odf.stamp
 
 
 $(STAMP_DIR)/html.stamp: $(patsubst %,$(STAMP_DIR)/html.%.stamp,$(ALL_LINGUAS))
