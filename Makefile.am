@@ -1,5 +1,8 @@
 ## Process this file with automake to produce Makefile.in
 
+SUBDIRS = \
+	quickreference
+
 STAMP_DIR = stamps
 
 IMAGE_DIRS = \
@@ -31,8 +34,8 @@ XML_FILES = \
 	$(wildcard $(top_srcdir)/src/*/*/*.xml)	\
 	$(wildcard $(top_srcdir)/src/*/*/*/*.xml)
 
-DTD_FILES = \
-	$(top_srcdir)/src/linkset.dtd
+PO_FILES = \
+	$(wildcard $(top_srcdir)/po/*.po)
 
 CSS_DIRS = \
 	$(top_srcdir)/stylesheets
@@ -69,7 +72,6 @@ EXTRA_DIST = \
 	$(XSL_FILES)			\
 	$(MAKEINDEX)			\
 	$(IMAGE_FILES)			\
-	$(DTD_FILES)			\
 	$(XML_FILES)			\
 	$(CSS_FILES)
 
@@ -240,8 +242,7 @@ $(patsubst %,$(STAMP_DIR)/index.%.stamp,$(ALL_LINGUAS)): $(STAMP_DIR)/index.%.st
 
 	@touch $@
 
-index: $(STAMP_DIR)/index.stamp 
-
+index: $(STAMP_DIR)/index.stamp
 
 $(STAMP_DIR)/validate.stamp: $(patsubst %,$(STAMP_DIR)/validate.%.stamp,$(ALL_LINGUAS))
 	@if test "x$(XMLLINT)" != "x"; then \

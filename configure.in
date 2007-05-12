@@ -13,7 +13,7 @@ AC_INIT(gimp-help-2, [help_version])
 
 AC_CONFIG_SRCDIR([src/gimp.xml])
 
-AM_INIT_AUTOMAKE(no-define)
+AM_INIT_AUTOMAKE(dist-bzip2)
 
 
 AC_PROG_INSTALL
@@ -98,7 +98,17 @@ fi
 # Look for docbook2odf
 AC_PATH_PROG(DOCBOOK2ODF, docbook2odf)
 if test -z "$DOCBOOK2ODF" && test "x$enable_odf" = "xyes"; then
-  AC_MSG_ERROR([Couldn't find the tool docbook2odf.])
+  AC_MSG_ERROR([
+** Couldn't find the tool docbook2odf, which is needed to
+** generate ODF files.])
+fi
+
+# Look for docbook2odf
+AC_PATH_PROG(XML2PO, xml2po)
+if test -z "$XML2PO" && test "x$enable_xml2po" = "xyes"; then
+  AC_MSG_ERROR([
+** Couldn't find the tool xml2po. If you want to generate the quick
+** reference SVGs, install gnome-doc-utils.])
 fi
 
 #  Optionally allow xsltproc to access DTDs over the network.
@@ -158,6 +168,7 @@ AC_SUBST(GIMP_DATADIR)
 
 AC_CONFIG_FILES([
 Makefile
+quickreference/Makefile
 omf/gimp-C.omf
 stylesheets/plainhtml.xsl
 ])
