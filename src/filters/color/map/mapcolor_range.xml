@@ -4,6 +4,7 @@
                 "http://www.docbook.org/xml/4.3/docbookx.dtd">
 
 <!-- section history:
+  2007-05-15 ude: added notes about mapping and mapping problems/bug
   2007-04-01 KoSt: added 'no'
   2006-10-27 Slight change in Color Source Range by j.h en;fr
   2005-12-07 replaced <simplesect> by <sect3> by lexa
@@ -15,13 +16,13 @@
     <revhistory>
       <revision lang="en">
         <revnumber>$Revision$</revnumber>
-        <date>2006-10-25</date>
-        <authorinitials>j.h</authorinitials>
+        <date>2007-05-15</date>
+        <authorinitials>ude</authorinitials>
       </revision>
       <revision lang="de">
         <revnumber>$Revision$</revnumber>
-        <date>2005-08-30</date>
-        <authorinitials>lexa</authorinitials>
+        <date>2007-05-15</date>
+        <authorinitials>ude</authorinitials>
       </revision>
       <revision lang="fr">
         <revnumber>$Revision$</revnumber>
@@ -34,7 +35,7 @@
   <title>
     <phrase lang="en">Map Color Range</phrase>
     <phrase lang="cs">Mapování rozsahu barev</phrase>
-    <phrase lang="de">Farbbereiche vertauschen</phrase>
+    <phrase lang="de">Farbbereich abbilden</phrase>
     <phrase lang="fr">Échanger un intervalle de couleur</phrase>
     <phrase lang="it">Mappatura gamma colore</phrase>
     <phrase lang="no">Fargekopling</phrase>
@@ -57,7 +58,7 @@
   <indexterm lang="de">
     <primary>Filter</primary><secondary>Farben</secondary>
   </indexterm>
-  <indexterm lang="de"><primary>Farbbereiche vertauschen</primary></indexterm>
+  <indexterm lang="de"><primary>Farbbereich abbilden</primary></indexterm>
 
   <indexterm lang="fr">
     <primary>Filtres</primary>
@@ -106,12 +107,10 @@
 
     <figure lang="en;de;fr;it;no;ru">
       <title>
-        <phrase lang="en">
-          From left to right: Original image, after applying filter
-        </phrase>
+        <phrase lang="en">Example for the Map Color Range filter</phrase>
         <phrase lang="de">
           Anwendungsbeispiel für das Filter
-          <quote>Farbbereich vertauschen</quote>
+          <quote>Farbbereich abbilden</quote>
         </phrase>
         <phrase lang="fr">
           De gauche à droite: image d"origine, après application du filtre
@@ -146,7 +145,7 @@
         <caption lang="en;de;no">
           <para lang="en">Filter <quote>Map Color Range</quote> applied</para>
           <para lang="de">
-            Filter <quote>Farbbereich vertauschen</quote> angewandt
+            Filter <quote>Farbbereich abbilden</quote> angewandt
           </para>
            <para lang="no">
             Verknad av filteret <quote>Fargekopling</quote>
@@ -166,8 +165,12 @@
     </para>
     <para lang="en">
       Unlike Exchange filter, Map Color Range maps a defined color range
-      against another defined color range.
+      against another defined color range. More precisely, for every image
+      pixel the values of the color channels (red, green, blue) are separately
+      replaced according to a mapping table. This way, the color range may be
+      moved, stretched, compressed, and/or inverted.
     </para>
+
     <para lang="cs">
       Tento filtr lze spustit z nabídky okna obrázku volbou
       <menuchoice>
@@ -183,9 +186,27 @@
     </para>
 
     <para lang="de">
-      Das Filter erlaubt es Ihnen, einen definierten Farbbereich im Bild mit
-      einem anderen Farbbereich zu vertauschen.
+      Das Filter erlaubt es Ihnen, einen definierten Farbbereich im Bild auf
+      einen anderen Farbbereich abzubilden. Genauer gesagt, wird für jeden
+      Farbkanal (Rot, Grün, Blau) jedes Pixels der jeweilige Wert nach einer
+      bestimmten Abbildungsvorschrift durch einen anderen Wert ersetzt. Diese
+      Abbildung kann eine Verschiebung, eine Stauchung oder Dehnung sowie eine
+      Umkehrung des Farbbereichs beinhalten.
     </para>
+
+    <note lang="en;de">
+      <para lang="en">
+        This mapping does not apply to the specified source color range only.
+        Colors outside this color range are mapped the same way by
+        extrapolating their destination color.
+      </para>
+      <para lang="de">
+        Es ist keineswegs so, dass nur der Quell-Farbbereichs durch den
+        Ziel-Farbbereich ersetzt wird. Tatsächlich werden auch die Bildfarben
+        außerhalb des Quell-Farbbereichs durch Extrapolation nach genau
+        derselben Abbildungsvorschrift verändert.
+      </para>
+    </note>
 
     <para lang="fr">
        On accède à ce filtre à partir du menu d'image en suivant
@@ -285,7 +306,7 @@
           Options of the <quote>Map Color Range</quote> filter
         </phrase>
         <phrase lang="de">
-          Eigenschaften für das Filter <quote>Farbbereiche vertauschen</quote>
+          Eigenschaften für das Filter <quote>Farbbereich abbilden</quote>
         </phrase>
         <phrase lang="fr">
           Options du filtre <quote>Échanger un intervalle de couleurs</quote>
@@ -294,32 +315,22 @@
           Innstillingane for filteret <quote>Fargekopling</quote>
         </phrase>
       </title>
-      <mediaobject lang="en">
-        <imageobject>
-          <imagedata
-            fileref="../images/filters/filters-colormap-rangemapping.png"
-            format="PNG" />
+      <mediaobject>
+        <imageobject lang="en">
+          <imagedata format="PNG"
+            fileref="../images/filters/filters-colormap-rangemapping.png" />
         </imageobject>
-      </mediaobject>
-      <mediaobject lang="de">
-        <imageobject>
-          <imagedata
-            fileref="../images/filters/de/options-color-maprange-color.png"
-            lang="de" format="PNG" />
+        <imageobject lang="de">
+          <imagedata format="PNG"
+            fileref="../images/filters/de/options-color-mapcolor.png" />
         </imageobject>
-      </mediaobject>
-      <mediaobject lang="fr">
-        <imageobject>
-          <imagedata
-            fileref="../images/filters/fr/filters-colormap-rangemapping.png"
-            format="PNG" />
+        <imageobject lang="fr">
+          <imagedata format="PNG"
+            fileref="../images/filters/fr/filters-colormap-rangemapping.png" />
         </imageobject>
-      </mediaobject>
-      <mediaobject lang="no">
-        <imageobject>
-          <imagedata
-                    fileref="../images/filters/no/filters-colormap-rangemapping.png"
-                    format="PNG"/>
+        <imageobject lang="no">
+          <imagedata format="PNG"
+            fileref="../images/filters/no/filters-colormap-rangemapping.png" />
         </imageobject>
       </mediaobject>
     </figure>
@@ -343,7 +354,7 @@
             interaktivně, před skutečnou změnou obrázku.
           </para>
           <para lang="de">
-            Das Vorschaufenster zeigt, wie das Bild aussehen würden, wenn der
+            Das Vorschaufenster zeigt, wie das Bild aussehen würden, wenn das
             Filter mit den aktuellen Einstellungen ausgeführt würde.
           </para>
           <para lang="fr">
@@ -384,17 +395,57 @@
             <link linkend='gimp-color-dialog'>Color selector</link> which
             lets you select other colors.
           </para>
+          <para lang="en">
+            Note that, when you select a color, you really select three
+            separate color channels.
+          </para>
+
           <para lang="cs">
             Dvě barevná pole umožňují nastavit hraniční barvy zdrojového
             rozsahu. Kliknutím na pole se otevře standardní
             <link linkend='gimp-color-dialog'>volič barev</link>.
           </para>
+
           <para lang="de">
-            Mit Hilfe der zwei farbigen Schaltflächen können Sie den ersten
-            Farbbereich einstellen. Durch Anklicken der Schaltflächen öffnet
-            sich der <acronym>GIMP</acronym> Dialog zur
-            <link linkend="gimp-color-dialog">Farbwahl</link>.
+            Das ist der Bereich (<quote>Von</quote> - <quote>Bis</quote>), der
+            auf den entsprechenden Ziel-Farbbereich abgebildet wird, d.h.
+            diese Werte werden durch die entsprechenden Zielwerte ersetzt.
+            Alle Werte außerhalb dieses Bereichs werden nach der gleichen
+            Abbildungsvorschrift ersetzt, ihre Zielfarben also durch
+            Extrapolation berechnet. Es werden daher <emphasis>alle</emphasis>
+            Farbwerte abgebildet bzw. ersetzt.
           </para>
+          <para lang="de">
+            Mit Hilfe der zwei farbigen Schaltflächen können Sie diesen
+            Farbbereich einstellen. Voreingestellt sind die aktuelle Vorder-
+            und und Hintergrundfarbe.  Durch Anklicken der Schaltflächen
+            öffnet sich der <acronym>GIMP</acronym>-Dialog zur <link
+            linkend="gimp-color-dialog">Farbwahl</link>, wo Sie dann andere
+            Farben bestimmen können.
+          </para>
+          <para lang="de">
+            Denken Sie daran, dass Sie mit der Wahl einer Farbe tatsächlich
+            drei voneinander unabhängige Farbkanäle gleichzeitig wählen.
+          </para>
+
+          <!--TODO cs fr it no ru: missing content-->
+          <caution lang="en;de"><!--added 2007-05-15-->
+            <para lang="en">
+              It's an error if for some channel both source color values are
+              the same (you cannot map a single value to the destination
+              range). Although the filter seems to work and will not display
+              any warning or error message, this will lead to unexpected and
+              probably unwanted results.
+            </para>
+            <para lang="de">
+              Es ist ein Fehler, wenn für die beiden Farben ein Farbkanal
+              denselben Wert hat (ein leerer Bereich kann nicht sinnvoll
+              abgebildet werden). Auch wenn das Filter keine Warnung oder
+              Fehlermeldung ausgibt: dies wird zu unerwarteten und vermutlich
+              unerwünschten Effekten führen.
+            </para>
+          </caution>
+
           <para lang="fr">
             Vous disposez de deux <guilabel>Boîtes d'échantillon</guilabel>
             permettant de définir les limites, <guilabel>Depuis</guilabel>
@@ -455,7 +506,9 @@
             <link linkend="gimp-color-dialog">volič barev</link>.
           </para>
           <para lang="de">
-            Wie oben, nur für den zweiten Farbbereich.
+            Entsprechend wie oben, nur für den zweiten Farbbereich, der den
+            Quellbereich ersetzt. Voreingestellte Farben sind hier Schwarz
+            und Weiß.
           </para>
           <para lang="fr">
             Vous disposez de deux <emphasis>Boîtes à échantillon</emphasis>
