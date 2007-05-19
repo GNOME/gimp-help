@@ -18,6 +18,7 @@ IMAGE_DIRS = \
 	preferences	\
 	tool-options	\
 	toolbox		\
+	tutorials		\
 	using
 
 IMAGE_FILES = \
