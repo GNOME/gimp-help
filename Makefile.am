@@ -178,9 +178,9 @@ $(patsubst %,$(STAMP_DIR)/profile.%.stamp,$(ALL_LINGUAS)): $(STAMP_DIR)/profile.
 	   --stringparam profile.lang $* \
 	   ../stylesheets/profile.xsl \
 	   ../src/gimp.xml | \
-	   sed -e "s/xmlns[:a-z]*\=\"[^\"]*\" //" | \
-	   sed -e "s/lang=[\"'][A-Za-z_;]*[\"']/lang=\"$*\"/" | \
-	   sed -e "/^[ \t]*$$/d" >$*.xml
+	   sed -e "s/xmlns[:a-z]*\=\"[^\"]*\" //" \
+	       -e "s/lang=[\"'][A-Za-z_;]*[\"']/lang=\"$*\"/" \
+	       -e "/^[ \t]*$$/d" >$*.xml
 
 	@touch $@
 
