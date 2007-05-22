@@ -1,7 +1,9 @@
 ## Process this file with automake to produce Makefile.in
 
 PO_FILES = \
-	$(wildcard $(top_srcdir)/*.po)
+	$(wildcard $(top_srcdir)/quickreference/po/*.po)
+
+XML_FILES = $(wildcard xml/*.xml)
 
 STAMP_DIR = stamps
 
@@ -12,7 +14,7 @@ XSL_FILES = \
         $(top_srcdir)/stylesheets/keys-svg.xsl	\
         $(top_srcdir)/stylesheets/keys-docbook.xsl
 
-FORMATS = svg docbook
+FORMATS = xml svg docbook
 
 $(STAMP_DIR)/clean.stamp: Makefile
 	@echo '*** Creating fresh stamps directory ***'
@@ -21,12 +23,14 @@ $(STAMP_DIR)/clean.stamp: Makefile
 
 	@touch $@
 
+clean: $(STAMP_DIR)/clean.stamp
+
 
 $(STAMP_DIR)/mkdirs.stamp: Makefile
 	@echo '*** Creating directories ***'
+	$(mkinstalldirs) $(STAMP_DIR)
 	@for format in $(FORMATS); do \
-	 echo $$format &&
-	 $(mkinstalldirs) -p $$format; \
+	 $(mkinstalldirs) $$format; \
 	done;
 
 	@touch $@
@@ -34,10 +38,10 @@ $(STAMP_DIR)/mkdirs.stamp: Makefile
 mkdirs: $(STAMP_DIR)/mkdirs.stamp
 
 
-$(STAMP_DIR)/profile.stamp: mkdirs.stamp profile.stamp
+$(STAMP_DIR)/profile.stamp: mkdirs
 	@echo '*** Profiling po files ***'
-	@for po in $(PO_FILES); do \
-	  $(XML2PO) -p $$po $(top_srcdir)/docs/gimp-keys.xml > $(top_srcdir)/xml/gimp-keys-`basename $$po | sed s/\.po$$//`.xml; \
+	for po in $(PO_FILES); do \
+	  $(XML2PO) -p $$po gimp-keys.xml > xml/gimp-keys-`basename $$po | sed s/\.po$$//`.xml; \
 	done;
 
 	@touch $@
@@ -45,15 +49,22 @@ $(STAMP_DIR)/profile.stamp: mkdirs.stamp profile.stamp
 profile: $(STAMP_DIR)/profile.stamp
 
 
-svg: $(STAMP_DIR)/profile.stamp
+$(STAMP_DIR)/svg.stamp: profile
 	echo '*** Creating quickreference SVGs ***'; \
-	$(mkinstalldirs) xml && \
-	 for po in $(PO_FILES); do \
-	   $(XML2PO) -p $$po $(top_srcdir)/docs/gimp-keys.xml > $(top_srcdir)/xml/gimp-keys-`basename $$po | sed s/\.po$$//`.xml; \
+	for xml in $(XML_FILES); do \
+	  $(XSLTPROC) stylesheets/keys-svg.xsl $$xml > svg/`basename $$xml | sed s/\.xml/\.svg/`; \
+	done;
+
+	@touch $@
+
+svg: $(STAMP_DIR)/svg.stamp
+
+$(STAMP_DIR)/docbook.stamp: profile
+	echo '*** Creating quickreference as DocBook/XML ***'; \
+	for xml in $(XML_FILES); do \
+	  $(XSLTPROC) stylesheets/keys-docbook.xsl $$xml > docbook/`basename $$xml`;\
 	 done;
 
 	@touch $@
 
-
-clean: $(STAMP_DIR)/clean.stamp
-
+docbook: $(STAMP_DIR)/docbook.stamp
