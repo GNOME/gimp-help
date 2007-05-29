@@ -19,12 +19,10 @@
   
   <xsl:template match="div|obj|ttl">
     <xsl:choose>
-      <!-- skip area elements, because the help browser cannot link to
-      them anyway and we don't want them in the statistics
+      <!-- skip elements with no title, because they're mostly internal
+      used anchors to footnotes or callout lists
       //-->
-      <xsl:when test="@element='area'">
-      </xsl:when>
-      <xsl:when test="@element='figure'">
+      <xsl:when test="contains(ttl, '???TITLE???')">
       </xsl:when>
       <xsl:when test="@targetptr">
         <help-item>
@@ -35,14 +33,14 @@
             <xsl:value-of select="@href"/>
           </xsl:attribute>
           <xsl:attribute name="title">
-	    <xsl:choose>
-	      <xsl:when test="@number=''">
-	        <xsl:value-of select="normalize-space(ttl)" />
-	      </xsl:when>
-	      <xsl:otherwise>
-	        <xsl:value-of select="concat(@number, '. ', normalize-space(ttl))" />
-	      </xsl:otherwise>
-	    </xsl:choose>  
+            <xsl:choose>
+              <xsl:when test="@number=''">
+                <xsl:value-of select="normalize-space(ttl)" />
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:value-of select="concat(@number, '. ', normalize-space(ttl))" />
+              </xsl:otherwise>
+            </xsl:choose>  
           </xsl:attribute>
           <xsl:attribute name="parent">
             <xsl:value-of select="../@targetptr" />
@@ -57,5 +55,5 @@
   
   <xsl:template match="*">
   </xsl:template>
-  
+
 </xsl:stylesheet>
