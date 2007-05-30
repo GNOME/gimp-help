@@ -7,7 +7,7 @@
   2007-06-14 alex falappa: finished italian translation
   2007-04-13 alex falappa: started it translation
 -->
-<sect1 id="gimp-using-script-fu-tutorial" lang="cs;de;en;fr;it;no">
+<sect1 id="gimp-using-script-fu-tutorial" lang="cs;de;en;fr;no">
   <sect1info lang="de;fr;no" role="cvs">
     <revhistory>
       <revision lang="de">
@@ -19,6 +19,11 @@
         <revnumber>$Revision$</revnumber>
         <date>2006-03-16</date>
         <authorinitials>j.h</authorinitials>
+      </revision>
+      <revision lang="es">
+        <revnumber>$Revision$</revnumber>
+        <date>2007-04-01</date>
+        <authorinitials>AntI</authorinitials>
       </revision>
       <revision lang="no">
         <revnumber>$Revision$</revnumber>
@@ -32,19 +37,19 @@
     <phrase lang="en">A Script-Fu Tutorial</phrase>
     <phrase lang="cs">Zasvěcení do Script-Fu</phrase>
     <phrase lang="de">Ein Skript-Fu-Tutorial</phrase>
+    <phrase lang="es">Un tutorial de Script-Fu</phrase>
     <phrase lang="fr">Didacticiel pour Script-Fu</phrase>
-    <phrase lang="it">Una guida a Script-Fu</phrase>
     <phrase lang="no">Ei innføring i Script-Fu</phrase>
   </title>
 
   <indexterm lang="en">
     <primary>Script-Fu</primary><secondary>Tutorial</secondary>
   </indexterm>
-  <indexterm lang="en">
-    <primary>Tutorials</primary><secondary>Script-Fu</secondary>
-  </indexterm>
   <indexterm lang="de">
     <primary>Skript-Fu</primary><secondary>Tutorial</secondary>
+  </indexterm>
+  <indexterm lang="es">
+    <primary>Script-Fu</primary><secondary>Tutorial</secondary>
   </indexterm>
   <indexterm lang="fr">
     <primary>Script-Fu</primary>
@@ -94,6 +99,15 @@
     dann mit ein paar Vorschlägen, wie Sie Ihr Wissen über Skript-Fu erweitern
     können.
   </para>
+  <para lang="es">
+    En este curso de entrenamiento, le introduciremos en los fundamentos del
+    Scheme, necesarios para usar Script-Fu, y entonces construir un script 
+    práctico que pueda añadir a su caja de herramientas de scripts. El 
+    script pide al usuario algún texto, entonces crea una imagen nueva del 
+    tamaño perfecto para el texto. Entonces, aumentaremos el script para 
+    permitir un búfer de espacio alrededor del texto. Concluiremos con unas
+    pocas sugerencias de maneras de aumentar su conocimiento de Script-Fu.
+  </para>
   <para lang="fr">
     Dans ce cours, nous commencerons par une introduction aux notions
     fondamentales indispensables à l'utilisation du langage de programmation
@@ -103,16 +117,6 @@
     Ensuite, nous améliorerons ce script, en ajoutant un cadre autour du
     texte. Nous terminerons sur la façon d'augmenter vos connaissances sur les
     Script-Fus.
-  </para>
-  <para lang="it">
-    In questo piccolo corso si introdurranno i concetti fondamentali del
-    linguaggio Scheme necessari all'utilizzo degli script Script-Fu quindi
-    si metterà insieme un comodo script da aggiungere al proprio arsenale di
-    script. Lo script richiederà l'immissione di testo quindi creerà una
-    nuova immagine delle dimensioni opportune a contenerlo. Lo script
-    verrà quindi migliorato consentendo di specificare uno spazio vuoto
-    attorno al testo. Si concluderà con suggerimenti per incrementare
-    la propria conoscenza di Script-Fu.
   </para>
   <para lang="no">
     Dette er eit kortkurs i bruk av programmeringsspråket Scheme, som blir
@@ -136,13 +140,13 @@
       Dieses Kapitel wurde aus einem Tutorial von Mike Terry für das
       <acronym>GIMP</acronym>1-Handbuch übernommen und angepasst.
     </para>
+    <para lang="es">
+      Esta sección está adaptada de un tutorial escrito para el manual de 
+      usuario del GIMP 1 por Mike Terry.
+    </para>
     <para lang="fr">
       Ce chapitre a été adapté d'un didacticiel écrit par Mike Terry pour le
       GIMP 1 user manual.
-    </para>
-    <para lang="it">
-      Questo capitolo è tratto da una guida scritta per il manuale di GIMP
-      versione 1 da Mike Terry.
     </para>
     <para lang="no">
       Denne leksjonen er tatt frå brukarhandboka til GIMP 1, skriven av Mike
@@ -156,8 +160,8 @@
       <phrase lang="en">Getting Acquainted With Scheme</phrase>
       <phrase lang="cs">První krůčky s jazykem Scheme</phrase>
       <phrase lang="de">Der erste Kontakt mit Scheme</phrase>
+      <phrase lang="es">Conociendo el Scheme</phrase>
       <phrase lang="fr">Faisons connaissance avec Scheme</phrase>
-      <phrase lang="it">Introduzione a Scheme</phrase>
       <phrase lang="no">Bli kjent med Scheme</phrase>
     </title>
 
@@ -166,14 +170,15 @@
         <phrase lang="en">Let's Start Scheme'ing</phrase>
         <phrase lang="cs">Základy Scheme</phrase>
         <phrase lang="de">Anfangen mit Scheme</phrase>
+        <phrase lang="es">Comencemos</phrase>
         <phrase lang="fr">Premières notions de Scheme</phrase>
-        <phrase lang="it">Iniziamo a Scheme'atizzare</phrase>
         <phrase lang="no">La oss komme i gang</phrase>
       </title>
 
       <para lang="en">The first thing to learn is that:</para>
       <para lang="cs">Jako první je nutno pochopit, že:</para>
       <para lang="de">Das erste, was Sie lernen müssen, ist:</para>
+      <para lang="es">Lo primero que aprenderemos es que:</para>
       <para lang="fr">Règle n°1 :</para>
       <para lang="it">La prima regola da ricordare è che:</para>
       <para lang="no">Det første du må lære er at</para>
@@ -191,6 +196,11 @@
       <para lang="de">
         <emphasis role="bold">
           Jede Anweisung in Scheme wird von runden Klammern () umgeben.
+        </emphasis>
+      </para>
+      <para lang="es">
+        <emphasis role='bold'>
+          Todas las declaraciones en scheme van entre paréntesis ().
         </emphasis>
       </para>
       <para lang="fr">
@@ -212,6 +222,7 @@
       <para lang="en">The second thing you need to know is that:</para>
       <para lang="cs">Druhým důležitým pravidlem je:</para>
       <para lang="de">Als zweites müssen Sie wissen:</para>
+      <para lang="es">La segunda cosa que debe saber es que:</para>
       <para lang="fr">Règle n°2 :</para>
       <para lang="it">La seconda nozione da sapere è che:</para>
       <para lang="no">Det andre du må lære er at</para>
@@ -233,6 +244,12 @@
         <emphasis role="bold">
           Der Funktionsname/-operator ist immer das erste Element innerhalb
           der Klammern, die anderen Elemente sind Parameter der Funktion.
+        </emphasis>
+      </para>
+      <para lang="en">
+        <emphasis role='bold'>
+          El nombre de función/operadores, siempre, lo primero en los 
+          paréntesis, y el resto son parámetros de la función.
         </emphasis>
       </para>
       <para lang="fr">
@@ -283,6 +300,15 @@
         Notation verwendet, sollten Sie keine Probleme haben, sich an die
         Formulierung von Scheme-Ausdrücken anzupassen.
       </para>
+      <para lang="es">
+        Sin embargo, no todo lo encerrado entre paréntesis es una función
+        -- pueden ser artículos de una lista -- lo veremos más tarde. Esta 
+        notación es referida como notación prefix, porque la función prefija 
+        todo. Si está familiarizado con la notación postfix, o posee una 
+        calculadora que usa Notación Polish Reverse (como muchas calculadoras
+        HP), no debería tener problemas adaptandose a la formulación de 
+        expresiones en Scheme.
+      </para>
       <para lang="fr">
         Néanmoins, tout ce qui est entre les parenthèses n'est pas toujours
         une fonction -- il peut s'agir des termes d'une liste -- mais nous y
@@ -319,6 +345,7 @@
       <para lang="en">The third thing to understand is that:</para>
       <para lang="de">Das dritte, was Sie verstehen müssen, ist:</para>
       <para lang="cs">Třetí důležitá věc je:</para>
+      <para lang="es">La tercera cosa a entender es que:</para>
       <para lang="fr">Règle n°3 :</para>
       <para lang="it">La terza reogola è:</para>
       <para lang="no">Det tredje du må lære deg er at</para>
@@ -340,6 +367,13 @@
           Mathematische Operatoren werden ebenfalls als Funktionen betrachtet
           und daher genauso am Anfang eines mathematischen Ausdrucks
           aufgeführt.
+        </emphasis>
+      </para>
+      <para lang="es">
+        <emphasis role='bold'>
+          Los operadores matemáticos son, tambien, considarados funciones, 
+          y, así, son listados primero cuando se escriben expresiones 
+          matemáticas.
         </emphasis>
       </para>
       <para lang="fr">
@@ -371,6 +405,9 @@
         Das folgt ganz logisch aus der eben erwähnten Erklärung zur
         Präfixnotation.
       </para>
+      <para lang="es">
+        Esto seguido, logicamente, de la notación prefix que mencionamos.
+      </para>
       <para lang="it">
         Questo deriva logicamente dalla notazione prefissa summenzionata.
       </para>
@@ -391,11 +428,11 @@
         <phrase lang="de">
           Beispiele für Präfix-, Infix- und Postfixnotation
         </phrase>
+        <phrase lang="es">
+          Ejemplos de notaciones Prefix, Infix, Y Postfix
+        </phrase>
         <phrase lang="fr">
           Exemples de notations Préfixée, Infixée, et Postfixée
-        </phrase>
-        <phrase lang="it">
-          Esempi di notazione prefissa, infissa e postfissa
         </phrase>
         <phrase lang="no">
           Eksempel på <quote>Prefix-</quote>, <quote>Infix-</quote>
@@ -418,6 +455,11 @@
         <emphasis>Präfix-</emphasis>, <emphasis>Infix-</emphasis> und
         <emphasis>Postfix-</emphasis>Notation illustrieren.
         Dazu addieren wir 1 und 3:
+      </para>
+      <para lang="es">
+        Aquí están algunos ejemplos rápidos que ilustran las diferencias 
+        entre notaciones  <emphasis>prefix</emphasis>, <emphasis>infix</emphasis>, 
+        y <emphasis>postfix</emphasis>.Sumamos un 1 y un 3:
       </para>
       <para lang="fr">
         Voici quelques exemples rapides pour illustrer les différences
@@ -447,6 +489,9 @@
           <para lang="de">
             Präfixnotation: + 1 3 (so will es Scheme haben)
           </para>
+          <para lang="es">
+            Prefix notation: + 1 3 ( la manera en que Sheme lo quiere)
+          </para>
           <para lang="fr">
             Notation préfixée : + 1 3 (c'est ce que veut Sheme)
           </para>
@@ -468,6 +513,10 @@
           <para lang="de">
             Infixnotation: 1 + 3 (so schreiben wir es
             <quote>normalerweise</quote>)
+          </para>
+          <para lang="es">
+            Infix notation: 1 + 3 (La manera en que,  "normalmente", lo 
+            escribimos)
           </para>
           <para lang="fr">
             Notation infixée : 1 + 3 (c'est la façon <quote>naturelle</quote> d'écrire)
@@ -491,6 +540,10 @@
           <para lang="de">
             Postfixnotation: 1 3 + (so wollen es manche HP-Taschenrechner)
           </para>
+          <para lang="es">
+            Postfix notation: 1 3 + (la manera en que muchas calculadoras HP 
+            lo quieren)
+          </para>
           <para lang="fr">
             Notation postfixée : 1 3 + (utilisée par les calculatrices HP)
           </para>
@@ -510,8 +563,8 @@
         <phrase lang="en">Practicing In Scheme</phrase>
         <phrase lang="cs">Procvičování Scheme</phrase>
         <phrase lang="de">Mit Scheme üben</phrase>
+        <phrase lang="es">Practicando scheme</phrase>
         <phrase lang="fr">Pratiquons Scheme</phrase>
-        <phrase lang="it">Fare pratica in Scheme</phrase>
         <phrase lang="no">Praktiske øvingar i Scheme</phrase>
       </title>
 
@@ -543,6 +596,15 @@
         </menuchoice>.
         Es öffnet sich das Fenster der Skript-Fu-Konsole, wo Sie interaktiv
         mit Scheme arbeiten können:
+      </para>
+      <para lang="es">
+        Ahora, practicaremos lo que hemos aprendido. Inicie GIMP, si todavia 
+        no lo ha hecho, y seleccione <menuchoice>
+        <guimenu>Exts</guimenu> <guisubmenu>Script-Fu</guisubmenu>
+        <guimenuitem>Consola</guimenuitem> </menuchoice>. Esto inicia la ventana
+        de la consola de Script-Fu, lo que nos permite trabajar, 
+        interactivamente, en Scheme. En un momento, la Consola de Script-Fu 
+        aparecerá.:
       </para>
       <para lang="fr">
         Appliquons maintenant ce que nous venons d'apprendre. Démarrez GIMP,
@@ -578,6 +640,7 @@
         <phrase lang="en">The Script-Fu Console Window</phrase>
         <phrase lang="cs">Okno Script-Fu konzole</phrase>
         <phrase lang="de">Die Skript-Fu-Konsole</phrase>
+        <phrase lang="es">La ventana de la consola de Script-Fu</phrase>
         <phrase lang="fr">La fenêtre Console de Script-Fu</phrase>
         <phrase lang="it">La finestra del terminale Script-Fu</phrase>
         <phrase lang="no">Script-Fu konsoll vindauget</phrase>
@@ -599,6 +662,11 @@
         <guilabel>Aktueller Befehl</guilabel>. Hier können wir interaktiv
         einfache Scheme-Anweisungen ausprobieren. Fangen wir mit etwas ganz
         Einfachem an und addieren einige Zahlen:
+      </para>
+      <para lang="es">
+        En el fondo de esta ventana hay una campo de entrada con el título 
+        <guilabel>Comando actual</guilabel>. Aquí, puede probar los comandos
+        Scheme interactivamente. Comienze , y añada unos números:
       </para>
       <para lang="fr">
         En bas de cette fenêtre se trouve un champ nommé
@@ -633,6 +701,10 @@
         Wenn Sie das eingeben und dann <keycap>Enter</keycap> drücken,
         erhalten Sie die erwartete Antwort von 8 im Hauptfenster.
       </para>
+      <para lang="es">
+        Tecleando esto y presionando <keycap>Enter</keycap>, da la respuesta
+        esperada, 8, en el centro de la ventana. 
+      </para>
       <para lang="fr">
         En tapant cette séquence et en appuyant sur <keycap>Entrée </keycap>
         vous obtenez le résultat attendu : 8, dans le panneau central.
@@ -660,6 +732,10 @@
         <quote><function>+</function></quote>-Funktion akzeptiert auch mehr
         als zwei Argumente, das ist also kein Problem:
       </para>
+      <para lang="es">
+        Ahora, ¿Si queremos sumar más de un número?, La función "+" puede 
+        tener dos o más argumentos, así que esto no es un problema:
+      </para>
       <para lang="fr">
         Maintenant, si nous voulons ajouter plus de deux nombres, pas de
         problème ; la fonction <quote>+</quote> accepte plus de deux arguments :
@@ -681,6 +757,7 @@
       <para lang="de">
         Dies ergibt ebenfalls die erwartete Antwort von 14.
       </para>
+      <para lang="es">Esto da la respuesta esperada, 14.</para>
       <para lang="fr">Et, comme prévu, vous obtenez 14.</para>
       <para lang="it">Si ottiene la risposta attesa di 14.</para>
       <para lang="no">Fekk du svaret 14?</para>
@@ -697,6 +774,11 @@
       <para lang="de">
         So weit, so gut - wir geben eine Scheme-Anweisung ein und sie wird
         unverzüglich in der Skript-Fu-Konsole ausgeführt. Aber Vorsicht...
+      </para>
+      <para lang="es">
+        Bueno, tecleamos una declaración en Scheme y se ejecuta 
+        inmediatamente en la ventana de la consola de Script-Fu. Ahora unas
+        palabras de precaución...
       </para>
       <para lang="fr">
         Bon, nous avons tapé une déclaration Scheme, et elle a été exécutée
@@ -720,10 +802,10 @@
         <phrase lang="en">Watch Out For Extra Parens</phrase>
         <phrase lang="cs">Dávejte pozor na nadbytečné závorky</phrase>
         <phrase lang="de">Vorsicht bei zusätzlichen Klammern</phrase>
+        <phrase lang="es">Tener cuidado con los paréntesis extras</phrase>
         <phrase lang="fr">
           Faire attention aux parenthèses supplémentaires
         </phrase>
-        <phrase lang="it">Attenzione alle parentesi di troppo</phrase>
         <phrase lang="no">Sjå opp for ekstra parentesar</phrase>
       </title>
 
@@ -750,10 +832,21 @@
         fehlerhafter Weise einfügen. Sagen wir mal als Beispiel, wir wollen
         die folgende Addition durchführen:
       </para>
+      <para lang="es">
+        Si es como yo, lo usará para ser capaz de usar paréntesis extras 
+        donde quiera, como cuando teclea una ecuación matemática compleja y 
+        quiere separar las partes con paréntesis, para hacerla más clara 
+        cuando la lee. En Scheme, hay que ser cuidadoso y no insertar estos
+        paréntesis extra, de manera incorrecta. Por ejemplo, decir que 
+        queremos sumar 3 al resultado de sumar 5 y 6:
+      </para>
       <para lang="fr">
         Si vous êtes comme moi, vous avez certainement l'habitude d'utiliser
         des parenthèses supplémentaires pour rendre plus claires vos formules
         mathématiques. Dans Scheme, vous devez être prudent et ne pas utiliser
+        ces parenthèses de façon incorrecte. Si, dans l'addition suivante, 
+		nous voulons par exemple, ajouter 3 au résultat de l'addition de 5 et 6 
+		puis y ajouter 7 :
         ces parenthèses de façon incorrecte. Si, dans l'addition suivante,
         nous voulons par exemple, ajouter 3 au résultat de l'addition de 5 et 6
         puis y ajouter 7 :
@@ -790,8 +883,13 @@
         zwei Zahlen addieren kann, könnten Sie versucht sein, den obigen
         Ausdruck folgendermaßen umzuformen:
       </para>
+      <para lang="es">
+        Sabiendo que el operador <quote><function>+</function></quote> 
+        puede usar una lista de números para sumar, podría tentatarle 
+        convertir lo de arriba en lo siguiente:
+      </para>
       <para lang="fr">
-        Sachant que l'opérateur <quote><function>+</function></quote>
+        Sachant que l'opérateur <quote><function>+</function></quote> 
         accepte une liste de nombre à additionner,
         vous pourriez être tenté d'écrire :
       </para>
@@ -826,6 +924,12 @@
         namens <quote>5</quote> aufzurufen versuchen, anstatt zuerst die Summe
         dieser Zahlen zu bilden und sie dann zu 3 zu addieren.
       </para>
+      <para lang="es">
+        Esto es incorrecto, recuerde, cada declaración en Scheme comienza y 
+        termina con paréntesis, así que el intérprete Scheme pensará que 
+        intenta llamar a una función llamada "5" en el segundo grupo de 
+        paréntesis, más que sumar esos números, antes de sumarles el 3.
+      </para>
       <para lang="fr">
         et ce serait une erreur. Rappelez-vous, chaque déclaration dans Scheme
         commence et finit par des parenthèses ; Scheme considère que dans tout ce
@@ -856,6 +960,9 @@
       <para lang="de">
         Der korrekte Weg, die obige Anweisung zu schreiben, wäre:
       </para>
+      <para lang="es">
+        La forma correcta de escribir esta declaración sería:
+      </para>
       <para lang="fr">Il faut donc écrire :</para>
       <para lang="it">
         Il modo corretto di scrivere l'istruzione di cui sopra è:
@@ -871,10 +978,10 @@
         <phrase lang="en">Make Sure You Have The Proper Spacing, Too</phrase>
         <phrase lang="cs">Ujistěte se, že používáte správně mezery</phrase>
         <phrase lang="de">Achten Sie auch auf korrekte Leerzeichen</phrase>
+        <phrase lang="es">Asegúrese de tener el espacio apropiado, también</phrase>
         <phrase lang="fr">
           Assurez-vous que les espacements sont corrects
         </phrase>
-        <phrase lang="it">Assicurarsi di avere l'opportuna spaziatura</phrase>
         <phrase lang="no">Pass på mellomromma</phrase>
       </title>
 
@@ -893,6 +1000,12 @@
         Perl oder Java, dann wissen Sie, dass vor und hinter mathematischen
         Operatoren keine Leerzeichen stehen müssen, damit der Ausdruck eine
         korrekte Form hat.
+      </para>
+      <para lang="es">
+        Si está familiarizado con otros lenguajes de programación, como 
+        C/C++, Perl o Java, sabe que no necesita espacios blancos alrededor 
+        de operadores matemáticos para formar, apropiadamente,  una 
+        expresión:
       </para>
       <para lang="fr">
         Si vous êtes familier avec d'autres langages de programmation tels que
@@ -932,6 +1045,13 @@
         Funktionsnamen oder Operator) ein Leerzeichen lassen, damit er vom
         Scheme-Interpreter korrekt interpretiert wird.
       </para>
+      <para lang="es">
+        Estos son aceptados por los compiladores de C/C++, Perl o Java. Esto 
+        mismo, no es cierto para Scheme. En Scheme, debe tener un espacio 
+        después de un operador matemático (u otra nombre de función u 
+        operador), para que sea correctamente interpretado por el intérprete 
+        de Scheme.
+      </para>
       <para lang="fr">
         Toutes ces formulations sont acceptées par C/C++, Java ou Perl. Mais
         ce n'est pas le cas de Sheme qui nécessite obligatoirement un espace
@@ -962,6 +1082,10 @@
         Skript-Fu-Konsole, bis Sie mit diesen grundlegenden Konzepten
         vollkommen vertraut sind.
       </para>
+      <para lang="es">
+        Practique un poco con operaciones matemáticas simples en la consola 
+        de Script-Fu hasta que esté cómodo con estos conceptos iniciales. 
+      </para>
       <para lang="fr">
         Essayez-vous avec de simples opérations mathématiques dans la Console
         pour Script-Fu jusqu'à ce que vous soyez parfaitement à l'aise avec
@@ -985,8 +1109,8 @@
       <phrase lang="en">Variables And Functions</phrase>
       <phrase lang="cs">Proměnné a funkce</phrase>
       <phrase lang="de">Variablen und Funktionen</phrase>
+      <phrase lang="es">Variables y funciones</phrase>
       <phrase lang="fr">Variables et fonctions</phrase>
-      <phrase lang="it">Variabili e funzioni</phrase>
       <phrase lang="no">Variablar og funksjonar</phrase>
     </title>
 
@@ -1007,6 +1131,12 @@
       ist und dass der Funktionsname/-operator als erstes aufgeführt wird,
       müssen wir sehen, wie man Variablen oder Funktionen erzeugt und benutzt.
       Wir fangen mit den Variablen an.
+    </para>
+    <para lang="es">
+      Ahora que sabemos que todas las declaraciones en Scheme están entre
+      paréntesis, y que el nombre de función/operadores se listan primero,
+      necesitamos saber como crear y usar variables, y como crear y usar 
+      funciones. Comenzaremos con las funciones.
     </para>
     <para lang="fr">
       Maintenant que nous savons que toute déclaration Scheme est incluse
@@ -1032,8 +1162,8 @@
         <phrase lang="en">Declaring Variables</phrase>
         <phrase lang="cs">Deklarace proměnných</phrase>
         <phrase lang="de">Variablen deklarieren</phrase>
+        <phrase lang="es">Declarando variables</phrase>
         <phrase lang="fr">Déclaration de Variables</phrase>
-        <phrase lang="it">Dichiarare le variabili</phrase>
         <phrase lang="no">Deklarera variablar</phrase>
       </title>
 
@@ -1061,6 +1191,14 @@
         zugehörigem Gültigkeitsbereich zu definieren. Um beispielsweise zwei
         Variablen a und b zu deklarieren und mit den Werten 1 beziehungsweise 2 zu
         initialisieren, würden Sie folgendes schreiben:
+      </para>
+      <para lang="es">
+        Aunque hay un par de métodos diferentes para declarar variables, 
+        el método preferido es usar la construcción let*. Si está 
+        familiarizado con otros lenguajes de programación, esta construcción 
+        es equivalente a definir una lista de variables locales y una 
+        extensión en la cual están activas. Como ejemplo, para declarar dos 
+        variables, a y b, inicializadas a 1 y 2, respectivamente, escriba:
       </para>
       <para lang="fr">
         Bien qu'il existe deux méthodes pour déclarer des variables, la
@@ -1103,6 +1241,7 @@
       <para lang="en">or, as one line:</para>
       <para lang="cs">nebo na jedné řádce:</para>
       <para lang="de">oder, als Einzeiler:</para>
+      <para lang="es">o, en una linea:</para>
       <para lang="fr">ou, sur une ligne :</para>
       <para lang="it">oppure su una sola linea</para>
       <para lang="no">eller på ei linje:</para>
@@ -1128,6 +1267,12 @@
           einen ähnlichen Einrückungsstil wie oben übernehmen, um Ihre Skripte
           lesbarer zu gestalten. Wir werden im Abschnitt über Leerzeichen noch
           ein wenig mehr dazu sagen.
+        </para>
+        <para lang="es">
+          Tendrá que poner todo esto en una linea si está usando la ventana 
+          de la consola. En general, querrá adoptar una práctica similar 
+          para ayudar a hacer sus scripts más legibles. Hablaremos un poco 
+          más de esto en la sección espacio blanco.
         </para>
         <para lang="fr">
           Avec la Console pour Script-Fu, vous ne pourrez utiliser que
@@ -1162,6 +1307,10 @@
         Das deklariert zwei lokale Variablen a und b, initialisiert sie, und
         gibt dann die Summe der beiden Variablen aus.
       </para>
+      <para lang="es">
+        Esto declara dos variables locales, a y b, inicializados, que muestra
+        la suma de las dos variables.
+      </para>
       <para lang="fr">
         Ceci déclare deux variables locales, a et b, les initialise, puis
         affiche leur somme.
@@ -1182,6 +1331,7 @@
         <phrase lang="en">What Is A Local Variable?</phrase>
         <phrase lang="cs">Co je lokální proměnná?</phrase>
         <phrase lang="de">Was ist eine lokale Variable?</phrase>
+        <phrase lang="es">¿Que es una variable local?</phrase>
         <phrase lang="fr">Qu'est-ce qu'une Variable Locale ?</phrase>
         <phrase lang="it">Cos'è una variabile locale?</phrase>
         <phrase lang="no">Kva er ein lokal variabel?</phrase>
@@ -1199,6 +1349,10 @@
         Sie werden bemerkt haben, dass wir die Summe <code>(+ a b)</code>
         innerhalb der Klammern des <code>let*</code>-Ausdrucks und nicht
         außerhalb geschrieben haben.
+      </para>
+      <para lang="es">
+        Notará que escribimos la suma (+ a b) bajo los paréntesis de la 
+        expresión let* , no después de ella.
       </para>
       <para lang="fr">
         Vous remarquerez que nos avons écrit l'addition
@@ -1241,6 +1395,13 @@
         gültig sind. Sie sind das, was Programmierer
         <quote>lokale Variablen</quote> nennen.
       </para>
+      <para lang="es">
+        Esto es porque la declaración let* define un area en su script en el 
+        que se declaran las variables que serán utilizables; si teclea 
+        (+ a b) y después (let* ...), obtendrá un error, porque las variables
+        declaradas son, solo, válidas bajo el contexto de la declaración  
+        let* ; son lo que los programadores llaman variables locales.
+      </para>
       <para lang="fr">
         C'est parce que la déclaration <code>let*</code>
         définit un domaine dans le script où ces variables sont utilisables ;
@@ -1273,8 +1434,8 @@
         <phrase lang="en">The General Syntax Of <code>let*</code></phrase>
         <phrase lang="cs">Obecná syntaxe <code>let*</code></phrase>
         <phrase lang="de">Die allgemeine Syntax von <code>let*</code></phrase>
+        <phrase lang="es">La sintaxis general de <code>let*</code></phrase>
         <phrase lang="fr">Syntaxe générale de <code>let*</code></phrase>
-        <phrase lang="it">La sintassi generica di <code>let*</code></phrase>
         <phrase lang="no">Den generelle <code>let*</code>-syntaksen</phrase>
       </title>
 
@@ -1286,6 +1447,9 @@
       </para>
       <para lang="de">
         Die allgemeine Form der <code>let*</code>-Anweisung ist:
+      </para>
+      <para lang="es">
+        la forma general de una declaración <code>let*</code>:
       </para>
       <para lang="fr">
         La forme générale d'une déclaration <code>let*</code> est :
@@ -1322,6 +1486,12 @@
         daran, dass die hier deklarierten Variablen nur innerhalb der
         <code>let*</code>-Anweisung gültig sind - sie sind lokale Variablen.
       </para>
+      <para lang="es">
+        donde las variables son declaradas bajo paréntesis, p. e. (a2), y
+        expresiones son cualquier expresión válida de Scheme. Recuerde que 
+        las variables declaradas aquí son solo válidas bajo la declaración 
+        <code>let*</code>, son variables locales..
+      </para>
       <para lang="fr">
         où les variables sont déclarées entre parenthèses, p. ex. (a 2), et les
         expressions sont une des expressions Scheme valides. Rappelez-vous que
@@ -1349,8 +1519,8 @@
         <phrase lang="en">White Space</phrase>
         <phrase lang="cs">Bílé znaky</phrase>
         <phrase lang="de">Leerzeichen</phrase>
+        <phrase lang="es">Espacio blanco</phrase>
         <phrase lang="fr">Espace Blanc</phrase>
-        <phrase lang="it">Spazi bianchi</phrase>
         <phrase lang="no"><quote>Kvite mellomrom</quote></phrase>
       </title>
 
@@ -1394,6 +1564,17 @@
         alles zwischen der öffnenden und der korrespondierenden schließenden
         Klammer eines Ausdrucks.
       </para>
+      <para lang="es">
+        Previamente, mencionamos el hecho de que, probablemente, quiere usar
+        indetation para ayudar a clarificar y organizar sus scripts. Esto es 
+        una buena politica a adoptar, y no es un problema en Scheme, espacio 
+        en blanco es ignorado por el interprete Scheme, y se puede aplicar 
+        para ayudar a clarificar y organizar el código bajo un script. , si 
+        está trabajando en la ventana de la consola de Script-Fu, tendrá que 
+        entrar una expresión entera en una linea; todo, entre los paréntesis 
+        de inicio y fin de una expresión, debe venir en una linea en la 
+        ventana de la consola de Script-Fu.
+      </para>
       <para lang="fr">
         Précédemment, nous avons mentionné le fait que vous voudriez
         certainement utiliser des indentations pour clarifier votre programme.
@@ -1436,10 +1617,10 @@
         <phrase lang="en">Assigning A New Value To A Variable</phrase>
         <phrase lang="cs">Přiřazení nové hodnoty proměnné</phrase>
         <phrase lang="de">Einer Variablen einen neuen Wert zuweisen</phrase>
+        <phrase lang="es">Asignando un nuevo valor a una variable</phrase>
         <phrase lang="fr">
           Attribuer une nouvelle valeur à une variable
         </phrase>
-        <phrase lang="it">Assegnare un nuovo valore ad una variabile</phrase>
         <phrase lang="no">Å tilordna ein nye verdi til ein variabel</phrase>
       </title>
 
@@ -1456,6 +1637,11 @@
         Wenn Sie eine Variable initialisiert haben, müssen Sie ihren Wert
         vielleicht später im Skript verändern. Verwenden Sie dafür die
         <code>set!</code>-Anweisung:
+      </para>
+      <para lang="es">
+        Una vez que ha inicializado una variable, podría necesitar cambiar 
+        este valor, más tarde en el script. Usa la declaración set! para 
+        cambiar el valor de la variable:
       </para>
       <para lang="fr">
         Après avoir initialisé une variable, il se peut que vous ayez besoin
@@ -1492,6 +1678,10 @@
         Überlegen Sie sich, was die obige Anweisung tun wird, und dann
         probieren Sie es aus und geben Sie sie in der Skript-Fu-Konsole ein.
       </para>
+      <para lang="es">
+        Intente adivinar lo que la declaración de arriba hará, entonces, 
+        adelante e introdúzcalo en la ventana de la consola de Script-Fu.
+      </para>
       <para lang="fr">
         Essayez de deviner ce que fait cette déclaration, puis entrez-la dans
         la console pour Script-Fu.
@@ -1525,8 +1715,13 @@
           ein und drücken Sie nicht auf <quote>Enter</quote>),
           machen Sie einfach mit der nächsten Zeile weiter.
         </para>
+        <para lang="es">
+          La "\" indica que allí no hay una linea rota. Ignórelo (no lo 
+          escriba en su consola de Script-Fu y no pulse Enter), justo 
+          continue con la siguiente linea.
+        </para>
         <para lang="fr">
-          Le <quote>\</quote> indique qu'il n'y a pas de retour à la ligne.
+          Le <quote>\</quote> indique qu'il n'y a pas de retour à la ligne. 
 		  Ne l'écrivez pas dans la Console et n'appuyez pas sur Entrée, continuez
           simplement sur la ligne suivante.
         </para>
@@ -1553,8 +1748,8 @@
         <phrase lang="en">Functions</phrase>
         <phrase lang="cs">Funkce</phrase>
         <phrase lang="de">Funktionen</phrase>
+        <phrase lang="es">Funciones</phrase>
         <phrase lang="fr">Fonctions</phrase>
-        <phrase lang="it">Funzioni</phrase>
         <phrase lang="no">Funksjonar</phrase>
       </title>
 
@@ -1570,6 +1765,10 @@
         Nachdem Sie nun den Dreh mit den Variablen raushaben, lassen Sie uns
         ein wenig mit Funktionen arbeiten. Sie deklarieren eine Funktion gemäß
         der folgenden Syntax:
+      </para>
+      <para lang="es">
+        Ahora que entendemos las variables, trabajemos con algunas funciones.
+        Declare una función con la siguiente sintaxis:
       </para>
       <para lang="fr">
         Maintenent que nous savons manipuler les variables, passons aux
@@ -1618,6 +1817,13 @@
         eine Folge von Ausdrücken, die die Funktion bei ihrem Aufruf ausführt.
         Zum Beispiel:
       </para>
+      <para lang="es">
+        donde <replaceable>name</replaceable> es el nombre asignado a esta
+        función, <replaceable>param-list</replaceable> es una lista espacio
+        -delimitada de nombres de parámetros, y <replaceable>expressions
+        </replaceable> son una serie de expresiones que las funciones 
+        ejecutan cuando se las llama. Por ejemplo:
+      </para>
       <para lang="fr">
         où <replaceable>nom</replaceable> est le nom donné à la fonction,
         <replaceable>liste de paramètres</replaceable>
@@ -1662,6 +1868,11 @@
         sind die Variablen. Die Funktion erwartet zwei Parameter und addiert
         sie.
       </para>
+      <para lang="es">
+        <varname>AddXY</varname> es el nombre de función y 
+        <varname>inX</varname> y <varname>inY</varname> son las variables. 
+        Esta función toma los dos parámetros y los suma juntos.
+      </para>
       <para lang="fr">
         <varname>AddXY</varname> est le nom de la fonction,
         <varname>inX</varname> et <varname>inY</varname>
@@ -1695,6 +1906,12 @@
         (z.B. in C/C++, Java, Pascal, etc.), dann werden Sie vielleicht
         bemerkt haben, dass im Vergleich zu anderen Programmiersprachen einige
         Dinge in dieser Funktionsdefinition fehlen.
+      </para>
+      <para lang="es">
+        Si ha programado en otro lenguaje imperativo (como C/C++, Java, 
+        Pascal, etc.), podría notar que un par de cosas no están presentes 
+        en esta definición de función, cuando la comparas con otros 
+        lenguajes de programción.
       </para>
       <para lang="fr">
         Si vous avez programmé dans d'autres langages (comme C/C++, Java,
@@ -1733,8 +1950,14 @@
             praktisch und erlaubt es uns, Skripte sehr viel schneller zu
             schreiben.
           </para>
+          <para lang="es">
+            Primero, nota que los parámetros no tienen un "tipo" (no se 
+            declaran como cadenas, o íntegros, etc.). Scheme es un lenguaje 
+            sin tipos. Esto es práctico y permite una escritura más rápida 
+            de scripts.
+          </para>
           <para lang="fr">
-            Premièrement, notez que les paramètres n'ont pas de <quote>type</quote>
+            Premièrement, notez que les paramètres n'ont pas de <quote>type</quote> 
 			(c.-à-d. que nous ne les avons pas déclarés comme chaîne, ou entiers...
             etc.). Scheme est un langage sans-type. C'est pratique et cela
             permet une écriture rapide des scripts.
@@ -1774,6 +1997,12 @@
             zurückgegeben wird. Tippen Sie die Funktion in der Konsole ein,
             und dann versuchen Sie so etwas wie:
           </para>
+          <para lang="es">
+            Segundo, nota que no necesitamos preocuparnos de como devolver 
+            los resultados de nuestra función, la última declaración es el 
+            valor devuelto cuando llama a esta función. Escriba la función 
+            en la consola, entonces intente algo como:
+          </para>
           <para lang="fr">
             Ensuite, que nous n'avons pas à nous préoccuper de la façon de
             <quote>retourner</quote> le résultat de notre fonction ; la dernière
@@ -1805,6 +2034,7 @@
       <phrase lang="en">Lists, Lists And More Lists</phrase>
       <phrase lang="cs">Seznamy, seznamy a zase seznamy</phrase>
       <phrase lang="de">Listen, Listen und noch mehr Listen</phrase>
+      <phrase lang="es">Listas, listas y más listas</phrase>
       <phrase lang="fr">Listes, des listes et encore des listes</phrase>
       <phrase lang="it">Liste, liste e ancora liste</phrase>
       <phrase lang="no">Lister, lister og atter lister</phrase>
@@ -1822,6 +2052,10 @@
     <para lang="de">
       Wir haben Ihnen etwas über Variablen und Funktionen erklärt, und nun
       betreten wir die düsteren Sümpfe von Schemes Listen...
+    </para>
+    <para lang="es">
+      Le hemos entrenado en variables y funciones, y ahora, entramos en el 
+      lúgubre pantano de las listas Scheme.
     </para>
     <para lang="fr">
       Après avoir vu les variables et les fonctions, abordons maintenant
@@ -1842,6 +2076,7 @@
         <phrase lang="en">Defining A List</phrase>
         <phrase lang="cs">Definování seznamu</phrase>
         <phrase lang="de">Eine Liste definieren</phrase>
+        <phrase lang="es">Definir una lista</phrase>
         <phrase lang="fr">Définir une Liste</phrase>
         <phrase lang="it">Definire una lista</phrase>
         <phrase lang="no">Å definere ei liste</phrase>
@@ -1858,6 +2093,10 @@
       <para lang="de">
         Bevor wir mehr über Listen erzählen, müssen Sie den Unterschied
         zwischen atomaren Werten und Listen kennen.
+      </para>
+      <para lang="es">
+        Antes de que hablamos más sobre las listas, es necesario que sepa 
+        la diferencia entre valores atómicos y listas.
       </para>
       <para lang="fr">
         Avant d'en dire plus sur les listes, vous devez connaître la
@@ -1890,6 +2129,12 @@
         Abschnitt Variablen initialisiert hatten. Ein atomarer Wert ist
         ein einzelner Wert. Zum Beispiel können wir in der folgenden
         Anweisung der Variablen <quote>x</quote> den Wert 8 zuweisen:
+      </para>
+      <para lang="es">
+        Ya ha visto los valores atómicos cuando inicializamos variables en 
+        la lección anterior. Un valor atómico es un valor simple. Así, por 
+        ejemplo, podemos asignar a la variable "x" el valor simple de 8 en 
+        la declaración siguiente:
       </para>
       <para lang="fr">
         Vous avez déjà vu des valeurs atomiques quand nous avons initialisé
@@ -1931,6 +2176,12 @@
         Funktion verhält: Der Wert der letzten Anweisung ist der
         Rückgabewert.)
       </para>
+      <para lang="es">
+        (Añadimos la expresión x al final para imprimir el valor asignado a 
+         x-- normalmente, no necesitará hacer esto. Note como let* opera 
+         justo como una función: El valor de la última declaración es el 
+         valor devuelto).
+      </para>
       <para lang="fr">
         (Nous avons ajouté l'expression  <varname>x</varname> à la fin pour
         afficher la valeur attribuée à x, mais vous n'avez pas
@@ -1967,6 +2218,11 @@
         einen einzelnen Wert beziehen. Um der Variablen <varname>x</varname>
         die Liste der Werte 1, 3, 5 zuzuweisen, schreiben wir:
       </para>
+      <para lang="es">
+        Una variable puede, tambien, referirse a una lista de valores, casi 
+        como un valor simple. Para asignar a la variable x , la lista de 
+        valores 1, 3, 5, tecleamos:
+      </para>
       <para lang="fr">
         Une variable peut aussi se référer à une liste de valeurs, plutôt
         qu'à une valeur simple. Pour attribuer à la variable
@@ -2000,6 +2256,11 @@
         achten Sie auf die Antworten. Bei der ersten Anweisung lautet sie
         einfach:
       </para>
+      <para lang="es">
+        Intente teclear ambas declaraciones en la consola de Script-Fu y 
+        verá como contesta. Cuando teclea la primera declaración, responde 
+        con el resultado:
+      </para>
       <para lang="fr">
         Essayez de taper les deux déclarations dans la Console de
         Script-Fu et voyez ce que ça donne. Avec la première, vous obtenez :
@@ -2024,6 +2285,10 @@
       <para lang="de">
         Wenn Sie aber die andere Anweisung eingeben, ist die Antwort das
         folgende Ergebnis:
+      </para>
+      <para lang="es">
+        Cuando teclea la otra declaración, responde con el siguiente 
+        resultado:
       </para>
       <para lang="fr">Et avec l'autre déclaration:</para>
       <para lang="it">
@@ -2056,6 +2321,14 @@
         unserer Deklaration oder Zuweisung der Liste noch im ausgegebenen
         Resultat Kommas stehen.
       </para>
+      <para lang="es">
+        Cuando responde con el valor 8 está informando que 
+        <varname>x</varname> contiene el valor atómico 8. Cuando responde 
+        con  (1 3 5), entonces, está informando que <varname>x</varname> no
+        contiene un valor simple, sino una lista de valores. Note que no hay
+        comillas en nuestra declaración o en la asignación de la lista, ni 
+        en el resultado impreso.
+      </para>
       <para lang="fr">
         Le premier résultat vous informe que la variable
         <varname>x</varname> contient la valeur atomique 8. Le deuxième
@@ -2082,6 +2355,7 @@
       <para lang="en">The syntax to define a list is:</para>
       <para lang="cs">Syntaxe definice seznamu je následující:</para>
       <para lang="de">Die Syntax, um eine Liste zu definieren, lautet:</para>
+      <para lang="es">La sintaxis para definir una lista es:</para>
       <para lang="fr">La syntaxe pour définir une liste de valeurs est :</para>
       <para lang="it">La sintassi per definire una lista è:</para>
       <para lang="no">For å definera ei liste, brukar du syntaksen:</para>
@@ -2106,6 +2380,12 @@
         verwenden den Apostroph (') um anzuzeigen, dass der nachfolgende
         Klammerausdruck eine Liste literaler Werte ist und nicht eine
         Funktion oder ein Ausdruck.
+      </para>
+      <para lang="es">
+        donde <varname>a</varname>, <varname>b</varname>, y
+        <varname>c</varname> son literales. Usamos el apóstrofe (') para 
+        indicar que lo que sigue entre paréntesis es una lista de valores
+        literales, casí como una función o expresión.
       </para>
       <para lang="fr">
         où <varname>a</varname>, <varname>b</varname>, et
@@ -2132,6 +2412,7 @@
         Prázdný seznam lze definovat následujícím způsobem:
       </para>
       <para lang="de">Eine leere Liste kann wie folgt definiert werden:</para>
+      <para lang="es">Una lista vacia puede definirse como:</para>
       <para lang="fr">Une liste vide est définie comme suit :</para>
       <para lang="it">Una lista vuota può essere definita come segue:</para>
       <para lang="no">Du kan også definere ei tom liste:</para>
@@ -2141,6 +2422,7 @@
       <para lang="en">or simply:</para>
       <para lang="cs">nebo jednodušeji:</para>
       <para lang="de">oder einfach:</para>
+      <para lang="es">o simplemente:</para>
       <para lang="fr">ou simplement :</para>
       <para lang="it">o semplicemente:</para>
       <para lang="no">eller bare</para>
@@ -2155,6 +2437,9 @@
       </para>
       <para lang="de">
         Listen können sowohl atomare Werte als auch andere Listen enthalten:
+      </para>
+      <para lang="es">
+        Las listas pueden contener valores atómicos, así como otras listas:
       </para>
       <para lang="fr">
         Outre les valeurs atomiques, les listes peuvent contenir d'autres
@@ -2196,6 +2481,11 @@
         Probieren Sie es nun aus, kopieren Sie die Anweisung in die
         Skript-Fu-Konsole und schauen Sie, was sie zurück liefert.
       </para>
+      <para lang="es">
+        Note que después del primer apóstrofe, no necesita usar un apóstrofe 
+        cuando defina las listas internas. Adelante, copie la declaración en 
+        la consola de Script-Fu y mire que devuelve.
+      </para>
       <para lang="fr">
         Notez qu'après la première apostrophe, vous n'avez plus besoin
         d'utiliser d'autres apostrophes lors de la définition des listes
@@ -2228,6 +2518,11 @@
         eines Literals <code>"The GIMP"</code>, der Liste <code>(1 2
         3)</code> etc.
       </para>
+      <para lang="es">
+        Notará que el resultado devuelto no es una lista de simples valores
+        atómicos; casí es una lista de un literal 
+        <code>("The GIMP")</code>, la lista <code>(1 2 3)</code>, etc.
+      </para>
       <para lang="fr">
         Vous verrez que le résultat n'est pas une suite de valeurs simples,
         mais plutôt la liste d'un littéral <code>("The GIMP")</code>,
@@ -2251,6 +2546,7 @@
         <phrase lang="en">How To Think Of Lists</phrase>
         <phrase lang="cs">Kterak přemýšlet o seznamech</phrase>
         <phrase lang="de">Wie man sich Listen vorstellen sollte</phrase>
+        <phrase lang="es">¿Como se representan las listas?</phrase>
         <phrase lang="fr">Comment se représenter les listes ?</phrase>
         <phrase lang="it">Come concepire le liste</phrase>
         <phrase lang="no">Tenkt oppbygging av lister</phrase>
@@ -2284,6 +2580,13 @@
         werden gleich sehen, warum das wichtig ist, wenn wir besprechen, wie
         man zu Listen etwas hinzufügt und wie man auf Elemente der Liste
         zugreift.
+      </para>
+      <para lang="es">
+        Es útil pensar que las listas están compuestas de una <quote>cabeza</quote>
+        y de una <quote>cola</quote>. La cabeza es el primer elemento de la 
+        lista, la cola es el resto de la lista. Verá porque esto es 
+        importante cuando tratemos como añadir listas y como acceder 
+        elementos en la lista.
       </para>
       <para lang="fr">
         Il est utile de penser que les listes sont composées d'une <quote>tête</quote> et
@@ -2319,6 +2622,8 @@
           Listen durch Konkatenation (Verkettung) erstellen (die
           <code>cons</code>-Funktion)
         </phrase>
+        <phrase lang="es">
+        Crear listas mediante concatenación (Lafunción cons)</phrase>
         <phrase lang="fr">
           Creation de listes par concaténation (la fonction cons)
         </phrase>
@@ -2357,6 +2662,15 @@
         <code>cons</code> - sie fügt ein Element als Listenkopf ein. Somit
         können Sie eine Liste wie folgt erstellen:
       </para>
+      <para lang="es">
+        Una de las funciones más comunes que encontrará es la función 
+        <code>cons</code>. 
+        Toma un valor y lo situa en el segundo argumento, una lista. En la 
+        sección previa, sugerí que piense que una lista está compuesta de un
+        elemento (la cabeza) y el resto de la lista (la cola). Es, 
+        exactamente, como <code>cons</code> funciona -- añade un elemento a 
+        la cabeza de la lista. Puede crear una lista como sigue:
+      </para>
       <para lang="fr">
         Une des fonctions que vous rencontrerez le plus souvent est la
         fonction cons. Elle prend une valeur et la positionne en tête de son
@@ -2390,6 +2704,7 @@
       <para lang="de">
         Das Ergebnis ist die Liste <code>(1 2 3 4)</code>.
       </para>
+      <para lang="es">El resultado es la lista <code>(1 2 3 4)</code>.</para>
       <para lang="fr">Le résultat est la liste <code>(1 2 3 4)</code>.</para>
       <para lang="it">Il risultato è la lista <code>(1 2 3 4)</code>.</para>
       <para lang="no">
@@ -2401,6 +2716,7 @@
       <para lang="de">
         Sie könnten auch eine Liste mit nur einem Element erstellen:
       </para>
+      <para lang="en">También, podrías crear una lista con un elemento:</para>
       <para lang="fr">Vous pouvez aussi créer une liste d'un élément :</para>
       <para lang="it">Si può anche creare una lista con un solo elemento:</para>
       <para lang="no">Du kan også lage ei liste med bare eitt element:</para>
@@ -2418,6 +2734,10 @@
       <para lang="de">
         Sie können vorher deklarierte Variablen anstelle irgendwelcher
         Literale verwenden, genau so, wie man es erwarten würde.
+      </para>
+      <para lang="es">
+        Puede usar, previamente, variables declaradas en lugar de literales, 
+        como cabría esperar.
       </para>
       <para lang="fr">
         Vous pouvez utiliser des variables préalablement déclarées à la place
@@ -2445,6 +2765,7 @@
         <phrase lang="de">
           Eine Liste mit der <code>list</code>-Funktion definieren
         </phrase>
+        <phrase lang="es">Definir una lista usando la función list</phrase>
         <phrase lang="fr">
           Définir une liste en utilisant la fonction <code>list</code>
         </phrase>
@@ -2467,6 +2788,10 @@
       <para lang="de">
         Um eine Liste aus Literalen oder vorher deklarierten Variablen
         zu definieren, verwenden Sie die <code>list</code>-Funktion:
+      </para>
+      <para lang="es">
+        Para definir una lista compuesta de literales o, previamente, 
+        variables declaradas, use la función <code>list</code>:
       </para>
       <para lang="fr">
         Pour définir une liste composée de littéraux ou de variables
@@ -2497,6 +2822,11 @@
         Das wird eine Liste erstellen, die die Werte der Variablen
         <varname>a</varname>, <varname>b</varname> und <varname>c</varname>
         enthält, und diese zurückgeben. Beispiel:
+      </para>
+      <para lang="es">
+        Esto compondrá y devolverá una lista conteniendo los valores de las 
+        variables <varname>a</varname>, <varname>b</varname>
+        y <varname>c</varname>. Por ejemplo:
       </para>
       <para lang="fr">
         Ceci composera et retournera une liste contenant les valeurs
@@ -2535,6 +2865,9 @@
       <para lang="de">
         Dieser Code erzeugt die Liste <code>(5 4 3 1 2 3)</code>.
       </para>
+      <para lang="es">
+        Este código crea la lista <code>(5 4 3 1 2 3)</code>.
+      </para>
       <para lang="fr">
         Ce code crée la liste <code>(5 4 3 1 2 3)</code>.
       </para>
@@ -2552,6 +2885,7 @@
         <phrase lang="en">Accessing Values In A List</phrase>
         <phrase lang="cs">Přístupování k hodnotám v seznamu</phrase>
         <phrase lang="de">Auf Werte in einer Liste zugreifen</phrase>
+        <phrase lang="es">Acceder a los valores de una lista</phrase>
         <phrase lang="fr">Accéder aux valeurs dans une liste</phrase>
         <phrase lang="it">Accedere ai valori contenuti in una lista</phrase>
         <phrase lang="no">Tilgang til verdiane i ei liste</phrase>
@@ -2575,6 +2909,12 @@
         den Rest einer Liste liefern. Diese Funktionen gliedern die Liste in
         die vorher erwähnte Struktur aus <foreignphrase>head</foreignphrase>
         (Kopf) und <foreignphrase>tail</foreignphrase> (Rest) auf.
+      </para>
+      <para lang="es">
+        Para acceder a los valores de una lista, use las funciones 
+        <code>car</code> y <code>cdr</code>, que devuelven el primer elemento
+        de la lista y el resto de la lista, respectivamente. Estas funciones 
+        rompen la lista en la construcción cabeza::cola que mencioné antes.
       </para>
       <para lang="fr">
         Pour accéder aux valeurs dans une liste, utilisez les fonctions
@@ -2603,6 +2943,7 @@
         <phrase lang="en">The <code>car</code> Function</phrase>
         <phrase lang="cs">Funkce <code>car</code></phrase>
         <phrase lang="de">Die <code>car</code>-Funktion</phrase>
+        <phrase lang="es">La función <code>car</code></phrase>
         <phrase lang="fr">La fonction <code>car</code></phrase>
         <phrase lang="it">La funzione <code>car</code></phrase>
         <phrase lang="no">Funksjonen <code>car</code></phrase>
@@ -2621,6 +2962,11 @@
         <code>car</code>
         liefert das erste Element (den Kopf) einer nicht-leeren Liste.
         Folgende Anweisung liefert also das erste Element der Liste:
+      </para>
+      <para lang="es">
+        <code>car</code> devuelve el primer elemento de la lista (la cabeza 
+        de la lista). La lista necesita ser no -null. La siguiente devuelve 
+        el primer elemento de la lista:
       </para>
       <para lang="fr">
         <code>car</code> retourne le premier élément de la liste (la tête).
@@ -2643,6 +2989,7 @@
       <para lang="en">which is:</para>
       <para lang="cs">vrátí:</para>
       <para lang="de">nämlich:</para>
+      <para lang="es">que es:</para>
       <para lang="fr">qui est :</para>
       <para lang="it">che è:</para>
       <para lang="no">vil gi tilbake:</para>
@@ -2656,6 +3003,7 @@
         <phrase lang="en">The <code>cdr</code> function</phrase>
         <phrase lang="cs">Funkce <code>cdr</code></phrase>
         <phrase lang="de">Die <code>cdr</code>-Funktion</phrase>
+        <phrase lang="es">La función <code>cdr</code></phrase>
         <phrase lang="fr">La fonction <code>cdr</code></phrase>
         <phrase lang="it">La funzione <code>cdr</code></phrase>
         <phrase lang="no">Funksjonen <code>cdr</code></phrase>
@@ -2675,6 +3023,11 @@
         <code>cdr</code> liefert den Rest der Liste nach dem ersten Element.
         Wenn die Liste nur ein Element enthält, liefert <code>cdr</code>
         eine leere Liste.
+      </para>
+      <para lang="es">
+        <code>cdr</code> devuelve el resto de la lista después del primer 
+        elemento (la cola de la lista). Si solo hay un elemento en la lista,
+       devuelve una lista vacia.
       </para>
       <para lang="fr">
         <code>cdr</code> retourne le reste de la liste après le premier
@@ -2696,6 +3049,7 @@
       <para lang="en">returns:</para>
       <para lang="cs">vrací:</para>
       <para lang="de">liefert:</para>
+      <para lang="es">devuelve:</para>
       <para lang="fr">retourne :</para>
       <para lang="it">restituisce:</para>
       <para lang="no">returnerar:</para>
@@ -2705,6 +3059,7 @@
       <para lang="en">whereas the following:</para>
       <para lang="cs">zatímco následující:</para>
       <para lang="de">während folgende Anweisung:</para>
+      <para lang="es">donde la siguiente:</para>
       <para lang="fr">tandis que ce qui suit :</para>
       <para lang="it">mentre l'istruzione seguente:</para>
       <para lang="no">medan</para>
@@ -2714,6 +3069,7 @@
       <para lang="en">returns:</para>
       <para lang="cs">vrací:</para>
       <para lang="de">das liefert:</para>
+      <para lang="es">devuelve:</para>
       <para lang="fr">retourne :</para>
       <para lang="it">restituisce:</para>
       <para lang="no">returnerar</para>
@@ -2727,6 +3083,7 @@
         <phrase lang="en">Accessing Other Elements In A List</phrase>
         <phrase lang="cs">Přístup k dalším prvkům v seznamu</phrase>
         <phrase lang="de">Auf andere Elemente der Liste zugreifen</phrase>
+        <phrase lang="es">Acceder a otros elementos de una lista</phrase>
         <phrase lang="fr">Accéder à d'autres éléments d'une liste</phrase>
         <phrase lang="it">Accedere ad altri elementi di una lista</phrase>
         <phrase lang="no">Tilgang til andre element i ei liste</phrase>
@@ -2755,6 +3112,14 @@
         beispielsweise auf den Kopf eines Kopfes eines Rests
         (<code>caadr</code>) oder den Rest eines Restes (<code>cddr</code>)
         einer Liste zuzugreifen.
+      </para>
+      <para lang="es">
+        OK, bravo,podemos obtener el primer elemento en una lista, tanto 
+        como el resto de la lista, pero ¿como hacemos para acceder al 
+        segundo, tercero o otros elementos de la lista?. Existen varias 
+        funciones convenientes para acceder, por ejemplo, la cabeza de la 
+        cabeza de una cola de una lista (<code>caadr</code>), la cola de la 
+        cola de una lista (<code>cddr</code>), etc.
       </para>
       <para lang="fr">
         Bon, d'accord, nous pouvons accéder au premier élément et au reste
@@ -2792,6 +3157,10 @@
         Die zugrunde liegende Namenskonvention ist einfach: Die
         <quote>a</quote>s und <quote>d</quote>s repräsentieren Köpfe
         beziehungsweise Reste von Listen, d.h.
+      </para>
+      <para lang="es">
+        La convención básica para nombrar es fácil: a y d representan las 
+        cabezas y las colas de la lista, así 
       </para>
       <para lang="fr">
         La convention de base est simple : a et d représentent la tête et la
@@ -2841,6 +3210,7 @@
       <para lang="en">could be written as:</para>
       <para lang="cs">lze jednodušeji zapsat jako:</para>
       <para lang="de">kann geschrieben werden als:</para>
+      <para lang="en">se podría escribir como:</para>
       <para lang="fr">peut s'écrire :</para>
       <para lang="it">si potrebbe scrivere come:</para>
       <para lang="no">kan altså trekkast saman til</para>
@@ -2862,6 +3232,11 @@
         Skript-Fu verwendeten Scheme-Version finden Sie im Anhang.
       </para>
       -->
+      <para lang="es">
+        Para ver una lista completa de la lista de funciones, le remitimos 
+        al apéndice, que lista las funciones disponibles para la versión de 
+        Scheme usada por Script-Fu.
+      </para>
       <para lang="fr">
         Pour avoir la liste de toutes les conventions de liste, référez-vous à
         l'Appendice, qui donne la liste de toutes les fonctions disponibles
@@ -2896,6 +3271,12 @@
         falls Sie die Konsole benutzen) und verschiedene Variationen
         von <code>car</code>s und <code>cdr</code>s auszuprobieren,
         um auf verschiedene Elemente der Liste zuzugreifen:
+      </para>
+      <para lang="es">
+        Para tener práctica con las funciones de acceso a listas, intente 
+        teclear lo siguiente ( en una sola linea si está usando la consola);
+        use diferentes variaciones de car y cdr para acceder a los 
+        diferentes elementos de la lista:
       </para>
       <para lang="fr">
         Afin d'acquérir quelque expérience des fonctions d'accession aux
@@ -2939,6 +3320,11 @@
         zuzugreifen. Wenn Sie das schaffen, sind Sie auf dem besten Wege,
         ein Skript-Fu-Meister zu werden.
       </para>
+      <para lang="es">
+        Intente acceder al número 3 en la lista usando solo dos llamadas 
+        a función. Si puede hacer eso, está en el camino para llegar a ser
+        un Maestro de Script-Fu!.
+      </para>
       <para lang="fr">
         Essayez d'accéder au troisième élément de la liste en utilisant
         seulement deux appels de fonction. Si vous faites ça, vous êtes en
@@ -2973,6 +3359,12 @@
           um Kommentare hinzuzufügen und Ihrem Gedächtnis auf die Sprünge
           zu helfen, wenn Sie sich das Skript später anschauen.
         </para>
+        <para lang="es">
+          En Scheme, un punto y coma ";" marca un comentario. Esto y todo lo
+          que siga en la misma linea, es ignorado por el interprete de 
+          script, así que puede usar esto para añadir comentarios para 
+          refrescar su memoria cuando vuelva a mirar su script.
+        </para>
         <para lang="fr">
           Dans Scheme, un point-virgule (;) indique un commentaire. Il est
           ignoré, ainsi que tout ce qui suit sur la même ligne, par
@@ -3004,6 +3396,7 @@
       <phrase lang="en">Your First Script-Fu Script</phrase>
       <phrase lang="cs">Váš první Script-Fu skript</phrase>
       <phrase lang="de">Ihr erstes Fu-Skript</phrase>
+      <phrase lang="es">Su primer código de Script-Fu</phrase>
       <phrase lang="fr">Votre premier script de Script-Fu</phrase>
       <phrase lang="it">Il primo script Script-Fu</phrase>
       <phrase lang="no">Det første Script-Fu skriptet ditt</phrase>
@@ -3023,6 +3416,10 @@
       Sie uns mit der vierten Lektion fortfahren - Ihrem ersten
       Skript-Fu-Skript.
     </para>
+    <para lang="es">
+      ¿No necesita parar y tomar algo? ¿No? Bien, entonces procederemos con 
+      la cuarta lección, su primer código de Script-Fu.
+    </para>
     <para lang="fr">
       Vous tirez la langue, non ? Allez, entamons notre quatrième leçon :
       votre premier script de Script-Fu !
@@ -3041,6 +3438,7 @@
         <phrase lang="en">Creating A Text Box Script</phrase>
         <phrase lang="cs">Vytvoření skriptu Text Box</phrase>
         <phrase lang="de">Ein Textbox-Skript erstellen</phrase>
+        <phrase lang="es">Crear un código: una caja de texto</phrase>
         <phrase lang="fr">Création d'un Script Boîte de Texte</phrase>
         <phrase lang="it">Creare uno script Text Box</phrase>
         <phrase lang="no">
@@ -3069,6 +3467,13 @@
         groß das anfängliche Bild sein muss, denn man weiß nicht, wieviel
         Platz der Text bei der gewünschten Schriftart und -größe benötigen
         wird.
+      </para>
+      <para lang="es">
+        Una de las operaciones más comunes que realizo en el GIMP es crear 
+        una caja con algún texto en ella para una página web, un logo o 
+        algo así. Nunca se sabe el tamaño adecuado de una imagen cuando se 
+        empieza. No sabe cuanto espacio llenará el texto con la fuente ni 
+        el tamaño de fuente que quiere.
       </para>
       <para lang="fr">
         L'une des opérations les plus fréquentes que je réalise avec GIMP,
@@ -3107,6 +3512,11 @@
         dass dieses Problem mit Skript-Fu leicht gelöst und automatisiert
         werden kann.
       </para>
+      <para lang="es">
+        Los maestros de Script-Fu (y los estudiantes), rapidamente, reconocen
+        que este problema puede resolverse, facilmente, y automatizando con 
+        Script-Fu.
+      </para>
       <para lang="fr">
         Le Maître en Script-Fu (et l'étudiant), se rend compte rapidement
         que ce problème peut être aisément résolu et automatisé avec un
@@ -3142,6 +3552,12 @@
         außerdem den Benutzer die Schrift, die Schriftgröße und die
         Textfarbe auswählen lassen.
       </para>
+      <para lang="es">
+        Crearemos un script, llamado Text Box, que creará una imagen, con 
+        el tamaño correctamente ajustado a una linea de texto, que el 
+        usuario introduce. También, dejaremos al usuario elegir la fuente, 
+        el tamaño de la fuente y el color del texto.
+      </para>
       <para lang="fr">
         Nous allons donc créer un script, appelé Text Box, qui crée
         une image dont la taille est parfaitement adaptée au texte que
@@ -3168,6 +3584,7 @@
         <phrase lang="en">Editing And Storing Your Scripts</phrase>
         <phrase lang="cs">Editace a ukládání skriptů</phrase>
         <phrase lang="de">Ihre Skripte bearbeiten und speichern</phrase>
+        <phrase lang="es">Editar y guardar su código</phrase>
         <phrase lang="fr">Éditer et enregistrer vos Scripts</phrase>
         <phrase lang="it">Modificare e memorizzare gli script</phrase>
         <phrase lang="no">Å redigere og lagre skripta dine</phrase>
@@ -3184,6 +3601,10 @@
       <para lang="de">
         Bis jetzt haben wir in der Skript-Fu-Konsole gearbeitet, aber jetzt
         gehen wir dazu über, Skripte in Form von Textdateien zu bearbeiten.
+      </para>
+      <para lang="es">
+        Hasta ahora, hemos trabajado en la consola de Script-Fu. Ahora, sin
+        embargo, vamos a cambiar para editar códigos de archivos de texto.
       </para>
       <para lang="fr">
         Jusqu'à présent, nous avons travaillé avec la Console de Script-Fu.
@@ -3217,6 +3638,13 @@
         allerdings, meine persönlichen Skripte in meinem eigenen
         Skriptverzeichnis zu haben, getrennt von den vorinstallierten
         Skripten.
+      </para>
+      <para lang="es">
+        Donde situar sus códigos es cuestión de preferencias, si tiene 
+        acceso al directorio de scripts predefinido de GIMP, puede situarlos
+        allí. Sin embargo, yo prefiero dejar mis códigos personales en mi 
+        propio directorio de scripts, para mantenerlos separados de los 
+        instalados de fabrica.
       </para>
       <para lang="fr">
         Là où vous stockez vos scripts est affaire de préférence -- si vous
@@ -3265,6 +3693,14 @@
         Skript-Fu-Datenbank hinzu. Sie sollten also Ihre Skripte dort
         speichern.
       </para>
+      <para lang="es">
+        En el directorio <filename>.gimp-2.2</filename>, que el GIMP crea 
+        en directorio home, debería encontrar un directorio llamado
+        <filename>scripts</filename>. El GIMP, automaticamente, buscará en su
+        directorio <filename>.gimp-2.2</filename>, el directorio de scripts, 
+        y añadirá los scripts de este directorio a la base de datos de 
+        Script-Fu. Debería situar sus scripts personales aquí.
+      </para>
       <para lang="fr">
         Dans le répertoire <filename>.gimp-2.2</filename> que GIMP a créé
         dans votre répertoire personnel, vous devriez trouver un répertoire nommé
@@ -3306,6 +3742,7 @@
         <phrase lang="en">The Bare Essentials</phrase>
         <phrase lang="cs">Úplné základy</phrase>
         <phrase lang="de">Das Allernötigste</phrase>
+        <phrase lang="es">Lo esencial al descubierto</phrase>
         <phrase lang="fr">Le strict nécessaire</phrase>
         <phrase lang="it">Lo stretto necessario</phrase>
         <phrase lang="no">Det essensielle</phrase>
@@ -3322,6 +3759,10 @@
       <para lang="de">
         Jedes Skript-Fu-Skript definiert mindestens eine Funktion, die
         Hauptfunktion des Skripts. Das ist der Ort, wo Sie arbeiten müssen.
+      </para>
+      <para lang="es">
+        Cada script Script-Fu define al menos una función, la cual es la 
+        función principal del script. Esta es donde haces el trabajo.
       </para>
       <para lang="fr">
         Tout script de Script-Fu définit au moins une fonction, qui est la
@@ -3349,6 +3790,10 @@
         Jedes Skript muss sich auch bei der Prozedurendatenbank registrieren,
         so dass Sie von <acronym>GIMP</acronym> aus darauf zugreifen können.
       </para>
+      <para lang="es">
+        Cada script debe, también, registrarse en la base de datos de
+        procedimientos, para poder acceder a el bajo GIMP.
+      </para>
       <para lang="fr">
         Tout script doit également être connu de la base de données de
         procédures (PDB), de façon à ce que GIMP puisse y accéder.
@@ -3365,6 +3810,7 @@
       <para lang="en">We'll define the main function first:</para>
       <para lang="cs">Nejprve definujeme hlavní funkci:</para>
       <para lang="de">Wir definieren zuerst die Hauptfunktion:</para>
+      <para lang="es">Definiremos la función principal, primero:</para>
       <para lang="fr">
         Nous allons définir la fonction principale en premier :
       </para>
@@ -3395,6 +3841,12 @@
         Textfarbe entsprechen. Die Funktion ist jetzt noch leer und macht
         daher überhaupt nichts. So weit, so gut - nichts Neues, nichts
         Außergewöhnliches.
+      </para>
+      <para lang="es">
+        Aquí, hemos definido una nueva función llamada script-fu-text-box 
+        que toma cuatro parámetros, que, más tarde, corresponderán al texto, 
+        una fuente, el tamaño de la fuente y el color del texto. La función 
+        está vacia y no hace nada.
       </para>
       <para lang="fr">
         Nous definissons ici une fonction appelée script-fu-text-box avec
@@ -3427,6 +3879,7 @@
         <phrase lang="en">Naming Conventions</phrase>
         <phrase lang="cs">Jmenné konvence</phrase>
         <phrase lang="de">Namenskonventionen</phrase>
+        <phrase lang="es">Convenciones de nombres</phrase>
         <phrase lang="fr">Conventions de dénomination</phrase>
         <phrase lang="it">Convenzioni per i nomi</phrase>
         <phrase lang="no">Namnereglar</phrase>
@@ -3462,15 +3915,24 @@
         innerhalb des Skriptes erzeugt wurden. Für letztere verwende ich
         die Vorsilbe <quote>the</quote>.
       </para>
+      <para lang="es">
+        Las convenciones de nombres en Scheme parecen preferir minúsculas 
+        con guiones, en el nombre de la función. Sin embargo, parto de 
+        la convención con los parámetros. Quiero nombres más descriptivos 
+        para mis parámetros y variables, y añado el prefijo "in" a los 
+        parámetros, así que,  puedo, rapidamente, ver que valores entran en 
+        el script, más bien que los que se crean en el. Uso el prefijo "the"
+        para las variables definidas en el script.
+      </para>
       <para lang="fr">
         Les conventions de dénomination de Scheme préfèrent les lettres
         minuscules avec traits d'union, ce que j'ai respecté dans la
         dénomination de la fonction. Toutefois, je me suis écarté de la
         convention en ce qui concerne les paramètres. Je préfère en effet les
         noms descriptifs pour mes paramètres et variables, c'est pourquoi j'ai
-        ajouté le préfixe <quote>in</quote> aux paramètres, de façon à voir
-		d'emblée qu'il s'agit de paramètres reçus par la fonction et non pas
-		de paramètres émis par elle. Et j'utilise le prefixe <quote>the</quote>
+        ajouté le préfixe <quote>in</quote> aux paramètres, de façon à voir 
+		d'emblée qu'il s'agit de paramètres reçus par la fonction et non pas 
+		de paramètres émis par elle. Et j'utilise le prefixe <quote>the</quote> 
 		pour les variables définies au sein du script.
       </para>
       <para lang="it">
@@ -3516,6 +3978,13 @@
         <quote>script-fu</quote> erscheinen. Das hilft auch, sie von
         Plugins zu unterscheiden.
       </para>
+      <para lang="es">
+        Es la convención del GIMP para nombrar sus funciones de códigos 
+        Script-Fu, porque así están listados en la base de datos de 
+        procedimientos, todos ellos se mostrarán bajo script-fu cuando se 
+        estén listando las funciones. Esto, también, ayuda a distinguirlos 
+        de los plug-ins.
+      </para>
       <para lang="fr">
         C'est une convention GIMP de nommer vos fonctions de script
         script-fu-..., parce qu'ainsi elle apparaîtront avec les script-fu
@@ -3543,6 +4012,7 @@
         <phrase lang="en">Registering The Function</phrase>
         <phrase lang="cs">Registrace funkce</phrase>
         <phrase lang="de">Die Funktion registrieren</phrase>
+        <phrase lang="es">Registro de la función</phrase>
         <phrase lang="fr">Enregistrement de la fonction</phrase>
         <phrase lang="it">Registrare la funzione</phrase>
         <phrase lang="no">Å registrere funksjonen</phrase>
@@ -3572,6 +4042,14 @@
         registriert. Sie können diese Funktion irgendwo innerhalb des
         Skripts platzieren, ich stelle sie ganz ans Ende, hinter meinen
         anderen Code.
+      </para>
+      <para lang="es">
+        Ahora, registremos la función con el GIMP. Esto se hace llamando a 
+        la función <code>script-fu-register</code>. Cuando el GIMP lee en un
+        script, ejecutará esta función, que registrará el script en la base 
+        de datos de procedimientos. Puede situar esta llamada a función donde
+        quiera en su script, pero, normalmente, se situa al final, después de 
+        las otras lineas de códigos.
       </para>
       <para lang="fr">
         Maintenant, faisons connaître la fonction à GIMP. On réalise cela
@@ -3608,6 +4086,10 @@
       <para lang="de">
         Hier ist das Programmlisting, um die Funktion zu registrieren (ich
         erkläre alle Parameter in einer Minute):
+      </para>
+      <para lang="es">
+        Aquí está el listado de registro de esta función (explicaré todos 
+        estos parámetros en un minuto):
       </para>
       <para lang="fr">
         Voici le listing pour enregistrer cette fonction (j'expliquerai ses
@@ -3696,6 +4178,22 @@
         </menuchoice>
         erscheinen.
       </para>
+      <para lang="es">
+        Si guardas estas funciones en un archivo de texto con el sufijo
+        <filename>.scm</filename> en su directorio de script, seleccione 
+        <menuchoice>
+          <guimenu>Exts</guimenu>
+          <guisubmenu>Script-Fu</guisubmenu>
+          <guimenuitem>Refresh Scripts</guimenuitem>
+        </menuchoice>,
+        este nuevo script aparecerá como 
+        <menuchoice>
+          <guimenu> Exts</guimenu>
+          <guisubmenu>Script-Fu</guisubmenu>
+          <guisubmenu>Text</guisubmenu>
+          <guimenuitem>Text Box</guimenuitem>
+        </menuchoice>.
+      </para>
       <para lang="fr">
         Enregistrez ces fonctions dans un fichier texte avec le
         suffixe <filename>.scm</filename> dans votre répertoire de scripts,
@@ -3763,6 +4261,11 @@
         Registrieren erstellt haben (mehr darüber, was wir eigentlich
         gemacht haben, folgt gleich).
       </para>
+      <para lang="es">
+        Si llama a este nuevo script, no hará nada, desde luego, pero puede
+        ver los apuntes creados cuando se registra el script (más 
+        información de lo que hicimos, se descubrirá luego).
+      </para>
       <para lang="fr">
         Si vous lancez ce nouveau script, il ne fera rien bien sûr, mais
         vous pourrez voir les invites que vous avez créées quand vous avez
@@ -3804,6 +4307,14 @@
         werden Sie feststellen, dass unser Skript jetzt in der Datenbank
         auftaucht.
       </para>
+      <para lang="es">
+        Finalmente, si abre el examinador de procedimientos
+        <menuchoice>
+          <guimenu> Exts</guimenu>
+          <guimenuitem>Examinador de procedimientos</guimenuitem>
+        </menuchoice>),
+        notará que nuestro script aparece en la base de datos.
+      </para>
       <para lang="fr">
         Finalement,si vous invoquez le Navigateur de Procédures (
         <menuchoice>
@@ -3837,6 +4348,7 @@
         <phrase lang="cs">Jednotlivé kroky registrace skriptu</phrase>
         <phrase lang="en">Steps For Registering The Script</phrase>
         <phrase lang="de">Skriptregistrierung Schritt für Schritt</phrase>
+        <phrase lang="es">Pasos para registrar el código</phrase>
         <phrase lang="fr">Étapes pour enregistrer le script</phrase>
         <phrase lang="it">Passi per la registrazione dello script</phrase>
         <phrase lang="no">Å registrere skriptet</phrase>
@@ -3859,6 +4371,12 @@
         die Funktion <code>script-fu-register</code> auf, geben die sieben
         erforderlichen Parameter an und fügen unsere eigenen Parameter noch
         hinzu, jeweils mit Beschreibung und Standardwert.
+      </para>
+      <para lang="es">
+        Para registrar nuestro script en elGIMP, llamamos a la función 
+        <code>script-fu-register</code>, rellenamos los siete parámetros 
+        requeridos y añadimos los nuestros propios, junto con una 
+        descripción y valores predefinidos para cada parámetro.
       </para>
       <para lang="fr">
         Pour enregistrer notre script dans GIMP, nous appelons la fonction
@@ -3886,6 +4404,7 @@
           <phrase lang="cs">Povinné parametry</phrase>
           <phrase lang="en">The Required Parameters</phrase>
           <phrase lang="de">Die erforderlichen Parameter</phrase>
+          <phrase lang="es">Los parámetros requeridos</phrase>
           <phrase lang="fr">Les paramètres requis</phrase>
           <phrase lang="it">Gli argomenti richiesti</phrase>
           <phrase lang="no">Dei nødvendige parametra</phrase>
@@ -3916,6 +4435,15 @@
             muss, welche von diesen Funktionen es aufrufen muss. In unserem
             Beispiel haben wir nur eine Funktion definiert,
             <code>script-fu-text-box</code>, die wir gerade registriert haben.
+          </para>
+          <para lang="es">
+            El <emphasis role='bold'>nombre</emphasis> de la función que 
+            definimos. Esto es la llamada de función cuando nuestro script 
+            es invocado (el punto de entrada de nuestro script). Esto es 
+            necesario porque podriamos definir funciones adicionales bajo 
+            el mismo archivo, y GIMP necesita saber a cuales de estas 
+            funciones se llama. En nuestro ejemplo, solo definimos una 
+            función, text box, que registramos.
           </para>
           <para lang="fr">
             Le <emphasis role='bold'>nom</emphasis> de la fonction que nous
@@ -3965,6 +4493,17 @@
             <quote>&lt;Toolbox&gt;</quote> oder <quote>&lt;Image&gt;</quote>
             ist.
           </para>
+          <para lang="es">
+            La <emphasis role='bold'>localización</emphasis> en el menú donde el 
+            script será insertado. El lugar exacto de el script está 
+            especificado, como una ruta en Unix, con la raiz de la ruta 
+            estando entre la caja de herramientas o click derecho.
+
+            The <emphasis role='bold'>location</emphasis> in the menu where
+            the script will be inserted. The exact location of the script is
+            specified like a path in Unix, with the root of the path being
+            either toolbox or right-click.
+          </para>
           <para lang="fr">
             L'<emphasis role='bold'>emplacement</emphasis> dans le menu où
             le script est inséré est spécifié comme un chemin dans Unix, avec
@@ -4012,6 +4551,13 @@
             einfügen wollen - das ist das Menü in <acronym>GIMP</acronym>s
             Hauptfenster (wo sich alle Werkzeuge befinden: die
             Auswahlwerkzeuge, das Vergrößerungsglas und so weiter).
+          </para>
+          <para lang="es">
+            Si su script no opera sobre una imagen existente (y crea una 
+            imagen nueva, como hará nuestro Text Box), querrá insertarlo en 
+            el menú de la caja de herramientas, este es el menu en la ventana
+            principal del GIMP (donde se localizan todas las herramientas:
+            herramientas de selección, lupa, etc.).
           </para>
           <para lang="fr">
             Si votre script n'opère pas sur une image existante (et donc
@@ -4077,6 +4623,21 @@
               <guisubmenu>Text</guisubmenu>
               <guimenuitem>Text Box</guimenuitem>
             </menuchoice>.
+          </para>
+          <para lang="es">
+            Si u script está intentando trabajar sobre una imagen que está 
+            siendo editada, querrá insertarla en el menú que aparece cuando 
+            pulsa el botón derecho sobre una imagen abierta. El resto de la 
+            ruta apunta a la lista de menú, menús y sub-menús. Resgistramos 
+            nuestro script Text Box en el menú Text de el menú Script-Fu del 
+            menú Exts, en el menú de la caja de herramientas (
+            <menuchoice>
+              <guimenu> Exts</guimenu>
+              <guisubmenu>Script-Fu</guisubmenu>
+              <guisubmenu>Text</guisubmenu>
+              <guimenuitem>Text Box</guimenuitem>
+            </menuchoice>
+            ).
           </para>
           <para lang="fr">
             Si votre script est destiné à opérer sur une image présente à
@@ -4145,6 +4706,11 @@
             vorhanden, als wir anfingen - <acronym>GIMP</acronym> erstellt
             automatisch alle noch nicht existierenden Menüs.
           </para>
+          <para lang="es">
+            Si se fija, el sub-menú Text, en el menú Script-Fu, no estaba 
+            allí cuando empezamos, el GIMP crea, automaticamente, cualquier 
+            menú que todavia no exista.
+          </para>
           <para lang="fr">
             Si vous avez remarqué, le sous-menu Texte dans le menu Script-Fu
             n'existait pas au départ : GIMP crée automatiquement les menus qui
@@ -4176,6 +4742,10 @@
             Eine <emphasis role="bold">Beschreibung</emphasis> Ihres
             Skripts, die dann im Prozeduren-Browser erscheint.
           </para>
+          <para lang="es">
+            Una <emphasis role='bold'>descripción</emphasis> de su script, para
+            ser mostrada en el Examinador de Procedimientos.
+          </para>
           <para lang="fr">
             Une <emphasis role='bold'>description</emphasis> de votre script,
             qui sera affichée dans le Navigateur de Procédures.
@@ -4202,6 +4772,9 @@
           <para lang="de">
             <emphasis role="bold">Ihr Name</emphasis> (Autor des Skripts).
           </para>
+          <para lang="es">
+            <emphasis role='bold'>Su nombre</emphasis> (el autor del código).
+          </para>
           <para lang="fr">
             <emphasis role='bold'>Votre nom</emphasis> (l'auteur du script)
           </para>
@@ -4226,6 +4799,9 @@
           <para lang="de">
             <emphasis role="bold">Copyright</emphasis>-Information.
           </para>
+          <para lang="es">
+            Información del <emphasis role='bold'>copyright</emphasis>.
+          </para>
           <para lang="fr">
             Information de <emphasis role='bold'>Copyright</emphasis>.
           </para>
@@ -4249,6 +4825,10 @@
           <para lang="de">
             Das <emphasis role="bold">Datum</emphasis>, an dem das Skript
             erstellt oder zuletzt überarbeitet wurde.
+          </para>
+          <para lang="es">
+            La <emphasis role='bold'>fecha</emphasis> en que se hizó el código, 
+            o la última revisión del mismo.
           </para>
           <para lang="fr">
             La <emphasis role='bold'>date</emphasis> à laquelle le script a été créé,
@@ -4286,6 +4866,13 @@
             kein Typ: in unserem Fall erstellen wir ein Bild und brauchen
             daher auch keinen Typ zu definieren.
           </para>
+          <para lang="es">
+            El <emphasis role='bold'>tipo</emphasis> de imágenes con las 
+            trabaja el script. Puede ser uno de los siguientes: RGB, RGBA, 
+            GRAY, GRAYA, INDEXED, INDEXEDA. O podría no ser ninguno de ellos,
+            en nuestro caso, estamos creando una imagen, y no necesitamos 
+            definir el tipo de imagen sobre la que trabajaremos.
+          </para>
           <para lang="fr">
             Les <emphasis role='bold'>types</emphasis> d'image sur lesquels
             travaille le script. Il peut s'agir de RGB, RGBA, GRAY, GRAYA,
@@ -4313,6 +4900,7 @@
         <phrase lang="cs">Registrace parametrů skriptu</phrase>
         <phrase lang="en">Registering The Script's Parameters</phrase>
         <phrase lang="de">Die Skriptparameter registrieren</phrase>
+        <phrase lang="es">Registro de los parámetros del código</phrase>
         <phrase lang="fr">Enregistrement des paramètres du script</phrase>
         <phrase lang="it">Registrare i parametri dello script</phrase>
         <phrase lang="no">Registrering av skriptparametra</phrase>
@@ -4338,6 +4926,14 @@
         Parametern entsprechen. Wir werden dabei auch Hinweise zu ihrem
         jeweiligen Typ für den Dialog, der sich beim Aufruf unseres Skripts
         öffnet, geben. Außerdem geben wir einen Standardwert vor.
+      </para>
+      <para lang="es">
+        Una vez que hemos listado los parámetros requeridos, necesitamos 
+        listar los parámetros que corresponden a los parámetros que nuestro 
+        script necesita. Cuando listamos estos parámetros, les damos 
+        indicación de como son. Esto es por el diálogo que surge cuando el 
+        usuario selecciona nuestro script. También podemos proporcionar 
+        valores predefinidos.
       </para>
       <para lang="fr">
         Maintenant que nous avons vu la liste des paramètres requis, nous
@@ -4372,6 +4968,9 @@
       <para lang="de">
         Dieser Abschnitt des Registrierungsprozesses hat das folgende Format:
       </para>
+      <para lang="es">
+        Esta sección del proceso de registro tiene el siguiente formato:
+      </para>
       <para lang="fr">
         Cette section du processus d'enregistrement a le format suivant :
       </para>
@@ -4394,6 +4993,7 @@
               <para lang="en">Param Type</para>
               <para lang="cs">Typ parametru</para>
               <para lang="de">Parametertyp</para>
+              <para lang="es">Tipo de parámetro</para>
               <para lang="fr">Type de paramètre</para>
               <para lang="it">Tipo argomento</para>
               <para lang="no">Parametertype</para>
@@ -4403,6 +5003,7 @@
               <para lang="en">Description</para>
               <para lang="cs">Popis</para>
               <para lang="de">Beschreibung</para>
+              <para lang="es">Descripción</para>
               <para lang="fr">Description</para>
               <para lang="it">Descrizione</para>
               <para lang="no">Beskriving</para>
@@ -4412,6 +5013,7 @@
               <para lang="en">Example</para>
               <para lang="cs">Příklad</para>
               <para lang="de">Beispiel</para>
+              <para lang="es">Ejemplo</para>
               <para lang="fr">Exemple</para>
               <para lang="it">Esempio</para>
               <para lang="no">Eksempel</para>
@@ -4435,6 +5037,10 @@
                 Akzeptiert Zahlen und Zeichenketten. Beachten Sie, dass
                 Anführungszeichen im Standardtext maskiert werden müssen,
                 nehmen Sie also besser SF-STRING.
+              </para>
+              <para lang="es">
+                Acepta números y cadenas. Notese que las cuotas deben eludir 
+                el texto predefinido, mejor usar SF-STRING.
               </para>
               <para lang="fr">
                 Accepte les nombres et les chaînes de caractères. (NDT- pas
@@ -4460,6 +5066,7 @@
               <para lang="en">Accepts strings.</para>
               <para lang="cs">Přijímá řetězce.</para>
               <para lang="de">Akzeptiert Zeichenketten.</para>
+              <para lang="es">Acepta cadenas.</para>
               <para lang="fr">Accepte les chaînes de caractères.</para>
               <para lang="it">Accetta stringhe.</para>
               <para lang="no">Godtar tekststrenger.</para>
@@ -4468,6 +5075,7 @@
               <para lang="en">"Some text"</para>
               <para lang="cs">"Nějaký text"</para>
               <para lang="de"><literal>"Irgendein Text"</literal></para>
+              <para lang="es">"Un texto"</para>
               <para lang="fr">"Un texte"</para>
               <para lang="it">"Del testo"</para>
               <para lang="no">"Ein tekst"</para>
@@ -4485,6 +5093,9 @@
               <para lang="cs">Označuje parametr vyžadující barvu.</para>
               <para lang="de">
                 Zeigt an, dass dieser Parameter eine Farbe erfordert.
+              </para>
+              <para lang="es">
+                Indica que color se requiere en este parámetro.
               </para>
               <para lang="fr">
                 Indique qu'une couleur est nécessaire pour ce paramètre.
@@ -4514,6 +5125,9 @@
               <para lang="de">
                 Ein Kontrollkästchen für einen Booleschen Wert wird angezeigt.
               </para>
+              <para lang="es">
+                Se muestra una caja, para obtener un valor Booleano
+              </para>
               <para lang="fr">
                 Une boîte de saisie est affichée, pour entrer une valeur
                 Booléenne.
@@ -4530,6 +5144,7 @@
               <para lang="cs">TRUE nebo FALSE</para>
               <para lang="en">TRUE or FALSE</para>
               <para lang="de">TRUE oder FALSE (wahr oder falsch)</para>
+              <para lang="es">TRUE o FALSE</para>
               <para lang="fr">TRUE ou FALSE (Vrai ou Faux)</para>
               <para lang="it">TRUE o FALSE (vero o falso)</para>
               <para lang="no">TRUE eller FALSE (sant/usant)</para>
@@ -4554,6 +5169,11 @@
                 dieser Parameter der erste nach den zwingend erforderlichen
                 Parametern sein. <acronym>GIMP</acronym> übergibt in diesem
                 Parameter eine Referenz auf das Bild.
+              </para>
+              <para lang="es">
+                Si su script opera en una imagen nueva, esta debería ser el 
+                primer parámetro después de los parámetros requeridos. GIMP 
+                pasará una referencia a la imagen en este parámetro.
               </para>
               <para lang="fr">
                 Si votre script opère sur une image ouverte, ceci doit être le
@@ -4595,6 +5215,12 @@
                 sein.  <acronym>GIMP</acronym> übergibt in diesem Parameter
                 eine Referenz auf die aktive Ebene.
               </para>
+              <para lang="es">
+                Si su script opera sobre una imagen abierta, este sería el 
+                segundo parámetro después de el parámetro SF-IMAGE. Se 
+                refiere a la capa activa. GIMP pasará una referencia a la 
+                capa activa en este parámetro.
+              </para>
               <para lang="fr">
                 Si votre script opère sur une image ouverte, ceci doit être
                 le second paramètre, après le paramètre SF-IMAGE. Il se
@@ -4628,6 +5254,7 @@
       <phrase lang="cs">Vytvoření střev skriptu</phrase>
       <phrase lang="en">Giving Our Script Some Guts</phrase>
       <phrase lang="de">Unserem Skript Leben einhauchen</phrase>
+      <phrase lang="es">Dar algo de sustancia a nuestro script</phrase>
       <phrase lang="fr">Donner un peu plus de corps à votre script</phrase>
       <phrase lang="it">Dare un corpo allo script</phrase>
       <phrase lang="no">Sprit opp skriptet</phrase>
@@ -4643,6 +5270,10 @@
     <para lang="de">
       Lassen Sie uns mit unseren Übungen fortfahren und unserem Skript etwas
       Funktionalität hinzufügen.
+    </para>
+    <para lang="es">
+      Continuemos con nuestro entrenamiento y añadamos alguna funcionalidad 
+      a nuestro script
     </para>
     <para lang="fr">
       Poursuivons notre entraînement et ajoutons quelques fonctionnalités à
@@ -4661,6 +5292,7 @@
         <phrase lang="en">Creating A New Image</phrase>
         <phrase lang="cs">Vytvoření nového obrázku</phrase>
         <phrase lang="de">Ein neues Bild erstellen</phrase>
+        <phrase lang="es">Crear una nueva imagen</phrase>
         <phrase lang="fr">Création d'une nouvelle image</phrase>
         <phrase lang="it">Creare una nuova immagine</phrase>
         <phrase lang="no">Å lage eit nytt bilete</phrase>
@@ -4684,6 +5316,13 @@
         Skript Funktionalität verschaffen - wir wollen ein neues Bild
         erstellen, den Text des Benutzers hinzufügen und das Bild skalieren,
         so dass der Text genau hineinpasst.
+      </para>
+      <para lang="es">
+        En la lección anterior, creamos una función vacia y la registramos 
+        en el  GIMP. En esta lección, queremos proporcionar funcionalidad a 
+        nuestro script, queremos crear una nueva imagen, añadirle texto del 
+        usuario y redimensionar la imagen para adecuarla al texto 
+        exactamente.
       </para>
       <para lang="fr">
         Dans la leçon précédente, nous avons créé une fonction vide et nous
@@ -4728,6 +5367,14 @@
         vertraut machen und sie anwenden. Also öffnen Sie den
         Prozeduren-Browser und lassen Sie uns loslegen!
       </para>
+      <para lang="es">
+        Una vez que sabe como configurar variables, definir funciones y 
+        acceder a los miembros de la lista, el resto es cuesta abajo, todo 
+        lo que necesita hacer es familiarizarse con las funciones 
+        disponibles en la base de datos de procedimientos del GIMP y llamar,
+        directamente, a las funciones. Así que encienda su examinador de
+        procedimientos y vamos a cocinar!.
+      </para>
       <para lang="fr">
         Une fois que vous savez fixer les variables, définir les fonctions et
         accéder aux membres d'une liste, le reste va comme sur des roulettes.
@@ -4767,6 +5414,11 @@
         das Ergebnis der internen <acronym>GIMP</acronym>-Funktion
         <code>gimp-image-new</code> zu.
       </para>
+      <para lang="es">
+        Comencemos haciendo una imagen nueva. Crearemos una nueva variable,
+        <varname>theImage</varname>, es el resultado de llamar a la función de
+        construcción del GIMP <code>gimp-image-new</code>.
+      </para>
       <para lang="fr">
         Commençons par fabriquer une nouvelle image. Nous créons pour cela
         une nouvelle variable <varname>theImage</varname>, réglée pour
@@ -4803,6 +5455,14 @@
         speichern außerdem die Bildbreite und -höhe in einigen Variablen,
         da wir später im Skript auf sie zurückgreifen und sie verändern
         werden.
+      </para>
+      <para lang="es">
+        Como puede ver en el examinador de procedimientos, la función 
+        <code>gimp-image-new</code> toma tres parámetros ancho, alto y tipo 
+        de la imagen. Porque, más tarde, redimensionaremos la imagen al 
+        tamaño adecuado para el texto, haremos una imagen 10x10 RGB. 
+        Almacenaremos el ancho y tamaño de la imagen en algunas variables, 
+        tambien, las remitiremos y manipularemos, más tarde, en el script.
       </para>
       <para lang="fr">
         Comme vous pouvez le voir dans le Navigateur de Procédures, la
@@ -4869,6 +5529,11 @@
         <quote>0</quote> nehmen können, aber <code>RGB</code> ist viel
         aussagefähiger, wenn man sich den Code ansieht.
       </para>
+      <para lang="es">
+        Nota: Usamos el valor RGB para especificar que la imagen es una 
+        imagen RGB. Se podría usar, tambien, 0, pero RGB es más descriptivo 
+        cuando ojeemos el código.
+      </para>
       <para lang="fr">
         Note : Nous avons utilisé la valeur RGB pour spécifier que l'image
         est une image RVB. Nous aurions pu aussi utiliser 0, mais RGB est
@@ -4908,6 +5573,14 @@
         dieser Liste nur ein Element ist, daher müssen wir auf den Kopf der
         Liste zugreifen.
       </para>
+      <para lang="es">
+        Tambien, debería notar que tomamos la cabeza de el resultado de la 
+        función llamada. Esto podría parecer extraño, porque la base de 
+        datos, explicitamente, nos dice que devuelve solo un valor, el ID 
+        de la imagen recien creada. Todas las funciones devuelven una lista,
+        siempre que haya un solo elemento en la lista, así que necesitamos
+        conseguir la cabeza de la lista.
+      </para>
       <para lang="fr">
         Vous devriez aussi avoir remarqué que nous avons pris la tête du
         résultat de la fonction <quote>call</quote>. Cela peut paraître étrange parce que
@@ -4939,6 +5612,7 @@
         <phrase lang="en">Adding A New Layer To The Image</phrase>
         <phrase lang="cs">Přidání nové vrstvy do obrázku</phrase>
         <phrase lang="de">Eine neue Ebene zum Bild hinzufügen</phrase>
+        <phrase lang="es">Añadir una capa nueva a la imagen</phrase>
         <phrase lang="fr">Ajouter un nouveau calque à l'image</phrase>
         <phrase lang="it">Aggiungere un nuovo livello all'immagine</phrase>
         <phrase lang="no">Å legge eit nytt lag til biletet</phrase>
@@ -4974,6 +5648,15 @@
         Da wir alle lokalen Variablen, die wir verwenden, deklariert haben,
         werden wir auch das Klammernpaar schließen, welches das Ende unserer
         lokalen Variablen markiert:
+      </para>
+      <para lang="es">
+        Ahora que tenemos una imagen, necesitamos añadirle una capa. 
+        Llamaremos a la función <code>gimp-layer-new</code> para crear la capa,
+        basado en el ID de la imagen, que justo creamos. (Por ahora, en lugar
+        de listar la función completa, solo listamos las lineas que se le 
+        están añadiendo.<!--Puede ver el script completo aquí-->). Porque hemos 
+        declarado las variables locales que usaremos, cerraremos los 
+        paréntesis al final de nuestras declaraciones de variables:
       </para>
       <para lang="fr">
         Maintenant que nous avons l'image, nous devons lui ajouter un calque.
@@ -5032,6 +5715,9 @@
       <para lang="de">
         Wenn wir eine neue Ebene haben, müssen wir sie dem Bild hinzufügen:
       </para>
+      <para lang="es">
+        Una vez tenemos la capa nueva, necesitaremos añadirla a la imagen:
+      </para>
       <para lang="fr">
         Ce nouveau calque obtenu, nous devons l'ajouter à l'image :
       </para>
@@ -5057,6 +5743,10 @@
         Und jetzt, nur so zum Spaß, wollen wir uns die Früchte unserer
         Arbeit bis zu diesem Punkt anschauen. Wir fügen diese Zeile hinzu,
         um das neue, leere Bild darzustellen:
+      </para>
+      <para lang="es">
+        Ahora, por diversión, veremos los frutos de nuestra labor hasta este 
+        punto, y añadiremos esta linea para mostrar la imagen nueva y vacia:
       </para>
       <para lang="fr">
         Et maintenant, juste pour le plaisir, admirons le fruit de notre
@@ -5110,6 +5800,17 @@
         Farben), da wir es bis jetzt noch nicht geleert haben. Dazu werden
         wir gleich kommen.
       </para>
+      <para lang="es">
+        Guarde el trabajo, seleccionando
+        <menuchoice>
+          <guimenu>Exts</guimenu>
+          <guisubmenu>Script-Fu</guisubmenu>
+          <guimenuitem>Refrescar scripts</guimenuitem>
+        </menuchoice>,
+        ejecute el script y aparece una nueva imagen. Probablemente, contiene
+        basura (colores aleatorios),  porque no la hemos borrado. 
+        Conseguiremos eso en un segundo. 
+      </para>
       <para lang="fr">
         Enregistrez votre travail, sélectionnez la commande suivante
         <menuchoice>
@@ -5152,6 +5853,7 @@
         <phrase lang="en">Adding The Text</phrase>
         <phrase lang="cs">Přidání textu</phrase>
         <phrase lang="de">Den Text hinzufügen</phrase>
+        <phrase lang="es">Añadir el texto</phrase>
         <phrase lang="fr">Ajouter le texte</phrase>
         <phrase lang="it">Aggiungere il testo</phrase>
         <phrase lang="no">Legge til tekst</phrase>
@@ -5170,6 +5872,9 @@
         darzustellen (oder kommentieren Sie sie mit einem <code>;</code>
         als erstem Zeichen der Zeile aus).
       </para>
+      <para lang="es">
+        Avancemos y quitamos la linea de representación de la imagen (o la
+        comentamos con un ; como primer caracter de la linea).      </para>
       <para lang="fr">
         Supprimez la ligne d'affichage de l'image (ou mettez-la en
         commentaire en plaçant un ; en premier caractère de la ligne).
@@ -5201,6 +5906,13 @@
         Hintergrundfarbe festlegen, so dass der Text in der vom Benutzer
         angegebenen Farbe erscheint. Wir verwenden dafür die Funktionen
         <function>gimp-context-set-background</function> und
+        <function>gimp-context-set-foreground</function>:
+      </para>
+      <para lang="es">
+        Antes de que añadamos texto a la imagen, necesitamos seleccionar los
+        colores de fondo y frente, para que así aparezca con el color 
+        especificado por el usuario. Usaremos las funciones
+        <function>gimp-context-set-background</function> y
         <function>gimp-context-set-foreground</function>:
       </para>
       <para lang="fr">
@@ -5243,6 +5955,11 @@
         Bild entfernen, indem wir die Zeichenfläche mit der Hintergrundfarbe
         füllen:
       </para>
+      <para lang="es">
+       Con los colores seleccionados correctamente, ahora, limpiaremos la 
+       basura actual en la imagen para rellenar el dibujable con el color 
+       de fondo:
+      </para>
       <para lang="fr">
         Les couleurs étant correctement réglées, nettoyons les résidus
         présents dans l'image en remplissant le calque avec la couleur
@@ -5266,6 +5983,9 @@
       <para lang="cs">Do vyčištěného obrázku lze přidat text:</para>
       <para lang="de">
         Nach den Löschen des Bildes sind wir bereit, einen Text hinzuzufügen:
+      </para>
+      <para lang="es">
+        Con la imagen limpia, estamos listos para añadir algún texto:
       </para>
       <para lang="fr">
         L'image nettoyée, nous sommes prêts à ajouter un texte :
@@ -5313,6 +6033,12 @@
         erstellen wir nur eine neue Textebene und weisen sie der Variablen
         <varname>theText</varname> zu.
       </para>
+      <para lang="es">
+        Aunque hay una llamada de función, es bastante más sencillo si 
+        repasas los parámetros mientras miras las entradas de función en el
+        examinador de procedimientos. Basicamente, estamos creando una nueva 
+        capa de texto y la asignamos a la variable <varname>theText</varname>.
+      </para>
       <para lang="fr">
         Malgré un appel de fonction un peu long, il est facile à
         comprendre si vous suivez les paramètres tout en consultant les
@@ -5346,6 +6072,10 @@
       <para lang="de">
         Nachdem wir nun den Text haben, können wir seine Breite und Höhe
         bestimmen und das Bild sowie die Bildebene entsprechend skalieren.
+      </para>
+      <para lang="es">
+       Ahora que tenemos el texto, podemos coger el ancho y alto y 
+       redimensionar la imagen y la capa de la imagen al tamaño del texto:
       </para>
       <para lang="fr">
         Maintenant que nous avons le texte, nous pouvons nous intéresser à
@@ -5397,12 +6127,20 @@
         einer Zeichenfläche. In den meisten Fällen ist der Unterschied
         allerdings völlig unwichtig.
       </para>
+      <para lang="es">
+        Si es como yo, le maravillará lo que es un dibujable comparado con 
+        una capa. La diferencia entre los dos es que un dibujable es algo en 
+        lo que puedes dibujar, incluido capas, pero también canales, 
+        máscaras de capa, selecciones, etc.; una capa es una versión más 
+        especifica de un dibujable. En muchos casos, la distinción no es 
+        importante.
+      </para>
       <para lang="fr">
         Si vous êtes comme moi, vous vous demandez probablement quelle
-        différence il y a entre un <quote>drawable</quote> et un calque
-		(NdT: faute de mieux, je traduis <quote>drawable</quote> par
-		"élément peignable", ce qui enlève pas mal d'intérêt à cette remarque
-		de l'auteur) . Un élément peignable est tout objet de GIMP
+        différence il y a entre un <quote>drawable</quote> et un calque 
+		(NdT: faute de mieux, je traduis <quote>drawable</quote> par 
+		"élément peignable", ce qui enlève pas mal d'intérêt à cette remarque 
+		de l'auteur) . Un élément peignable est tout objet de GIMP 
 		pouvant être peint : les
         sélections, les masques de calque, les masques de canaux et aussi
         les calques. Les calques sont un type particulier d'élément peignable.
@@ -5429,6 +6167,10 @@
       <para lang="de">
         Mit dem fertigen Bild können wir nun unsere Ausgabezeile wieder
         hinzufügen:
+      </para>
+      <para lang="es">
+        Con la imagen lista, podemos reañadir nuestra linea de 
+        representación:
       </para>
       <para lang="fr">
         Notre image étant prête, nous pouvons rajouter notre ligne d'affichage
@@ -5457,6 +6199,10 @@
         Sichern Sie Ihre Arbeit, frischen Sie die Datenbank wieder auf und
         probieren Sie Ihr erstes Skript aus!
       </para>
+      <para lang="es">
+        Guarde su trabajo, refresque la base de datos y ejecute su primer 
+        script!.
+      </para>
       <para lang="fr">
         Enregistrez votre travail, rafraîchissez la base de données et tentez
         un démarrage de votre script !
@@ -5475,6 +6221,7 @@
         <phrase lang="en">Clearing The Dirty Flag</phrase>
         <phrase lang="cs">Odstranění příznaku nečistoty</phrase>
         <phrase lang="de">Das Geändert-Kennzeichen löschen</phrase>
+        <phrase lang="es">Limpiar</phrase>
         <phrase lang="fr">Annulons le drapeau de modification</phrase>
         <phrase lang="it">Reimpostare il dirty flag</phrase>
         <phrase lang="no">Stryk det skitne flagget</phrase>
@@ -5509,6 +6256,15 @@
         einfachen Skript ist die Ausgabe leicht reproduzierbar, es ist also
         sinnvoll, dieses Geändert-Kennzeichen zu entfernen.
       </para>
+      <para lang="es">
+       Si intenta cerrar la imagen creada sin primero guardar el archivo, 
+       el GIMP le preguntará si quiere guardar su trabajo antes de cerrar 
+       la imagen. Pregunta esto porque la imagen está marcada como sucia, o 
+       no guardada. En el caso de nuestro script, esto es una molestia, las 
+       veces que simplemente hace una prueba y no le añade o cambia algo en 
+       la imagen resultante, eso es que nuestro trabajo es facilmente 
+       reproducible como un simple script, asi que dele sentido liberandose 
+       de esa marca sucia.      </para>
       <para lang="fr">
         Quand vous essayez de fermer une image modifiée sans l'avoir
         enregistrée au préalable, GIMP vous demande de l'enregistrer. L'image
@@ -5549,6 +6305,10 @@
         Um das zu tun, können wir das Geändert-Kennzeichen löschen, nachdem
         wir das Bild dargestellt haben:
       </para>
+      <para lang="es">
+        Para hacer esto, puede limpiar la marca sucia y despues mostrar la 
+        imagen:
+      </para>
       <para lang="fr">
         Nous pouvons faire cela après l'affichage de l'image :
       </para>
@@ -5573,6 +6333,10 @@
       <para lang="de">
         Dies setzt den Änderungenzähler auf 0 und lässt das Bild als
         unverändert erscheinen.
+      </para>
+      <para lang="es">
+        Esto da 0 al contador sucio, haciendolo aparecer como una imagen 
+        limpia.
       </para>
       <para lang="fr">
         Ceci mettra le drapeau de modification à 0, faisant comme si l'image
@@ -5607,6 +6371,13 @@
         existierenden Bild arbeitet, werden Sie diese Funktion vermutlich
         nicht verwenden wollen.
       </para>
+      <para lang="es">
+        Añadir esta linea o no es cuestión del gusto personal. Uselo en 
+        scripts que produzcan nuevas imágenes, donde los resultados son 
+        triviales, como en este caso. Si su script es muy complicado, o si 
+        trabaja sobre una imagen existente, probablemente no querrá usar 
+        esta función..
+      </para>
       <para lang="fr">
         Ajouter ou non cette ligne est affaire de goût personnel. Je l'utilise
         dans les scripts qui produisent une nouvelle image sans intérêt
@@ -5637,6 +6408,7 @@
       <phrase lang="en">Extending The Text Box Script</phrase>
       <phrase lang="cs">Rozšíření skriptu Text Box</phrase>
       <phrase lang="de">Das Textbox-Skript erweitern</phrase>
+      <phrase lang="es">Extender el script: Text Box</phrase>
       <phrase lang="fr">Compléter le script Text Box</phrase>
       <phrase lang="it">Estendere lo script Text Box</phrase>
       <phrase lang="no">Utvid skriptet Text Box</phrase>
@@ -5647,6 +6419,7 @@
         <phrase lang="en">Handling Undo Correctly</phrase>
         <phrase lang="cs">Správné zacházení s historií změn</phrase>
         <phrase lang="de">Rückgängig machen korrekt handhaben</phrase>
+        <phrase lang="es">Mantener correctamente deshacer</phrase>
         <phrase lang="fr">Gérer correctement l'annulation d'action</phrase>
         <phrase lang="it">Gestire correttamente l'annullamento</phrase>
         <phrase lang="no">Korrekt handtering av Angre</phrase>
@@ -5684,6 +6457,17 @@
         <acronym>GIMP</acronym> wissen lässt, wann es das Aufzeichnen von
         Bildmanipulationen starten oder beenden soll, so dass diese
         Änderungen später rückgängig gemacht werden können.
+      </para>
+      <para lang="es">
+        Cuando crea un script, quiere dar a sus usuarios la habilidad para 
+        deshacer sus acciones, podrían cometer un error. Esto es fácil de 
+        efectuar llamando a las funciones  
+        <code>gimp-undo-push-group-start</code>
+        y <code>gimp-undo-push-group-end</code> sobre el código que manipula 
+        la imagen. Puede pensar que son declaraciones marcadas que dejan al 
+        GIMP saber cuando empezar y parar la grabación de manipulaciones 
+        sobre la imagen, así esas manipulaciones pueden ser deshechas más 
+        tarde.
       </para>
       <para lang="fr">
         Quand vous créez un script, vous voulez donner à l'utilisateur la
@@ -5732,6 +6516,11 @@
         das allerdings tun, dann sollten Sie diese Funktionen ganz bestimmt
         verwenden.
       </para>
+      <para lang="es">
+        Si crea una imagen nueva, no tiene sentido usar estas funciones 
+        porque no cambia una imagen existente. Cuando está cambiando una 
+        imagen existente, debe asegurarse que quiere usar estas funciones.
+      </para>
       <para lang="fr">
         Si vous créez une image entièrement, il est de peu d'intérêt
         d'utiliser ces fonctions, puique vous ne modifiez pas une image
@@ -5760,6 +6549,10 @@
         Mit Hilfe dieser Funktionen klappt das Zurücknehmen eines Skriptes
         praktisch ohne Probleme.
       </para>
+      <para lang="es">
+        Deshacer un script trabaja casi perfectamente cuando usa estas 
+        funciones.
+      </para>
       <para lang="fr">
         L'annulation d'un script marche presque parfaitement en utilisant ces
         fonctions.
@@ -5780,6 +6573,7 @@
         <phrase lang="en">Extending The Script A Little More</phrase>
         <phrase lang="cs">Další rozšíření skriptu</phrase>
         <phrase lang="de">Das Skript noch etwas mehr erweitern</phrase>
+        <phrase lang="es">Extender el script un poco más</phrase>
         <phrase lang="fr">Compléter un peu plus notre script</phrase>
         <phrase lang="it">Ulteriore estensione dello script</phrase>
         <phrase lang="no">Enda ei skriptutviding</phrase>
@@ -5796,6 +6590,10 @@
       <para lang="de">
         Nachdem wir nun ein wirklich nettes Skript zur Texterzeugung haben,
         lassen Sie uns noch zwei Möglichkeiten hinzufügen:
+      </para>
+      <para lang="es">
+        Ahora que hemos creado un excelente y manejable script para crear 
+        cajas de texto, añadamosle dos capacidades:
       </para>
       <para lang="it">
         Ora che si ha uno script per creare riquadri di testo aggiungiamovi due
@@ -5835,6 +6633,11 @@
             uns daher einen Puffer um den Text erstellen und obendrein den
             Benutzer festlegen, wie groß der Puffer (in Prozent der
             Textgröße) sein soll.
+          </para>
+          <para lang="es">
+            La imagen se redimensiona exactamente alrededor del texto, no 
+            hay sitio para nada, como  sombras o efectos especiales (muchos 
+            scripts redimensionan la imagen cuando es necesario.
           </para>
           <para lang="fr">
             Actuellement, l'image est redimensionnée pour coller exactement
@@ -5882,6 +6685,12 @@
             dieses Skript aufrufen können und das von uns erstellte Bild und
             die Ebenen verwenden können.
           </para>
+          <para lang="es">
+            Este script podría facilmente ser usado en otro script para 
+            trabajar con texto. Extendiéndolo para que devuelva la imagen 
+            y las capas, así otros scripts pueden llamar a este script y 
+            usar la imagen y las capas que creemos. 
+          </para>
           <para lang="fr">
             Ce script pourrait aisément être utilisé dans d'autres scripts
             travaillant sur du texte. Enrichissons-le donc aussi pour qu'il
@@ -5914,6 +6723,9 @@
         <phrase lang="de">
           Die Parameter und die Registrierungsfunktion modifizieren
         </phrase>
+        <phrase lang="es">
+          Modificando los parámetros y la función de registro
+        </phrase>
         <phrase lang="fr">
           Modifier les paramètres et la fonction d'enregistrement
         </phrase>
@@ -5936,6 +6748,10 @@
       <para lang="de">
         Damit der Benutzer die Puffergröße festlegen kann, fügen wir unserer
         Funktion und der Registrierungsfunktion einen Parameter hinzu:
+      </para>
+      <para lang="es">
+        Para dejar al usuario  especificar la cantidad del bufer, añadiremos 
+        un parámetro a nuestra función y a la función de registrar:
       </para>
       <para lang="fr">
         Pour permettre à l'utilisateur de spécifier la taille du tampon, nous
@@ -6025,6 +6841,7 @@
         <phrase lang="en">Adding The New Code</phrase>
         <phrase lang="cs">Adding The New Code</phrase>
         <phrase lang="de">Den neuen Code hinzufügen</phrase>
+        <phrase lang="es">Añadir el nuevo código</phrase>
         <phrase lang="fr">Ajoutons ce nouveau code</phrase>
         <phrase lang="it">Aggiungere nuovo codice</phrase>
         <phrase lang="no">Tilføy den nye koden</phrase>
@@ -6043,6 +6860,11 @@
         Wir fügen den Code an zwei Stellen ein: unmittelbar, bevor wir die
         Größe des Bildes anpassen, und am Ende des Skripts (um das neue
         Bild, die Ebene und den Text zurückzugeben).
+      </para>
+      <para lang="es">
+        Vamos a añadir código en dos sitios: antes de redimensionar la imagen
+        y al final del script (para devolver la nueva imagen, la capa y el 
+        texto).
       </para>
       <para lang="fr">
         Nous allons ajouter du code à deux endroits : juste avant de
@@ -6084,6 +6906,14 @@
         nicht gefährlich wäre und es zum anderen keinen Grund gibt, warum
         der Benutzer nicht einen Wert wie <quote>200</quote> als Prozentwert
         für den Puffer eingeben sollte.
+      </para>
+      <para lang="es">
+        Después de obtener el ancho y alto del texto, necesitamos 
+        redimensionar estos valores basados en la cantidad del bufer 
+        especificado por el usuario. No queremos cometer ningún error, 
+        chequeando para asegurar que está en el rango de 0-100%, porque no 
+        es vital y porque no hay razón para que el usuario no pueda dar un 
+        valor como 200 % de bufer para añadir.
       </para>
       <para lang="fr">
         Après avoir obtenu la hauteur et la largeur du texte, nous devons
@@ -6134,6 +6964,12 @@
         addieren. (Wir addieren ihn zweimal in beide Richtungen, da der
         Puffer zu beiden Seiten des Textes hinzugefügt werden muss.)
       </para>
+      <para lang="es">
+        Todo lo que hacemos aquí es configurar el bufer basado en la altura 
+        del texto, y añadirlo dos veces a ambos, el alto y ancho de nuestra 
+        nueva imagen. (Lo añadiremos dos veces porque el bufer necesita ser 
+        añadido a ambos lados del texto).
+      </para>
       <para lang="it">
         Il codice imposta la spaziatura in basse all'altezza del
         testo e la somma due volte sia all'altezza che alla larghezza della
@@ -6176,6 +7012,13 @@
         verschieben. Ich habe diese Zeile hinter der Skalierung von Ebene
         und Bild eingefügt:
       </para>
+      <para lang="es">
+        Ahora que hemos redimensionado la imagen para permitir un bufer,
+        necesitamos centrar el texto bajo la imagen. Esto se hace para 
+        moverlo a las coordenadas (x, y) de (<varname>theBuffer</varname>,
+        <varname>theBuffer</varname>). Añadí esta linea después de 
+        redimensionar la capa y la imagen:
+      </para>
       <para lang="fr">
         Maintenant que nous avons redimensionné l'image pour
         permettre une zone tampon, nous devons centrer le texte dans
@@ -6212,6 +7055,10 @@
         Sichern Sie nun Ihr Skript und probieren Sie es aus, nachdem Sie die
         (Prozeduren-)Datenbank aufgefrischt haben.
       </para>
+      <para lang="es">
+        Adelante y guarde su script, e inténtelo después de refrescar la base
+        de datos.
+      </para>
       <para lang="fr">
         Poursuivez et enregistrez votre script, puis testez-le après avoir
         rafraîchi la base de données.
@@ -6236,6 +7083,10 @@
       <para lang="de">
         Was noch zu tun bleibt ist, das Bild, die Ebene und die Textebene
         zurückzugeben. Nach dem Anzeigen des Bildes fügen wir diese Zeile ein:
+      </para>
+      <para lang="es">
+        Todo lo que queda por hacer es devolver nuestra imagen, la capa y la 
+        capa del texto. Después de mostrar la imagen, añadimos esta linea:
       </para>
       <para lang="fr">
         Tout ce qui reste à faire est de retourner notre image, le calque et
@@ -6268,6 +7119,10 @@
         Das ist die letzte Zeile unserer Funktion und macht diese Liste
         anderen Skripten, die sie verwenden wollen, verfügbar.
       </para>
+      <para lang="es">
+        Esta es la última linea de la función, hace que esta linea esté 
+        disponible a otros scripts que quieran usarla.
+      </para>
       <para lang="fr">
         C'est la dernière ligne de la fonction, qui rend cette liste
         disponible pour les autres scripts qui veulent l'utiliser.
@@ -6292,6 +7147,10 @@
       <para lang="de">
         Um unser neues Textbox-Skript in anderen Skripten zu verwenden,
         könnten wir etwa folgendes schreiben:
+      </para>
+      <para lang="es">
+        Para usar nuestro nuevo script text box en otro script, podriamos 
+        escribir algo como lo siguiente:
       </para>
       <para lang="fr">
         Pour utiliser notre nouveau script de boîte de texte dans un autre
@@ -6326,6 +7185,10 @@
       <para lang="de">
         Gratuliere, Sie sind nun auf dem besten Wege zu Ihrem Schwarzen Gürtel
         in Skript-Fu!
+      </para>
+      <para lang="es">
+        Felicitaciones, está en el camino para su 
+        ¡Cinturón Negro de Script-Fu!.
       </para>
       <para lang="fr">
         Félicitations, vous êtes sur le chemin de votre Ceinture Noire de
