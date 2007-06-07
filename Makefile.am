@@ -101,13 +101,13 @@ $(STAMP_DIR)/mkdirs.stamp: $(patsubst %,$(STAMP_DIR)/mkdirs.%.stamp,$(ALL_LINGUA
     # we care only for HTML here
     # I suppose IMAGE_DIRS to be updated each time whenever you add new image directory
     # and it should not list empty directories
-	@echo 'Creating base image dirrectories.'; \
+	@echo 'Creating base image directories.'; \
 	for dir in $(IMAGE_DIRS); do \
 	  $(mkinstalldirs) html/images/$$dir; \
 	done
 
 	@for lang in $(ALL_LINGUAS); do \
-	  echo 'Creating image dirrectories for language: '$$lang; \
+	  echo 'Creating image directories for language: '$$lang; \
 	  for file in `find images/ -name "*.png" -o -name "*.jpg" | grep "/$$lang/"`; do \
 	    $(mkinstalldirs) `dirname html/$$file`; \
 	  done; \
