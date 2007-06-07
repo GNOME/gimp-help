@@ -19,7 +19,7 @@
       docs/gimp-keys.xml.
     </xsl:comment>
     <reference>
-        <title>GIMP keys and mouse reference</title>
+        <title>Keys and Mouse Reference</title>
         
         <xsl:apply-templates select="k:p"/>
           
