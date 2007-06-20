@@ -3,6 +3,7 @@
           "http://www.docbook.org/xml/4.3/docbookx.dtd">
 
 <!-- section history:
+  2007-06-15 j.h : some improvement in Add Layer Mask explanations
   2006-03-09 lexa: reviewed and made docbook compliant
 -->
 <sect3 id="gimp-layer-mask" lang="cs;de;en;fr;it;no;ru;zh_CN">
@@ -324,9 +325,13 @@
 
         <itemizedlist>
           <listitem>
-            <para lang="en">
-              <guilabel>White (full opacity)</guilabel>: the mask has no
-              effect, all layer pixels are full visible.
+            <!--TODO cs de it no ru zh_CN-->
+            <para lang="en"><!--changed 070615-->
+              <guilabel>White (full opacity)</guilabel>: the mask is white
+              in the Layer Dialog. So, all pixels of the layer are visible
+              in the image window since painting the mask with white makes
+              layer pixels fully visible. You will paint with black to make
+              layer pixels transparent.
             </para>
             <para lang="cs">
               <guilabel>Bílá</guilabel>: maska je bez účinku, všechny pixely
@@ -338,9 +343,11 @@
               Pixel der Ebene sind sichtbar.
             </para>
             <para lang="fr">
-              <guilabel>Blanc</guilabel> : ce masque rend le calque
-              complètement opaque et donc pleinement visible. Vous devrez
-              utiliser du noir pour rendre certaine parties transparentes.
+              <guilabel>Blanc</guilabel> : Le masque est blanc dans le
+              Dialogue des calques. Il n'est donc pas visible dans la
+              fenêtre d'image puisque peindre un masque de calque en blanc
+              correspond à dé-masquer les pixels de l'image. Vous utiliserez
+              la peinture noire pour rendre des pixels transparents.
             </para>
             <para lang="it">
               <guilabel>Bianco (totale opacità)</guilabel>: la maschera
@@ -361,9 +368,13 @@
           </listitem>
 
           <listitem>
-            <para lang="en">
-              <guilabel>Black (full transparency)</guilabel>: the mask gives
-              a full transparency to the layer which becomes invisible.
+            <!--TODO cs de it no ru zh_CN-->
+            <para lang="en"><!--changed 070615-->
+              <guilabel>Black (full transparency)</guilabel>: the mask is
+              black in the Layer Dialog. So, the layer is fully transparent
+              since painting the mask with black makes layer pixels
+              transparent. Painting with white will remove the mask and make
+              layer pixels visible.
             </para>
             <para lang="cs">
               <guilabel>Černá</guilabel>: maska způsobí úplnou průhlednost
@@ -374,10 +385,12 @@
               Alle Pixel der Ebene sind mit der Ebenenmaske transparent.
             </para>
             <para lang="fr">
-              <guilabel>Noir</guilabel> : ce masque rend le calque
-              complètement transparent et donc invisible. Vous devrez
-              utiliser de la peinture blanche pour rendre certaines parties
-              opaques et donc visibles.
+              <guilabel>Noir</guilabel> : Le masque est noir dans le Dialogue
+              des Calques. Le calque est donc totalement transparent dans
+              la fenêtre d'image puisque peindre un masque de calque en noir
+              correspond à rendre les pixels du calque transparents. En
+              peignant avec du blanc, vous effacez le masque et les pixels
+              du calque redeviennent visibles.
             </para>
             <para lang="it">
               <guilabel>Nero (totale trasparenza)</guilabel>: la maschera
@@ -562,16 +575,20 @@
             </listitem>
         </itemizedlist>
 
-        <para lang="en">
+        <para lang="en"><!--changed 070615-->
+          <!--TODO cs de it no ru zh_CN-->
           When the mask is created it appears as a thumbnail right to the
           layer thumbnail. By clicking alternatively on the layer and mask
           thumbnail you can enable one or other. The active item is
           highlighted by a white border (which is not well visible around a
-          white mask). To view mask content instead of its effect in image
-          window, press
+          white mask). To view mask content instead of its effect in the
+          image window, press <keycap>Alt</keycap> (or
           <keycombo><keycap>Ctrl</keycap><keycap>Alt</keycap></keycombo>
-          and then on mask thumbnail. Its border turns to red. To return to
-          normal view redo last operation.
+          and then on mask thumbnail. Its border turns to red. If you press
+          <keycap>Ctrl</keycap> the border is green and the mask effect
+          disapear from the image window. To return to normal view redo last
+          operation.
+          <!--What these options are useful for?-->
         </para>
         <para lang="cs">
           Vytvořená maska je viditelná jako náhled napravo od náhledu vrstvy.
@@ -597,11 +614,17 @@
           vignette du calque puis du masque vous rendez actif soit l'un, soit
           l'autre. L'élément actif est indiqué par un contour blanc (qui ne se
           voit pas franchement autour d'un calque ou d'un masque rempli de
-          blanc). Pour afficher le contenu du masque plutôt que son effet dans
-          la fenêtre d'image, appuyez sur
-          <keycombo><keycap>Ctrl</keycap><keycap>Alt</keycap></keycombo>
-          puis sur la vignette du masque. Pour revenir à la vision normale,
-          recommencez l'opération précédente.
+          blanc).
+        </para>
+        <para lang="fr">
+          Si vous appuyez sur la touche <keycap>Ctrl</keycap> quand vous
+          cliquez sur le masque pour l'activer, le masque s'entoure d'un
+          liseré vert et l'effet du masque disparaît de la fenêtre d'image.
+          Si vous appuyez sur la touche <keycap>Alt</keycap> (ou
+          <keycombo><keycap>Ctrl</keycap><keycap>Alt</keycap></keycombo>)
+          puis sur la vignette du masque, le masque s'entoure d'un liseré
+          rouge et le masque apparaît dans la fenêtre d'image. Pour revenir à
+          la vision normale, recommencez l'opération précédente.
         </para>
         <para lang="it">
           Quando viene creata la maschera, essa appare come una miniatura a
@@ -645,23 +668,26 @@
           <keycombo><keycap>Ctrl</keycap><keycap>Alt</keycap></keycombo>，然后点击蒙板缩略图，重做上一个操作就可以回到正常查看。
         </para>
 
+<!-- This caution is wrong. The layer mask modifies the Alpha Channel. This
+     is not visible if there is an opaque layer in the stack, but it
+     actually exists.
         <caution>
           <para lang="en">
             The layer mask acts like a transparency mask on a particular
-            layer.  Since you have many layers it becomes different from the
-            image Alpha channel which represents transparency applied to the
+            layer.  It doesn't modifies the image Alpha channel which
+            represents transparency applied to the
             whole image.
           </para>
           <para lang="cs">
-            <!-- FIXME: cs -???? -->
+            <!- FIXME: cs -???? ->
           </para>
           <para lang="de">
-            <!--
+            <!-
             Da die Ebenenmaske die Transparenz einer einzelnen Ebene
             beeinflusst, sollte bei vielen Ebenen darauf geachtet werden,
             dass die Alphatransparenz das gesamte Bild beeinflusst.
-            -->
-            <!-- TODO de:  check (changed) translation -->
+            ->
+            <!- TODO de:  check (changed) translation ->
             Die Ebenenmaske beeinflusst die Transparenz einer einzelnen Ebene.
             Wenn Sie mehrere Ebenen haben, wird sich diese Transparenz vom
             Alphakanal unterscheiden, der die auf das gesamte Bild wirkende
@@ -669,9 +695,8 @@
           </para>
           <para lang="fr">
             Le masque de calque agit comme un masque de transparence sur un
-            calque particulier. Dès lors que vous avez plusieurs calques,
-            il est différent du canal Alpha de l'image qui représente
-            la transparence appliquée à l'ensemble de l'image.
+            calque particulier. Il ne modifie pas le canal Alpha de l'image
+            qui représente la transparence appliquée à l'ensemble de l'image.
           </para>
           <para lang="it">
             La maschera di livello agisce come un livello di trasparenza su
@@ -695,6 +720,66 @@
             图层蒙板好像一个特殊图层上的透明蒙板，由于有很多图层，使它不同于添加透明到整个图像的图像 Alpha 通道。
           </para>
         </caution>
+-->
+      </listitem>
+    </varlistentry>
+
+    <varlistentry lang="en;fr"> <!--Created 07-06-15-->
+      <term lang="en">Layer Mask example</term>
+      <term lang="fr">Exemple de Masque de calque</term>
+
+      <listitem>
+        <figure>
+          <title>
+            <phrase lang="en">A layer with layer mask</phrase>
+            <phrase lang="fr">Un calque avec masque de calque</phrase>
+          </title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref='../images/dialogs/examples/layer-mask-1.png'
+                format="PNG" />
+            </imageobject>
+            <caption>
+              <para lang="en">
+                This image has a background layer with a flower and another
+                blue one, fully opaque. A white layer mask has been added to
+                the blue layer. In the image window, the blue layer remains
+                visible because a white mask makes layer pixels visible.
+              </para>
+              <para lang="fr">
+                Cette image comporte un calque de fond avec une image de
+                fleur et un autre calque bleu, complètement opaque. Un masque
+                de calque blanc a été ajouté au calque bleu actif. Dans la
+                fenêtre d'image, le calque bleu reste visible car un masque
+                blanc rend visibles les pixels du calque.
+              </para>
+            </caption>
+          </mediaobject>
+        </figure>
+        <figure>
+          <title>
+            <phrase lang="en">Painting the layer mask</phrase>
+            <phrase lang="fr">On peint le masque de calque</phrase>
+          </title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref='../images/dialogs/examples/layer-mask-2.png'
+                format="PNG" />
+            </imageobject>
+            <caption>
+              <para lang="en">
+                The layer mask is active. You paint with black color, which
+                makes the layer transparent : the underlying layer becomes
+                visible.
+              </para>
+              <para lang="fr">
+                Le masque de calque est activé. On peint ce masque de calque
+                avec de la peinture noire, ce qui a pour effet de rendre le
+                calque transparent : le calque sous-jacent devient visible.
+              </para>
+            </caption>
+          </mediaobject>
+        </figure>
       </listitem>
     </varlistentry>
   </variablelist>
