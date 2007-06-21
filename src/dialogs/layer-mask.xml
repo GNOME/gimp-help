@@ -17,8 +17,8 @@
       </revision>
       <revision lang="de">
         <revnumber>$Revision$</revnumber>
-        <date lang="de">2007-01-25</date>
-        <authorinitials lang="de">ude</authorinitials>
+        <date>2007-06-21</date>
+        <authorinitials>ude</authorinitials>
       </revision>
       <revision lang="fr">
         <revnumber>$Revision$</revnumber>
@@ -137,6 +137,9 @@
     </mediaobject>
   </figure>
 
+  <!--CHECK all: IMHO a variablelist is not the best way here,
+    better remove it and split off the example below to a new file
+    "layer-mask-example.xml", creating a new sect3.-->
   <variablelist>
     <varlistentry>
       <term lang='en'>Overview</term>
@@ -192,7 +195,7 @@
           gleiche Größe und Pixeldichte wie die dazugehörige Ebene. So ist
           es möglich, jedem Pixel der Ebenenmaske einen Transparenzwert
           zuzuordnen. Die Maske selber ist eine Grauwertmaske, so dass jedem
-          Pixel einen Wert von 0 für Schwarz bis 255 für Weiß zugeordnet
+          Pixel ein Wert von 0 für Schwarz bis 255 für Weiß zugeordnet
           werden kann. Ein schwarzer Pixel bedeutet hierbei ein transparenter
           Pixel, während Weiß das Pixel der Ebene nicht beeinflusst.
         </para>
@@ -213,6 +216,8 @@
           Hier können Sie einstellen, welche Eigenschaft die neu erstellte
           Ebenenmaske haben soll:
         </para>
+        <!--CHECK de: vermutlich falsch, siehe Juliens Bemerkung weiter unten
+          ("This caution is wrong...")
         <caution lang="de">
           <para>
             Da die Ebenenmaske die Transparenz einer einzelnen Ebene
@@ -220,6 +225,7 @@
             dass die Alphatransparenz das gesamte Bild beeinflusst.
           </para>
         </caution>
+        -->
 
         <para lang="fr">
           Alors que les masques de sélection (ou masques de canaux)
@@ -325,7 +331,7 @@
 
         <itemizedlist>
           <listitem>
-            <!--TODO cs de it no ru zh_CN-->
+            <!--TODO cs it no ru zh_CN-->
             <para lang="en"><!--changed 070615-->
               <guilabel>White (full opacity)</guilabel>: the mask is white
               in the Layer Dialog. So, all pixels of the layer are visible
@@ -339,8 +345,9 @@
             </para>
             <para lang="de">
               <guilabel><accel>W</accel>eiß (volle Deckkraft)</guilabel>: Die
-              neu erstellte Ebenenmaske hat keinen Effekt auf die Ebene. Alle
-              Pixel der Ebene sind sichtbar.
+              neu erstellte Ebenenmaske hat keinen Effekt auf die Ebene, alle
+              Pixel der Ebene sind sichtbar. Um Transparenz hinzuzufügen,
+              müssen Sie die Ebenenmaske mit Schwarz bemalen.
             </para>
             <para lang="fr">
               <guilabel>Blanc</guilabel> : Le masque est blanc dans le
@@ -368,7 +375,7 @@
           </listitem>
 
           <listitem>
-            <!--TODO cs de it no ru zh_CN-->
+            <!--TODO cs it no ru zh_CN-->
             <para lang="en"><!--changed 070615-->
               <guilabel>Black (full transparency)</guilabel>: the mask is
               black in the Layer Dialog. So, the layer is fully transparent
@@ -382,7 +389,9 @@
             </para>
             <para lang="de">
               <guilabel><accel>S</accel>chwarz (volle Transparenz)</guilabel>:
-              Alle Pixel der Ebene sind mit der Ebenenmaske transparent.
+              Alle Pixel der Ebene sind mit der Ebenenmaske transparent. Wenn
+              Sie die Ebenenmaske mit Weiß bemalen, werden die Pixel der Ebene
+              sichtbar.
             </para>
             <para lang="fr">
               <guilabel>Noir</guilabel> : Le masque est noir dans le Dialogue
@@ -576,7 +585,7 @@
         </itemizedlist>
 
         <para lang="en"><!--changed 070615-->
-          <!--TODO cs de it no ru zh_CN-->
+          <!--TODO cs it no ru zh_CN-->
           When the mask is created it appears as a thumbnail right to the
           layer thumbnail. By clicking alternatively on the layer and mask
           thumbnail you can enable one or other. The active item is
@@ -589,6 +598,7 @@
           disapear from the image window. To return to normal view redo last
           operation.
           <!--What these options are useful for?-->
+          <!-- ??? red="Disable Layer Mask", green="Show Layer Mask" -->
         </para>
         <para lang="cs">
           Vytvořená maska je viditelná jako náhled napravo od náhledu vrstvy.
@@ -600,13 +610,16 @@
           vrstvy ovlivněného maskou. V takovém případě je zeleně orámován.
         </para>
         <para lang="de">
-          Die angelegte Ebenenmaske wird als Miniaturbild im Ebenendialog
-          angezeigt. Die jetzt aktivierte Ebenenmaske können Sie zum Beispiel
-          mit dem Pinselwerkzeug bearbeiten. Durch Malen im Bild wird nun die
-          Ebenenmaske verändert. Möchten Sie das Bild selber bearbeiten,
-          reicht ein Mausklick im Ebenendialog auf das Miniaturbild der Ebene.
-          Der Ebenendialog markiert das gerade aktive Element (Ebenenmaske
-          oder Ebene) durch eine Umrandung.
+          Die angelegte Ebenenmaske wird im Ebenendialog als Miniaturbild
+          neben dem Miniaturbild der Ebene angezeigt. Die jetzt aktivierte
+          Ebenenmaske können Sie zum Beispiel mit dem Pinselwerkzeug
+          bearbeiten. Durch Malen im Bild wird nun die Ebenenmaske verändert.
+          Möchten Sie das Bild selbst bearbeiten, reicht ein Mausklick im
+          Ebenendialog auf das Miniaturbild der Ebene. Der Ebenendialog
+          markiert das gerade aktive Element (Ebenenmaske oder Ebene) durch
+          eine weiße Umrandung (bei einer Ebenenmaske mit voller Deckkraft ist
+          diese allerdings nicht sichtbar, da die Ebenenmaske ebenfalls Weiß
+          dargestellt wird).
         </para>
         <para lang="fr">
           Une fois que le masque est créé il est représenté par une vignette à
@@ -681,18 +694,6 @@
           <para lang="cs">
             <!- FIXME: cs -???? ->
           </para>
-          <para lang="de">
-            <!-
-            Da die Ebenenmaske die Transparenz einer einzelnen Ebene
-            beeinflusst, sollte bei vielen Ebenen darauf geachtet werden,
-            dass die Alphatransparenz das gesamte Bild beeinflusst.
-            ->
-            <!- TODO de:  check (changed) translation ->
-            Die Ebenenmaske beeinflusst die Transparenz einer einzelnen Ebene.
-            Wenn Sie mehrere Ebenen haben, wird sich diese Transparenz vom
-            Alphakanal unterscheiden, der die auf das gesamte Bild wirkende
-            Transparenz darstellt.
-          </para>
           <para lang="fr">
             Le masque de calque agit comme un masque de transparence sur un
             calque particulier. Il ne modifie pas le canal Alpha de l'image
@@ -724,14 +725,16 @@
       </listitem>
     </varlistentry>
 
-    <varlistentry lang="en;fr"> <!--Created 07-06-15-->
+    <varlistentry lang="en;de;fr"> <!--Created 07-06-15-->
       <term lang="en">Layer Mask example</term>
+      <term lang="de">Ebenenmaske-Beispiel</term>
       <term lang="fr">Exemple de Masque de calque</term>
 
       <listitem>
         <figure>
           <title>
             <phrase lang="en">A layer with layer mask</phrase>
+            <phrase lang="de">Eine Ebene mit einer Ebenenmaske</phrase>
             <phrase lang="fr">Un calque avec masque de calque</phrase>
           </title>
           <mediaobject>
@@ -746,6 +749,13 @@
                 the blue layer. In the image window, the blue layer remains
                 visible because a white mask makes layer pixels visible.
               </para>
+              <para lang="de">
+                Dieses Bild besteht aus einer Hintergrundebene mit einer Blume
+                und einer vollständig deckenden blauen Ebene darüber. Zu
+                dieser Ebene wurde eine weiße Ebenenmaske (volle Deckkraft)
+                hinzugefügt, die Pixel der blauen Ebenene bleiben daher
+                sichtbar. Insgesamt bleibt also auch das Bild blau.
+              </para>
               <para lang="fr">
                 Cette image comporte un calque de fond avec une image de
                 fleur et un autre calque bleu, complètement opaque. Un masque
@@ -759,6 +769,7 @@
         <figure>
           <title>
             <phrase lang="en">Painting the layer mask</phrase>
+            <phrase lang="de">Die Ebenenmaske bemalen</phrase>
             <phrase lang="fr">On peint le masque de calque</phrase>
           </title>
           <mediaobject>
@@ -771,6 +782,11 @@
                 The layer mask is active. You paint with black color, which
                 makes the layer transparent : the underlying layer becomes
                 visible.
+              </para>
+              <para lang="de">
+                Die Ebenenmaske ist aktiviert. Wenn man die Ebenenmaske mit
+                Schwarz bemalt, wird die Ebene transparent und die
+                darunterliegende Ebene sichtbar.
               </para>
               <para lang="fr">
                 Le masque de calque est activé. On peint ce masque de calque
