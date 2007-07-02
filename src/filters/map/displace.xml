@@ -4,6 +4,7 @@
                 "http://www.docbook.org/xml/4.3/docbookx.dtd">
 
 <!-- section history:
+  2007-07-02 ude: fixed description of displacement calculation
   2007-05-06 KoSt: added 'no'
   2006-12-12 lexa: added german translation
   2005-12-07 replaced <simplesect> by <sect3> by lexa
@@ -14,13 +15,13 @@
      <revhistory>
        <revision lang="en">
          <revnumber>$Revision$</revnumber>
-         <date>2007-01-04</date>
-         <authorinitials>j.h</authorinitials>
+         <date>2007-07-02</date>
+         <authorinitials>ude</authorinitials>
        </revision>
        <revision lang="de">
          <revnumber>$Revision$</revnumber>
-         <date>2006-12-12</date>
-         <authorinitials>lexa</authorinitials>
+         <date>2007-07-02</date>
+         <authorinitials>ude</authorinitials>
        </revision>
        <revision lang="fr">
          <revnumber>$Revision$</revnumber>
@@ -108,17 +109,20 @@
         </imageobject>
 
         <caption>
+          <!--TODO en de fr it no ru: change this (irritating) example(?)
+            pixels corr. to 128 *will* be displaced, but not with coefficient 30
+          -->
           <para lang="en">
             X displacement coefficient is 30 (with a negative coefficient
             displacement would be inverse). Vacated pixels are black.
             Displacement map has three grey stripes, from top to bottom:
             medium gray (128), light gray 200), dark gray (60).
           </para>
-          <para lang="en">
+          <para lang="en"><!--changed 2007-07-02-->
             You can see that the image area corresponding to medium gray in
             map was not displaced. The image area corresponding to light gray
-            (&gt;128) was displaced 17 pixels to the left. The image area
-            corresponding to dark gray (&lt;128) was displaced -15 pixels, to
+            (&gt;127.5) was displaced 17 pixels to the left. The image area
+            corresponding to dark gray (&lt;127.5) was displaced -15 pixels, to
             the right.
           </para>
 
@@ -131,9 +135,9 @@
           <para lang="de">
             Sie können erkennen, dass die Bildbereiche, die zu dem
             mittelgrauen Bereich gehören, nicht verschoben wurden. Die
-            Bildbereiche, welche Lichtgrau zugeordnet sind (&gt;128), wurden um
-            17 Pixel nach links verschoben. Die Bildbereich, welche Dunkelgrau
-            zugeordnet sind (&lt;128), wurden um 15 Pixel nach rechts
+            Bildbereiche, welche Lichtgrau zugeordnet sind (&gt;127,5), wurden um
+            17 Pixel nach links verschoben. Die Bildbereiche, welche Dunkelgrau
+            zugeordnet sind (&lt;127,5), wurden um 15 Pixel nach rechts
             verschoben.
           </para>
 
@@ -201,7 +205,7 @@
       You can find this filter through
       <menuchoice>
         <guimenu>Filte<accel>r</accel>s</guimenu>
-        <guisubmenu><accel>M</accel></guisubmenu>
+        <guisubmenu><accel>M</accel>ap</guisubmenu>
         <guimenuitem><accel>D</accel>isplace</guimenuitem>
       </menuchoice>
     </para>
@@ -417,39 +421,40 @@
         <term lang="ru">Смещение по X/Y</term>
 
         <listitem>
-          <para lang="en">
+          <para lang="en"><!--changed 2007-07-02-->
             When you select one or both options, active layer pixels
-            corresponding to pixels different from 128 in displacement map,
+            corresponding to pixels in the displacement map
             will be displaced horizontally (X) or/and vertically (Y).
+            Both direction and amount of displacement depend on the
+            intensity of the corresponding pixels in the displacement map.
           </para>
           <para lang="en">
-            Why 128 ? Because map, that must be grey-level, has 256 gray
-            levels: 128 intensity corresponds to <emphasis>medium gray
-            </emphasis>. Filter displaces image pixels,
-            corresponding to <emphasis>pixels higher than 128</emphasis> in
-            map, to the left for X and upwards for Y. Likewise, filter
-            displaces image pixels, corresponding to <emphasis>pixels lesser
-              then 128</emphasis> in map, to the right for X and downwards for
-            Y.
+            The map, that should be a grayscale image, has 256 gray levels
+            (0-255), the (theoretical) average value is 127.5.  The filter
+            displaces image pixels corresponding to pixels with values
+            less than 127.5 (0 to 127) in the map to the right for X and
+            downwards for Y, pixels corresponding to pixels with values from
+            128 to 255 to the left for X and upwards for Y.
           </para>
 
           <para lang="de">
             Wenn Sie mindestens eine der beiden Eigenschaften aktiviert haben,
-            werden die Pixel der aktiven Ebene, welche in den zugeordneten
-            Verschiebungs-Karte eine Helligkeit ungleich 128 haben, in die
-            gewählte X- bzw. Y-Richtung verschoben.
+            werden die Pixel der aktiven Ebene in die gewählte X- bzw.
+            Y-Richtung verschoben. Sowohl Richtung als auch Entfernung der
+            Verschiebung ist von der Helligkeit der entsprechenden Pixel in
+            der Verschiebungskarte abhängig.
           </para>
           <para lang="de">
-            Warum 128? Weil die Karten, welche Graustufenbilder sein müssen,
-            genau 256 Graustufen darstellen können und damit 128 exakt die
-            mittlere Helligkeit darstellt. Für Helligkeiten, die größer als
-            128 sind, werden die zugeordneten Bildpunkte nach links
-            beziehungsweise oben verschoben. Umgekehrt werden diejenigen
-            Bildpunkte, welche in der Verschiebungs-Karte eine Helligkeit
-            kleiner als 128 haben, nach rechts beziehungsweise unten
-            verschoben.
+            Die Verschiebungskarten sind Graustufenbilder und können genau 256
+            Graustufen von 0 bis 255 darstellen. Ausgangspunkt der
+            Berechnungen ist die (theoretische) mittlere Helligkeit von 127,5.
+            Für Helligkeiten kleiner als 127,5 (0-127) werden die
+            entsprechenden Bildpunkte nach rechts beziehungsweise unten
+            verschoben, für Helligkeiten von 128-255 nach links
+            beziehungsweise oben.
           </para>
 
+          <!--FIXME fr it no ru: changed/fixed content-->
           <para lang="fr">
             En cochant une ou les deux options, vous choisissez de déplacer,
             horizontalement (X) ou/et verticalement (Y), les pixels du
@@ -528,53 +533,54 @@
         <term lang="ru">Поля ввода</term>
 
         <listitem>
-          <para lang="en">
-            <quote>X/Y Displacement</quote> should be called
-            <emphasis>X/Y Displacement Coefficient</emphasis>. What you
-            enter in input boxes, directly or by using arrow-head buttons,
-            is not the actual displacement. This coefficient is used in
-            a <emphasis role="bold">displacement = (intensity x coefficient)
-              /128</emphasis> formula which gives the pixel actual
-            displacement according to the intensity of the corresponding
-            pixel in map, modulated by the coefficient you enter.
-            Introducing intensity into formula is important: this allows
-            progressive displacement by using a gradient map.
+          <para lang="en"><!--changed 2007-07-02-->
+            <quote>X/Y Displacement</quote> should be called <emphasis>X/Y
+            Displacement Coefficient</emphasis>. What you enter in input
+            boxes, directly or by using arrow-head buttons, is not the actual
+            displacement. This coefficient is used in a <emphasis
+            role="bold">displacement = (intensity x coefficient) </emphasis>
+            formula which gives the pixel actual displacement according to the
+            scaled intensity<footnote>
+              <para>scaled intensity = (intensity - 127.5) / 127.5</para>
+            </footnote>
+            of the corresponding pixel in map, modulated by the coefficient
+            you enter. Introducing intensity into formula is important: this
+            allows progressive displacement by using a gradient map.
           </para>
           <!-- TODO en: could please an en native review this content? -->
           <para lang="en">
             This value varies in limits equal to the double of image
-            dimensions. This corresponds to maximum displacement, from an
-            image edge to the other.
+            dimensions.
+            <!-- This corresponds to maximum displacement, from an
+            image edge to the other. WRONG! -->
           </para>
           <para lang="en">
             This value may be positive or negative. A negative displacement is
             reverse of a positive one.
           </para>
-          <para lang="en">
-            To complicate stuff, intensity used in formula is not
-            directly pixel intensity. Actual intensity is plotted on a
-            -128 +128 scale, where 0 corresponds to null displacement as
-            we have seen above. Transformation is done by subtracting
-            128 from the pixel intensity and adding +1. So, in previous
-            example, 75 associated to a white pixel (value 255 reported
-            to 255-128+1= 128) gives a (128*75)/128=75 pixels
-            displacement. And a black (0) pixel gives a -75 pixels
-            displacement.
-          </para>
 
           <para lang="de">
-            Über die Textfelder der Eigenschaften
-            <guilabel>X-Verschiebung</guilabel> und
-            <guilabel>Y-Verschiebung</guilabel> können Sie
-            Verschiebungskoeffizienten eintragen. Bei den Werten handelt es
-            sich also nicht um absolute Entfernungen, sondern um
-            Faktoren. Die eigentliche Verschiebung berechnet sich für jeden
-            Bildpunkt als Entfernung = (Intensität * Koeffizient) / 128. Die
-            Intensität ist ein wichtiger Bestandteil der Berechnung. Sie
-            ermöglicht die zunehmende Verschiebung durch die Verwendung eines
-            Verlaufes als Karte.
+            Über die Eingabefelder können Sie Verschiebungskoeffizienten
+            eintragen. Bei diesen Werten handelt es sich also nicht um
+            absolute Entfernungen, sondern um Faktoren. Die eigentliche
+            Verschiebung berechnet sich für jeden Bildpunkt als <emphasis
+            role="bold">Entfernung = (Intensität * Koeffizient)</emphasis>,
+            wobei die Intensität die skalierte Helligkeit<footnote>
+              <para>Intensität = (Helligkeit - 127,5) / 127,5</para>
+            </footnote>
+            des entsprechenden Verschiebungspixels ist. Die Intensität ist ein
+            wichtiger Bestandteil der Berechnung. Sie ermöglicht die
+            zunehmende Verschiebung durch die Verwendung eines Verlaufes als
+            Karte.
+          </para>
+          <para lang="de">
+            Negative Werte für die Verschiebungskoeffizienten sind möglich und
+            kehren die Verschiebungsrichtung um. Die maximalen Werte der
+            Koeffizienten (ohne Berücksichtigung des Vorzeichens) sind jeweils
+            das Doppelte der Bildbreite bzw. -höhe.
           </para>
 
+          <!--FIXME fr it no ru: changed/fixed content-->
           <para lang="fr">
             <quote>Déplacement X/Y</quote> devrait s'appeler
             <emphasis>Coefficient de déplacement</emphasis>. En effet, ce que
@@ -599,7 +605,7 @@
             négatif. Un déplacement négatif se fait en sens inverse du
             déplacement positif.
           </para>
-          <para lang="fr">
+          <!--para lang="fr">
             Pour compliquer les choses, l'intensité utilisée dans la formule
             n'est pas directement l'intensité du pixel de la carte, mais
             l'intensité rapportée à l'échelle -128 +128, où 0 correspond à
@@ -609,7 +615,7 @@
             un pixel blanc (intensité 255 rapportée à 255-128+1=128) donne
             bien un déplacement de (128x75)/128=75 pixels. Et un pixel noir
             (0) donne un déplacement de -75 pixels.
-          </para>
+          </para-->
 
           <para lang="it">
             <quote>Spostamento X/Y</quote> dovrebbe chiamarsi
@@ -633,7 +639,7 @@
             Questo valore può essere positivo o negativo. Uno spostamento
             negativo è opposto ad uno positivo.
           </para>
-          <para lang="it">
+          <!--para lang="it">
             A complicare le cose l'intensità utilizzata nella formula non è
             direttamente l'intensità del pixel. In realtà l'intensità è
             riportata su una scala da -128 a 128 dove 0 corrisponde a nessuno
@@ -643,7 +649,7 @@
             255-128+1=128) restituisce uno spostamento di (128*75)/128=75
             pixel. Un pixel nero (valore 0) restituisce uno spostamento di
             -75 pixel.
-          </para>
+          </para-->
 
           <para lang="no">
             Det talet du skriv inn i boksane for
@@ -663,7 +669,7 @@
             Verdien du skriv inn kan også vere negativ. Flyttinga blir
             då reversert i høve til om verdien er positiv.
           </para>
-          <para lang="no">
+          <!--para lang="no">
             For å gjere det litt meir innvikla, så er intensiteten brukt i
             formelen eigentleg ikkje den verkelege intensiteten for
             pikselen. I staden blir intensiteten plotta inn på ein skala frå
@@ -675,7 +681,7 @@
             blir då (128 × 75) / 128 = 75. Biletpikselen blir flytt 75
             pikslar. Ein svart piksel (0) ville gitt ei forflytting på -75
             pikslar.
-          </para>
+          </para-->
 
           <para lang="ru">
             Параметр <quote>Смещение по X/Y</quote> должен называться
@@ -696,7 +702,7 @@
             Это значение может быть положительным и отрицательным.
             Отрицательные значения смещают в противоположную сторону.
           </para>
-          <para lang="ru">
+          <!--para lang="ru">
             Используемая в формуле интенсивность не есть интенсивность точек.
             Интенсивность точек нормализуется по шкале от -128 до +128, где
             0 представляет отсутствие замещения, как описано выше. При
@@ -704,7 +710,7 @@
             предыдущем примере, замещение 75 для белой точки (преобразованной
             в 255-128+1=128) даёт (128*75)/128=75 точек смещения. Чёрная
             точка (0) даёт -75 точек смещения.
-          </para>
+          </para-->
         </listitem>
       </varlistentry>
 
