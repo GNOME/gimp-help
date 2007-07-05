@@ -26,6 +26,7 @@
 
     <indexterm lang="en;fr;it"><primary>Gamma</primary></indexterm>
     <indexterm lang="de"><primary>Gammawert</primary></indexterm>
+    <indexterm lang="no"><primary>Gammaverdi</primary></indexterm>
 
     <glossdef>
       <para lang="en">
@@ -191,11 +192,44 @@
       </para>
 
       <para lang="no">
-        Gammaverdien for biletskjermen er ein korrigeringsfaktor som bestemmer
-        kor lys skjermen skal vere med bestemte inngangssignal. Dess høgare
-        verdi, dess mørkare skjerm. Mac har standard gamma på 1,8 og gir
-        såleis normalt ein lysare skjerm enn ein standard Windows PC som er
-        sett til gammaverdien 2,2.
+        <emphasis>Gamma</emphasis> eller
+        <emphasis>gammakorreksjon</emphasis> er ein ulineær operasjon
+        til å kode og dekode luminans- og fargeverdiar i biletsystem for video
+        og foto. Operasjonen blir brukt i mange ulike biletsystem for å rette
+        ut signal-til lys eller intensitet-til-signal responsen. For eksempel er
+        lyset som kjem frå biletrøyret (tidlegare) brukt i TV og dataskjerm,
+        ulineært i høve til inngangsspenninga. Spenninga som kjem ut frå eit
+        kamera er heller ikkje lineær med omsyn til intensiteten i lyset frå 
+        tablået. Gammakorreksjonen prøver å rette opp dette slik at alle data
+        blir innføre eit område vi oppfattar som lineært. Dette gjer også at
+        det avgrensa signalområdet, altså den avgrensa mengda av bits i
+        kvart RGB-signal, blir betre tilpassa det menneskelege synet.
+      </para>
+      <para lang="no">
+        Gammaverdien blir brukt som eksponent i likninga. Dersom gamma
+        er mindre enn 1, blir resultatet komprimert. Dette blir brukt for å
+        omforme lineære luminans- og RGB-verdiar til fargesignal eller til
+        digitale verdiar som kan lagrast i ei fil. Gammaekspansjon (gamma
+        &gt; 1) er den omvendte prosessen og blir oftast brukt for å
+        korrigera funksjonen straum-til-spenning i biletrøyr der denne
+        funksjonen er ulineær.
+      </para>
+      <para lang="no">
+        I PC-video blir bileta oftast koda med ein gamma på omkring 0,45
+        og dekoda med gamma 2,2. I Mac-systemet er desse verdiane oftast
+        0,55 og 1,8. Fargestandarden som blir brukt i dei fleste kamera,
+        PC-ar og skrivarar (sRGB fargemodellen) bruker ikkje ei enkel 
+        eksponental likning for kodinga, men har som oftast ein gammaverdi
+        rundt 2,2 for dekodinga.
+      </para>
+      <para lang="no">
+        I <acronym>GIMP</acronym> er gamma brukt i penseldelen i filteret
+        <link linkend="plug-in-gimpressionist">GIMPressionist</link> og i
+        filteret <link linkend="plug-in-flame">flamme</link>. 
+        <link linkend="gimp-display-filter-dialog">visningsfiltra</link>
+        inneheld også eit gammafilter. I <link
+        linkend="gimp-tool-levels">nivåverktøya</link> kan du bruke den
+        midtre glidebrytaren for  forandre gammaverdien.
       </para>
     </glossdef>
   </glossentry>
@@ -415,13 +449,51 @@
       </para>
 
       <para lang="no">
-        GIF er eit varemerke for firmaet CompuServe. Kompresjonsmetoden LZW
-        er patentert av firmaet Unisys. Formatet er i 8 bits indekserte
-        fargar og støtter gjennomsikt av eller på, men ikkje delvis
-        gjennomsiktig. Formatet støtter også merknader og animasjonar. Blir
-        mykje brukt til transparente bilete og animasjonar for internett.
-        Ofte vil kanskje likevel
-        <link linkend="file-png-save-defaults">PNG</link> vere eit betre val.
+        <trademark>GIF</trademark> står for <quote>Graphics Interchange
+        Format</quote>. Dette er eit <link 
+        linkend="glossary-fileformat">filformat</link> med god komprimering
+        utan tap for bilete med låg <link
+        linkend="glossary-colordepth">fargedjupn</link>. Opp til 256 ulike
+        fargar. Etter at GIF blei utvikla, er det komen eit nytt format, <link
+        linkend="file-png-save-defaults">Portable Network Graphics
+        (PNG)</link> som er betre enn GIF på alle område unntatt når det
+        gjeld animasjon (og noen lite brukte eigenskapar).
+      </para>
+      <para lang="no">
+        GIF blei introdusert av CompuServe i 1987, og blei raskt svært 
+        populært på grunn av den effektive LZW-komprimeringa. Storleiken
+        på biletfilene blir merkbart redusert i høve til PCX, MacPaint og
+        andre, liknande program som var i bruk på den tida. Dermed kunne
+        nokså store bilete overførast på til dels langsame internettlinjer. I
+        tillegg gjorde den opne lisenspolitikken til CompuServe det mogleg
+        å inkorporere GIF i andre program utan å betale lisens så lenge
+        CompuServe sin opphavsrett blei tatt med i programmet.
+      </para>
+      <para lang="no">
+        I GIF blir fargane lagra i ein tabell med plass til opp til 256 fargar
+        valde frå eit utval på ca. 16,7 millionar ulike fargar. I 1987 var
+        det bare noen få som hadde tilgang på datautstyr som kunne vise
+        meir enn 256 fargar, så fargeutvalet var meir enn stort nok. I dag
+        er det bare teikningar og svart/kvit-bilete som greier seg med så
+        få fargar. For fargefoto vil ein reduksjon til 256 fargar svært ofte
+        gi ei synleg forringing. Dette er grunnen til at GIF som oftast er
+        ueigna til fargebilete.
+      </para>
+      <para lang="no">
+        Ein av fargane i paletten kan definerast til å vere gjennomsiktig.
+        Dette betyr at ein piksel kan vere anten gjennomsiktig eller
+        ugjennomsiktig. Det er ikkje råd å ha pikslar som er delvis
+        gjennomsiktige slik som t.d. i 
+        <link linkend="file-png-save-defaults">PNG</link>.
+      </para>
+      <para lang="no">
+        Den første versjonen heitte GIF 87a. I 1989 publiserte
+        CompuServe versjon 89a. Mellom anna kunne denne versjonen
+        lagra fleire bilete i ei og same GIF-fila. Dette er særleg nyttig ved
+        enkle animasjonar. Du kan sjå kva for versjon som er i bruk ved å
+        sjå på dei første seks bytes i GIF-fila. Versjonen blir oppgitt i
+        ASCII-kode, og er anten <quote>GIF87a</quote> eller
+        <quote>GIF89a</quote>.
       </para>
 
       <para lang="zh_CN">
@@ -564,13 +636,43 @@
         프로그램이다. 더 자세한 내용은 위키피아에서 확인할 수 있다.
       </para>
 
-      <para lang="no">
+      <para lang="nono">
         GNU er eit prosjekt som arbeider med å utvikla eit Unix-liknande
         operastivsystem med støtte for gratis programvare.
         <acronym>GIMP</acronym> (GNU Image Manipulation Program) er eit slikt
         GNU-program. Du kan finne meir om dette i wikipedia under
         <xref linkend="bibliography-online-wkpd-gnu" />.
       </para>
+      <para lang="no">
+        Då Richard Stallman byrja GNU-prosjektet i 1983 var føremålet å
+        utvikle eit fullstendig fritt operativsystem. I dag er prosjektet mest
+        kjent frå GNU General Public License (GPL) og GNU/Linux, ein
+        GNU-variant med Linux-kjerne.
+      </para>
+      <para lang="no">
+        Namnet blei laga ut frå ein namneskikk som var vanleg ved MIT der
+        Stallman arbeidde den gongen. Program som var nokså like andre
+        program, fekk namn som var rekursive akronym. Sidan det nye 
+        systemet var basert på det mykje brukte operastivsystemet Unix,
+        valde Stallman namnet GNU, som skal stå for <quote>GNU is not
+        Unix</quote> (GNU er ikkje Unix). (GNU blir uttalt som på norsk,
+        ikkje som engelsk <quote>new</quote>). Det var mange grunnar
+        for å lage GNU kompatibelt med Unix. Mellom anna var Stallman
+        overtydd om at dei fleste firma ikkje ville ta i bruk eit nytt
+        operativsystem dersom programma dei brukte ikkje kunne køyrast
+        på det. Dessutan er Unix bygd opp av mange småprogram som kan
+        utviklast stort sett uavhengig av kvarandre. Endeleg var store
+        deler av Unix fritt tilgjengeleg for alle som hadde lyst og kunnskap
+        til å utvikle programmet vidare. Desse delane kunne såleis lett
+        integrerast direkte i GNU. Dei partane som mangla måtte derimot
+        skrivast frå botnen av.
+      </para>
+      <para lang="no">
+        <acronym>GIMP</acronym> (GNU Image Manipulation Program)
+        er kanskje den mest kjende GNU applikasjonen
+        <xref linkend="bibliography-online-wkpd-gnu" />.
+      </para>
+      
       <para lang="zh_CN">
         GNU's Not Unix，是一个致力于开放源软件的发展和支持的机构。GIMP 是一个 GNU 官方应用程序。
       </para>

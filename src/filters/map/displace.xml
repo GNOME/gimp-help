@@ -4,6 +4,7 @@
                 "http://www.docbook.org/xml/4.3/docbookx.dtd">
 
 <!-- section history:
+  2007-07-04 kost: ude's fix to 'no'
   2007-07-04 ude: added polar mode for GIMP 2.4 (disabled)
   2007-07-02 ude: fixed description of displacement calculation
   2007-05-06 KoSt: added 'no'
@@ -110,9 +111,8 @@
         </imageobject>
 
         <caption>
-          <!--TODO en de fr it no ru: change this (irritating) example(?)
-            pixels corr. to 128 *will* be displaced, but not with coefficient 30:
-            ((128 - 127.5) / 127.5) * 30.0 = 0.12
+          <!--TODO en de fr it ru: change this (irritating) example(?)
+            pixels corr. to 128 *will* be displaced, but not with coefficient 30
           -->
           <para lang="en">
             X displacement coefficient is 30 (with a negative coefficient
@@ -125,9 +125,8 @@
             map was not displaced. The image area corresponding to light gray
             (&ge;128) was displaced 17 pixels to the left. The image area
             corresponding to dark gray (&le;127) was displaced -15 pixels, to
-            the right.
-            For pixels corresponding to medium gray (128) the displacement
-            coefficient is too small to cause any displacement.
+            the right. For pixels corresponding to medium gray (128) the
+            displacement coefficient is too small to cause any displacement.
           </para>
 
           <para lang="de">
@@ -139,20 +138,19 @@
           <para lang="de">
             Sie können erkennen, dass die Bildbereiche, die zu dem
             mittelgrauen Bereich gehören, nicht verschoben wurden. Die
-            Bildbereiche, welche Lichtgrau zugeordnet sind (&ge;128), wurden um
-            17 Pixel nach links verschoben. Die Bildbereiche, welche Dunkelgrau
-            zugeordnet sind (&le;127), wurden um 15 Pixel nach rechts
-            verschoben.
-            Für die mittelgrauen Pixel (128) ist der Verschiebungskoeffizient
-            zu gering für eine Verschiebung.
+            Bildbereiche, welche Lichtgrau zugeordnet sind (&ge;128), wurden
+            um 17 Pixel nach links verschoben. Die Bildbereiche, welche
+            Dunkelgrau zugeordnet sind (&le;127), wurden um 15 Pixel nach
+            rechts verschoben. Für die mittelgrauen Pixel (128) ist der
+            Verschiebungskoeffizient zu gering für eine Verschiebung.
           </para>
 
           <para lang="fr">
             Le coefficient de déplacement X est de 30 (avec un coefficient
             négatif les déplacements seraient inversés), les pixels libérés
             par les déplacements sont en noir. La carte de déplacement
-            comporte 3 bandes de gris superposées, de haut en bas: gris
-            neutre (128), gris clair (200), gris foncé (60).
+            comporte 3 bandes de gris superposées, de haut en bas: gris neutre
+            (128), gris clair (200), gris foncé (60).
           </para>
           <para lang="fr">
             On voit que la partie de l'image correspondant à la bande de gris
@@ -166,8 +164,7 @@
           <para lang="it">
             Il coefficiente di spostamento X è 30 (con un coefficiente
             negativo lo spostamento sarebbe opposto). I pixel mancanti sono
-            neri.
-            Displacement map has three grey stripes, from top to bottom:
+            neri. Displacement map has three grey stripes, from top to bottom:
             medium gray (128), light gray 200), dark gray (60).
           </para>
           <para lang="it">
@@ -179,16 +176,17 @@
           </para>
 
           <para lang="no">
-            X-forskyvinga er sett til 30,0. Frie pikslar er svarte.
+            X-forskyvinga er sett til 30,0. Med negativ verdi ville
+            forskyvinga blitt invertert. Frie pikslar er svarte.
             Forskyvingskartet (i midten) har tre grå striper: øvst mellomgrå
             (128), i midten lysegrå (200) og nedst mørkegrå (60).
           </para>
           <para lang="no">
             På biletet til høgre kan du sjå at området som høyrer til den
-            mellomgrå sona ikkje er forandra. Biletområda som er tilordna
-            den lysegrå sona (&gt;128) er forskjøve 17 pikslar mot venstre,
-            medan biletområda som er tilordna den mørkegrå sona (&lt;128)
-            er forskjøve 15 pikslar mot høgre.
+            mellomgrå sona ikkje er forandra. Biletområda som er tilordna den
+            lysegrå sona (&gt;127,5) er forskjøve 17 pikslar mot venstre,
+            medan biletområda som er tilordna den mørkegrå sona (&lt;127,5) er
+            forskjøve 15 pikslar mot høgre.
           </para>
 
           <para lang="ru">
@@ -462,7 +460,7 @@
             beziehungsweise oben.
           </para>
 
-          <!--FIXME fr it no ru: changed/fixed content-->
+          <!--FIXME fr it ru: changed/fixed content-->
           <para lang="fr">
             En cochant une ou les deux options, vous choisissez de déplacer,
             horizontalement (X) ou/et verticalement (Y), les pixels du
@@ -499,21 +497,19 @@
           </para>
 
           <para lang="no">
-            Pikslane i det aktive teikneområdet vil bli forskjøve i langs x- eller
-            y-aksen i høve til kor mykje dei tilsvarande pikslane i
-            <quote>forskyvingskartet</quote> avvik frå 128.
+            Pikslar i det aktive laget vil bli forskjøve i langs x- eller
+            y-aksen ut frå intensiteten for dei tilsvarande pikslane i
+            <quote>forskyvingskartet</quote>.
           </para>
           <para lang="no">
-            Kvifor 128 ? Fordi kartet, som må vere i gråskala, har 256 ulike
-            grader av grått. 128 er halvparten av dette, og tilsvarar
-            <emphasis>mellomgrå</emphasis>. Filteret flytter alle biletpikslane
-            som har ein korresponderande kartpiksel med
-            <emphasis>høgare</emphasis> verdi enn 128 mot venstre på
-            x-aksen og oppover for y-aksen. Tilsvarande vil alle pikslane med
-            <emphasis>lågare</emphasis> verdi enn 128 bli flytt mot
-            <emphasis>høgre</emphasis> langs x-aksen og nedover langs
-            y-aksen.
-          </para>
+            Kartet, som bør vere eit gråskalabilete, har 256 grånivå 
+            (0 -255). Den (teoretiske) gjennomsnittsverdien er 127,5.
+            Dersom kartpikslelen har ein verdi mindre enn 127,5 (0 - 127)
+            vil den tilsvarande biletpikselen bli flytt til høgre på X-aksen
+            eller nedover på Y-aksen. Tilsvarande gjer pikselverdiar
+            større enn 127,5 (128 - 255) at biletpikslane blir flytt til
+            venstre på X-aksen eller oppover på Y-aksen.
+          </para>          
 
           <para lang="ru">
             Когда вы выбираете эти параметры, точки активного слоя
@@ -588,7 +584,7 @@
             das Doppelte der Bildbreite bzw. -höhe.
           </para>
 
-          <!--FIXME fr it no ru: changed/fixed content-->
+          <!--FIXME fr it ru: changed/fixed content-->
           <para lang="fr">
             <quote>Déplacement X/Y</quote> devrait s'appeler
             <emphasis>Coefficient de déplacement</emphasis>. En effet, ce que
@@ -664,9 +660,14 @@
             <quote>X-/Y-forskyving</quote> er eigentleg ikkje kor mykje
             pikslane skal forskyvast, men ein koeffisient som blir brukt i
             formelen <emphasis role="bold">forskyving = (intensitet ×
-            koeffisient) / 128</emphasis> for å rekne ut kor langt og i kva
-            retning pikselen skal flyttast. Intensitetet er verdien for den
-            aktuelle pikselen i kartet.
+            koeffisient)</emphasis> for å rekne ut kor langt og i kva
+            retning pikselen skal flyttast i høve til den graderte intensiteten
+            <footnote>
+              <para>gradert intensitet = (intensitet - 127,5) / 127,5</para>
+            </footnote>
+            til den tilsvarande pikselen i kartet, modulert med talet du skreiv
+            inn. At intensiteten er med i formelen, gjer at det er råd å flytte
+            pikslane progressivt ved å bruke fargeovergangar i kartet.
           </para>
           <para lang="no">
             Den høgaste verdien du kan skrive inn i x- eller y-boksen er
@@ -677,19 +678,6 @@
             Verdien du skriv inn kan også vere negativ. Flyttinga blir
             då reversert i høve til om verdien er positiv.
           </para>
-          <!--para lang="no">
-            For å gjere det litt meir innvikla, så er intensiteten brukt i
-            formelen eigentleg ikkje den verkelege intensiteten for
-            pikselen. I staden blir intensiteten plotta inn på ein skala frå
-            -128 via 0 til +128. (Som vist ovanfor, gir verdien 0 inga
-            flytting). Omforminga blir gjort ved å trekka 128 frå
-            pikselverdien og legge til 1. Dersom glidebrytaren er sett til
-            75 og kartet inneheld ein kvit piksel (verdi 255) på aktuell
-            stad, vil dette gi 255 - 128 + 1 = 128. Utrekninga i formelen
-            blir då (128 × 75) / 128 = 75. Biletpikselen blir flytt 75
-            pikslar. Ein svart piksel (0) ville gitt ei forflytting på -75
-            pikslar.
-          </para-->
 
           <para lang="ru">
             Параметр <quote>Смещение по X/Y</quote> должен называться
