@@ -1,316 +1,307 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS = \
-	quickreference
+# SUBDIRS = quickreference
 
-STAMP_DIR = stamps
+image_find_predicates = \
+	-name '*.gif' -o \
+	-name '*.jpg' -o \
+	-name '*.mng' -o \
+	-name '*.png' -o \
+	-name '*.xcf'
 
-IMAGE_DIRS = \
-	.		\
-	callouts	\
-	dialogs		\
-	dialogs/examples\
-	filters		\
-	filters/examples\
-	glossary	\
-	math		\
-	menus		\
-	preferences	\
-	tool-options	\
-	toolbox		\
-	tutorials		\
-	using
+IMAGE_FILES := $(sort $(shell cd $(top_srcdir) && find images $(image_find_predicates)))
 
-IMAGE_FILES = \
-	$(wildcard $(top_srcdir)/images/*.png)		\
-	$(wildcard $(top_srcdir)/images/*.jpg)		\
-	$(wildcard $(top_srcdir)/images/*/*.png)	\
-	$(wildcard $(top_srcdir)/images/*/*.jpg)	\
-	$(wildcard $(top_srcdir)/images/*/*/*.png)	\
-	$(wildcard $(top_srcdir)/images/*/*/*.jpg)
+IMAGE_COUNT := $(words $(IMAGE_FILES))
 
-XML_FILES = \
-	$(wildcard $(top_srcdir)/src/*.xml)	\
-	$(wildcard $(top_srcdir)/src/*/*.xml)	\
-	$(wildcard $(top_srcdir)/src/*/*/*.xml)	\
-	$(wildcard $(top_srcdir)/src/*/*/*/*.xml)
+IMAGE_DIRS := $(sort $(dir $(IMAGE_FILES)))
 
-PO_FILES = \
-	$(wildcard $(top_srcdir)/po/*.po)
+XML_FILES := $(shell cd $(top_srcdir) && find src -name '*.xml')
 
-CSS_DIRS = \
-	$(top_srcdir)/stylesheets
+COMMON_CSS_FILES = \
+	stylesheets/gimp-help-plain.css	\
+	stylesheets/gimp-help-screen.css
 
-CSS_FILES = \
-        $(top_srcdir)/stylesheets/gimp-help-plain.css	\
-        $(top_srcdir)/stylesheets/gimp-help-screen.css	
+OTHER_CSS_FILES = \
+	stylesheets/plainhtml.xsl.in	\
+	stylesheets/zh_CN/gimp-help-custom.css
 
 XSL_FILES = \
-        $(top_srcdir)/stylesheets/plainprint.xsl	\
-        $(top_srcdir)/stylesheets/profile.xsl
-
-MAKEINDEX = $(top_srcdir)/stylesheets/makeindex.xsl
-
-HELP_STAMPS = \
-	$(STAMP_DIR)/css.stamp		\
-	$(STAMP_DIR)/pdf.stamp		\
-	$(STAMP_DIR)/html.stamp		\
-	$(STAMP_DIR)/odf.stamp		\
-	$(STAMP_DIR)/images.stamp	\
-	$(STAMP_DIR)/index.stamp	\
-	$(STAMP_DIR)/mkdirs.stamp	\
-	$(STAMP_DIR)/profile.stamp	\
-	$(STAMP_DIR)/validate.stamp
-
-FORMATS = html pdf
+	stylesheets/authors_docbook.xsl \
+	stylesheets/authors_text.xsl \
+	stylesheets/makeindex.xsl \
+	stylesheets/plainprint.xsl \
+	stylesheets/profile.xsl
 
 EXTRA_DIST = \
 	HACKING				\
 	INSTALL				\
 	TERMINOLOGY			\
-	stylesheets/plainhtml.xsl.in	\
-	stylesheets/zh_CN/gimp-help-custom.css	\
-	$(XSL_FILES)			\
-	$(MAKEINDEX)			\
-	$(IMAGE_FILES)			\
+	$(COMMON_CSS_FILES)		\
+	$(OTHER_CSS_FILES)		\
 	$(XML_FILES)			\
-	$(CSS_FILES)
+	$(XSL_FILES)
 
+DISTCHECK_CONFIGURE_FLAGS = --without-gimp
 
-$(STAMP_DIR)/clean.stamp: Makefile
-	@echo '*** Creating fresh stamps directory ***'
-	@rm -rf $(STAMP_DIR); $(mkinstalldirs) $(STAMP_DIR)
-	@echo '*** Removing the built help files ***'
-	@rm -rf html
-	@rm -rf pdf 
-	@rm -rf xml
-	@rm -rf odf
+helpdir = $(gimpdatadir)/help
 
-	@echo '*** Removing temporary files ***'
-	@rm -rf `find . -name "*~"`
-	@rm -rf `find . -name "*.orig"`
-	@rm -rf `find . -name "*.bak"`
-	@rm -rf `find . -name "*.rej"`
+#### XML profiling
 
-	@touch $@
+xml/%.xml: src/gimp.xml stylesheets/profile.xsl
+	$(MKDIR_P) xml
 
+	$(XSLTPROC) \
+	  $(XSLTFLAGS) \
+	  --xinclude \
+	  --stringparam profile.lang $* \
+	  $(top_srcdir)/stylesheets/profile.xsl \
+	  $< \
+	  > $@.tmp
 
-$(STAMP_DIR)/mkdirs.stamp: $(patsubst %,$(STAMP_DIR)/mkdirs.%.stamp,$(ALL_LINGUAS)) 
-	@echo '*** Creating directories ***'
+	sed -e 's/xmlns[:a-z]*="[^"]*" //' \
+	    -e 's/lang="[A-Za-z_;]*"/lang="$*"/' \
+	    -e '/^[ \t]*$$/d' \
+	  < $@.tmp \
+	  > $@
 
-    # we care only for HTML here
-    # I suppose IMAGE_DIRS to be updated each time whenever you add new image directory
-    # and it should not list empty directories
-	@echo 'Creating base image directories.'; \
-	for dir in $(IMAGE_DIRS); do \
-	  $(mkinstalldirs) html/images/$$dir; \
-	done
+	rm -f $@.tmp
 
-	@for lang in $(ALL_LINGUAS); do \
-	  echo 'Creating image directories for language: '$$lang; \
-	  for file in `find images/ -name "*.png" -o -name "*.jpg" | grep "/$$lang/"`; do \
-	    $(mkinstalldirs) `dirname html/$$file`; \
-	  done; \
-	done;
+if HAVE_XMLLINT
+	$(XMLLINT) --noout $@
+endif
 
-	@touch $@
+#### PDF output
 
-$(patsubst %,$(STAMP_DIR)/mkdirs.%.stamp,$(ALL_LINGUAS)) : $(STAMP_DIR)/mkdirs.%.stamp :
-	@$(mkinstalldirs) $(STAMP_DIR)
-	@for format in $(FORMATS); do \
-	  $(mkinstalldirs) $$format/$*; \
-	done;
+if HAVE_DBLATEX
 
-	@touch $@
+pdf/%.pdf: xml/%.xml stylesheets/plainprint.xsl
+	$(MKDIR_P) pdf
+	dblatex -p $(top_srcdir)/stylesheets/plainprint.xsl $< -o $@
 
-mkdirs: $(STAMP_DIR)/mkdirs.stamp
-
-
-$(STAMP_DIR)/css.stamp : $(patsubst %,$(STAMP_DIR)/css.%.stamp,$(ALL_LINGUAS))
-	@echo '*** Copying stylesheets ***'
-	@touch $@
-
-$(patsubst %,$(STAMP_DIR)/css.%.stamp,$(ALL_LINGUAS)) : $(STAMP_DIR)/css.%.stamp : $(STAMP_DIR)/mkdirs.%.stamp $(CSS_FILES)
-	@cp $(CSS_FILES) $(srcdir)/html/$*; \
-	if test $* = "zh_CN"; then \
-	  cp $(CSS_DIRS)/$*/gimp-help-custom.css $(srcdir)/html/$*; \
-	fi
-
-	@touch $@
-
-css: $(STAMP_DIR)/css.stamp
-
-
-$(STAMP_DIR)/images.stamp : $(STAMP_DIR)/mkdirs.stamp $(IMAGE_FILES)
-	@echo '*** Copying images ***'
-
-  # copy the image files to html directory
-	@echo 'Copying common images.'; \
-	for dir in $(IMAGE_DIRS); do \
-	  for file in `echo $(top_srcdir)/images/$$dir/*.png` `echo $(top_srcdir)/images/$$dir/*.jpg`; do \
-	    if test -f $$file ; then \
-	      cp $$file html/$$file || exit $$?; \
-	    fi; \
-	  done; \
-	done;
-
-	@for lang in $(ALL_LINGUAS); do \
-	  echo 'Copying images for '$$lang ; \
-	  for file in `find images/ -name "*.png" -o -name "*.jpg" | grep "/$$lang/"`; do \
-	    cp $$file html/$$file || exit $$?; \
-	  done; \
-	done;
-
-	@touch $@
-
-images: $(STAMP_DIR)/images.stamp
-
-
-$(STAMP_DIR)/profile.stamp: $(patsubst %,$(STAMP_DIR)/profile.%.stamp,$(ALL_LINGUAS))
-	@echo '*** Profiling XML files ***'
-	@touch $@
-
-$(patsubst %,$(STAMP_DIR)/profile.%.stamp,$(ALL_LINGUAS)): $(STAMP_DIR)/profile.%.stamp : $(STAMP_DIR)/mkdirs.%.stamp $(XML_FILES)
-	@cd $(top_srcdir) && \
-	$(mkinstalldirs) xml && cd xml && \
-	echo '-- Profiling XML for '$*;\
-	$(XSLTPROC) $(XSLTFLAGS) --xinclude \
-	   --stringparam profile.lang $* \
-	   ../stylesheets/profile.xsl \
-	   ../src/gimp.xml | \
-	   sed -e "s/xmlns[:a-z]*\=\"[^\"]*\" //" \
-	       -e "s/lang=[\"'][A-Za-z_;]*[\"']/lang=\"$*\"/" \
-	       -e "/^[ \t]*$$/d" >$*.xml
-
-	@touch $@
-
-profile: $(STAMP_DIR)/profile.stamp 
-
-
-$(STAMP_DIR)/pdf.stamp: $(STAMP_DIR)/mkdirs.stamp $(STAMP_DIR)/profile.stamp
-	@echo '*** Building PDF files ***'
-	@for lang in $(ALL_LINGUAS); do \
-	  echo '-- Building PDF for '$$lang; \
-	  (dblatex -p stylesheets/plainprint.xsl xml/$$lang.xml -o pdf/$$lang.pdf); \
-	done
-
-	@touch $@
-pdf: $(STAMP_DIR)/pdf.stamp
-
-$(STAMP_DIR)/odf.stamp: $(patsubst %,$(STAMP_DIR)/odf.%.stamp,$(ALL_LINGUAS))
-	@echo '*** Building ODF files ***'
-	@touch $@
-	
-
-$(patsubst %,$(STAMP_DIR)/odf.%.stamp,$(ALL_LINGUAS)): $(STAMP_DIR)/odf.%.stamp : $(STAMP_DIR)/profile.%.stamp $(XML_FILES)
-	@echo '*** Building ODF files ***'
-	@cd $(top_srcdir) && \
-	$(mkinstalldirs) odf && cd odf && \
-	for lang in $(ALL_LINGUAS); do \
-	  echo '-- Building ODF for '$$lang; \
-	    $(DOCBOOK2ODF) --input-file ../xml/$$lang.xml --output-file ../odf/$$lang.odf; \
-	done
-	@touch $@
-
-odf: $(STAMP_DIR)/odf.stamp
-
-
-$(STAMP_DIR)/html.stamp: $(patsubst %,$(STAMP_DIR)/html.%.stamp,$(ALL_LINGUAS))
-	@echo '*** Building HTML ***'
-	@touch $@
-
-$(patsubst %,$(STAMP_DIR)/html.%.stamp,$(ALL_LINGUAS)): $(STAMP_DIR)/html.%.stamp : $(STAMP_DIR)/profile.%.stamp $(STAMP_DIR)/css.%.stamp $(STAMP_DIR)/images.stamp
-	@echo '-- Building HTML for '$*;\
-	(cd $(top_srcdir)/html/$* && \
-	  $(XSLTPROC) $(XSLTFLAGS) --xinclude \
-	     --stringparam l10n.gentext.default.language $* \
-	     @abs_top_builddir@/stylesheets/plainhtml.xsl ../../xml/$*.xml);
-
-	@touch $@
-
-html: $(STAMP_DIR)/html.stamp 
-
-
-$(STAMP_DIR)/index.stamp: $(patsubst %,$(STAMP_DIR)/index.%.stamp,$(ALL_LINGUAS))
-	@echo '*** Generating index files ***';
-	@touch $@
-
-$(patsubst %,$(STAMP_DIR)/index.%.stamp,$(ALL_LINGUAS)): $(STAMP_DIR)/index.%.stamp : $(STAMP_DIR)/html.%.stamp
-	echo '-- Generating index for '$*; \
-	  $(XSLTPROC) $(XSLTFLAGS) \
-	     $(MAKEINDEX) \
-	       $(top_srcdir)/html/$*/gimp-xrefs.xml > html/$*/gimp-help.xml;
-
-	@touch $@
-
-index: $(STAMP_DIR)/index.stamp
-
-$(STAMP_DIR)/validate.stamp: $(patsubst %,$(STAMP_DIR)/validate.%.stamp,$(ALL_LINGUAS))
-	@if test "x$(XMLLINT)" != "x"; then \
-	  echo '*** Validating profiled XML ***'; \
-	  echo 'Log files of the validation process have been generated in the xml directory.'; \
-	  echo 'Please correct any errors before writing new content.'; \
-	else \
-	  echo '*** xmllint is missing, skipping the validation step ***'; \
-	fi
-
-	@touch $@
-
-$(patsubst %,$(STAMP_DIR)/validate.%.stamp,$(ALL_LINGUAS)): $(STAMP_DIR)/validate.%.stamp : $(STAMP_DIR)/profile.%.stamp
-	@echo -n '-- Validating XML for '$*; \
-	$(XMLLINT) --noout --valid xml/$*.xml >/dev/null 2>xml/$*-validity-errors.log; \
-	echo -n '	number of errors: '; \
-	grep "validity error" xml/$*-validity-errors.log | wc -l
-
-	@touch $@
-
-validate: $(STAMP_DIR)/validate.stamp
-
-
-lint: $(STAMP_DIR)/profile.stamp
-	@if test "x$(XMLLINT)" != "x"; then \
-	  echo '*** Checking XML for well-formed-ness ***'; \
-	  for xml in $(XML_FILES); do \
-	    $(XMLLINT) --noout $$xml || exit; \
-	  done \
-	fi
-
-
-if GIMP_HELP_BUILD
-
-dist-check-build:
-
-all-local: mkdirs validate images css html index
-
-clean: $(STAMP_DIR)/clean.stamp
-
-CLEANFILES = $(HELP_STAMPS)
+# Note that Automake already defines a "pdf" target
+pdf-local: $(foreach lang,$(ALL_LINGUAS),pdf/$(lang).pdf)
 
 else
 
-dist-check-build:
-	@echo "*** --enable-build must be specified in order to make dist"
+pdf-local:
+	@echo "*** Cannot build PDFs because dblatex(1) was not found ***"
 	@false
-
-all-local: mkdirs images css
 
 endif
 
+#### ODF output
 
-MAINTAINERCLEANFILES = $(HELP_STAMPS)
+if HAVE_DOCBOOK2ODF
 
+odf/%.odf: xml/%.xml
+	$(MKDIR_P) odf
+	$(DOCBOOK2ODF) --input-file $< --output-file $@
+
+odf: $(foreach lang,$(ALL_LINGUAS),odf/$(lang).odf)
+
+else
+
+odf:
+	@echo "*** Cannot build ODFs because docbook2odf(1) was not found ***"
+	@false
+
+endif
+
+#### HTML output
+
+if GIMP_HELP_BUILD
+
+# Main text
+html/%/index.html: xml/%.xml stylesheets/plainhtml.xsl
+	rm -rf html/$*
+	$(MKDIR_P) html/$*
+
+	$(XSLTPROC) \
+	  $(XSLTFLAGS) \
+	  --xinclude \
+	  --stringparam l10n.gentext.default.language $* \
+	  -o html/$*/ \
+	  stylesheets/plainhtml.xsl \
+	  $<
+
+	@for file in $(top_srcdir)/stylesheets/*.css; do \
+		test -f $$file || continue; \
+		echo "Adding stylesheet: $$file"; \
+		cp -fp $$file html/$*; \
+	done
+
+	@for file in $(top_srcdir)/stylesheets/$*/*.css; do \
+		test -f $$file || continue; \
+		echo "Adding language-specific stylesheet: $$file"; \
+		cp -fp $$file html/$*; \
+	done
+
+# The xrefs file is a side effect of the HTML build
+html/%/gimp-xrefs.xml: html/%/index.html
+	@true
+
+# Index
+html/%/gimp-help.xml: html/%/gimp-xrefs.xml stylesheets/makeindex.xsl
+	$(XSLTPROC) \
+	  $(XSLTFLAGS) \
+	  $(top_srcdir)/stylesheets/makeindex.xsl \
+	  $< \
+	  > $@
+
+# Note that Automake already defines an "html" target
+html-local: $(foreach lang,$(ALL_LINGUAS),html/$(lang)/index.html)
+
+index: $(foreach lang,$(ALL_LINGUAS),html/$(lang)/gimp-help.xml)
+
+else # GIMP_HELP_BUILD
+
+html-local:
+	@echo "*** Cannot build HTML because --disable-build was specified ***"
+	@false
+
+index:
+	@echo "*** Cannot build indexes because --disable-build was specified ***"
+	@false
+
+endif # GIMP_HELP_BUILD
+
+#### HTML preview
+
+preview: html index
+	rm -rf preview
+	$(MKDIR_P) preview
+	cd preview && $(LN_S) ../html/* .
+	cd preview && $(LN_S) $(abs_top_srcdir)/images .
+
+preview-%: html/%/index.html html/%/gimp-help.xml
+	rm -rf preview-$*
+	$(MKDIR_P) preview-$*
+	cd preview-$* && $(LN_S) ../html/$* .
+	cd preview-$* && $(LN_S) $(abs_top_srcdir)/images .
+
+#### Language-specific HTML tarballs for distribution
+
+tarball_prefix := gimp-help-2-html
+
+.SECONDARY: $(tarball_prefix)-%.tar
+$(tarball_prefix)-%.tar: html/%/index.html html/%/gimp-help.xml
+	rm -rf $(tarball_prefix)-$*
+	$(MKDIR_P) $(tarball_prefix)-$*
+	cd $(tarball_prefix)-$* && $(LN_S) ../html/$* .
+	cd $(tarball_prefix)-$* && $(LN_S) $(abs_top_srcdir)/images .
+	tar chf $@ --exclude .svn $(tarball_prefix)-$*
+	rm -rf $(tarball_prefix)-$*
+
+$(tarball_prefix)-%.tar.gz: $(tarball_prefix)-%.tar
+	gzip -c9 $< > $@
+
+$(tarball_prefix)-%.tar.bz2: $(tarball_prefix)-%.tar
+	bzip2 -c9 $< > $@
+
+$(tarball_prefix)-%.zip: $(tarball_prefix)-%.tar
+	tar xf $<
+	zip -9r $@ $(tarball_prefix)-$*
+	rm -rf $(tarball_prefix)-$*
+
+html-dist: \
+	$(foreach lang,$(ALL_LINGUAS), \
+		$(tarball_prefix)-$(lang).tar.gz \
+		$(tarball_prefix)-$(lang).tar.bz2 \
+		$(tarball_prefix)-$(lang).zip \
+	)
+
+#### XML validation
+
+if HAVE_XMLLINT
+
+xml/stamp-%-valid: xml/%.xml
+	$(XMLLINT) --noout --valid $< > /dev/null
+	touch $@
+
+validate: $(foreach lang,$(ALL_LINGUAS),xml/stamp-$(lang)-valid)
+
+else
+
+validate:
+	@echo "*** Cannot validate XML because xmllint(1) was not found ***"
+
+endif
+
+#### Installation
 
 install-data-local:
-	$(mkinstalldirs) $(DESTDIR)$(GIMP_DATADIR)/help
-	-cp -r html/* $(DESTDIR)$(GIMP_DATADIR)/help
+	$(MKDIR_P) $(DESTDIR)$(helpdir)
+
+	@echo "** Installing HTML:"
+	cd html && cp -a . $(DESTDIR)$(helpdir)
+
+	@echo "** Installing $(IMAGE_COUNT) images: (G=gif, J=jpg, M=mng, P=png, X=xcf)"
+	@for dir in $(IMAGE_DIRS); do \
+		$(MKDIR_P) "$(DESTDIR)$(helpdir)/$$dir" || exit; \
+	done
+	@for file in $(IMAGE_FILES); do \
+		case "$$file" in \
+		  *.gif) echo -n G ;; \
+		  *.jpg) echo -n J ;; \
+		  *.mng) echo -n M ;; \
+		  *.png) echo -n P ;; \
+		  *.xcf) echo -n X ;; \
+		esac; \
+		$(INSTALL) $(top_srcdir)/$$file $(DESTDIR)$(helpdir)/$$file || exit; \
+	done
+	@echo .
+
+uninstall-local:
+	rm -rf $(DESTDIR)$(helpdir)
+
+#### Et cetera
+
+check-local: validate
+
+if GIMP_HELP_BUILD
+all-local: validate html index
+endif
+
+dist-hook: dist-copy-images
+
+##  Note that $(IMAGE_FILES) is *huge*, and if we stick it in EXTRA_DIST
+##  we get an "Argument list too long" error. So we handle it here.
+
+dist-copy-images:
+	test -d "$(distdir)"
+	@echo "Copying $(IMAGE_COUNT) images into distdir ..."
+	@for dir in $(IMAGE_DIRS); do \
+		$(MKDIR_P) "$(distdir)/$$dir" || exit; \
+	done
+	@for file in $(IMAGE_FILES); do \
+		cp -fp $(top_srcdir)/$$file $(distdir)/$$file || exit; \
+	done
+
+clean-local:
+if GIMP_HELP_BUILD
+	rm -rf html
+endif
+	rm -rf odf
+	rm -rf pdf
+	rm -rf preview
+	rm -rf preview-*
+	rm -rf xml
+	rm -rf $(tarball_prefix)-*
 
 maintainer-clean-local:
 	rm -rf html
 
+# GNU Make, please don't delete these targets when a target that depends
+# on them fails, 'kay?
+#
+.PRECIOUS: \
+	xml/%.xml \
+	pdf/%.pdf \
+	odf/%.odf \
+	html/%/gimp-xrefs.xml \
+	html/%/gimp-help.xml \
+	html/%/index.html
 
-dist-hook:
-	rmdir $(distdir)/images/\*/\*
-	rmdir $(distdir)/images/\*
-	rmdir $(distdir)/src/\*/\*/\*
-	rmdir $(distdir)/src/\*/\*
-	rmdir $(distdir)/src/\*
+.DELETE_ON_ERROR:
+
+## EOF

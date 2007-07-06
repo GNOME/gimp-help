@@ -12,57 +12,25 @@ PROJECT="gimp-help-2"
 TEST_TYPE=-f
 FILE=src/gimp.xml
 
-AUTOCONF_REQUIRED_VERSION=2.54
-AUTOMAKE_REQUIRED_VERSION=1.6
-
 srcdir=`dirname $0`
 test -z "$srcdir" && srcdir=.
 ORIGDIR=`pwd`
 cd $srcdir
 
-check_version ()
-{
-    if expr $1 \>= $2 > /dev/null; then
-	echo "yes (version $1)"
-    else
-	echo "Too old (found version $1)!"
-	DIE=1
-    fi
-}
-
-echo
-echo "I am testing that you have the required versions of autoconf and automake ..."
-echo
-
 DIE=0
 
-echo -n "checking for autoconf >= $AUTOCONF_REQUIRED_VERSION ... "
-if (autoconf --version) < /dev/null > /dev/null 2>&1; then
-    VER=`autoconf --version \
-         | grep -iw autoconf | sed "s/.* \([0-9.]*\)[-a-z0-9]*$/\1/"`
-    check_version $VER $AUTOCONF_REQUIRED_VERSION
-else
-    echo
-    echo "  You must have autoconf installed to compile $PROJECT."
-    echo "  Download the appropriate package for your distribution,"
-    echo "  or get the source tarball at ftp://ftp.gnu.org/pub/gnu/"
-    DIE=1;
-fi
+echo -n "Looking for latest automake version ... "
+for minor in `seq 15 -1 6`; do
+    ver=1.$minor
+    if (automake-$ver --version) < /dev/null > /dev/null 2>&1; then
+        AUTOMAKE=automake-$ver
+        ACLOCAL=aclocal-$ver
+	echo $ver
+        break
+    fi
+done
 
-echo -n "checking for automake >= $AUTOMAKE_REQUIRED_VERSION ... "
-if (automake-1.9 --version) < /dev/null > /dev/null 2>&1; then
-   AUTOMAKE=automake-1.9
-   ACLOCAL=aclocal-1.9
-elif (automake-1.8 --version) < /dev/null > /dev/null 2>&1; then
-   AUTOMAKE=automake-1.8
-   ACLOCAL=aclocal-1.8
-elif (automake-1.7 --version) < /dev/null > /dev/null 2>&1; then
-   AUTOMAKE=automake-1.7
-   ACLOCAL=aclocal-1.7
-elif (automake-1.6 --version) < /dev/null > /dev/null 2>&1; then
-   AUTOMAKE=automake-1.6
-   ACLOCAL=aclocal-1.6
-else
+if [ -z "$AUTOMAKE" ]; then
     echo
     echo "  You must have automake 1.6 or newer installed to compile $PROJECT."
     echo "  Download the appropriate package for your distribution,"
@@ -70,16 +38,10 @@ else
     DIE=1
 fi
 
-if test x$AUTOMAKE != x; then
-    VER=`$AUTOMAKE --version \
-         | grep automake | sed "s/.* \([0-9.]*\)[-a-z0-9]*$/\1/"`
-    check_version $VER $AUTOMAKE_REQUIRED_VERSION
-fi
-
 if test "$DIE" -eq 1; then
     echo
     echo "Please install/upgrade the missing tools and call me again."
-    echo	
+    echo
     exit 1
 fi
 
@@ -108,7 +70,7 @@ fi
 if test -z "$ACLOCAL_FLAGS"; then
     acdir=`$ACLOCAL --print-ac-dir`
     m4list="pkg.m4"
- 
+
     for file in $m4list
     do
         if [ ! -f "$acdir/$file" ]; then
@@ -132,6 +94,8 @@ fi
 
 $AUTOMAKE --add-missing || exit 1
 autoconf || exit 1
+
+rm -rf autom4te.cache
 
 cd $ORIGDIR
 

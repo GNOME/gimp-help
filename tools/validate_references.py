@@ -20,9 +20,9 @@
 #
 try:
     from lxml import etree
-    have_lxml = True
+    HAVE_LXML = True
 except ImportError:
-    have_lxml = False
+    HAVE_LXML = False
 
 try:
     from xml import xpath
@@ -37,7 +37,7 @@ import getopt
 import re
 
 # xpath expressions of filereferences in a DocBook XML file
-refs_to_test = ['//imagedata[@fileref]','//graphic[@fileref]']
+REFERENCESTOTEST = ['//imagedata[@fileref]', '//graphic[@fileref]']
 
 # check only xml files
 xmlfile_exp = re.compile('[\w-]*.xml$')
@@ -92,7 +92,7 @@ class LxmlValidator(XMLReferenceValidator):
        
        >>> str = '<sect1><imagedata '\
                  'fileref="../images/toolbox/toolbox-flip.png" /></sect1>'
-       >>> val = LxmlValidator(refs_to_test[0], xmlstr=str)
+       >>> val = LxmlValidator(REFERENCESTOTEST[0], xmlstr=str)
        >>> val.validate_imagepath_references()
        []
 
@@ -100,13 +100,13 @@ class LxmlValidator(XMLReferenceValidator):
        error.
        >>> str = '<sect1><imagedata '\
                  'fileref="../foobar/toolbox/toolbox-flip.png" /></sect1>'
-       >>> val = LxmlValidator(refs_to_test[0], xmlstr=str)
+       >>> val = LxmlValidator(REFERENCESTOTEST[0], xmlstr=str)
        >>> val.validate_imagepath_references()
        [(0, './foobar/toolbox/toolbox-flip.png')]
       
        >>> str = '<sect2><graphic '\
                  'fileref="../foobar/math/dot-for-dot.png" /></sect2>'
-       >>> val = LxmlValidator(refs_to_test[1], xmlstr=str)
+       >>> val = LxmlValidator(REFERENCESTOTEST[1], xmlstr=str)
        >>> val.validate_imagepath_references()
        [(0, './foobar/math/dot-for-dot.png')]
     """
@@ -145,7 +145,7 @@ class LibXMLValidator(XMLReferenceValidator):
        validates it.
        >>> str = '<sect1><imagedata '\
                  'fileref="../images/toolbox/toolbox-flip.png" /></sect1>'
-       >>> val = LibXMLValidator(refs_to_test[0], xmlstr=str)
+       >>> val = LibXMLValidator(REFERENCESTOTEST[0], xmlstr=str)
        >>> val.validate_imagepath_references()
        []
 
@@ -153,13 +153,13 @@ class LibXMLValidator(XMLReferenceValidator):
        error.
        >>> str = '<sect1><imagedata '\
                  'fileref="../foobar/toolbox/toolbox-flip.png" /></sect1>'
-       >>> val = LibXMLValidator(refs_to_test[0], xmlstr=str)
+       >>> val = LibXMLValidator(REFERENCESTOTEST[0], xmlstr=str)
        >>> val.validate_imagepath_references()
        [(0, './foobar/toolbox/toolbox-flip.png')]
         
        >>> str = '<sect2><graphic '\
                  'fileref="../foobar/math/dot-for-dot.png" /></sect2>'
-       >>> val = LibXMLValidator(refs_to_test[1], xmlstr=str)
+       >>> val = LibXMLValidator(REFERENCESTOTEST[1], xmlstr=str)
        >>> val.validate_imagepath_references()
        [(0, './foobar/math/dot-for-dot.png')]
     """
@@ -293,10 +293,10 @@ class FileLookup(object):
                     continue
 
                 # puzzle together the relative filepath
-                for xpathexpr in refs_to_test:
+                for xpathexpr in REFERENCESTOTEST:
                     xml_filepath = os.path.join(root, file)
                     
-                    if have_lxml:
+                    if HAVE_LXML:
                         val = LxmlValidator(xpathexpr, 
                                             xml_filepath)
                     else:
@@ -347,30 +347,30 @@ def main():
             absolute = 1
         if o == "-f":
             result = []
-            for xpath_expr in refs_to_test:
-                if have_lxml:
+            for xpath_expr in REFERENCESTOTEST:
+                if HAVE_LXML:
                     val = LxmlValidator(xpath_expr, a)
                 elif have_xml:
                     val = LibXMLValidator(xpath_expr, a)
                 else:
                     sys.exit(1)
                 result += val.validate_imagepath_references()
-            
+
             for r in result:
                 print "%s invalid: %s" %(r)
             sys.exit(1)
-        
+
         if o == "-x":
             gimp_help_root = a
         if o == "-i":
-            fl = FileLookup(verbose, absolute, gimp_help_root)
-            fl.validate_refs()
-            fl.validate_imagefiles()
+            filelookup = FileLookup(verbose, absolute, gimp_help_root)
+            filelookup.validate_refs()
+            filelookup.validate_imagefiles()
             sys.exit(1)
-    
-    fl = FileLookup(verbose, absolute, gimp_help_root)
-    fl.validate_refs()
-    fl.print_broken_imagefilepaths()
+
+    filelookup = FileLookup(verbose, absolute, gimp_help_root)
+    filelookup.validate_refs()
+    filelookup.print_broken_imagefilepaths()
     sys.exit(1)
 
 def usage():

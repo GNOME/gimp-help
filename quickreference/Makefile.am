@@ -1,70 +1,65 @@
 ## Process this file with automake to produce Makefile.in
 
+QUICKREFERENCE_ALL_LINGUAS = de en fr it ru
+
 PO_FILES = \
-	$(wildcard $(top_srcdir)/quickreference/po/*.po)
-
-XML_FILES = $(wildcard xml/*.xml)
-
-STAMP_DIR = stamps
-
-EXTRA_DIST = \
-	gimp-keys.xml
+	po/de.po	\
+	po/fr.po	\
+	po/it.po	\
+	po/ru.po
 
 XSL_FILES = \
-        $(top_srcdir)/stylesheets/keys-svg.xsl	\
-        $(top_srcdir)/stylesheets/keys-docbook.xsl
+	stylesheets/keys-svg.xsl	\
+	stylesheets/keys-docbook.xsl
 
-FORMATS = xml svg docbook
+EXTRA_DIST = \
+	gimp-keys.xml \
+	$(PO_FILES) \
+	$(XSL_FILES)
 
-$(STAMP_DIR)/clean.stamp: Makefile
-	@echo '*** Creating fresh stamps directory ***'
-	@rm -rf $(STAMP_DIR); $(mkinstalldirs) $(STAMP_DIR)
-	@rm -rf $(FORMATS)
+if HAVE_XML2PO
 
-	@touch $@
+xml/gimp-keys-%.xml: po/%.po gimp-keys.xml
+	$(MKDIR_P) xml
+	$(XML2PO) -p $< $(srcdir)/gimp-keys.xml > $@
 
-clean: $(STAMP_DIR)/clean.stamp
+# English is a special case
+#
+xml/gimp-keys-en.xml: po/gimp-keys.pot gimp-keys.xml
+	$(MKDIR_P) xml
+	$(XML2PO) -p $< $(srcdir)/gimp-keys.xml > $@
 
+endif
 
-$(STAMP_DIR)/mkdirs.stamp: Makefile
-	@echo '*** Creating directories ***'
-	$(mkinstalldirs) $(STAMP_DIR)
-	@for format in $(FORMATS); do \
-	 $(mkinstalldirs) $$format; \
-	done;
+svg/gimp-keys-%.svg: xml/gimp-keys-%.xml stylesheets/keys-svg.xsl
+	$(MKDIR_P) svg
+	$(XSLTPROC) \
+	  $(srcdir)/stylesheets/keys-svg.xsl \
+	  $< \
+	  > $@
 
-	@touch $@
+svg: $(foreach lang,$(QUICKREFERENCE_ALL_LINGUAS),svg/gimp-keys-$(lang).svg)
 
-mkdirs: $(STAMP_DIR)/mkdirs.stamp
+docbook/gimp-keys-%.xml: xml/gimp-keys-%.xml stylesheets/keys-docbook.xsl
+	$(MKDIR_P) docbook
+	$(XSLTPROC) \
+	  $(srcdir)/stylesheets/keys-docbook.xsl \
+	  $< \
+	  > $@
 
+docbook: $(foreach lang,$(QUICKREFERENCE_ALL_LINGUAS),docbook/gimp-keys-$(lang).xml)
 
-$(STAMP_DIR)/profile.stamp: mkdirs
-	@echo '*** Profiling po files ***'
-	for po in $(PO_FILES); do \
-	  $(XML2PO) -p $$po gimp-keys.xml > xml/gimp-keys-`basename $$po | sed s/\.po$$//`.xml; \
-	done;
+if GIMP_HELP_BUILD
+if HAVE_XML2PO
+all-local: svg docbook
+endif
+endif
 
-	@touch $@
+clean-local:
+	rm -rf docbook
+	rm -rf svg
+	rm -rf xml
 
-profile: $(STAMP_DIR)/profile.stamp
+.DELETE_ON_ERROR:
 
-
-$(STAMP_DIR)/svg.stamp: profile
-	echo '*** Creating quickreference SVGs ***'; \
-	for xml in $(XML_FILES); do \
-	  $(XSLTPROC) stylesheets/keys-svg.xsl $$xml > svg/`basename $$xml | sed s/\.xml/\.svg/`; \
-	done;
-
-	@touch $@
-
-svg: $(STAMP_DIR)/svg.stamp
-
-$(STAMP_DIR)/docbook.stamp: profile
-	echo '*** Creating quickreference as DocBook/XML ***'; \
-	for xml in $(XML_FILES); do \
-	  $(XSLTPROC) stylesheets/keys-docbook.xsl $$xml > docbook/`basename $$xml`;\
-	 done;
-
-	@touch $@
-
-docbook: $(STAMP_DIR)/docbook.stamp
+## EOF
