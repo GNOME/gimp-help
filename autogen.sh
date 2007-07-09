@@ -20,7 +20,7 @@ cd $srcdir
 DIE=0
 
 echo -n "Looking for latest automake version ... "
-for minor in `seq 15 -1 6`; do
+for minor in 15 14 13 12 11 10 9 8 7 6 ; do
     ver=1.$minor
     if (automake-$ver --version) < /dev/null > /dev/null 2>&1; then
         AUTOMAKE=automake-$ver
