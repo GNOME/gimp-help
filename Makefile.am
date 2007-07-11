@@ -48,7 +48,7 @@ helpdir = $(gimpdatadir)/help
 #### XML profiling
 
 xml/%.xml: src/gimp.xml stylesheets/profile.xsl $(filter-out $$@, $(XML_FILES))
-	$(MKDIR_P) xml
+	$(mkdir_p) xml
 
 	$(XSLTPROC) \
 	  $(XSLTFLAGS) \
@@ -75,7 +75,7 @@ endif
 if HAVE_DBLATEX
 
 pdf/%.pdf: xml/%.xml stylesheets/plainprint.xsl
-	$(MKDIR_P) pdf
+	$(mkdir_p) pdf
 	dblatex -p $(top_srcdir)/stylesheets/plainprint.xsl $< -o $@
 
 # Note that Automake already defines a "pdf" target
@@ -94,7 +94,7 @@ endif
 if HAVE_DOCBOOK2ODF
 
 odf/%.odf: xml/%.xml
-	$(MKDIR_P) odf
+	$(mkdir_p) odf
 	$(DOCBOOK2ODF) --input-file $< --output-file $@
 
 odf: $(foreach lang,$(ALL_LINGUAS),odf/$(lang).odf)
@@ -114,7 +114,7 @@ if GIMP_HELP_BUILD
 # Main text
 html/%/index.html: xml/%.xml stylesheets/plainhtml.xsl
 	rm -rf html/$*
-	$(MKDIR_P) html/$*
+	$(mkdir_p) html/$*
 
 	$(XSLTPROC) \
 	  $(XSLTFLAGS) \
@@ -138,7 +138,7 @@ html/%/index.html: xml/%.xml stylesheets/plainhtml.xsl
 
 # The xrefs file is a side effect of the HTML build
 html/%/gimp-xrefs.xml: html/%/index.html
-	@true
+	@touch $@
 
 # Index
 html/%/gimp-help.xml: html/%/gimp-xrefs.xml stylesheets/makeindex.xsl
@@ -169,13 +169,13 @@ endif # GIMP_HELP_BUILD
 
 preview: html index
 	rm -rf preview
-	$(MKDIR_P) preview
+	$(mkdir_p) preview
 	cd preview && $(LN_S) ../html/* .
 	cd preview && $(LN_S) $(abs_top_srcdir)/images .
 
 preview-%: html/%/index.html html/%/gimp-help.xml
 	rm -rf preview-$*
-	$(MKDIR_P) preview-$*
+	$(mkdir_p) preview-$*
 	cd preview-$* && $(LN_S) ../html/$* .
 	cd preview-$* && $(LN_S) $(abs_top_srcdir)/images .
 
@@ -186,7 +186,7 @@ tarball_prefix := gimp-help-2-html
 .SECONDARY: $(tarball_prefix)-%.tar
 $(tarball_prefix)-%.tar: html/%/index.html html/%/gimp-help.xml
 	rm -rf $(tarball_prefix)-$*
-	$(MKDIR_P) $(tarball_prefix)-$*
+	$(mkdir_p) $(tarball_prefix)-$*
 	cd $(tarball_prefix)-$* && $(LN_S) ../html/$* .
 	cd $(tarball_prefix)-$* && $(LN_S) $(abs_top_srcdir)/images .
 	tar chf $@ --exclude .svn $(tarball_prefix)-$*
@@ -230,14 +230,14 @@ endif
 #### Installation
 
 install-data-local:
-	$(MKDIR_P) $(DESTDIR)$(helpdir)
+	$(mkdir_p) $(DESTDIR)$(helpdir)
 
 	@echo "** Installing HTML:"
 	cd html && cp -a . $(DESTDIR)$(helpdir)
 
 	@echo "** Installing $(IMAGE_COUNT) images: (G=gif, J=jpg, M=mng, P=png, X=xcf)"
 	@for dir in $(IMAGE_DIRS); do \
-		$(MKDIR_P) "$(DESTDIR)$(helpdir)/$$dir" || exit; \
+		$(mkdir_p) "$(DESTDIR)$(helpdir)/$$dir" || exit; \
 	done
 	@for file in $(IMAGE_FILES); do \
 		case "$$file" in \
@@ -271,7 +271,7 @@ dist-copy-images:
 	test -d "$(distdir)"
 	@echo "Copying $(IMAGE_COUNT) images into distdir ..."
 	@for dir in $(IMAGE_DIRS); do \
-		$(MKDIR_P) "$(distdir)/$$dir" || exit; \
+		$(mkdir_p) "$(distdir)/$$dir" || exit; \
 	done
 	@for file in $(IMAGE_FILES); do \
 		cp -fp $(top_srcdir)/$$file $(distdir)/$$file || exit; \
