@@ -4,13 +4,14 @@
                 "http://www.docbook.org/xml/4.3/docbookx.dtd">
 
 <!-- section history:
+  2007-07-09 Added Spanish translation by AntI
   2007-04-06 KoSt: added 'no'
   2006-11-12 added example by j.h
   2005-12-07 replaced <simplesect> by <sect3> by lexa
   2005-08-26 de added by axel.wernicke
 -->
-<sect2 id="plug-in-semiflatten" lang="en;cs;de;fr;it;no;ru;zh_CN">
-  <sect2info lang="en;de;fr" role="cvs">
+<sect2 id="plug-in-semiflatten" lang="en;cs;de;es;fr;it;no;ru;zh_CN">
+  <sect2info lang="en;de;es;fr" role="cvs">
     <revhistory>
       <revision lang="en">
         <revnumber>$Revision$</revnumber>
@@ -21,6 +22,11 @@
         <revnumber>$Revision$</revnumber>
         <date>2006-11-04</date>
         <authorinitials>lexa</authorinitials>
+      </revision>
+      <revision lang="es">
+        <revnumber>$Revision$</revnumber>
+        <date>2007-07-09</date>
+        <authorinitials>AntI</authorinitials>
       </revision>
       <revision lang="fr">
         <revnumber>$Revision$</revnumber>
@@ -34,6 +40,7 @@
     <phrase lang="en">Semi-Flatten</phrase>
     <phrase lang="cs">Částečně zploštit</phrase>
     <phrase lang="de">Semi-Flatten</phrase>
+    <phrase lang="es">Semi-Aplanar</phrase>
     <phrase lang="fr">Aplatir à moitié</phrase>
     <phrase lang="it">Semi-appiattito</phrase>
     <phrase lang="no">Halvutflating</phrase>
@@ -59,6 +66,13 @@
     <secondary>Farben</secondary>
   </indexterm>
   <indexterm lang="de"><primary>Semi-Flatten</primary></indexterm>
+
+  <indexterm lang="es">
+    <primary>Filtros</primary>
+    <secondary>Colores</secondary>
+    <tertiary>Semi-Aplanar</tertiary>
+  </indexterm>
+  <indexterm lang="es"><primary>Semi-Aplanar</primary></indexterm>
 
   <indexterm lang="fr">
     <primary>Filtres</primary>
@@ -97,6 +111,7 @@
       <phrase lang="en">Overview</phrase>
       <phrase lang="cs">Přehled</phrase>
       <phrase lang="de">Wirkungsweise</phrase>
+      <phrase lang="es">Generalidades</phrase>
       <phrase lang="fr">Généralités</phrase>
       <phrase lang="it">Panoramica</phrase>
       <phrase lang="no">Oversyn</phrase>
@@ -192,6 +207,41 @@
       Die Ausführung des Filters wird die aktive Hintergrundfarbe und die
       Farbe des Bildes proportional entsprechend dem Transparenzwert des
       Pixels mischen und das Antialiasing wieder herstellen.
+    </para>
+
+    <para lang="es">
+      Puede encontrar este filtro en
+      <menuchoice>
+        <guimenu>Filt<accel>r</accel>os</guimenu>
+        <guisubmenu><accel>C</accel>olores</guisubmenu>
+        <guimenuitem>Semi-Aplanar</guimenuitem>
+      </menuchoice>
+      Esta disponible si su imagen tiene un canal alfa
+     (&lt;Imagen&gt;Capas/Transparencia/Añadir canal alfa).
+      De otra manera, estará desactivada.
+    </para>
+    <para lang="es">
+      El filtro semi-aplanar ayuda a aquellos que necesitan una solución para
+      el antidentado en imágenes indexadas con transparencia. El formato
+      indexado GIF soporta transparencia completa (0 o 255 de valor de alfa),
+      pero no semitansparencia (de 1 a 254): los píxeles semitransparentes se
+      transformarán en no transparentes o completamente transparentes,
+      arruinando el antidentado aplicado al logo que quiere poner en su
+      página web.
+    </para>
+    <para lang="es">
+      Antes de aplicar el filtro, es esencial conocer el color de fondo de su
+      página web. Use el recogecolor para determinar el color exacto que
+      aparece en color de fondo en la caja de herramientas. Invierta los
+      colores FG/BG para que el color BG sea el mismo que el color de fondo
+      de su página web.
+    </para>
+    <para lang="es">
+      El proceso semi-aplanar combinará el color FG al color de la capa
+      (logo), proporcionalmente, al correspondiente valor alfa, y
+      reconstruirá el antidentado correcto. Los píxeles completamente
+      transparentes no tomarán el color. Los píxeles muy transparentes
+      tomarán un poco del color y los opacos tomarán mucho color.
     </para>
 
     <para lang="fr">
@@ -378,19 +428,22 @@
   <sect3 lang="no"> <!-- I think it's simpler for the user to tell this -->
     <title>
       <phrase lang="en;fr">Options</phrase>
+      <phrase lang="es">Opciones</phrase>
       <phrase lang="it">Opzioni</phrase>
       <phrase lang="no">Innstillingar</phrase>
       <phrase lang="ru">Параметры</phrase>
     </title>
     <para lang="en">This filter has no options.</para>
     <!--para lang="de">SKIPPED</para-->
+    <para lang="es">Este filtro no tiene opciones.</para>
     <para lang="no">Filteret har ingen innstillingar</para>
   </sect3>
 
-  <sect3 lang="en;de;fr;no">
+  <sect3 lang="en;de;es;fr;no">
     <title>
       <phrase lang="en">Example</phrase>
       <phrase lang="de">Beispiel</phrase>
+      <phrase lang="es">Ejemplo</phrase>
       <phrase lang="fr">Exemple</phrase>
       <phrase lang="no">Eksempel</phrase>
     </title>
@@ -402,6 +455,11 @@
         </phrase>
         <phrase lang="de">
           Anwendungsbeispiel für <quote>Semi-Flatten</quote>
+        </phrase>
+        <phrase lang="es">
+          El color de fondo de la caja de herramientas (rosa) y una imagen
+          con los bordes difuminados en un fondo transparente, con un nivel
+          de zoom de 800%.
         </phrase>
         <phrase lang="fr">
           Couleur d'Arrière-plan (rose) de la Boîte à outils et une image
@@ -441,6 +499,10 @@
           Result, in GIF format, after applying Semi-flatten filter.
         </phrase>
         <phrase lang="de">Nach Anwendung des Semi-Flatten-Filters</phrase>
+        <phrase lang="es">
+          Resultado, en formato GIF, después de aplicar el filtro
+          semi-aplanar.
+        </phrase>
         <phrase lang="fr">
           Résultat, au format GIF, après application du filtre Aplatir à
           moitié.
@@ -469,6 +531,12 @@
             Pixel sind entsprechend ihrem Alphawert (also ihrer Transparenz)
             rosa gefärbt. Auf einer Seite mit rosa Hintergrund wird sich
             dieses Bild gut einfügen.
+          </para>
+          <para lang="es">
+            Se preserva la transparencia completa. Los píxeles
+            semitransparentes se colorean con rosa según su transparencia
+            (valor alfa). Esta imagen se fundirá bien con el fondo rosado de
+            la nueva página.
           </para>
           <para lang="fr">
             La transparence complète est préservée. Les pixels
