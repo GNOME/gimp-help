@@ -20,19 +20,19 @@ EXTRA_DIST = \
 if HAVE_XML2PO
 
 xml/gimp-keys-%.xml: po/%.po gimp-keys.xml
-	$(MKDIR_P) xml
+	$(mkdir_p) xml
 	$(XML2PO) -p $< $(srcdir)/gimp-keys.xml > $@
 
 # English is a special case
 #
 xml/gimp-keys-en.xml: po/gimp-keys.pot gimp-keys.xml
-	$(MKDIR_P) xml
+	$(mkdir_p) xml
 	$(XML2PO) -p $< $(srcdir)/gimp-keys.xml > $@
 
 endif
 
 svg/gimp-keys-%.svg: xml/gimp-keys-%.xml stylesheets/keys-svg.xsl
-	$(MKDIR_P) svg
+	$(mkdir_p) svg
 	$(XSLTPROC) \
 	  $(srcdir)/stylesheets/keys-svg.xsl \
 	  $< \
@@ -41,7 +41,7 @@ svg/gimp-keys-%.svg: xml/gimp-keys-%.xml stylesheets/keys-svg.xsl
 svg: $(foreach lang,$(QUICKREFERENCE_ALL_LINGUAS),svg/gimp-keys-$(lang).svg)
 
 docbook/gimp-keys-%.xml: xml/gimp-keys-%.xml stylesheets/keys-docbook.xsl
-	$(MKDIR_P) docbook
+	$(mkdir_p) docbook
 	$(XSLTPROC) \
 	  $(srcdir)/stylesheets/keys-docbook.xsl \
 	  $< \
