@@ -47,7 +47,7 @@ helpdir = $(gimpdatadir)/help
 
 #### XML profiling
 
-xml/%.xml: src/gimp.xml stylesheets/profile.xsl $(filter-out $$@, $(XML_FILES))
+xml/%.xml: src/gimp.xml stylesheets/profile.xsl $(filter-out src/gimp.xml, $(XML_FILES))
 	$(mkdir_p) xml
 
 	$(XSLTPROC) \
