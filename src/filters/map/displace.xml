@@ -4,6 +4,7 @@
                 "http://www.docbook.org/xml/4.3/docbookx.dtd">
 
 <!-- section history:
+  2007-07-23 ude: new section and image for displacement details
   2007-07-04 kost: ude's fix to 'no'
   2007-07-04 ude: added polar mode for GIMP 2.4 (disabled)
   2007-07-02 ude: fixed description of displacement calculation
@@ -17,12 +18,12 @@
      <revhistory>
        <revision lang="en">
          <revnumber>$Revision$</revnumber>
-         <date>2007-07-04</date>
+         <date>2007-07-23</date>
          <authorinitials>ude</authorinitials>
        </revision>
        <revision lang="de">
          <revnumber>$Revision$</revnumber>
-         <date>2007-07-04</date>
+         <date>2007-07-23</date>
          <authorinitials>ude</authorinitials>
        </revision>
        <revision lang="fr">
@@ -105,44 +106,42 @@
       </title>
 
       <mediaobject>
-        <imageobject>
+        <imageobject lang="en;de">
+          <imagedata fileref="../images/filters/examples/map-displace7.png"
+            format="PNG" />
+        </imageobject>
+        <!--TODO fr it ru: replace this example; pixels corresponding to 128
+          *will* be displaced, but not with coefficient 30.
+        -->
+        <imageobject lang="fr;it;no;ru">
           <imagedata fileref="../images/filters/examples/map-displace4.png"
                     format="PNG" />
         </imageobject>
 
         <caption>
-          <!--TODO en de fr it ru: change this (irritating) example(?)
-            pixels corr. to 128 *will* be displaced, but not with coefficient 30
-          -->
-          <para lang="en">
+          <para lang="en"><!--changed 2007-07-23-->
             X displacement coefficient is 30 (with a negative coefficient
-            displacement would be inverse). Vacated pixels are black.
-            Displacement map has three grey stripes, from top to bottom:
-            medium gray (128), light gray 200), dark gray (60).
+            displacement would be inverse). Vacated pixels are black. The
+            displacement map has four grey stripes with values of 210, 160,
+            110, and 60, respectively.
           </para>
-          <para lang="en"><!--changed 2007-07-02, 2007-07-04-->
-            You can see that the image area corresponding to medium gray in
-            map was not displaced. The image area corresponding to light gray
-            (&gt;128) was displaced 17 pixels to the left. The image area
-            corresponding to dark gray (&lt;127) was displaced -15 pixels, to
-            the right. For pixels corresponding to medium gray (128) the
-            displacement coefficient is too small to cause any displacement.
+          <para lang="en"><!--changed 2007-07-23-->
+            The image areas corresponding to light gray (&ge;128) were
+            displaced 19 and 8 pixels to the left. The image areas
+            corresponding to dark gray (&le;127) were displaced 4 and 15
+            pixels to the right.
           </para>
 
           <para lang="de">
             Die X-Verschiebung ist im Beispiel auf 30.0 eingestellt. Die
-            freien Pixel sind schwarz. Die Verschiebungskarte hat drei graue
-            Streifen, von oben nach unten: Mittelgrau (128), Lichtgrau (200)
-            sowie Dunkelgrau (60).
+            freien Pixel sind schwarz. Die Verschiebungskarte hat vier graue
+            Streifen mit Helligkeit 210, 160, 110 bzw. 60.
           </para>
           <para lang="de">
-            Sie können erkennen, dass die Bildbereiche, die zu dem
-            mittelgrauen Bereich gehören, nicht verschoben wurden. Die
-            Bildbereiche, welche Lichtgrau zugeordnet sind (&gt;128), wurden
-            um 17 Pixel nach links verschoben. Die Bildbereiche, welche
-            Dunkelgrau zugeordnet sind (&lt;127), wurden um 15 Pixel nach
-            rechts verschoben. Für die mittelgrauen Pixel (128) ist der
-            Verschiebungskoeffizient zu gering für eine Verschiebung.
+            Die Bildbereiche, welche einem hellen Grau (&ge;128) zugeordnet
+            sind, wurden um 19 bzw. 8 Pixel nach links verschoben. Die
+            Bildbereiche, die einem dunkleren Grau (&le;127) zugeordnet sind,
+            wurden um 4 bzw. 15 Pixel nach rechts verschoben.
           </para>
 
           <para lang="fr">
@@ -170,8 +169,8 @@
           <para lang="it">
             You can see that the image area corresponding to medium gray in
             map was not displaced. The image area corresponding to light gray
-            (&gt;128) was displaced 17 pixels to the left. The image area
-            corresponding to dark gray (&lt;128) was displaced -15 pixels, to
+            (&ge;128) was displaced 17 pixels to the left. The image area
+            corresponding to dark gray (&le;127) was displaced -15 pixels, to
             the right.
           </para>
 
@@ -198,8 +197,8 @@
           <para lang="ru">
             Можно видеть, что области, соответствующие среднему серому на
             карте, не заместятся. Области, соответствующие светло-серому
-            (&gt;128) сместились на 17 точек влево. Области, соответствующие
-            тёмно-серому (&lt;128) сместились на 15 точек вправо.
+            (&ge;128) сместились на 17 точек влево. Области, соответствующие
+            тёмно-серому (&le;127) сместились на 15 точек вправо.
           </para>
         </caption>
       </mediaobject>
@@ -257,8 +256,8 @@
       the amounts specified in X and Y Displacement multiplied by the
       intensity of the corresponding pixel in the 'displace map' drawables.
       <emphasis role="bold">
-        Both X and Y displace maps must be gray-scale images and have the same
-        size as the drawable
+        Both X and Y displace maps should be gray-scale images and have the
+        same size as the drawable
       </emphasis>. This filter allows interesting distortion effects.
     </para>
 
@@ -270,7 +269,7 @@
       <guilabel>Y-Verschiebung</guilabel> multipliziert mit der Helligkeit des
       zugeordneten Pixels in der <quote>Verschiebungs-Karte</quote>. Bitte
       beachten Sie, dass die beiden Verschiebungs-Karten Graustufenbilder sein
-      müssen mit der gleichen Größe wie das zu verändernde Bild.
+      sollten mit der gleichen Größe wie das zu verändernde Bild.
     </para>
 
     <para lang="fr">
@@ -547,7 +546,10 @@
             role="bold">displacement = (intensity x coefficient) </emphasis>
             formula which gives the pixel actual displacement according to the
             scaled intensity<footnote>
-              <para>scaled intensity = (intensity - 127.5) / 127.5</para>
+              <para>
+                Scaled intensity = (intensity - 127.5) / 127.5; see section
+                <quote>displacement calculation</quote>.
+              </para>
             </footnote>
             of the corresponding pixel in map, modulated by the coefficient
             you enter. Introducing intensity into formula is important: this
@@ -571,10 +573,13 @@
             absolute Entfernungen, sondern um Faktoren. Die eigentliche
             Verschiebung berechnet sich für jeden Bildpunkt als <emphasis
             role="bold">Entfernung = (Intensität * Koeffizient)</emphasis>,
-            wobei die Intensität die skalierte Helligkeit<footnote>
-              <para>Skalierte Intensität = (Intensität - 127,5) / 127,5</para>
+            mit der <quote>normierten Intensität</quote><footnote>
+              <para>
+                Normierte Intensität = (Intensität - 127,5) / 127,5; siehe
+                Abschnitt <quote>Verschiebung berechnen</quote>.
+              </para>
             </footnote>
-            des entsprechenden Verschiebungspixels ist. Die Intensität ist ein
+            des entsprechenden Verschiebungspixels. Die Intensität ist ein
             wichtiger Bestandteil der Berechnung. Sie ermöglicht die
             zunehmende Verschiebung durch die Verwendung eines Verlaufes als
             Karte.
@@ -732,10 +737,6 @@
             possible to use RGB images, but color luminosity is used making
             result prevision difficult. Map may be different in horizontal and
             vertical directions.
-          </para>
-          <para lang="en">
-            Map gradient must be horizontal for a vertical displacement, and
-            vertical for a horizontal displacement.
           </para>
 
           <para lang="de">
@@ -1300,7 +1301,10 @@
             in a <emphasis role="bold">displacement = (intensity x
             coefficient) </emphasis> formula, which gives the pixel actual
             displacement according to the scaled intensity<footnote>
-              <para>scaled intensity = (intensity - 127.5) / 127.5</para>
+              <para>
+                Scaled intensity = (intensity - 127.5) / 127.5; see section
+                <quote>displacement calculation</quote>.
+              </para>
             </footnote>
             of the corresponding pixel in map, modulated by the coefficient
             you enter. Introducing intensity into formula is important: this
@@ -1321,10 +1325,13 @@
             absolute Entfernungen, sondern um Faktoren. Die eigentliche
             Verschiebung berechnet sich für jeden Bildpunkt als <emphasis
             role="bold">Entfernung = (Intensität * Koeffizient)</emphasis>,
-            wobei die Intensität die skalierte Helligkeit<footnote>
-              <para>Skalierte Intensität = (Intensität - 127,5) / 127,5</para>
+            mit der <quote>normierten Intensität</quote><footnote>
+              <para>
+                Normierte Intensität = (Intensität - 127,5) / 127,5; siehe
+                Abschnitt <quote>Verschiebung berechnen</quote>.
+              </para>
             </footnote>
-            des entsprechenden Verschiebungspixels ist. Die Intensität ist ein
+            des entsprechenden Verschiebungspixels. Die Intensität ist ein
             wichtiger Bestandteil der Berechnung. Sie ermöglicht die
             zunehmende Verschiebung durch die Verwendung eines Verlaufes als
             Karte.
@@ -1821,4 +1828,115 @@
     </tip>
 
   </sect3>
+
+  <!-- TODO fr it no ru: translate new content: displacement details -->
+  <sect3 id="plug-in-displace-calculation" lang="en;de">
+    <title>
+      <phrase lang="en">Displacement Calculation</phrase>
+      <phrase lang="de">Die Verschiebung berechnen</phrase>
+    </title>
+
+    <para lang="en">
+      The following section will show you how to calculate the amount of
+      displacement, if you are interested in these details. If you don't want
+      to know it, you can safely omit this section.
+    </para>
+    <para lang="de">
+      Für die an Details interessierten Nutzer wird im nachfolgenden Abschnitt
+      gezeigt, wie die Verschiebung berechnet wird. Sie können diesen
+      Abschnitt aber auch unbesorgt auslassen.
+    </para>
+
+    <para lang="en">
+      The overview example showed the X displacement using a coefficient of
+      30.0: 19, 8, 4, or 15 pixels, depending on the grey level of the
+      displacement map's color.
+    </para>
+    <para lang="en">
+      Why just these amounts? That's easy:
+    </para>
+
+    <para lang="de">
+      Im Einführungsbeispiel konnten Sie sehen, wie die Pixel mit einem
+      Verschiebungskoeffizienten von 30.0 abhängig von der Helligkeit der
+      Verschiebungkarte um 19, 8, 4 bzw. 15 Pixel verschoben wurden.
+    </para>
+    <para lang="de">
+      Wie kommen diese Werte zustande? Ganz einfach:
+    </para>
+
+    <informalequation>
+      <alt>30.0 * (I - 127.5) / 127.5 = D</alt>
+      <!-- 1 image containing 4 equations - maybe not the best way -->
+      <graphic fileref="../images/math/displace4.png" format="PNG" />
+    </informalequation>
+
+    <para lang="en">
+      If you check these equations, you will notice that the above values are
+      not the exact results (using non-integers, that's not surprising). So
+      the results were rounded to the nearest integer and then the pixels were
+      displaced by a whole-numbered amount? No. Every pixel is displaced
+      exactly by the calculated amount; a <quote>displacement by a fractional
+      amount</quote> is realized by interpolation. A closer look at the
+      example image will show it:
+    </para>
+    <para lang="de">
+      Wenn Sie einmal nachrechnen, werden Sie allerdings feststellen, dass die
+      Ergebnisse nicht ganz genau sind (nicht sehr überraschend, wenn man mit
+      <quote>krummen</quote> Zahlen rechnet). Die exakten Ergebnisse wurden
+      also auf eine ganze Zahl gerundet und die Pixel um diesen ganzzahligen
+      Betrag verschoben? Nein. Jedes Pixel wird tatsächlich genau um den
+      berechneten Betrag verschoben, wobei eine <quote>Verschiebung um einen
+      Bruchteil</quote> durch Interpolation realisiert wird. Ein genauerer
+      Blick auf das einführende Beispiel zeigt es Ihnen:
+    </para>
+
+    <figure>
+      <title>
+        <phrase lang="en">A closer look at the displacement example</phrase>
+        <phrase lang="de">
+          <quote>Das Verschieben</quote>-Beispiel genauer betrachtet
+        </phrase>
+      </title>
+
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/map-displace8.png"
+            format="PNG" />
+        </imageobject>
+        <caption>
+          <para lang="en">A small area zoomed in by 800 percent.</para>
+          <para lang="de">
+            Rechts: Ein Ausschnitt bei 8facher Vergrößerung (Zoom = 800%).
+          </para>
+          </caption>
+      </mediaobject>
+    </figure>
+
+    <para lang="en">
+      The displacement causes small (one pixel wide) areas of intermediate
+      colors at the edges of plain color areas. E.g., the black area (zoomed
+      in image) is caused by a displacement of -4.12, so the intermediate
+      color is 12% black and 88% gold.
+    </para>
+    <para lang="en">
+      So if you select a displacement coefficient of 30.01 instead of 30.00,
+      you will indeed get a different image, although you won't see the
+      difference, of course.
+    </para>
+
+    <para lang="de">
+      Durch die <quote>teilweise</quote> Verschiebung entstehen an den Rändern
+      einfarbiger Flächen schmale (1 Pixel) Bereiche mit Zwischenfarben.
+      Beispielsweise wurde der schwarze Bereich links unten im vergrößerten
+      Ausschnitt durch eine Verschiebung von -4,12 erzeugt. Die Zwischenfarbe
+      ist daher 12% Schwarz und 88% Gold.
+    </para>
+    <para lang="de">
+      Wenn Sie also einen Verschiebungkoeffizienten von 30,01 statt 30,00
+      wählen, erhalten Sie tatsächlich ein anderes Bild, auch wenn Sie den
+      Unterschied natürlich nicht wahrnehmen können.
+    </para>
+
+  </sect3> <!--end of displacement calulation -->
 </sect2>
