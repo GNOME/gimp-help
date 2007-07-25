@@ -5,7 +5,7 @@
 AC_PREREQ(2.54)
 
 m4_define([help_major_version], [0])
-m4_define([help_minor_version], [12])
+m4_define([help_minor_version], [13])
 
 m4_define([help_version], [help_major_version.help_minor_version])
 
