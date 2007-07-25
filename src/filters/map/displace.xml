@@ -28,7 +28,7 @@
        </revision>
        <revision lang="fr">
          <revnumber>$Revision$</revnumber>
-         <date>2007-01-04</date>
+         <date>2007-07-24</date>
          <authorinitials>j.h</authorinitials>
        </revision>
      </revhistory>
@@ -106,14 +106,14 @@
       </title>
 
       <mediaobject>
-        <imageobject lang="en;de">
+        <imageobject lang="en;de;fr">
           <imagedata fileref="../images/filters/examples/map-displace7.png"
             format="PNG" />
         </imageobject>
-        <!--TODO fr it ru: replace this example; pixels corresponding to 128
+        <!--TODO it ru: replace this example; pixels corresponding to 128
           *will* be displaced, but not with coefficient 30.
         -->
-        <imageobject lang="fr;it;no;ru">
+        <imageobject lang="it;no;ru">
           <imagedata fileref="../images/filters/examples/map-displace4.png"
                     format="PNG" />
         </imageobject>
@@ -148,16 +148,14 @@
             Le coefficient de déplacement X est de 30 (avec un coefficient
             négatif les déplacements seraient inversés), les pixels libérés
             par les déplacements sont en noir. La carte de déplacement
-            comporte 3 bandes de gris superposées, de haut en bas: gris neutre
-            (128), gris clair (200), gris foncé (60).
+            comporte 4 bandes de gris superposées, de haut en bas: 210, 160,
+            110, 60.
           </para>
           <para lang="fr">
-            On voit que la partie de l'image correspondant à la bande de gris
-            neutre de la carte n'a pas été déplacée. La partie de l'image
-            correspondant à la bande de gris clair (&gt;128) s'est déplacée
-            vers la gauche de 17 pixels. La partie de l'image correspondant à
-            la bande de gris foncé (&lt;128) s'est déplacée vers la droite de
-            15 pixels.
+            On voit que les bandes de gris clair (&gt;127.5) ont été
+            déplacées de 19 et 8 pixels vers la gauche. Les bandes de gris
+            foncé (&lt;127.5) ont été déplacées de 4 et 15 pixels vers la
+            droite.
           </para>
 
           <para lang="it">
@@ -434,12 +432,12 @@
             intensity of the corresponding pixels in the displacement map.
           </para>
           <para lang="en">
-            The map, that should be a grayscale image, has 256 gray levels
-            (0-255), the (theoretical) average value is 127.5.  The filter
+            The map, which must be a grayscale image, has 256 gray levels
+            (0-255). The (theoretical) average value is 127.5.  The filter
             displaces image pixels corresponding to pixels with values
-            less than 127.5 (0 to 127) in the map to the right for X and
-            downwards for Y, pixels corresponding to pixels with values from
-            128 to 255 to the left for X and upwards for Y.
+            less than 127.5 (0 to 127) in the map, to the right for X and
+            downwards for Y. It moves pixels corresponding to pixels with
+            values from 128 to 255 to the left for X and upwards for Y.
           </para>
 
           <para lang="de">
@@ -461,24 +459,21 @@
 
           <!--FIXME it ru: changed/fixed content-->
           <para lang="fr">
-            En cochant une ou les deux options, vous choisissez de déplacer,
-            vers la droite pour X, vers le bas pour Y, les pixels du calque
-            correspondant aux pixels d'intensité inférieure à 127.5 (0 à 127)
-            dans la carte, et vers la gauche pour X, vers le bas pour Y, les
-            pixels de l'image correspondants aux pixels de valeur 128-255
-            dans la carte.
+            En choisissant l'une et/ou l'autre des deux options, les pixels
+            du calque actif correspondant aux pixels de la carte de
+            déplacement, seront déplacés horizontalement (H) et/ou
+            verticalement (V). La direction et l'importance du déplacement
+            dépendent de l'intensité des pixels correspondants dans la
+            carte de déplacement.
           </para>
           <para lang="fr">
-            Pourquoi 128 ? Parce que la carte de déplacement, qui doit être
-            une image en niveaux de gris, possède 256 niveaux de gris:
-            l'intensité 128 correspond au <emphasis>Gris moyen</emphasis>.
-            Le filtre déplace les pixels de l'image, correspondants aux
-            pixels d'<emphasis>intensité supérieure à 128 </emphasis> dans
-            la carte de déplacement, vers la gauche pour X et vers le haut
-            pour Y. De même, il déplace les pixels de l'image,
-            correspondants à des pixels d'<emphasis>intensité
-              inférieure à 128</emphasis> dans la carte de déplacement, dans
-            l'autre sens, vers la droite pour X et vers le bas pour Y.
+            La carte, qui doit être une image en niveaux de gris, a 256
+            niveaux de gris. La valeur moyenne théorique est 127.5. Le filtre
+            déplace les pixels de l'image correspondant aux pixels de valeur
+            inférieure à 127.5 (0-127) dans la carte, vers la droite pour X
+            et vers le bas pour Y. Il déplace les pixels correspondants aux
+            pixels de valeur 128-255 vers la gauche pour X et vers le haut
+            pour Y.
           </para>
 
           <para lang="it">
@@ -606,26 +601,15 @@
             d'obtenir un déplacement progressif avec une carte de dégradé.
           </para>
           <para lang="fr">
-            Cette valeur varie dans des limites égales au double des
-            dimensions de votre image, car cela correspond au déplacement
-            maximum d'un pixel, d'un bord à l'autre, ce qui double la
-            dimension totale.
+            Cette valeur varie dans des limites positives et négatives égales
+            en valeur absolue au double des dimensions de votre image, car
+            cela correspond au déplacement maximum d'un pixel, d'un bord à
+            l'autre, ce qui double la dimension totale.
           </para>
           <para lang="fr">
-            Cette variation se fait dans le sens positif ET dans le sens
+            Cette variation se fait dans le sens positif ou dans le sens
             négatif. Un déplacement négatif se fait en sens inverse du
             déplacement positif.
-          </para>
-          <para lang="fr">
-            Pour compliquer les choses, l'intensité utilisée dans la formule
-            n'est pas directement l'intensité du pixel de la carte, mais
-            l'intensité rapportée à l'échelle -128 +128, où 0 correspond à
-            un déplacement nul comme nous l'avons vu au début. La
-            transformation se fait en soustrayant 128 à l'intensité du pixel
-            +1. Dans l'exemple précédent, un coefficient de 75 associé à
-            un pixel blanc (intensité 255 rapportée à 255-128+1=128) donne
-            bien un déplacement de (128x75)/128=75 pixels. Et un pixel noir
-            (0) donne un déplacement de -75 pixels.
           </para>
 
           <para lang="it">
@@ -1829,11 +1813,12 @@
 
   </sect3>
 
-  <!-- TODO fr it no ru: translate new content: displacement details -->
-  <sect3 id="plug-in-displace-calculation" lang="en;de">
+  <!-- TODO it no ru: translate new content: displacement details -->
+  <sect3 id="plug-in-displace-calculation" lang="en;de;fr">
     <title>
       <phrase lang="en">Displacement Calculation</phrase>
       <phrase lang="de">Die Verschiebung berechnen</phrase>
+      <phrase lang="fr">Calcul des déplacements</phrase>
     </title>
 
     <para lang="en">
@@ -1845,6 +1830,11 @@
       Für die an Details interessierten Nutzer wird im nachfolgenden Abschnitt
       gezeigt, wie die Verschiebung berechnet wird. Sie können diesen
       Abschnitt aber auch unbesorgt auslassen.
+    </para>
+    <para lang="fr">
+      Cette section vous montrera comment calculer l'importance du
+      déplacement, si ces détails vous intéressent. Vous pouvez sans
+      problème la sauter.
     </para>
 
     <para lang="en">
@@ -1865,6 +1855,15 @@
       Wie kommen diese Werte zustande? Ganz einfach:
     </para>
 
+    <para lang="fr">
+      Dans l'exemple donné au début, les déplacements, avec un coefficient
+      30, sont: 19, 8, 4, 15 pixels.
+    </para>
+    <para lang="fr">
+      Il est facile de comprendre d'où viennent ces nombres :
+    </para>
+
+
     <informalequation>
       <alt>30.0 * (I - 127.5) / 127.5 = D</alt>
       <!-- 1 image containing 4 equations - maybe not the best way -->
@@ -1872,9 +1871,10 @@
     </informalequation>
 
     <para lang="en">
-      If you check these equations, you will notice that the above values are
-      not the exact results (using non-integers, that's not surprising). So
-      the results were rounded to the nearest integer and then the pixels were
+      If you check these equations, you will notice that the values they give
+      are not exactly the results we retained in the example
+      (using non-integers, that's not surprising). So, were the results
+      rounded to the nearest integer and then the pixels were
       displaced by a whole-numbered amount? No. Every pixel is displaced
       exactly by the calculated amount; a <quote>displacement by a fractional
       amount</quote> is realized by interpolation. A closer look at the
@@ -1890,12 +1890,24 @@
       Bruchteil</quote> durch Interpolation realisiert wird. Ein genauerer
       Blick auf das einführende Beispiel zeigt es Ihnen:
     </para>
+    <para lang="fr">
+      Si vous étudiez cette équation, vous remarquerez que les valeurs
+      retenues dans l'exemple ne sont pas exactement les valeurs calculées
+      avec la formule (ce n'est guère étonnant puisqu'on utilise des nombres
+      à virgule). Les résultats ont-ils été arrondis et les pixels déplacés
+      d'un nombre entier de pixels? Eh bien non! Le déplacement est bien le
+      déplacement calculé, et une interpolation est calculée pour le
+      deplacement fractionnaire. Un zoom sur l'image le montre clairement :
+    </para>
 
     <figure>
       <title>
         <phrase lang="en">A closer look at the displacement example</phrase>
         <phrase lang="de">
           <quote>Das Verschieben</quote>-Beispiel genauer betrachtet
+        </phrase>
+        <phrase lang="fr">
+          Vue rapprochée sur l'exemple de déplacement.
         </phrase>
       </title>
 
@@ -1908,6 +1920,9 @@
           <para lang="en">A small area zoomed in by 800 percent.</para>
           <para lang="de">
             Rechts: Ein Ausschnitt bei 8facher Vergrößerung (Zoom = 800%).
+          </para>
+          <para lang="fr">
+            À droite, une petite surface zoomée à 800 %.
           </para>
           </caption>
       </mediaobject>
@@ -1936,6 +1951,17 @@
       Wenn Sie also einen Verschiebungkoeffizienten von 30,01 statt 30,00
       wählen, erhalten Sie tatsächlich ein anderes Bild, auch wenn Sie den
       Unterschied natürlich nicht wahrnehmen können.
+    </para>
+
+    <para lang="fr">
+      Le déplacement crée de petites zones de couleur intermédiaire, de 1
+      pixel de large, à la limite des surfaces colorées. Par exemple, pour
+      la limite noir-doré (zoomée), le calcul donne -4.12 : la couleur
+      intermédiaire sera 12% noir et 88% doré.
+    </para>
+    <para lang="fr">
+      Ainsi, si vous choisissez un coefficient de 30,01  au lieu de 30,00,
+      vous obtiendrez une image différente, bien que ce ne sera guère visible.
     </para>
 
   </sect3> <!--end of displacement calulation -->
