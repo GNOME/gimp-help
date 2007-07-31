@@ -16,7 +16,7 @@
  2005-08-24 de added by axel.wernicke
 -->
 <!--TODO: cs it ru translation partially missing -->
-<sect2 id="plug-in-borderaverage" lang="en;cs;de;es;fr;it;ru">
+<sect2 id="plug-in-borderaverage" lang="en;cs;de;es;fr;it;no;ru">
   <sect2info lang="en;de;fr">
     <revhistory>
       <revision lang="en">
@@ -41,8 +41,8 @@
       </revision>
       <revision lang="no">
         <revnumber>$Revision$</revnumber>
-        <date>YYYY-MM-DD</date>
-        <authorinitials>N.N.</authorinitials>
+        <date>2007-07-17</date>
+        <authorinitials>kost</authorinitials>
       </revision>
     </revhistory>
   </sect2info>
@@ -404,7 +404,7 @@
         <term lang="ru">Количество цветов</term>
 
         <listitem>
-          <!--FIXME cs no ru: description was wrong, has been fixed-->
+          <!--FIXME cs ru: description was wrong, has been fixed-->
           <para lang="en"><!--changed 2007-05-12-->
             The <guilabel>Bucket Size</guilabel> lets you control the number
             of colors considered as similar and counted with the same
@@ -449,13 +449,17 @@
             nel calcolo del colore medio. Si noti che una miglior precisione
             non significa necessariamente risultati migliori (si veda l'esempio
             più avanti.
-          </para>
-          <para lang="no">
-            Dette litt merkelege namnet <guilabel>Bøttestorleik</guilabel>
-            refererer måten filteret arbeider, og bestemmer kor mange fargenivå
-            som skal trekkast frå eller leggast til kvar RGB-kanal. Nivåa går i
-            digitale sprang frå 1 til 256. Dess høgare tal dess meir tenderer
-            fargen mot grå.
+          </para>          
+          <para lang="no"><!--changed-->
+            I <guilabel>bøttestorleik</guilabel> bestemmer du kor store
+            bøtter, eller malingspann om du vil, som skal brukast for å
+            finne gjennomsnittsfargen. Vel du store bøtter, vil kvar bøtte
+            innehalde farge som er sett saman av fleire fargar som liknar på
+            kvarandre. Vel du i staden å bruke små, men mange, bøtter
+            vil kvar bøtte ha reinare farge. Dette gjer at utrekninga av
+            gjennomsnittsverdien blir meir nøyaktig. Eit meir nøyaktig
+            resultat treng likevel ikkje vere det same som eit betre
+            resultat. Sjå eksemplet nedanfor.
           </para>
           <para lang="ru">
             <guilabel>Количество цветов</guilabel>: Определяет сколько цветов
@@ -529,7 +533,8 @@
             (00******;11******;00******).
           </para>
           <para lang="no">
-            Fargane er: raud (255;0;0), blå (0;0;255) og <!--FIXME no--> grøn
+            Fargane er: rein raud (255;0;0), rein blå (0;0;255) og ulike
+            grøntoner
             (00******;11******;00******).
           </para>
         </caption>
@@ -564,7 +569,7 @@
             format="PNG" />
         </imageobject>
 
-        <caption lang="en;de;es;fr;it">
+        <caption lang="en;de;es;fr;it;no">
           <para lang="en">
             The resulting color is a Red (254,2,2).
           </para>
@@ -581,7 +586,7 @@
             Il colore risultante è un rosso (254,2,2).
           </para>
           <para lang="no">
-            <!--TODO: no: caption-->
+            Resultatfargen blir raud (254,2,2).
           </para>
         </caption>
       </mediaobject>
@@ -622,19 +627,12 @@
       risultante è un rosso quasi puro (254,2,2) che diventa il colore di
       primo piano della casella strumenti.
       </para>
-    <!--FIXME no: description was wrong, has been fixed-->
-    <para lang="no">
-      Filteret har vald å ta utgangspunkt i grønt sidan det er denne
-      fargen det er mest av i ramma. <quote>Talet på
-      fargar</quote> (sett til 4) blir delt på dei to andre kanalane
-      slik at det blir lagt til 2 til kvar av kanalane raud og blå.
-      Den same verdien, altså 2, blir også trekt i frå grønkanalen.
-      Difor blir den endelege fargen sett saman av 2 deler raudt
-      (256 + 2 = 2), 254 deler grønt (256 - 2 = 254) og 2 deler
-      blått (256 + 2 = 2). (Matematikken er ikkje feil. At 256 +
-      2 = 2 kjem av at operasjonen eigentleg føregår i 8 bits
-      digitalkode men her omtalt i desimaltal). Den endelege fargen
-      blir lagt inn i verktøyskrinet som forgrunnsfarge.
+    <para lang="no"><!--changed 2007-07-17-->
+      Den vanlegaste fargen i biletkanten er rein raud (255, 0, 0). Sidan det
+      her er brukt små bøtter, vil dei ulike variantane av grønt bli sett på
+      som ulike fargar og ikkje som ulike grøntoner. Resultatfargen som
+      blir lagt inn som forgrunnsfarge i verktøyskrinet blir nesten rein
+      raud (254, 2, 2)..
     </para>
 
     <figure>
@@ -665,7 +663,7 @@
             format="PNG" />
         </imageobject>
 
-        <caption lang="en;de;es;fr;it">
+        <caption lang="en;de;es;fr;it;no">
           <para lang="en">
             The resulting color is Green (32,224,32).
           </para>
@@ -682,13 +680,15 @@
             Il colore risultante è verde (32,224,32).
           </para>
           <para lang="no">
-            <!--TODO: no: caption-->
+            Resultatfargen er grøn (32,224,32)
           </para>
         </caption>
       </mediaobject>
     </figure>
 
-    <para lang="en">
+    <para lang="en"> <!-- Where comes the green (0-63,192-255,0-63) from and how
+    can it be averaged to (32,224,32) if only the two most significant bits are counting?
+    Would it be more readable using hexcode?-->
       Here the bucket size is high, the number of buckets low. The
       filter looks at only the two most significant bits of every color
       channel value. Now Green (0-63,192-255,0-63) is the most frequent
@@ -724,10 +724,12 @@
       frequente. Il colore risultante è un verde (32,224,32), che è la media di
       tutti i colori inclusi nel <quote>secchiello</quote>.
     </para>
-    <!--FIXME no: description was wrong, has been fixed-->
-    <para lang="no">
-      Resultatet slik det kjem fram i verktøyskrinet og verdiane
-      for denne fargen.
+    <para lang="no"><!--changed 2007-07-17-->
+      I dette eksemplet er det brukt store, og difor få, bøtter. Filteret 
+      ser bare på dei to mest signifikante bits for kvar farge. I dette tilfellet
+      blir grønt (0-63,192-255,0-63) den fargen det er mest av, og 
+      gjennomsnittsverdien, slik det kjem fram i verktøyskrinet, er difor
+      grønt (32,224,32).
     </para>
   </sect3>
 </sect2>
