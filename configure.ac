@@ -23,9 +23,13 @@ AC_PROG_MAKE_SET
 
 #  You can set the ALL_LINGUAS environment variable to
 #  control what languages are build.
+#  
+#  GIMP 2.2 Linguas: Content for those language code exist, but they
+#  haven't been worked on for a while:
+#  ALL_LINGUAS="cs de en es fr hr it ko nl no ru sv zh_CN"
 
 if test "x$ALL_LINGUAS" = "x"; then
-  ALL_LINGUAS="cs de en es fr hr it ko nl no ru sv zh_CN"
+  ALL_LINGUAS="de en es fr it ko nl no ru sv"
 fi
 
 AC_SUBST(ALL_LINGUAS)
