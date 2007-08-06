@@ -9,18 +9,18 @@
   050930 de replaced informalfigure by axel.wernicke
   050826 de added by axel.wernicke
 -->
-<!-- TODO: all RGB Noise in Gimp-2.4 -->
+<!-- TODO: cs es fr it no ru: Scatter RGB ==> RGB Noise in Gimp-2.4 -->
 <sect2 id="plug-in-noisify" lang="en;es;cs;de;fr;it;no;ru">
   <sect2info lang="en;de;fr" role="cvs">
     <revhistory>
       <revision lang="en">
         <revnumber>$Revision$</revnumber>
-        <date>2006-11-19</date>
-        <authorinitials>j.h</authorinitials>
+        <date>2007-08-06</date>
+        <authorinitials>ude</authorinitials>
       </revision>
       <revision lang="de">
         <revnumber>$Revision$</revnumber>
-        <date>2007-01-18</date>
+        <date>2007-08-06</date>
         <authorinitials>ude</authorinitials>
       </revision>
       <revision lang="fr">
@@ -32,9 +32,9 @@
   </sect2info>
 
   <title>
-    <phrase lang="en">Scatter RGB</phrase>
+    <phrase lang="en">RGB Noise</phrase>
     <phrase lang="cs">Roztřepení RGB</phrase>
-    <phrase lang="de">Streue RGB</phrase>
+    <phrase lang="de">RGB-Rauschen</phrase>
     <phrase lang="es">Ruido RGB</phrase>
     <phrase lang="fr">Dispersion RVB</phrase>
     <phrase lang="it">Dispersione RGB</phrase>
@@ -45,9 +45,9 @@
   <indexterm lang="en">
     <primary>Filters</primary>
     <secondary>Noise</secondary>
-    <tertiary>Scatter RGB</tertiary>
+    <tertiary>RGB Noise</tertiary>
   </indexterm>
-  <indexterm lang="en"><primary>Scatter RGB</primary></indexterm>
+  <indexterm lang="en"><primary>RGB Noise</primary></indexterm>
 
   <indexterm lang="cs">
     <primary>filtry</primary><secondary>Šum</secondary>
@@ -57,7 +57,7 @@
   <indexterm lang="de">
     <primary>Filter</primary><secondary>Rauschen</secondary>
   </indexterm>
-  <indexterm lang="de"><primary>Streue RGB</primary></indexterm>
+  <indexterm lang="de"><primary>RGB-Rauschen</primary></indexterm>
   <indexterm lang="de"><primary>RGB</primary></indexterm>
 
   <indexterm lang="es">
@@ -120,11 +120,12 @@
       <phrase lang="ru">Общая информация</phrase>
     </title>
 
+    <!--TODO cs es: add example image-->
     <figure lang="en;de;fr;it;no;ru">
       <title>
         <phrase lang="en">Example of applying the Noisify filter</phrase>
         <phrase lang="de">
-          Anwendungsbeispiel für das Filter <quote>Streue RGB</quote>
+          Anwendungsbeispiel für das Filter <quote>RGB-Rauschen</quote>
         </phrase>
         <phrase lang="fr">
           Exemple d'application du filtre Dispersion RVB
@@ -157,8 +158,8 @@
                     format="JPG" />
         </imageobject>
         <caption lang="en;de;no">
-          <para lang="en">Filter <quote>Scatter RGB</quote> applied</para>
-          <para lang="de">Filter <quote>Streue RGB</quote> angewandt</para>
+          <para lang="en">Filter <quote>RGB Noise</quote> applied</para>
+          <para lang="de">Filter <quote>RGB-Rauschen</quote> angewandt</para>
           <para lang="no">Etter bruk av filteret <quote>Strø RGB</quote></para>
         </caption>
       </mediaobject>
@@ -169,11 +170,11 @@
       <menuchoice>
         <guimenu>Filters</guimenu>
         <guisubmenu>Noise</guisubmenu>
-        <guimenuitem><accel>S</accel>catter RGB</guimenuitem>
+        <guimenuitem><accel>R</accel>GB Noise</guimenuitem>
       </menuchoice>.
     </para>
     <para lang="en">
-      The Scatter RGB filter adds a normally distributed noise to a layer or a
+      The RGB Noise filter adds a normally distributed noise to a layer or a
       selection. It uses the RGB color model to produce the noise (noise is
       added to red, green and blue values of each pixel). A normal
       distribution means, that only slight noise is added to the most pixels
@@ -359,7 +360,7 @@
       <menuchoice>
         <guimenu><accel>F</accel>ilter</guimenu>
         <guisubmenu><accel>R</accel>auschen</guisubmenu>
-        <guimenuitem>Streue <accel>R</accel>GB</guimenuitem>
+        <guimenuitem><accel>R</accel>GB-Rauschen</guimenuitem>
       </menuchoice>
       im Bildfenster aufrufen.
     </para>
@@ -377,13 +378,14 @@
       <phrase lang="ru">Параметры</phrase>
     </title>
 
+    <!--TODO cs es it ru: add screenshot-->
     <figure lang="en;de;fr;no">
       <title>
         <phrase lang="en">
-          <quote>Scatter RGB</quote> filter options
+          <quote>RGB Noise</quote> filter options
         </phrase>
         <phrase lang="de">
-          Eigenschaften für das Filter <quote>Streue RGB</quote>
+          Eigenschaften für das Filter <quote>RGB-Rauschen</quote>
         </phrase>
         <phrase lang="fr">
           Options du filtre <quote>Dispersion RVB</quote>
@@ -394,12 +396,11 @@
       </title>
       <mediaobject>
         <imageobject lang="en">
-          <imagedata fileref="../images/filters/scatter-RGB-options.png"
+          <imagedata fileref="../images/filters/options-noise-rgb.png"
                     format="PNG" />
         </imageobject>
         <imageobject lang="de">
-          <imagedata
-            fileref="../images/filters/de/options-noise-scatter-rgb.png"
+          <imagedata fileref="../images/filters/de/options-noise-rgb.png"
                     format="PNG" />
         </imageobject>
         <imageobject lang="fr">
@@ -469,7 +470,6 @@
         <term lang="no">Korrelatert støy</term>
         <term lang="ru">Согласованный шум</term>
         <listitem>
-          <!-- FIXME: en es it ru:  correlated, not independent -->
           <!-- From plug-ins/common/noisify.c:
                    "Noise may be additive (uncorrelated) or multiplicative
                    (correlated - also known as speckle noise)."
@@ -477,11 +477,14 @@
                    correlated:      dest = src * (1 + noise),   -2 < noise < 2
                    not correlated:  dest = src + noise,       -255 < noise < 255
           -->
-          <para lang="en">
-            When checked, this radio button makes sliders R, G and B to move
-            all together. The same relative noise will be added to all
-            channels in each pixel, so the hue of pixels does not change much.
+          <para lang="en"><!-- changed 2007-08-06 -->
+            Noise may be additive (uncorrelated) or multiplicative (correlated
+            - also known as speckle noise). When checked, every channel value
+            is multiplied by an normally distributed value. So the noise
+            depends on the channel values: a greater channel value leads to
+            more noise, while dark colors (small values) tend to remain dark.
           </para>
+          <!--TODO cs: translation missing-->
           <para lang="cs"></para>
           <para lang="de">
             Wenn diese Eigenschaft aktiviert ist, ist für jeden Kanal der
@@ -489,12 +492,14 @@
             Wert führt zu einem höheren Rauschen. Insbesondere bleiben
             dunkle Bildbereiche tendenziell dunkel.
           </para>
+          <!-- FIXME: es it ru:  correlated, not independent -->
           <para lang="es">
             Cuando está activa esta casilla, hace que los deslizadores R, G y
             B se muevan a la vez. El mismo ruido relativo se añadirá a todos
             los canales en cada píxel, y de esta forma conseguir que no cambie
             mucho la tonalidad de los píxeles.
           </para>
+          <!-- CHECK  fr:  en changed, does it correspond to fr? -->
           <para lang="fr">
             Quand cette option est cochée, un algorithme de <quote>bruit
             corrélé</quote> est appliqué au résultat : l'histogramme est
@@ -529,21 +534,19 @@
 
       <varlistentry>
         <term lang="en">Independent RGB</term>
-        <term lang="es">RGB Independiente</term>
         <term lang="cs">Nezávislé RGB</term>
         <term lang="de">Unabhängige RGB-Kanäle</term>
+        <term lang="es">RGB Independiente</term>
         <term lang="fr">R, V, B indépendants</term>
         <term lang="it">RGB indipendenti</term>
         <term lang="no">Uavhengig RGB</term>
         <term lang="ru">Независимый RGB</term>
         <listitem>
           <para lang="en">
-            When this radio button is checked, you can move each RGB sliders
-            separately.
-          </para>
-          <para lang="es">
-            Si esta casilla está activa, puedes mover cada deslizador RGB de
-            forma independiente.
+            When this radio button is checked, you can move each RGB slider
+            separately.  Otherwise, sliders R, G and B will be moved all
+            together. The same relative noise will then be added to all
+            channels in each pixel, so the hue of pixels does not change much.
           </para>
           <para lang="cs">
             Pokud tato volba není aktivní, pohybují se všechny posuvníky
@@ -557,6 +560,10 @@
             Das gleiche relative Rauschen wird damit auf alle Kanäle jedes
             Pixels angewendet. Daher ändert sich der Farbton der Pixel nicht
             sehr.
+          </para>
+          <para lang="es">
+            Si esta casilla está activa, puedes mover cada deslizador RGB de
+            forma independiente.
           </para>
           <para lang="fr">
             Quand ce bouton radio est coché, les trois curseurs RVB sont
