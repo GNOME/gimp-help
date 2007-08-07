@@ -4,6 +4,7 @@
                 "http://www.docbook.org/xml/4.3/docbookx.dtd">
 
 <!-- section history:
+  2007-08-07 alex falappa: ude's fix to 'it', polar mode
   2007-07-23 ude: new section and image for displacement details
   2007-07-04 kost: ude's fix to 'no'
   2007-07-04 ude: added polar mode for GIMP 2.4 (disabled)
@@ -106,14 +107,14 @@
       </title>
 
       <mediaobject>
-        <imageobject lang="en;de;fr">
+        <imageobject lang="en;de;fr;it">
           <imagedata fileref="../images/filters/examples/map-displace7.png"
             format="PNG" />
         </imageobject>
-        <!--TODO it ru: replace this example; pixels corresponding to 128
+        <!--TODO no ru: replace this example; pixels corresponding to 128
           *will* be displaced, but not with coefficient 30.
         -->
-        <imageobject lang="it;no;ru">
+        <imageobject lang="no;ru">
           <imagedata fileref="../images/filters/examples/map-displace4.png"
                     format="PNG" />
         </imageobject>
@@ -161,15 +162,14 @@
           <para lang="it">
             Il coefficiente di spostamento X è 30 (con un coefficiente
             negativo lo spostamento sarebbe opposto). I pixel mancanti sono
-            neri. Displacement map has three grey stripes, from top to bottom:
-            medium gray (128), light gray 200), dark gray (60).
+            neri. La mappa di spostamento ha quattro strisce grigie con intensità
+			pari a 210, 160, 110, e 60 rispettivamente.
           </para>
           <para lang="it">
-            You can see that the image area corresponding to medium gray in
-            map was not displaced. The image area corresponding to light gray
-            (&ge;128) was displaced 17 pixels to the left. The image area
-            corresponding to dark gray (&le;127) was displaced -15 pixels, to
-            the right.
+            Si noti come le aree dell'immagine corrispondenti al grigio chiaro
+			(&ge;128) siano state spostate 19 e 8 pixel a sinistra. Le aree
+            corrispondenti al grigio scuro (&le;127) sono state spostate di 4 e 15
+			pixel a destra.
           </para>
 
           <para lang="no">
@@ -586,7 +586,7 @@
             das Doppelte der Bildbreite bzw. -höhe.
           </para>
 
-          <!--FIXME it ru: changed/fixed content-->
+          <!--FIXME ru: changed/fixed content-->
           <para lang="fr">
             <quote>Déplacement X/Y</quote> devrait s'appeler
             <emphasis>Coefficient de déplacement</emphasis>. En effet, ce que
@@ -618,8 +618,14 @@
             immesso nelle caselle di testo, direttamente o tramite i pulsanti
             con le frecce, non è lo spostamento reale. Questo coefficiente è
             utilizzato nella formula <emphasis role="bold">spostamento =
-              (intensità x coefficiente) / 128</emphasis> che restituisce lo
-            spostamento reale del pixel secondo l'intensità del pixel
+              (intensità x coefficiente)</emphasis> che restituisce lo
+            spostamento reale del pixel secondo l'intensità scalata del pixel
+			<footnote>
+              <para>
+                Intensità scalata = (intensità - 127.5) / 127.5; si veda la sezione
+				sul  <quote>calcolo dello spostamento</quote>.
+              </para>
+            </footnote>
             corrispondente nella mappa modulato dal coefficente immesso.
             L'introduzione dell'intensità nella formula è importante poichè
             consente uno spostamento progressivo utilizzando una mappa con
@@ -1371,14 +1377,14 @@
     </variablelist>
   </sect3> <!--end of GIMP 2.4 cartesian options-->
 
-
-  <!--TODO fr it no ru: translate new sect3 for GIMP 2.4-->
-  <sect3 id="plug-in-displace-polar" lang="en;de">
+  <!--TODO fr no ru: translate new sect3 for GIMP 2.4-->
+  <sect3 id="plug-in-displace-polar" lang="en;de;it">
     <title>
       <phrase lang="en">Polar Displacement Mode</phrase>
       <phrase lang="de">
         Verschiebungsmodus <quote>Polar</quote>
       </phrase>
+      <phrase lang="it">Modalità spostamento polare</phrase>
     </title>
 
     <figure>
@@ -1389,16 +1395,20 @@
         <phrase lang="de">
           Eigenschaften für das Filter <quote>Verschieben</quote> (Polar)
         </phrase>
+        <phrase lang="it">
+          Opzioni filtro sposta (polare)
+        </phrase>
       </title>
 
       <mediaobject>
-        <imageobject lang="en;de">
+        <imageobject lang="en;de;it">
           <imagedata format="PNG"
             fileref="../images/filters/options-map-displace-polar.png" />
         </imageobject>
-        <caption lang="en;de">
+        <caption lang="en;de;it">
           <para lang="en">Displacement Mode: Polar</para>
           <para lang="de">Verschiebungsmodus: Polar</para>
+          <para lang="it">Modalità di spostamento polare</para>
         </caption>
       </mediaobject>
     </figure>
@@ -1408,7 +1418,7 @@
         <term lang="en">Pinch</term>
         <term lang="de">Drücken</term>
         <term lang="fr">Pincer</term>
-        <term lang="it">Cuscino</term>
+        <term lang="it">Pizzica</term>
         <term lang="no">Pinch</term>
         <term lang="ru">Щипок</term>
 
@@ -1439,7 +1449,18 @@
             X- und Y-Verschiebung.
           </para>
           <para lang="fr">TODO</para>
-          <para lang="it">TODO</para>
+          <para lang="it">
+            Se questa opzione è attivata saranno cmbiate le coordinate radiali
+            (cioè la distanza dal centro dell'immagine, il <quote>polo</quote>)
+            del pixel. I pixel corrispondenti ai pixel della mappa di valore tra
+            0 e 127 saranno spostati all'infuori (radialmente) mentre i pixel
+            corrispondenti ai pixel della mappa di valore da 128 a 255 saranno
+            spostati verso il centro.
+          </para>
+          <para lang="it">
+            Per i valori e ma mappa di spostamento si veda sopra
+            (<quote>Spostamenti X/Y</quote>).
+          </para>
           <para lang="no">TODO</para>
           <para lang="ru">TODO</para>
 
@@ -1453,15 +1474,23 @@
             Betrag. Dadurch wird das Bild nicht nur vergrößert oder
             verkleinert, sondern auch verzerrt:
           </para>
+          <para lang="it">
+            Lo spostamento è indipendente dalla distanza dal polo, tutti i
+            pixel sono spostati della stessa quantità. L'immagine non sarà
+            solo stirata o compressa ma anche distorta:
+          </para>
 
           <mediaobject>
-            <imageobject lang="en;de">
+            <imageobject lang="en;de;it">
               <imagedata format="PNG"
                 fileref="../images/filters/examples/map-displace-pinch.png" />
             </imageobject>
-            <caption lang="en;de">
+            <caption lang="en;de;it">
               <para lang="en">Image distortion by Pinch option</para>
               <para lang="de">Bildverzerrung durch Drücken</para>
+              <para lang="it">
+                Distorsione dell'immagine con l'opzione Pizzico
+              </para>
             </caption>
           </mediaobject>
 
@@ -1479,6 +1508,15 @@
             Verkleinerung um 25%, vertikal um 33% und diagonal um 20%, daher
             wird das Bild verzerrt.
           </para>
+          <para lang="it">
+            Una immagine di 160x120 pixel con una mappa di spostamento
+            completamente bianca e un coefficiente di sposstamento pari a 20
+            restituisce uno spostamento di 20 pixel verso il centro. Questo
+            provoca una riduzione di dimensioni del 25% in orizzontale, del 33%
+            in verticale e del 20% in diagonale quindi una distorsione
+            dell'immagine.
+          </para>
+
         </listitem>
       </varlistentry>
 
@@ -1486,7 +1524,7 @@
         <term lang="en">Whirl</term>
         <term lang="de">Drehen</term>
         <term lang="fr">Tourbillonner</term>
-        <term lang="it">Rotazione</term>
+        <term lang="it">Vortice</term>
         <term lang="no">Whirl</term>
         <term lang="ru">Вихрь</term>
 
@@ -1523,7 +1561,22 @@
             Eigenschaften der Verschiebungskarte gilt genau dasselbe wie oben.
           </para>
           <para lang="fr">TODO</para>
-          <para lang="it">TODO</para>
+          <para lang="it">
+            Se questa opzione è selezionata le coordinate angolari dei pixel
+            dell'immagine saranno <quote>spostate</quote> di una quantità
+            dipendente dal corrispondente pixel della mappa. Per una mappa di
+            spostamento uniforme l'immagine risulterà ruotata altrimenti
+            verrà resa simile ad un vortice.
+          </para>
+          <para lang="it">
+            I pixel dell'immagine corrispondenti a pixel nella mappa di valore
+            da 0 a 127 saranno spostati in senso antiorario mentre pixel
+            dell'immagine corrispondenti a pixel nella mappa di valore
+            da 128 a 255 saranno spostati in senso orario.
+          </para>
+          <para lang="it">
+            Per i valori e la mappa di spostamento si veda sopra.
+          </para>
           <para lang="no">TODO</para>
           <para lang="ru">TODO</para>
         </listitem>
@@ -1540,6 +1593,11 @@
         Mit einer einfarbigen Verschiebungskarte wirkt das Filter im
         Verschiebungsmodus <quote>Polar</quote> wie
         <link linkend="plug-in-whirlpinch">Drehen und Drücken</link>.
+      </para>
+      <para lang="it">
+        Per una mappa uniforme non neutra se la modalità di spostamento
+        <quote>Polare</quote> è selezionata questo filtro opera in maniera simile
+        a <link linkend="plug-in-whirlpinch">Vortice e pizzico</link>.
       </para>
     </note>
   </sect3> <!--end of GIMP 2.4 polar options-->
@@ -1590,7 +1648,6 @@
           im Menü des Bildfensters ausführen. Damit haben Sie die
           Verschiebungs-Karte erzeugt.
         </para>
-
         <para lang="fr">
           Dupliquez cette image. Activez ce double et mettez-le en mode
           Niveau de gris (&lt;IMAGE&gt;/Image/Mode/Niveau de gris).
