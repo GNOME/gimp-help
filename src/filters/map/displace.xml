@@ -107,14 +107,14 @@
       </title>
 
       <mediaobject>
-        <imageobject lang="en;de;fr;it">
+        <imageobject lang="en;de;fr;it;ru">
           <imagedata fileref="../images/filters/examples/map-displace7.png"
             format="PNG" />
         </imageobject>
-        <!--TODO no ru: replace this example; pixels corresponding to 128
+        <!--TODO no: replace this example; pixels corresponding to 128
           *will* be displaced, but not with coefficient 30.
         -->
-        <imageobject lang="no;ru">
+        <imageobject lang="no">
           <imagedata fileref="../images/filters/examples/map-displace4.png"
                     format="PNG" />
         </imageobject>
@@ -189,14 +189,13 @@
           <para lang="ru">
             Коэффициент замещения по X равен 30-ти (с отрицательным
             коэффициентом замещение будет в обратную сторону). Замещённые
-            точки становятся чёрными. У карты замещения три полосы, с верху
-            вниз: средне-серая (128), светло-серая (200) и тёмно-серая (60).
+            точки становятся чёрными. У карты замещения четыре полосы, с разным
+            значением серого: 210, 160, 110, и 60.
           </para>
           <para lang="ru">
-            Можно видеть, что области, соответствующие среднему серому на
-            карте, не заместятся. Области, соответствующие светло-серому
-            (&ge;128) сместились на 17 точек влево. Области, соответствующие
-            тёмно-серому (&le;127) сместились на 15 точек вправо.
+            Можно видеть, что области, соответствующие светло-серому
+            (&ge;128) сместились на 19 и 8 точек влево. Области, соответствующие
+            тёмно-серому (&le;127) сместились на 4 и 15 точек вправо.
           </para>
         </caption>
       </mediaobject>
@@ -311,7 +310,8 @@
       выделения. Величина смещения по горизонтали и вертикали зависит от
       интенсивности точек в карте смещения и вводимого коэффициента.
       <emphasis role="bold">Катры смещения по X и Y должны быть серые и того
-        же размера, что и искомое изображение.</emphasis>.
+      же размера, что и искомое изображение.</emphasis>. Этот фильтр
+      допускает интересные эффекты.
     </para>
   </sect3>
 
@@ -457,7 +457,7 @@
             beziehungsweise oben.
           </para>
 
-          <!--FIXME it ru: changed/fixed content-->
+          <!--FIXME it: changed/fixed content-->
           <para lang="fr">
             En choisissant l'une et/ou l'autre des deux options, les pixels
             du calque actif correspondant aux pixels de la carte de
@@ -508,18 +508,18 @@
           </para>
 
           <para lang="ru">
-            Когда вы выбираете эти параметры, точки активного слоя
-            со значением, отличающегося от 128 в карте смещения, будут
-            смещены горизонтально или вертикально.
+            Когда вы выбираете эти параметры, точки активного слоя,
+            соответствующие точкам на карте будут смещены горизонтально (X)
+            или вертикально (Y). Направление и величина смещения зависят от
+            интенсивности точек на карте смещения.
           </para>
           <para lang="ru">
-            Почему 128? Потому что карта должна быть серая, т.е. с 256-ю
-            уровнями интенсивности: 128 соответствует <emphasis>среднему
-              серому</emphasis>. Фильтр
-            смещает влево по X и вправо по Y те точки, значения которых
-            <emphasis>выше, чем 128</emphasis> в карте. Фильтр перемещает
-            точки в противоположном направлении, если они
-            <emphasis>меньше, чем 128</emphasis> в карте.
+            Карта должна быть серым изображением, т.е. с 256-ю уровнями
+            интенсивности серого (0-255). Значение <emphasis>среднего</emphasis>
+            (теоритического) серого - 127,5. Фильтр смещает влево по X и вниз
+            по Y те точки, значения которых <emphasis>ниже чем 127,5</emphasis>
+            на карте. Фильтр перемещает точки в противоположном направлении,
+            если они <emphasis>больше чем 127,5</emphasis> на карте.
           </para>
         </listitem>
       </varlistentry>
@@ -586,7 +586,6 @@
             das Doppelte der Bildbreite bzw. -höhe.
           </para>
 
-          <!--FIXME ru: changed/fixed content-->
           <para lang="fr">
             <quote>Déplacement X/Y</quote> devrait s'appeler
             <emphasis>Coefficient de déplacement</emphasis>. En effet, ce que
@@ -680,8 +679,12 @@
             Параметр <quote>Смещение по X/Y</quote> должен называться
             <emphasis>Коэффициент смещения по X/Y</emphasis>. Значение, вводимое
             в поле ввода, используется в формуле
-            <emphasis role="bold">смещение = (интенсивность x коэффициент)
-              /128</emphasis>, которая даёт действительное смещение согласно
+            <footnote>
+              <para>
+                итоговая интенсивность = (интенсивность - 127.5) / 127.5;
+                обратитесь к части <quote>вычисление смещения</quote>.
+              </para>
+            </footnote>, которая даёт действительное смещение согласно
             интенсивности точки на карте и введённому коэффициенту.
             Коэффициент важен потому, что он позволяет использовать
             градиентную карту для прогрессивного смещения.
@@ -695,15 +698,6 @@
             Это значение может быть положительным и отрицательным.
             Отрицательные значения смещают в противоположную сторону.
           </para>
-          <!--para lang="ru">
-            Используемая в формуле интенсивность не есть интенсивность точек.
-            Интенсивность точек нормализуется по шкале от -128 до +128, где
-            0 представляет отсутствие замещения, как описано выше. При
-            преобразовании 127 вычитается из интенсивности точки. Так, в
-            предыдущем примере, замещение 75 для белой точки (преобразованной
-            в 255-128+1=128) даёт (128*75)/128=75 точек смещения. Чёрная
-            точка (0) даёт -75 точек смещения.
-          </para-->
         </listitem>
       </varlistentry>
 
@@ -950,8 +944,8 @@
   </sect3> <!--end of GIMP 2.2 options-->
 
 
-  <!--TODO fr it no ru: translate new sect3 for GIMP 2.4-->
-  <sect3 lang="en;de">
+  <!--TODO fr it no: translate new sect3 for GIMP 2.4-->
+  <sect3 lang="en;de;ru">
     <title>
       <phrase lang="en">Options (General)</phrase>
       <phrase lang="de">Eigenschaften</phrase>
@@ -972,11 +966,11 @@
         <phrase lang="no">
           Innstillingane for filteret <quote>Forskyv</quote>
         </phrase>
-        <phrase lang="ru">Параметры</phrase>
+        <phrase lang="ru">Параметры фильтра <quote>Смещение</quote></phrase>
       </title>
 
       <mediaobject>
-        <imageobject lang="en">
+        <imageobject lang="en;ru">
           <imagedata fileref="../images/filters/options-map-displace.png"
             format="PNG" />
         </imageobject>
@@ -1022,7 +1016,7 @@
         </listitem>
       </varlistentry>
 
-      <varlistentry lang="en;de">
+      <varlistentry lang="en;de;ru">
         <term lang="en">Displacement Mode</term>
         <term lang="de">Verschiebungsmodus</term>
         <term lang="fr">Mode de déplacement</term>
@@ -1056,7 +1050,13 @@
           <para lang="fr">TODO</para>
           <para lang="it">TODO</para>
           <para lang="no">TODO</para>
-          <para lang="ru">TODO</para>
+          <para lang="ru">
+            Вы можете работать в <link linkend="plug-in-displace-cartesian">
+            декартовых</link> координатах, где точки смещаются по X и Y, или
+            работать в <link linkend="plug-in-displace-polar">полярных</link>
+            координатах, где изображение сжимается и заворачивается при
+            смещении точек в радиальном и касательном направлениях.
+          </para>
         </listitem>
       </varlistentry>
 
@@ -1197,16 +1197,17 @@
   </sect3> <!--end of GIMP 2.4 general options-->
 
 
-  <!--TODO fr it no ru: translate new sect3 for GIMP 2.4-->
-  <sect3 id="plug-in-displace-cartesian" lang="en;de">
+  <!--TODO fr it no: translate new sect3 for GIMP 2.4-->
+  <sect3 id="plug-in-displace-cartesian" lang="en;de;ru">
     <title>
       <phrase lang="en">Cartesian Displacement Mode</phrase>
       <phrase lang="de">
         Verschiebungsmodus <quote>Kartesisch</quote>
       </phrase>
+      <phrase lang="ru">Режим декартова смещения</phrase>
     </title>
 
-    <figure lang="en;de">
+    <figure lang="en;de;ru">
       <title>
         <phrase lang="en">
           Displace filter options (Cartesian)
@@ -1215,10 +1216,13 @@
           Eigenschaften für das Filter <quote>Verschieben</quote>
           (Kartesisch)
         </phrase>
+        <phrase lang="ru">
+          Параметры фильтра <quote>Смещение</quote> (Декартово)
+        </phrase>
       </title>
 
       <mediaobject>
-        <imageobject lang="en">
+        <imageobject lang="en;ru">
           <imagedata format="PNG"
             fileref="../images/filters/options-map-displace-cartesian.png" />
         </imageobject>
@@ -1226,9 +1230,10 @@
           <imagedata format="PNG"
             fileref="../images/filters/de/options-map-displace-cartesian.png" />
         </imageobject>
-        <caption lang="en;de">
+        <caption lang="en;de;ru">
           <para lang="en">Displacement Mode: Cartesian</para>
           <para lang="de">Verschiebungsmodus: Kartesisch</para>
+          <para lang="ru">Режим смещения: декартово</para>
         </caption>
       </mediaobject>
     </figure>
@@ -1257,6 +1262,18 @@
       Bildpunkte in die eine, für Helligkeiten von 128-255 in die andere
       Richtung verschoben.
     </para>
+    <para lang="ru">
+      В обоих режимах, направление и величина смещения зависит от интенсивности
+      соответствущей точки на карте смещения.
+    </para>
+    <para lang="ru">
+      Карта должна быть серым изображением, т.е. с 256-ю уровнями
+      интенсивности серого (0-255). Значение <emphasis>среднего</emphasis>
+      (теоритического) серого - 127,5. Фильтр смещает в одном направлении
+      те точки, значения которых <emphasis>ниже чем 127,5</emphasis>
+      на карте (0-127). Фильтр перемещает точки в противоположном направлении,
+      если они <emphasis>больше чем 127,5</emphasis> на карте (128-255).
+    </para>
 
     <variablelist>
       <varlistentry>
@@ -1283,7 +1300,12 @@
           <para lang="fr">TODO</para>
           <para lang="it">TODO</para>
           <para lang="no">TODO</para>
-          <para lang="ru">TODO</para>
+          <para lang="ru">
+            Фильтр смещает влево по X и вниз
+            по Y те точки, значения которых <emphasis>ниже чем 127,5</emphasis>
+            на карте (0-127). Фильтр перемещает точки в противоположном направлении,
+            если они <emphasis>больше чем 127,5</emphasis> на карте (128-255).
+          </para>
 
           <para lang="en">
             What you enter in input boxes, directly or by using arrow-head
@@ -1336,7 +1358,24 @@
           <para lang="fr">TODO</para>
           <para lang="it">TODO</para>
           <para lang="no">TODO</para>
-          <para lang="ru">TODO</para>
+          <para lang="ru">
+            Параметр <quote>Смещение по X/Y</quote> должен называться
+            <emphasis>Коэффициент смещения по X/Y</emphasis>. Значение, вводимое
+            в поле ввода, используется в формуле
+            <footnote>
+              <para>
+                итоговая интенсивность = (интенсивность - 127.5) / 127.5;
+                обратитесь к части <quote>вычисление смещения</quote>.
+              </para>
+            </footnote>, которая даёт действительное смещение согласно
+            интенсивности точки на карте и введённому коэффициенту.
+            Коэффициент важен потому, что он позволяет использовать
+            градиентную карту для прогрессивного смещения.
+          </para>
+          <para lang="ru">
+            Это значение может быть положительным и отрицательным.
+            Отрицательные значения смещают в противоположную сторону.
+          </para>
 
           <para lang="en">
             When you click on the drop-down list button, a list appears where
@@ -1371,20 +1410,31 @@
           <para lang="fr">TODO</para>
           <para lang="it">TODO</para>
           <para lang="no">TODO</para>
-          <para lang="ru">TODO</para>
+          <para lang="ru">
+            При нажатии на кнопку появляется список карт смещения. Чтобы
+            появится в этом списке, изображение должно отвечать двум критериям.
+            Во-первых, оно должно быть на экране во время активации фильтра.
+            Во-вторых, оно должно быть того же размера, что и искомое
+            изображение. Обычно это копия искомого изображения, которое было
+            преобразовано в серое и измененено градиентом. Возможно использовать
+            изображения RGB, но результат работы фильтра труднее предугадать,
+            потому что фильтр работает от интенсивности цвета. Карты могут быть
+            разными по горизонтали и вертикали.
+          </para>
         </listitem>
       </varlistentry>
     </variablelist>
   </sect3> <!--end of GIMP 2.4 cartesian options-->
 
-  <!--TODO fr no ru: translate new sect3 for GIMP 2.4-->
-  <sect3 id="plug-in-displace-polar" lang="en;de;it">
+  <!--TODO fr no: translate new sect3 for GIMP 2.4-->
+  <sect3 id="plug-in-displace-polar" lang="en;de;it;ru">
     <title>
       <phrase lang="en">Polar Displacement Mode</phrase>
       <phrase lang="de">
         Verschiebungsmodus <quote>Polar</quote>
       </phrase>
       <phrase lang="it">Modalità spostamento polare</phrase>
+      <phrase lang="ru">Режим полярного смещения</phrase>
     </title>
 
     <figure>
@@ -1398,17 +1448,21 @@
         <phrase lang="it">
           Opzioni filtro sposta (polare)
         </phrase>
+        <phrase lang="ru">
+          Параметры фильтра <quote>Смещение</quote> (Полярное)
+        </phrase>
       </title>
 
       <mediaobject>
-        <imageobject lang="en;de;it">
+        <imageobject lang="en;de;it;ru">
           <imagedata format="PNG"
             fileref="../images/filters/options-map-displace-polar.png" />
         </imageobject>
-        <caption lang="en;de;it">
+        <caption lang="en;de;it;ru">
           <para lang="en">Displacement Mode: Polar</para>
           <para lang="de">Verschiebungsmodus: Polar</para>
           <para lang="it">Modalità di spostamento polare</para>
+          <para lang="ru">Режим смещения: Полярный</para>
         </caption>
       </mediaobject>
     </figure>
@@ -1462,7 +1516,16 @@
             (<quote>Spostamenti X/Y</quote>).
           </para>
           <para lang="no">TODO</para>
-          <para lang="ru">TODO</para>
+          <para lang="ru">
+            При выборе этого параметры, радиальные (т.е. растояние от центра)
+            координаты точек будут изменены. Точки изображения, соответствующие
+            точкам на карте со значением от 0 до 127 будут смещены от центра,
+            остальные точки - к центру.
+          </para>
+          <para lang="ru">
+            За описанием значений и карт смещения обратитесь выше
+            (<quote>Смещение по X/Y</quote>).
+          </para>
 
           <para lang="en">
             The displacement is independent from the polar distance, all
@@ -1479,18 +1542,24 @@
             pixel sono spostati della stessa quantità. L'immagine non sarà
             solo stirata o compressa ma anche distorta:
           </para>
+          <para lang="ru">
+            Смещение не зависит от радиального растояния. Все точки смещаются
+            на одно растояние. Поэтому изображение будет растянуто или сжато,
+            но не искажено:
+          </para>
 
           <mediaobject>
-            <imageobject lang="en;de;it">
+            <imageobject lang="en;de;it;ru">
               <imagedata format="PNG"
                 fileref="../images/filters/examples/map-displace-pinch.png" />
             </imageobject>
-            <caption lang="en;de;it">
+            <caption lang="en;de;it;ru">
               <para lang="en">Image distortion by Pinch option</para>
               <para lang="de">Bildverzerrung durch Drücken</para>
               <para lang="it">
                 Distorsione dell'immagine con l'opzione Pizzico
               </para>
+              <para lang="ru">Искажение изображения параметром щипок</para>
             </caption>
           </mediaobject>
 
@@ -1516,7 +1585,12 @@
             in verticale e del 20% in diagonale quindi una distorsione
             dell'immagine.
           </para>
-
+          <para lang="ru">
+            Изображение 160x120, белая карта смещения и коэффициент смещения
+            20.0 сместят все точки на 20 точек к центру. Это соответствует
+            сжатию по горизонтали на 25%, по вертикали 33% и диагонали 20%, так
+            что изображение будет искажено.
+          </para>
         </listitem>
       </varlistentry>
 
@@ -1578,7 +1652,20 @@
             Per i valori e la mappa di spostamento si veda sopra.
           </para>
           <para lang="no">TODO</para>
-          <para lang="ru">TODO</para>
+          <para lang="ru">
+            При выборе этого параметра, изменятся угловые координаты точек
+            изображения. Для простого смещения, изображение повернётся, иначе
+            завихрится.
+          </para>
+          <para lang="ru">
+            Точки изображения, соответствующие точкам на карте со значением
+            от 0 до 127 будут повёрнуты против часовой стрелки,
+            остальные точки - по часовой стрелке.
+          </para>
+          <para lang="ru">
+            За описанием значений и карт смещения обратитесь выше
+            (<quote>Смещение по X/Y</quote>).
+          </para>
         </listitem>
       </varlistentry>
     </variablelist>
@@ -1598,6 +1685,11 @@
         Per una mappa uniforme non neutra se la modalità di spostamento
         <quote>Polare</quote> è selezionata questo filtro opera in maniera simile
         a <link linkend="plug-in-whirlpinch">Vortice e pizzico</link>.
+      </para>
+      <para lang="ru">
+        Для простой, не нейтральной карты фильтр в <quote>полярном</quote>
+        режиме ведёт себя как <link
+        linkend="plug-in-whirlpinch">Вихрь и щипок</link>.
       </para>
     </note>
   </sect3> <!--end of GIMP 2.4 polar options-->
@@ -1865,19 +1957,20 @@
       <para lang="ru">
         Чтобы получить нужный градиент, сначала нарисуйте градиент от чёрного
         до белого. Затем с помощью инструмента
-        <!-- PENDING: ru <link linkend="gimp-tool-curves">-->Кривые<!--</link>-->
+        <link linkend="gimp-tool-curves">Кривые</link>
         измените кривую градиента.
       </para>
     </tip>
 
   </sect3>
 
-  <!-- TODO it no ru: translate new content: displacement details -->
-  <sect3 id="plug-in-displace-calculation" lang="en;de;fr">
+  <!-- TODO it no: translate new content: displacement details -->
+  <sect3 id="plug-in-displace-calculation" lang="en;de;fr;ru">
     <title>
       <phrase lang="en">Displacement Calculation</phrase>
       <phrase lang="de">Die Verschiebung berechnen</phrase>
       <phrase lang="fr">Calcul des déplacements</phrase>
+      <phrase lang="ru">Вычисление смещения</phrase>
     </title>
 
     <para lang="en">
@@ -1894,6 +1987,10 @@
       Cette section vous montrera comment calculer l'importance du
       déplacement, si ces détails vous intéressent. Vous pouvez sans
       problème la sauter.
+    </para>
+    <para lang="ru">
+      Следующая часть покажет как вычислить смещение для тем, кого это
+      интересует.
     </para>
 
     <para lang="en">
@@ -1920,6 +2017,15 @@
     </para>
     <para lang="fr">
       Il est facile de comprendre d'où viennent ces nombres :
+    </para>
+
+    <para lang="ru">
+      Общий пример показал смещение по X с коэффициентом 30.0: 19, 8, 4, или 15
+      точек, в зависимости от уровня серого на карте смещения.
+      displacement map's color.
+    </para>
+    <para lang="ru">
+      Почему только эти значения?
     </para>
 
 
@@ -1958,6 +2064,13 @@
       déplacement calculé, et une interpolation est calculée pour le
       deplacement fractionnaire. Un zoom sur l'image le montre clairement :
     </para>
+    <para lang="ru">
+      Если вы проверите эти уравнения, вы заметите, что они дают значению,
+      отличающиеся от приведённых в примере. Это значение не округляется до
+      смещения. Точки смещаются на дробные числа. В этом случае смещение
+      выполняется с помощью интерполяции. При ближнем рассмотрении изображения
+      это заметно:
+    </para>
 
     <figure>
       <title>
@@ -1968,6 +2081,7 @@
         <phrase lang="fr">
           Vue rapprochée sur l'exemple de déplacement.
         </phrase>
+        <phrase lang="ru">Детальный вид примера смещения</phrase>
       </title>
 
       <mediaobject>
@@ -1983,7 +2097,8 @@
           <para lang="fr">
             À droite, une petite surface zoomée à 800 %.
           </para>
-          </caption>
+          <para lang="ru">Область увеличена в 8 раз.</para>
+        </caption>
       </mediaobject>
     </figure>
 
@@ -2022,6 +2137,15 @@
       Ainsi, si vous choisissez un coefficient de 30,01  au lieu de 30,00,
       vous obtiendrez une image différente, bien que ce ne sera guère visible.
     </para>
-
+    <para lang="ru">
+      Смещение приводит к маленькой области (шириной в одну точку)
+      промежуточного цвета по краям областей сплошного цвета. В примере смещение
+      на -4.12 привело к тому что промежуточный цвет стал 12% чёрным и 88%
+      золотым.
+    </para>
+    <para lang="ru">
+      Если выбрать коэффициент смещения 30,01 вместо 30,00, то получится другое
+      изображение, хотя изменение и не видны.
+    </para>
   </sect3> <!--end of displacement calulation -->
 </sect2>
