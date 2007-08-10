@@ -20,7 +20,9 @@ cd $srcdir
 DIE=0
 
 echo -n "Looking for latest automake version ... "
-for minor in 15 14 13 12 11 10 9 8 7 6 ; do
+required_automake_minor=10
+minor=15
+while [ $minor -ge $required_automake_minor ]; do
     ver=1.$minor
     if (automake-$ver --version) < /dev/null > /dev/null 2>&1; then
         AUTOMAKE=automake-$ver
@@ -28,11 +30,13 @@ for minor in 15 14 13 12 11 10 9 8 7 6 ; do
 	echo $ver
         break
     fi
+    minor=`expr $minor - 1`
 done
 
 if [ -z "$AUTOMAKE" ]; then
     echo
-    echo "  You must have automake 1.6 or newer installed to compile $PROJECT."
+    echo "  You must have automake 1.$required_automake_minor or newer" \
+            "installed to compile $PROJECT."
     echo "  Download the appropriate package for your distribution,"
     echo "  or get the source tarball at ftp://ftp.gnu.org/pub/gnu/automake/"
     DIE=1
