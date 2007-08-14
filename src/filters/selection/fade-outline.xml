@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+                "http://www.docbook.org/xml/4.3/docbookx.dtd">
+
+<!-- section history:
+  2007-08-12 ude: created
+-->
+<sect2 id="plug-in-fade-outline" lang="en;de">
+  <sect2info>
+    <revhistory>
+      <revision lang="en">
+        <revnumber>$Revision$</revnumber>
+        <date>2007-08-14</date>
+        <authorinitials>ude</authorinitials>
+      </revision>
+      <revision lang="de">
+        <revnumber>$Revision$</revnumber>
+        <date>2007-08-14</date>
+        <authorinitials>ude</authorinitials>
+      </revision>
+    </revhistory>
+  </sect2info>
+
+  <title>
+    <phrase lang="en">Fade to Layer Mask</phrase>
+    <phrase lang="de">Ebenenmaske ausblenden</phrase>
+  </title>
+
+  <indexterm lang="en">
+    <primary>Filters</primary>
+    <secondary>Fade to Layer Mask</secondary>
+  </indexterm>
+  <indexterm lang="en"><primary>Fade to Layer Mask</primary></indexterm>
+
+  <indexterm lang="de">
+    <primary>Filter</primary>
+    <secondary>Ebenenmaske ausblenden</secondary>
+  </indexterm>
+  <indexterm lang="de"><primary>Ebenenmaske ausblenden</primary></indexterm>
+
+
+  <sect3>
+    <title>
+      <phrase lang="en">Overview</phrase>
+      <phrase lang="cs">Přehled</phrase>
+      <phrase lang="de">Wirkungsweise</phrase>
+      <phrase lang="fr">Généralités</phrase>
+      <phrase lang="it">Panoramica</phrase>
+      <phrase lang="no">Oversyn</phrase>
+      <phrase lang="ru">Общая информация</phrase>
+      <phrase lang="zh_CN">概述</phrase>
+    </title>
+
+    <figure>
+      <title>
+        <phrase lang="en">
+          Example for the <quote>Fade to Layer Mask</quote> filter
+        </phrase>
+        <phrase lang="de">
+          Anwendungsbeispiel für das Filter <quote>Ebenenmaske
+          ausblenden</quote>
+        </phrase>
+        <phrase lang="fr">
+          Exemple d'application pour le filtre <!-- Filter name -->
+        </phrase>
+        <phrase lang="it">
+          Esempio di applicazione del filtro <!-- Filter name-->
+        </phrase>
+      </title>
+
+      <mediaobject>
+        <imageobject>
+          <imagedata
+            fileref="../images/filters/examples/taj_orig.jpg" format="JPG" />
+        </imageobject>
+        <caption>
+          <para lang="en">Original image</para>
+          <para lang="de">Originalbild</para>
+          <para lang="fr">Image d'origine</para>
+        </caption>
+      </mediaobject>
+
+      <mediaobject>
+        <imageobject>
+          <imagedata
+            fileref="../images/filters/examples/selection-taj-fade-outline.jpg"
+            format="JPG" />
+        </imageobject>
+
+        <caption>
+          <para lang="en"><quote>Fade to Layer Mask</quote> applied</para>
+          <para lang="de">
+            Filter <quote>Ebenenmaske ausblenden</quote> angewandt
+          </para>
+          <para lang="fr">
+            Après application du filtre <quote><!-- Filter name --></quote>
+          </para>
+        </caption>
+      </mediaobject>
+    </figure>
+
+    <!-- This is the (slightly modified) description from the source code
+         "plug-ins/script-fu/scripts/fade-outline.scm" -->
+    <para lang="en">
+      This GIMP Script-Fu blends the outline border of a selection from one to
+      another transparency level by adding a <link
+      linkend="gimp-layer-mask">layer mask</link> that follows the shape of
+      the selection.  Usually from 100% (white, full opaque) to 0% (black,
+      full transparent).
+    </para>
+    <para lang="en">
+      You can specify the thickness of the fading border that is used to blend
+      from transparent to opaque and the fading direction (shrink or grow).
+    </para>
+    <para lang="en">
+      The outline is taken from the current selection or from the layers alpha
+      channel if no selection is active.
+    </para>
+    <para lang="en">
+      Optional you may keep the generated layer mask or apply it to the layer.
+    </para>
+
+    <para lang="de">
+      Dieses Skript-Fu-Script blendet den Rand einer Auswahl aus, indem mit
+      Hilfe einer <link linkend="gimp-layer-mask">Ebenenmaske</link> von einem
+      Transparenzniveau zu einem anderen übergeblendet wird, normalerweise von
+      100% (Weiß, vollständig deckend) nach 0% (Schwarz, vollständig
+      transparent).
+    </para>
+    <para lang="de">
+      Die Breite des ausblendenden Rands, der zum Übergang von Transparenz bis
+      Deckung verwendet wird, kann ebenso wie die Richtung der Ausblendung
+      (verkleinernd oder vergrößernd) eingestellt werden.
+    </para>
+    <para lang="de">
+      Falls keine aktive Auswahl existiert, wird der Rand der aktiven Ebene
+      (bzw. des Alphakanals der Ebene) gewählt.
+    </para>
+    <para lang="de">
+      Die verwendete Auswahlmaske kann wahlweise sofort angewendet werden oder
+      erhalten bleiben.
+    </para>
+  </sect3>
+
+
+  <!--
+    The next section describes where to find the filter in the menu and how to
+    call it.
+  -->
+  <sect3>
+    <title>
+      <phrase lang="en">Activate the filter</phrase>
+      <phrase lang="cs">Aktivace filtru</phrase>
+      <phrase lang="de">Filteraufruf</phrase>
+      <phrase lang="es">Activar el filtro</phrase>
+      <phrase lang="fr">Ouverture du filtre</phrase>
+      <phrase lang="it">Attivazione del filtro</phrase>
+      <phrase lang="ru">Активация фильтра</phrase>
+      <phrase lang="zh_CN">使用这个滤镜</phrase>
+    </title>
+
+    <para lang="en">
+      This filter is found in the image window menu under
+      <menuchoice>
+        <guimenu><accel>F</accel>ilters</guimenu>
+        <guisubmenu>Selection</guisubmenu>
+        <guimenuitem><accel>F</accel>ade to Layer Mask</guimenuitem>
+      </menuchoice>.
+    </para>
+
+    <para lang="de">
+      Dieses Filter lässt sich über das Menü
+      <menuchoice>
+        <guimenu><accel>F</accel>ilter</guimenu>
+        <guisubmenu>Auswahl</guisubmenu><!--Selection-->
+        <guimenuitem><accel>E</accel>benenmaske ausblenden</guimenuitem>
+      </menuchoice>
+      im Bildfenster aufrufen.
+    </para>
+
+    <para lang="fr">
+      On accède à ce filtre par
+      <menuchoice>
+        <guimenu>Filtres</guimenu>
+        <guisubmenu><!-- filter category --></guisubmenu>
+        <guimenuitem><!-- filter name --></guimenuitem>
+      </menuchoice>.
+    </para>
+
+    <para lang="it">
+      Questo filtro si trova nel menu immagine:
+      <menuchoice>
+        <guimenu>Filtri</guimenu>
+        <guisubmenu><accel></accel><!-- filter category --></guisubmenu>
+        <guisubmenu><accel></accel><!-- filter name --></guisubmenu>
+      </menuchoice>.
+    </para>
+
+    <para lang="no">
+      Du har tilgang til filteret frå biletmenyen via
+      <menuchoice>
+        <guimenu>Filter</guimenu>
+        <guisubmenu><!-- filter category --></guisubmenu>
+        <guimenuitem><!-- filter name --></guimenuitem>
+      </menuchoice>
+    </para>
+    
+    <para lang="ru">
+      Этот фильтр находится в
+      <menuchoice>
+        <guimenu>Фильтры</guimenu>
+        <guisubmenu><!-- filter category --></guisubmenu>
+        <guimenuitem><!-- filter name --></guimenuitem>
+      </menuchoice>.
+    </para>
+  </sect3>
+
+
+  <sect3>
+    <title>
+      <phrase lang="en;fr">Options</phrase>
+      <phrase lang="cs">Volby</phrase>
+      <phrase lang="de">Eigenschaften</phrase>
+      <phrase lang="it">Opzioni</phrase>
+      <phrase lang="no">Innstillingar</phrase>
+      <phrase lang="ru">Параметры</phrase>
+      <phrase lang="zh_CN">选项</phrase>
+    </title>
+
+    <figure>
+      <title>
+        <phrase lang="en"><quote>Fade to Layer Mask</quote> options</phrase>
+        <phrase lang="de">
+          Eigenschaften des Filters <quote>Ebenenmaske ausblenden</quote>
+        </phrase>
+      </title>
+
+      <mediaobject>
+        <imageobject lang="en">
+          <imagedata format="PNG"
+            fileref="../images/filters/options-selection-fade-out.png" />
+        </imageobject>
+        <imageobject lang="de">
+          <imagedata format="PNG"
+            fileref="../images/filters/de/options-selection-fade-out.png" />
+        </imageobject>
+      </mediaobject>
+    </figure>
+
+    <variablelist>
+      <varlistentry>
+        <term>
+          <phrase lang="en">Border size</phrase>
+          <phrase lang="de">Randgröße (Pixel)</phrase>
+        </term>
+
+        <listitem>
+          <para lang="en">
+            The size of the outline border, in pixels.
+          </para>
+          <para lang="de">
+            Die Breite des Rands in Pixeln.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>
+          <phrase lang="en">Fade from %</phrase>
+          <phrase lang="de">Überblenden von %</phrase>
+        </term>
+
+        <listitem>
+          <para lang="en">
+            The transparency level of the area within the selection. Default
+            is 100%, which corresponds to a white layer mask giving full
+            opacity to the coupled pixel in the layer.
+          </para>
+          <para lang="de">
+            Das Transparenzniveau innerhalb der Auswahl. Normalerweise ist
+            dies 100%, was einer weißen Ebenenmaske entspricht, so dass jedes
+            Pixel vollständig deckend ist.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>
+          <phrase lang="en">Fade to %</phrase>
+          <phrase lang="de">Überblenden nach %</phrase>
+        </term>
+
+        <listitem>
+          <para lang="en">
+            The transparency level of the outside edge of the border. Default
+            is 0%, which corresponds to a black layer mask giving full
+            transpareny to the coupled pixel in the layer.
+          </para>
+          <para lang="de">
+            Das Transparenzniveau an der Außenkante des ausblendenden Rands.
+            Voreinstellung ist 0%, was einer schwarzen Ebenenmaske entspricht,
+            so dass jedes Pixel vollständig transparent ist.
+          </para>
+
+          <figure>
+            <title>
+              <phrase lang="en">
+                <quote>Fade from</quote> and <quote>Fade to</quote> examples
+              </phrase>
+              <phrase lang="de">
+                Beispiele für <quote>Überblenden von</quote> und
+                <quote>Überblenden nach</quote>
+              </phrase>
+            </title>
+            <mediaobject>
+              <imageobject>
+                <imagedata
+                  fileref="../images/filters/examples/fade-outline-levels.png"
+                  format="PNG" />
+              </imageobject>
+              <caption>
+                <para lang="en">
+                  Top: from 100% to 0% (default) and layer dialog.
+                  Bottom (from left): from 100% to 50%, from 50% to 0%,
+                  from 0% to 100%.
+                </para>
+                <para lang="de">
+                  Oben: von 100% nach 0% (Voreinstellung) und Ebenendialog.
+                  Unten (von links): von 100% nach 50%, von 50% nach 0%,
+                  von 0% nach 100%.
+                </para>
+              </caption>
+            </mediaobject>
+          </figure>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>
+          <phrase lang="en">Use growing selection</phrase>
+          <phrase lang="de">Auswahl vergrößern</phrase>
+        </term>
+
+        <listitem>
+          <para lang="en">
+            If checked, the fading border is placed on the outside of the
+            selection, and the selection is growing by the border size. It not
+            checked, the border is <quote>moving</quote> inside the selection,
+            and the selection is shrinking.
+          </para>
+          <para lang="de">
+            Wenn diese Eigenschaft aktiviert ist, liegt der ausblendende Rand
+            an der Außenseite der Auswahl, und die Auswahl wird um die
+            Randbreite vergrößert. Andernfalls wird der Rand an die Innenseite
+            der Auswahl gelegt, und die Auswahl verkleinert sich.
+          </para>
+
+          <figure>
+            <title>
+              <phrase lang="en">
+                Option <quote>Use growing selection</quote>
+              </phrase>
+              <phrase lang="de">
+                Eigenschaft <quote>Auswahl vergrößern </quote>
+              </phrase>
+            </title>
+            <mediaobject>
+              <imageobject>
+                <imagedata
+                  fileref="../images/filters/examples/fade-outline-grow.png"
+                  format="PNG" />
+              </imageobject>
+              <caption>
+                <para lang="en">
+                  Left: unchecked. Right: checked (selection is stroked).
+                </para>
+                <para lang="de">
+                  Links: deaktiviert. Rechts: aktiviert (Auswahl ist
+                  nachgezogen).
+                </para>
+              </caption>
+            </mediaobject>
+          </figure>
+
+          <para lang="en">
+            Where do the rounded corners come from? See <link
+            linkend="gimp-selection-grow">Grow Selection</link> for an
+            explantion and what to do if you don't want rounded corners.
+          </para>
+          <para lang="de">
+            Wo kommen die abgerundeten Ecken auf einmal her? Die Erklärung
+            dafür plus Korrekturhinweis finden Sie unter <link
+            linkend="gimp-selection-grow">Auswahl vergrößern</link>.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>
+          <phrase lang="en">Apply generated layermask</phrase>
+          <phrase lang="de">Erstellte Ebenemaske anwenden</phrase>
+        </term>
+
+        <listitem>
+          <para lang="en">
+            If checked, the layer mask will be merged with the layer. This
+            transfers the transparency information to the layer's alpha
+            channel, then the layer mask will be removed. See <xref
+            linkend="gimp-layer-mask-apply" />.
+          </para>
+          <para lang="de">
+            Fall aktiviert, wird die Ebenmaske auf die Ebene angewendet, d.h.
+            die Transparenzinformation wird auf die Ebene übertragen und die
+            Ebenenmaske dann gelöscht. Siehe <xref
+            linkend="gimp-layer-mask-apply" />.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>
+          <phrase lang="en">Clear unselected maskarea</phrase>
+          <phrase lang="de">Nicht ausgewählten Maskenbereich löschen</phrase>
+        </term>
+
+        <listitem>
+          <para lang="en">
+            If checked, the area outside the selection will be cleared, i.e.
+            the layer mask will be black (full transparency). This is the
+            default.
+          </para>
+          <para lang="de">
+            Wenn aktiviert, wird der Bereich außerhalb der Auswahl gelöscht,
+            d.h. die Ebenenmaske ist schwarz (vollständig transparent).
+          </para>
+
+          <figure>
+            <title>
+              <phrase lang="en">
+                Option <quote>Clear unselected maskarea</quote>
+              </phrase>
+              <phrase lang="de">
+                Eigenschaft <quote>Nicht ausgewählten Maskenbereich
+                löschen</quote>
+              </phrase>
+            </title>
+            <mediaobject>
+              <imageobject>
+                <imagedata
+                  fileref="../images/filters/examples/fade-outline-clear.png"
+                  format="PNG" />
+              </imageobject>
+              <caption>
+                <para lang="en">Left: checked. Right: unchecked.</para>
+                <para lang="de">Links: aktiviert. Rechts: deaktiviert.</para>
+              </caption>
+            </mediaobject>
+          </figure>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+  </sect3>
+</sect2>
