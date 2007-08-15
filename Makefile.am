@@ -115,6 +115,7 @@ if GIMP_HELP_BUILD
 html/%/index.html: xml/%.xml stylesheets/plainhtml.xsl
 	rm -rf html/$*
 	$(mkdir_p) html/$*
+	@test -d html/images || $(LN_S) $(abs_top_srcdir)/images html/
 
 	$(XSLTPROC) \
 	  $(XSLTFLAGS) \
