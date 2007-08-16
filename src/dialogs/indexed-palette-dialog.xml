@@ -4,6 +4,7 @@
                 "http://www.docbook.org/xml/4.3/docbookx.dtd">
 
 <!-- section history:
+  2007-08-12 j.h: updated to v2.4 ; colormap submenu and a note added en;fr
   2006-03-12 lexa: added german translation and made docbook compliant
   2005-11-29 replaced informalfigures by figures by lexa
 -->
@@ -43,7 +44,7 @@
     <phrase lang="cs">Dialog Mapa barev</phrase>
     <phrase lang="de">Der Dialog <quote>Farbtabelle</quote></phrase>
     <phrase lang="es">Diálogo Mapa de colores</phrase>
-    <phrase lang="fr">Dialogue Palette des couleurs indexées</phrase>
+    <phrase lang="fr">Dialogue Palette des couleurs (indexées)</phrase>
     <phrase lang="it">Finestra mappa colori</phrase>
     <phrase lang="no">Fargekart for indekserte fargar</phrase>
     <phrase lang="ru">Диалог цветовой карты</phrase>
@@ -84,22 +85,30 @@
   <indexterm lang="ru"><primary>Цветовая карта</primary></indexterm>
   <indexterm lang="zh_CN"><primary>颜色表</primary></indexterm>
 
-  <figure>
+  <figure><!--TODO de;es;it;no;ru-->
     <title>
-      <phrase lang="en">The Colormap dialog</phrase>
+      <phrase lang="en">An indexed image with 6 colors and its Colormap
+        dialog</phrase>
       <phrase lang="cs">Dialog Mapa barev</phrase>
       <phrase lang="de">Ansicht des Dialoges <quote>Farbtabelle</quote></phrase>
       <phrase lang="es">El diálogo Mapa de colores</phrase>
-      <phrase lang="fr">Le dialogue Palette de couleurs indexées</phrase>
+      <phrase lang="fr">Une image indexée avec 6 couleurs et sa Palette des
+        couleurs</phrase>
       <phrase lang="it">La finestra mappa colori</phrase>
+
       <phrase lang="no">Fargekartdialogen</phrase>
       <phrase lang="ru">Диалог "Цветовая карта"</phrase>
       <phrase lang="zh_CN">颜色表对话框</phrase>
     </title>
-
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref="../images/dialogs/examples/cosmos-6.gif"
+          format="GIF" />
+      </imageobject>
+    </mediaobject>
     <mediaobject>
       <imageobject lang="en;de;es">
-        <imagedata fileref="../images/dialogs/dialogs-indexed-palette.png"
+        <imagedata fileref="../images/dialogs/colormap-dialog.png"
           format="PNG" />
       </imageobject>
       <imageobject lang="cs">
@@ -107,7 +116,7 @@
           format="PNG" />
       </imageobject>
       <imageobject lang="fr">
-        <imagedata fileref="../images/dialogs/fr/dialogs-indexed-palette.png"
+        <imagedata fileref="../images/dialogs/fr/colormap-dialog.png"
           format="PNG" />
       </imageobject>
       <imageobject lang="it">
@@ -205,7 +214,7 @@
 
   <sect3 id="gimp-indexed-palette-dialog-activate">
     <title>
-      <phrase lang="en">Dialog call</phrase>
+      <phrase lang="en">Activate dialog</phrase>
       <phrase lang="cs">Vyvolání dialogu</phrase>
       <phrase lang="de">Dialogaufruf</phrase>
       <phrase lang="es">Apertura del diálogo</phrase>
@@ -255,7 +264,7 @@
           <menuchoice>
             <guimenu>Fichier</guimenu>
             <guisubmenu>Dialogues</guisubmenu>
-            <guimenuitem>Palette de couleurs</guimenuitem>
+            <guimenuitem>Palette des couleurs</guimenuitem>
           </menuchoice>
         </para>
         <para lang="it">
@@ -325,7 +334,7 @@
           À partir du menu de l'image :
           <menuchoice>
             <guimenu>Dialogues</guimenu>
-            <guimenuitem>Palette de couleurs</guimenuitem>
+            <guimenuitem>Palette des couleurs</guimenuitem>
           </menuchoice>
         </para>
         <para lang="it">
@@ -568,8 +577,8 @@
       (jusqu'à ce que vous en ajoutiez). Cela a un effet majeur sur de
       nombreuses opérations de Gimp : par exemple, lors du remplissage par un
       motif, il risque de ne pas trouver toutes les couleurs nécessaires et
-      créera une couleur approchée par
-      <link linkend="glossary-dithering-fr">Tramage</link>.
+      créera une couleur approchée par une méthode de
+      <link linkend="glossary-quantization">Quantisation</link>.
       Si la carte des couleurs est pauvre en couleurs, le résultat sera de
       piètre qualité.
     </para>
@@ -1335,9 +1344,11 @@
         este tipo de imágenes.  Y sólo unos pocos filtros pueden emplearse.
       </para>
       <para lang="fr">
-        Ce dialogue n'est pas la seule façon de modifier la carte des couleurs
-        d'une image indexée. Les outils de couleur, comme
-        Luminosité/Contraste, Teinte/Saturation le permettent aussi.
+        Ce dialogue fournit les méthodes les plus utilisées pour modifier
+        la palette des couleurs d'une image indexée. Les outils de couleur,
+        tels Luminosité/Contrast, Teinte-saturation...etc, n'agissent pas sur
+        les images indexées. Seuls certains greffons, comme Normaliser,
+        Renforcement des couleurs, Étendre le contraste en sont capables.
       </para>
       <para lang="it">
         La finestra mette a disposizione le funzioni più comunemente usate per
@@ -1368,5 +1379,98 @@
         亮度/对比度，色调/饱和度等
       </para>
     </note>
+    <note lang="en;fr"> <!--TODO de es it no ru-->
+      <para lang="en">
+        If you paint an indexed image with a color which is not in the
+        Colormap, GIMP will use the most similar color of the Colormap.
+      </para>
+      <para lang="fr">
+        Si vous peignez une image indexée avec une couleur qui n'est pas dans
+        la Palette des couleurs indexées, GIMP utilisera la couleur de la
+        Palette qui s'en rapproche le plus.
+      </para>
+    </note>
+  </sect3>
+
+  <sect3 lang= "en;fr" id="gimp-indexed-palette-dialog-submenu">
+    <!--TODO v2.4 de;es;it;no;ru-->
+    <title>
+      <phrase lang="en">The Colormap context menu</phrase>
+      <phrase lang="fr">Le menu local de la Palette des couleurs</phrase>
+    </title>
+    <para lang="en">
+      Right-clicking on a color in the Colormap selects this color and opens
+      a pop-up submenu:
+    </para>
+    <para lang="fr">
+      Un clic droit sur une des couleurs de la palette sélectionne cette
+      couleur et fait apparaître un menu local comportant plusieurs
+      commandes :
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para lang="en">
+          <guilabel>Edit color</guilabel> : This command opens a color
+          selector which allows you to modify the color.
+        </para>
+        <para lang="fr">
+          <guilabel>Éditer la couleur</guilabel> : Cette commande fait
+          apparaître un sélecteur de couleurs vous permettant de modifier
+          la couleur.
+        </para>
+      </listitem>
+      <listitem>
+        <para lang="en">
+          <guilabel>Add from FG</guilabel> : This command replaces the
+          selected color with the Foreground color of Toolbox.
+        </para>
+        <para lang="fr">
+          <guilabel>Ajouter la couleur depuis le PP</guilabel> : Cette
+          commande remplace la couleur sélectionnée par la couleur de
+          premier-plan de la Boîte à Outils.
+        </para>
+      </listitem>
+      <listitem>
+        <para lang="en">
+          <guilabel>Add from BG</guilabel> : This command replaces the
+          selected color with the Background color of Toolbox.
+        </para>
+        <para lang="fr">
+          <guilabel>Ajouter la couleur depuis l'AP</guilabel> : Cette
+          commande remplace la couleur sélectionnée par la couleur
+          d'arrière-plan de la Boîte à Outils.
+        </para>
+      </listitem>
+      <listitem>
+        <para lang="en">
+          <guilabel>Rearrange Colormap</guilabel> : This command opens which
+          can be understood very intuitively and doesn't need to explain
+          more.
+        </para>
+        <para lang="fr">
+          <guilabel>Réorganiser la Palette des couleurs</guilabel> : Cette
+          commande fait apparaître une fenêtre particulière, de compréhension
+          très intuitive et ne nécessitant pas plus d'explication.
+        </para>
+        <figure>
+          <title>
+            <phrase lang="en">The <quote>Rearrange Colormap</quote>
+              window and its sub-menu</phrase>
+            <phrase lang="fr">La fenêtre de réorganisation de la Palette des
+              couleurs et son sous-menu</phrase>
+          </title>
+          <mediaobject>
+            <imageobject lang="en">
+              <imagedata fileref="../images/dialogs/colormap-reorg.png"
+                         format="PNG" />
+            </imageobject>
+            <imageobject lang="fr">
+              <imagedata fileref="../images/dialogs/fr/colormap-reorg.png"
+                         format="PNG" />
+            </imageobject>
+          </mediaobject>
+        </figure>
+      </listitem>
+    </itemizedlist>
   </sect3>
 </sect2>

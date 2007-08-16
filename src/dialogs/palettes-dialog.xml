@@ -4,6 +4,7 @@
           "http://www.docbook.org/xml/4.3/docbookx.dtd">
 
 <!-- section history:
+  2007-08-15 j.h: v2.4 added Edit Active Palette option en;fr
   2007-01-09 manuq: added es translation
   2006-09-09 ciampix: added it translation
   2006-05-02 lexa: added de translation
@@ -116,7 +117,7 @@
   <indexterm lang="no">
     <primary>Palettar</primary>
   </indexterm>
-
+<!--Not to be repeated
   <figure>
     <title>
       <phrase lang="en">The Palettes dialog</phrase>
@@ -157,6 +158,7 @@
       </imageobject>
     </mediaobject>
   </figure>
+-->
 
   <para lang="en">
     A <emphasis>palette</emphasis> is a set of discrete colors, in no
@@ -623,13 +625,12 @@
       <phrase lang="zh_CN">使用色板对话框</phrase>
     </title>
 
-    <para lang="en">
-      Clicking on a palette in the dialog makes it GIMP's active palette. This
-      does not really have any significance, though. Double-clicking on a
-      palette brings up the
-      <link linkend='gimp-palette-editor-dialog'>Palette Editor</link>,
+    <para lang="en"><!--TODO v2.4 de;es;it;no;ru-->
+      Clicking on a palette in the dialog selects this palette and brings up
+      the <link linkend='gimp-palette-editor-dialog'>Palette Editor</link>,
       which allows you to set GIMP's foreground or background colors by
-      clicking on colors in the palette display.
+      clicking on colors in the palette display. You can also use the
+      arrow keys to select a palette.
     </para>
     <para lang="cs">
       Kliknutím na paletu v dialogu se paleta stane aktivní paletou Gimpu.
@@ -654,9 +655,10 @@
     </para>
     <para lang="fr">
       Pour sélectionner une palette, cliquez une fois dessus ou utilisez la
-      touche de tabulation et les touches fléchées. Un double clic sur une
-      vignette ouvrira la palette correspondante dans l'
-      <link linkend='gimp-palette-editor-dialog'>Éditeur de palette</link>.
+      touche de tabulation et les touches fléchées. Cela ouvre l'
+      <link linkend='gimp-palette-editor-dialog'>Éditeur de palette</link>
+      qui vous permet de fixer les couleurs de Premier-plan et d'Arrière-plan
+      de la Boîte à Outils.
     </para>
     <para lang="it">
       Se nella finestra di dialogo delle tavolozze si fa clic su una
@@ -724,9 +726,11 @@
       de editarlo.
     </para>
     <para lang="fr">
-      Un double clic sur un nom de palette (en mode Liste) permet d'éditer ce nom.
-      Mais cela ne concerne que les palettes personnelles, pas les palettes
-      système.
+      Un double clic sur un nom de palette (en mode Liste) permet d'éditer ce
+      nom. Mais cela ne concerne que les palettes personnelles, pas les
+      palettes système. Si vous modifiez un nom que vous n'êtes pas autorisé
+      à modifier, il reprendra le nom original dès que vous taperez Entrée ou
+      cliquerez ailleurs.
     </para>
     <para lang="it">
       Facendo doppio clic sul <emphasis>nome</emphasis> di una tavolozza
@@ -1606,7 +1610,7 @@
             <mediaobject>
               <imageobject lang="en;cs;es">
                 <imagedata
-                  fileref='../images/dialogs/dialogs-palette-import.png'
+                  fileref='../images/dialogs/palette-import-dialog.png'
                   format='PNG' />
               </imageobject>
               <imageobject lang="de">
@@ -1616,7 +1620,7 @@
               </imageobject>
               <imageobject lang="fr">
                 <imagedata
-                  fileref='../images/dialogs/fr/dialogs-palette-import.png'
+                  fileref='../images/dialogs/fr/palette-import-dialog.png'
                   format='PNG' />
               </imageobject>
               <imageobject lang="it">
@@ -1694,6 +1698,22 @@
             “导入色板”对话框，其中有如下选项：
           </para>
 
+          <note lang="en;fr">
+            <para lang="en">
+              Former versions of GIMP had a <quote>Save palette</quote>
+              command. It no longer exists. To save the palette of an image,
+              indexed or not, you must <emphasis>import</emphasis> it in fact
+              from the image.
+            </para>
+            <para lang="fr">
+              Les anciennes versions de GIMP possédaient une commande
+              <quote>Enregistrer la palette</quote>. Elle n'existe plus.
+              Pour enregistrer la palette d'une image, indexée ou non, vous
+              devez en fait l'<emphasis>importer</emphasis> à partir de
+              l'image.
+            </para>
+          </note>
+
           <variablelist>
             <varlistentry>
               <term lang="en">Select Source</term>
@@ -1706,10 +1726,6 @@
               <term lang="ru">Выбрать источник (исходное)</term>
               <term lang="zh_CN">选择来源</term>
 
-              <!--TODO: all  new options for source: image in GIMP 2.4:
-                               - Sample Merged
-                               - Selected Pixels only
-              -->
               <listitem>
                 <para lang="en">
                   You can import a palette either from any of GIMP's gradients
@@ -1719,6 +1735,29 @@
                   extension <filename>.pal</filename>), of the type used by
                   several Microsoft Windows applications.
                 </para>
+                <para lang="en"><!--TODO v2.4 de;es;it;no;ru;-->
+                  Two new options in GIMP-2.4 concerning image as source,
+                  available for RGB images only:
+                  <itemizedlist>
+                    <listitem>
+                      <para>
+                        <guilabel>Sample merged</guilabel>: When this option
+                        is checked, colors are picked from all visible
+                        layers. If unchecked, pixels are picked from the
+                        active layer only, even though not visible.
+                      </para>
+                    </listitem>
+                    <listitem>
+                      <para>
+                        <guilabel>Selected pixels only</guilabel>: As the
+                        name says, pixels are picked from the selected area
+                        only, in the active layer or all visible layers
+                        according to the status of the previous option.
+                      </para>
+                    </listitem>
+                  </itemizedlist>
+                </para>
+
                 <para lang="cs">
                   Paletu lze importovat z libovolného přechodu v Gimpu
                   (výběrem z příslušné nabídky) nebo z jakéhokoliv právě
@@ -1746,6 +1785,7 @@
                   <filename>.pal</filename>), que son el tipo empleado por
                   varias aplicaciones de Microsoft Windows.
                 </para>
+
                 <para lang="fr">
                   Vous pouvez importer une palette soit à partir d'un dégradé
                   quelconque pris dans la liste déroulante, ou à partir d'une
@@ -1755,6 +1795,33 @@
                   <filename>.pal</filename>,
                   utilisé dans plusieurs applications Microsoft Windows.
                 </para>
+                <para lang="fr">
+                  Deux nouvelles options dans GIMP-2.4 concernant l'image
+                  comme source, disponibles pour les images RVB seulement:
+                  <itemizedlist>
+                    <listitem>
+                      <para>
+                        <guilabel>Échantillonner sur tous les
+                        calques</guilabel>: Quand cette option est cochée,
+                        les couleurs sont prélevées dans l'ensemble des
+                        calques visibles. Quand elle n'est pas cochée, les
+                        couleurs sont prélevées dans le calque actif
+                        seulement, même s'il n'est pas visible.
+                      </para>
+                    </listitem>
+                    <listitem>
+                      <para>
+                        <guilabel>Pixels sélectionnés seulement</guilabel>:
+                        Comme le nom l'indique, seuls les pixels contenus
+                        dans la surface de sélection servent au prélèvement
+                        des couleurs, dans le calque actif ou l'ensemble des
+                        calques visibles selon l'état de la précédente
+                        option.
+                      </para>
+                    </listitem>
+                  </itemizedlist>
+                </para>
+
                 <para lang="it">
                   È possibile importare una tavolozza sia da qualsiasi
                   gradiente di GIMP (selezionabile dal menu associato), che
@@ -2042,7 +2109,16 @@
                  A mainly blue image makes by default a mainly blue palette. Increasing
                  the Interval opens for less frequently colors to be added to the palette
                  -->
-                <para lang="en">XXX I have no idea what this is.</para>
+                <para lang="en">I think I can give the following
+                  explanation. Even setting Number of colors to maximum,
+                  the number of colors can't exceed 10000 in the palette.
+                  RGB images have much more colors.
+                  <guilabel>Interval</guilabel> should allow to group similar
+                  colors around an average and so get a better palette. This
+                  problem doesn't exist with 256 colors indexed images :
+                  Interval to 1 allows picking 256 colors (this option is
+                  grayed out with more than 256 colors indexed palettes too).
+                </para>
                 <para lang="cs">Doplnit.</para>
                 <para lang="de">
                   Hmm, keine Ahnung. Wenn Sie es herausfinden, schicken Sie
@@ -2050,7 +2126,17 @@
                 </para>
                 <para lang="es">FIXME</para>
                 <para lang="fr">
-                  Quelqu'un a-t-il une idée sur le rôle de cette fonction ?
+                  Il me semble pouvoir donner l'explication suivante. Même
+                  en poussant le curseur Nombre de couleurs au maximum, le
+                  nombre de couleurs de la palette ne peut dépasser 10000.
+                  Or, une image RVB possède beaucoup plus de couleurs.
+                  L'<guilabel>Intervalle</guilabel> permettrait donc de
+                  regrouper des couleurs similaires autour d'une moyenne et
+                  ainsi d'obtenir une palette plus proche la réalité. Le
+                  problème ne se pose pas avec les images indexées en 256
+                  couleurs : l'intervalle de 1 permet de prélever ces 256
+                  couleurs (Cette option est également en grisé avec les
+                  images indexées en plus de 256 couleurs).
                 </para>
                 <para lang="it">Da fare: non abbiamo alcuna idea di cosa
                 faccia questa funzione.</para>
@@ -2773,10 +2859,9 @@
       </para>
 
       <para lang="en">
-        Double-clicking on a color not only sets the foreground, it also
-        brings up a color editor that allows you to modify the selected
-        palette entry. (This only happens if the palette is one you are
-        allowed to modify: that is, one you have added to GIMP yourself.)
+        If the palette is a custom palette, double-clicking on a color not
+        only sets the foreground, it also brings up a color editor that
+        allows you to modify the selected palette entry.
       </para>
       <para lang="cs">
         Dvojitým kliknutím na barvu v paletě se kromě jejího nastavení jako
@@ -2797,10 +2882,9 @@
         que se le permiten modificar, esto es, las que ha creado Ud. mismo).
       </para>
       <para lang="fr">
-        Un double clic non seulement règle le Premier-plan, mais aussi ouvre
-        un éditeur de couleur qui vous permet de modifier la couleur
-        sélectionnée, à condition qu'il s'agisse d'une palette que vous avez
-        ajoutée vous-même.
+        Si la palette est une palette personnelle, un double clic non
+        seulement règle le Premier-plan, mais aussi ouvre un éditeur de
+        couleur qui vous permet de modifier la couleur sélectionnée.
       </para>
       <para lang="it">
         Facendo doppio clic su un colore, non solo si imposta il colore di
@@ -3481,12 +3565,12 @@
       <mediaobject>
         <imageobject lang='en;cs;de;es;ru'>
           <imagedata
-            fileref='../images/dialogs/dialogs-palette-editor-menu.png'
+            fileref='../images/dialogs/palette-editor-context-menu.png'
             format='PNG' />
         </imageobject>
         <imageobject lang="fr">
           <imagedata
-            fileref='../images/dialogs/fr/dialogs-palette-editor-menu.png'
+            fileref='../images/dialogs/fr/palette-editor-context-menu.png'
             format='PNG' />
         </imageobject>
         <imageobject lang="it">
@@ -3903,6 +3987,24 @@
           </para>
           <para lang="zh_CN">“完整镜头”调整色板显示项的竖向大小，使整个色板
           刚好在显示区域中。</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry><!--TODO v2.4 de;es;it;no;ru;-->
+        <term id="gimp-palette-editor-active">
+          <phrase lang="en">Edit Active Palette</phrase>
+          <phrase lang="fr">Éditer la palette active</phrase>
+        </term>
+        <listitem>
+          <para lang="en">
+            When this option is checked (default), you can edit another
+            palette by clicking on it in <quote>Palettes</quote> dialog.
+          </para>
+          <para lang="fr">
+            Quand cette option est cochée (par défaut), vous pouvez éditer
+            une autre palette en cliquant dessus dans la boîte de dialogue
+            <quote>Palettes</quote>.
+          </para>
         </listitem>
       </varlistentry>
     </variablelist>
