@@ -3,11 +3,12 @@
           "http://www.docbook.org/xml/4.3/docbookx.dtd">
 
 <!-- section history:
+  2007-08-17 Added Spanish translation by AntI
   2007-04-09 KoSt: added 'no'
   2005-08-29 de added by axel.wernicke
 -->
-<sect2 id="filters-edges-introduction" lang="en;cs;de;fr;it;no;ru">
-  <sect2info lang="en;de;fr;no" role="cvs">
+<sect2 id="filters-edges-introduction" lang="en;cs;de;es;fr;it;no;ru">
+  <sect2info lang="en;de;es;fr;no" role="cvs">
     <revhistory>
       <revision lang="en">
         <revnumber>$Revision$</revnumber>
@@ -18,6 +19,11 @@
         <revnumber>$Revision$</revnumber>
         <date>2006-11-23</date>
         <authorinitials>lexa</authorinitials>
+      </revision>
+      <revision lang="es">
+        <revnumber>$Revision$</revnumber>
+        <date>2007-08-17</date>
+        <authorinitials>AntI</authorinitials>
       </revision>
       <revision lang="fr">
         <revnumber>$Revision$</revnumber>
@@ -36,6 +42,7 @@
     <phrase lang="en">Introduction</phrase>
     <phrase lang="cs">Úvod do detekování hran</phrase>
     <phrase lang="de">Einführung</phrase>
+    <phrase lang="es">Introducción</phrase>
     <phrase lang="fr">Introduction à la détection des bords</phrase>
     <phrase lang="it">Introduzione al rilevamento bordi</phrase>
     <phrase lang="no">Innleiing</phrase>
@@ -53,6 +60,13 @@
     <primary>Filter</primary>
     <secondary>Kantenerkennung</secondary>
   </indexterm>
+
+  <indexterm lang="es">
+    <primary>Filtros</primary>
+    <secondary>Detectar bordes</secondary>
+    <tertiary>Introducción</tertiary>
+  </indexterm>
+  <indexterm lang="es"><primary>Detectar bordes</primary></indexterm>
 
   <indexterm lang="fr">
     <primary>Filtres</primary>
@@ -105,6 +119,14 @@
     verschiedene künstlerische Effekte zu erreichen.
   </para>
 
+  <para lang="es">
+    El filtro detectar bordes busca los bordes entre colores diferentes y así
+    pueden detectar los contornos de los objetos.
+  </para>
+  <para lang="es">
+    Se usan para hacer selecciones y para otras propuestas artísticas.
+  </para>
+
   <para lang="fr">
     Les filtres de détection des bords recherchent les limites entre
     les couleurs et détectent ainsi le contour des objets.
@@ -140,7 +162,7 @@
     художественных целей.
   </para>
 
-  <mediaobject lang="en;de;it;ru">
+  <mediaobject lang="en;de;es;it;ru">
     <imageobject>
       <imagedata fileref="../images/filters/filters-edgedetect-fig.png"
                  format="PNG" />
@@ -236,6 +258,31 @@
     Gegen diese falsch erkannten Kanten hilft eine leichte Weichzeichnung
     des Bildes vor der Anwendung des Filters.
   </para>
+
+  <para lang="es">
+    La mayoria de ellos se basan en métodos de cálculo sobre degradados y
+    generan líneas espesas. Mire la fig. 1 que representa las variaciones de
+    intensidad de color. A la izquierda, es un degradado lento de color que
+    no es un borde. A la derecha, una variación rápida que si es un borde.
+    Ahora, calculamos el degradado, la velocidad de variación, de este borde:
+    la primera derivada (fig. 2). Hemos decidido que se detecte el borde
+    cuando el degradado sea mayor que el valor del umbral (el valor exacto
+    está en la cima de la curva, pero está cima varia según los bordes). En
+    la mayoria de los casos, el umbral está bajo la cima y el borde es
+    espeso.
+  </para>
+  <para lang="es">
+    La detección de bordes Laplace usa una segunda derivada (fig.3). La cima
+    de la curva es ahora cero y está claramente identificada. Por eso el
+    filtro Laplace representa un borde fino, de solo un píxel de ancho. Pero
+    esta derivada genera varios ceros correspondientes a pequeñas
+    ondulaciones, dando resultados falsos.
+  </para>
+  <para lang="es">
+    A menudo es necesario desenfocar algo la imagen antes de aplicar el
+    filtro detectar bordes, evitando, así, los bordes falsos.
+  </para>
+
   <para lang="fr">
     La plupart d'entre eux sont basés sur des méthodes de calcul de
     gradient et donnent des bordures épaisses. Considérez la figure

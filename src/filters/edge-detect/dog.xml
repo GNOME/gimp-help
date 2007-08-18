@@ -4,13 +4,14 @@
           "http://www.docbook.org/xml/4.3/docbookx.dtd">
 
 <!-- section history:
+  2007-08-17 Added Spanish translation by AntI
   2007-04-09 KoSt: added 'no'
   2005-12-07 replaced <simplesect> by <sect3> by lexa
   050930 de replaced informalfigure by axel.wernicke
   050829 de added by axel.wernicke
 -->
-<sect2 id="plug-in-dog" lang="en;cs;de;fr;it;no;ru">
-  <sect2info lang="en;de;fr" role="cvs">
+<sect2 id="plug-in-dog" lang="en;cs;de;es;fr;it;no;ru">
+  <sect2info lang="en;de;es;fr" role="cvs">
     <revhistory>
       <revision lang="en">
         <revnumber>$Revision$</revnumber>
@@ -21,6 +22,11 @@
         <revnumber>$Revision$</revnumber>
         <date>2006-11-04</date>
         <authorinitials>lexa</authorinitials>
+      </revision>
+      <revision lang="es">
+        <revnumber>$Revision$</revnumber>
+        <date>2007-08-17</date>
+        <authorinitials>AntI</authorinitials>
       </revision>
       <revision lang="fr">
         <revnumber>$Revision$</revnumber>
@@ -34,6 +40,7 @@
     <phrase lang="en">Difference of Gaussians</phrase>
     <phrase lang="cs">Rozdíl gaussovských rozostření</phrase>
     <phrase lang="de">Differenz der Mittelwerte</phrase>
+    <phrase lang="es">Diferencia de Gaussianas</phrase>
     <phrase lang="fr">Différence gaussienne</phrase>
     <phrase lang="it">Differenza di gaussiane</phrase>
     <phrase lang="no">Gaussiske kantfinning</phrase>
@@ -57,6 +64,13 @@
   <indexterm lang="de">
     <primary>Differenz der Mittelwerte</primary>
   </indexterm>
+
+  <indexterm lang="es">
+    <primary>Filtros</primary>
+    <secondary>Detectar bordes</secondary>
+    <tertiary>Diferencia de Gaussianas</tertiary>
+  </indexterm>
+  <indexterm lang="es"><primary>Diferencia de Gaussianas</primary></indexterm>
 
   <indexterm lang="fr">
     <primary>Filtres</primary>
@@ -95,13 +109,14 @@
       <phrase lang="en">Overview</phrase>
       <phrase lang="cs">Přehled</phrase>
       <phrase lang="de">Wirkungsweise</phrase>
+      <phrase lang="es">Generalidades</phrase>
       <phrase lang="fr">Généralités</phrase>
       <phrase lang="it">Panoramica</phrase>
       <phrase lang="no">Oversyn</phrase>
       <phrase lang="ru">Общая информация</phrase>
     </title>
 
-    <figure lang="en;de;fr;it;no">
+    <figure lang="en;de;es;fr;it;no">
       <title>
         <phrase lang="en">
           Applying example for the Difference of Gaussians filter
@@ -109,6 +124,9 @@
         <phrase lang="de">
           Anwendungsbeispiel für das Filter
           <quote>Differenz der Mittelwerte</quote>
+        </phrase>
+        <phrase lang="es">
+          Ejemplo de aplicación del filtro diferencias de gaussianas
         </phrase>
         <phrase lang="fr">
           Exemple d'application du filtre Différence Gaussienne
@@ -124,9 +142,10 @@
           <imagedata fileref="../images/filters/examples/taj_orig.jpg"
                       format="JPG"/>
         </imageobject>
-        <caption lang="en;de;fr;no">
+        <caption lang="en;de;es;fr;no">
           <para lang="en">Original image</para>
           <para lang="de">Originalbild</para>
+          <para lang="es">Original</para>
           <para lang="fr">Image d'origine</para>
           <para lang="no">Originalbilete</para>
         </caption>
@@ -136,10 +155,13 @@
           <imagedata fileref="../images/filters/examples/edge-taj-dog.jpg"
                       format="JPG"/>
         </imageobject>
-        <caption lang="en;de;fr;no">
+        <caption lang="en;de;es;fr;no">
           <para lang="en">Filter <quote></quote> applied</para>
           <para lang="de">
             Filter <quote>Differenz der Mittelwerte</quote> angewandt
+          </para>
+          <para lang="es">
+            Filtro <quote>Diferencia de gaussianas</quote> aplicado
           </para>
           <para lang="fr">Après application du filtre</para>
           <para lang="no">
@@ -164,6 +186,14 @@
         <guisubmenu>Detekce hran</guisubmenu>
         <guimenuitem>Rozdíl gaussovských rozostření</guimenuitem>
       </menuchoice>.
+    </para>
+    <para lang="es">
+      Puede encontrar este filtro en
+      <menuchoice>
+        <guimenu>Filtros</guimenu>
+        <guisubmenu>Detectar bordes</guisubmenu>
+        <guimenuitem>Diferencia de Gaussianas</guimenuitem>
+      </menuchoice>
     </para>
     <para lang="fr">
       Le filtre se trouve dans
@@ -247,6 +277,24 @@
       erreichen, wenn der Radius 2 kleiner ist als der Radius 1. Manchmal
       jedoch, insbesondere bei Bildern mit dunklem Hintergrund, lohnt es sich,
       es andersherum zu probieren.
+    </para>
+    <para lang="es">
+      Este filtro hace la detección de bordes usando el algoritmo llamado
+      <quote>Diferencia de Gaussianas</quote>, que ejecuta dos desenfoques
+      Gaussianos en la imagen, con diferentes radios de desenfoque, y sustrae
+      las dos versiones para obtener el resultado final. Es un algoritmo
+      ampliamente usado en el campo de la visión artificial, y es bastante
+      rápido porque hay varios métodos eficientes para realizar desenfoques
+      Gaussianos. Los parámetros más importantes son el radio de desenfoque
+      para los dos desenfoques. Provablemente, lo más fácil seleccionarlos
+      usando la vista previa, puede ayudar saber que al incrementar el radio
+      más pequeño se obtiene unos bordes de apariencia más espesa y que
+      reducir el radio más largo incrementa el <quote>umbral</quote> para
+      reconocer bordes. En la mayoria de los casos, se obtienen mejores
+      resultados si radio 2 es más pequeño que radio 1, pero nada evita que
+      haga lo contrario, y en situaciones donde hay una figura iluminada
+      sobre un fondo oscuro, hacer el radio 1 más pequeño puede mejorar el
+      resultado.
     </para>
     <para lang="fr">
       Ce filtre est apparu dans GIMP 2.2. Il fait une détection de bords en
@@ -339,19 +387,21 @@
       <phrase lang="en">Options</phrase>
       <phrase lang="cs">Volby</phrase>
       <phrase lang="de">Eigenschaften</phrase>
+      <phrase lang="es">Opciones</phrase>
       <phrase lang="fr">Options</phrase>
       <phrase lang="it">Opzioni</phrase>
       <phrase lang="no">Innstillingar</phrase>
       <phrase lang="ru">Параметры</phrase>
     </title>
 
-    <figure lang="en;de;fr;no">
+    <figure lang="en;de;es;fr;no">
       <title>
         <phrase lang="en">Gaussian Difference filter options</phrase>
         <phrase lang="de">
           Eigenschaften für das Filter
           <quote>Differenz der Mittelwerte</quote>
         </phrase>
+        <phrase lang="es">Opciones del filtro diferencia de Gaussiana</phrase>
         <phrase lang="fr">Options du filtre Différence Gaussienne</phrase>
         <phrase lang="no">
           Innstillingane for filteret <quote>Gaussiske kantfinning</quote>
@@ -359,7 +409,7 @@
       </title>
 
       <mediaobject>
-        <imageobject lang="en">
+        <imageobject lang="en;es">
           <imagedata fileref="../images/filters/diff-gauss-options.png"
             format="PNG" />
         </imageobject>
@@ -383,6 +433,7 @@
         <term lang="en">Smoothing parameters</term>
         <term lang="cs">Parametry vyhlazování</term>
         <term lang="de">Parameter abgleichen</term>
+        <term lang="es">Parámetros de suavizado</term>
         <term lang="fr">Paramètres d'adoucissement</term>
         <term lang="it">Parametri di arrotondamento</term>
         <term lang="no">Utglattingsparametra</term>
@@ -410,6 +461,13 @@
             gefunden werden können. In den meisten Fällen führt es zu besseren
             Ergebnissen, wenn <guilabel>Radius 2</guilabel> etwas kleiner ist
             als <guilabel>Radius 1</guilabel>.
+          </para>
+          <para lang="es">
+            Radio 1 y Radio 2 son los radios de desnfoque para los dos
+            desenfoques gaussianos. No pueden ser iguales ya que se
+            produciría una imagen blanca. Si quiere producir algo parecido a
+            un dibujo a lápiz, en la mayoria de los casos, seleccionar el
+            radio 2 más pequeño que el radio 1 dará mejores resultados.
           </para>
           <para lang="fr">
             Les rayons 1 et 2 sont les rayons de flou pour les deux flous
@@ -447,6 +505,7 @@
         <term lang="en">Normalize</term>
         <term lang="cs">Normalizovat</term>
         <term lang="de">Normalisieren</term>
+        <term lang="es">Normalizar</term>
         <term lang="fr">Normaliser</term>
         <term lang="it">Normalizza</term>
         <term lang="no">Normaliser</term>
@@ -471,6 +530,14 @@
             maximal möglichen Kontrastumfang erhalten. Das bedeutet, dass die
             Kanten im Ergebnisbild soweit verstärkt werden, bis der volle
             Helligkeitsumfang des Bildes ausgeschöpft ist.
+          </para>
+          <para lang="es">
+            Al marcar esta casilla se estira el rango de luminosidad tanto
+           como sea posible, incrementando el contraste. Nótese que en la
+           vista previa, solo se tiene en cuenta la parte de la imagen que se
+           muestra, así que con <guilabel>Normalizar</guilabel> marcada la
+           vista previa no es completamente exacta (al menos en términos del
+           contraste global).
           </para>
           <para lang="fr">
             Cocher cette option entraînera un résultat avec l'échelle de
@@ -509,6 +576,7 @@
         <term lang="en">Invert</term>
         <term lang="cs">Invertovat</term>
         <term lang="de">Invertieren</term>
+        <term lang="es">Invertir</term>
         <term lang="fr">Inverser</term>
         <term lang="it">Inverti</term>
         <term lang="no">Inverter</term>
@@ -529,6 +597,11 @@
             dunkle Kanten auf einem weißen Hintergrund angezeigt werden. Das
             eigentliche Ergebnis des Filters wäre umgekehrt, also helle Kanten
             auf einem schwarzen Hintergrund.
+          </para>
+          <para lang="es">
+            Al marcar esta opción se invierte el resultado, por lo que se
+            verán bordes oscuros sobre fondo blanco, algo parecido a un
+            dibujo.
           </para>
           <para lang="fr">
             Cocher cette option inversera le résultat de telle façon que vous

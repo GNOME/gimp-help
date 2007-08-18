@@ -95,7 +95,7 @@ if HAVE_DOCBOOK2ODF
 
 odf/%.odf: xml/%.xml
 	$(mkdir_p) odf
-	$(DOCBOOK2ODF) --input-file $< --output-file $@
+	$(DOCBOOK2ODF) -v $< --output-file=$@
 
 odf: $(foreach lang,$(ALL_LINGUAS),odf/$(lang).odf)
 
