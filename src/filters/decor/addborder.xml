@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+                "http://www.docbook.org/xml/4.3/docbookx.dtd">
+
+<!-- section history:
+  2007-08-19 ude: created en, de
+-->
+<!--TODO es fr it no ko ru: translation-->
+<sect2 id="plug-in-addborder" lang="en;de">
+  <sect2info>
+    <revhistory>
+      <revision lang="en">
+        <revnumber>$Revision$</revnumber>
+        <date>2007-08-18</date>
+        <authorinitials>ude</authorinitials>
+      </revision>
+      <revision lang="de">
+        <revnumber>$Revision$</revnumber>
+        <date>2007-08-18</date>
+        <authorinitials>ude</authorinitials>
+      </revision>
+    </revhistory>
+  </sect2info>
+
+  <title>
+    <phrase lang="en">Add Border</phrase>
+    <phrase lang="cs"><!-- Filter name cs --></phrase>
+    <phrase lang="de">Rand hinzufügen</phrase>
+    <phrase lang="fr"><!-- Filter name fr --></phrase>
+    <phrase lang="it"><!-- Filter name it --></phrase>
+    <phrase lang="no"><!-- Filter name no --></phrase>
+    <phrase lang="ru"><!-- Filter name ru --></phrase>
+  </title>
+
+  <indexterm lang="en">
+    <primary>Filters</primary>
+    <secondary>Add Border</secondary>
+  </indexterm>
+  <indexterm lang="en"><primary>Add Border</primary></indexterm>
+
+  <indexterm lang="de">
+    <primary>Filter</primary>
+    <secondary>Rand hinzufügen</secondary>
+  </indexterm>
+  <indexterm lang="de"><primary>Rand hinzufügen</primary></indexterm>
+
+
+  <!--- See gimp/trunk/plug-ins/script-fu/scripts/addborder.scm -->
+  <sect3>
+    <title>
+      <phrase lang="en">Overview</phrase>
+      <phrase lang="cs">Přehled</phrase>
+      <phrase lang="de">Wirkungsweise</phrase>
+      <phrase lang="fr">Généralités</phrase>
+      <phrase lang="it">Panoramica</phrase>
+      <phrase lang="no">Oversyn</phrase>
+      <phrase lang="ru">Общая информация</phrase>
+      <phrase lang="zh_CN">概述</phrase>
+    </title>
+
+    <figure>
+      <title>
+        <phrase lang="en">
+          Example for the <quote>Add Border</quote> filter
+        </phrase>
+        <phrase lang="de">
+          Anwendungsbeispiel für das Filter <quote>Rand hinzufügen</quote>
+        </phrase>
+        <phrase lang="fr">
+          Exemple d'application pour le filtre <!-- Filter name fr -->
+        </phrase>
+        <phrase lang="it">
+          Esempio di applicazione del filtro <!-- Filter name it -->
+        </phrase>
+      </title>
+
+      <mediaobject>
+        <imageobject>
+          <imagedata format="JPG"
+            width="330" depth="330" scalefit="0" align="center" valign="middle"
+            fileref="../images/filters/examples/taj_orig.jpg" />
+        </imageobject>
+        <caption>
+          <para lang="en">Original image</para>
+          <para lang="de">Originalbild</para>
+          <para lang="fr">Image d'origine</para>
+        </caption>
+      </mediaobject>
+
+      <mediaobject>
+        <imageobject>
+          <imagedata format="JPG"
+            width="330" depth="330" scalefit="0" align="center" valign="middle"
+            fileref="../images/filters/examples/decor-taj-addborder.jpg" />
+        </imageobject>
+
+        <caption>
+          <para lang="en">Added border</para>
+          <para lang="de">Rand hinzugefügt</para>
+          <para lang="fr">
+            Après application du filtre <quote><!-- Filter name fr --></quote>
+          </para>
+        </caption>
+      </mediaobject>
+    </figure>
+
+    <para lang="en">
+      This filter just does what its name says: it adds a border to the image.
+      You can specify the thickness of the border as well as the color. The
+      four sides of the border are colored in different shades, so the image
+      area will appear raised.
+    </para>
+    <para lang="en">
+      The image will be enlarged by the border size, it won't be painted over.
+    </para>
+
+    <para lang="de">
+      Dieses Filter mach genau das, was sein Name besagt: es fügt Ihrem Bild
+      einen Rand hinzu, dessen Breite und Farbe Sie bestimmen können. Die
+      vier Seiten des Rands werden in unterschiedlichen Farbtönen gefärbt, so
+      dass der Eindruck eines erhöhten Bildes entsteht.
+    </para>
+    <para lang="de">
+      Das Bild wird um die Breite des Rands vergrößert, es wird also nichts
+      übermalt.
+    </para>
+  </sect3>
+
+
+  <sect3 lang="de">
+    <title>
+      <phrase lang="en">Activate the filter</phrase>
+      <phrase lang="cs">Aktivace filtru</phrase>
+      <phrase lang="de">Filteraufruf</phrase>
+      <phrase lang="es">Activar el filtro</phrase>
+      <phrase lang="fr">Ouverture du filtre</phrase>
+      <phrase lang="it">Attivazione del filtro</phrase>
+      <phrase lang="ru">Активация фильтра</phrase>
+      <phrase lang="zh_CN">使用这个滤镜</phrase>
+    </title>
+
+    <para lang="en">
+      This filter is found in the image window menu under
+      <menuchoice>
+        <guimenu><accel>F</accel>ilters</guimenu>
+        <guisubmenu><accel>D</accel>ecor</guisubmenu>
+        <guimenuitem>Add <accel>B</accel>order</guimenuitem>
+      </menuchoice>.
+    </para>
+
+    <para lang="de">
+      Dieses Filter lässt sich über das Menü
+      <menuchoice>
+        <guimenu><accel>F</accel>ilter</guimenu>
+        <guisubmenu><accel>D</accel>ekoration</guisubmenu>
+        <guimenuitem>Rand <accel>h</accel>inzufügen</guimenuitem>
+      </menuchoice>
+      im Bildfenster aufrufen.
+    </para>
+
+    <para lang="fr">
+      On accède à ce filtre par
+      <menuchoice>
+        <guimenu>Filtres</guimenu>
+        <guisubmenu><!-- filter category --></guisubmenu>
+        <guimenuitem><!-- filter name fr --></guimenuitem>
+      </menuchoice>.
+    </para>
+
+    <para lang="it">
+      Questo filtro si trova nel menu immagine:
+      <menuchoice>
+        <guimenu>Filtri</guimenu>
+        <guisubmenu><accel></accel><!-- filter category --></guisubmenu>
+        <guisubmenu><accel></accel><!-- filter name it --></guisubmenu>
+      </menuchoice>.
+    </para>
+
+    <para lang="no">
+      Du har tilgang til filteret frå biletmenyen via
+      <menuchoice>
+        <guimenu>Filter</guimenu>
+        <guisubmenu><!-- filter category --></guisubmenu>
+        <guimenuitem><!-- filter name no --></guimenuitem>
+      </menuchoice>
+    </para>
+    
+    <para lang="ru">
+      Этот фильтр находится в
+      <menuchoice>
+        <guimenu>Фильтры</guimenu>
+        <guisubmenu><!-- filter category --></guisubmenu>
+        <guimenuitem><!-- filter name ru --></guimenuitem>
+      </menuchoice>.
+    </para>
+  </sect3>
+
+
+  <sect3>
+    <title>
+      <phrase lang="en;fr">Options</phrase>
+      <phrase lang="cs">Volby</phrase>
+      <phrase lang="de">Eigenschaften</phrase>
+      <phrase lang="it">Opzioni</phrase>
+      <phrase lang="no">Innstillingar</phrase>
+      <phrase lang="ru">Параметры</phrase>
+      <phrase lang="zh_CN">选项</phrase>
+    </title>
+
+    <figure>
+      <title>
+        <phrase lang="en"><quote>Add Border</quote> options</phrase>
+        <phrase lang="de">
+          Eigenschaften des Filters <quote>Rand hinzufügen</quote>
+        </phrase>
+      </title>
+
+      <mediaobject>
+        <imageobject lang="en">
+          <imagedata
+            fileref="../images/filters/options-decor-addborder.png"
+            format="PNG" />
+        </imageobject>
+        <imageobject lang="de">
+          <imagedata
+            fileref="../images/filters/de/options-decor-addborder.png"
+            format="PNG" />
+        </imageobject>
+      </mediaobject>
+    </figure>
+
+    <variablelist>
+      <varlistentry>
+        <term lang="en">Border X size, Border Y size</term>
+        <term lang="de">Randgröße X, Randgröße Y</term>
+
+        <listitem>
+          <para lang="en">
+            Here you can select the thickness of the added border, in pixels.
+            X size (left an right) and Y size (top and bottom) may be
+            different. Maximum is 250 pixels.
+          </para>
+          <para lang="de">
+            Hier können Sie die Randbreite in Pixeln einstellen. X-Randgröße
+            (links und rechts) und Y-Randgröße (oben und unten) dürfen
+            unterschiedlich sein. Größtmöglicher Wert ist jeweils 250 Pixel.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term lang="en">Border color</term>
+        <term lang="de">Randfarbe</term>
+
+        <listitem>
+          <para lang="en">
+            Clicking on this button brings up the color selector dialog that
+            allows you to choose an <quote>average</quote> border color (see
+            below, <guilabel>Delta value on color</guilabel>).
+          </para>
+          <para lang="de">
+            Mit einem Klick auf die farbige Schaltfläche öffnet sich der
+            Farbauswahldialog, in dem Sie eine beliebige
+            <quote>durchschnittliche</quote> Farbe für den Rand auswählen
+            können (siehe unten, <guilabel>Farbänderung</guilabel>). 
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term lang="en">Delta value on color</term>
+        <term lang="de">Farbänderung</term>
+
+        <listitem>
+          <para lang="en">
+            This option makes the border sides to be colored in different
+            shades and thus makes the image to appear raised. The actual
+            color of the respective border side is computed for every color
+            component red, green, and blue<footnote><para>
+              See <link
+              linkend="gimp-concepts-image-types">image types</link> or
+              <xref linkend="glossary-rgb" />.
+            </para></footnote>
+            from the <quote>average</quote> <guilabel>Border color</guilabel>
+            as follows:<footnote lang="en"><para>
+              Resulting values less than 0 are set to 0, values greater than
+              255 are set to 255.
+            </para></footnote>
+          </para>
+          <para lang="de">
+            Diese Eigenschaft legt fest, wie sich die Farben der vier Ränder
+            oben, rechts, unten und links unterscheiden. Die Farbwerte für
+            jede einzelne Farbkomponente Rot, Grün und Blau<footnote><para>
+              Siehe <link
+              linkend="gimp-concepts-image-types">Farbmodelle</link> oder
+              <xref linkend="glossary-rgb" />.
+            </para></footnote>
+            werden aus der gewählten <quote>durchschnittlichen</quote>
+            <guilabel>Randfarbe</guilabel> folgendermaßen ermittelt:
+            <footnote lang="de"><para>
+              Falls der resultierende Wert kleiner als 0 ist, wird er auf 0
+              gesetzt, Werte größer als 255 auf 255.
+            </para></footnote>
+          </para>  
+
+          <itemizedlist> 
+            <listitem>
+              <para lang="en">Top shade = Border color + Delta</para>
+              <para lang="de">Farbe oben = Randfarbe + Farbänderung</para>
+            </listitem>
+            <listitem>
+              <para lang="en">Right shade = Border color - ½ Delta</para>
+              <para lang="de">Farbe rechts = Randfarbe - ½ Farbänderung</para>
+            </listitem>
+            <listitem>
+              <para lang="en">Bottom shade = Border color - Delta</para>
+              <para lang="de">Farbe unten = Randfarbe - Farbänderung</para>
+            </listitem>
+            <listitem>
+              <para lang="en">Left shade = Border color + ½ Delta</para>
+              <para lang="de">Farbe links = Randfarbe + ½ Farbänderung</para>
+            </listitem>
+           </itemizedlist> 
+
+          <figure>
+            <title>
+              <phrase lang="en">Delta examples</phrase>
+              <phrase lang="de">
+                Beispiele für verschiedene Farbänderungen
+              </phrase>
+            </title>
+            <mediaobject>
+              <imageobject>
+                <imagedata format="PNG"
+                  fileref="../images/filters/examples/addborder-delta.png" />
+              </imageobject>
+              <caption>
+                <para lang="en">
+                  <quote>Add Border</quote> filter applied with
+                  <guilabel>Delta value</guilabel> 25, then with 75, 125, 175,
+                  and 225.
+                </para>
+                <para lang="de">
+                  Filter angewandt mit <guilabel>Farbänderung</guilabel> 25,
+                  danach mit 75, 125, 175 und 225.
+                </para>
+              </caption>
+            </mediaobject>
+          </figure>
+
+          <para lang="en">
+            Example: the default color is blue (38,31,207), default delta is
+            25. So the shades of the borders are: top: (38,31,207) +
+            (25,25,25) = (63,56,232), right: (38,31,207) + (-13,-13,-13) =
+            (25,18,194), etc.
+          </para>
+          <para lang="de">
+            Beispiel: die voreingestellte Farbe ist Blau (38,31,207),
+            standardmäßige Farbänderung ist 25. Damit ergeben sich für die
+            Randseiten die folgenden Farben: oben: (38,31,207) + (25,25,25) =
+            (63,56,232), rechts: (38,31,207) + (-13,-13,-13) = (25,18,194),
+            usw.
+          </para>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+  </sect3>
+</sect2>
