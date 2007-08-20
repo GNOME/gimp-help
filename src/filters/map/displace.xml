@@ -4,6 +4,7 @@
                 "http://www.docbook.org/xml/4.3/docbookx.dtd">
 
 <!-- section history:
+  2007-08-19 alex falappa: new sections for 2.4 and torough review
   2007-08-07 alex falappa: ude's fix to 'it', polar mode
   2007-07-23 ude: new section and image for displacement details
   2007-07-04 kost: ude's fix to 'no'
@@ -162,7 +163,7 @@
           <para lang="it">
             Il coefficiente di spostamento X è 30 (con un coefficiente
             negativo lo spostamento sarebbe opposto). I pixel mancanti sono
-            neri. La mappa di spostamento ha quattro strisce grigie con intensità
+            neri. La mappa a sbalzo ha quattro strisce grigie con intensità
 			pari a 210, 160, 110, e 60 rispettivamente.
           </para>
           <para lang="it">
@@ -333,9 +334,9 @@
   </sect3>
 
 
-  <!--TODO fr it no ru: translate 3 new sections for GIMP 2.4-->
+  <!--TODO fr no ru: translate 3 new sections for GIMP 2.4-->
   <!--PENDING fr it no ru delete this sect3 as soon as it is moved to GIMP 2.4-->
-  <sect3 lang="fr;it;no;ru">
+  <sect3 lang="fr;no;ru">
     <title>
       <phrase lang="en">Options</phrase>
       <phrase lang="de">Eigenschaften</phrase>
@@ -457,7 +458,6 @@
             beziehungsweise oben.
           </para>
 
-          <!--FIXME it: changed/fixed content-->
           <para lang="fr">
             En choisissant l'une et/ou l'autre des deux options, les pixels
             du calque actif correspondant aux pixels de la carte de
@@ -478,18 +478,18 @@
 
           <para lang="it">
             Selezionando una opzione o entrambe, i pixel del livello corrente
-            corrispondenti ai pixel di valore diverso da 128 nella mappa a
-            sbalzo saranno spostati orizzontalmente (X) e/o verticalmente (Y),
+            corrispondenti ai pixel nella mappa a sbalzo saranno spostati
+            orizzontalmente (X) e/o verticalmente (Y). Sia la direzione che
+            l'entità dello spostamento dipendono dall'intensità dei pixel
+            corrispondenti sulla mappa a sbalzo.
           </para>
           <para lang="it">
-            Perchè 128? Perchè la mappa, che deve essere a scala di grigio, ha
-            256 livelli di grigio: l'intensità pari a  128 corrisponde ad un
-            <emphasis>grigio medio</emphasis>. Il filtro
-            sposta i pixel dell'immagine corrispondenti a <emphasis>pixel nella
-              mappa di valore più alto di 128</emphasis> a sinistra per le X ed
-            in alto per le Y. In maniera simile il filtro sposta i pixel
-            dell'immagine corrispondenti a <emphasis>pixel nella mappa di valore
-              più basso di 128</emphasis> a destra per le X e in alto per le Y.
+            La mappa, che deve essere a scala di grigio, ha 256 livelli di
+            grigio (0-255). Il valore (teorico) medio è pari a 127,5. Il filtro
+            sposta i pixel dell'immagine corrispondenti ai pixel nella mappa di
+            valore inferiore a 127,5 (da 0 a 127) a destra per le X ed in basso
+            per le Y. In maniera simile sposta i pixel corrispondenti a pixel
+            con valori da 128 a 255 a sinistra per le X e in alto per le Y.
           </para>
 
           <para lang="no">
@@ -639,17 +639,6 @@
             Questo valore può essere positivo o negativo. Uno spostamento
             negativo è opposto ad uno positivo.
           </para>
-          <!--para lang="it">
-            A complicare le cose l'intensità utilizzata nella formula non è
-            direttamente l'intensità del pixel. In realtà l'intensità è
-            riportata su una scala da -128 a 128 dove 0 corrisponde a nessuno
-            spostamento come visto sopra. La trasformazione è effettuata
-            sottraendo 128 dall'intensità del pixel e aggiungendo 1. Quindi
-            75 associato ad un pixel bianco (valore 255 trasformato in
-            255-128+1=128) restituisce uno spostamento di (128*75)/128=75
-            pixel. Un pixel nero (valore 0) restituisce uno spostamento di
-            -75 pixel.
-          </para-->
 
           <para lang="no">
             Det talet du skriv inn i boksane for
@@ -944,13 +933,13 @@
   </sect3> <!--end of GIMP 2.2 options-->
 
 
-  <!--TODO fr it no: translate new sect3 for GIMP 2.4-->
-  <sect3 lang="en;de;ru">
+  <!--TODO fr no: translate new sect3 for GIMP 2.4-->
+  <sect3 lang="en;de;it;ru">
     <title>
       <phrase lang="en">Options (General)</phrase>
       <phrase lang="de">Eigenschaften</phrase>
       <phrase lang="fr">Options</phrase>
-      <phrase lang="it">Opzioni</phrase>
+      <phrase lang="it">Opzioni (Generali)</phrase>
       <phrase lang="no">Innstillingar</phrase>
       <phrase lang="ru">Параметры</phrase>
     </title>
@@ -962,7 +951,7 @@
             Eigenschaften des Filters <quote>Verschieben</quote>
         </phrase>
         <phrase lang="fr">Options</phrase>
-        <phrase lang="it">Opzioni</phrase>
+        <phrase lang="it">Opzioni del filtro <quote>Sposta</quote></phrase>
         <phrase lang="no">
           Innstillingane for filteret <quote>Forskyv</quote>
         </phrase>
@@ -970,7 +959,7 @@
       </title>
 
       <mediaobject>
-        <imageobject lang="en;ru">
+        <imageobject lang="en;it;ru">
           <imagedata fileref="../images/filters/options-map-displace.png"
             format="PNG" />
         </imageobject>
@@ -1016,7 +1005,7 @@
         </listitem>
       </varlistentry>
 
-      <varlistentry lang="en;de;ru">
+      <varlistentry lang="en;de;it;ru">
         <term lang="en">Displacement Mode</term>
         <term lang="de">Verschiebungsmodus</term>
         <term lang="fr">Mode de déplacement</term>
@@ -1048,7 +1037,17 @@
             Die Details finden Sie in den nächsten Abschnitten.
           </para>
           <para lang="fr">TODO</para>
-          <para lang="it">TODO</para>
+          <para lang="it">
+            Si può scegliere di lavorare in coordinate <link
+            linkend="plug-in-displace-cartesian">cartesiane</link> nelle quali
+            i pixel vengono spostati lungo le direzioni X o Y, oppure di lavorare
+            in coordinate <link linkend="plug-in-displace-polar">polari</link>
+            nelle quali l'immagine viene pizzicata e ruotata spostando i pixel
+            nelle direzioni radiali o tangenti.
+          </para>
+          <para lang="it">
+            Si vedano i paragrafi successivi per dettagli su queste opzioni.
+          </para>
           <para lang="no">TODO</para>
           <para lang="ru">
             Вы можете работать в <link linkend="plug-in-displace-cartesian">
@@ -1114,7 +1113,7 @@
                 déplacement réapparaît de l'autre côté.
               </para>
               <para lang="it">
-                <emphasis>Avvolgi</emphasis>: Con questa opzione ciò che esce
+                <guilabel>Avvolgi</guilabel>: Con questa opzione ciò che esce
                 da un lato ricompare dal lato opposto.
               </para>
               <para lang="no">
@@ -1145,7 +1144,7 @@
                 remplacée par un étirement de la partie adjacente de l'image.
               </para>
               <para lang="it">
-                <emphasis>Macchia</emphasis>: Con questa opzione i pixel
+                <guilabel>Macchia</guilabel>: Con questa opzione i pixel
                 mancanti dopo lo spostamento sono rimpiazzati da pixel stirati
                 da parti adiacenti dell'immagine.
               </para>
@@ -1177,7 +1176,7 @@
                 remplacée par du noir.
               </para>
               <para lang="it">
-                <emphasis>Nero</emphasis>:
+                <guilabel>Nero</guilabel>:
                 Con questa opzione i pixel mancanti dopo lo spostamento sono
                 rimpiazzati da pixel di colore nero.
               </para>
@@ -1197,17 +1196,18 @@
   </sect3> <!--end of GIMP 2.4 general options-->
 
 
-  <!--TODO fr it no: translate new sect3 for GIMP 2.4-->
-  <sect3 id="plug-in-displace-cartesian" lang="en;de;ru">
+  <!--TODO fr no: translate new sect3 for GIMP 2.4-->
+  <sect3 id="plug-in-displace-cartesian" lang="en;de;it;ru">
     <title>
       <phrase lang="en">Cartesian Displacement Mode</phrase>
       <phrase lang="de">
         Verschiebungsmodus <quote>Kartesisch</quote>
       </phrase>
+      <phrase lang="it">Modalità spostamento cartesiano</phrase>
       <phrase lang="ru">Режим декартова смещения</phrase>
     </title>
 
-    <figure lang="en;de;ru">
+    <figure>
       <title>
         <phrase lang="en">
           Displace filter options (Cartesian)
@@ -1216,13 +1216,16 @@
           Eigenschaften für das Filter <quote>Verschieben</quote>
           (Kartesisch)
         </phrase>
+        <phrase lang="it">
+          Opzioni del filtro <quote>Sposta</quote> (cartesiano)
+        </phrase>
         <phrase lang="ru">
           Параметры фильтра <quote>Смещение</quote> (Декартово)
         </phrase>
       </title>
 
       <mediaobject>
-        <imageobject lang="en;ru">
+        <imageobject lang="en;it;ru">
           <imagedata format="PNG"
             fileref="../images/filters/options-map-displace-cartesian.png" />
         </imageobject>
@@ -1230,10 +1233,11 @@
           <imagedata format="PNG"
             fileref="../images/filters/de/options-map-displace-cartesian.png" />
         </imageobject>
-        <caption lang="en;de;ru">
+        <caption>
           <para lang="en">Displacement Mode: Cartesian</para>
           <para lang="de">Verschiebungsmodus: Kartesisch</para>
           <para lang="ru">Режим смещения: декартово</para>
+          <para lang="it">Modalità di spostamento: cartesiano</para>
         </caption>
       </mediaobject>
     </figure>
@@ -1261,6 +1265,17 @@
       Für Helligkeiten kleiner als 127,5 (0-127) werden die zugeordneten
       Bildpunkte in die eine, für Helligkeiten von 128-255 in die andere
       Richtung verschoben.
+    </para>
+    <para lang="it">
+      In entrambe le modalità sia la direzione che l'entità dello spostamento
+      dipendono dall'intensità dei pixel corrispondenti sulla mappa a sbalzo.
+    </para>
+    <para lang="it">
+      La mappa, che deve essere a scala di grigio, ha 256 livelli di
+      grigio (0-255). Il valore (teorico) medio è pari a 127,5. Il filtro
+      sposta i pixel dell'immagine corrispondenti ai pixel nella mappa di
+      valore inferiore a 127,5 (da 0 a 127) in una direzione e quelli
+      corrispondenti a pixel con valori da 128 a 255 nella direzione opposta.
     </para>
     <para lang="ru">
       В обоих режимах, направление и величина смещения зависит от интенсивности
@@ -1298,7 +1313,12 @@
             oben.
           </para>
           <para lang="fr">TODO</para>
-          <para lang="it">TODO</para>
+          <para lang="it">
+            Se l'opzione corrispondente è abilitata i pixel dell'immagine
+            corrispondenti a pixel da 0 a 127 verranno spostati a destra per
+            le X e in basso per le Y, i pixel corrispondenti a pixel da 128
+            a 255 verranno spostati a sinistra per le X e in alto per le Y.
+          </para>
           <para lang="no">TODO</para>
           <para lang="ru">
             Фильтр смещает влево по X и вниз
@@ -1356,7 +1376,28 @@
           </para>
 
           <para lang="fr">TODO</para>
-          <para lang="it">TODO</para>
+          <para lang="it">
+            Il valore immesso nelle caselle di testo, direttamente o tramite i
+            pulsanti con le frecce, non è lo spostamento reale. É un coefficiente
+            utilizzato in una formula <emphasis role="bold">spostamento =
+            (intensità x coefficiente)</emphasis> che restituisce lo
+            spostamento reale del pixel secondo l'intensità scalata del pixel
+			<footnote>
+              <para>
+                Intensità scalata = (intensità - 127.5) / 127.5; si veda la
+                sezione sul <quote>calcolo dello spostamento</quote>.
+              </para>
+            </footnote>
+            corrispondente nella mappa modulato dal coefficente immesso.
+            L'introduzione dell'intensità nella formula è importante poichè
+            consente uno spostamento progressivo utilizzando una mappa con
+            un gradiente.
+          </para>
+          <para lang="it">
+            Questo valore può essere positivo o negativo. Uno spostamento
+            negativo è opposto ad uno positivo. Questo valore varia in un
+            intervallo pari al doppio delle dimensioni dell'immagine.
+          </para>
           <para lang="no">TODO</para>
           <para lang="ru">
             Параметр <quote>Смещение по X/Y</quote> должен называться
@@ -1408,7 +1449,18 @@
             praktisch unmöglich.
           </para>
           <para lang="fr">TODO</para>
-          <para lang="it">TODO</para>
+          <para lang="it">
+            Premendo la casella a discesa compare una lista dove si può
+            scegliere la mappa a sbalzo. Una immagine è presente in questa
+            lista se soddisfa due condizioni. Per prima cosa l'immagine
+            deve essere caricata al momento dell'invocazione del filtro, quindi
+            l'immagine deve avere le stesse dimensioni dell'immagine originale.
+            Spesso sarà una copia dell'immagine originale trasformata in scala
+            di grigio e modificata in maniera appropriata con un gradiente. E'
+            possibile utilizzare immagini RGB ma in tal caso viene utilizzata
+            la luminosità rendendo l'effetto difficile da prevedere. La mappa
+            può essere diversa nelle direzioni orizzontali e verticali.
+          </para>
           <para lang="no">TODO</para>
           <para lang="ru">
             При нажатии на кнопку появляется список карт смещения. Чтобы
@@ -1446,7 +1498,7 @@
           Eigenschaften für das Filter <quote>Verschieben</quote> (Polar)
         </phrase>
         <phrase lang="it">
-          Opzioni filtro sposta (polare)
+          Opzioni del filtro <quote>Sposta</quote> (polare)
         </phrase>
         <phrase lang="ru">
           Параметры фильтра <quote>Смещение</quote> (Полярное)
@@ -1454,11 +1506,11 @@
       </title>
 
       <mediaobject>
-        <imageobject lang="en;de;it;ru">
+        <imageobject>
           <imagedata format="PNG"
             fileref="../images/filters/options-map-displace-polar.png" />
         </imageobject>
-        <caption lang="en;de;it;ru">
+        <caption>
           <para lang="en">Displacement Mode: Polar</para>
           <para lang="de">Verschiebungsmodus: Polar</para>
           <para lang="it">Modalità di spostamento polare</para>
@@ -1512,8 +1564,8 @@
             spostati verso il centro.
           </para>
           <para lang="it">
-            Per i valori e ma mappa di spostamento si veda sopra
-            (<quote>Spostamenti X/Y</quote>).
+            Per i valori e la mappa a sbalzo si veda sopra (<quote>Spostamento
+            X/Y</quote>).
           </para>
           <para lang="no">TODO</para>
           <para lang="ru">
@@ -1549,11 +1601,11 @@
           </para>
 
           <mediaobject>
-            <imageobject lang="en;de;it;ru">
+            <imageobject>
               <imagedata format="PNG"
                 fileref="../images/filters/examples/map-displace-pinch.png" />
             </imageobject>
-            <caption lang="en;de;it;ru">
+            <caption>
               <para lang="en">Image distortion by Pinch option</para>
               <para lang="de">Bildverzerrung durch Drücken</para>
               <para lang="it">
@@ -1578,7 +1630,7 @@
             wird das Bild verzerrt.
           </para>
           <para lang="it">
-            Una immagine di 160x120 pixel con una mappa di spostamento
+            Una immagine di 160x120 pixel con una mappa a sbalzo
             completamente bianca e un coefficiente di sposstamento pari a 20
             restituisce uno spostamento di 20 pixel verso il centro. Questo
             provoca una riduzione di dimensioni del 25% in orizzontale, del 33%
@@ -1638,8 +1690,8 @@
           <para lang="it">
             Se questa opzione è selezionata le coordinate angolari dei pixel
             dell'immagine saranno <quote>spostate</quote> di una quantità
-            dipendente dal corrispondente pixel della mappa. Per una mappa di
-            spostamento uniforme l'immagine risulterà ruotata altrimenti
+            dipendente dal corrispondente pixel della mappa. Per una mappa a
+            sbalzo uniforme l'immagine risulterà ruotata altrimenti
             verrà resa simile ad un vortice.
           </para>
           <para lang="it">
@@ -1649,7 +1701,7 @@
             da 128 a 255 saranno spostati in senso orario.
           </para>
           <para lang="it">
-            Per i valori e la mappa di spostamento si veda sopra.
+            Per i valori e la mappa a sbalzo si veda sopra.
           </para>
           <para lang="no">TODO</para>
           <para lang="ru">
@@ -1964,12 +2016,13 @@
 
   </sect3>
 
-  <!-- TODO it no: translate new content: displacement details -->
-  <sect3 id="plug-in-displace-calculation" lang="en;de;fr;ru">
+  <!-- TODO no: translate new content: displacement details -->
+  <sect3 id="plug-in-displace-calculation" lang="en;de;fr;it;ru">
     <title>
       <phrase lang="en">Displacement Calculation</phrase>
       <phrase lang="de">Die Verschiebung berechnen</phrase>
       <phrase lang="fr">Calcul des déplacements</phrase>
+      <phrase lang="it">Calcolo dello spostamento</phrase>
       <phrase lang="ru">Вычисление смещения</phrase>
     </title>
 
@@ -1987,6 +2040,11 @@
       Cette section vous montrera comment calculer l'importance du
       déplacement, si ces détails vous intéressent. Vous pouvez sans
       problème la sauter.
+    </para>
+    <para lang="it">
+      Il seguente capitolo mostra come avviene il calcolo dell'entità dello
+      spostamento per chi è interessato a questi dettagli. Si può omettere la
+      lettura del capitolo se non si è intenzionati a conoscere questi dettagli.
     </para>
     <para lang="ru">
       Следующая часть покажет как вычислить смещение для тем, кого это
@@ -2017,6 +2075,15 @@
     </para>
     <para lang="fr">
       Il est facile de comprendre d'où viennent ces nombres :
+    </para>
+    
+    <para lang="it">
+      L'esempio nella panoramica mostra lo spostamento lungo le X utilizzando
+      un coefficiente pari a 30.0: si ottengono spostamenti di 19, 8, 4, o 15
+      pixel a seconda del livello di grigio persente nella mappa a sbalzo.
+    </para>
+    <para lang="it">
+      Di seguito la provenienza degli spostamenti:
     </para>
 
     <para lang="ru">
@@ -2064,6 +2131,14 @@
       déplacement calculé, et une interpolation est calculée pour le
       deplacement fractionnaire. Un zoom sur l'image le montre clairement :
     </para>
+    <para lang="it">
+      Analizzando le equazioni si noterà che i valori restituiti non sono
+      esattamente i risultati mostrati nell'esempio (ciò è dovuto all'utilizzo
+      di numeri non interi). Ogni pixel viene spostato esattamente dell'importo
+      calcolato, uno <quote>spostamento di entità frazionaria</quote> si
+      realizza mediante interpolazione. Uno sguardo ravvicinato all'immagine di
+      esempio evidenzia il procedimento:
+    </para>
     <para lang="ru">
       Если вы проверите эти уравнения, вы заметите, что они дают значению,
       отличающиеся от приведённых в примере. Это значение не округляется до
@@ -2081,6 +2156,9 @@
         <phrase lang="fr">
           Vue rapprochée sur l'exemple de déplacement.
         </phrase>
+        <phrase lang="it">
+          Particolare ingrandito dello spostamento di esempio
+        </phrase>
         <phrase lang="ru">Детальный вид примера смещения</phrase>
       </title>
 
@@ -2097,6 +2175,7 @@
           <para lang="fr">
             À droite, une petite surface zoomée à 800 %.
           </para>
+          <para lang="it">Dettaglio ingrandito dell'800%.</para>
           <para lang="ru">Область увеличена в 8 раз.</para>
         </caption>
       </mediaobject>
@@ -2137,6 +2216,19 @@
       Ainsi, si vous choisissez un coefficient de 30,01  au lieu de 30,00,
       vous obtiendrez une image différente, bien que ce ne sera guère visible.
     </para>
+    
+    <para lang="it">
+      Lo spostamento provoca piccole aree (larghe un pixel) di colore intermedio
+      ai bordi delle aree di colore pieno. Ad esempio l'area nera (vedi figura
+      di dettaglio) è provocata da uno spostamento di -4.12 quindi il colore
+      intermedio è composto di un 12% di nero e di un 88% di dorato.
+    </para>
+    <para lang="it">
+      Selezionando un coefficiente di spostamento pari a 30.01 invecedi 30.00
+      si otterrà effettivamente una immagine diversa anche se le differenze
+      non saranno visibili.
+    </para>
+    
     <para lang="ru">
       Смещение приводит к маленькой области (шириной в одну точку)
       промежуточного цвета по краям областей сплошного цвета. В примере смещение
