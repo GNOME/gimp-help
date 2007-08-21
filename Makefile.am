@@ -95,7 +95,7 @@ if HAVE_DOCBOOK2ODF
 
 odf/%.odt: xml/%.xml
 	$(mkdir_p) odf
-	$(DOCBOOK2ODF) -v $< --output-dir=`pwd` --output-file=$@
+	$(DOCBOOK2ODF) --debug -v $< --output-dir=`pwd` --output-file=$@
 
 odf: $(foreach lang,$(ALL_LINGUAS),odf/$(lang).odt)
 
