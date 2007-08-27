@@ -4,13 +4,14 @@
                 "http://www.docbook.org/xml/4.3/docbookx.dtd">
 
 <!-- section history:
+  2007-08-23 AntI: added 'es'
   2007-04-17 KoSt: added 'no'
   2005-12-07 replaced <simplesect> by <sect3> by lexa
   050830 de replaced informalfigure by axel.wernicke
   050901 de added by axel.wernicke
 -->
-<sect2 id="plug-in-convmatrix" lang="en;cs;de;fr;it;no;ru">
-  <sect2info lang="en;de;fr" role="cvs">
+<sect2 id="plug-in-convmatrix" lang="en;cs;de;es;fr;it;no;ru">
+  <sect2info lang="en;de;es;fr" role="cvs">
     <revhistory>
       <revision lang="en">
         <revnumber>$Revision$</revnumber>
@@ -21,6 +22,11 @@
         <revnumber>$Revision$</revnumber>
         <date>2006-11-04</date>
         <authorinitials>lexa</authorinitials>
+      </revision>
+      <revision lang="es">
+        <revnumber>$Revision$</revnumber>
+        <date>2007-08-23</date>
+        <authorinitials>AntI</authorinitials>
       </revision>
       <revision lang="fr">
         <revnumber>$Revision$</revnumber>
@@ -34,6 +40,7 @@
     <phrase lang="en">Convolution Matrix</phrase>
     <phrase lang="cs">Konvoluční matice</phrase>
     <phrase lang="de">Faltungsmatrix</phrase>
+    <phrase lang="es">Matriz de convolución</phrase>
     <phrase lang="fr">Matrice de convolution</phrase>
     <phrase lang="it">Matrice di convoluzione</phrase>
     <phrase lang="no">Konturutjamningsmatrise</phrase>
@@ -57,6 +64,13 @@
     <primary>Filter</primary><secondary>Generisch</secondary>
   </indexterm>
   <indexterm lang="de"><primary>Faltungsmatrix</primary></indexterm>
+
+  <indexterm lang="es">
+    <primary>Filtros</primary>
+    <secondary>Genérico</secondary>
+    <tertiary>Matriz de convolución</tertiary>
+  </indexterm>
+  <indexterm lang="es"><primary>Matriz de convolución</primary></indexterm>
 
   <indexterm lang="fr">
     <primary>Filtres</primary>
@@ -97,6 +111,7 @@
       <phrase lang="en">Overview</phrase>
       <phrase lang="cs">Přehled</phrase>
       <phrase lang="de">Wirkungsweise</phrase>
+      <phrase lang="es">Generalidades</phrase>
       <phrase lang="fr">Généralités</phrase>
       <phrase lang="it">Panoramica</phrase>
       <phrase lang="no">Oversyn</phrase>
@@ -210,6 +225,46 @@
       Multiplikationen werden als neuer Wert des aktuellen Pixels übernommen.
     </para>
     <para lang="de">Die nachfolgende Abbildung verdeutlicht den Ablauf:</para>
+
+    <para lang="es">
+      Puede encontrar este filtro en
+      <menuchoice>
+        <guimenu><accel>F</accel>iltros</guimenu>
+        <guisubmenu><accel>G</accel>enérico</guisubmenu>
+        <guimenuitem>Matriz de <accel>c</accel>onvolución</guimenuitem>
+      </menuchoice>
+    </para>
+    <para lang="es">
+      Un dominio de matemáticos. La mayoria de los filtros usan matriz de
+      convolución. Con este filtro, se pueden crear filtros personalizado.
+    </para>
+    <para lang="es">
+      ¿Que es una matriz de convolución? Es posible hacerse una idea sin usar
+      las herramientas matemáticas que solo conocen unos pocos. Convolución
+      es el tratamiento de una matriz por otra que se llama
+      <quote>kernel</quote>.
+    </para>
+    <para lang="es">
+      El filtro matriz de convolución usa una primera matriz que es la imagen
+      que será tratada. La imagen es una colección bidimensional de píxeles
+      en coordenada rectágular. El kernel usado depende del efecto deseado.
+    </para>
+    <para lang="es">
+      El GIMP usa matrices 5x5 o 3x3. Consideraremos solo las matrices 3x3,
+      son las más usadas y son suficiente para los efectos deseados. Si todos
+      los valores de un kernel se seleccionan a cero, el sistema la
+      considerará como una matriz 3x3.
+    </para>
+    <para lang="es">
+      El filtro examina, sucesivamente, cada píxel de la imagen. Para cada
+      uno de ellos, que llamaremos <quote>píxeles iniciales</quote>, se
+      multiplica el valor de este píxel y el valor de los 8 circundantes por
+      el valor correspondiente del kernel. Entonces se añade el resultado, y
+      el píxel inicial se regula en este valor resultante final.
+    </para>
+    <para lang="es">
+      Un ejemplo simple:
+    </para>
 
     <para lang="fr">
       On accède à ce filtre par le menu d'image en suivant
@@ -390,7 +445,7 @@
 
     <!--TODO: en cs de fr it no ru: Maybe this example would be even better,
               if the left numbers were unique instead of 50, 100.-->
-    <mediaobject lang="en;cs;de;fr;it;no;ru">
+    <mediaobject lang="en;cs;de;es;fr;it;no;ru">
       <imageobject>
         <imagedata fileref="../images/filters/examples/convolution-example1.png"
                    format="PNG" />
@@ -443,6 +498,24 @@
       Werten des Kerns multipliziert und die Ergebnisse addiert:
       (100*0)+(50*1)+(50*0)*(100*0)+(100*0)+(100*0)+(100*0)+(100*0)+(100*0)+(100*0)
       = 50. Das aktuell bearbeitete Pixel bekommt also den Wert 50.
+    </para>
+    <para lang="es">
+      A la izquierda, la imagen de la matriz: cada píxel está marcado con su
+      valor. El píxel inicial tiene un borde rojo. El área de acción del
+      kernel tiene un borde verde. En el medio, el kernel, y a la derecha, el
+      resultado de convolución.
+    </para>
+    <para lang="es">
+      Lo que sucede: el filtro lee sucesivamente, de izquierda a derecha y de
+      arriba a abajo, todos los píxeles del área de acción del kernel. Se
+      multiplica el valor de cada uno de ellos por el valor correspondiente
+      del kernel y se suman los resultados: (100*0)+(50*1)+(50*0)*(100*0)
+      +(100*0)+(100*0)+(100*0)+(100*0)+(100*0)+(100*0) = 50. El píxel inicial
+      asumió el valor 50. Previamente, cuando el píxel inicial tenía el
+      valor=50, tomó el valor 100 del píxel de arriba (el filtro no trabaja
+      sobre la imagen sino sobre una copia) y de esta manera desapareció en
+      el fondo de píxeles a "100". Como resultado gráfico, el píxel inicial
+      se movió un píxel hacia abajo.
     </para>
     <para lang="fr">
       À gauche se trouve la matrice de l'image: chaque pixel est indiqué par
@@ -537,19 +610,23 @@
       <phrase lang="en">Options</phrase>
       <phrase lang="cs">Volby</phrase>
       <phrase lang="de">Eigenschaften</phrase>
+      <phrase lang="es">Opciones</phrase>
       <phrase lang="fr">Options</phrase>
       <phrase lang="it">Opzioni</phrase>
       <phrase lang="no">Innstillingar</phrase>
       <phrase lang="ru">Параметры</phrase>
     </title>
 
-    <figure lang="en;de;fr;no;ru">
+    <figure lang="en;de;es;fr;no;ru">
       <title>
         <phrase lang="en">
           <quote>Convolution matrix</quote> options
         </phrase>
         <phrase lang="de">
           Eigenschaften für das Filter <quote>Faltungsmatrix</quote>
+        </phrase>
+        <phrase lang="es">
+          Opciones del filtro <quote>Matriz de convolución</quote>
         </phrase>
         <phrase lang="fr">
           Options du filtre <quote>Matrice de convolution</quote>
@@ -563,7 +640,7 @@
       </title>
 
       <mediaobject>
-        <imageobject lang="en;ru">
+        <imageobject lang="en;es;ru">
           <imagedata
             fileref="../images/filters/filters-generic-convolution.png"
             format="PNG" />
@@ -595,6 +672,7 @@
       <varlistentry>
         <term lang="en;de">Matrix</term>
         <term lang="cs">Matice</term>
+        <term lang="es">Matriz</term>
         <term lang="fr;it">Matrice</term>
         <term lang="no">Matrise</term>
         <term lang="ru">Матрица</term>
@@ -610,6 +688,10 @@
           <para lang="de">
             Dies ist die 5x5-Matrix, der Kern. Sie können die gewünschten
             Werte direkt in die Eingabefelder eintragen.
+          </para>
+          <para lang="es">
+            Es una matriz kernel de 5x5: el valor se introduce directamente
+            en las cajas.
           </para>
           <para lang="fr">
             C'est la matrice 5x5 du noyau que vous voulez créer: vous entrez
@@ -644,6 +726,12 @@
             durch den in diesem Eingabefeld angegebenen Wert geteilt. Dadurch
             können Sie verhindern, dass die Rechenergebnisse zu groß werden,
             um als Farbwert dargestellt zu werden.
+          </para>
+          <para lang="es">
+            <guilabel>Divisor</guilabel>: El resultado del cálculo previo
+            será dividido por este divisor. Dificilmente usará 1, que no
+            variará el resultado, y 9 o 25 según el tamaño de la matriz, que
+            da la media del valor del píxel.
           </para>
           <para lang="fr">
             <guilabel>Diviseur</guilabel>: le résultat du calcul précédent
@@ -685,6 +773,11 @@
             negative Rechenergebnisse zu vermeiden. Der eingetragene Wert kann
             auch negativ sein.
           </para>
+          <para lang="es">
+            <guilabel>Desplazamiento</guilabel>: este valor se suma al
+            resultado de la división. Es útil si el resultado fuese negativo.
+            Este desplazamiento puede ser negativo.
+          </para>
           <para lang="fr">
             <guilabel>Décalage</guilabel>: cette valeur est ajoutée au
             résultat de la division. C'est utile si le résultat risque
@@ -713,6 +806,7 @@
         <term lang="en">Border</term>
         <term lang="cs">Obvod</term>
         <term lang="de">Rand</term>
+        <term lang="es">Borde</term>
         <term lang="fr">Bordure</term>
         <term lang="it">Bordo</term>
         <term lang="no">Kant</term>
@@ -751,6 +845,7 @@
             Von links: Original, Rand Erweitern, Rand umfalten, Rand
             abschneiden
           </para>
+          <para lang="es">Extender, Ajustar, Recortar</para>
           <para lang="fr">Source, Étendre, Enrouler, Rogner</para>
           <para lang="it">Estendi, Wrap, Taglierino</para>
           <para lang="no">Utvid, Linjebryting, Beskjer</para>
@@ -768,6 +863,10 @@
             Wenn sich das aktuell bearbeitete Pixel am Rand des Bildes
             befindet, ist ein Teil des Kernes außerhalb des Bildes. Sie können
             einstellen, wie sich das Filter in einem solchen Fall verhält:
+          </para>
+          <para lang="es">
+            Cuando el píxel inicial está sobre un borde, una parte del kernel
+            se situa fuera de la imagen. Puede decidir que filtro usar:
           </para>
           <para lang="fr">
             Quand le pixel initial est sur un bord, une partie du noyau porte
@@ -805,6 +904,10 @@
                 <guilabel>Erweitern</guilabel>: der Teil des Kernes wird nicht
                 berücksichtigt.
               </para>
+              <para lang="es">
+                <guilabel>Extender</guilabel>: esta parte del kernel no se
+                tiene en cuenta.
+              </para>
               <para lang="fr">
                 <guilabel>Étendre</guilabel>: cette partie du noyau n'est
                 pas prise en compte. Des pixels disparaissent. La ligne
@@ -838,6 +941,11 @@
               <para lang="de">
                 <guilabel>Umfalten</guilabel>: der Teil des Kernes betrachtet
                 die Pixel auf der gegenüberliegenden Seite des Bildes.
+              </para>
+              <para lang="es">
+                <guilabel>Ajustar</guilabel>: esta parte del kernel examinará
+                los píxeles del borde opuesto, así que los píxeles
+                desaparecidos por un lado reaparecen por el otro lado.
               </para>
               <para lang="fr">
                 <guilabel>Enrouler</guilabel>: cette partie du noyau
@@ -875,6 +983,10 @@
                 <guilabel>Abschneiden</guilabel>: die Pixel am Rand werden
                 nicht bearbeitet und abgeschnitten.
               </para>
+              <para lang="es">
+                <guilabel>Recortar</guilabel>: los píxeles sobre los bordes
+                no se modifican, pero se recortan.
+              </para>
               <para lang="fr">
                 <guilabel>Rogner</guilabel>: Les pixels situés en bordure
                 disparaissent et les parties libérées sont transparentes. Si
@@ -902,6 +1014,7 @@
         <term lang="en">Channels</term>
         <term lang="cs">Kanály</term>
         <term lang="de">Kanäle</term>
+        <term lang="es">Canales</term>
         <term lang="fr">Canaux</term>
         <term lang="it">Canali</term>
         <term lang="no">Kanalar</term>
@@ -919,6 +1032,10 @@
           <para lang="de">
             Hier können Sie einen oder mehrere Kanäle auswählen, um
             festzulegen, auf welche Kanälen das Filter angewendet werden soll.
+          </para>
+          <para lang="es">
+            Puede seleccionar uno o varios canales con los que trabajará el
+            filtro.
           </para>
           <para lang="fr">
             Vous pouvez choisir là le ou les canaux sur lesquels agira le
@@ -940,6 +1057,7 @@
         <term lang="en">Automatic</term>
         <term lang="cs">Automatické</term>
         <term lang="de">Automatisch</term>
+        <term lang="es">Normalizar</term>
         <term lang="fr">Automatique</term>
         <term lang="it">Automatico</term>
         <term lang="no">Automatisk</term>
@@ -963,6 +1081,13 @@
             Wenn diese Eigenschaft des Filters aktiviert ist, werden die
             Werte für <guilabel>Divisor</guilabel> und
             <guilabel>Versatz</guilabel> automatisch optimal gewählt.
+          </para>
+          <para lang="es">
+            Si esta opción está marcada, el divisor toma el valor resultante
+            de la convolución. Si este resultado es cero (no es posible
+            dividir por cero), se aplica un desplazamiento de 128. Si es
+            negativo (un color negativo no es posible), se aplica un
+            desplazamiento de 255 (se invierte el resultado).
           </para>
           <para lang="fr">
             Quand cette option est cochée, le Diviseur prend la valeur du
@@ -998,6 +1123,7 @@
         <term lang="en">Alpha weighting</term>
         <term lang="cs">Vážená alfa</term>
         <term lang="de">Alpha-Gewichtung</term>
+        <term lang="es">Ponderar con alfa</term>
         <term lang="fr">Poids alpha</term>
         <term lang="it">Ponderazione-alfa</term>
         <term lang="no">Alfavekting</term>
@@ -1018,6 +1144,11 @@
             vorhandener Alphakanal nicht in die Berechnung einbezogen. Dies
             kann zu Artefakten im Bild führen, wenn eine Weichzeichnung durch
             die Faltungsmatrix vorgenommen wird.
+          </para>
+          <para lang="es">
+            Si esta opción no está marcada, el filtro no tiene en cuenta la
+            transparencia y esto puede producir algunos artefactos cunado se
+            desenfoca.
           </para>
           <para lang="fr">
             Si cette option n'est pas cochée, le calcul ne tient pas compte du
@@ -1049,6 +1180,7 @@
       <phrase lang="en">Examples</phrase>
       <phrase lang="cs">Příklady</phrase>
       <phrase lang="de">Anwendungsbeispiele</phrase>
+      <phrase lang="es">Ejemplos</phrase>
       <phrase lang="fr">Exemples</phrase>
       <phrase lang="it">Esempi</phrase>
       <phrase lang="no">Eksempel</phrase>
@@ -1067,6 +1199,11 @@
       Der Entwurf von Kernen erfordert spezielle mathematische Kenntnisse. Die
       folgenden Beispiele enthalten Kerne, die Sie ausprobieren können, auch
       wenn Sie kein Diplom in höherer Mathematik erworben haben.
+    </para>
+    <para lang="es">
+      El diseño de kernel se basa en conocimientos matemáticos altos. Puede
+      encontrar kernels preconfeccionados en la web. Ahora unos pocos
+      ejemplos:
     </para>
     <para lang="fr">
       La création de noyaux nécessite des connaissances mathématiques de haut
@@ -1093,6 +1230,7 @@
         <phrase lang="en">Sharpen</phrase>
         <phrase lang="cs">Zaostření</phrase>
         <phrase lang="de">Schärfen</phrase>
+        <phrase lang="es">Enfocar</phrase>
         <phrase lang="fr">Augmenter le contraste</phrase>
         <phrase lang="it">Aumento del contrasto</phrase>
         <phrase lang="no">Gjer skarpare</phrase>
@@ -1126,6 +1264,7 @@
         <phrase lang="en">Blur</phrase>
         <phrase lang="cs">Rozmazání</phrase>
         <phrase lang="de">Weichzeichnen</phrase>
+        <phrase lang="es">Desenfoque</phrase>
         <phrase lang="fr">Flou</phrase>
         <phrase lang="it">Sfocatura</phrase>
         <phrase lang="no">Sløring</phrase>
@@ -1158,6 +1297,7 @@
         <phrase lang="en">Edge enhance</phrase>
         <phrase lang="cs">Vylepšení hran</phrase>
         <phrase lang="de">Kanten verstärken</phrase>
+        <phrase lang="es">Realzar bordes</phrase>
         <phrase lang="fr">Renforcement des bords</phrase>
         <phrase lang="it">Evidenziazione dei bordi</phrase>
         <phrase lang="no">Kantforsterking</phrase>
@@ -1190,6 +1330,7 @@
         <phrase lang="en">Edge detect</phrase>
         <phrase lang="cs">Detekce hran</phrase>
         <phrase lang="de">Kanten erkennen</phrase>
+        <phrase lang="es">Detectar bordes</phrase>
         <phrase lang="fr">Détection des bords</phrase>
         <phrase lang="it">Individuazione dei bordi</phrase>
         <phrase lang="no">Kantfinning</phrase>
@@ -1223,6 +1364,7 @@
         <phrase lang="en">Emboss</phrase>
         <phrase lang="cs">Reliéf</phrase>
         <phrase lang="de">Relief</phrase>
+        <phrase lang="es">Repujado</phrase>
         <phrase lang="fr">Repoussage</phrase>
         <phrase lang="it">Bassorilievo</phrase>
         <phrase lang="no">Relieff</phrase>
