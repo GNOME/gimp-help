@@ -4,6 +4,7 @@
                 "http://www.docbook.org/xml/4.3/docbookx.dtd">
 
 <!-- section history:
+  2007-08-27 ude: added rubber-banding
   2007-08-19 ude: added stock images; de translation
   2007-08-14 ciampix: align tool stub page created
 -->
@@ -13,12 +14,12 @@
     <revhistory>
       <revision lang="en">
         <revnumber>$Revision$</revnumber>
-        <date>2007-08-18</date>
-        <authorinitials>j.h</authorinitials>
+        <date>2007-08-27</date>
+        <authorinitials>ude</authorinitials>
       </revision>
       <revision lang="de">
         <revnumber>$Revision$</revnumber>
-        <date>2007-08-22</date>
+        <date>2007-08-27</date>
         <authorinitials>ude</authorinitials>
       </revision>
       <revision lang="fr">
@@ -28,7 +29,7 @@
       </revision>
       <revision lang="it">
         <revnumber>$Revision$</revnumber>
-        <date>2007-08-14</date>
+        <date>2007-08-23</date>
         <authorinitials>ciampix</authorinitials>
       </revision>
     </revhistory>
@@ -63,7 +64,7 @@
 
   <figure>
     <title>
-      <phrase lang="en">The Align tool in Toolbox</phrase>
+      <phrase lang="en">The Align tool in the toolbox</phrase>
       <phrase lang="de">
         Das Werkzeug <quote>Ausrichten</quote> im Werkzeugfenster
       </phrase>
@@ -106,10 +107,10 @@
   </para>
   <para lang="de">
     Mit dieses Werkzeug können Sie Ebenen im Bild ausrichten. Wenn das
-    Werkzeug ausgewählt wurde, erkennen Sie das am Mauszeiger, der die Form
+    Werkzeug aktiviert wird, erkennen Sie das am Mauszeiger, der die Form
     einer Hand annimmt. Durch einen Klick auf eine Ebene wählen Sie die
     auszurichtende Ebene aus, sie wird dann durch kleine Quadrate in den Ecken
-    gekennzeichnet. Mit den verschiedenen Schaltern bei den
+    gekennzeichnet. Mit den verschiedenen Schaltflächen in den
     Werkzeugeinstellungen können Sie die Ausrichtung der Ebene auswählen.
     Außerdem können Sie das Objekt, an dem die Ebene ausgerichtet wird (andere
     Ebene, Auswahl, Pfad ...), frei wählen. (Dieses Objekt wird im folgenden
@@ -159,7 +160,7 @@
 
     <para lang="en">You can activate the Align tool in several ways :</para>
     <para lang="de">
-      Sie haben verschiedene Möglichkeiten, das Ausrichten zu aktivieren:
+      Sie haben verschiedene Möglichkeiten, Ausrichten zu aktivieren:
     </para>
 
     <itemizedlist>
@@ -170,7 +171,7 @@
             <guimenu><accel>T</accel>ools</guimenu>
             <guisubmenu><accel>T</accel>ransform Tools</guisubmenu>
             <guimenuitem><accel>A</accel>lign</guimenuitem>
-          </menuchoice>
+          </menuchoice>.
         </para>
         <para lang="de">
           Über das Menü
@@ -210,7 +211,7 @@
               </imageobject>
             </inlinemediaobject>
           </guiicon>
-          in the Toolbox,
+          in the toolbox.
         </para>
         <para lang="cs">
           Nástroj lze také vyvolat kliknutím na ikonu spreje v Panelu
@@ -345,14 +346,6 @@
         <term lang="fr"><keycap>Maj</keycap></term>
         <term lang="it"><keycap>Maiusc</keycap></term>
 
-        <!-- developer's comment in app/tools/gimpaligntool.c
-             for "gimp_align_tool_button_release()":
-          "[...] If the user clicks without modifiers, then we start a new
-          list, and use the first object in it as reference.  If the user
-          clicks using Shift, or draws a rubber-band box, then we add objects
-          to the list, but do not specify which one should be used as
-          reference."
-        -->
         <listitem>
           <para lang="en">
             You can select several layers by holding <keycap>Shift</keycap>
@@ -370,6 +363,36 @@
             premuto il tasto <keycap>Maiusc</keycap> mentre si fa clic su
             di essi.
           </para>
+
+          <!-- TODO fr it:  translate (and review) rubber-banding tip -->
+          <tip lang="en;de">
+            <para lang="en">
+              Sometimes it's easier to select multiple layers using
+              rubber-banding: click somewhere outside an imaginary rectangular
+              region covering the layers you want to select. Then drag out
+              that region by moving the pointer, and release the mouse button.
+              Now every layer, which is completely inside the dragged
+              rectangle, is selected.
+            </para>
+            <para lang="en">
+              Note that now there is no target <quote>first item</quote> the
+              selected layers can be aligned on.
+            </para>
+            <para lang="de">
+              Sie können mehrere Ebenen auch einfach mit der üblichen
+              <quote>Gummiband</quote>-Funktion auswählen: Klicken Sie
+              außerhalb der anvisierten Ebenen ins Bild und ziehen Sie die
+              Maus so, dass sich alle betreffenden Ebenen innerhalb des
+              entstehenden rechteckigen Bereichs befinden. Wenn Sie jetzt die
+              Maustaste loslassen, werden alle eingeschlossenen Ebenen
+              ausgewählt.
+            </para>
+            <para lang="de">
+              Beachten Sie, dass es hier kein <quote>erstes Objekt</quote> als
+              Ziel gibt, an dem die ausgewählten Ebenen ausgerichtet werden
+              können.
+            </para>
+          </tip>
         </listitem>
       </varlistentry>
     </variablelist>
@@ -547,6 +570,9 @@
         <term lang="it">Align</term>
         <listitem>
           <variablelist>
+            <!-- CHECK en de fr it: according to the dialog, "Relative to:"
+                 belongs to "Align" only (it's indented), but this seems to be
+                 wrong... -->
             <varlistentry lang="en;de;it">
               <term lang="en">Relative to:</term>
               <term lang="de">Relativ zu:</term>
@@ -567,13 +593,22 @@
                   Questo è l'obbiettivo: l'oggetto immagine a cui i livelli
                   selezionati saranno allineati.
                 </para>
+                <!-- TODO fr it: (review and) translate missing target docs -->
                 <itemizedlist>
                   <listitem>
                     <para lang="en">
-                      <guilabel>First item: the first selected item when
-                      selecting multiple layers the the Shift key</guilabel>
+                      <guilabel>First item</guilabel>: the first selected
+                      item when selecting multiple layers holding the Shift
+                      key. Note that there is no <quote>first item</quote>
+                      when you select multiple layers using rubber-banding.
                     </para>
-                    <para lang="de"><guilabel>Erstes Objekt</guilabel>:</para>
+                    <para lang="de">
+                      <guilabel>Erstes Objekt</guilabel>: die erste von
+                      mehreren bei gedrückter <keycap>Umschalt</keycap>-Taste
+                      ausgewählten Ebenen. Wenn Sie mit Hilfe der
+                      Gummiband-Funktion mehrere Ebenen auswählen, gibt es
+                      allerdings kein <quote>erstes Objekt</quote>.
+                    </para>
                     <para lang="fr">
                       <guilabel>Premier objet:</guilabel>
                     </para>
@@ -583,22 +618,39 @@
                   </listitem>
 
                   <listitem>
-                    <para lang="en"><guilabel>Image:</guilabel></para>
-                    <para lang="de"><guilabel>Bild</guilabel>:</para>
+                    <para lang="en">
+                      <guilabel>Image</guilabel>: the image is used as target.
+                    </para>
+                    <para lang="de">
+                      <guilabel>Bild</guilabel>: das Bild selbst ist das Ziel
+                      der Ausrichtung.
+                    </para>
                     <para lang="fr"><guilabel>Image:</guilabel></para>
                     <para lang="it"><guilabel>Immagine:</guilabel></para>
                   </listitem>
 
                   <listitem>
-                    <para lang="en"><guilabel>Selection:</guilabel></para>
-                    <para lang="de"><guilabel>Auswahl</guilabel>:</para>
+                    <para lang="en">
+                      <guilabel>Selection</guilabel>: the minimal rectangular
+                      region covering the active selection.
+                    </para>
+                    <para lang="de">
+                      <guilabel>Auswahl</guilabel>: das kleinstmögliche
+                      Rechteck, das die vollständige aktive Auswahl umfasst.
+                    </para>
                     <para lang="fr"><guilabel>Sélection:</guilabel></para>
                     <para lang="it"><guilabel>Selezione:</guilabel></para>
                   </listitem>
 
                   <listitem>
-                    <para lang="en"><guilabel>Active Layer:</guilabel></para>
-                    <para lang="de"><guilabel>Aktive Ebene</guilabel>:</para>
+                    <para lang="en">
+                      <guilabel>Active Layer</guilabel>: the selected layer
+                      will be aligned with the atcive layer.
+                    </para>
+                    <para lang="de">
+                      <guilabel>Aktive Ebene</guilabel>: Die Ebene wird an der
+                      aktiven Ebenen ausgerichtet.
+                    </para>
                     <para lang="fr"><guilabel>Calque actif:</guilabel></para>
                     <para lang="it"><guilabel>Livello attivo:</guilabel></para>
                   </listitem>
@@ -630,8 +682,8 @@
                       pas encore prise en compte.
                     </para>
                     <para lang="it">
-                      <guilabel>Tracciato attivo: quest'opzione non è
-                      ancora stata completata e attivata.</guilabel>
+                      <guilabel>Tracciato attivo</guilabel>: quest'opzione
+                      non è ancora stata completata e attivata.
                     </para>
                   </listitem>
                 </itemizedlist>
@@ -710,6 +762,8 @@
             <!-- FIXME en de fr it: description -->
             <!-- What I describe is exact, but I am not sure this is the
                  right explanation...-->
+            <!-- Once again special thanks to the developers for the really,
+                 really extensive and helpful source code documentation :-| -->
             <varlistentry>
               <term>
                 <guiicon>
@@ -998,6 +1052,73 @@
             </guiicon> presente nel secondo gruppo di pulsanti (distribuisci).
             Il livello viene allineato a 5 pixel prima del lato destro del
             livello attivo giallo.
+          </para>
+        </caption>
+      </mediaobject>
+    </figure>
+
+    <!-- TODO fr it: add align example (rubber-band box) -->
+    <figure lang="en;de">
+      <title>
+        <phrase lang="en">Align using rubber-band box</phrase>
+        <phrase lang="de">Ausrichten mit Gummiband</phrase>
+        <phrase lang="fr">TODO</phrase>
+        <phrase lang="it">TODO</phrase>
+      </title>
+      <mediaobject>
+        <imageobject>
+          <imagedata
+            fileref="../images/toolbox/align-ex5a.png" format="PNG" />
+        </imageobject>
+        <caption>
+          <para lang="en">
+            We clicked left from and above the red layer, and dragged out a
+            region covering the red and the yellow layer by moving the pointer
+            towards the bottom right corner.
+          </para>
+          <para lang="de">
+            Nach einem Mausklick links oberhalb der roten Ebene wird die Maus
+            nach rechts unten gezogen, so dass beide Ebenen eingeschlossen
+            sind.
+          </para>
+          <para lang="fr">
+            TODO
+          </para>
+          <para lang="it">
+            TODO
+          </para>
+        </caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject>
+          <imagedata
+            fileref="../images/toolbox/align-ex5b.png" format="PNG" />
+        </imageobject>
+        <caption>
+          <para lang="en">
+            Again, <guilabel>Selection</guilabel> is the target. After a click
+            on the
+            <guiicon>
+              <inlinegraphic
+                fileref="../images/tool-options/stock-gravity-west-24.png" />
+            </guiicon>
+            button, both layers are aligned with the left side of the
+            selection.
+          </para>
+          <para lang="de">
+            Ziel der Ausrichtung ist wieder die aktive Auswahl. Ein Klick auf
+            <guiicon>
+              <inlinegraphic
+                fileref="../images/tool-options/stock-gravity-west-24.png" />
+            </guiicon>,
+            und beide Ebenen werden an der linken Seite des Auswahl
+            ausgerichtet.
+          </para>
+          <para lang="fr">
+            TODO
+          </para>
+          <para lang="it">
+            TODO
           </para>
         </caption>
       </mediaobject>
