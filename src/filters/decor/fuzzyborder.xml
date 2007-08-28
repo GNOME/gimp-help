@@ -1,0 +1,540 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+                "http://www.docbook.org/xml/4.3/docbookx.dtd">
+
+<!-- section history:
+  2007-08-28 ude: created en, de
+-->
+<sect2 id="plug-in-fuzzy-border" lang="en;de">
+  <sect2info>
+    <revhistory>
+      <revision lang="en">
+        <revnumber>$Revision$</revnumber>
+        <date>2007-08-28</date>
+        <authorinitials>ude</authorinitials>
+      </revision>
+      <revision lang="de">
+        <revnumber>$Revision$</revnumber>
+        <date>2007-08-28</date>
+        <authorinitials>ude</authorinitials>
+      </revision>
+    </revhistory>
+  </sect2info>
+
+  <title>
+    <phrase lang="en">Fuzzy Border</phrase>
+    <phrase lang="cs"><!-- Filter name cs --></phrase>
+    <phrase lang="de">Rand ausblenden</phrase>
+    <phrase lang="fr"><!-- Filter name fr --></phrase>
+    <phrase lang="it"><!-- Filter name it --></phrase>
+    <phrase lang="no"><!-- Filter name no --></phrase>
+    <phrase lang="ru"><!-- Filter name ru --></phrase>
+  </title>
+
+  <indexterm lang="en">
+    <primary>Filters</primary>
+    <secondary>Decor</secondary>
+    <tertiary>Fuzzy Border</tertiary>
+  </indexterm>
+  <indexterm lang="en"><primary>Fuzzy Border</primary></indexterm>
+
+  <indexterm lang="de">
+    <primary>Filter</primary>
+    <secondary>Rand ausblenden</secondary>
+  </indexterm>
+  <indexterm lang="de"><primary>Rand ausblenden</primary></indexterm>
+
+
+  <!-- This section gives an overview of what the filter does -->
+  <sect3>
+    <title>
+      <phrase lang="en">Overview</phrase>
+      <phrase lang="cs">Přehled</phrase>
+      <phrase lang="de">Wirkungsweise</phrase>
+      <phrase lang="fr">Généralités</phrase>
+      <phrase lang="it">Panoramica</phrase>
+      <phrase lang="no">Oversyn</phrase>
+      <phrase lang="ru">Общая информация</phrase>
+      <phrase lang="zh_CN">概述</phrase>
+    </title>
+
+    <!-- First show a double of images to show the effect the filter creates -->
+    <figure>
+      <title>
+        <phrase lang="en">
+          Example for the <quote>Fuzzy Border</quote> filter
+        </phrase>
+        <phrase lang="de">
+          Anwendungsbeispiel für das Filter <quote>Rand ausblenden</quote>
+        </phrase>
+        <phrase lang="fr">
+          Exemple d'application pour le filtre <!-- Filter name fr -->
+        </phrase>
+        <phrase lang="it">
+          Esempio di applicazione del filtro <!-- Filter name it -->
+        </phrase>
+      </title>
+
+      <mediaobject>
+        <imageobject>
+          <imagedata format="JPG"
+            fileref="../images/filters/examples/taj_orig.jpg" />
+        </imageobject>
+        <caption>
+          <para lang="en">Original image</para>
+          <para lang="de">Originalbild</para>
+          <para lang="fr">Image d'origine</para>
+        </caption>
+      </mediaobject>
+
+      <mediaobject>
+        <imageobject>
+          <imagedata format="JPG"
+            fileref="../images/filters/examples/decor-taj-fuzzyborder.jpg" />
+        </imageobject>
+
+        <caption>
+          <para lang="en"><quote>Fuzzy Border</quote> applied</para>
+          <para lang="de">
+            Filter <quote>Rand ausblenden</quote> angewandt
+          </para>
+          <para lang="fr">
+            Après application du filtre <quote><!-- Filter name fr --></quote>
+          </para>
+        </caption>
+      </mediaobject>
+    </figure>
+
+    <!-- gimp/trunk/plug-ins/script-fu/scripts/fuzzyborder.scm:
+             "Do a cool fade to a given colour at the border of an image
+             (optional shadow)
+             Will make image RGB if it isn't already."
+         tooltip:
+             "Add a jagged, fuzzy border to an image"
+    -->
+    <para lang="en">
+      This filter adds a cool fading border to an image. The border will look
+      jagged and fuzzy, and you can specify color and thicknes of the fading
+      border. Optional you may add a shadow to the image.
+    </para>
+    <para lang="de">
+      Dieses Filter blendet den Rand eines Bildes aus. Der Bereich der
+      Ausblendung ist ausgefranst und verschwommen, Breite und Farbe können
+      frei gewählt werden. Optional können Sie einen Schatten hinzufügen.
+    </para>
+  </sect3>
+
+
+  <sect3 lang="en;de">
+    <title>
+      <phrase lang="en">Activate the filter</phrase>
+      <phrase lang="cs">Aktivace filtru</phrase>
+      <phrase lang="de">Filteraufruf</phrase>
+      <phrase lang="es">Activar el filtro</phrase>
+      <phrase lang="fr">Ouverture du filtre</phrase>
+      <phrase lang="it">Attivazione del filtro</phrase>
+      <phrase lang="ru">Активация фильтра</phrase>
+      <phrase lang="zh_CN">使用这个滤镜</phrase>
+    </title>
+
+    <para lang="en">
+      This filter is found in the image window menu under
+      <menuchoice>
+        <guimenu><accel>F</accel>ilters</guimenu>
+        <guisubmenu><accel>D</accel>ecor</guisubmenu>
+        <guimenuitem><accel>F</accel>uzzy Border</guimenuitem>
+      </menuchoice>.
+    </para>
+
+    <para lang="de">
+      Das Filter lässt sich über das Menü
+      <menuchoice>
+        <guimenu><accel>F</accel>ilter</guimenu>
+        <guisubmenu><accel>D</accel>ekoration</guisubmenu>
+        <guimenuitem>Ra<accel>n</accel>d ausblenden</guimenuitem>
+      </menuchoice>
+      im Bildfenster aufrufen.
+    </para>
+
+    <para lang="fr">
+      On accède à ce filtre par
+      <menuchoice>
+        <guimenu>Filtres</guimenu>
+        <guisubmenu><!-- filter category --></guisubmenu>
+
+        <guimenuitem><!-- filter name fr --></guimenuitem>
+      </menuchoice>.
+    </para>
+
+    <para lang="it">
+      Questo filtro si trova nel menu immagine:
+      <menuchoice>
+        <guimenu>Filtri</guimenu>
+        <guisubmenu><accel></accel><!-- filter category --></guisubmenu>
+        <guisubmenu><accel></accel><!-- filter name it --></guisubmenu>
+      </menuchoice>.
+    </para>
+
+    <para lang="no">
+      Du har tilgang til filteret frå biletmenyen via
+      <menuchoice>
+        <guimenu>Filter</guimenu>
+        <guisubmenu><!-- filter category --></guisubmenu>
+        <guimenuitem><!-- filter name no --></guimenuitem>
+      </menuchoice>
+    </para>
+
+    <para lang="ru">
+      Этот фильтр находится в
+      <menuchoice>
+        <guimenu>Фильтры</guimenu>
+        <guisubmenu><!-- filter category --></guisubmenu>
+        <guimenuitem><!-- filter name ru --></guimenuitem>
+      </menuchoice>.
+    </para>
+  </sect3>
+
+
+  <sect3>
+    <title>
+      <phrase lang="en;fr">Options</phrase>
+      <phrase lang="cs">Volby</phrase>
+      <phrase lang="de">Eigenschaften</phrase>
+      <phrase lang="it">Opzioni</phrase>
+      <phrase lang="no">Innstillingar</phrase>
+      <phrase lang="ru">Параметры</phrase>
+      <phrase lang="zh_CN">选项</phrase>
+    </title>
+
+    <figure>
+      <title>
+        <phrase lang="en"><quote>Fuzzy Border</quote> options</phrase>
+        <phrase lang="de">
+          Eigenschaften des Filters <quote>Rand ausblenden</quote>
+        </phrase>
+      </title>
+
+      <mediaobject>
+        <imageobject lang="en">
+          <imagedata format="PNG"
+            fileref="../images/filters/options-decor-fuzzyborder.png" />
+        </imageobject>
+        <imageobject lang="de">
+          <imagedata format="PNG"
+            fileref="../images/filters/de/options-decor-fuzzyborder.png" />
+        </imageobject>
+      </mediaobject>
+    </figure>
+
+    <variablelist>
+      <varlistentry>
+        <term lang="en">Color</term>
+        <term lang="de">Farbe</term>
+
+        <listitem>
+          <para lang="en">
+            Clicking on this button brings up the color selector dialog that
+            allows you to choose the border color.
+          </para>
+          <para lang="de">
+            Ein Klick auf diese Schaltfläche öffnet den Farbauswahl-Dialog, wo
+            Sie die Randfarbe festlegen können.
+          </para>
+
+          <!-- CHECK all: isn't this just a bug? -->
+          <warning>
+            <para lang="en">
+              <acronym>GIMP</acronym>'s background color will be set to the
+              selected color.
+            </para>
+            <para lang="de">
+              <acronym>GIMP</acronym>s Hintergrundfarbe wird auf die hier
+              gewählte Farbe gesetzt.
+            </para>
+          </warning>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term lang="en">Border size</term>
+        <term lang="de">Randgröße</term>
+
+        <listitem>
+          <para lang="en">
+            Here you can set the thickness of the fuzzy border, in pixels.
+            Maximum is 300 pixels, regardless of the image's width or height.
+          </para>
+          <para lang="de">
+            Hier können Sie die Randbreite in Pixeln einstellen.
+            Größtmöglicher Wert ist 300 Pixel, unabhängig von Bildhöhe oder
+            -breite.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term lang="en">Blur border</term>
+        <term lang="de">Rand weichzeichnen</term>
+
+        <listitem>
+          <para lang="en">
+            If checked, the border will be blurred. The example below shows
+            the effect of blurring:
+          </para>
+          <para lang="de">
+            Wenn diese Eigenschaft aktiviert ist, wird der Rand
+            weichgezeichnet. Das nachfolgende Beispiel zeigt die Auswirkungen
+            des Weichzeichnens:
+          </para>
+
+          <figure>
+            <title>
+              <phrase lang="en"><quote>Blur border</quote> example</phrase>
+              <phrase lang="de">
+                Beispiel für <quote>Rand weichzeichnen</quote>
+              </phrase>
+            </title>
+
+            <mediaobject>
+              <imageobject>
+                <imagedata format="PNG"
+                  fileref="../images/filters/examples/fuzzyborder-blur.png" />
+              </imageobject>
+              <caption>
+                <para lang="en"><quote>Blur</quote> checked</para>
+                <para lang="de">Mit <quote>Weichzeichnen</quote></para>
+              </caption>
+            </mediaobject>
+            <mediaobject>
+              <imageobject>
+                <imagedata format="PNG"
+                  fileref="../images/filters/examples/fuzzyborder-noblur.png" />
+              </imageobject>
+              <caption>
+                <para lang="en"><quote>Blur</quote> unchecked</para>
+                <para lang="de">Ohne <quote>Weichzeichnen</quote></para>
+              </caption>
+            </mediaobject>
+          </figure>
+
+          <figure>
+            <title>
+              <phrase lang="en">
+                <quote>Blur border</quote> zoomed (1600%)
+              </phrase>
+              <phrase lang="de">
+                <quote>Rand weichzeichnen</quote> in 16facher Vergrößerung
+              </phrase>
+            </title>
+
+            <mediaobject>
+              <imageobject>
+                <imagedata format="PNG"
+                  fileref="../images/filters/examples/fuzzyborder-blurx16.png" />
+              </imageobject>
+              <caption>
+                <para lang="en"><quote>Blur</quote> checked</para>
+                <para lang="de">Mit <quote>Weichzeichnen</quote></para>
+              </caption>
+            </mediaobject>
+            <mediaobject>
+              <imageobject>
+                <imagedata format="PNG"
+                  fileref="../images/filters/examples/fuzzyborder-noblurx16.png" />
+              </imageobject>
+              <caption>
+                <para lang="en"><quote>Blur</quote> unchecked</para>
+                <para lang="de">Ohne <quote>Weichzeichnen</quote></para>
+              </caption>
+            </mediaobject>
+          </figure>
+
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term lang="en">Granularity</term>
+        <term lang="de">Körnigkeit</term>
+
+        <listitem>
+          <para lang="en">
+            The border's granularity is almost the size of pixel blocks spread
+            to create the effect of a jagged and fuzzy border.
+          </para>
+          <para lang="de">
+            Die Körnigkeit des Rands ist quasi die Größe der Pixelblöcke, die
+            zufällig gestreut werden, um den Effekt eines verschwommenen,
+            ausgefransten Randes zu erzeugen.
+          </para>
+
+          <figure>
+            <title>
+              <phrase lang="en">
+                Granularity example (without blurring)
+              </phrase>
+              <phrase lang="de">
+                Beispiel für Körnigkeit (ohne Weichzeichnen)
+              </phrase>
+            </title>
+
+            <mediaobject>
+              <imageobject>
+                <imagedata format="PNG"
+                  fileref="../images/filters/examples/fuzzyborder-gran1.png" />
+              </imageobject>
+              <caption>
+                <para lang="en">Granularity 1 (min)</para>
+                <para lang="de">Körnigkeit 1 (Minimum)</para>
+              </caption>
+            </mediaobject>
+            <mediaobject>
+              <imageobject>
+                <imagedata format="PNG"
+                  fileref="../images/filters/examples/fuzzyborder-gran4.png" />
+              </imageobject>
+              <caption>
+                <para lang="en">Granularity 4 (default)</para>
+                <para lang="de">Körnigkeit 4 (Voreinstellung)</para>
+              </caption>
+            </mediaobject>
+            <mediaobject>
+              <imageobject>
+                <imagedata format="PNG"
+                  fileref="../images/filters/examples/fuzzyborder-gran16.png" />
+              </imageobject>
+              <caption>
+                <para lang="en">Granularity 16 (max)</para>
+                <para lang="de">Körnigkeit 16 (Maximum)</para>
+              </caption>
+            </mediaobject>
+          </figure>
+
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term lang="en">Add shadow</term>
+        <term lang="de">Schatten hinzufügen</term>
+
+        <listitem>
+          <para lang="en">
+            If checked, the filter will also create a shadow at the border.
+          </para>
+          <para lang="de">
+            Falls diese Eigenschaft aktiviert ist, erzeugt das Filter
+            zusätzlich einen Schatten am Rand.
+          </para>
+
+          <figure>
+            <title>
+              <phrase lang="en"><quote>Add shadow</quote> example</phrase>
+              <phrase lang="de">
+                Beispiel für <quote>Schatten hinzufügen</quote>
+              </phrase>
+            </title>
+
+            <mediaobject>
+              <imageobject>
+                <imagedata format="PNG"
+                  fileref="../images/filters/examples/fuzzyborder-shadow100.png" />
+              </imageobject>
+              <caption>
+                <para lang="en">
+                  <quote>Add shadow</quote> checked, shadow weight 100%
+                  (default shadow weight).
+                </para>
+                <para lang="de">
+                  Mit Schatten, Intensität 100% (voreingestellte Intensität).
+                </para>
+              </caption>
+            </mediaobject>
+            <mediaobject>
+              <imageobject>
+                <imagedata format="PNG"
+                  fileref="../images/filters/examples/fuzzyborder-shadow10.png" />
+              </imageobject>
+              <caption>
+                <para lang="en">
+                  <quote>Add shadow</quote> with shadow weight 10%.
+                </para>
+                <para lang="de">
+                  Mit Schatten, Intensität 10%.
+                </para>
+              </caption>
+            </mediaobject>
+            <mediaobject>
+              <imageobject>
+                <imagedata format="PNG"
+                  fileref="../images/filters/examples/fuzzyborder-noshadow.png" />
+              </imageobject>
+              <caption>
+                <para lang="en">
+                  <quote>Add shadow</quote> unchecked (default)
+                </para>
+                <para lang="de">Ohne Schatten (Voreinstellung)</para>
+              </caption>
+            </mediaobject>
+          </figure>
+
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term lang="en">Shadow weight</term>
+        <term lang="de">Schattenintensität</term>
+
+        <listitem>
+          <para lang="en">
+            If <guilabel>Add shadow</guilabel> is checked,
+            you may set the shadow opacity here. Defaults to 100% (full
+            opacity).
+          </para>
+          <para lang="de">
+            Hier können Sie die Deckkraft des Schattens einstellen, falls
+            <guilabel>Schatten hinzufügen</guilabel> aktiviert ist.
+            Voreinstellung ist 100% (vollständig deckend).
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term lang="en">Work on copy</term>
+        <term lang="de">Mit Kopie arbeiten</term>
+
+        <listitem>
+          <para lang="en">
+            If checked, the filter creates a new window containing a copy of
+            the image with the filter applied. The original image remains
+            unchanged.
+          </para>
+          <para lang="de">
+            Wenn diese Eigenschaft aktiviert ist, erzeugt das Filter ein neues
+            Fenster mit einer Kopie des Bildes, auf der das Filter angewandt
+            wurde. Das Originalbild bleibt unverändert.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term lang="en">Flatten image</term>
+        <term lang="de">Bild zusammenfügen</term>
+
+        <listitem>
+          <para lang="en">
+            If unchecked, the filter keeps the additional layers it used to
+            create the border and the shadow (if demanded). Default is to
+            merge down all layers.
+          </para>
+          <para lang="de">
+            Falls diese Eigenschaft nicht aktiviert ist, bleiben die
+            zusätzlichen Ebenen, die das Filter zur Erstellung des Rands und
+            (falls nötig) des Schattens verwendet, erhalten. Voreinstellung
+            ist, alle Ebenen zu vereinen.
+          </para>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+  </sect3>
+</sect2>
