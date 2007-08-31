@@ -7,8 +7,8 @@
   2007-08-16 ude: created en, de
 -->
 <!--TODO es fr it no ko ru: translation-->
-<sect2 id="script-fu-add-bevel" lang="en;de">
-  <sect2info>
+<sect2 id="script-fu-add-bevel" lang="en;de;ru">
+  <sect2info lang="en;de">
     <revhistory>
       <revision lang="en">
         <revnumber>$Revision$</revnumber>
@@ -30,7 +30,7 @@
     <phrase lang="fr"><!-- Filter name --></phrase>
     <phrase lang="it"><!-- Filter name --></phrase>
     <phrase lang="no"><!-- Filter name --></phrase>
-    <phrase lang="ru"><!-- Filter name --></phrase>
+    <phrase lang="ru">Добавить рельеф</phrase>
   </title>
 
   <indexterm lang="en">
@@ -44,6 +44,11 @@
     <secondary>Rand abschrägen</secondary>
   </indexterm>
   <indexterm lang="de"><primary>Rand abschrägen</primary></indexterm>
+  <indexterm lang="ru">
+    <primary>Фильтры</primary>
+    <secondary>Добавить рельеф</secondary>
+  </indexterm>
+  <indexterm lang="ru"><primary>Добавить рельеф</primary></indexterm>
 
 
   <!-- See gimp/trunk/plug-ins/script-fu/scripts/add-bevel.scm -->
@@ -73,6 +78,9 @@
         <phrase lang="it">
           Esempio di applicazione del filtro <!-- Filter name-->
         </phrase>
+        <phrase lang="ru">
+          Пример применения фильтра <quote>Добавить рельеф</quote>
+        </phrase>
       </title>
 
       <mediaobject>
@@ -88,6 +96,9 @@
             Originalbild, das farbige Rechteck ist ausgewählt
           </para>
           <para lang="fr">Image d'origine</para>
+          <para lang="ru">
+            Искомое изображение, выделен цветной прямоугольник
+          </para>
         </caption>
       </mediaobject>
 
@@ -104,6 +115,9 @@
           </para>
           <para lang="fr">
             Après application du filtre <quote><!-- Filter name --></quote>
+          </para>
+          <para lang="ru">
+            После применения фильтра <quote>Добавить рельеф</quote>
           </para>
         </caption>
       </mediaobject>
@@ -126,6 +140,11 @@
       abgeschrägt, andernfalls der Alphakanal (falls es einen gibt) oder das
       ganze Bild.
     </para>
+    <para lang="ru">
+      Этот фильтр добавляет рельеф к активному изображению, выделению или
+      каналу альфа, используя <link linkend="plug-in-bump-map">карту
+      рельефа</link> (смотри ниже).
+    </para>
 
     <figure>
       <title>
@@ -135,6 +154,10 @@
         <phrase lang="de">
           Ein weiteres Beispiel für <quote>Rand abschrägen</quote>, mit
           Bump-Ebene
+        </phrase>
+        <phrase lang="ru">
+          Пример применения фильтра <quote>Добавить рельеф</quote> с картой
+          рельефа.
         </phrase>
       </title>
 
@@ -147,6 +170,7 @@
           <para lang="en">Original image</para>
           <para lang="de">Originalbild</para>
           <para lang="fr">Image d'origine</para>
+          <para lang="ru">Искомое изображение</para>
         </caption>
       </mediaobject>
       <mediaobject>
@@ -157,6 +181,7 @@
         <caption>
           <para lang="en">Bumpmap</para>
           <para lang="de">Bump-Ebene</para>
+          <para lang="ru">Карта рельефа</para>
         </caption>
       </mediaobject>
       <mediaobject>
@@ -168,6 +193,7 @@
           <para lang="en">Filter applied</para>
           <para lang="de">Filter angewandt</para>
           <para lang="fr">Après application du filtre</para>
+          <para lang="ru">После применения фильтра</para>
         </caption>
       </mediaobject>
     </figure>
@@ -234,11 +260,11 @@
     </para>
 
     <para lang="ru">
-      Этот фильтр находится в
+      Этот фильтр находится в меню изображения
       <menuchoice>
         <guimenu>Фильтры</guimenu>
-        <guisubmenu><!-- filter category --></guisubmenu>
-        <guimenuitem><!-- filter name --></guimenuitem>
+        <guisubmenu>Декорация</guisubmenu>
+        <guimenuitem>Добавить рельеф</guimenuitem>
       </menuchoice>.
     </para>
   </sect3>
@@ -261,10 +287,13 @@
         <phrase lang="de">
           Eigenschaften des Filters <quote>Rand abschrägen</quote>
         </phrase>
+        <phrase lang="ru">
+          Параметры фильтра <quote>Добавить рельеф</quote>
+        </phrase>
       </title>
 
       <mediaobject>
-        <imageobject lang="en">
+        <imageobject lang="en;ru">
           <imagedata
             fileref="../images/filters/options-decor-add-bevel.png"
             format="PNG" />
@@ -281,6 +310,7 @@
       <varlistentry>
         <term lang="en">Thickness</term>
         <term lang="de">Dicke</term>
+        <term lang="ru">Толщина</term>
 
         <listitem>
           <para lang="en">
@@ -291,12 +321,16 @@
             Sie können die Breite der Schräge einstellen, maximale Breite ist
             30 Pixel.
           </para>
+          <para lang="ru">
+            Определяет ширину рельфа в точках. Диапазон значений от 1 до 30-ти.
+          </para>
         </listitem>
       </varlistentry>
 
       <varlistentry>
         <term lang="en">Work on copy</term>
         <term lang="de">Mit Kopie arbeiten</term>
+        <term lang="ru">Работать с копией</term>
 
         <listitem>
           <para lang="en">
@@ -312,12 +346,19 @@
             machen können, können Sie auch unbesorgt mit dem Original
             arbeiten, indem Sie diese Eigenschaft deaktivieren.
           </para>
+          <para lang="ru">
+            По умолчанию этот фильтр создаёт копию и придаёт рельеф этой копии.
+            Это ещё одно окно на рабочем столе. Но поскольку операцию фильтра
+            можно отменить, то этот параметр можно не выбирать и работать с
+            оригиналом.
+          </para>
         </listitem>
       </varlistentry>
 
       <varlistentry>
         <term lang="en">Keep bump layer</term>
         <term lang="de">Bump-Ebene erhalten</term>
+        <term lang="ru">Держать слой рельефа</term>
 
         <listitem>
           <para lang="en">
@@ -328,6 +369,10 @@
             Wenn Sie diese Eigenschaft aktivieren, können Sie die verwendete
             Bump-Ebene als neue, nicht sichtbare Ebene erhalten (hier der
             Ebenendialog):
+          </para>
+          <para lang="ru">
+            При выборе этого параметра, карта рельефа будет оставатся как новый
+            невидимый слой (внизу диалога слоёв):
           </para>
           <mediaobject>
             <imageobject>

@@ -7,8 +7,8 @@
   2007-08-19 ude: created en, de
 -->
 <!--TODO es fr it no ko ru: translation-->
-<sect2 id="script-fu-addborder" lang="en;de">
-  <sect2info>
+<sect2 id="script-fu-addborder" lang="en;de;ru">
+  <sect2info lang="en;de">
     <revhistory>
       <revision lang="en">
         <revnumber>$Revision$</revnumber>
@@ -30,7 +30,7 @@
     <phrase lang="fr"><!-- Filter name fr --></phrase>
     <phrase lang="it"><!-- Filter name it --></phrase>
     <phrase lang="no"><!-- Filter name no --></phrase>
-    <phrase lang="ru"><!-- Filter name ru --></phrase>
+    <phrase lang="ru">Добавить рамку</phrase>
   </title>
 
   <indexterm lang="en">
@@ -45,6 +45,11 @@
   </indexterm>
   <indexterm lang="de"><primary>Rand hinzufügen</primary></indexterm>
 
+  <indexterm lang="ru">
+    <primary>Фильтры</primary>
+    <secondary>Добавить рамку</secondary>
+  </indexterm>
+  <indexterm lang="ru"><primary>Добавить рамку</primary></indexterm>
 
   <!--- See gimp/trunk/plug-ins/script-fu/scripts/addborder.scm -->
   <sect3>
@@ -73,6 +78,9 @@
         <phrase lang="it">
           Esempio di applicazione del filtro <!-- Filter name it -->
         </phrase>
+        <phrase lang="ru">
+          Пример применения фильтра <quote>Добавить рамку</quote>
+        </phrase>
       </title>
 
       <mediaobject>
@@ -85,6 +93,7 @@
           <para lang="en">Original image</para>
           <para lang="de">Originalbild</para>
           <para lang="fr">Image d'origine</para>
+          <para lang="ru">Искомое изображение</para>
         </caption>
       </mediaobject>
 
@@ -101,6 +110,7 @@
           <para lang="fr">
             Après application du filtre <quote><!-- Filter name fr --></quote>
           </para>
+          <para lang="ru">Добавлена рамка</para>
         </caption>
       </mediaobject>
     </figure>
@@ -125,6 +135,16 @@
       Das Bild wird um die Breite des Rands vergrößert, es wird also nichts
       übermalt.
     </para>
+    <para lang="ru">
+      Этот фильтр добавляет рамку вокруг изображения. Параметрами можно указать
+      толщину и цвет рамки. Стороны рамки будут окрашены в разный цвет
+      (насколько разный, определяется соответствующим параметром), чтобы
+      придать изображению приподнятый вид.
+    </para>
+    <para lang="ru">
+      Размер изображения увеличится на размер рамки. Рамка не покрывает
+      изображение.
+    </para>
   </sect3>
 
 
@@ -136,7 +156,7 @@
       <phrase lang="es">Activar el filtro</phrase>
       <phrase lang="fr">Ouverture du filtre</phrase>
       <phrase lang="it">Attivazione del filtro</phrase>
-      <phrase lang="ru">Активация фильтра</phrase>
+      <phrase lang="ru">Активация</phrase>
       <phrase lang="zh_CN">使用这个滤镜</phrase>
     </title>
 
@@ -187,11 +207,11 @@
     </para>
     
     <para lang="ru">
-      Этот фильтр находится в
+      Этот фильтр находится в меню изображения
       <menuchoice>
         <guimenu>Фильтры</guimenu>
-        <guisubmenu><!-- filter category --></guisubmenu>
-        <guimenuitem><!-- filter name ru --></guimenuitem>
+        <guisubmenu>Декорация</guisubmenu>
+        <guimenuitem>Добавить рамку</guimenuitem>
       </menuchoice>.
     </para>
   </sect3>
@@ -214,10 +234,13 @@
         <phrase lang="de">
           Eigenschaften des Filters <quote>Rand hinzufügen</quote>
         </phrase>
+        <phrase lang="ru">
+          Параметры фильтра <quote>Добавить рамку</quote>
+        </phrase>
       </title>
 
       <mediaobject>
-        <imageobject lang="en">
+        <imageobject lang="en;ru">
           <imagedata
             fileref="../images/filters/options-decor-addborder.png"
             format="PNG" />
@@ -234,6 +257,7 @@
       <varlistentry>
         <term lang="en">Border X size, Border Y size</term>
         <term lang="de">Randgröße X, Randgröße Y</term>
+        <term lang="ru">Ширина рамки по X/Y</term>
 
         <listitem>
           <para lang="en">
@@ -246,12 +270,17 @@
             (links und rechts) und Y-Randgröße (oben und unten) dürfen
             unterschiedlich sein. Größtmöglicher Wert ist jeweils 250 Pixel.
           </para>
+          <para lang="ru">
+            Определяет толщину добавленного края, в точках. Размеры по X и Y
+            могут отличаться. Максимальное значение - 250.
+          </para>
         </listitem>
       </varlistentry>
 
       <varlistentry>
         <term lang="en">Border color</term>
         <term lang="de">Randfarbe</term>
+        <term lang="ru">Цвет края</term>
 
         <listitem>
           <para lang="en">
@@ -265,12 +294,18 @@
             <quote>durchschnittliche</quote> Farbe für den Rand auswählen
             können (siehe unten, <guilabel>Farbänderung</guilabel>). 
           </para>
+          <para lang="ru">
+            Нажатие на эту кнопку покажет диалог выбора цвета, позволяющий
+            выбрать <quote>средний</quote> цвет края (смотри ниже
+            <guilabel>Дельта цвета</guilabel>).
+          </para>
         </listitem>
       </varlistentry>
 
       <varlistentry>
         <term lang="en">Delta value on color</term>
         <term lang="de">Farbänderung</term>
+        <term lang="ru">Дельта цвета</term>
 
         <listitem>
           <para lang="en">
@@ -303,23 +338,44 @@
               gesetzt, Werte größer als 255 auf 255.
             </para></footnote>
           </para>  
+          <para lang="ru">
+            Этот параметр определяет разный цвет тени краёв, что даёт
+            изображению приподнятый вид. Цвет для каждого края высчитывается
+            по отдельности для компонентов красного, синего и зелёного
+            <footnote><para>
+              За дополнительной информацией обратитесь к разделу о<link
+              linkend="gimp-concepts-image-types">типах изображения</link> или
+              <!--link linkend="glossary-rgb"-->RGB<!--/link-->.
+            </para>
+            </footnote>
+            из <quote>среднего</quote> <guilabel>цвета края</guilabel> следующим
+            образом:
+            <footnote lang="ru"><para>
+              Отрицательные значения устанавливаются на 0, значения больше чем
+              255 устанавливаются на 255.
+            </para></footnote>
+          </para>
 
           <itemizedlist> 
             <listitem>
               <para lang="en">Top shade = Border color + Delta</para>
               <para lang="de">Farbe oben = Randfarbe + Farbänderung</para>
+              <para lang="ru">Верхняя тень = цвет края + Дельта</para>
             </listitem>
             <listitem>
               <para lang="en">Right shade = Border color - ½ Delta</para>
               <para lang="de">Farbe rechts = Randfarbe - ½ Farbänderung</para>
+              <para lang="ru">Правая тень = цвет края - ½ Дельта</para>
             </listitem>
             <listitem>
               <para lang="en">Bottom shade = Border color - Delta</para>
               <para lang="de">Farbe unten = Randfarbe - Farbänderung</para>
+              <para lang="ru">Нижняя тень = цвет края - Дельта</para>
             </listitem>
             <listitem>
               <para lang="en">Left shade = Border color + ½ Delta</para>
               <para lang="de">Farbe links = Randfarbe + ½ Farbänderung</para>
+              <para lang="ru">Левая тень = цвет края + ½ * Дельта</para>
             </listitem>
            </itemizedlist> 
 
@@ -328,6 +384,10 @@
               <phrase lang="en">Delta examples</phrase>
               <phrase lang="de">
                 Beispiele für verschiedene Farbänderungen
+              </phrase>
+              <phrase lang="ru">
+                Примеры применения фильтра <quote>Добавить рельеф</quote> с
+                разными значениями параметра дельта
               </phrase>
             </title>
             <mediaobject>
@@ -345,6 +405,10 @@
                   Filter angewandt mit <guilabel>Farbänderung</guilabel> 25,
                   danach mit 75, 125, 175 und 225.
                 </para>
+                <para lang="ru">
+                  Применение фильтра <quote>Добавить рельеф</quote> со значением
+                  <guilabel>Дельта</guilabel> 25, затем 75, 125, 175 и 225.
+                </para>
               </caption>
             </mediaobject>
           </figure>
@@ -361,6 +425,11 @@
             Randseiten die folgenden Farben: oben: (38,31,207) + (25,25,25) =
             (63,56,232), rechts: (38,31,207) + (-13,-13,-13) = (25,18,194),
             usw.
+          </para>
+          <para lang="ru">
+            Пример: цвет по умолчанию - синий (38,31,207), дельта по умолчанию
+            - 25. Тень края: верхняя = (38,31,207) + (25,25,25) = (63,56,232),
+            правая = (38,31,207) + (-13,-13,-13) = (25,18,194), и т.д.
           </para>
         </listitem>
       </varlistentry>
