@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+                "http://www.docbook.org/xml/4.3/docbookx.dtd">
+
+<!-- section history:
+  2007-09-03 ude: created en, de
+-->
+<sect2 id="script-fu-round-corners" lang="en;de">
+  <sect2info>
+    <revhistory>
+      <revision lang="en">
+        <revnumber>$Revision$</revnumber>
+        <date>2007-09-03</date>
+        <authorinitials>ude</authorinitials>
+      </revision>
+      <revision lang="de">
+        <revnumber>$Revision$</revnumber>
+        <date>2007-09-03</date>
+        <authorinitials>ude</authorinitials>
+      </revision>
+    </revhistory>
+  </sect2info>
+
+  <title>
+    <phrase lang="en">Round Corners</phrase>
+    <phrase lang="cs"><!-- Filter name cs --></phrase>
+    <phrase lang="de">Runde Ecken</phrase>
+    <phrase lang="fr"><!-- Filter name fr --></phrase>
+    <phrase lang="it"><!-- Filter name it --></phrase>
+    <phrase lang="no"><!-- Filter name no --></phrase>
+    <phrase lang="ru"><!-- Filter name ru --></phrase>
+  </title>
+
+  <indexterm lang="en">
+    <primary>Filters</primary>
+    <secondary>Decor</secondary>
+    <tertiary>Round Corners</tertiary>
+  </indexterm>
+  <indexterm lang="en"><primary>Round Corners</primary></indexterm>
+
+  <indexterm lang="de">
+    <primary>Filter</primary>
+    <secondary>Runde Ecken</secondary>
+  </indexterm>
+  <indexterm lang="de"><primary>Runde Ecken</primary></indexterm>
+
+
+  <sect3>
+    <title>
+      <phrase lang="en">Overview</phrase>
+      <phrase lang="cs">Přehled</phrase>
+      <phrase lang="de">Wirkungsweise</phrase>
+      <phrase lang="fr">Généralités</phrase>
+      <phrase lang="it">Panoramica</phrase>
+      <phrase lang="no">Oversyn</phrase>
+      <phrase lang="ru">Общая информация</phrase>
+      <phrase lang="zh_CN">概述</phrase>
+    </title>
+
+    <figure>
+      <title>
+        <phrase lang="en">
+          Example for the <quote>Round Corners</quote> filter
+        </phrase>
+        <phrase lang="de">
+          Anwendungsbeispiel für das Filter <quote>Runde Ecken</quote>
+        </phrase>
+        <phrase lang="fr">
+          Exemple d'application pour le filtre <!-- Filter name fr -->
+        </phrase>
+        <phrase lang="it">
+          Esempio di applicazione del filtro <!-- Filter name it -->
+        </phrase>
+      </title>
+
+      <mediaobject>
+        <imageobject>
+          <imagedata format="JPG"
+            width="330" depth="330" scalefit="0" align="center" valign="middle"
+            fileref="../images/filters/examples/taj_orig.jpg" />
+        </imageobject>
+        <caption>
+          <para lang="en">Original image</para>
+          <para lang="de">Originalbild</para>
+          <para lang="fr">Image d'origine</para>
+        </caption>
+      </mediaobject>
+
+      <mediaobject>
+        <imageobject>
+          <imagedata format="JPG"
+            width="330" depth="330" scalefit="0" align="center" valign="middle"
+            fileref="../images/filters/examples/decor-taj-round-corners.jpg" />
+        </imageobject>
+
+        <caption>
+          <para lang="en"><quote>Round Corners</quote> applied</para>
+          <para lang="de">
+            Filter <quote>Runde Ecken</quote> angewandt
+          </para>
+          <para lang="fr">
+            Après application du filtre <quote><!-- Filter name fr --></quote>
+          </para>
+        </caption>
+      </mediaobject>
+    </figure>
+
+      <!-- gimp/trunk/plug-ins/script-fu/scripts/round-corners.scm:
+
+        "Rounds the corners of an image, optionally adding a drop-shadow and a
+        background layer
+
+        The script works on RGB and grayscale images that contain only one
+        layer. It creates a copy of the image or can optionally work on the
+        original. The script uses the current background color to create a
+        background layer. It makes a call to the script drop-shadow."
+       -->
+    <para lang="en">
+      This filter rounds the corners of an image, optionally adding a
+      drop-shadow and a background layer.
+    </para>
+    <para lang="en">
+      The filter works on RGB and grayscale images that contain only one
+      layer. It creates a copy of the image or can optionally work on the
+      original. It uses the current background color to create a background
+      layer.
+    </para>
+
+    <para lang="de">
+      Dieses Filter rundet die Ecken eines Bildes ab. Optional fügt es einen
+      Schlagschatten und eine Hintergrundebene hinzu.
+    </para>
+    <para lang="de">
+      Das Filter kann nur auf Bilder im RGB-Format oder mit Graustufenbildern
+      angewendet werden. Diese Bilder dürfen nicht mehr als eine Ebene haben.
+      Das Filter arbeitet wahlweise mit einer Kopie des Bildes oder dem
+      Original. Für die Hintergrundebene wird die aktuelle Hintergrundfarbe
+      verwendet.
+    </para>
+  </sect3>
+
+
+  <sect3 lang="en;de">
+    <title>
+      <phrase lang="en">Activate the filter</phrase>
+      <phrase lang="cs">Aktivace filtru</phrase>
+      <phrase lang="de">Filteraufruf</phrase>
+      <phrase lang="es">Activar el filtro</phrase>
+      <phrase lang="fr">Ouverture du filtre</phrase>
+      <phrase lang="it">Attivazione del filtro</phrase>
+      <phrase lang="ru">Активация фильтра</phrase>
+      <phrase lang="zh_CN">使用这个滤镜</phrase>
+    </title>
+
+    <para lang="en">
+      This filter is found in the image window menu under
+      <menuchoice>
+        <guimenu><accel>F</accel>ilters</guimenu>
+        <guisubmenu><accel>D</accel>ecor</guisubmenu>
+        <guimenuitem><accel>R</accel>ound Corners</guimenuitem>
+      </menuchoice>.
+    </para>
+
+    <para lang="de">
+      Dieses Filter lässt sich über das Menü
+      <menuchoice>
+        <guimenu><accel>F</accel>ilter</guimenu>
+        <guisubmenu><accel>D</accel>ekoration</guisubmenu>
+        <guimenuitem><accel>R</accel>unde Ecken</guimenuitem>
+      </menuchoice>
+      im Bildfenster aufrufen.
+    </para>
+
+    <para lang="fr">
+      On accède à ce filtre par
+      <menuchoice>
+        <guimenu>Filtres</guimenu>
+        <guisubmenu><!-- filter category --></guisubmenu>
+
+        <guimenuitem><!-- filter name fr --></guimenuitem>
+      </menuchoice>.
+    </para>
+
+    <para lang="it">
+      Questo filtro si trova nel menu immagine:
+      <menuchoice>
+        <guimenu>Filtri</guimenu>
+        <guisubmenu><accel></accel><!-- filter category --></guisubmenu>
+        <guisubmenu><accel></accel><!-- filter name it --></guisubmenu>
+      </menuchoice>.
+    </para>
+
+    <para lang="no">
+      Du har tilgang til filteret frå biletmenyen via
+      <menuchoice>
+        <guimenu>Filter</guimenu>
+        <guisubmenu><!-- filter category --></guisubmenu>
+        <guimenuitem><!-- filter name no --></guimenuitem>
+      </menuchoice>
+    </para>
+
+    <para lang="ru">
+      Этот фильтр находится в
+      <menuchoice>
+        <guimenu>Фильтры</guimenu>
+        <guisubmenu><!-- filter category --></guisubmenu>
+        <guimenuitem><!-- filter name ru --></guimenuitem>
+      </menuchoice>.
+    </para>
+  </sect3>
+
+
+  <sect3>
+    <title>
+      <phrase lang="en;fr">Options</phrase>
+      <phrase lang="cs">Volby</phrase>
+      <phrase lang="de">Eigenschaften</phrase>
+      <phrase lang="it">Opzioni</phrase>
+      <phrase lang="no">Innstillingar</phrase>
+      <phrase lang="ru">Параметры</phrase>
+      <phrase lang="zh_CN">选项</phrase>
+    </title>
+
+    <figure>
+      <title>
+        <phrase lang="en"><quote>Round Corners</quote> options</phrase>
+        <phrase lang="de">
+          Eigenschaften des Filters <quote>Runde Ecken</quote>
+        </phrase>
+      </title>
+
+      <mediaobject>
+        <imageobject lang="en">
+          <imagedata format="PNG"
+            fileref="../images/filters/options-decor-round-corners.png" />
+        </imageobject>
+        <imageobject lang="de">
+          <imagedata format="PNG"
+            fileref="../images/filters/de/options-decor-round-corners.png" />
+        </imageobject>
+      </mediaobject>
+    </figure>
+
+    <variablelist>
+      <varlistentry>
+        <term lang="en">Edge radius</term>
+        <term lang="de">Eckradius</term>
+        <listitem>
+          <para lang="en">
+            Rounding corners is done by selecting a quarter of a circle at
+            every corner and removing the area not covered by this selection.
+            The <quote>edge radius</quote> is the radius of the constructing
+            circle.
+          </para>
+          <para lang="en">
+            In the examples below, the filter was applied to a 100x100 pixels
+            image, with varying edge radius. For radius = 50, the four
+            quadrants just form a circle with diameter = 100, which exactly
+            fits into the original image outline. A radius greater than 50 is
+            possible, but look what happens...
+          </para>
+          <para lang="de">
+            Das Abrunden der Ecken wird dadurch erreicht, dass für jede Ecke
+            ein Viertelkreis ausgewählt wird und der Bereich, der nicht zur
+            Auswahl gehört, gelöscht wird. Der <quote>Eckradius</quote> ist
+            der Radius des konstruierenden Kreises.
+          </para>
+          <para lang="de">
+            In den nachfolgenden Beispielen wurde das Filter auf ein 100x100
+            Pixel großes Bild angewandt, und der Radius variiert. Bei einem
+            Radius von 50 bilden die Viertelkreise gerade einen Kreis, der
+            genau in den ursprüngliche Bildumriss passt. Ein größerer Radius
+            ist zwar möglich, aber sehen Sie selbst, was dann passiert...
+          </para>
+
+          <figure>
+            <title>
+              <phrase lang="en">Edge radius examples</phrase>
+              <phrase lang="de">Eckradius-Beispiele</phrase>
+            </title>
+            <mediaobject>
+              <imageobject>
+                <imagedata format="PNG"
+                  fileref="../images/filters/examples/round-corners-rad15.png" />
+              </imageobject>
+              <caption>
+                <para lang="en">
+                  A 100x100 pixels image, edge radius: 15 (default).
+                </para>
+                <para lang="de">
+                  Ein 100x100 Pixel großes Bild, Eckradius 15
+                  (Voreinstellung).
+                </para>
+              </caption>
+            </mediaobject>
+            <mediaobject>
+              <imageobject>
+                <imagedata format="PNG"
+                  fileref="../images/filters/examples/round-corners-rad35.png" />
+              </imageobject>
+              <caption>
+                <para lang="en">Edge radius: 35.</para>
+                <para lang="de">Eckradius 35.</para>
+              </caption>
+            </mediaobject>
+            <mediaobject>
+              <imageobject>
+                <imagedata format="PNG"
+                  fileref="../images/filters/examples/round-corners-rad50.png" />
+              </imageobject>
+              <caption>
+                <para lang="en">Edge radius: 50.</para>
+                <para lang="de">Eckradius 50.</para>
+              </caption>
+            </mediaobject>
+            <mediaobject>
+              <imageobject>
+                <imagedata format="PNG"
+                  fileref="../images/filters/examples/round-corners-rad65.png" />
+              </imageobject>
+              <caption>
+                <para lang="en">Edge radius: 65. Ouch!</para>
+                <para lang="de">Eckradius 65. Autsch!</para>
+              </caption>
+            </mediaobject>
+          </figure>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term lang="en">Add drop-shadow</term>
+        <term lang="de">Schlagschatten hinzufügen</term>
+        <listitem>
+          <para lang="en">
+            When this option is checked, the filter will cast a shadow behind
+            your image after rounding the image corners.
+          </para>
+          <para lang="de">
+            Wenn Sie diese Eigenschaft aktivieren, erzeugt das Filter einen
+            Schatten hinter Ihrem Bild, nachdem die Bildecken abgerundet
+            wurden.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term lang="en">Shadow X/Y offset</term>
+        <term lang="de">Schattenversatz X/Y</term>
+        <listitem>
+          <para lang="en">
+            X and Y offset determine where the shadow will be placed in
+            relation to the image. Offset is measured in pixels. High values
+            make the shadow look like it's far away, and low values will make
+            it look closer to the image. 
+          </para>
+          <para lang="de">
+            Der X- und Y-Versatz legt fest, wo der Schatten in Relation zum
+            Bild platziert wird, angegeben in Pixeln. Höhere Werten lassen den
+            Schatten weiter entfernt erscheinen, niedrigere Werte näher am
+            Bild.
+          </para>
+
+          <figure>
+            <title>
+              <phrase lang="en">Shadow offset examples</phrase>
+              <phrase lang="de">Schattenversatz-Beispiele</phrase>
+            </title>
+            <mediaobject>
+              <imageobject>
+                <imagedata format="PNG"
+                  fileref="../images/filters/examples/round-corners-shadow1.png" />
+              </imageobject>
+              <caption>
+                <para lang="en">
+                  Shadow X offset: 8, Y offset: 8 (default).
+                </para>
+                <para lang="de">
+                  Schattenversatz jeweils 8 (Voreinstellung).
+                </para>
+              </caption>
+            </mediaobject>
+            <mediaobject>
+              <imageobject>
+                <imagedata format="PNG"
+                  fileref="../images/filters/examples/round-corners-shadow2.png" />
+              </imageobject>
+              <caption>
+                <para lang="en">Shadow X offset: 16, Y offset: 4.</para>
+                <para lang="de">Schattenversatz X = 16, Y = 4.</para>
+              </caption>
+            </mediaobject>
+          </figure>
+
+          <!-- TODO all: find out how to calculate these offsets
+               (see gimp/trunk/plug-ins/script-fu/scripts/drop-shadow.scm) -->
+          <para lang="en">
+            Note that the shadow offsets as well as the blur radius affect
+            the offset within the background area.
+          </para>
+          <para lang="de">
+            Beachten Sie, dass sowohl der Schattenversatz als auch der
+            Weichzeichenradius den Versatz innerhalb der Hintergrundebene
+            beeinflussen.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term lang="en">Blur radius</term>
+        <term lang="de">Weichzeichenradius</term>
+        <listitem>
+          <para lang="en">
+            When <guilabel>Add drop-shadow</guilabel> is checked, you may
+            select a blur radius, which will be used by the 
+            <!--PENDING en: link linkend="script-fu-drop-shadow"-->
+            <quote>Drop Shadow</quote><!--/link--> filter. The image will be
+            enlarged in both dimensions by twice the blur radius.
+          </para>
+          <para lang="de">
+            Wenn <guilabel>Schlagschatten hinzufügen</guilabel> aktiviert ist,
+            können Sie hier einen Radius wählen, der vom Filter
+            <!--PENDING en: link linkend="script-fu-drop-shadow"-->
+            <quote>Schlagschatten</quote><!--/link--> verwendet wird. Das Bild
+            wird in beiden Dimensionen um das Doppelte des Weichzeichenradius
+            vergrößert.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term lang="en">Add background</term>
+        <term lang="de">Hintergrund hinzufügen</term>
+        <listitem>
+          <para lang="en">
+            When you check this option (it is checked by default), the filter
+            will add a background layer below the existant layer, filled with
+            the current background color. The size of this new layer depends
+            on the blur radius.
+          </para>
+          <para lang="de">
+            Wenn Sie diese Eigenschaft aktivieren (per Voreinstellung ist sie
+            bereits aktiviert), fügt das Filter eine Hintergrundebene
+            unterhalb der vorhandenen Ebene ein und füllt sie mit der
+            aktuellen Hintergrundfarbe. Die Größe der Ebene hängt u.a. vom
+            Weichzeichenradius ab. 
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term lang="en">Work on copy</term>
+        <term lang="de">Mit Kopie arbeiten</term>
+        <listitem>
+          <para lang="en">
+            If checked, the filter creates a new window containing a copy of
+            the image with the filter applied. The original image remains
+            unchanged.
+          </para>
+          <para lang="de">
+            Wenn diese Eigenschaft aktiviert ist, erzeugt das Filter ein neues
+            Fenster mit einer Kopie des Bildes, auf der das Filter angewandt
+            wurde. Das Originalbild bleibt unverändert.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <!--TODO fr it ru: when you are here, goto
+          src/filters/decor/introduction.xml (content changed) -->
+
+    </variablelist>
+  </sect3>
+</sect2>
