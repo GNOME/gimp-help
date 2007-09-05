@@ -5,12 +5,13 @@
 
 <!-- section history:
   2007-09-02 AntI: Added 'es'
+  2007-08-30 alex falappa: added it
   2007-08-22 j.h: translated to fr
   2007-08-19 ude: created en, de
 -->
-<!--TODO it;no;ko; : translation-->
-<sect2 id="script-fu-addborder" lang="en;de;es;fr;ru">
-  <sect2info lang="en;de;es;fr">
+<!--TODO no;ko; : translation-->
+<sect2 id="script-fu-addborder" lang="en;de;es;fr;it;ru">
+  <sect2info lang="en;de;es;fr;it">
     <revhistory>
       <revision lang="en">
         <revnumber>$Revision$</revnumber>
@@ -32,6 +33,11 @@
         <date>2007-08-22</date>
         <authorinitials>j.h</authorinitials>
       </revision>
+      <revision lang="it">
+        <revnumber>$Revision$</revnumber>
+        <date>2007-08-30</date>
+        <authorinitials>alex falappa</authorinitials>
+      </revision>
     </revhistory>
   </sect2info>
 
@@ -41,7 +47,7 @@
     <phrase lang="de">Rand hinzufügen</phrase>
     <phrase lang="es">Añadir borde</phrase>
     <phrase lang="fr">Ajouter une bordure</phrase>
-    <phrase lang="it"><!-- Filter name it --></phrase>
+    <phrase lang="it">Aggiungi bordo</phrase>
     <phrase lang="no"><!-- Filter name no --></phrase>
     <phrase lang="ru">Добавить рамку</phrase>
   </title>
@@ -71,12 +77,18 @@
   </indexterm>
   <indexterm lang="fr"><primary>Ajouter une bordure</primary></indexterm>
 
+  <indexterm lang="it">
+    <primary>Filtri</primary>
+    <secondary>Aggiungi bordo</secondary>
+    <tertiary>Aggiunge un bordo alla selezione corrente</tertiary>
+  </indexterm>
+  <indexterm lang="it"><primary>Aggiungi bordo</primary></indexterm>
+
   <indexterm lang="ru">
     <primary>Фильтры</primary>
     <secondary>Добавить рамку</secondary>
   </indexterm>
   <indexterm lang="ru"><primary>Добавить рамку</primary></indexterm>
-
 
   <!--- See gimp/trunk/plug-ins/script-fu/scripts/addborder.scm -->
   <sect3>
@@ -108,7 +120,7 @@
             bordure</quote>
         </phrase>
         <phrase lang="it">
-          Esempio di applicazione del filtro <!-- Filter name it -->
+          Esempio di applicazione del filtro <quote>Aggiungi bordo</quote>
         </phrase>
         <phrase lang="ru">
           Пример применения фильтра <quote>Добавить рамку</quote>
@@ -126,6 +138,7 @@
           <para lang="de">Originalbild</para>
           <para lang="es">Original</para>
           <para lang="fr">Image d'origine</para>
+          <para lang="it">Immagine originale</para>
           <para lang="ru">Искомое изображение</para>
         </caption>
       </mediaobject>
@@ -143,6 +156,9 @@
           <para lang="es">Borde añadido</para>
           <para lang="fr">
             Après application du filtre <quote>Ajouter une bordure</quote>
+          </para>
+          <para lang="it">
+            Dopo l'applicazione del filtro  <quote>Aggiungi bordo</quote>
           </para>
           <para lang="ru">Добавлена рамка</para>
         </caption>
@@ -190,6 +206,16 @@
     <para lang="fr">
       L'image est élargie par cette bordure, et rien n'est repeint dans
       l'image elle-même.
+    </para>
+
+    <para lang="it">
+      Questo filtro, come intuibile dal nome, aggiunge un bordo all'immagine.
+      Si può impostare lo spessore e il colore del bordo. I quattro lati del
+      bordo sono ombreggiati in modo da far sembrare l'immagine rialzata.
+    </para>
+    <para lang="it">
+      L'immagine verrà ingrandita della dimensione del bordo, esso non verrà
+      disegnato sopra.
     </para>
 
     <para lang="ru">
@@ -258,8 +284,8 @@
       Questo filtro si trova nel menu immagine:
       <menuchoice>
         <guimenu>Filtri</guimenu>
-        <guisubmenu><accel></accel><!-- filter category --></guisubmenu>
-        <guisubmenu><accel></accel><!-- filter name it --></guisubmenu>
+        <guisubmenu><accel>D</accel>ecorazioni</guisubmenu>
+        <guisubmenu>Aggiungi <accel>b</accel>ordo</guisubmenu>
       </menuchoice>.
     </para>
 
@@ -271,7 +297,7 @@
         <guimenuitem><!-- filter name no --></guimenuitem>
       </menuchoice>
     </para>
-
+    
     <para lang="ru">
       Этот фильтр находится в меню изображения
       <menuchoice>
@@ -305,13 +331,16 @@
         <phrase lang="fr">
           Options du filtre <quote>Ajouter une bordure</quote>
         </phrase>
+        <phrase lang="it">
+          Opzioni del filtro <quote>Aggiungi bordo</quote>
+        </phrase>
         <phrase lang="ru">
           Параметры фильтра <quote>Добавить рамку</quote>
         </phrase>
       </title>
 
       <mediaobject>
-        <imageobject lang="en;es;ru">
+        <imageobject lang="en;es;it;ru">
           <imagedata
             fileref="../images/filters/options-decor-addborder.png"
             format="PNG" />
@@ -335,6 +364,7 @@
         <term lang="de">Randgröße X, Randgröße Y</term>
         <term lang="es">Tamaño X del borde, Tamaño Y del borde</term>
         <term lang="fr">Taille de la bordure en X, en Y</term>
+        <term lang="it">Dimensione bordo X, bordo Y</term>
         <term lang="ru">Ширина рамки по X/Y</term>
 
         <listitem>
@@ -360,6 +390,12 @@
             (en Y). Ces valeurs peuvent être différentes. le maximum est de
             250 pixels.
           </para>
+          <para lang="it">
+            Consente di impostare lo spessore del bordo in pixel. La
+            dimensione X (sinistra e destra) e la dimensione Y (superiore
+            ed inferiore) possono essere diverse. Il massimo è pari a
+            250 pixel.
+          </para>
           <para lang="ru">
             Определяет толщину добавленного края, в точках. Размеры по X и Y
             могут отличаться. Максимальное значение - 250.
@@ -372,6 +408,7 @@
         <term lang="de">Randfarbe</term>
         <term lang="es">Color del borde</term>
         <term lang="fr">Couleur de la bordure</term>
+        <term lang="it">Colore bordo</term>
         <term lang="ru">Цвет края</term>
 
         <listitem>
@@ -384,7 +421,7 @@
             Mit einem Klick auf die farbige Schaltfläche öffnet sich der
             Farbauswahldialog, in dem Sie eine beliebige
             <quote>durchschnittliche</quote> Farbe für den Rand auswählen
-            können (siehe unten, <guilabel>Farbänderung</guilabel>).
+            können (siehe unten, <guilabel>Farbänderung</guilabel>). 
           </para>
           <para lang="es">
             Al pulsar en el botón del color aparece el diálogo del editor
@@ -397,6 +434,12 @@
             couleur qui vous permet de choisir une couleur <quote>moyenne
             </quote> pour la bordure (voir plus bas, <guilabel>Valeur de
             différence de couleur</guilabel>).
+          </para>
+          <para lang="it">
+            Facendo clic su questo pulsante si richiama una finestra di
+            dialogo per la selezione dei colori che consente di scegliere
+            un colore <quote>intermedio</quote> del bordo (si veda qui sotto
+            per <guilabel>Valore delta su colore</guilabel>).
           </para>
           <para lang="ru">
             Нажатие на эту кнопку покажет диалог выбора цвета, позволяющий
@@ -411,6 +454,7 @@
         <term lang="de">Farbänderung</term>
         <term lang="es">Valor delta en el color</term>
         <term lang="fr">Valeur de différence de couleur</term>
+        <term lang="it">Valore delta su colore</term>
         <term lang="ru">Дельта цвета</term>
 
         <listitem>
@@ -443,8 +487,8 @@
             <footnote lang="de"><para>
               Falls der resultierende Wert kleiner als 0 ist, wird er auf 0
               gesetzt, Werte größer als 255 auf 255.
-            </para></footnote>
-          </para>
+            </para></footnote>:
+          </para>  
           <para lang="es">
             Esta opción hace que los lados del borde se coloreen en forma
             diferente y da a la imagen una apariencia de relieve. El color
@@ -473,6 +517,22 @@
             résultat inférieur à 0 est mis à 0; un résultat spérieur à 255
             est mis à 255.
           </para>
+          <para lang="it">
+            Questa opzione regola la colorazione dei lati del bordo e
+            l'effetto di sbalzo finale. Il valore effettivo del colore per
+            ciascun lato del bordo viene calcolato per ciascuna componente
+            di colore<footnote><para>
+              Si veda <link
+              linkend="gimp-concepts-image-types">tipi di immagine</link> o
+              <xref linkend="glossary-rgb" />.
+            </para></footnote>
+            a partire dal colore <quote>intermedio</quote> specificato in
+            <guilabel>Colore bordo</guilabel> come segue
+            <footnote><para>
+              I valori minori di 0 sono impostati a 0, valori maggiori di 255
+              sono impostati a 255.
+            </para></footnote>:
+          </para>
           <para lang="ru">
             Этот параметр определяет разный цвет тени краёв, что даёт
             изображению приподнятый вид. Цвет для каждого края высчитывается
@@ -491,44 +551,60 @@
             </para></footnote>
           </para>
 
-          <itemizedlist>
+          <itemizedlist> 
             <listitem>
               <para lang="en">Top shade = Border color + Delta</para>
               <para lang="de">Farbe oben = Randfarbe + Farbänderung</para>
               <para lang="es">Color de arriba = Color del borde + Delta</para>
-              <para lang="fr">Teinte du haut = Couleur de bordure +
-                Delta</para>
+              <para lang="fr">
+                Teinte du haut = Couleur de bordure + Delta
+              </para>
+              <para lang="it">
+                Ombreggiatura superiore = Colore bordo + Delta
+              </para>
               <para lang="ru">Верхняя тень = цвет края + Дельта</para>
             </listitem>
             <listitem>
               <para lang="en">Right shade = Border color - ½ Delta</para>
               <para lang="de">Farbe rechts = Randfarbe - ½ Farbänderung</para>
               <para lang="es">
-               Color de la derecha = Color del borde - ½ Delta
+                Color de la derecha = Color del borde - ½ Delta
               </para>
-              <para lang="fr">Teinte à droite = Couleur de bordure -
-                ½ Delta</para>
+              <para lang="fr">
+                Teinte à droite = Couleur de bordure - ½ Delta
+              </para>
+              <para lang="it">
+                Ombreggiatura destra = Colore bordo - ½ Delta
+              </para>
               <para lang="ru">Правая тень = цвет края - ½ Дельта</para>
             </listitem>
             <listitem>
               <para lang="en">Bottom shade = Border color - Delta</para>
               <para lang="de">Farbe unten = Randfarbe - Farbänderung</para>
               <para lang="es">Color abajo = Color del borde - Delta</para>
-              <para lang="fr">Teinte du bas = Couleur de bordure -
-                Delta</para>
+              <para lang="fr">
+                Teinte du bas = Couleur de bordure - Delta
+              </para>
+              <para lang="it">
+                Ombreggiatura inferiore = Colore bordo - Delta
+              </para>
               <para lang="ru">Нижняя тень = цвет края - Дельта</para>
             </listitem>
             <listitem>
               <para lang="en">Left shade = Border color + ½ Delta</para>
               <para lang="de">Farbe links = Randfarbe + ½ Farbänderung</para>
               <para lang="es">
-               Color de la izquierda = Color del borde + ½ Delta
+                Color de la izquierda = Color del borde + ½ Delta
               </para>
-              <para lang="en">Teinte à gauche = Couleur de bordure + ½
-                Delta</para>
+              <para lang="fr">
+                Teinte à gauche = Couleur de bordure + ½ Delta
+              </para>
+              <para lang="it">
+                Ombreggiatura sinistra = Colore bordo + ½ Delta
+              </para>
               <para lang="ru">Левая тень = цвет края + ½ * Дельта</para>
             </listitem>
-           </itemizedlist>
+           </itemizedlist> 
 
           <figure>
             <title>
@@ -540,6 +616,7 @@
               <phrase lang="fr">
                 Exemples avec diverses différences de couleur
               </phrase>
+               <phrase lang="it">Esempi per Delta</phrase>
               <phrase lang="ru">
                 Примеры применения фильтра <quote>Добавить рельеф</quote> с
                 разными значениями параметра дельта
@@ -568,6 +645,11 @@
                 <para lang="fr">
                   Filtre appliqué avec <guilabel>Valeur de différence de
                   couleur</guilabel> à 25, 75, 125, 175 et 225.
+                </para>
+                <para lang="it">
+                  Filtro <quote>Aggiungi Bordo</quote> applicato con
+                  <guilabel>Valore delta</guilabel> 25, poi con 75, 125, 175,
+                  e 225.
                 </para>
                 <para lang="ru">
                   Применение фильтра <quote>Добавить рельеф</quote> со значением
@@ -602,6 +684,12 @@
             la bordure seront donc : en haut, (38,31,207) + (25,25,25) =
             (63,56,232); à droite, (38,31,207) + (-13,-13,-13) = (25,18,194),
             etc.
+          </para>
+          <para lang="it">
+            Esempio: il colore predefinito è blu (38,31,207), il valore delta
+            predefinito è 25. Quindi le ombreggiature dei bordi sono:
+            superiore = (38,31,207) + (25,25,25) = (63,56,232),
+            destro = (38,31,207) + (-13,-13,-13) = (25,18,194), etc.
           </para>
           <para lang="ru">
             Пример: цвет по умолчанию - синий (38,31,207), дельта по умолчанию
