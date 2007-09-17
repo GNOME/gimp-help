@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+                "http://www.docbook.org/xml/4.3/docbookx.dtd">
+
+<!-- section history:
+  2007-09-17 ude: created en,de
+-->
+<sect2 id="script-fu-carve-it" lang="en;de">
+  <sect2info>
+    <revhistory>
+      <revision lang="en">
+        <revnumber>$Revision$</revnumber>
+        <date>2007-09-17</date>
+        <authorinitials>ude</authorinitials>
+      </revision>
+      <revision lang="de">
+        <revnumber>$Revision$</revnumber>
+        <date>2007-09-17</date>
+        <authorinitials>ude</authorinitials>
+      </revision>
+      <revision lang="it">
+        <revnumber>$Revision$</revnumber>
+        <date><!-- yyyy-mm-dd --></date>
+        <authorinitials><!-- author --></authorinitials>
+      </revision>
+    </revhistory>
+  </sect2info>
+
+  <!-- TODO es fr it no ru: translate new content and review 'en' -->
+  <title>
+    <phrase lang="en">Stencil Carve</phrase>
+    <phrase lang="cs"><!-- Filter name cs --></phrase>
+    <phrase lang="de">Schablone einritzen</phrase>
+    <phrase lang="es"><!-- Filter name es --></phrase>
+    <phrase lang="fr"><!-- Filter name fr --></phrase>
+    <phrase lang="it"><!-- Filter name it --></phrase>
+    <phrase lang="no"><!-- Filter name no --></phrase>
+    <phrase lang="ru"><!-- Filter name ru --></phrase>
+  </title>
+
+  <indexterm lang="en">
+    <primary>Filters</primary>
+    <secondary>Decor</secondary>
+    <tertiary>Stencil Carve</tertiary>
+  </indexterm>
+  <indexterm lang="en"><primary>Stencil Carve</primary></indexterm>
+
+  <indexterm lang="de">
+    <primary>Filter</primary>
+    <secondary>Dekorationn</secondary>
+    <!--tertiary>Schablone einritzen</tertiary-->
+  </indexterm>
+  <indexterm lang="de"><primary>Schablone einritzen</primary></indexterm>
+
+  <indexterm lang="es">
+    <primary>Filtros</primary>
+    <secondary><!-- Category --></secondary>
+    <tertiary><!--Filter name or what the filter does--></tertiary>
+  </indexterm>
+  <indexterm lang="es"><primary><!-- Filter name es --></primary></indexterm>
+
+  <indexterm lang="it">
+    <primary>Filtri</primary>
+    <secondary><!-- Filter name it --></secondary>
+    <tertiary><!--Filter name or what the filter does : this tertiary is
+      necessary to get entries in Index one above the other instead of side by
+      side (and not only page number in PDF)-->
+    </tertiary>
+  </indexterm>
+  <indexterm lang="it"><primary><!-- Filter name it --></primary></indexterm>
+
+
+  <sect3>
+    <title>
+      <phrase lang="en">Overview</phrase>
+      <phrase lang="cs">Přehled</phrase>
+      <phrase lang="de">Wirkungsweise</phrase>
+      <phrase lang="es">Generalidades</phrase>
+      <phrase lang="fr">Généralités</phrase>
+      <phrase lang="it">Panoramica</phrase>
+      <phrase lang="no">Oversyn</phrase>
+      <phrase lang="ru">Общая информация</phrase>
+      <phrase lang="zh_CN">概述</phrase>
+    </title>
+
+    <figure>
+      <title>
+        <phrase lang="en">
+          Example for the <quote>Stencil Carve</quote> filter
+        </phrase>
+        <phrase lang="de">
+          Anwendungsbeispiel für das Filter <quote>Schablone einritzen</quote>
+        </phrase>
+        <phrase lang="es">
+          Ejemplo para el filtro <quote><!-- Filter name es --></quote>
+        </phrase>
+        <phrase lang="fr">
+          Exemple d'application pour le filtre <quote><!-- Filter name fr --></quote>
+        </phrase>
+        <phrase lang="it">
+          Esempio di applicazione del filtro <quote><!-- Filter name it --></quote>
+        </phrase>
+        <phrase lang="ru">
+          Пример применения фильтра <quote><!-- Filter name ru --></quote>
+        </phrase>
+      </title>
+
+      <mediaobject>
+        <imageobject>
+          <imagedata
+            fileref="../images/filters/examples/taj_grayscale.jpg"
+            format="JPG" />
+        </imageobject>
+        <caption>
+          <para lang="en">Original image</para>
+          <para lang="de">Originalbild</para>
+          <!--TODO es: edit docs/templates/filter_template.xml-->
+          <para lang="es">Original</para>
+          <!--para lang="es">Imagen original</para-->
+          <para lang="fr">Image d'origine</para>
+          <para lang="it">Immagine originale</para>
+          <para lang="ru">Искомое изображение</para>
+        </caption>
+      </mediaobject>
+
+      <mediaobject>
+        <imageobject>
+          <imagedata
+            fileref="../images/filters/examples/decor-taj-carve-it.jpg"
+            format="JPG" />
+        </imageobject>
+
+        <caption>
+          <para lang="en"><quote>Stencil Carve</quote> applied</para>
+          <para lang="de">
+            Filter <quote>Schablone einritzen</quote> angewandt
+          </para>
+          <para lang="es">
+            <quote><!-- Filter name es --></quote> aplicado
+          </para>
+          <para lang="fr">
+            Après application du filtre <quote><!-- Filter name fr --></quote>
+          </para>
+          <para lang="it">
+            Dopo l'applicazione del filtro <quote><!-- Filter name it --></quote>
+          </para>
+          <para lang="ru">
+            После применения фильтра <quote><!-- Filter name ru --></quote>
+          </para>
+        </caption>
+      </mediaobject>
+    </figure>
+
+      <!-- gimp/trunk/plug-ins/script-fu/scripts/carve-it.scm:
+
+        Carving, embossing, & stamping
+        Process taken from "The Photoshop 3 WOW! Book"
+        http://www.peachpit.com
+        This script requires a grayscale image containing a single layer.
+        This layer is used as the mask for the carving effect
+        NOTE: This script requires the image to be carved to either be an
+        RGB colour or grayscale image with a single layer. An indexed file
+        can not be used due to the use of gimp-histogram and gimp-levels.
+
+        Tooltip:
+          Use the specified [GRAY] drawable as a stencil to carve from the
+          specified image. The specified image must be either RGB colour or
+          grayscale, not indexed.
+       -->
+    <para lang="en">
+      This filter works on grayscale images containing a single layer. The
+      layer is used as selection mask and will work as stencil for the
+      carving effect. The image to be carved (the target image) must be an RGB
+      color or grayscale image, also with a single layer. This image should
+      have the same size as the source image.
+    </para>
+
+    <para lang="de">
+      Dieses Filter wirkt nur auf Graustufenbilder mit einer Ebene. Die Ebene
+      wird als Auswahlmaske verwendet und dient so als Schablone für das
+      Einritzen. Das zu gravierende Bild (das Zielbild) muß ein Graustufen-
+      oder RGB-Bild sein und darf ebenfalls nur eine Ebene haben. Es sollte
+      dieselbe Größe wie das Quellbild haben.
+    </para>
+  </sect3>
+
+
+  <sect3 lang="en;de">
+    <title>
+      <phrase lang="en">Activate the filter</phrase>
+      <phrase lang="cs">Aktivace filtru</phrase>
+      <phrase lang="de">Filteraufruf</phrase>
+      <phrase lang="es">Activar el filtro</phrase>
+      <phrase lang="fr">Ouverture du filtre</phrase>
+      <phrase lang="it">Attivazione del filtro</phrase>
+      <phrase lang="ru">Активация фильтра</phrase>
+      <phrase lang="zh_CN">使用这个滤镜</phrase>
+    </title>
+
+    <para lang="en">
+      This filter is found in the image window menu under
+      <menuchoice>
+        <guimenu><accel>F</accel>ilters</guimenu>
+        <guisubmenu><accel>D</accel>ecor</guisubmenu>
+        <guimenuitem>Stencil C<accel>a</accel>rve</guimenuitem>
+      </menuchoice>.
+    </para>
+
+    <para lang="de">
+      Dieses Filter lässt sich über das Menü
+      <menuchoice>
+        <guimenu><accel>F</accel>ilter</guimenu>
+        <guisubmenu><accel>D</accel>ekoration</guisubmenu>
+        <guimenuitem>Schablone <accel>e</accel>inritzen</guimenuitem>
+      </menuchoice>
+      im Bildfenster aufrufen.
+    </para>
+
+    <para lang="es">
+      Puede encontrar este filtro en
+      <menuchoice>
+        <guimenu><accel>F</accel>iltros</guimenu>
+        <guisubmenu><accel></accel><!-- filter category --></guisubmenu>
+        <guimenuitem><accel></accel><!-- Filter name es --></guimenuitem>
+      </menuchoice>.
+    </para>
+
+    <para lang="fr">
+      On accède à ce filtre par
+      <menuchoice>
+        <guimenu>Filtres</guimenu>
+        <guisubmenu><!-- filter category --></guisubmenu>
+        <guimenuitem><!-- Filter name fr --></guimenuitem>
+      </menuchoice>.
+    </para>
+
+    <para lang="it">
+      Questo filtro si trova nel menu immagine:
+      <menuchoice>
+        <guimenu>Filt<accel>r</accel>i</guimenu>
+        <guisubmenu><accel></accel><!-- filter category --></guisubmenu>
+        <guisubmenu><accel></accel><!-- Filter name it --></guisubmenu>
+      </menuchoice>.
+    </para>
+
+    <para lang="no">
+      Du har tilgang til filteret frå biletmenyen via
+      <menuchoice>
+        <guimenu>Filter</guimenu>
+        <guisubmenu><!-- filter category --></guisubmenu>
+        <guimenuitem><!-- Filter name no --></guimenuitem>
+      </menuchoice>
+    </para>
+
+    <para lang="ru">
+      Этот фильтр находится в
+      <menuchoice>
+        <guimenu>Фильтры</guimenu>
+        <guisubmenu><!-- filter category --></guisubmenu>
+        <guimenuitem><!-- Filter name ru --></guimenuitem>
+      </menuchoice>.
+    </para>
+  </sect3>
+
+
+  <sect3>
+    <title>
+      <phrase lang="en;fr">Options</phrase>
+      <phrase lang="cs">Volby</phrase>
+      <phrase lang="de">Eigenschaften</phrase>
+      <phrase lang="es">Opciones</phrase>
+      <phrase lang="it">Opzioni</phrase>
+      <phrase lang="no">Innstillingar</phrase>
+      <phrase lang="ru">Параметры</phrase>
+      <phrase lang="zh_CN">选项</phrase>
+    </title>
+
+    <figure>
+      <title>
+        <phrase lang="en"><quote>Stencil Carve</quote> options</phrase>
+        <phrase lang="de">
+          Eigenschaften des Filters <quote>Schablone einritzen</quote>
+        </phrase>
+        <phrase lang="es">
+          Opciones de <quote><!-- Filter name es --></quote>
+        </phrase>
+        <phrase lang="fr">
+          Options du filtre <quote><!-- Filter name fr --></quote>
+        </phrase>
+        <phrase lang="it">
+          Opzioni del filtro <quote><!-- Filter name it --></quote>
+        </phrase>
+        <phrase lang="ru">
+          Параметры фильтра <quote><!-- Filter name ru --></quote>
+        </phrase>
+      </title>
+
+      <mediaobject>
+        <imageobject lang="en">
+          <imagedata
+            fileref="../images/filters/options-decor-carve-it.png"
+            format="PNG" />
+        </imageobject>
+        <imageobject lang="de">
+          <imagedata
+            fileref="../images/filters/de/options-decor-carve-it.png"
+            format="PNG" />
+        </imageobject>
+      </mediaobject>
+    </figure>
+
+    <variablelist>
+      <varlistentry>
+        <term lang="en">Image to carve</term>
+        <term lang="de">Herauszuarbeitendes Bild</term>
+
+        <listitem>
+          <para lang="en">
+            Here you may select the target image, i.e. the image the carving
+            effect is applied to. The drop-down list will show you a list of
+            opened images which may be carved.
+          </para>
+          <para lang="de">
+            Hier können Sie das Zielbild auswählen, d.h. das Bild, auf das der
+            Gravureffekt angewendet werden soll. Das Klappmenü ermöglicht
+            Ihnen die Auswahl aus allen geeigneten Bildern. Nur Bilder, die
+            beim Filteraufruf bereits geöffnet waren, werden hier aufgelistet.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term lang="en">Carve white areas</term>
+        <term lang="de">Weiße Flächen herausarbeiten</term>
+
+        <listitem>
+          <para lang="en">
+            If checked (default), the source image is used as stencil as
+            described above. If unchecked, the <emphasis>inverted</emphasis>
+            source image is used as stencil, e.g.:
+          </para>
+          <para lang="de">
+            Falls diese Eigenschaft aktiviert ist (Voreinstellung), wird das
+            Quellbild wie oben beschrieben als Schablone verwendet. Ist die
+            Eigenschaft nicht aktiviert, dient das
+            <emphasis>invertierte</emphasis> Quellbild (das
+            <quote>Negativ</quote>) als Schablone, zum Beispiel:
+          </para>
+
+          <figure>
+            <title>
+              <phrase lang="en">Engraving Masks</phrase>
+              <phrase lang="de">Gravurmasken</phrase>
+            </title>
+
+            <mediaobject>
+              <imageobject>
+                <imagedata
+                  fileref="../images/filters/examples/carve-it-mask.jpg"
+                  format="JPG" />
+              </imageobject>
+
+              <caption>
+                <para lang="en">Normal mask</para>
+                <para lang="de">Normale Maske</para>
+              </caption>
+            </mediaobject>
+
+            <mediaobject>
+              <imageobject>
+                <imagedata
+                  fileref="../images/filters/examples/carve-it-invmask.jpg"
+                  format="JPG" />
+              </imageobject>
+
+              <caption>
+                <para lang="en">Inverted mask</para>
+                <para lang="de">Invertierte Maske</para>
+              </caption>
+            </mediaobject>
+          </figure>
+
+          <para lang="en">
+            In the example below, the target is a plain light yellow image.
+            Note that, when <guilabel>Carve white areas</guilabel> is enabled
+            (left image), the rectangular area is not carved, since it
+            corresponds to a black area of the stencil. If this option is
+            disabled (right image), the elliptical area, corresponding to the
+            black area of the <emphasis>inverted</emphasis> stencil, is
+            unchanged.
+          </para>
+          <para lang="de">
+            Im nachfolgenden Beispiel ist das zu bearbeitende Bild ein
+            einfarbiges, hellgelbes Bild. Beachten Sie, dass bei aktivierter
+            Eigenschaft <guilabel>Weiße Flächen herausarbeiten</guilabel>
+            (linkes Bild) die rechteckige Fläche nicht bearbeitet wird, da sie
+            mit einer schwarzen Fläche der Schablone korrespondiert. Wenn die
+            Eigenschaft nicht aktiviert ist, bleibt die ellipsenförmige Fläche
+            unverändert, da sie mit einer schwarzen Fläche der
+            <emphasis>invertierten</emphasis> Schablone korrespondiert.
+          </para>
+
+          <figure>
+            <title>
+              <phrase lang="en">
+                Example for <quote>Carve white areas</quote>
+              </phrase>
+              <phrase lang="de">
+                Beispiel für <quote>Weiße Flächen herausarbeiten</quote>
+              </phrase>
+            </title>
+
+            <mediaobject>
+              <imageobject>
+                <imagedata
+                  fileref="../images/filters/examples/carve-it-normal.png"
+                  format="PNG" />
+              </imageobject>
+              <caption>
+                <para lang="en">White areas carved</para>
+                <para lang="de">Weiße Flächen herausgearbeitet</para>
+              </caption>
+            </mediaobject>
+
+            <mediaobject>
+              <imageobject>
+                <imagedata
+                  fileref="../images/filters/examples/carve-it-stencil.png"
+                  format="PNG" />
+              </imageobject>
+              <caption>
+                <para lang="en">Stencil</para>
+                <para lang="de">Schablone</para>
+              </caption>
+            </mediaobject>
+
+            <mediaobject>
+              <imageobject>
+                <imagedata
+                  fileref="../images/filters/examples/carve-it-invers.png"
+                  format="PNG" />
+              </imageobject>
+
+              <caption>
+                <para lang="en">Black areas carved</para>
+                <para lang="de">Schwarze Flächen herausgearbeitet</para>
+              </caption>
+            </mediaobject>
+          </figure>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </sect3>
+</sect2>
