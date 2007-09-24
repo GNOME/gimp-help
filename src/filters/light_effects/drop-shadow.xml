@@ -1,0 +1,488 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+                "http://www.docbook.org/xml/4.3/docbookx.dtd">
+
+<!-- section history:
+  2007-09-24 ude: created 'en','de'
+-->
+<!--TODO fr it no ru: translate (and review en)-->
+<sect2 id="script-fu-drop-shadow" lang="en;de">
+  <sect2info>
+    <revhistory>
+      <revision lang="en">
+        <revnumber>$Revision$</revnumber>
+        <date>2007-09-24</date>
+        <authorinitials>ude</authorinitials>
+      </revision>
+      <revision lang="de">
+        <revnumber>$Revision$</revnumber>
+        <date>2007-09-24</date>
+        <authorinitials>ude</authorinitials>
+      </revision>
+      <revision lang="fr">
+        <revnumber>$Revision$</revnumber>
+        <date><!-- yyyy-mm-dd --></date>
+        <authorinitials><!-- author --></authorinitials>
+      </revision>
+      <revision lang="it">
+        <revnumber>$Revision$</revnumber>
+        <date><!-- yyyy-mm-dd --></date>
+        <authorinitials><!-- author --></authorinitials>
+      </revision>
+    </revhistory>
+  </sect2info>
+
+  <title>
+    <phrase lang="en">Drop Shadow</phrase>
+    <phrase lang="cs"><!-- Filter name cs --></phrase>
+    <phrase lang="de">Schlagschatten</phrase>
+    <phrase lang="es"><!-- Filter name es --></phrase>
+    <phrase lang="fr"><!-- Filter name fr --></phrase>
+    <phrase lang="it"><!-- Filter name it --></phrase>
+    <phrase lang="no"><!-- Filter name no --></phrase>
+    <phrase lang="ru"><!-- Filter name ru --></phrase>
+  </title>
+
+  <indexterm lang="en">
+    <primary>Filters</primary>
+    <secondary>Light and Shadow</secondary>
+    <tertiary>Drop Shadow</tertiary>
+  </indexterm>
+  <indexterm lang="en"><primary>Drop Shadow</primary></indexterm>
+
+  <indexterm lang="de">
+    <primary>Filter</primary>
+    <secondary>Licht und Schatten</secondary>
+    <!--tertiary>Schlagschatten</tertiary-->
+  </indexterm>
+  <indexterm lang="de"><primary>Schlagschatten</primary></indexterm>
+
+  <indexterm lang="es">
+    <primary>Filtros</primary>
+    <secondary><!-- Category --></secondary>
+    <tertiary><!--Filter name or what the filter does--></tertiary>
+  </indexterm>
+  <indexterm lang="es"><primary><!-- Filter name es --></primary></indexterm>
+
+  <indexterm lang="it">
+    <primary>Filtri</primary>
+    <secondary><!-- Filter name it --></secondary>
+    <tertiary><!--Filter name or what the filter does : this tertiary is
+      necessary to get entries in Index one above the other instead of side by
+      side (and not only page number in PDF)-->
+    </tertiary>
+  </indexterm>
+  <indexterm lang="it"><primary><!-- Filter name it --></primary></indexterm>
+
+  <indexterm lang="ru">
+    <primary>Фильтры</primary>
+    <secondary><!-- Category --></secondary>
+    <tertiary></tertiary>
+  </indexterm>
+  <indexterm lang="ru"><primary><!-- Filter name ru --></primary></indexterm>
+
+  <sect3>
+    <title>
+      <phrase lang="en">Overview</phrase>
+      <phrase lang="cs">Přehled</phrase>
+      <phrase lang="de">Wirkungsweise</phrase>
+      <phrase lang="es">Generalidades</phrase>
+      <phrase lang="fr">Généralités</phrase>
+      <phrase lang="it">Panoramica</phrase>
+      <phrase lang="no">Oversyn</phrase>
+      <phrase lang="ru">Общая информация</phrase>
+      <phrase lang="zh_CN">概述</phrase>
+    </title>
+
+    <figure>
+      <title>
+        <phrase lang="en">
+          Example for the <quote>Drop Shadow</quote> filter
+        </phrase>
+        <phrase lang="de">
+          Anwendungsbeispiel für das Filter <quote>Schlagschatten</quote>
+        </phrase>
+        <phrase lang="es">
+          Ejemplo para el filtro <quote><!-- Filter name es --></quote>
+        </phrase>
+        <phrase lang="fr">
+          Exemple d'application pour le filtre <quote><!-- Filter name fr --></quote>
+        </phrase>
+        <phrase lang="it">
+          Esempio di applicazione del filtro <quote><!-- Filter name it --></quote>
+        </phrase>
+        <phrase lang="ru">
+          Пример применения фильтра <quote><!-- Filter name ru --></quote>
+        </phrase>
+      </title>
+
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/taj_orig.jpg"
+            contentwidth="330" contentdepth="330"
+            format="JPG" />
+        </imageobject>
+        <caption>
+          <para lang="en">Original image</para>
+          <para lang="de">Originalbild</para>
+          <para lang="es">Original</para>
+          <para lang="fr">Image d'origine</para>
+          <para lang="it">Immagine originale</para>
+          <para lang="ru">Искомое изображение</para>
+        </caption>
+      </mediaobject>
+
+      <mediaobject>
+        <imageobject>
+          <imagedata format="JPG"
+            contentwidth="330" contentdepth="330"
+            fileref="../images/filters/examples/light-taj-drop-shadow.jpg" />
+            <!--width="330" depth="330" align="center" valign="middle"-->
+        </imageobject>
+
+        <caption>
+          <para lang="en"><quote>Drop Shadow</quote> applied</para>
+          <para lang="de">
+            Filter <quote>Schlagschatten</quote> angewandt
+          </para>
+          <para lang="es">
+            <quote><!-- Filter name es --></quote> aplicado
+          </para>
+          <para lang="fr">
+            Après application du filtre <quote><!-- Filter name fr --></quote>
+          </para>
+          <para lang="it">
+            Dopo l'applicazione del filtro <quote><!-- Filter name it --></quote>
+          </para>
+          <para lang="ru">
+            После применения фильтра <quote><!-- Filter name ru --></quote>
+          </para>
+        </caption>
+      </mediaobject>
+    </figure>
+
+    <!-- gimp/trunk/plug-ins/script-fu/scripts/drop-shadow.scm:
+      Adds a drop-shadow of the current selection or alpha-channel.
+     -->
+    <para lang="en">
+      This filter adds a drop-shadow to the current selection or to the image
+      if there's no active selection. Optional the filter resizes the image if
+      that's necessary for displaying the shadow.
+    </para>
+    <para lang="en">
+      You may choose the color, position, and size of the shadow.
+    </para>
+
+    <para lang="de">
+      Dieses Filter fügt einen Schatten zur Auswahl (bzw. dem ganzen Bild)
+      hinzu. Optional kann das Bild vergrößert werden, wenn das zur
+      Darstellung des Schattens nötig sein sollte.
+    </para>
+    <para lang="de">
+      Sie können die Farbe, Position und Größe des Schattens frei wählen.
+    </para>
+
+    <para lang="fr"><!-- Filter description --></para>
+
+    <para lang="it"><!-- Filter description --></para>
+  </sect3>
+
+
+  <sect3 lang="en;de">
+    <title>
+      <phrase lang="en">Activate the filter</phrase>
+      <phrase lang="cs">Aktivace filtru</phrase>
+      <phrase lang="de">Filteraufruf</phrase>
+      <phrase lang="es">Activar el filtro</phrase>
+      <phrase lang="fr">Ouverture du filtre</phrase>
+      <phrase lang="it">Attivazione del filtro</phrase>
+      <phrase lang="ru">Активация фильтра</phrase>
+      <phrase lang="zh_CN">使用这个滤镜</phrase>
+    </title>
+
+    <para lang="en">
+      This filter is found in the image window menu under
+      <menuchoice>
+        <guimenu><accel>F</accel>ilters</guimenu>
+        <guisubmenu><accel>L</accel>ight and Shadow</guisubmenu>
+        <guimenuitem><accel>D</accel>rop Shadow</guimenuitem>
+      </menuchoice>.
+    </para>
+
+    <para lang="de">
+      Dieses Filter lässt sich über das Menü
+      <menuchoice>
+        <guimenu><accel>F</accel>ilter</guimenu>
+        <guisubmenu><accel>L</accel>icht und Schatten</guisubmenu>
+        <guimenuitem><accel>S</accel>chlagschatten</guimenuitem>
+      </menuchoice>
+      im Bildfenster aufrufen.
+    </para>
+
+    <para lang="es">
+      Puede encontrar este filtro en
+      <menuchoice>
+        <guimenu><accel>F</accel>iltros</guimenu>
+        <guisubmenu><accel></accel><!-- filter category --></guisubmenu>
+        <guimenuitem><accel></accel><!-- Filter name es --></guimenuitem>
+      </menuchoice>.
+    </para>
+
+    <para lang="fr">
+      On accède à ce filtre par
+      <menuchoice>
+        <guimenu>Filtres</guimenu>
+        <guisubmenu><!-- filter category --></guisubmenu>
+        <guimenuitem><!-- Filter name fr --></guimenuitem>
+      </menuchoice>.
+    </para>
+
+    <para lang="it">
+      Questo filtro si trova nel menu immagine:
+      <menuchoice>
+        <guimenu>Filt<accel>r</accel>i</guimenu>
+        <guisubmenu><accel></accel><!-- filter category --></guisubmenu>
+        <guisubmenu><accel></accel><!-- Filter name it --></guisubmenu>
+      </menuchoice>.
+    </para>
+
+    <para lang="no">
+      Du har tilgang til filteret frå biletmenyen via
+      <menuchoice>
+        <guimenu>Filter</guimenu>
+        <guisubmenu><!-- filter category --></guisubmenu>
+        <guimenuitem><!-- Filter name no --></guimenuitem>
+      </menuchoice>
+    </para>
+
+    <para lang="ru">
+      Этот фильтр находится в меню изображения
+      <menuchoice>
+        <guimenu>Фильтры</guimenu>
+        <guisubmenu><!-- filter category --></guisubmenu>
+        <guimenuitem><!-- Filter name ru --></guimenuitem>
+      </menuchoice>.
+    </para>
+  </sect3>
+
+
+  <sect3>
+    <title>
+      <phrase lang="en;fr">Options</phrase>
+      <phrase lang="cs">Volby</phrase>
+      <phrase lang="de">Eigenschaften</phrase>
+      <phrase lang="es">Opciones</phrase>
+      <phrase lang="it">Opzioni</phrase>
+      <phrase lang="no">Innstillingar</phrase>
+      <phrase lang="ru">Параметры</phrase>
+      <phrase lang="zh_CN">选项</phrase>
+    </title>
+
+    <figure>
+      <title>
+        <phrase lang="en"><quote>Drop Shadow</quote> filter options</phrase>
+        <phrase lang="de">
+          Eigenschaften des Filters <quote>Schlagschatten</quote>
+        </phrase>
+        <phrase lang="es">
+          Opciones del filtro <quote><!-- Filter name es --></quote>
+        </phrase>
+        <phrase lang="fr">
+          Options du filtre <quote><!-- Filter name fr --></quote>
+        </phrase>
+        <phrase lang="it">
+          Opzioni del filtro <quote><!-- Filter name it --></quote>
+        </phrase>
+        <phrase lang="ru">
+          Параметры фильтра <quote><!-- Filter name ru --></quote>
+        </phrase>
+      </title>
+
+      <mediaobject lang="en">
+        <imageobject>
+          <imagedata format="PNG"
+            fileref="../images/filters/options-light-drop-shadow.png" />
+        </imageobject>
+      </mediaobject>
+      <mediaobject lang="de">
+        <imageobject>
+          <imagedata format="PNG"
+            fileref="../images/filters/de/options-light-drop-shadow.png" />
+        </imageobject>
+      </mediaobject>
+    </figure>
+
+    <variablelist>
+      <varlistentry>
+        <term lang="en">Offset X; Offset Y</term>
+        <term lang="de">Versatz X; Versatz Y</term>
+        <term lang="fr">TODO</term>
+        <term lang="it">TODO</term>
+
+        <listitem>
+          <!--TODO all: check this: it's (partially) copied from
+            concepts/script-fu.xm, but is "High values make the shadow look
+            like... " really correct? What about "... make the imaginary
+            source of light look like far away in horizontal or vertical
+            direction, ..."?
+          -->
+          <para lang="en">
+            The layer containing the drop shadow will be moved horizontally by
+            X pixels, vertically by Y pixels. So, X and Y offset determine
+            where the shadow will be placed in relation to the image. High
+            values make the shadow look like it's far away, and low values
+            will make it look closer to the image. 
+          </para>
+          <para lang="en">
+            The offsets may be negative, leading to a shadow on the left of
+            the selection if offset X &lt; 0, or above the selection if offset
+            Y &lt; 0.
+          </para>
+          <para lang="en">
+            If there's no active selection, you must have <guilabel>Allow
+            resizing</guilabel> enabled to see any effect.
+          </para>
+          <para lang="de">
+            Die Ebene, die den Schlagschatten enthält, wird horizontal und
+            vertikal um X bzw Y Pixel verschoben. Das heißt, der X- und
+            Y-Versatz legt fest, wo der Schatten in Relation zum Bild
+            platziert wird. Höhere Werten lassen den Schatten weiter entfernt
+            erscheinen, niedrigere Werte näher am Bild.
+          </para>
+          <para lang="de">
+            Der Versatz kann jeweils negativ sein, was zu einem Schatten links
+            von der Auswahl (Versatz X &lt; 0) bzw. oberhalb der Auswahl (Y
+            &lt; 0) führt.
+          </para>
+          <para lang="de">
+            Falls es keine aktive Auswahl gibt, müssen Sie allerdings
+            <guilabel>Größenänderung zulassen</guilabel> aktiviert haben, um
+            einen Effekt zu sehen.
+          </para>
+          <para lang="fr">TODO</para>
+          <para lang="it">TODO</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term lang="en">Blur radius</term>
+        <term lang="de">Weichzeichnenradius</term>
+        <term lang="fr">TODO</term>
+        <term lang="it">TODO</term>
+
+        <listitem>
+          <para lang="en">
+            After creating the shadow, a <link
+            linkend="plug-in-gauss">gaussian blur</link> with the specified
+            radius is applied to the shadow layer, resulting in the realistic
+            appearance of the drop shadow. It may be necessary to enable
+            <guilabel>Allow resizing</guilabel>, since blurring extends the
+            shadow.
+          </para>
+          <para lang="de">
+            Nach der Erstellung des Schattens wird ein <link
+            linkend="plug-in-gauss">Gaußscher Weichzeichner</link> mit dem
+            angegebenen Radius angewandt, was dem Schatten sein realistisches
+            Aussehen verleiht. Unter Umständen müssen Sie die Eigenschaft
+            <guilabel>Größenänderung zulassen</guilabel> aktivieren, da durch
+            das Weichzeichnen die Fläche des Schattens vergrößert wird.
+          </para>
+          <para lang="fr">TODO</para>
+          <para lang="it">TODO</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term lang="en">Color</term>
+        <term lang="de">Farbe</term>
+        <term lang="fr">TODO</term>
+        <term lang="it">TODO</term>
+
+        <listitem>
+          <para lang="en">
+            The shadow may have any color. Just click on the button, and
+            select a color when the color selector pops up.
+          </para>
+          <para lang="de">
+            Der Schatten kann von beliebiger Farbe sein. Klicken Sie einfach
+            auf die Schaltfläche und wählen Sie eine Farbe, wenn sich der
+            Farbauswahldialog öffnet.
+          </para>
+          <para lang="fr">TODO</para>
+          <para lang="it">TODO</para>
+
+          <figure>
+            <title>
+              <phrase lang="en">
+                <quote>Drop Shadow</quote> color example
+              </phrase>
+              <phrase lang="de">
+                Beispiel zur <quote>Schlagschatten</quote>-Farbe
+              </phrase>
+            </title>
+      
+            <mediaobject>
+              <imageobject>
+                <imagedata format="PNG"
+                  fileref="../images/filters/examples/drop-shadow-color.png" />
+              </imageobject>
+            </mediaobject>
+          </figure>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term lang="en">Opacity</term>
+        <term lang="de">Deckkraft</term>
+        <term lang="fr">TODO</term>
+        <term lang="it">TODO</term>
+
+        <listitem>
+          <para lang="en">
+            The shadow's opacity is just the opacity of the new layer
+            containing the shadow (see <xref linkend="gimp-layer-properties"
+            />). It defaults to 80%, but you may select any other value from 0
+            (full transparency) to 100 (full opacity) here. After applying the
+            filter to an image you can change the opacity in the <link
+            linkend="gimp-layer-dialog">layers dialog</link>.
+          </para>
+          <para lang="de">
+            Die Deckkraft des Schattens ist einfach die Deckkraft der neuen
+            Ebene, die den Schatten enthält (siehe <xref
+            linkend="gimp-layer-properties" />). Die Voreinstellung ist 80%,
+            aber Sie können hier jeden beliebigen Wert von 0 (vollständig
+            transparent) bis 100 (volle Deckkraft) eingeben. Nachdem Sie das
+            Filter angewendet haben, können Sie die Deckkraft einfach im <link
+            linkend="gimp-layer-dialog">Ebenendialog</link> ändern.
+          </para>
+          <para lang="fr">TODO</para>
+          <para lang="it">TODO</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term lang="en">Allow resizing</term>
+        <term lang="de">Größenänderung zulassen</term>
+        <term lang="fr">TODO</term>
+        <term lang="it">TODO</term>
+
+        <listitem>
+          <para lang="en">
+            If enabled, the filter will resize the image if that is needed to
+            make place for the shadow. The new size depends on the size of the
+            selection, the blur radius, and the shadow offsets.
+          </para>
+          <para lang="de">
+            Wenn diese Eigenschaft aktiviert ist, wird das Bild vergrößert,
+            falls das für die Darstellung des Schattens erforderlich ist. Die
+            neue Größe hängt von der Größe der Auswahl, vom
+            Weichzeichnenradius und vom Schatten-Versatz ab.
+          </para>
+          <para lang="fr">TODO</para>
+          <para lang="it">TODO</para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </sect3>
+</sect2>
