@@ -43,18 +43,16 @@
             </xsl:attribute>
           </xsl:if>
         </link>
+  
+        <!-- here's our modification, calling the new template below -->
+        <xsl:if test="$html.stylesheet.alternate != ''">
+          <xsl:call-template name="output.html.stylesheet.alternates">
+            <xsl:with-param name="alternates"
+              select=" normalize-space($html.stylesheet.alternate)" />
+          </xsl:call-template>
+        </xsl:if>
       </xsl:when>
     </xsl:choose>
-  
-    <!-- here's our modification, using 2 global variables (yes, that's ugly)
-         and calling the new template output.html.stylesheet.alternates -->
-    <xsl:if test="$html.stylesheet != '' and
-                  $html.stylesheet.alternate != ''">
-      <xsl:call-template name="output.html.stylesheet.alternates">
-        <xsl:with-param name="alternates"
-          select=" normalize-space($html.stylesheet.alternate)" />
-      </xsl:call-template>
-    </xsl:if>
   </xsl:template>
   
   <!--

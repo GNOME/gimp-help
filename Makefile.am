@@ -23,6 +23,8 @@ COMMON_CSS_FILES = \
 
 OTHER_CSS_FILES = \
 	stylesheets/plainhtml.xsl.in	\
+	stylesheets/htmlalternate.xsl	\
+	stylesheets/gimp22.css		\
 	stylesheets/zh_CN/gimp-help-custom.css
 
 XSL_FILES = \
