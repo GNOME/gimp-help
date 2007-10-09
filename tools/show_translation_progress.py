@@ -145,7 +145,10 @@ class Statistics(object):
             ids, append it to invalid.
             returns list with invalid ids (str)
         """
-        assert self.docs != {}
+        if not self.docs:
+            raise ValueError("Can't parse a gimp-help.xml for any"
+                             " Language. Maybe you need to build the HTML"
+                             " docs? Check if gimp-help.xml files exist.")
 
         for lang in self.docs.keys():
             invalid = []
