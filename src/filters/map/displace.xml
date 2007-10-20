@@ -1,9 +1,10 @@
-<?xml version='1.0' encoding="UTF-8" ?>
+﻿<?xml version='1.0' encoding="UTF-8" ?>
 
 <!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
                 "http://www.docbook.org/xml/4.3/docbookx.dtd">
 
 <!-- section history:
+  2007-10-14 KoSt: updatet no to v2.4
   2007-09-06 AntI: added 'es'
   2007-08-19 alex falappa: new sections for 2.4 and torough review
   2007-08-07 alex falappa: ude's fix to 'it', polar mode
@@ -124,16 +125,9 @@
       </title>
 
       <mediaobject>
-        <imageobject lang="en;de;es;fr;it;ru">
+        <imageobject lang="en;de;es;fr;it;no;ru">
           <imagedata fileref="../images/filters/examples/map-displace7.png"
             format="PNG" />
-        </imageobject>
-        <!--TODO no: replace this example; pixels corresponding to 128
-          *will* be displaced, but not with coefficient 30.
-        -->
-        <imageobject lang="no">
-          <imagedata fileref="../images/filters/examples/map-displace4.png"
-                    format="PNG" />
         </imageobject>
 
         <caption>
@@ -204,17 +198,15 @@
           </para>
 
           <para lang="no">
-            X-forskyvinga er sett til 30,0. Med negativ verdi ville
+            X-forskyvinga er sett til 30. Med negativ verdi ville
             forskyvinga blitt invertert. Frie pikslar er svarte.
-            Forskyvingskartet (i midten) har tre grå striper: øvst mellomgrå
-            (128), i midten lysegrå (200) og nedst mørkegrå (60).
+            Forskyvingskartet (i midten) har fire grå striper med respektive
+            verdiar 210, 160, 110 og 60.
           </para>
           <para lang="no">
-            På biletet til høgre kan du sjå at området som høyrer til den
-            mellomgrå sona ikkje er forandra. Biletområda som er tilordna den
-            lysegrå sona (&gt;127,5) er forskjøve 17 pikslar mot venstre,
-            medan biletområda som er tilordna den mørkegrå sona (&lt;127,5) er
-            forskjøve 15 pikslar mot høgre.
+            Biletområda som tilsvarar lysegrå (&ge;128) blir forskjøve 19
+            og 8 pikslar mot venstre. Biletområda som tilsvarar mørkegrå
+            (&le;128) blir forskjøve 4 og 15 pikslar mot høgre.
           </para>
 
           <para lang="ru">
@@ -350,7 +342,7 @@
       innahaldet i den aktive teikneflata (laget eller markeringa) i høve til
       verdiane sett for X og Y. Desse verdiane blir igjen multipliserte med
       lysverdiane for tilsvarande punkt i <quote>forskyvingskartet</quote>.
-      <emphasis role="bold"> Forskyvingskarta må vere gråskalabilete med
+      <emphasis role="bold"> Forskyvingskarta bør vere gråskalabilete med
       same format som teikneflata</emphasis>. Filteret kan gi mange
       interessante verknader.
     </para>
@@ -384,9 +376,9 @@
   </sect3>
 
 
-  <!--TODO fr no ru: translate 3 new sections for GIMP 2.4-->
+  <!--TODO fr ru: translate 3 new sections for GIMP 2.4-->
   <!--PENDING fr it no ru delete this sect3 as soon as it is moved to GIMP 2.4-->
-  <sect3 lang="fr;no;ru">
+  <sect3 lang="fr;ru">
     <title>
       <phrase lang="en">Options</phrase>
       <phrase lang="de">Eigenschaften</phrase>
@@ -541,11 +533,12 @@
             per le Y. In maniera simile sposta i pixel corrispondenti a pixel
             con valori da 128 a 255 a sinistra per le X e in alto per le Y.
           </para>
-
+          
           <para lang="no">
-            Pikslar i det aktive laget vil bli forskjøve i langs x- eller
-            y-aksen ut frå intensiteten for dei tilsvarande pikslane i
-            <quote>forskyvingskartet</quote>.
+            Når du vel ein eller begge innstillingane, vil pikslane i det
+            aktive laget bli forskjøve vassrett (x) og/eller loddrett (y).
+            Kor stor forskyvinga blir og kva retning ho får, blir bestemt
+            av intensiteten til dei samsvarande pikslane i mønsterkartet.
           </para>
           <para lang="no">
             Kartet, som bør vere eit gråskalabilete, har 256 grånivå
@@ -698,7 +691,8 @@
             koeffisient)</emphasis> for å rekne ut kor langt og i kva
             retning pikselen skal flyttast i høve til den graderte intensiteten
             <footnote>
-              <para>gradert intensitet = (intensitet - 127,5) / 127,5</para>
+              <para>gradert intensitet = (intensitet - 127,5) / 127,5. 
+              Sjå avsnittet om <quote>utrekning av forskyving</quote>.</para>
             </footnote>
             til den tilsvarande pikselen i kartet, modulert med talet du skreiv
             inn. At intensiteten er med i formelen, gjer at det er råd å flytte
@@ -983,8 +977,8 @@
   </sect3> <!--end of GIMP 2.2 options-->
 
 
-  <!--TODO fr no: translate new sect3 for GIMP 2.4-->
-  <sect3 lang="en;de;es;it;ru">
+  <!--TODO fr: translate new sect3 for GIMP 2.4-->
+  <sect3 lang="en;de;es;it;no;ru">
     <title>
       <phrase lang="en">Options (General)</phrase>
       <phrase lang="de">Eigenschaften</phrase>
@@ -1017,6 +1011,10 @@
         </imageobject>
         <imageobject lang="de">
           <imagedata fileref="../images/filters/de/options-map-displace.png"
+            format="PNG" />
+        </imageobject>
+        <imageobject lang="no">
+          <imagedata fileref="../images/filters/no/options-map-displace.png"
             format="PNG" />
         </imageobject>
       </mediaobject>
@@ -1061,13 +1059,13 @@
         </listitem>
       </varlistentry>
 
-      <varlistentry lang="en;de;es;it;ru">
+      <varlistentry lang="en;de;es;it;no;ru">
         <term lang="en">Displacement Mode</term>
         <term lang="de">Verschiebungsmodus</term>
         <term lang="es">Modo de desplazamiento</term>
         <term lang="fr">Mode de déplacement</term>
         <term lang="it">Modalità spostamento</term>
-        <term lang="no">Displacement Mode</term>
+        <term lang="no">Forskyvingsmetode</term>
         <term lang="ru">Вид замещения</term>
         <listitem>
           <para lang="en">
@@ -1118,7 +1116,18 @@
           <para lang="it">
             Si vedano i paragrafi successivi per dettagli su queste opzioni.
           </para>
-          <para lang="no">TODO</para>
+          <para lang="no">
+            Du kan velje å arbeide med <link
+            linkend="plug-in-displace-cartesian">kartesianske</link>
+            koordinat, der pikslane blir flytt vassrett (x) eller loddrett
+            (y), eller med <link 
+            linkend="plug-in-displace-polar">polar</link>-koordinat,
+            der biletet blir vridd og vrengd ved å flytte pikslane i radial
+            eller tangential retning.
+          </para>
+          <para lang="no">
+            Sjå neste kapittel for meir om desse vala.
+          </para>
           <para lang="ru">
             Вы можете работать в <link linkend="plug-in-displace-cartesian">
             декартовых</link> координатах, где точки смещаются по X и Y, или
@@ -1288,8 +1297,8 @@
   </sect3> <!--end of GIMP 2.4 general options-->
 
 
-  <!--TODO fr no: translate new sect3 for GIMP 2.4-->
-  <sect3 id="plug-in-displace-cartesian" lang="en;de;es;it;ru">
+  <!--TODO fr: translate new sect3 for GIMP 2.4-->
+  <sect3 id="plug-in-displace-cartesian" lang="en;de;es;it;no;ru">
     <title>
       <phrase lang="en">Cartesian Displacement Mode</phrase>
       <phrase lang="de">
@@ -1297,6 +1306,7 @@
       </phrase>
       <phrase lang="es">Modo de desplazamiento cartesiano</phrase>
       <phrase lang="it">Modalità spostamento cartesiano</phrase>
+      <phrase lang="no">Kartesiansk forskyving</phrase>
       <phrase lang="ru">Режим декартова смещения</phrase>
     </title>
 
@@ -1315,6 +1325,9 @@
         <phrase lang="it">
           Opzioni del filtro <quote>Sposta</quote> (cartesiano)
         </phrase>
+        <phrase lang="no">
+          Innstillingane for filteret <quote>forskyv</quote> (kartesiansk)
+        </phrase>
         <phrase lang="ru">
           Параметры фильтра <quote>Смещение</quote> (Декартово)
         </phrase>
@@ -1329,11 +1342,16 @@
           <imagedata format="PNG"
             fileref="../images/filters/de/options-map-displace-cartesian.png" />
         </imageobject>
+        <imageobject lang="no">
+          <imagedata format="PNG"
+            fileref="../images/filters/no/options-map-displace-cartesian.png" />
+        </imageobject>
         <caption>
           <para lang="en">Displacement Mode: Cartesian</para>
           <para lang="de">Verschiebungsmodus: Kartesisch</para>
           <para lang="es">Modo de desplazamiento: Cartesiano</para>
           <para lang="ru">Режим смещения: декартово</para>
+          <para lang="no">Forskyvingsmodus: kartesiansk</para>
           <para lang="it">Modalità di spostamento: cartesiano</para>
         </caption>
       </mediaobject>
@@ -1387,6 +1405,17 @@
       valore inferiore a 127,5 (da 0 a 127) in una direzione e quelli
       corrispondenti a pixel con valori da 128 a 255 nella direzione opposta.
     </para>
+    <para lang="no">
+      I begge metodane vil retninga og lengda på forskyvinga vere avhengig
+      av verdien til den tilsvarande pikselen i mønsterkartet.
+    </para>
+    <para lang="no">
+      Kartet, som bør vere eit gråskalabilete, har 256 grånivå (0 - 255) med
+      ein teoretisk gjennomsnittsverdi på 127,5. Biletpikslar der dei
+      tilsvarande kartpikslane er mindre enn 127,5 (dvs 0 - 127) vil bli
+      flytte i ei retning, medan biletpikslar med tilsvarande kartpikslar med
+      verdi høgare enn 127,5 (dvs. 128 - 255) vil bli flytt i motsett retning.
+    </para>
     <para lang="ru">
       В обоих режимах, направление и величина смещения зависит от интенсивности
       соответствущей точки на карте смещения.
@@ -1437,7 +1466,13 @@
             le X e in basso per le Y, i pixel corrispondenti a pixel da 128
             a 255 verranno spostati a sinistra per le X e in alto per le Y.
           </para>
-          <para lang="no">TODO</para>
+          <para lang="no">
+            Avhengig av kva innstilling som er vald, vil biletpikslar som
+            tilsvarar kartpikslar frå 0 til 127 bli flytt til høgre på x-aksen
+            eller nedover på y-aksen. Biletpikslar som tilsvarar kartpikslar
+            frå 128 til 255 bli flytt til venstre på x-aksen eller oppover på
+            y-aksen.
+          </para>
           <para lang="ru">
             Фильтр смещает влево по X и вниз
             по Y те точки, значения которых <emphasis>ниже чем 127,5</emphasis>
@@ -1538,7 +1573,25 @@
             negativo è opposto ad uno positivo. Questo valore varia in un
             intervallo pari al doppio delle dimensioni dell'immagine.
           </para>
-          <para lang="no">TODO</para>
+          <para lang="no">
+            Det talet du skriv inn i boksane for
+            <quote>X-/Y-forskyving</quote> er eigentleg ikkje kor mykje
+            pikslane skal forskyvast, men ein koeffisient som blir brukt i
+            formelen <emphasis role="bold">forskyving = (intensitet ×
+            koeffisient)</emphasis> for å rekne ut kor langt og i kva
+            retning pikselen skal flyttast i høve til den graderte intensiteten
+            <footnote>
+              <para>gradert intensitet = (intensitet - 127,5) / 127,5. 
+              Sjå avsnittet om <quote>utrekning av forskyving</quote>.</para>
+            </footnote>
+            til den tilsvarande pikselen i kartet, modulert med talet du skreiv
+            inn. At intensiteten er med i formelen, gjer at det er råd å flytte
+            pikslane progressivt ved å bruke fargeovergangar i kartet.
+          </para>
+          <para lang="no">
+            Verdien du skriv inn kan også vere negativ. Flyttinga blir
+            då reversert i høve til om verdien er positiv.
+          </para>
           <para lang="ru">
             Параметр <quote>Смещение по X/Y</quote> должен называться
             <emphasis>Коэффициент смещения по X/Y</emphasis>. Значение, вводимое
@@ -1614,7 +1667,17 @@
             la luminosità rendendo l'effetto difficile da prevedere. La mappa
             può essere diversa nelle direzioni orizzontali e verticali.
           </para>
-          <para lang="no">TODO</para>
+          <para lang="no">
+            Du kan trykke på nedtrekkslista for å få fram eit oversyn over
+            tilgjengelege forskyvingskart. Bilete som skal kome med i lista må
+            oppfylle to krav. Det eine er at biletet må vere opna når du
+            aktiviserer filteret. Det andre er at biletet må ha same
+            dimensjonane som originalbiletet. Som oftast vil forskyvingskartet
+            vere ein kopi av originalbiletet. Denne kopien blir omforma til
+            gråskala og fylt med høveleg fargeovergang. Filteret vil verke 
+            også med kart i fargar, men det er vanskelegare å føresjå
+            resultatet med eit slik kart.
+          </para>
           <para lang="ru">
             При нажатии на кнопку появляется список карт смещения. Чтобы
             появится в этом списке, изображение должно отвечать двум критериям.
@@ -1631,8 +1694,8 @@
     </variablelist>
   </sect3> <!--end of GIMP 2.4 cartesian options-->
 
-  <!--TODO fr no: translate new sect3 for GIMP 2.4-->
-  <sect3 id="plug-in-displace-polar" lang="en;de;es;it;ru">
+  <!--TODO fr: translate new sect3 for GIMP 2.4-->
+  <sect3 id="plug-in-displace-polar" lang="en;de;es;it;no;ru">
     <title>
       <phrase lang="en">Polar Displacement Mode</phrase>
       <phrase lang="de">
@@ -1640,6 +1703,7 @@
       </phrase>
       <phrase lang="es">Modo de desplazamiento polar</phrase>
       <phrase lang="it">Modalità spostamento polare</phrase>
+      <phrase lang="no">Polarforskyving</phrase>
       <phrase lang="ru">Режим полярного смещения</phrase>
     </title>
 
@@ -1657,21 +1721,29 @@
         <phrase lang="it">
           Opzioni del filtro <quote>Sposta</quote> (polare)
         </phrase>
+        <phrase lang="no">
+          Innstillingane for filteret <quote>Forskyving</quote> (Polar)
+        </phrase>
         <phrase lang="ru">
           Параметры фильтра <quote>Смещение</quote> (Полярное)
         </phrase>
       </title>
 
       <mediaobject>
-        <imageobject>
+        <imageobject lang="en;de,es;it;ru">
           <imagedata format="PNG"
             fileref="../images/filters/options-map-displace-polar.png" />
+        </imageobject>
+        <imageobject lang="no">
+          <imagedata format="PNG"
+            fileref="../images/filters/no/options-map-displace-polar.png" />
         </imageobject>
         <caption>
           <para lang="en">Displacement Mode: Polar</para>
           <para lang="de">Verschiebungsmodus: Polar</para>
           <para lang="es">Modo de desplazamiento: Polar</para>
           <para lang="it">Modalità di spostamento polare</para>
+          <para lang="no">Forskyvingsmetode: polar</para>
           <para lang="ru">Режим смещения: Полярный</para>
         </caption>
       </mediaobject>
@@ -1684,7 +1756,7 @@
         <term lang="es">Aspiración</term>
         <term lang="fr">Pincer</term>
         <term lang="it">Pizzica</term>
-        <term lang="no">Pinch</term>
+        <term lang="no">Knip</term>
         <term lang="ru">Щипок</term>
 
         <listitem>
@@ -1739,7 +1811,17 @@
             Per i valori e la mappa a sbalzo si veda sopra (<quote>Spostamento
             X/Y</quote>).
           </para>
-          <para lang="no">TODO</para>
+          <para lang="no">
+            Denne innstillinga fører til at radialkoordinata, dvs. avstanden til
+            midtpunktet (<quote>polen</quote>) i biletet blir forandra. 
+            Biletpikslar som samsvarar med kartpikslar frå 0 til 127 blir
+            flytte utover, medan biletpikslar som samsvarar med kartpikslar
+            i området 128 til 255 blir flytte innover.
+          </para>
+          <para lang="no">
+            Sjå nærare om verdiane og mønsterkartet ovanfor under
+            <quote>X/Y forskyvingar</quote>.
+          </para>
           <para lang="ru">
             При выборе этого параметры, радиальные (т.е. растояние от центра)
             координаты точек будут изменены. Точки изображения, соответствующие
@@ -1772,6 +1854,11 @@
             pixel sono spostati della stessa quantità. L'immagine non sarà
             solo stirata o compressa ma anche distorta:
           </para>
+          <para lang="no">
+            Forskyvinga er uavhengig av avstanden frå sentrum. Alle
+            pikslane blir flytt like langt. Biletet blir difor ikkje bare strekt
+            ut eller komprimert, men også forstyrra:
+          </para>
           <para lang="ru">
             Смещение не зависит от радиального растояния. Все точки смещаются
             на одно растояние. Поэтому изображение будет растянуто или сжато,
@@ -1792,6 +1879,7 @@
               <para lang="it">
                 Distorsione dell'immagine con l'opzione Pizzico
               </para>
+              <para lang="no">Bilete etter bruk av kommandoen knip</para>
               <para lang="ru">Искажение изображения параметром щипок</para>
             </caption>
           </mediaobject>
@@ -1825,6 +1913,13 @@
             in verticale e del 20% in diagonale quindi una distorsione
             dell'immagine.
           </para>
+          <para lang="no">
+            Eit bilete på 160 × 120 pikslar. Mønsterkartet er einsfarga kvitt og
+            forskyvingskoeffesienten sett til 20,0. Dette fører til at pikslane blir
+            flytt 20 pikslar mot sentrum. Den vassrett forminskinga blir
+            25 %, den loddrette 33 % og den diagonale forminskinga 20 %.
+            Biletet blir difor forstyrra.
+          </para>
           <para lang="ru">
             Изображение 160x120, белая карта смещения и коэффициент смещения
             20.0 сместят все точки на 20 точек к центру. Это соответствует
@@ -1840,7 +1935,7 @@
         <term lang="es">Remolino</term>
         <term lang="fr">Tourbillonner</term>
         <term lang="it">Vortice</term>
-        <term lang="no">Whirl</term>
+        <term lang="no">Drei</term>
         <term lang="ru">Вихрь</term>
 
         <listitem>
@@ -1908,7 +2003,19 @@
           <para lang="it">
             Per i valori e la mappa a sbalzo si veda sopra.
           </para>
-          <para lang="no">TODO</para>
+          <para lang="no">
+            Dette valet fører til at vinkelkoordinata for biletpikslane blit
+            sett i høve til kartpikslane. Dersom mønsterkartet er einsfarga,
+            vil biletet bli rotert, elles blir det <quote>kvervla</quote>.
+          </para>
+          <para lang="no">
+            Biletpikslar som korresponderer med kartpikslar frå 0 til 127
+            blir forskjøve motsols, medan biletpikslar som samsvarer med
+            kartpikslar frå 128 til 255 blir flytt medsols.
+          </para>
+          <para lang="no">
+            Sjå ovanfor om verdiar og mønsterkart.
+          </para>
           <para lang="ru">
             При выборе этого параметра, изменятся угловые координаты точек
             изображения. Для простого смещения, изображение повернётся, иначе
@@ -1947,6 +2054,11 @@
         Per una mappa uniforme non neutra se la modalità di spostamento
         <quote>Polare</quote> è selezionata questo filtro opera in maniera simile
         a <link linkend="plug-in-whirlpinch">Vortice e pizzico</link>.
+      </para>
+      <para lang="no">
+        Med eit einsfarga forskyvingskart verkar filteret i polarmodus på
+        same måten som filteret
+        <link linkend="plug-in-whirlpinch">vri og vreng</link>.
       </para>
       <para lang="ru">
         Для простой, не нейтральной карты фильтр в <quote>полярном</quote>
@@ -2105,7 +2217,7 @@
           non sposta pixel trasparenti. Solo le lettere vengono spostate.
         </para>
         <para lang="no">
-          Aktiver originalbiletet. Lag eit <emphasis>Tekstlag</emphasis> ved
+          Aktiver originalbiletet. Lag eit <emphasis>tekstlag</emphasis> ved
           å skrive inn ein tekst. Utvid tekstlaget til same format som biletet
           ved å gå inn i menyen
           <menuchoice>
@@ -2256,14 +2368,14 @@
 
   </sect3>
 
-  <!-- TODO no: translate new content: displacement details -->
-  <sect3 id="plug-in-displace-calculation" lang="en;de;es;fr;it;ru">
+  <sect3 id="plug-in-displace-calculation" lang="en;de;es;fr;it;no;ru">
     <title>
       <phrase lang="en">Displacement Calculation</phrase>
       <phrase lang="de">Die Verschiebung berechnen</phrase>
       <phrase lang="es">Cálculo del desplazamiento</phrase>
       <phrase lang="fr">Calcul des déplacements</phrase>
       <phrase lang="it">Calcolo dello spostamento</phrase>
+      <phrase lang="no">Utrekning av forskyving</phrase>
       <phrase lang="ru">Вычисление смещения</phrase>
     </title>
 
@@ -2291,6 +2403,12 @@
       Il seguente capitolo mostra come avviene il calcolo dell'entità dello
       spostamento per chi è interessato a questi dettagli. Si può omettere la
       lettura del capitolo se non si è intenzionati a conoscere questi dettagli.
+    </para>
+    <para lang="no">
+      I det følgjande vil vi vise korleis du kan rekne ut mengda av
+      forskyving. Dette er helst mynta på dei som ønskjer å vite korleis
+      ting fungerer. Har du ikkje slike interesser, kan du trygt sløyfe
+      dette kapitlet.
     </para>
     <para lang="ru">
       Следующая часть покажет как вычислить смещение для тем, кого это
@@ -2341,6 +2459,15 @@
       Di seguito la provenienza degli spostamenti:
     </para>
 
+    <para lang="no">
+      I innføringseksemplet er det vist resultatet av ei x-forskyving med ein
+      koeffisient på 30,0. Avhengig av grånivået i mønsterkartet blei
+      forskyvinga 19, 8, 4 eller 15 pikslar.
+    </para>
+    <para lang="no">
+      Kvifor akkurat desse forskyvingane? Svaret er enkelt:
+    </para>
+    
     <para lang="ru">
       Общий пример показал смещение по X с коэффициентом 30.0: 19, 8, 4, или 15
       точек, в зависимости от уровня серого на карте смещения.
@@ -2403,6 +2530,15 @@
       realizza mediante interpolazione. Uno sguardo ravvicinato all'immagine di
       esempio evidenzia il procedimento:
     </para>
+    <para lang="no">
+      Dersom du kontrollerer desse likningane vil du sjå at verdiane som
+      kjem ut ikkje er nøyaktig dei vi fekk i eksemplet. Kanskje ikkje så
+      rart dersom vi reknar med avrunda desimaltal. Kan det vere at 
+      tala er runda av til næraste heiltal og pikslane blir flytt i høve til
+      desse? Svaret er nei. Kvar piksel blir flytt så mykje som utrekninga
+      viser, men forflyttinga etter desimalane blir utført med interpolering
+      av desimalane. Vonleg vil dette eksemplet vise kva som skjer:
+    </para>
     <para lang="ru">
       Если вы проверите эти уравнения, вы заметите, что они дают значению,
       отличающиеся от приведённых в примере. Это значение не округляется до
@@ -2426,6 +2562,7 @@
         <phrase lang="it">
           Particolare ingrandito dello spostamento di esempio
         </phrase>
+        <phrase lang="no">Ein nærare kikk på eksemplet</phrase>
         <phrase lang="ru">Детальный вид примера смещения</phrase>
       </title>
 
@@ -2444,6 +2581,7 @@
             À droite, une petite surface zoomée à 800 %.
           </para>
           <para lang="it">Dettaglio ingrandito dell'800%.</para>
+          <para lang="no">Eit mindre område er forstørra 800 %</para>
           <para lang="ru">Область увеличена в 8 раз.</para>
         </caption>
       </mediaobject>
@@ -2507,6 +2645,18 @@
       Selezionando un coefficiente di spostamento pari a 30.01 invecedi 30.00
       si otterrà effettivamente una immagine diversa anche se le differenze
       non saranno visibili.
+    </para>
+    
+    <para lang="no">
+      Forskyvinga resulterer i små, ein piksel breie område med
+      overgangsfargar ved kanten av einsfarga område. Det svarte området
+      på det forstørra biletet er resultatet av ei flytting på -4,12. 
+      Overgangsfargen er 12 % svart og 88 % gul.
+    </para>
+    <para lang="no">
+      Dersom du set forskyvingskoeffisienten til 30,01 i staden for 30,00
+      vil du eigentleg få eit heilt anna bilete, men det er sjølvsagt uråd å 
+      sjå skilnaden.
     </para>
     
     <para lang="ru">
