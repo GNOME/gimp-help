@@ -177,6 +177,7 @@ AC_CONFIG_FILES([
 Makefile
 omf/gimp-C.omf
 stylesheets/plainhtml.xsl
+stylesheets/htmlalternate.xsl
 ])
 
 AC_OUTPUT

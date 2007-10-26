@@ -3,11 +3,14 @@
 # SUBDIRS = quickreference
 
 image_find_predicates = \
-	-name '*.gif' -o \
+	-path '*/.svn' -prune -o \
+	\( \
+	-name '*.png' -o \
 	-name '*.jpg' -o \
 	-name '*.mng' -o \
-	-name '*.png' -o \
-	-name '*.xcf'
+	-name '*.xcf' -o \
+	-name '*.gif'    \
+	\) -print
 
 IMAGE_FILES := $(sort $(shell cd $(top_srcdir) && find images $(image_find_predicates)))
 
@@ -235,22 +238,27 @@ endif
 install-data-local:
 	$(mkdir_p) $(DESTDIR)$(helpdir)
 
-	@echo "** Installing HTML:"
-	cd html && cp -a . $(DESTDIR)$(helpdir)
-
-	@echo "** Installing $(IMAGE_COUNT) images: (G=gif, J=jpg, M=mng, P=png, X=xcf)"
-	@for dir in $(IMAGE_DIRS); do \
-		$(mkdir_p) "$(DESTDIR)$(helpdir)/$$dir" || exit; \
+	@echo -n "** Installing HTML:"
+	@cd html && \
+	for lang in $(ALL_LINGUAS); do \
+		cp -a $$lang $(DESTDIR)$(helpdir) && echo -n " $$lang"; \
 	done
-	@for file in $(IMAGE_FILES); do \
+	@echo .
+
+	@echo "** Installing images: (G=gif, J=jpg, M=mng, P=png, X=xcf)"
+
+	@cd $(top_srcdir) && find images $(image_find_predicates) | \
+	while read file; do \
 		case "$$file" in \
-		  *.gif) echo -n G ;; \
-		  *.jpg) echo -n J ;; \
-		  *.mng) echo -n M ;; \
 		  *.png) echo -n P ;; \
+		  *.jpg) echo -n J ;; \
 		  *.xcf) echo -n X ;; \
+		  *.mng) echo -n M ;; \
+		  *.gif) echo -n G ;; \
 		esac; \
-		$(INSTALL) $(top_srcdir)/$$file $(DESTDIR)$(helpdir)/$$file || exit; \
+		test -d $(DESTDIR)$(helpdir)/$${file%/*} || \
+		$(mkdir_p) $(DESTDIR)$(helpdir)/$${file%/*}; \
+		$(INSTALL) $(top_srcdir)/$$file $(DESTDIR)$(helpdir)/$$file || exit 66; \
 	done
 	@echo .
 
@@ -276,9 +284,9 @@ dist-copy-images:
 	@for dir in $(IMAGE_DIRS); do \
 		$(mkdir_p) "$(distdir)/$$dir" || exit; \
 	done
-	@for file in $(IMAGE_FILES); do \
-		cp -fp $(top_srcdir)/$$file $(distdir)/$$file || exit; \
-	done
+	@find images \( $(image_find_predicates) \) \
+		-exec cp -fp '{}' gimp-help-2-0.13/'{}' ';'
+
 
 clean-local:
 if GIMP_HELP_BUILD
