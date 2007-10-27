@@ -223,7 +223,7 @@ html-dist: \
 if HAVE_XMLLINT
 
 xml/stamp-%-valid: xml/%.xml
-	@echo "Validating: " $*
+	@echo "Validating XML for: " $*
 	@$(XMLLINT) --noout --valid $< > /dev/null
 	@touch $@
 
