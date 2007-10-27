@@ -53,9 +53,10 @@ helpdir = $(gimpdatadir)/help
 #### XML profiling
 
 xml/%.xml: src/gimp.xml stylesheets/profile.xsl $(filter-out src/gimp.xml, $(XML_FILES))
-	$(mkdir_p) xml
+	@$(mkdir_p) xml
 
-	$(XSLTPROC) \
+	@echo "Profiling XML for: " $*
+	@$(XSLTPROC) \
 	  $(XSLTFLAGS) \
 	  --xinclude \
 	  --stringparam profile.lang $* \
@@ -63,16 +64,16 @@ xml/%.xml: src/gimp.xml stylesheets/profile.xsl $(filter-out src/gimp.xml, $(XML
 	  $< \
 	  > $@.tmp
 
-	sed -e 's/xmlns[:a-z]*="[^"]*" //' \
+	@sed -e 's/xmlns[:a-z]*="[^"]*" //' \
 	    -e 's/lang="[A-Za-z_;]*"/lang="$*"/' \
 	    -e '/^[ \t]*$$/d' \
 	  < $@.tmp \
 	  > $@
 
-	rm -f $@.tmp
+	@rm -f $@.tmp
 
 if HAVE_XMLLINT
-	$(XMLLINT) --noout $@
+	@$(XMLLINT) --noout $@
 endif
 
 #### PDF output
@@ -118,11 +119,12 @@ if GIMP_HELP_BUILD
 
 # Main text
 html/%/index.html: xml/%.xml stylesheets/plainhtml.xsl
-	rm -rf html/$*
-	$(mkdir_p) html/$*
+	@rm -rf html/$*
+	@$(mkdir_p) html/$*
 	@test -d html/images || $(LN_S) $(abs_top_srcdir)/images html/
 
-	$(XSLTPROC) \
+	@echo "Creating HTML for: " $*
+	@$(XSLTPROC) \
 	  $(XSLTFLAGS) \
 	  --xinclude \
 	  --stringparam l10n.gentext.default.language $* \
@@ -221,8 +223,9 @@ html-dist: \
 if HAVE_XMLLINT
 
 xml/stamp-%-valid: xml/%.xml
-	$(XMLLINT) --noout --valid $< > /dev/null
-	touch $@
+	@echo "Validating: " $*
+	@$(XMLLINT) --noout --valid $< > /dev/null
+	@touch $@
 
 validate: $(foreach lang,$(ALL_LINGUAS),xml/stamp-$(lang)-valid)
 
