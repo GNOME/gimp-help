@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-# SUBDIRS = quickreference
+SUBDIRS = quickreference
 
 image_find_predicates = \
 	-path '*/.svn' -prune -o \

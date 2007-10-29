@@ -175,6 +175,7 @@ AC_SUBST(gimpdatadir)
 
 AC_CONFIG_FILES([
 Makefile
+quickreference/Makefile
 omf/gimp-C.omf
 stylesheets/plainhtml.xsl
 stylesheets/htmlalternate.xsl

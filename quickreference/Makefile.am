@@ -1,11 +1,12 @@
 ## Process this file with automake to produce Makefile.in
 
-QUICKREFERENCE_ALL_LINGUAS = de en fr it ru
+QUICKREFERENCE_ALL_LINGUAS = de en fr it ru sv
 
 PO_FILES = \
 	po/de.po	\
 	po/fr.po	\
 	po/it.po	\
+	po/sv.po	\
 	po/ru.po
 
 XSL_FILES = \
