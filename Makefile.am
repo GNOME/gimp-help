@@ -3,7 +3,8 @@
 SUBDIRS = quickreference
 
 image_find_predicates = \
-	-path '*/.svn' -prune -o \
+	-name '.svn' -prune \
+	-o \
 	\( \
 	-name '*.png' -o \
 	-name '*.jpg' -o \
@@ -12,11 +13,9 @@ image_find_predicates = \
 	-name '*.gif'    \
 	\) -print
 
-IMAGE_FILES := $(sort $(shell cd $(top_srcdir) && find images $(image_find_predicates)))
-
-IMAGE_COUNT := $(words $(IMAGE_FILES))
-
-IMAGE_DIRS := $(sort $(dir $(IMAGE_FILES)))
+IMAGE_FILES = $(sort $(shell cd $(top_srcdir) && find images $(image_find_predicates)))
+IMAGE_COUNT = $(words $(IMAGE_FILES))
+IMAGE_DIRS  = $(sort $(dir $(IMAGE_FILES)))
 
 XML_FILES := $(shell cd $(top_srcdir) && find src -name '*.xml')
 
@@ -223,7 +222,7 @@ html-dist: \
 if HAVE_XMLLINT
 
 xml/stamp-%-valid: xml/%.xml
-	@echo "Validating XML for: " $*
+	@echo "Validating XML for:" $*
 	@$(XMLLINT) --noout --valid $< > /dev/null
 	@touch $@
 
