@@ -42,26 +42,22 @@
   </title>
 
   <indexterm lang="en">
-    <primary>Tools</primary>
-    <secondary>Heal</secondary>
+    <primary>Tools</primary><secondary>Heal</secondary>
   </indexterm>
   <indexterm lang="en"><primary>Heal</primary></indexterm>
 
   <indexterm lang="de">
-    <primary>Werkzeug</primary>
-    <secondary>Heilen</secondary>
+    <primary>Werkzeug</primary><secondary>Heilen</secondary>
   </indexterm>
   <indexterm lang="de"><primary>Heilen</primary></indexterm>
 
   <indexterm lang="fr">
-    <primary>Outils</primary>
-    <secondary>Correcteur</secondary>
+    <primary>Outils</primary><secondary>Correcteur</secondary>
   </indexterm>
   <indexterm lang="fr"><primary>Correcteur</primary></indexterm>
 
   <indexterm lang="it">
-    <primary>Strumenti</primary>
-    <secondary>Cerotto</secondary>
+    <primary>Strumenti</primary><secondary>Cerotto</secondary>
   </indexterm>
   <indexterm lang="it"><primary>Cerotto</primary></indexterm>
 
@@ -79,36 +75,56 @@
     </title>
 
     <mediaobject>
-      <imageobject>
-        <imagedata fileref="../images/toolbox/toolbox-heal.png"
-          format="PNG" />
+      <imageobject lang="en;fr;it">
+        <imagedata format="PNG" fileref="../images/toolbox/toolbox-heal.png" />
+      </imageobject>
+      <imageobject lang="de">
+        <imagedata format="PNG"
+          fileref="../images/toolbox/de/toolbox-heal.png" />
       </imageobject>
     </mediaobject>
   </figure>
 
   <para lang="en">
-    This tool allows you to correct small defects in an image, for example
-    blemishes on a pretty woman face. It remembers the Clone tool, but works
-    in a different way. To use it, first choose a brush with a size adapted
-    to the defect. Then Ctrl-click on the area you want to reproduce.
-    Release the Ctrl key and drag the sample to the defect. Click. If the
-    defect is slight, not very different from its surrounding, it will be
-    corrected as soon. Else, you can correct it with repeated clicks, but
-    with a risk of daubing
+    This tool was once described as <quote>The healing brush looks like a
+    smart clone tool on steroids</quote>. And indeed the Healing Tool is a
+    close relative to the Clone Tool, but it is more smart to remove small
+    failures in images. A typical usage is the removal of wrinkles in
+    photographs. To do so, pixels are not simply copied from source to
+    destination, but the area around the destination is taken into account
+    before cloning is applied. The algorithm used for this, is described in
+    a scientific paper by Todor Georgiev
+    <xref linkend="bibliography-online-georgiev" />.
   </para>
   <para lang="de">
-    Mit diesem Werkzeug können Sie kleinere Defekte im Bild korrigieren,
-    beispielsweise Schönheitsfehler im Gesicht einer schönen Frau.
-    <quote>Heilen</quote> ähnelt dem
-    <link linkend="gimp-tool-clone">Klonen</link>-Werkzeug, arbeitet aber
-    etwas anders. Das Werkzeug wird folgendermaßen benutzt: Zunächst wählen
+    Dieses Werkzeug ist ein Verwandter des
+    <link linkend="gimp-tool-clone">Klonen</link>-Werkzeugs, im Gegensatz zu
+    diesem aber auf das Reparieren kleiner Fehlstellen spezialisiert. Hierzu
+    eine Stelle im Bild gewählt, welche der Fehlstelle farblich ähnlich ist.
+    Mit diesem Quellpunkt wird dann die Zielstelle bemalt. Im Gegensatz zum
+    Klonen Werkzeug wird dabei jedoch die Struktur und Umgebung des
+    Zielbereiches berücksichtigt. Der hierzu angewendete Algorithmus ist in
+    einem wissenschaftlichen Paper von Todor Georgiev beschrieben
+    <xref linkend="bibliography-online-georgiev" />.
+  </para>
+
+  <para lang="en">
+    To use it, first choose a brush with a size adapted to the defect. Then
+    <keycap>Ctrl</keycap>-click on the area you want to reproduce. Release the
+    <keycap>Ctrl</keycap> key and drag the sample to the defect. Click. If the
+    defect is slight, not very
+    different from its surrounding, it will be corrected as soon. Else, you
+    can correct it with repeated clicks, but with a risk of daubing
+  </para>
+  <para lang="de">
+    Das Werkzeug wird folgendermaßen benutzt: Zunächst wählen
     Sie einen Pinsel mit einer dem Defekt entsprechenden Größe. Dann Klicken
     Sie bei gedrückter <keycap>Strg</keycap>-Taste auf den Bereich, den Sie
-    kopieren wollen. Lassen Sie die Strg-Taste los und ziehen Sie den
-    gewählten Bereich auf den Defekt. Klicken Sie dann. Ein minimaler Defekt,
-    der sich nur unwesentlich von der Umgebung unterscheidet, wird unmittelbar
-    korrigiert. Ansonsten müssen Sie mehrfach Klicken, allerdings mit dem
-    Risiko, den Bereich zu verschmieren.
+    kopieren wollen. Lassen Sie die <keycap>Strg</keycap>-Taste los und ziehen
+    Sie den gewählten Bereich auf den Defekt. Klicken Sie dann. Ein kleiner
+    Defekt, der sich nur unwesentlich von der Umgebung unterscheidet, wird
+    unmittelbar korrigiert. Ansonsten müssen Sie mehrfach Klicken, allerdings
+    mit dem Risiko, den Bereich zu verschmieren.
   </para>
   <para lang="fr">
     Cet outil permet de corriger les petits défauts d'une image, par exemple
@@ -152,12 +168,8 @@
       Sie haben verschiedene Möglichkeiten, das Werkzeug <quote>Heilen</quote>
       zu aktivieren:
     </para>
-    <para lang="fr">
-      On accède à cet outil de différentes façons :
-    </para>
-    <para lang="it">
-      Lo strumento può essere attivato in modi diversi:
-    </para>
+    <para lang="fr">On accède à cet outil de différentes façons :</para>
+    <para lang="it">Lo strumento può essere attivato in modi diversi:</para>
 
     <itemizedlist>
       <listitem>
@@ -282,11 +294,28 @@
 
         <listitem>
           <para lang="en">
-            Ctrl-click allows you to select a new heal source.
+            The Ctrl key is used to select the source. You can heal from any
+            layer of any image, by clicking on the image display, with the
+            Ctrl key held down, while the layer is active (as shown in the
+            Layers dialog). If Alignment is set to <quote>Non-aligned</quote>
+            or <quote>Aligned</quote> in Tool Options, then the point you
+            click on becomes the origin for healing: the image data at that
+            point will be used when you first begin painting with the Heal
+            tool. In source-selection mode, the cursor changes to a
+            crosshair-symbol.
           </para>
           <para lang="de">
-            Ein Klick bei gedrückter <keycap>Strg</keycap>-Taste erlaubt
-            Ihnen, eine neue Quelle zum Heilen zu wählen.
+            Die Taste <keycap>Strg</keycap> wird verwendet, um eine Stelle im
+            Bild zu definieren, die vom Werkzeug als Quelle zum Heilen
+            verwendet wird. Wenn die Eigenschaft
+            <guilabel>Ausrichtung</guilabel> auf den Wert
+            <guilabel>Ausgerichtet</guilabel> oder
+            <guilabel>Nicht ausgerichtet</guilabel> eingestellt ist, wird der
+            Bildpunkt, auf den Sie bei gedrückter <keycap>Strg</keycap>
+            klicken, als Quelle für das Heilen definiert. Der Bildinhalt an
+            dieser Stelle ist das, was beim Zeichnen verwendet wird. Wenn Sie
+            im Modus <quote>Quellpunkt auswählen</quote> sind, erkennen Sie
+            das auch am Mauszeiger, der sich in ein Kreuzsymbol verwandelt.
           </para>
           <para lang="fr">
             Ctrl-click vous permet de choisir une nouvelle source de
@@ -338,6 +367,7 @@
     </variablelist>
   </sect3>
 
+
   <sect3>
     <title>
       <phrase lang="en">Options</phrase>
@@ -352,7 +382,9 @@
     <figure>
       <title>
         <phrase lang="en">Heal Tool options</phrase>
-        <phrase lang="de">Werkzeugeinstellungen für <quote>Heilen</quote></phrase>
+        <phrase lang="de">
+          Werkzeugeinstellungen für <quote>Heilen</quote>
+        </phrase>
         <phrase lang="fr">Options de l'outil Correcteur</phrase>
         <phrase lang="it">
           Le opzioni dello strumento <quote>cerotto</quote> </phrase>
@@ -360,20 +392,20 @@
 
       <mediaobject>
         <imageobject lang="en">
-          <imagedata fileref="../images/toolbox/heal-options.png"
-            format="PNG" />
+          <imagedata format="PNG"
+            fileref="../images/toolbox/tool-options-heal.png" />
         </imageobject>
         <imageobject lang="de">
-          <imagedata fileref="../images/toolbox/de/tool-options-heal.png"
-            format="PNG" />
+          <imagedata format="PNG"
+            fileref="../images/toolbox/de/tool-options-heal.png" />
         </imageobject>
         <imageobject lang="fr">
-          <imagedata fileref="../images/toolbox/fr/heal-options.png"
-            format="PNG" />
+          <imagedata format="PNG"
+            fileref="../images/toolbox/fr/heal-options.png" />
         </imageobject>
         <imageobject lang="it">
-          <imagedata fileref="../images/toolbox/it/heal-options.png"
-            format="PNG" />
+          <imagedata format="PNG"
+            fileref="../images/toolbox/it/heal-options.png" />
         </imageobject>
       </mediaobject>
     </figure>
@@ -444,11 +476,12 @@
     <variablelist lang="de">
       <varlistentry lang="en;de;fr;no;ru">
         <term lang="en">
-          Opacity; Brush; Pressure Sensitivity; Fade Out; Hard Edges
+          Mode; Opacity; Brush; Pressure Sensitivity, Fade out, Apply Jitter,
+          Hard Edges
         </term>
         <term lang="de">
-          Deckkraft; Pinsel(-form); Druckempfindlichkeit; Verblassen; Harte
-          Kanten
+          Modus; Deckkraft; Pinsel; Druckempfindlichkeit; Verblassen; Zittern
+          hinzufügen; Harte Kante
         </term>
         <term lang="fr">
           Opacité, Brosse, Sensibilité à la pression, Estompage, Contour net
@@ -467,6 +500,24 @@
         </listitem>
       </varlistentry>
 
+      <!-- TODO: fr it translation missing -->
+      <varlistentry lang="en;de">
+        <term lang="en">Sample merged</term>
+        <term lang="de">Vereinigung prüfen</term>
+
+        <listitem>
+          <para lang="en">
+            If you enable this option, the healing is not only calcualted
+            using the values of the active layer, but all layers.
+          </para>
+          <para lang="de">
+            Wenn diese Eigenschaft aktiviert ist, wird die Berechnung des
+            Heilen-Werkzeuges nicht nur mit den Werten der aktiven Ebene,
+            sondern mit den Werten aller Ebenen des Bildes berechnet.
+          </para>
+        </listitem>
+      </varlistentry>
+      
       <varlistentry lang="de">
         <term lang="en">Alignment</term>
         <term lang="de">Ausrichtung</term>
@@ -527,10 +578,10 @@
          Confronto tra <quote>Cerotto</quote> e <quote>Clona</quote>
        </phrase>
      </title>
+
      <mediaobject>
        <imageobject>
-         <imagedata format="PNG"
-                    fileref="../images/toolbox/heal-compar.png" />
+         <imagedata format="PNG" fileref="../images/toolbox/heal-compar.png" />
        </imageobject>
        <caption>
          <para lang="en">
