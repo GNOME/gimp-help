@@ -13,10 +13,6 @@ image_find_predicates = \
 	-name '*.gif'    \
 	\) -print
 
-IMAGE_FILES = $(sort $(shell cd $(top_srcdir) && find images $(image_find_predicates)))
-IMAGE_COUNT = $(words $(IMAGE_FILES))
-IMAGE_DIRS  = $(sort $(dir $(IMAGE_FILES)))
-
 XML_FILES := $(shell cd $(top_srcdir) && find src -name '*.xml')
 
 COMMON_CSS_FILES = \
@@ -277,17 +273,15 @@ endif
 
 dist-hook: dist-copy-images
 
-##  Note that $(IMAGE_FILES) is *huge*, and if we stick it in EXTRA_DIST
-##  we get an "Argument list too long" error. So we handle it here.
+##  Note that number of images is *huge*, and if we stick image files in
+##  EXTRA_DIST we get an "Argument list too long" error. So we handle it here.
 
 dist-copy-images:
-	test -d "$(distdir)"
-	@echo "Copying $(IMAGE_COUNT) images into distdir ..."
-	@for dir in $(IMAGE_DIRS); do \
-		$(mkdir_p) "$(distdir)/$$dir" || exit; \
-	done
-	@find images \( $(image_find_predicates) \) \
-		-exec cp -fp '{}' gimp-help-2-0.13/'{}' ';'
+	test -d "$(top_srcdir)/images" && test -d "$(distdir)"
+	@echo "Copying images into distdir $(distdir) ..."
+	@(cd $(top_srcdir) && tar -cf- --exclude=.svn images) \
+	| (cd $(distdir) && tar -xf-)
+	test -d "$(distdir)/images" && test ! -d "$(distdir)/images/.svn"
 
 
 clean-local:
