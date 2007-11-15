@@ -4,7 +4,9 @@
                 "http://www.docbook.org/xml/4.3/docbookx.dtd">
 
 <!-- section history:
+  2007-11-14 j.h: updated to v2.4. Layers option and examples added.
   2007-09-25 AntI: Added 'es'
+  2006-07-28 scb: revised 'en'
   2006-02-25 fixed invalid image reference
 -->
 <sect2 id="gimp-image-canvas-size" lang="en;de;es;fr;it;no;zh_CN">
@@ -12,8 +14,8 @@
     <revhistory>
       <revision lang="en">
         <revnumber>$Revision$</revnumber>
-        <date>2006-07-28</date>
-        <authorinitials>scb</authorinitials>
+        <date>2007-11-14</date>
+        <authorinitials>j.h</authorinitials>
       </revision>
       <revision lang="cs">
         <revnumber>$Revision$</revnumber>
@@ -32,7 +34,7 @@
       </revision>
       <revision lang="fr">
         <revnumber>$Revision$</revnumber>
-        <date>2006-07-17</date>
+        <date>2007-11-14</date>
         <authorinitials>j.h</authorinitials>
       </revision>
       <revision lang="no">
@@ -111,14 +113,19 @@
     zasahují mimo hranice plátna.
   </para>
 
-  <para lang="en">
+  <para lang="en"><!--TODO de;es;it;no; v2.4-->
     The <quote>canvas</quote> is the visible area of the image. By default
     the size of the canvas coincides with the size of the layers. The
     <guimenuitem>Canvas Size</guimenuitem> command lets you enlarge or
-    reduce the canvas size without modifying the contents of the layers in
-    the image. When you enlarge the canvas, you create free space around
+    reduce the canvas size. You can, if you want, modify the size of the
+    layers. When you enlarge the canvas, you create free space around
     the contents of the image. When you reduce it, the visible area is
     cropped, however the layers still extend beyond the canvas border.
+  </para>
+  <para lang="en"><!--TODO de;es;it;no; added-->
+    When you reduce the canvas size, the new canvas appears surrounded with
+    a thin negative border in the preview. The mouse pointer is a moving
+    cross: click and drag to move the image against this frame.
   </para>
 
   <para lang="de">
@@ -136,7 +143,7 @@
 
   <para lang="es">
     El <quote>lienzo</quote> es el área visible de la imagen. Por defecto,
-    el tamaño del lienzo coincide con el tamaño de las capas. 
+    el tamaño del lienzo coincide con el tamaño de las capas.
     El comando <guimenuitem>Tamaño del lienzo</guimenuitem> permite
     agrandar o reducir el tamaño del lienzo sin modificar el contenido de
     las capas en la imagen. Cuando se agranda el lienzo, se crea un
@@ -146,13 +153,19 @@
   </para>
 
   <para lang="fr">
-    Le canevas est la zone de travail ; c'est la surface sur laquelle repose
-    l'image. Par défaut, le canevas coïncide avec les calques. Cette fonction
-    permet d'agrandir ou de réduire le canevas sans rien changer aux calques
-    qu'il contient. Quand vous l'agrandissez, vous créez un espace vide autour
-    de l'image. Quand vous le réduisez, la partie visible de l'image est
+    Le canevas est la partie visible de l'image. Par défaut, le canevas
+    coïncide avec les calques. Cette fonction  permet d'agrandir ou de
+    réduire le canevas. Vous pouvez aussi, éventuellement, modifier la
+    taille des calques qu'il contient. Quand vous l'agrandissez, vous créez
+    un espace vide autour de l'image. Quand vous le réduisez, l'image est
     tronquée, mais les calques continuent de s'étendre au-delà des bords du
     canevas.
+  </para>
+  <para lang="fr">
+    Quand vous reduisez le canevas, il apparaît limité par une bordure
+    négative dans l'apercu. Le pointeur de la souris est une croix
+    de déplacement. Cliquez-glissez pour déplacer l'image par rapport à ce
+    cadre.
   </para>
 
   <para lang="it">
@@ -185,7 +198,7 @@
 
   <sect3 lang="en;de;es;fr;it">
     <title>
-      <phrase lang="en">Activating the Command</phrase>
+      <phrase lang="en">Activate the Command</phrase>
       <phrase lang="cs">Aktivace dialogu</phrase>
       <phrase lang="de">Aufruf des Kommandos</phrase>
       <phrase lang="es">Activar el comando</phrase>
@@ -213,7 +226,7 @@
         </para>
         <para lang="es">
           Se puede acceder a este comando desde la barra de menú de la
-          imagen, mediante  
+          imagen, mediante
           <menuchoice>
             <guimenu><accel>I</accel>magen</guimenu>
             <guimenuitem>Tamaño del <accel>l</accel>lienzo</guimenuitem>
@@ -403,7 +416,7 @@
           </para>
 
           <para lang="es">
-            Puede selecconar la <guilabel>Anchura</guilabel> y la 
+            Puede selecconar la <guilabel>Anchura</guilabel> y la
             <guilabel>Altura</guilabel> del lienzo. La unidad predefinida
             es el píxel pero se pueden escoger otras unidades, p. e.
             porcentaje, si quiere selecconar la nueva dimensión relativa a
@@ -513,9 +526,11 @@
 
       <para lang="en">
         The <guilabel>Offset</guilabel> values are used to place the image
-        on the canvas. The preview window displays the image in a frame with
-        a thin border. When the canvas is smaller than the image, the
-        preview window shows it in a frame with a thin black border.
+        on the canvas. You can see the size and the content of the canvas in
+        the preview of the dialog window. When the canvas is smaller than
+        the image, the preview window shows it in a frame with a thin
+        negative border. You can also modify the offset by click-and-dragging
+        on the preview.
       </para>
       <para lang="de">
         Der Versatz wird benutzt, um die vorhandenen Bildebenen auf der
@@ -536,9 +551,10 @@
       </para>
       <para lang="fr">
         Le Décalage sert à placer l'image sur le canevas. Vous disposez d'un
-        aperçu où l'image est représentée par un cadre à bordure grise. Le
-        canevas est représenté par un cadre à fine bordure noire quand il est
-        différent de l'image.
+        aperçu où le canevas est représenté par un cadre à fine bordure en
+        négatif quand il est plus petit que l'image. Vous pouvez aussi
+        déplacer l'image par rapport au canevas par un cliquer-glisser sur
+        l'aperçu.
       </para>
       <para lang="it">
         I valori di <guilabel>Spostamento</guilabel> vengono usati per
@@ -549,9 +565,9 @@
       </para>
       <para lang="no">
         Verdiane i <guilabel>Forskyving</guilabel> bestemmer plasseringa
-        av biletet på lerretet. Resultatet blir vist i førehandsvisinga. Dersom
-        lerretet er mindre enn biletet, syner førehandsvisinga lerretet som
-        ei tynn, svart ramme.
+        av biletet på lerretet. Resultatet blir vist i førehandsvisinga.
+        Dersom lerretet er mindre enn biletet, syner førehandsvisinga
+        lerretet som ei tynn, svart ramme.
       </para>
       <para lang="zh_CN">
         位移用来确定图像在画布上的位置。预览窗口在画布上用灰色的框来显示图像，
@@ -636,6 +652,125 @@
             可以以十个十个像素的修改。用鼠标右键点击箭头，可以直接得到最大值
             或最小值。
           </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry lang="en;fr"><!--TODO de;es;it;no; v2.4-->
+        <term lang="en">Layers</term>
+        <term lang="fr">Calques</term>
+
+        <listitem>
+          <para lang="en">
+            Before the GIMP-2.4 version, <quote>Canvas Size</quote> had no
+            influence on layer size. To change it, you had to use the <link
+            linkend="gimp-layer-resize">Layer Boundary Size</link> command.
+            The <quote>Layers</quote> option now allows you to specify how,
+            possibly, layers will be resized. The drop-down list offers you
+            several possibilities:
+          </para>
+          <para lang="fr">
+            Avant la version GIMP-2.4, <quote>Taille du canevas</quote>
+            n'avait aucune influence sur la taille des calques; pour la
+            changer, il fallait recourir à <link
+            linkend="gimp-layer-resize">Taille des bords du calque</link>.
+            L'option <guilabel>Calques</guilabel> vous permet de spécifier
+            comment seront, éventuellement, redimensionnés les calques. La
+            liste déroulante vous donne plusieurs possibilités :
+          </para>
+          <figure>
+            <title>
+              <phrase lang="en">The Resize layers list</phrase>
+              <phrase lang="fr">
+                La liste de redimensionnement des calques
+              </phrase>
+            </title>
+            <mediaobject>
+              <imageobject lang="en">
+                <imagedata format="PNG"
+                  fileref="../images/menus/image-canvas-size-list.png" />
+              </imageobject>
+              <imageobject lang="fr">
+                <imagedata format="PNG"
+                  fileref="../images/menus/fr/image-canvas-size-list.png" />
+              </imageobject>
+            </mediaobject>
+          </figure>
+          <itemizedlist>
+            <listitem>
+              <para lang="en">
+                <guilabel>None</guilabel>: default option. No layer is
+                resized, only the canvas is.
+              </para>
+              <para lang="fr">
+                <guilabel>Aucun</guilabel> : c'est l'option par défaut,
+                aucun calque n'est redimensionné, seul l'est le canevas.
+              </para>
+            </listitem>
+            <listitem>
+              <para lang="en">
+                <guilabel>All Layers</guilabel>: all layers are resized to
+                canvas size.
+              </para>
+              <para lang="fr">
+                <guilabel>Tous les calques</guilabel> : tous les calques sont
+                redimensionnés à la taille du canevas.
+              </para>
+            </listitem>
+            <listitem>
+              <para lang="en">
+                <guilabel>Image-sized layers</guilabel>: only layers with
+                the same size as the image are sized to canvas size.
+              </para>
+              <para lang="fr">
+                <guilabel>Calques à la taille de l'image</guilabel> : seuls
+                les calques ayant la même taille que l'image sont
+                redimensionnés à la taille du canevas.
+              </para>
+              <warning lang="fr">
+                <para>
+                  Cette option est tout-à-fait différente de la commande
+                  <link linkend= "gimp-layer-resize-to-image">Calque aux
+                  dimensions de l'image</link>.
+                </para>
+              </warning>
+            </listitem>
+            <listitem>
+              <para lang="en">
+                <guilabel>All visibles layers</guilabel>: only visible
+                layers, marked with a
+                <guiicon><inlinegraphic
+                        fileref="../image/dialogs/stock-eye-20.png" />
+                </guiicon> icon, in the Layer Dialog,
+                are sized to canvas size.
+              </para>
+              <para lang="fr">
+                <guilabel>Tous les calques visibles</guilabel> : seuls les
+                calques visibles, marqués d'une icône
+                <guiicon><inlinegraphic
+                     fileref="../image/dialogs/stock-eye-20.png" />
+                </guiicon> dans le Dialogue des calques,
+                sont redimensionnés à la taille du canevas.
+              </para>
+            </listitem>
+            <listitem>
+              <para lang="en">
+                <guilabel>All linked layers</guilabel>: only linked layers,
+                marked with a
+                <guiicon><inlinegraphic
+                  fileref="../image/dialogs/stock-vchain-24.png" />
+                </guiicon> in the Layer Dialog,
+                are sized to canvas size.
+              </para>
+              <para lang="fr">
+                <guilabel>Tous les calques chaînés</guilabel> : Seuls les
+                calques liés, marqués d'une icône
+                <guiicon><inlinegraphic
+                  fileref="../image/dialogs/stock-vchain-24.png" />
+                </guiicon> dans le Dialogue des calques,
+                sont redimensionnés à la taille du canevas.
+              </para>
+            </listitem>
+          </itemizedlist>
         </listitem>
       </varlistentry>
 
@@ -750,7 +885,7 @@
         del lienzo antes de cambiar su tamaño, no hay capas en la parte
         del lienzo que se añadió al redimensionarla. Por lo tanto, esta
         parte del lienzo es transparente se muestra con cuadros, y no está
-        disponible, inmediatamente,  para pintar. Se puede 
+        disponible, inmediatamente,  para pintar. Se puede
         <link linkend="gimp-image-flatten">Aplanar</link>
         la imagen, en cuyo caso se obtiene una imagen con una sola capa
         que llena el lienzo, o se puede usar el comando
@@ -834,5 +969,163 @@
         插进相片的玻璃框）。
       </para>
     </note>
+  </sect3>
+
+  <sect3 lang="en;fr"><!--TODO de;es;it;no-->
+    <title>
+      <phrase lang="en">Example</phrase>
+      <phrase lang="fr">Exemple</phrase>
+    </title>
+    <figure>
+      <title>
+        <phrase lang="en">Original image</phrase>
+        <phrase lang="fr">Image d'origine</phrase>
+      </title>
+      <mediaobject>
+        <imageobject>
+          <imagedata format="PNG"
+                     fileref="../images/menus/image-canvas-size-ex1.png" />
+        </imageobject>
+        <caption>
+          <para lang="en">
+            We started with a green background layer 100x100 pixels, which
+            defines a default canvas with the same size. Then we added a new
+            red layer 80x80 pixels. The active layer limits are marked with a
+            black and yellow dotted line. The red layer does not fill the
+            canvas completely: the unoccupied part is transparent. The
+            background color in the Toolbox is yellow.
+          </para>
+          <para lang="fr">
+            Nous sommes partis d'un calque d'arrière-plan vert de 100x100
+            pixels, qui définit un canevas par défaut de la même taille. Puis
+            nous avons ajouté un calque rouge de 80x80 pixels. Les limites du
+            calque actif sont marquées par une ligne pointillée jaune et
+            noire. Le calque rouge n'occupe pas tout le canevas et la partie
+            non occupée est transparente. La couleur d'arrière-plan de la
+            Boîte à outils est jaune.
+          </para>
+        </caption>
+      </mediaobject>
+    </figure>
+
+    <figure>
+      <title>
+        <phrase lang="en">Canvas enlarged (layers unchanged)</phrase>
+        <phrase lang="fr">Canevas agrandi (calques inchangés)</phrase>
+      </title>
+      <mediaobject>
+        <imageobject>
+          <imagedata format="PNG"
+                      fileref="../images/menus/image-canvas-size-ex2.png" />
+        </imageobject>
+        <caption>
+          <para lang="en">
+            The canvas has been enlarged to 120x120 pixels. The canvas
+            size remained unchanged. The unoccupied part of the canvas is
+            transparent.
+          </para>
+          <para lang="fr">
+            Le canevas a été agrandi à 120x120 pixels. La taille des
+            calques est restée inchangée. La partie non occupée du
+            canevas est transparente.
+          </para>
+        </caption>
+      </mediaobject>
+    </figure>
+
+    <figure>
+      <title>
+        <phrase lang="en">Canvas enlarged (All layers changed)</phrase>
+        <phrase lang="fr">Canevas agrandi (Tous les calques changés)</phrase>
+      </title>
+      <mediaobject>
+        <imageobject>
+          <imagedata format="PNG"
+                      fileref="../images/menus/image-canvas-size-ex3.png" />
+        </imageobject>
+        <caption>
+          <para lang="en">
+            The canvas has been enlarged to 120x120 pixels. All layers
+            have been enlarged to the canvas size. The undrawn part is
+            tranparent in the red layer and yellow (background color in
+            Toolbox) in the green background layer.
+          </para>
+          <para lang="fr">
+            Le canevas a été agrandi à 120x120 pixels. Les calques sont
+            agrandis à la taille du canevas. On voit que la limite du
+            calque rouge se confond avec la limite de l'image. La partie
+            ajoutée, non dessinée, est transparente dans le calque rouge
+            et jaune (couleur d'arrière-plan de la Boîte à outils) dans
+            le calque vert d'arrière-plan.
+          </para>
+        </caption>
+      </mediaobject>
+    </figure>
+  </sect3>
+
+  <sect3 lang="en;fr"><!--TODO de;es;it;no-->
+    <title>
+      <phrase lang="en">What's Canvas Size useful for?</phrase>
+      <phrase lang="fr">À quoi sert Taille du canevas?</phrase>
+    </title>
+
+    <para lang="en">
+      You can use this command to crop an image:
+    </para>
+    <para lang="fr">
+      Cette commande peut servir à recadrer une image :
+    </para>
+
+    <figure>
+      <title>
+        <phrase lang="en">Resizing canvas</phrase>
+        <phrase lang="fr">Redimensionnement du canevas</phrase>
+      </title>
+      <mediaobject>
+        <imageobject>
+          <imagedata format="PNG"
+                    fileref="../images/menus/image-canvas-size-ex4.png" />
+        </imageobject>
+      </mediaobject>
+    </figure>
+
+    <para lang="en">
+      Click on the chain next to Width and Height entries to unlink
+      dimensions. By modifying these dimensions and moving image against
+      canvas, by trial and error, you can crop the part of the image you
+      want. Click on the Center button and then on the Resize button.
+    </para>
+    <para lang="fr">
+      Cliquez sur la chaîne à droite des entrées Largeur et Hauteur pour
+      désolidariser ces deux dimensions. En modifiant ces dimensions et
+      en déplaçant l'image par rapport au canevas, par tâtonnements, vous
+      pourrez cadrer la partie voulue de l'image. Cliquez alors sur le
+      bouton Centrer, et enfin sur le bouton Redimensionner.
+    </para>
+
+    <figure>
+      <title>
+        <phrase lang="en">Cropped image</phrase>
+        <phrase lang="fr">Image recadrée</phrase>
+      </title>
+      <mediaobject>
+        <imageobject>
+          <imagedata format="PNG"
+                      fileref="../images/menus/image-canvas-size-ex5.png" />
+        </imageobject>
+      </mediaobject>
+    </figure>
+
+    <note>
+      <para lang="en">
+        The <link linkend="gimp-tool-crop">Crop tool</link> is easier to
+        use.
+      </para>
+      <para lang="fr">
+        L'outil <link linkend="gimp-tool-crop">Découpage</link> est plus
+        facile à utiliser pour recadrer.
+      </para>
+    </note>
+
   </sect3>
 </sect2>
