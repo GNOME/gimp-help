@@ -4,12 +4,13 @@
 
 AC_PREREQ(2.54)
 
-m4_define([help_major_version], [0])
-m4_define([help_minor_version], [13])
+m4_define([help_major_version], [2])
+m4_define([help_minor_version], [4])
+m4_define([help_micro_version], [0])
 
-m4_define([help_version], [help_major_version.help_minor_version])
+m4_define([help_version], [help_major_version.help_minor_version.help_micro_version])
 
-AC_INIT([GIMP-Help-2], [help_version])
+AC_INIT([GIMP-Help], [help_version])
 
 AC_CONFIG_SRCDIR([src/gimp.xml])
 

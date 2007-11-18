@@ -3,6 +3,7 @@
 QUICKREFERENCE_ALL_LINGUAS = de en fr it ru sv
 
 PO_FILES = \
+	po/gimp-keys.pot\
 	po/de.po	\
 	po/fr.po	\
 	po/it.po	\
@@ -13,10 +14,16 @@ XSL_FILES = \
 	stylesheets/keys-svg.xsl	\
 	stylesheets/keys-docbook.xsl
 
+TEMPLATES = \
+	templates/svg_template.xml \
+	templates/wilber.svg
+
+
 EXTRA_DIST = \
 	gimp-keys.xml \
 	$(PO_FILES) \
-	$(XSL_FILES)
+	$(XSL_FILES) \
+	$(TEMPLATES)
 
 if HAVE_XML2PO
 
