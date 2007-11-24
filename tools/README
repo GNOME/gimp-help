@@ -188,3 +188,40 @@ Requirements:
 Call the script from the gimp-help-2 root:
 
     python tools/show_translation_progress.py -g ../gimp
+
+
+check_keywords_property.pl
+==========================
+
+This script searches for XML source files without 'svn:keywords'
+property set to "Author Date Id Revision". It will print a list of
+these files to stdout and a few informative lines to stderr if
+called with option '-v' or '--verbose'.
+
+If the 'svn:keywords' property is set, Subversion will replace e.g.
+"$Revision$" with "$Revision: <revision of last change> $".
+
+Example output (verbose):
+
+    Searching for missing/wrong properties:
+        searching xml files ...
+        checking 600 xml files ...
+    Found 1 file with missing/wrong property:
+    src/dialogs/foo-bar.xml
+
+Requirements: 
+    - Perl 5.8 or better
+
+Usage:
+    Call the script from the gimp-help-2 root:
+
+        tools/check_keywords_property.pl [-v | --verbose]
+                                or
+        perl tools/check_keywords_property.pl [-v | --verbose]
+
+    If you want to set the svn:keywords property:
+
+        tools/check_keywords_property.pl | \
+        xargs --no-run-if-empty svn propset svn:keywords "Author Date Id Revision"
+
+
