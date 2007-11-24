@@ -13,7 +13,12 @@ image_find_predicates = \
 	-name '*.gif'    \
 	\) -print
 
-XML_FILES := $(shell cd $(top_srcdir) && find src -name '*.xml')
+src_find_predicates =       \
+	-name '.svn' -prune \
+	-o                  \
+	-name '*.xml' -print
+
+XML_FILES := $(shell cd $(top_srcdir) && find src $(src_find_predicates))
 
 COMMON_CSS_FILES = \
 	stylesheets/gimp-help-plain.css	\
@@ -47,10 +52,12 @@ helpdir = $(gimpdatadir)/help
 
 #### XML profiling
 
-xml/%.xml: src/gimp.xml stylesheets/profile.xsl $(filter-out src/gimp.xml, $(XML_FILES))
+# Note that "src/gimp.xml" must be the first prerequisite
+# (it doesn't matter that it's listed twice)
+xml/%.xml: src/gimp.xml stylesheets/profile.xsl $(XML_FILES)
 	@$(mkdir_p) xml
 
-	@echo "Profiling XML for: " $*
+	@echo "Profiling  XML for:" $*
 	@$(XSLTPROC) \
 	  $(XSLTFLAGS) \
 	  --xinclude \
