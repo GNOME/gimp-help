@@ -15,8 +15,8 @@
   2006-09-06 scb: thorough review and/or rewrite of English
 -->
 <!-- TODO: ko nl zh_CN -->
-<sect1 id="gimp-concepts-layer-modes" lang="de;en;es;fr;it;ko;no;ru">
-  <sect1info role="cvs" lang="en;de;es;fr;ko;no">
+<sect1 id="gimp-concepts-layer-modes" lang="en;de;es;fr;it;ko;no;ru">
+  <sect1info role="cvs">
     <revhistory>
       <revision lang="en">
         <revnumber>$Revision$</revnumber>
@@ -38,6 +38,11 @@
         <date>2007-01-28</date>
         <authorinitials>j.h</authorinitials>
       </revision>
+      <revision lang="it">
+        <revnumber>$Revision$</revnumber>
+        <date>n.n.</date>
+        <authorinitials>n.n.</authorinitials>
+      </revision>
       <revision lang="ko">
         <revnumber>$Revision$</revnumber>
         <date>2007-04-29</date>
@@ -47,6 +52,11 @@
         <revnumber>$Revision$</revnumber>
         <date>2007-02-13</date>
         <authorinitials>KoSt</authorinitials>
+      </revision>
+      <revision lang="ru">
+        <revnumber>$Revision$</revnumber>
+        <date>n.n.</date>
+        <authorinitials>n.n.</authorinitials>
       </revision>
     </revhistory>
   </sect1info>
@@ -6647,9 +6657,24 @@
     здесь.
   </para>
 
-  <variablelist lang="en;es;fr;it;ko;no;ru">
+  <tip lang="en;de">
+    <para lang="en">
+      There are two more layer modes, but these are available only for
+      painting tools. See <xref linkend="gimp-tool-painting-modes" />
+      for detailed information.
+    </para>
+    <para lang="de">
+      Es gib zwei weitere Ebenenmodi <quote>Hinter</quote> und
+      <quote>Farbe entfernen</quote>. Diese sind jedoch ausschließlich mit den
+      Malwerkzeugen verwendbar und daher im
+      <xref linkend="gimp-tool-painting-modes" /> beschrieben.
+    </para>
+  </tip>
+
+  <!-- FIXME: These two modes are described in src/toolbox/tools-painting.xml
+              please move that content over -->
+  <variablelist lang="es;fr;it;ko;no;ru">
     <varlistentry>
-      <term lang="en">Behind</term>
       <term lang="es">Detrás</term>
       <term lang="fr">Derrière</term>
       <term lang="it">Dietro</term>
@@ -6659,12 +6684,6 @@
 
       <listitem>
         <para>
-          <indexterm lang="en">
-            <primary>Paint Modes</primary><secondary>Behind</secondary>
-          </indexterm>
-          <indexterm lang="en">
-            <primary>Behind (paint mode)</primary>
-          </indexterm>
 
           <indexterm lang="es">
             <primary>Modos de pintar</primary><secondary>Detrás</secondary>
@@ -6703,6 +6722,7 @@
         <indexterm lang="no">
           <primary>Bak (teiknemodus)</primary>
         </indexterm>
+
         </para>
           <indexterm lang="ru">
             <primary>Режимы рисования</primary><secondary>Позади</secondary>
@@ -6710,39 +6730,22 @@
           <indexterm lang="ru">
             <primary>Позади (режим рисования)</primary>
           </indexterm>
-        <para>
-          <inlinemediaobject>
-            <imageobject>
-              <imagedata fileref="../images/glossary/modes-normal2.png"
-                format="PNG" />
-            </imageobject>
-          </inlinemediaobject>
-          <inlinemediaobject>
-            <imageobject>
-              <imagedata fileref="../images/glossary/modes-behind.png"
-                format="PNG" />
-            </imageobject>
-          </inlinemediaobject>
-        </para>
 
-        <para lang="en">
-          The <guilabel>Behind</guilabel>
-          mode is only available from the Toolbox options, not as a layer mode
-          from the Layers dialog. When you paint with a tool in
-          <quote>Behind</quote> mode, it paints <emphasis>behind</emphasis>
-          objects that are already painted on the layer. That means that this
-          mode only makes sense when you are painting on a layer that has
-          transparent areas, otherwise you wouldn't be able to see any
-          difference in the resulting image.
-        </para>
-        <para lang="en">
-          In the example image, Wilber is on the top layer, surrounded by
-          transparency. The lower layer is solid light blue. The Bucket Fill
-          tool was used, with an <guilabel>Affect</guilabel>
-          mode of <quote>Selection</quote>,
-          and the entire layer was selected. A pattern was used to paint
-          with the Bucket Fill tool.
-        </para>
+          <para>
+            <inlinemediaobject>
+              <imageobject>
+                <imagedata fileref="../images/glossary/modes-normal2.png"
+                  format="PNG" />
+              </imageobject>
+            </inlinemediaobject>
+            <inlinemediaobject>
+              <imageobject>
+                <imagedata fileref="../images/glossary/modes-behind.png"
+                  format="PNG" />
+              </imageobject>
+            </inlinemediaobject>
+          </para>
+
 
         <para lang="es">
           El modo <guilabel>Detrás</guilabel>
@@ -6852,22 +6855,14 @@
     </varlistentry>
 
     <varlistentry>
-      <term lang="en">Color Erase</term>
       <term lang="es">Borrar color</term>
       <term lang="fr">Effacer la couleur</term>
       <term lang="it">Cancellazione colore</term>
       <term lang="ko">색상 지우기</term>
       <term lang="no">Slett farge</term>
       <term lang="ru">Очистка цвета</term>
-      <listitem>
-        <indexterm lang="en">
-          <primary>Paint Modes</primary>
-          <secondary>Color Erase</secondary>
-        </indexterm>
-        <indexterm lang="en">
-          <primary>Color Erase (paint mode)</primary>
-        </indexterm>
 
+      <listitem>
         <indexterm lang="es">
           <primary>Modos de pintar</primary>
           <secondary>Borrar color</secondary>
@@ -6928,21 +6923,6 @@
                 format="PNG" />
             </imageobject>
           </inlinemediaobject>
-        </para>
-
-        <para lang="en"> <!--changed 2007-07-14-->
-          The <guilabel>Color Erase</guilabel> mode is only available
-          from the Toolbox options, not as a layer mode from the Layers
-          dialog. When you paint with a tool in <quote>Color
-            Erase</quote> mode, it finds areas in the layer which have
-          the current painting color and erases them, turning those
-          areas transparent. The layer must have an alpha channel (so
-          that transparency is allowed) for an effect to be seen.
-        </para>
-        <para lang="en">
-          In the example image, the color of the Bucket Fill tool was white,
-          so white parts of Wilber were erased and the blue background shows
-          through.
         </para>
 
         <para lang="es">
