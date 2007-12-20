@@ -86,7 +86,7 @@
 
   <!-- §  fr added on 07/02/15 -->
   <!--TODO cs;it;zh_CN-->
-  <para lang="fr">Après que vous l'ayez créé, votre nouvelle brosse est
+  <para lang="fr">Après que vous l'ayez créée, votre nouvelle brosse est
     dans une fenêtre d'image et vous allez l'enregistrer au format .gih par
     <menuchoice>
       <guimenu>Fichier </guimenu>
@@ -340,6 +340,10 @@
           figurées, comme le <quote>poivron vert</quote>.
           La valeur varie de 1 à 200 et ce pourcentage correspond au
           <quote>diamètre</quote> de la brosse : 100% est 1 diamètre.
+          À 50 les poivrons se chevauchent à moitié (1/2 diamètre du 1er au
+          2ème), à 100 ils sont bord à bord (1 diamètre), à 150 ils ont 1/2
+          diamètre d'écart (1 diamètre et 1/2) et à 200 ils ont 1 diamètre
+          d'écart (2 diamètres).
         </para>
         <para lang="it">
           La "spaziatura" è la distanza tra due segni consecutivi creati da
@@ -503,8 +507,9 @@
         <para lang="fr">
           Par exemple, nous voulons une brosse de 100x100 pixels avec 8
           aspects différents. Nous pouvons prélever ces 8 aspects dans un
-          calque de 400x200 pixels, ou dans un calque de 300x300 mais alors
-          avec une case vide inutilisée.
+          calque de 400x200 pixels (4x100 sur 2x100 -> 4x2=8 cases), ou
+          dans un calque de 300x300 (3x100 sur 3x100 -> 3x3=9 cases)
+          mais alors avec une case vide inutilisée.
         </para>
 
         <para lang="it">
@@ -1012,8 +1017,8 @@
         <para lang="fr">
           GIMP commence par récupérer les cases dans chaque calque et à les
           empiler dans une pile FIFO (First In First Out : Premier entré,
-          Premier sorti et donc premier entré en haut de la pile pour pouvoir
-          sortir, le premier et dernier entré en bas de la pile). Dans notre
+          Premier sorti. Donc le premier entré est en haut de la pile pour pouvoir
+          sortir le premier et le dernier entré est en bas de la pile). Dans notre
           exemple 4 calques de 2 cases chacun, on aura, de haut en bas, la
           première case du premier calque, la deuxième case du premier calque,
           la première case du deuxième calque, la deuxième case du deuxième
@@ -1811,10 +1816,10 @@
               manuellement le fichier .gih dans le répertoire
               /usr/share/gimp/gimp 2.0/brushes. Revenez dans la Boîte à
               outils. Cliquez sur l'icône des brosses pour ouvrir le dialogue
-              des brosses et cliquez sur <quote>Rafraîchir</quote>.
+              des brosses et cliquez sur <quote>Actualiser les brosses</quote>.
               Votre nouvelle brosse apparaît dans la fenêtre des brosses et
-              vous pouvez la sélectionner pour dessiner. Faites un
-              cliquer-glisser sur une nouvelle image :
+              vous pouvez la sélectionner pour dessiner avec l'outil Crayon.
+              Faites un cliquer-glisser sur une nouvelle image :
               <mediaobject>
                 <imageobject>
                   <imagedata fileref='../images/using/1234incr.png'
@@ -1828,7 +1833,7 @@
             <para lang="fr">
               Reprenez votre image .xcf et enregistrez-la en .gih en
               choisissant cette fois la sélection <quote>Au hasard </quote>: les
-              chiffres se suivent dans un ordre aléatoire.
+              chiffres sont affichés dans un ordre aléatoire.
               <mediaobject>
                 <imageobject>
                   <imagedata fileref='../images/using/1234rand.png'
@@ -2288,16 +2293,16 @@
           de dessiner une main dont l'orientation change suivant la
           direction de la brosse (4 directions), alternant régulièrement
           main droite et main gauche, et changeant de couleur de façon
-          aléatoire.
+          aléatoire (noir/bleu).
         </para>
         <para lang="fr">
           La première question qui se pose est le nombre d'images nécessaires.
-          Nous réserverons la première dimension aux 4 orientations de la
+          Nous réserverons la première dimension (x) aux 4 orientations de la
           main.
-          La deuxième dimension sera pour l'alternance Gauche/Droite et la
-          troisième pour la variation entre deux couleurs. Une telle brosse
+          La deuxième dimension (y) sera pour l'alternance Gauche/Droite et la
+          troisième (z)  pour la variation entre deux couleurs. Une telle brosse
           aura besoin d'un tableau semblable au tableau 3D que nous avons
-          utilisé comme exemple :
+          utilisé comme exemple (4,2,2) :
           <mediaobject>
             <imageobject>
               <imagedata fileref='../images/using/3Dnum.png' format='PNG'/>
@@ -2475,19 +2480,19 @@
             <para lang="fr">
               <emphasis>Création des images de la dimension 1 (x) </emphasis>:
               Ouvrez une nouvelle image 30x30 pixels, RVB, avec Type de
-              remplissage Transparent. En vous aidant du zoom, dessinez
+              remplissage Transparence. En vous aidant du zoom, dessinez
               l'image d'une main gauche les doigts vers le haut. Enregistrez-la
               sous le nom mainG0n.xcf pour "main gauche 0° noire".
             </para>
             <para lang="fr">
-              Ouvrez le dialogue Calques. Double Clic² sur le calque pour
+              Ouvrez le dialogue Calques. Double Cliquez sur le calque pour
               ouvrir le dialogue Attributs du Calque et le renommer en
               <quote>mainG0n</quote>.
             </para>
             <para lang="fr">
               Dupliquez le calque. Laissez uniquement le calque dupliqué
               visible, sélectionnez-le et appliquez-lui une rotation de 90°
-              (Calque/Transformations/Rotation 90° sens anti-horaire).
+              (Calque/Transformer/Rotation 90° sens anti-horaire).
               Renommez-le en mainG-90n.
             </para>
             <para lang="fr">
@@ -2665,7 +2670,7 @@
             <para lang="fr">
               Dupliquez le calque mainG0n. Rendez-le seul visible et
               sélectionnez-le. Renommez-le en mainD0n
-              Appliquez Calque/Transformations/Retournement Horizontal.
+              Appliquez Calque/Transformer/Miroir Horizontal.
             </para>
             <para lang="fr">
               Agissez de la même façon sur les autres calques main gauche pour
@@ -2903,18 +2908,19 @@
               Remplissage pour remplir la main de bleu.
             </para>
             <para lang="fr">
-              Sélectionnez l'outil Déplacement. Double clic dessus pour
+              Sélectionnez l'outil Déplacement. Double cliquez dessus pour
               accéder à ses propriétés. Cochez l'option <quote>Déplacer le calque
               courant</quote>. Déplacez l'image dans la partie droite du calque
               avec précision en vous aidant du zoom.
             </para>
             <para lang="fr">
               Assurez-vous que seuls le calque maing0n et sa copie sont
-              visibles. Clic droit sur la fenêtre des calques : appliquez la
-              commande <quote>Fusionner les calques visibles</quote> avec l'option
-              <quote>Étendre autant que nécessaire</quote>. Vous obtenez ainsi un calque
-              avec une main gauche noire à gauche et une main gauche bleue à
-              droite. Renommez-le en mainG0.
+              visibles. Cliquez droit sur la fenêtre des calques : appliquez la
+              commande <quote>Fusionner les calques visibles
+              </quote> avec l'option
+              <quote>Étendre autant que nécessaire</quote>.
+              Vous obtenez ainsi un calque avec une main gauche noire à gauche
+              et une main gauche bleue à droite. Renommez-le en mainG0.
             </para>
             <para lang="fr">Agissez de même sur les autres calques.</para>
 
