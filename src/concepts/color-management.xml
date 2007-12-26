@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+                "http://www.docbook.org/xml/4.3/docbookx.dtd">
+
+<!-- section history:
+  2007-12-26 lexa: initial version for en and de
+-->
+<sect1 id="gimp-concepts-color-management"
+       xmlns:xi="http://www.w3.org/2001/XInclude"
+       lang="en;de">
+  <sect1info role="cvs">
+    <revhistory>
+      <revision lang="en">
+        <revnumber>$Revision: 2236 $</revnumber>
+        <date>2007-12-26</date>
+        <authorinitials>lexa</authorinitials>
+      </revision>
+      <revision lang="de">
+        <revnumber>$Revision: 2236 $</revnumber>
+        <date>2007-12-26</date>
+        <authorinitials>lexa</authorinitials>
+      </revision>
+    </revhistory>
+  </sect1info>
+
+  <title>
+    <phrase lang="en">Color Management in GIMP</phrase>
+    <phrase lang="de">Farbmanagement in GIMP</phrase>
+  </title>
+
+  <indexterm lang="en"><primary>color</primary></indexterm>
+  <indexterm lang="en"><primary>color management</primary></indexterm>
+  <indexterm lang="en"><primary>color profile</primary></indexterm>
+
+  <indexterm lang="de"><primary>Farbe</primary></indexterm>
+  <indexterm lang="de"><primary>Farbverwaltung</primary></indexterm>
+  <indexterm lang="de"><primary>Farbprofil</primary></indexterm>
+  <indexterm lang="de"><primary>Farbraum</primary></indexterm>
+  <indexterm lang="de"><primary>ICC-Profil</primary></indexterm>
+  <indexterm lang="de"><primary>.icc</primary></indexterm>
+
+  <para lang="en">
+    Many devices you use in your design or photography workflow, like digital
+    photo cameras, scanners, displays, printers etc., have their own color
+    reproduction characteristics. If those are not taken into account during
+    opening, editing and saving, harmful adjustments can be done to images.
+    With GIMP you can have reliable output for both Web and print.
+  </para>
+  <para lang="de">
+    In ihrem Design- oder Photobearbeitungsprozess können verschiedenste
+    Geräte wie Digitalkameras, Scanner, Monitore, Drucker und so weiter zum
+    Einsatz kommen. Jedes dieser Geräte wird dabei eine eigene Charakteristik
+    der Farbwiedergabe aufweisen. Diese müssen beim Öffnen, Bearbeiten und
+    Speichern von Bildern berücksichtigt werden, da es sonst zu sehr
+    unerwarteten Veränderungen der Farbwirkung der Bilder kommen kann. Mit
+    GIMP können Sie farblich zuverlässig sowohl für den Druck, als auch für
+    die Veröffentlichung im Internet arbeiten.
+  </para>
+
+  <figure>
+    <title>
+      <phrase lang="en">Image Processing Workflow</phrase>
+      <phrase lang="de">Prozess der Bildbearbeitung</phrase>
+    </title>
+
+    <mediaobject>
+      <imageobject>
+        <imagedata format="PNG"
+          fileref="../images/using/colormanagement-workflow1.png" />
+      </imageobject>
+
+      <caption>
+        <para lang="en">Workflow without Color management</para>
+        <para lang="de">Prozess ohne Farbmanagement</para>
+      </caption>
+    </mediaobject>
+
+    <mediaobject>
+      <imageobject>
+        <imagedata format="PNG"
+          fileref="../images/using/colormanagement-workflow2.png" />
+      </imageobject>
+
+      <caption>
+        <para lang="en">Process with Color management</para>
+        <para lang="de">Prozess mit Farbmanagement</para>
+      </caption>
+    </mediaobject>
+  </figure>
+
+ 
+  <sect2>
+    <title>
+      <phrase lang="en">Problems of a non Color Managed Workflow</phrase>
+      <phrase lang="de">
+        Probleme eines Bearbeitungsprozesses ohne Farbmanagement
+      </phrase>
+    </title>
+    
+    <para lang="en"></para>
+    <para lang="de">
+      Das grundsätzliche Problem bei der Bildbearbeitung ohne Farbmanagement
+      ist grob gesagt das Sie nicht sehen was Sie tun. Dabei sind zwei
+      verschiedene Bereiche betroffen:
+    </para>
+
+    <orderedlist>
+      <listitem>
+        <para lang="en"></para>
+        <para lang="de">
+          Farbunterschiede, welche durch die unterschiedliche
+          Farbcharakteristik von Kameras, Scannern, Bildschirmen, Druckern
+          entstehen
+        </para>
+      </listitem>
+
+      <listitem>
+        <para lang="en"></para>
+        <para lang="de">
+          Grundsätzlichen Beschränkungen in der Darstellbarkeit von Farben
+          durch Geräte und Medien
+        </para>
+      </listitem>
+    </orderedlist>
+
+    <para lang="en"></para>
+    <para lang="de">
+      Die Aufgabe eines Farbmanagements ist es nun genau diese Probleme zu
+      vermeiden. Die Grundidee ist es, zum einen den Bilddaten jeweils die
+      Beschreibung der Farbcharakteristik beizufügen, mit der sie entstanden
+      sind, zum anderen jedem Gerät eine Beschreibung seiner eigenen
+      Farbcharakteristik zuzuordnen.
+    </para>
+
+    <para lang="en"></para>
+    <para lang="de">
+      Diese Beschreibung der Farbcharakteristik wird
+      <emphasis>Farbprofil</emphasis>
+      genannt. Ein Farbprofil ist im Wesentlichen eine Art Übersetzungstabelle
+      der speziellen Farbcharakteristik eines Gerätes in einen allgemeinen,
+      geräteunabhängigen Farbraum. Mit Hilfe der Farbprofile ist es daher
+      möglich, sämtliche Bilddaten im Bildbearbeitungsprozess in einen
+      geräteunabhängigen Farbraum zu übersetzten. Außerdem kann man mit Hilfe
+      des Farbprofiles eines Gerätes die Farbdarstellung dieses Gerätes
+      simulieren.
+    </para>
+
+    <para lang="en"></para>
+    <para lang="de">
+      Die Erstellung von Farbprofilen für Ein- und Ausgabegeräte wird oft
+      durch die Hersteller der Geräte übernommen. Um diese Profile dann
+      plattformübergreifend einsetzen zu können wurde durch das
+      <quote>International Color Consortium</quote>
+      (<acronym>ICC</acronym>) eine Standardisierung vorgenommen, welche in
+      der ISO-Norm 15076 festgehalten ist. Farbprofile werden daher auch als
+      ICC-Profile bezeichnet.
+    </para>
+  </sect2>
+
+
+  <sect2>
+    <title>
+      <phrase lang="en">Color Managed Workflow</phrase>
+      <phrase lang="de">Bearbeitungsprozess mit Farbmanagement</phrase>
+    </title>
+
+    <variablelist>
+      <varlistentry id="plug-in-icc-profile-apply">
+        <term lang="en">Input</term>
+        <term lang="de">Bilderzeugung und Import</term>
+
+        <listitem>
+          <para lang="en">
+            Most digital cameras embed a color profile to individual photo
+            files without user interaction. Digital scanners usually come with
+            a color profile, which they also attach to the scanned images.
+          </para>
+          <para lang="de">
+             Die allermeisten Digitalkameras betten ohne weiteres zutun ein
+             Farbprofil in jede einzelne Bilddatei ein. Auch Scanner werden in
+             der Regel mit einem Farbprofil geliefert, welches den gescannten
+             Bildern automatisch beigefügt wird.
+          </para>
+
+          <figure>
+            <title>
+              <phrase lang="en">Applying the ICC-profile</phrase>
+              <phrase lang="de">
+                Anwendung des eingebetteten ICC-Profils
+              </phrase>
+            </title>
+          
+            <mediaobject>
+              <imageobject>
+                <imagedata format="PNG"
+                  fileref="../images/using/icc-apply.png" />
+              </imageobject>
+            </mediaobject>
+          </figure>
+
+          <para lang="en">
+            When opening an image with an embedded color profile, GIMP offers
+            to convert the file to the RGB working color space. This is sRGB
+            by default and it is recommended that all work is done in that
+            color space. Should you however decide to keep the embedded color
+            profile, the image will however still be displayed correctly.
+          </para>
+          <para lang="de">
+            Wenn eine Datei geladen wird, die neben dem eigentlichen Bild auch
+            ein Farbprofil enthält, so bietet GIMP an, das Bild unter
+            Verwendung des beigefügten Profils in den RGB Arbeitsfarbraum zu
+            konvertieren. Dieser Farbraum ist der sRGB Farbraum. Sollten Sie
+            sich dazu entscheiden das eingebettete Farbprofil zu behalten, so
+            wird das Bild trotzdem korrekt angezeigt.
+          </para>
+
+          <para lang="en">
+            In case for some reason a color profile is not embedded in the
+            image and you know (or have a good guess) which one it should be,
+            you can manually assign it to that image.
+          </para>
+          <para lang="de">
+            In den Fällen, wo dem Bild kein Farbprofil beigefügt ist, können
+            Sie - sofern Sie denn wissen, oder zu wissen glauben welches es
+            sein sollte - auch ein Farbprofil von Hand zuordnen.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term lang="en">Display</term>
+        <term lang="de">Anzeige</term>
+
+        <listitem>
+          <para lang="en">
+            To get best results, you need a color profile for your monitor. If
+            a monitor profile is configured, either system-wide or in the
+            Color Management section of the GIMP Preferences dialog, the image
+            colors will be displayed most accurately.
+          </para>
+          <para lang="de">
+            Um gute Resultate zu erhalten, benötigen Sie auch für Ihren
+            Monitor ein Farbprofil. Dieses kann entweder systemweit oder
+            innerhalb von GIMP eingestellt werden. Sofern ein Profil für jeden
+            Monitor hinterlegt ist, werden die Farben in höchster
+            Originalgetreue angezeigt.
+          </para>
+
+          <para lang="en">
+            If you do not have a color profile for your monitor, you can
+            create it using hardware calibration and measurement tools. On
+            UNIX systems you will need
+            <productname>Argyll Color Management System</productname>
+            <xref linkend="bibliography-online-argyllcms" /> and/or
+            <productname>LProf</productname>
+            <xref linkend="bibliography-online-lprof" />
+            to create color profiles.
+          </para>
+          <para lang="de">
+            Wenn Sie für Ihren Monitor kein (aktuelles) Farbprofil haben, so
+            können Sie mittels Kalibrierungswerkzeug eines Erstellen. Hierzu
+            gibt es verschiedene Lösungen. Unter UNIX können Sie zum Beispiel
+            das <productname>Argyll Color Management System</productname>
+            <xref linkend="bibliography-online-argyllcms" /> und / oder
+            <productname>LProf</productname>
+            <xref linkend="bibliography-online-lprof"/> verwenden,
+            um Farbprofile zu erzeugen.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term lang="en">Print Simulation</term>
+        <term lang="de">Drucksimulation</term>
+
+        <listitem>
+          <para lang="en">
+            Using GIMP, you can easily get a preview of what your image will
+            look like on paper. Given a color profile for your printer, the
+            display can be switched into Soft Proof mode. In such a simulated
+            printout, colors that cannot be reproduced will optionally be
+            marked with neutral gray color, allowing you to correct such
+            mistakes before sending your images to the printer.
+          </para>
+          <para lang="de">
+            Mit Hilfe von GIMP können Sie sich auch eine Vorschau Ihres Bildes
+            in der Art anzeigen lassen, wie es auf einem bestimmten Drucker
+            ausgegeben würde. Wenn Sie ein Farbprofil des Druckers angeben,
+            können Sie die Darstellung von GIMP in den
+            <quote>Soft proof</quote>-Modus umschalten. Bei einer derartigen
+            simulierten Druckansicht, können Farben, welche der Drucker nicht
+            ausgeben kann, wahlweise mit einem neutralen Grau dargestellt.
+            Dies kann Ihnen helfen derartige Probleme mit der Farbausgabe zu
+            beheben <emphasis>bevor</emphasis> Sie das Bild tatsächlich
+            drucken.
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </sect2>
+</sect1>
