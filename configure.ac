@@ -30,7 +30,7 @@ AC_PROG_MAKE_SET
 #  ALL_LINGUAS="cs de en es fr hr it ko nl no ru sv zh_CN"
 
 if test "x$ALL_LINGUAS" = "x"; then
-  ALL_LINGUAS="de en es fr it ko nl no ru sv pl"
+  ALL_LINGUAS="de en es fr it ko nl no pl ru sv"
 fi
 
 AC_SUBST(ALL_LINGUAS)
