@@ -98,7 +98,10 @@
       </phrase>
     </title>
     
-    <para lang="en"></para>
+    <para lang="en">
+      The basic problem of image manipulation without color management is that
+      you do simply not see what you do. This affects two different areas:
+    </para>
     <para lang="de">
       Das grundsätzliche Problem bei der Bildbearbeitung ohne Farbmanagement
       ist grob gesagt das Sie nicht sehen was Sie tun. Dabei sind zwei
@@ -107,7 +110,11 @@
 
     <orderedlist>
       <listitem>
-        <para lang="en"></para>
+        <para lang="en">
+          There are differences in Colors caused by different color
+          characteristics of different devices like cameras, scanners,
+          displays or printers
+        </para>
         <para lang="de">
           Farbunterschiede, welche durch die unterschiedliche
           Farbcharakteristik von Kameras, Scannern, Bildschirmen, Druckern
@@ -116,7 +123,10 @@
       </listitem>
 
       <listitem>
-        <para lang="en"></para>
+        <para lang="en">
+          There are differences in Colors caused by the limitations of the
+          colorspace a specific device is able to handle
+        </para>
         <para lang="de">
           Grundsätzlichen Beschränkungen in der Darstellbarkeit von Farben
           durch Geräte und Medien
@@ -124,7 +134,11 @@
       </listitem>
     </orderedlist>
 
-    <para lang="en"></para>
+    <para lang="en">
+      The main purpose of color management is do avoid such problems. The
+      approach taken to do so involves the addition of an description of the
+      color characteristic to an image or devices.
+    </para>
     <para lang="de">
       Die Aufgabe eines Farbmanagements ist es nun genau diese Probleme zu
       vermeiden. Die Grundidee ist es, zum einen den Bilddaten jeweils die
@@ -133,7 +147,14 @@
       Farbcharakteristik zuzuordnen.
     </para>
 
-    <para lang="en"></para>
+    <para lang="en">
+      These descriptions are called <emphasis>color profile</emphasis>. A
+      color profile is basically a lookup table to translate the specific
+      color characteristic of a device to a deviceindependant color space -
+      the so called workingspace. All the image manipulation is the done to
+      images in the workingspace. In addition to that the color profile of a
+      device can be used to simulate how colors would look on that device. 
+    </para>
     <para lang="de">
       Diese Beschreibung der Farbcharakteristik wird
       <emphasis>Farbprofil</emphasis>
@@ -146,7 +167,13 @@
       simulieren.
     </para>
 
-    <para lang="en"></para>
+    <para lang="en">
+      The creation of color profiles is most often done by the manufacturer
+      of the devices themselfes. To make these profiles usable independant of
+      platform and operating system, the ICC (International Color Consortium)
+      created a standard called ICC-profile that describes how color profiles
+      are stored to files and embedded into images.
+    </para>
     <para lang="de">
       Die Erstellung von Farbprofilen für Ein- und Ausgabegeräte wird oft
       durch die Hersteller der Geräte übernommen. Um diese Profile dann
@@ -164,6 +191,20 @@
       <phrase lang="en">Color Managed Workflow</phrase>
       <phrase lang="de">Bearbeitungsprozess mit Farbmanagement</phrase>
     </title>
+
+    <tip>
+      <para lang="en">
+        Most of the parameters and profiles described here can be set in the
+        GIMP preferences. Please see
+        <xref linkend="gimp-prefs-color-management" /> for details.
+      </para>
+      <para lang="de">
+        Viele der Parameter und Profile des Farbmanagements die hier
+        beschrieben werden, können in den GIMP Voreinstellungen angepasst
+        werden. Beachten Sie hierzu bitte den Abschnitt
+        <xref linkend="gimp-prefs-color-management" /> des Handbuches.
+      </para>
+    </tip>
 
     <variablelist>
       <varlistentry id="plug-in-icc-profile-apply">
@@ -190,11 +231,17 @@
                 Anwendung des eingebetteten ICC-Profils
               </phrase>
             </title>
-          
-            <mediaobject>
+
+            <mediaobject lang="en">
               <imageobject>
                 <imagedata format="PNG"
                   fileref="../images/using/icc-apply.png" />
+              </imageobject>
+            </mediaobject>
+            <mediaobject lang="de">
+              <imageobject>
+                <imagedata format="PNG"
+                  fileref="../images/using/de/icc-apply.png" />
               </imageobject>
             </mediaobject>
           </figure>
@@ -212,9 +259,11 @@
             Verwendung des beigefügten Profils in den RGB Arbeitsfarbraum zu
             konvertieren. Dieser Farbraum ist der sRGB Farbraum. Sollten Sie
             sich dazu entscheiden das eingebettete Farbprofil zu behalten, so
-            wird das Bild trotzdem korrekt angezeigt.
+            wird das Bild trotzdem korrekt angezeigt, da das eingebettete
+            Profil bei der Darstellung berücksichtigt wird.
           </para>
 
+          <!-- TODO: en de - lexa asks: so how exactly is a new Profile applied to an image? -->
           <para lang="en">
             In case for some reason a color profile is not embedded in the
             image and you know (or have a good guess) which one it should be,
@@ -245,6 +294,17 @@
             innerhalb von GIMP eingestellt werden. Sofern ein Profil für jeden
             Monitor hinterlegt ist, werden die Farben in höchster
             Originalgetreue angezeigt.
+          </para>
+
+          <para lang="en">
+            One of the most important GIMP commands to work with the color
+            management is described in
+            <xref linkend="gimp-display-filter-dialog"/>.
+          </para>
+          <para lang="de">
+            Eines der zentralen GIMP Kommandos zur Beeinflussung der
+            Darstellung mit Hilfe des Farbmanagements ist im
+            <xref linkend="gimp-display-filter-dialog"/> beschrieben.
           </para>
 
           <para lang="en">

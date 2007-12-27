@@ -4,6 +4,7 @@
                    "http://www.docbook.org/xml/4.3/docbookx.dtd">
 
 <!-- section history:
+  2007-12-27 lexa: added rendering intent for en, de
   2006-09-06 scb: thorough review and/or rewrite of English
   2006-07-25 lexa: applied changes suggested by Sally
   2006-03-15 norwegian added by kolbjørn
@@ -342,7 +343,6 @@
         </mediaobject>
       </figure>
 
-
       <para lang="en">
         It is important to know what happens when you are dealing with colors
         in <acronym>GIMP</acronym>.
@@ -498,6 +498,143 @@
         gir deg høve til å sjå RGB-verdien til eit fargepunkt, og gir deg
         samstundes <link linkend="glossary-html-notation">hexverdien</link> for
         fargen til bruk i HTML.
+      </para>
+    </glossdef>
+  </glossentry>
+
+
+  <glossentry id="glossary-rendering-intent" lang="en;de">
+    <glossterm lang="en;de">Rendering Intent</glossterm>
+
+    <indexterm lang="en"><primary>Color Management</primary></indexterm>
+    <indexterm lang="de"><primary>Farbmanagement</primary></indexterm>
+    
+    <glossdef>
+      <para lang="en">
+        Rendering intents are ways of dealing with colors that are
+        out-of-<xref linkend="glossary-gamut"/> colors present in the source
+        space that the destination space is incapable of producing. There are 
+        four rendering intents defined by the ICC:
+      </para>
+      <para lang="de">
+        it dem Rendering Intent (Wiedergabe-Ziel) legt der Benutzer eines
+        Farbmanagementsystems fest, welche Umrechnungsmethode angewendet
+        werden soll. Die Umrechnung eines Bildes von einem Farbraum in einen
+        anderen nennt man <xref linkend="glossary-gamut" /> Mapping. Vier
+        verschiedene Rendering Intents (RIs) wurden vom ICC
+        (International Color Consortium) festgelegt:
+      </para>
+
+      <variablelist>
+        <varlistentry>
+          <term lang="en">Perceptual</term>
+          <term lang="de">Wahrnehmung</term>
+
+          <listitem>
+            <para lang="en">
+              This rendering intent is typically used for photographic
+              content. It scales one gamut to fit into the other while
+              maintaining the relative position of colors.
+            </para>
+            <para lang="de">
+              Diese Methode wird vornehmlich für die Umrechnung von RGB in
+              CMYK bzw. zwischen deutlich verschieden großen Farbräumen
+              verwendet. Wenn von einem größeren in einen kleineren Farbraum
+              umgerechnet wird, werden alle Farbabstände komprimiert,
+              allerdings werden die gesättigten Bereiche stärker komprimiert
+              als die weniger gesättigten, da das menschliche Farbempfinden
+              Unterschiede zwischen wenig gesättigten oder neutralen (grauen)
+              Farbtönen sehr viel stärker wahrnimmt als zwischen gesättigten
+              Farben gleichen Farbtons. Die Komprimierung ist also
+              nicht-linear. Das Gamut Mapping wird bei der Erstellung des
+              ICC-Profils festgelegt, es ist also nicht motivabhängig. Das
+              kann unter Umständen dazu führen, dass Motive mit geringer
+              Buntheit unnötig stark komprimiert werden. Die
+              Gamut-Mapping-Methode ist nicht standardisiert, daher kann es
+              vor allem beim perzeptiven Intent zu erheblichen Unterschieden
+              zwischen Profilen verschiedener Hersteller kommen.
+            </para>
+          </listitem>
+        </varlistentry>
+
+        <varlistentry>
+          <term lang="en">Relative colorimetric</term>
+          <term lang="de">Kolorimetrisch (relativ)</term>
+
+          <listitem>
+            <para lang="en">
+              This rendering intent is typically used for spot colors. Colors
+              that are not out of gamut are left unchanged. Colors outside the
+              gamut are converted to colors with the same lightness, but
+              different saturation, at the edge of the gamut.
+            </para>
+            <para lang="de">
+              Die Umrechnung erfolgt ähnlich wie beim absolut farbmetrischen
+              Rendering Intent, allerdings erfolgt hier eine
+              Papierweiß-Simulation. Alle Farben des Quellfarbraums werden
+              zunächst so verschoben, dass die Weißpunkte der beiden Medien
+              zusammenfallen. Außerhalb des Zielfarbraums liegende Farben
+              werden dann – wie beim absolut farbmetrischen Intent –
+              beschnitten. Diese Methode wird vor allem für Layout-Drucke und
+              bei der Umrechnung von Bildern für ein neues Druckverfahren mit
+              ähnlich großem Gamut (re-targeting) verwendet. Passt der Gamut
+              des Bildes nicht vollständig in den Zielfarbraum kann es auch
+              hier zu störenden Clipping-Fehlern (Detailverlust,
+              Unregelmäßigkeiten in Verläufen, Farbverschiebungen) in sehr
+              bunten oder dunklen Farbbereichen kommen.
+            </para>
+          </listitem>
+        </varlistentry>
+
+        <varlistentry>
+          <term lang="en">Saturation</term>
+          <term lang="de">Sättigung</term>
+
+          <listitem>
+            <para lang="en">
+              This method ist typically used for business graphics. The
+              relative saturation of colors is mostly maintained, but
+              lightning is usually changed.
+            </para>
+            <para lang="de">
+              Diese Umrechnung dient vor allem dazu, möglichst satte Farben in
+              Präsentationsgrafiken (Torten- oder Balkendiagramme usw.) zu
+              erhalten. Es wird nach maximaler Stättigung gesucht, auch unter
+              Inkaufnahme von Farbton-Verschiebungen.
+            </para>
+          </listitem>
+        </varlistentry>
+
+        <varlistentry>
+          <term lang="en">Absolute colorimetric</term>
+          <term lang="de">Kolorimetrisch (absolut)</term>
+
+          <listitem>
+            <para lang="en">
+              This rendering intent is most often used in proofing. It
+              preserves the native device white point of the source image.
+            </para>
+            <para lang="de">
+              Bei der Umrechnung von einem größeren in einen kleineren
+              Farbraum werden die Farben, die außerhalb des Zielfarbraums
+              liegen, auf dessen Hülle abgebildet (Clipping). Die Farben
+              innerhalb beider Farbräume werden nicht verändert. Interessant
+              ist dieses Verfahren besonders für Digitalproofs, bei dem der
+              Proofdrucker ein anderes Druckverfahren simuliert. Durch absolut
+              farbmetrische Wiedergabe wird sichergestellt, dass der Proof
+              alle Farben (einschließlich der Papierfarbe) exakt so darstellt
+              wie das spätere Druckergebnis. Dieses Verfahren wird vor allem
+              verwendet, wenn der Proof als Vorlage in die Druckerei gegeben
+              wird. Ein zuverlässiger Proof darf kein Clipping aufweisen. Der
+              Gamut des zu simulierenden Druckverfahrens muss deshalb
+              vollständig innerhalb des Proofdrucker-Gamuts liegen.
+            </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+
+      <para lang="de">
+        Quelle: <xref linkend="bibliography-online-wkpd-rendering"/>
       </para>
     </glossdef>
   </glossentry>
