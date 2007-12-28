@@ -238,6 +238,13 @@ validate:
 
 endif
 
+#### AUTHORS file creation
+
+authors: authors.xml stylesheets/authors_text.xsl
+	@echo "Creating AUTHORS"
+	$(XSLTPROC) stylesheets/authors_text.xsl authors.xml > AUTHORS
+
+
 #### Installation
 
 install-data-local:
