@@ -44,7 +44,6 @@
   </xsl:template>
  
   <!-- two simple transformations -->
-  <!-- they should be enhanced though -->
   <xsl:template match="//dc:creator | //dc:contributor">
     <xsl:param name="print_language">1</xsl:param>
     <xsl:text>  </xsl:text>

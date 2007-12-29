@@ -46,6 +46,8 @@ EXTRA_DIST = \
 	$(XML_FILES)			\
 	$(XSL_FILES)
 
+AUTHORS_DOCBOOK_XML = src/preface/authors.xml
+
 DISTCHECK_CONFIGURE_FLAGS = --without-gimp
 
 helpdir = $(gimpdatadir)/help
@@ -240,9 +242,11 @@ endif
 
 #### AUTHORS file creation
 
-authors: authors.xml stylesheets/authors_text.xsl
+authors: stylesheets/authors.xml stylesheets/authors_text.xsl
 	@echo "Creating AUTHORS"
-	$(XSLTPROC) stylesheets/authors_text.xsl authors.xml > AUTHORS
+	$(XSLTPROC) stylesheets/authors_text.xsl stylesheets/authors.xml > AUTHORS
+	@echo "Creating src/preface/authors.xml"
+	$(XSLTPROC) stylesheets/authors_docbook.xsl stylesheets/authors.xml > $(AUTHORS_DOCBOOK_XML)
 
 
 #### Installation

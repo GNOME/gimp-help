@@ -6,6 +6,7 @@
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:dc="http://purl.org/dc/elements/1.1/"
                 exclude-result-prefixes="dc">
+  <xsl:include href="authors_text.xsl" />
 
   <xsl:output method="xml" indent="yes" />
 
@@ -19,7 +20,7 @@
          in the root of gimp-help-2 -->
       ]]>
     </xsl:text>
-    <sect1 id="gimp-team" lang="en;cs;de;es;fr;it;ko;nl;no">
+    <sect1 id="gimp-team" lang="en;es;cs;de;fr;it;ko;nl;no">
       <title>
         <phrase lang="en">GIMP User Manual Authors and Contributors</phrase>
         <phrase lang="cs">
@@ -59,7 +60,9 @@
           <term lang="no">Forfattarane</term>
           <listitem>
             <para>
-              <xsl:apply-templates select="//dc:creator" />
+              <itemizedlist>
+                <xsl:apply-templates select="//dc:creator" />
+              </itemizedlist>
             </para>
           </listitem>
         </varlistentry>
@@ -74,25 +77,68 @@
           <term lang="no">Korrekturlesing</term>
           <listitem>
             <para>
-              <xsl:apply-templates select="//dc:contributor" />
+              <itemizedlist>
+                <xsl:apply-templates select="//dc:contributor[contains(@role, 'documenter')]" />
+              </itemizedlist>
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term lang="en">Graphics, Stylesheets</term>
+          <term lang="cs">Grafika a styly</term>
+          <term lang="de">Grafik, Stylesheets</term>
+          <term lang="es">Gráficos, hojas de estilo</term>
+          <term lang="fr">Graphismes, Feuilles de Style</term>
+          <term lang="it">Grafica e fogli di stile</term>
+          <term lang="ko">그래픽스, 스타일쉬트</term>
+          <term lang="nl">Afbeeldingen en Stijlbladen</term>
+          <term lang="no">Grafikk og stilark</term>
+
+          <listitem>
+            <para>
+              <itemizedlist>
+                <xsl:apply-templates select="//dc:contributor[contains(@role, 'artist')]" />
+              </itemizedlist>
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term lang="en">Build System, Technical Contributions</term>
+          <term lang="cs">Technické řešení</term>
+          <term lang="de">Technische Unterstützung</term>
+          <term lang="es">Contribuciones técnicas</term>
+          <term lang="fr">Contributions techniques</term>
+          <term lang="it">Contributi tecnici</term>
+          <term lang="ko">시스템 구축, 기술 지원</term>
+          <term lang="nl">Technische Ondersteuning</term>
+          <term lang="no">Teknisk støtte</term>
+
+          <listitem>
+            <para>
+              <itemizedlist>
+                <xsl:apply-templates select="//dc:contributor[contains(@role, 'technican')]" />
+              </itemizedlist>
             </para>
           </listitem>
         </varlistentry>
       </variablelist>
     </sect1> 
   </xsl:template>
- 
-  <!-- two simple transformations -->
-  <!-- they should be enhanced though -->
-  <xsl:template match="//dc:creator">
-    <xsl:apply-templates match="." />
-    <xsl:text> (</xsl:text>
-    <xsl:value-of select="@lang" />
-    <xsl:text>),</xsl:text>
-  </xsl:template>
 
-  <xsl:template match="//dc:contributor">
-    <xsl:apply-templates match="." />
-    <xsl:text>, </xsl:text>
+  <!-- two simple transformations -->
+  <xsl:template match="//dc:creator | //dc:contributor">
+    <xsl:param name="print_language">1</xsl:param>
+    <listitem>
+      <para>
+        <xsl:apply-templates match="." />
+        <xsl:if test="@lang != '' and $print_language != 0">
+          <xsl:text> (</xsl:text>
+          <xsl:call-template name="lang.split">
+            <xsl:with-param name="lang" select="@lang" />
+          </xsl:call-template>
+          <xsl:text>)</xsl:text>
+        </xsl:if>
+      </para>
+    </listitem>
   </xsl:template>
 </xsl:stylesheet>

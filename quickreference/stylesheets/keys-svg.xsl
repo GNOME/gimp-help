@@ -17,7 +17,8 @@
 
 <xsl:output method="xml" encoding="utf-8" indent="no"/>
 
-<xsl:variable name="style-section" select="'fill:black;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans;font-style:normal;font-weight:bold;font-size:24;text-anchor:start;writing-mode:lr;letter-spacing:-2;'"/>
+<xsl:variable name="style-section"
+    select="'fill:black;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans;font-style:normal;font-weight:bold;font-size:16;text-anchor:start;writing-mode:lr;letter-spacing:-2;'"/>
 <xsl:variable name="space-section" select="28"/>
 <xsl:variable name="skip-section-title" select="21"/>
 <xsl:variable name="skip-section-content" select="25"/>
