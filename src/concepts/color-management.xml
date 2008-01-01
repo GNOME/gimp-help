@@ -8,7 +8,7 @@
 -->
 <sect1 id="gimp-concepts-color-management"
        xmlns:xi="http://www.w3.org/2001/XInclude"
-       lang="en;de">
+       lang="en;de;it">
   <sect1info role="cvs">
     <revhistory>
       <revision lang="en">
@@ -21,17 +21,24 @@
         <date>2007-12-26</date>
         <authorinitials>lexa</authorinitials>
       </revision>
+      <revision lang="it">
+        <revnumber>$Revision$</revnumber>
+        <date>2007-12-28</date>
+        <authorinitials>ciampix</authorinitials>
+      </revision>
     </revhistory>
   </sect1info>
 
   <title>
     <phrase lang="en">Color Management in GIMP</phrase>
     <phrase lang="de">Farbmanagement in GIMP</phrase>
+    <phrase lang="it">Gestione del colore in GIMP</phrase>
   </title>
 
   <indexterm lang="en"><primary>color</primary></indexterm>
   <indexterm lang="en"><primary>color management</primary></indexterm>
   <indexterm lang="en"><primary>color profile</primary></indexterm>
+  <indexterm lang="en"><primary>ICC profile</primary></indexterm>
 
   <indexterm lang="de"><primary>Farbe</primary></indexterm>
   <indexterm lang="de"><primary>Farbverwaltung</primary></indexterm>
@@ -39,6 +46,11 @@
   <indexterm lang="de"><primary>Farbraum</primary></indexterm>
   <indexterm lang="de"><primary>ICC-Profil</primary></indexterm>
   <indexterm lang="de"><primary>.icc</primary></indexterm>
+
+  <indexterm lang="it"><primary>colore</primary></indexterm>
+  <indexterm lang="it"><primary>gestione del colore</primary></indexterm>
+  <indexterm lang="it"><primary>profilo colore</primary></indexterm>
+  <indexterm lang="it"><primary>profilo ICC</primary></indexterm>
 
   <para lang="en">
     Many devices you use in your design or photography workflow, like digital
@@ -57,11 +69,24 @@
     GIMP können Sie farblich zuverlässig sowohl für den Druck als auch für
     die Veröffentlichung im Internet arbeiten.
   </para>
+  <para lang="it">
+    Molti dispositivi in uso nei propri flussi di produzione fotografica o
+    di design come macchine fotografiche digitali, telecamere,
+    digitalizzatori, schermi, stampanti ecc. possiedono delle proprie
+    caratteristiche (N.d.T. e limiti) di riproduzione del colore. Se queste
+    non vengono prese in considerazione durante l'apertura, la modifica e
+    il salvataggio, potrebbero essere fatte delle modifiche dannose e
+    controproducenti alle immagini. GIMP è ora in grado di considerare
+    questi fattori rendendo possibile avere risultati ottimizzati per il
+    WEB e la stampa.
+  </para>
 
   <figure>
     <title>
       <phrase lang="en">Image Processing Workflow</phrase>
       <phrase lang="de">Prozess der Bildbearbeitung</phrase>
+      <phrase lang="it">Flusso di produzione nell'elaborazione delle
+      immagini</phrase>
     </title>
 
     <mediaobject>
@@ -73,6 +98,7 @@
       <caption>
         <para lang="en">Workflow without Color management</para>
         <para lang="de">Prozess ohne Farbmanagement</para>
+        <para lang="it">Flusso di produzione senza gestione del colore</para>
       </caption>
     </mediaobject>
 
@@ -85,6 +111,7 @@
       <caption>
         <para lang="en">Process with Color management</para>
         <para lang="de">Prozess mit Farbmanagement</para>
+        <para lang="it">Elaborazione comprensiva di gestione del colore</para>
       </caption>
     </mediaobject>
   </figure>
@@ -96,6 +123,8 @@
       <phrase lang="de">
         Probleme eines Bearbeitungsprozesses ohne Farbmanagement
       </phrase>
+      <phrase lang="it">Problemi di un flusso di produzione senza gestione
+      del colore</phrase>
     </title>
     
     <para lang="en">
@@ -106,6 +135,12 @@
       Das grundsätzliche Problem bei der Bildbearbeitung ohne Farbmanagement
       ist, grob gesagt, dass Sie nicht sehen, was Sie tun. Dabei sind zwei
       verschiedene Bereiche betroffen:
+    </para>
+    <para lang="it">
+      Il problema di base dell'elaborazione delle immagini senza una
+      adeguata gestione del colore è semplicemente che non si può vedere
+      cosa si sta facendo effettivamente. Questo problema comprende due
+      aree differenti:
     </para>
 
     <orderedlist>
@@ -120,6 +155,11 @@
           Farbcharakteristik von Kameras, Scannern, Bildschirmen, Druckern
           entstehen
         </para>
+        <para lang="it">
+          Differenze nel colore possono essere causate dalle differenti
+          caratteristiche di dispositivi diversi come macchine
+          fotografiche, telecamere, digitalizzatori, schermi o stampanti.
+        </para>
       </listitem>
 
       <listitem>
@@ -130,6 +170,11 @@
         <para lang="de">
           Grundsätzlichen Beschränkungen in der Darstellbarkeit von Farben
           durch Geräte und Medien
+        </para>
+        <para lang="it">
+          Altre differenze nel colore sono dovute alle limitazioni dello
+          spazio colore gestibile da uno specifico dispositivo presente
+          nella catena di produzione.
         </para>
       </listitem>
     </orderedlist>
@@ -145,6 +190,12 @@
       Beschreibung der Farbcharakteristik beizufügen, mit der sie entstanden
       sind, zum anderen jedem Gerät eine Beschreibung seiner eigenen
       Farbcharakteristik zuzuordnen.
+    </para>
+    <para lang="it">
+      Lo scopo principale della gestione del colore è di evitare tali
+      problemi. L'approccio considerato implica l'aggiunta di una
+      descrizione delle caratteristiche di colore di un'immagine o di un
+      dispositivo.
     </para>
 
     <para lang="en">
@@ -166,6 +217,16 @@
       des Farbprofiles eines Gerätes die Farbdarstellung dieses Gerätes
       simulieren.
     </para>
+    <para lang="it">
+      Queste descrizioni sono chiamate <emphasis>profili [di]
+      colore</emphasis>. Un profilo di colore è in pratica una tabella di
+      riferimenti che traduce le caratteristiche di colore specifiche di un
+      dispositivo in uno spazio di colore indipendente dai dispositivi - il
+      cosiddetto spazio di lavoro. Tutte le elaborazioni dell'immagine
+      vengono fatte nello spazio di lavoro. In aggiunta a ciò il profilo
+      colore di un dispositivo può essere usato per simulare come i colori
+      verranno resi su quel particolare dispositivo.
+    </para>
 
     <para lang="en">
       The creation of color profiles is most often done by the manufacturer
@@ -183,6 +244,14 @@
       der ISO-Norm 15076 festgehalten ist. Farbprofile werden daher auch als
       ICC-Profile bezeichnet.
     </para>
+    <para lang="it">
+      La creazione dei profili di colore è spesso fatta dallo stesso
+      produttore del dispositivo. Per rendere questi profili utilizzabili
+      indipendentemente dalla piattaforma e dal sistema operativo,
+      l'ICC (International Color Consortium) ha creato uno standard chiamato
+      profilo-ICC che descrive come i profili di colore devono essere
+      memorizzati nei file e incorporati nelle immagini.
+    </para>
   </sect2>
 
 
@@ -190,6 +259,7 @@
     <title>
       <phrase lang="en">Color Managed Workflow</phrase>
       <phrase lang="de">Bearbeitungsprozess mit Farbmanagement</phrase>
+      <phrase lang="it">Flusso di produzione con gestione del colore</phrase>
     </title>
 
     <tip>
@@ -204,12 +274,18 @@
         werden. Beachten Sie hierzu bitte
         <xref linkend="gimp-prefs-color-management" /> des Handbuches.
       </para>
+      <para lang="it">
+        Molti dei parametri e profili descritti in questa sede possono
+        essere impostati nelle preferenze di GIMP. Vedere la sezione 
+        <xref linkend="gimp-prefs-color-management" /> per i dettagli.
+      </para>
     </tip>
 
     <variablelist>
       <varlistentry id="plug-in-icc-profile-apply">
         <term lang="en">Input</term>
         <term lang="de">Bilderzeugung und Import</term>
+        <term lang="it">Inserimento</term>
 
         <listitem>
           <para lang="en">
@@ -223,6 +299,13 @@
              der Regel mit einem Farbprofil geliefert, welches den gescannten
              Bildern automatisch beigefügt wird.
           </para>
+          <para lang="it">
+            Molte macchine fotografiche e telecamere digitali incorporano
+            un profilo di colore in ogni file di foto anche senza
+            intervento diretto dell'operatore. Anche i dispositivi di
+            digitalizzazione (scanners) normalmente aggiungono un profilo
+            di colore alle immagini che producono.
+          </para>
 
           <figure>
             <title>
@@ -230,6 +313,7 @@
               <phrase lang="de">
                 Anwendung des eingebetteten ICC-Profils
               </phrase>
+              <phrase lang="it">Applicazione del profilo ICC</phrase>
             </title>
 
             <mediaobject lang="en">
@@ -242,6 +326,12 @@
               <imageobject>
                 <imagedata format="PNG"
                   fileref="../images/using/de/icc-apply.png" />
+              </imageobject>
+            </mediaobject>
+            <mediaobject lang="it">
+              <imageobject>
+                <imagedata format="PNG"
+                  fileref="../images/using/it/icc-apply.png" />
               </imageobject>
             </mediaobject>
           </figure>
@@ -262,8 +352,17 @@
             wird das Bild trotzdem korrekt angezeigt, da das eingebettete
             Profil bei der Darstellung berücksichtigt wird.
           </para>
+          <para lang="it">
+            All'apertura di un'immagine con un profilo di colore
+            incorporato, GIMP offre di convertire il file nello spazio di
+            colore di lavoro RGB. Questo è predefinito su sRGB ed è anche
+            quello raccomandato per tutto il ciclo di lavoro. È comunque
+            possibile decidere di mantenere il profilo di colore
+            incorporato, e l'immagine sarà comunque mostrata correttamente.
+          </para>
 
-          <!-- TODO: en de - lexa asks: so how exactly is a new Profile applied to an image? -->
+          <!-- TODO: en de it - lexa asks: so how exactly is a new Profile
+               applied to an image? -->
           <para lang="en">
             In case for some reason a color profile is not embedded in the
             image and you know (or have a good guess) which one it should be,
@@ -274,12 +373,19 @@
             Sie - sofern Sie denn wissen oder zu wissen glauben, welches es
             sein sollte - auch ein Farbprofil von Hand zuordnen.
           </para>
+          <para lang="it">
+            Nel caso che, per qualche ragione, il profilo di colore non sia
+            incorporato nell'immagine e si conosce (o si può intuire) quale
+            dovrebbe essere, è possibile assegnarne uno manualmente
+            all'immagine.
+          </para>
         </listitem>
       </varlistentry>
 
       <varlistentry>
         <term lang="en">Display</term>
         <term lang="de">Anzeige</term>
+        <term lang="it">Schermo</term>
 
         <listitem>
           <para lang="en">
@@ -295,6 +401,14 @@
             Monitor hinterlegt ist, werden die Farben in höchster
             Originalgetreue angezeigt.
           </para>
+          <para lang="it">
+            Per ottenere i migliori risultati, è necessario possedere un
+            profilo di colore per il proprio schermo. Se viene configurato
+            un profilo per il monitor, di sistema o nella sezione di
+            gestione del colore nelle preferenze del proprio GIMP,
+            i colori dell'immagine verranno mostrati con la massima
+            accuratezza possibile.
+          </para>
 
           <para lang="en">
             One of the most important GIMP commands to work with the color
@@ -305,6 +419,11 @@
             Eines der zentralen GIMP-Kommandos zur Beeinflussung der
             Darstellung mit Hilfe des Farbmanagements ist im
             <xref linkend="gimp-display-filter-dialog"/> beschrieben.
+          </para>
+          <para lang="it">
+            Uno dei comandi più importanti di GIMP per lavorare con la
+            gestione del colore è descritto in
+            <xref linkend="gimp-display-filter-dialog"/>.
           </para>
 
           <para lang="en">
@@ -327,12 +446,23 @@
             <xref linkend="bibliography-online-lprof"/> verwenden,
             um Farbprofile zu erzeugen.
           </para>
+          <para lang="it">
+            Se non si possiede un profilo di colore per il proprio schermo,
+            è possibile crearne uno usando uno strumento di calibrazione e
+            misura del colore. Sui sistemi UNIX sarà necessario usare
+            l'<productname>Argyll Color Management System</productname>
+            <xref linkend="bibliography-online-argyllcms" /> e/o
+            <productname>LProf</productname>
+            <xref linkend="bibliography-online-lprof" />
+            per creare un profilo di colore.
+          </para>
         </listitem>
       </varlistentry>
 
       <varlistentry>
         <term lang="en">Print Simulation</term>
         <term lang="de">Drucksimulation</term>
+        <term lang="it">Simulazione di stampa</term>
 
         <listitem>
           <para lang="en">
@@ -354,6 +484,16 @@
             werden. Dies kann Ihnen helfen, derartige Probleme mit der
             Farbausgabe zu beheben, <emphasis>bevor</emphasis> Sie das Bild
             tatsächlich drucken.
+          </para>
+          <para lang="it">
+            Usando GIMP, è facilmente possibile ottenere un'anteprima di
+            ciò che risulterà della propria immagine su carta. Dato un
+            profilo di colore per la propria stampante, lo schermo può
+            essere convertito in modalità Soft Proof. In tale simulazione
+            di stampa, i colori che non possono essere riprodotti possono
+            essere opzionalmente essere evidenziati con un colore grigio
+            neutro, permettendo la correzione di tali errori prima di
+            mandare l'immagine alla stampante.
           </para>
         </listitem>
       </varlistentry>
