@@ -3,17 +3,22 @@
 <!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
           "http://www.docbook.org/xml/4.3/docbookx.dtd">
 
-<!--TODO de;es;it;ko;no;nl;ru;-->
-<sect2 id="plug-in-palettemap" lang="en;fr">
+<!--TODO es;it;ko;no;nl;ru-->
+<sect2 id="plug-in-palettemap" lang="en;de;fr">
   <sect2info role="cvs">
     <revhistory>
       <revision lang="en">
-        <revnumber>$Revision:$</revnumber>
+        <revnumber>$Revision$</revnumber>
         <date>2007-12-28</date>
         <authorinitials>j.h</authorinitials>
       </revision>
+      <revision lang="de">
+        <revnumber>$Revision$</revnumber>
+        <date>2008-01-03</date>
+        <authorinitials>ude</authorinitials>
+      </revision>
       <revision lang="fr">
-        <revnumber>$Revision:$</revnumber>
+        <revnumber>$Revision$</revnumber>
         <date>2007-12-28</date>
         <authorinitials>j.h</authorinitials>
       </revision>
@@ -22,6 +27,7 @@
 
   <title>
     <phrase lang="en">Palette Map</phrase>
+    <phrase lang="de">Auf Palette</phrase>
     <phrase lang="fr">Palette Carte</phrase>
   </title>
 
@@ -31,6 +37,13 @@
     <tertiary>Palette Map</tertiary>
   </indexterm>
   <indexterm lang="en"><primary>Palette Map</primary></indexterm>
+
+  <indexterm lang="de">
+    <primary>Farben</primary>
+    <secondary>Abbilden</secondary>
+    <!--tertiary>Auf Palette</tertiary-->
+  </indexterm>
+  <indexterm lang="de"><primary>Palette</primary></indexterm>
 
   <indexterm lang="fr">
     <primary>Couleurs</primary>
@@ -70,6 +83,26 @@
       with/without alpha channel.
     </para>
 
+    <para lang="de">
+      Dieses Plugin ersetzt die Farben des Bildes durch die Farben der aktiven
+      Palette, die Sie über
+      <menuchoice>
+        <guimenu>Dialoge</guimenu>
+        <guimenuitem>Paletten</guimenuitem>
+      </menuchoice>
+      auswählen können.
+    </para>
+    <para lang="de">
+      Es bildet den Inhalt der angegebenen Zeichenfläche (Ebene, Auswahl,
+      usw.) auf die aktive Palette ab. Es berechnet die Helligkeit jedes
+      Pixels und ersetzt das Pixel durch den Eintrag in der Palette, dessen
+      Index dieser Helligkeitswert ist. Ein schwarzes Pixel wird also durch
+      den Paletteneintrag mit dem kleinsten Index ersetzt, ein weißes Pixel
+      durch den mit dem größten Index. Das Plugin kann sowohl auf
+      Graustufenbildern als auch auf RGB-Bildern mit oder ohne Alphakanal
+      (Transparenz) angewendet werden.
+    </para>
+
     <para lang="fr">
       Ce greffon recolore l'image en utilisant les couleurs de la palette
       active que vous choisissez dans
@@ -88,7 +121,7 @@
     </para>
   </sect3>
 
-  <sect3 lang="en;fr">
+  <sect3 lang="en;de;fr">
     <title>
       <phrase lang="en">Activate the filter</phrase>
       <phrase lang="cs">Aktivace filtru</phrase>
@@ -108,6 +141,15 @@
         <guimenuitem>Palette Map</guimenuitem>
       </menuchoice>.
     </para>
+    <para lang="de">
+      Dieses Filter lässt sich über das Menü
+      <menuchoice>
+        <guimenu>Farben</guimenu>
+        <guisubmenu>Abbilden</guisubmenu>
+        <guimenuitem>Auf Palette</guimenuitem>
+      </menuchoice>
+      im Bildfenster aufrufen.
+    </para>
     <para lang="fr">
       On accède à ce filtre à partir du menu de l'image par
       <menuchoice>
@@ -118,9 +160,10 @@
     </para>
   </sect3>
 
-  <sect3 lang="en;fr">
+  <sect3 lang="en;de;fr">
     <title>
       <phrase lang="en">Example</phrase>
+      <phrase lang="de">Beispiel</phrase>
       <phrase lang="fr">Exemple</phrase>
     </title>
     <figure>
@@ -128,19 +171,25 @@
         <phrase lang="en">
           The active palette is applied to a gradient image
         </phrase>
+        <phrase lang="de">
+          Die aktive Palette auf einen Farbverlauf angewendet
+        </phrase>
         <phrase lang="fr">
           La palette active est appliquée à une image de dégradé
         </phrase>
       </title>
 
       <mediaobject>
-        <imageobject lang="en;fr">
+        <imageobject lang="en;de;fr">
           <imagedata fileref="../images/menus/colors-map-palettemap-ex1.png"
-                      format="PNG"/>
+            format="PNG"/>
         </imageobject>
         <caption>
           <para lang="en">
             The current palette, with 18 colors
+          </para>
+          <para lang="de">
+            Die aktuelle Palette (mit 18 Farben)
           </para>
           <para lang="fr">
             La palette active, avec 18 couleurs
@@ -149,9 +198,9 @@
       </mediaobject>
 
       <mediaobject>
-        <imageobject lang="en;fr">
+        <imageobject lang="en;de;fr">
           <imagedata fileref="../images/menus/colors-map-palettemap-ex2.png"
-                      format="PNG"/>
+            format="PNG"/>
         </imageobject>
         <caption>
           <para lang="en">
@@ -161,6 +210,9 @@
             highest index in the palette (red) replaces the white color in
             the gradient. The other colors spread out in the order of the
             palette.
+          </para>
+          <para lang="de">
+            Links: Originalbild. Rechts: <quote>Auf Palette</quote> angewandt.
           </para>
           <para lang="fr">
             Les couleurs de la palette active sont appliquées à un dégradé du
@@ -173,5 +225,13 @@
         </caption>
       </mediaobject>
     </figure>
+
+    <para lang="de">
+      Die Farben der aktiven Palette wurden auf einen Farbverlauf von Schwarz
+      nach Weiß angewendet. Die Farbe in der Palette mit dem kleinsten Index
+      (Orange) ersetzt Schwarz. Die Farbe mit dem höchsten Index (Rot) ersetzt
+      Weiß. Die Zwischenfarben sind durch die Palettenfarben dazwischen in der
+      Reihenfolge ihres Vorkommens ersetzt.
+    </para>
   </sect3>
 </sect2>
