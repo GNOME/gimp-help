@@ -2,8 +2,18 @@
 
 SUBDIRS = quickreference
 
+# languages we want to exclude from installing images
+image_find_exclude = \
+	-o \
+	\( \
+	-name 'zh_CN' -type d -o \
+	-name 'cs' -type d -o \
+	-name 'hr' -type d \
+	\)
+
 image_find_predicates = \
-	-name '.svn' -prune \
+	-name '.svn' \
+	$(image_find_exclude) -prune\
 	-o \
 	\( \
 	-name '*.png' -o \
@@ -12,6 +22,10 @@ image_find_predicates = \
 	-name '*.xcf' -o \
 	-name '*.gif'    \
 	\) -print
+
+html_files_find_predicates = \
+	-type f -name '*.*' \
+	-print
 
 src_find_predicates =       \
 	-name '.svn' -prune \
@@ -257,7 +271,11 @@ install-data-local:
 	@echo -n "** Installing HTML:"
 	@cd html && \
 	for lang in $(ALL_LINGUAS); do \
-		cp -a $$lang $(DESTDIR)$(helpdir) && echo -n " $$lang"; \
+		$(mkdir_p) $(DESTDIR)$(helpdir)/$$lang && echo -n " $$lang"; \
+		find $$lang $(html_files_find_predicates) | \
+		while read file; do \
+		  $(INSTALL_DATA) $$file $(DESTDIR)$(helpdir)/$$file || exit 66; \
+		done \
 	done
 	@echo .
 
