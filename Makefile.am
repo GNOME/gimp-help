@@ -4,7 +4,6 @@ SUBDIRS = quickreference
 
 # languages we want to exclude from installing images
 image_find_exclude = \
-	-o \
 	\( \
 	-name 'zh_CN' -type d -o \
 	-name 'cs' -type d -o \
@@ -12,8 +11,8 @@ image_find_exclude = \
 	\)
 
 image_find_predicates = \
-	-name '.svn' \
-	$(image_find_exclude) -prune\
+	-name '.svn' -prune \
+	-o $(image_find_exclude) -prune \
 	-o \
 	\( \
 	-name '*.png' -o \
