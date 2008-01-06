@@ -1,7 +1,5 @@
 ## Process this file with automake to produce Makefile.in
 
-QUICKREFERENCE_ALL_LINGUAS = de en fr it ru sv es
-
 PO_FILES = \
 	po/gimp-keys.pot\
 	po/de.po	\
