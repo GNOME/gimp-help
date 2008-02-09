@@ -158,7 +158,7 @@
     <para lang="en">You can get to the Hue-Saturationtool in two ways :</para>
     <itemizedlist lang="en">
       <listitem>
-        <!--TODO es;it;no;pl;ru-->
+        <!--TODO es;it;no;pl-->
         <para>
           In the the image-menu through:
           <menuchoice>
@@ -391,6 +391,10 @@
             <guimenu>Инструменты</guimenu>
             <guisubmenu>Инструменты цвета</guisubmenu>
             <guimenuitem>Тон-<accel>Н</accel>асыщенность</guimenuitem>
+          </menuchoice> или
+          <menuchoice>
+            <guimenu>Цвета</guimenu>
+            <guimenuitem>Тон-Насыщенность</guimenuitem>
           </menuchoice>
         </para>
       </listitem>
@@ -501,7 +505,7 @@
         <term lang="it">Selezionare il colore primario da usare</term>
         <term lang="no">Vel primærfarge som skal endrast</term>
       <term lang="pl">Modyfikacja wybranego koloru podstawowego</term>
-        <term lang="ru">Выбрать основной цвет</term>
+        <term lang="ru">Выбрать основной цвет для корректировки</term>
         <term lang="zh_CN">选择要修改的色系</term>
         <listitem><!--Changed 2008-01-14-->
           <para lang="en">
@@ -577,9 +581,18 @@
             spowoduje dopasowanie wszystkich kolorów.
           </para>
           <para lang="ru">
-            Можно выбрать до шести цветов для изменения. Они расположены по
-            цветовому кругу. После нажатия кнопки <guilabel>Мастер</guilabel>
-            изменения будут влиять на все цвета.
+            Цвет для корректировки можно выбрать из трёх главных цветов
+            (красный, зелёный, синий) или из трёх дополнительных (голубой,
+            фиолетовый, жёлтый). Они организованы по цветному кругу. Когда тон
+            увеличивается, он идёт против часовой стрелки, при понижении - по
+            часовой стрелке. После нажатия кнопки <guilabel>Мастер</guilabel>
+            изменения будут влиять на все цвета. <acronym>GIMP</acronym>
+            устанавливает красный на ноль по умолчанию. Заметьте, что эти цвета
+            относятся к цветовым диапазонам, а не к цветовым каналам.
+          </para>
+          <para lang="ru">
+            Изменения тона показаны в цветовых кнопках, а результат - в
+            изображении если выбран параметр <quote>просмотр</quote>.
           </para>
           <para lang="zh_CN">
             您的修改可以在六种颜色间选择。它们根据色环位置排列。如果按下
@@ -588,11 +601,12 @@
         </listitem>
       </varlistentry>
 
-      <varlistentry lang="en;de;fr">
-        <!--TODO es;it;no;pl;ru v2.4-->
+      <varlistentry lang="en;de;fr;ru">
+        <!--TODO es;it;no;pl v2.4-->
         <term lang="en">Overlap</term>
         <term lang="de">Überlagern</term>
         <term lang="fr">Superposition</term>
+        <term lang="ru">Перекрывание</term>
         <listitem>
           <para lang="en">
             This slider lets you set how much color ranges will overlap. This
@@ -608,6 +622,11 @@
             entre les intervalles de couleur. Cet effet est très subtil et
             n'intervient que pour des couleurs très proches :
           </para>
+          <para lang="ru">
+            Этот параметр определяет, насколько цветовые диапазоны будут
+            пересекаться. Этот эффект трудно заметить и относится только к
+            соседним цветам:
+          </para>
 
           <figure>
             <title>
@@ -619,6 +638,9 @@
               </phrase>
               <phrase lang="fr">
                 Exemple pour l'option <quote>Superposition</quote>
+              </phrase>
+              <phrase lang="ru">
+                Пример параметра <quote>Перекрывание</quote>
               </phrase>
             </title>
             <mediaobject>
@@ -641,6 +663,11 @@
                   à droite : un jaune rougeâtre (255;240;0) ; un jaune pur
                   (255;255;0) ; un jaune verdâtre (240;255;0).
                 </para>
+                <para lang="ru">
+                  <emphasis>Искомое изображение</emphasis>. Слева направо:
+                  красновато-жёлтый (255;240;0); чистый жёлтый (255;255;0);
+                  зелёновато-жёлтый (240;255;0).
+                </para>
               </caption>
             </mediaobject>
             <mediaobject>
@@ -661,6 +688,10 @@
                   <emphasis>Superposition = 0</emphasis>. Teinte
                   = 15. Les couleurs deviennent (186;255;1), (168;255,1),
                   (156,255,1).
+                </para>
+                <para lang="ru">
+                  <emphasis>Перекрывание= 0</emphasis>. Тон = 15. Цвета
+                  становятся (186;255;1), (168;255,1), (156,255,1).
                 </para>
               </caption>
             </mediaobject>
@@ -688,6 +719,12 @@
                   (168;255;1), (162;255;1). Du fait de la superposition, le
                   jaune-vert est moins vert et le jaune-rouge est moins
                   rouge.
+                </para>
+                <para lang="en">
+                  <emphasis>Перекрывание = 100</emphasis>. Тон = 15.
+                  Цвета становятся (192;255;1), (168;255;1), (162;255;1). Из-за
+                  перекрывания зеленоватый цвет менее зелёный, а красноватый -
+                  менее красный.
                 </para>
               </caption>
             </mediaobject>
@@ -850,8 +887,8 @@
                 ：该滑条和输入框让您在-100到100间选择一个亮度值。
               </para>
 
-              <note lang="en;de;fr">
-                <!--TODO es;it;no;pl;ru-->
+              <note lang="en;de;fr;ru">
+                <!--TODO es;it;no;pl-->
                 <para lang="en">
                   Lightness changes here concern a color range, while they
                   concern a color tone with Curves and Levels tools, which
@@ -879,6 +916,16 @@
                   c'est la luminosité de tous les jaunes qui sera changée,
                   alors qu'avec Courbes ou Niveaux, c'est la luminosité des
                   jaunes sombres, clairs ou moyens.
+                </para>
+                <para lang="ru">
+                  Изменение светлости здесь относится к цветовому диапазону,
+                  хотя они относятся к тону в инструментах
+                  <link linkend="gimp-tool-curves">Кривые</link> и
+                  <link linkend="gimp-tool-levels">Уровни</link>, которые
+                  работают над цветовыми каналами. Если изменить светлость
+                  жёлтого этим инструментом, изменятся все жёлтые точки, тогда
+                  как с инструментами Кривые и Уровни яркость изменится только
+                  для тёмных, светлых или средних точек.
                 </para>
               </note>
             </listitem>

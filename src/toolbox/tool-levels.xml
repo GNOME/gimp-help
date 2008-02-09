@@ -155,7 +155,9 @@
   <para lang="ru">
     Инструмент Уровни даёт похожие настройки что и инструмент Гистограмма, но
     также позволяет изменить диапазон интенсивности активного слоя или
-    выделения.
+    выделения в кажном канале. Этот инструмент используется, чтобы сделать
+    изображение темнее или светлее, изменить контраст или изменить состав
+    доминирующих цветов.
   </para>
 
   <para lang="zh_CN">
@@ -361,6 +363,10 @@
         <guimenu>Инструменты</guimenu>
         <guisubmenu>Инструменты цвета</guisubmenu>
         <guimenuitem><accel>У</accel>ровни</guimenuitem>
+      </menuchoice> или
+      <menuchoice>
+        <guimenu>Цвета</guimenu>
+        <guimenuitem>Уровни</guimenuitem>
       </menuchoice>,
     </para>
     <para lang="ru">
@@ -455,7 +461,7 @@
         <term lang="it">Modificare i livelli per canale</term>
         <term lang="no">Kanal</term>
         <term lang="pl">Modyfikacja poziomów kolorów</term>
-        <term lang="ru">Изменить уровни по каналу</term>
+        <term lang="ru">Канал</term>
         <term lang="zh_CN">调整通道色阶</term>
         <listitem>
           <para lang="en"><!--Changed 2008-01-18-->
@@ -582,10 +588,38 @@
           </para>
           <para lang="ru">
             Можно выбрать определённый канал для изменения инструментом:
-            значение яркости изменит яркость всех точек изображения. Цветовые
-            каналы позволяют изменить насыщенность. Канал альфа изменяет
-            прозрачность. <guilabel>Сбросить канал</guilabel> удаляет все
-            изменения в выбранном канале.
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <guilabel>Яркость</guilabel>: изменит яркость всех точек
+                  изображения. Изображение становится темнее или светлее.
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <guilabel>Красный</guilabel>, <guilabel>Зелёный</guilabel> и
+                  <guilabel>Синий</guilabel> работают над отдельным цветовым
+                  каналом: изображение получает больше или меньше цвета.
+                  Помните, что добавление или удаление цвета также удаляет или
+                  прибавляет дополнительный цвет.
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <guilabel>Альфа</guilabel> работает над полупрозрачными
+                  слоями или выделениями: здесь тёмный означает больше
+                  прозрачности, а белый - полную непрозрачность. Для
+                  использования этого параметра у изображения должен быть
+                  канал альфа.
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <guilabel>Сбросить канал</guilabel> отменяет все изменения
+                  для выделенного канала.
+                </para>
+              </listitem>
+            </itemizedlist>
           </para>
           <para lang="zh_CN">
             您可以选择该工具所要修改的特定通道：亮度修改图像所有像素的亮度。颜色通道允许改变其饱和度。Alpha 通道影响其透明度。<guilabel>重置通道</guilabel>取消对选定通道的修改。
@@ -840,9 +874,28 @@
                 gamma), biały dla  jasnych odcieni.
               </para>
               <para lang="ru">
-                Три треугольника как ползунки: одни чёрный для тёмных тонов,
-                один серый для средних тонов (также называется значение
-                гамма), один белый для светлых тонов.
+                Три треугольника как ползунки: один чёрный для тёмных тонов
+                (теней), один серый для средних тонов (гамма), один белый для
+                светлых тонов (отблески).
+              </para>
+              <para lang="ru">
+                Чёрный ползунок определяет <emphasis>чёрную точку</emphasis>:
+                все точки со значением меньше или равным этому станут чёрными
+                (без цвета, если выбран цветовой канал или прозрачными, если
+                выбран канал альфа).
+              </para>
+              <para lang="ru">
+                Белый ползунок определяет <emphasis>белую точку</emphasis>:
+                все точки со значением больше или равным этому станут белыми
+                (полного цвета, если выбран цветовой канал или непрозрачными,
+                если выбран канал альфа).
+              </para>
+              <para lang="ru">
+                Серый ползунок определяет <emphasis>среднюю точку</emphasis>.
+                Если точка ближе к чёрному, то изображение станет светлее (с
+                большим цветом, более прозрачным). Если точка ближе к белому,
+                то изображение станет темнее (с меньшим цветом, менее
+                прозрачным).
               </para>
               <para lang="zh_CN">
                 滑动三个三角：暗范围用黑色的，中等范围(即 Gamma 值)用灰色的，亮范围用白色。
@@ -850,7 +903,7 @@
             </listitem>
 
             <listitem>
-              <!--TODO de;es;it;no;pl;ru v2.4-->
+              <!--TODO de;es;it;no;pl v2.4-->
               <para lang="en">
                 Two eye-droppers: when you click them, the mouse pointer
                 becomes an eye-dropper. Then clicking on the image determines
@@ -901,7 +954,7 @@
                 frå biletmenyen for å vise fargane i pipetta.
               </para>
               <para lang="ru">
-                <guilabel>Dве пипетки</guilabel>: определяют две точки на
+                <guilabel>Две пипетки</guilabel>: определяют две точки на
                 серой шкале. <quote>Чёрная точка</quote> определяет самый
                 тёмный цвет.
                 <quote>Белая точка</quote> определяет самый светлый цвет.
@@ -956,7 +1009,7 @@
           </itemizedlist>
 
           <para lang="en">
-            <!--TODO de;es;it;no;pl;ru-->
+            <!--TODO de;es;it;no;pl-->
             Input Levels are used to lighten highlights (bright tones),
             darken shadows (dark tones), change the balance of bright and
             dark tones. Move sliders to the left to increase lightness
@@ -971,6 +1024,13 @@
             la gauche pour éclaicir (renforcer la couleur choisie /renforcer
             l'opacité). Déplacez les curseurs vers la droite pour assombrir
             (diminuer la couleur choisie /diminuer l'opacité).
+          </para>
+          <para lang="ru">
+            Уровни на входе используются для осветления отблесков (яркие тона),
+            затемнения теней (тёмные тона), исменения баланса светлых и тёмных
+            тонов. Движение ползунков влево увеличивает светлость (выбранный
+            цвет или прозрачность). Движение ползунков вправо уменьшает
+            светлость (выбранный цвет или прозрачность).
           </para>
           <mediaobject>
             <imageobject>
@@ -988,13 +1048,19 @@
                 tons moyens (127), tons clairs (192). L'histogramme montre
                 trois pics, un pour chacun des trois tons.
               </para>
+              <para lang="ru">
+                Серое изображение. Три полосы: тени (64), средние тона (127),
+                блики (192). Гистограмма показывает три вершины, одну на каждый
+                тон.
+              </para>
             </caption>
           </mediaobject>
-          <figure lang="en;fr">
-            <!--TODO de;es;it;no;pl;ru-->
+          <figure lang="en;fr;ru">
+            <!--TODO de;es;it;no;pl-->
             <title>
               <phrase lang="en">Example for Input Levels</phrase>
               <phrase lang="fr">Exemple pour Niveaux d'entrée</phrase>
+              <phrase lang="ru">Пример уровней на входе</phrase>
             </title>
             <mediaobject>
               <imageobject>
@@ -1020,6 +1086,13 @@
                   prend la valeur 84. La bande de tons clairs est également
                   assombrie à 171.
                 </para>
+                <para lang="ru">
+                  Выбран канал яркости. Чёрный ползунок (тени) передвинут к
+                  вершине теней. Значение 64 становится 0 и полоса теней
+                  становится чёрной (0). Ползунок гаммы (средние тона)
+                  автоматически перещается в центр тонального диапазона.
+                  Средние тона становятся темнее до 84, и блики до 171.
+                </para>
               </caption>
             </mediaobject>
             <mediaobject>
@@ -1043,6 +1116,13 @@
                   pour rester au milieu de l'intervalle tonal. La bande de
                   tons moyens est éclaircie à 169 et la bande des tons
                   sombres à 84.
+                </para>
+                <para lang="ru">
+                  Белый ползунок (блики) передвинут к вершине бликов. Значение
+                  192 становится 255 и полоса бликов становится белой (255).
+                  Ползунок гаммы (средние тона) автоматически перещается в
+                  центр тонального диапазона. Средние тона становятся светлее
+                  до 169, и тени до 84.
                 </para>
               </caption>
             </mediaobject>
@@ -1070,7 +1150,7 @@
             Levels.
           </para>
           <para lang="en">
-            <!--TODO de;es;it;no;pl;ru-->
+            <!--TODO de;es;it;no;pl-->
             Output levels force the tone range to fit the new limits you have
             set.
             <itemizedlist>
@@ -1169,15 +1249,44 @@
             Также есть стелки для изменение уровней в реальном масштабе
             времени.
           </para>
+          <para lang="ru">
+            Уровни на выходе заставляют тональный диапазон вместиться в новые
+            ограничения.
+            <itemizedlist>
+              <listitem>
+                <para>
+                  Работа с яркостью: значения компрессуются и становятся более
+                  похожи друг на друга; контраст уменьшается. Тени становятся
+                  светлее: могут появиться новые детали, но с меньшим
+                  контрастом. Блики становятся темнее.
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  Работа с цветовыми каналами: если, на пример, для зелёного
+                  канала установить уровни на выходе от 100 до 140, все точки
+                  станут зелёными. Даже малые значения точек в зелёном канале
+                  подтянутся до диапазона от 100 до 140.
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  Работа с каналом альфа: все значения передвинутся к
+                  выбранному диапазону.
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
           <para lang="zh_CN">
             输入色阶允许人工选择所要输出的色阶范围。也可以用三角箭头交互地控制输出色阶。
           </para>
 
-          <figure lang="en;fr">
-            <!--TODO de;es;it;no;pl;ru-->
+          <figure lang="en;fr;ru">
+            <!--TODO de;es;it;no;pl-->
             <title>
               <phrase lang="en">Example for Output Levels</phrase>
               <phrase lang="fr">Exemple pour Niveaux de sortie</phrase>
+              <phrase lang="ru">Пример уровней выхода</phrase>
             </title>
             <mediaobject>
               <imageobject>
@@ -1204,6 +1313,15 @@
                     <guimenuitem>Histogramme</guimenuitem>
                   </menuchoice>.
                 </para>
+                <para lang="ru">
+                  <emphasis role="bold">Искомое изображение</emphasis>:
+                  градиент RGB от чёрного (0;0;0) до белого (255;255;255).
+                  У уровней выхода нет гистограммы; здесь мы используем
+                  <menuchoice>
+                    <guimenu>Диалоги</guimenu>
+                    <guimenuitem>Гистограмма</guimenuitem>
+                  </menuchoice>.
+                </para>
               </caption>
             </mediaobject>
             <mediaobject>
@@ -1228,6 +1346,12 @@
                   n'a de valeur supérieure à 189. Dans l'image, les tons
                   sombres sont plus clairs et les tons clairs sont plus
                   sombres : le contraste est diminué.
+                </para>
+                <para lang="ru">
+                  Выбран канал яркости. Чёрный ползунок передвинут до 63, а
+                  белый до 189. Гистограмма показывает компрессию точек. Нет
+                  точек со значениями меньше, чем 63 или больше, чем 189. В
+                  изображении тени светлее а блики темнее: контраст уменьшился.
                 </para>
               </caption>
             </mediaobject>
@@ -1261,7 +1385,7 @@
             of the levels.
           </para>
           <para lang="en">
-            <!--TODO de;es;it;no;pl;ru-->
+            <!--TODO de;es;it;no;pl-->
             <guilabel>Three eyedroppers</guilabel>: These three buttons
             respectively represent a white, a gray and a black eye-dropper.
             When you click one of these buttons, the mouse pointer takes the
@@ -1436,12 +1560,12 @@
             <guilabel>Авто</guilabel>: устанавливает уровни автоматически.
           </para>
           <para lang="ru">
-            <guilabel>Три пипетки</guilabel>: определяют три точки на серой
-            шкале. Любой уровень ниже <quote>чёрной точки</quote> становится
-            чёрным. Любой уровень выше <quote>белой точки</quote> становится
-            белым. <quote>Серая точка</quote> между двумя указанными
-            определяет средний уровень серого. Все другие уровни верого
-            вычисляются из этих трёх.
+            <guilabel>Три пипетки</guilabel>: определяют белую, серую и чёрную
+            пипетки. При нажатии на кнопку, курсор мышки меняется на пипетку.
+            Затем при нажатии на изображение нажатая точка определяет
+            <quote>белую точку</quote>, <quote>серую точку</quote> или
+            <quote>чёрную точку</quote>, в зависимости от нажатой пипетки.
+            Работает на всех каналах, даже если какой-то канал на выбран.
           </para>
 
           <para lang="zh_CN">
@@ -1457,11 +1581,12 @@
             <guilabel>三个颜色拾取器</guilabel>: 它们控制灰度上的三个点。“黑点”以下的都是黑色，“白点”以上的都是白色。“灰点”必须在它们之间，指灰色的中间值。
           </para>
 
-          <figure lang="en;fr">
-            <!--TODO de;es;it;no;pl;ru-->
+          <figure lang="en;fr;ru">
+            <!--TODO de;es;it;no;pl-->
             <title>
               <phrase lang="en">Example for Levels eye-droppers</phrase>
               <phrase lang="fr">Exemple pour les pipettes Niveaux</phrase>
+              <phrase lang="ru">Пример пипеток уровней</phrase>
             </title>
             <mediaobject>
               <imageobject>
@@ -1480,6 +1605,11 @@
                   résultat après avoir cliqué avec la pipette blanche: tous
                   les pixels dont la valeur est supérieure à celle du pixel
                   cliqué sont devenus blancs.
+                </para>
+                <para lang="ru">
+                  Внизу градиент от чёрного до белого. Ниже - результат после
+                  нажатия на белую пипетку: все точки со значение выше нажатого
+                  становятся белыми.
                 </para>
               </caption>
             </mediaobject>
@@ -1630,7 +1760,7 @@
         <term lang="it">Scala istogramma</term>
         <term lang="no">Histogramskala</term>
         <term lang="pl">Skala histogramu</term>
-        <term lang="ru">Масштабирование гистограммы</term>
+        <term lang="ru">Масштаб гистограммы</term>
         <term lang="zh_CN">直方图尺度</term>
 
         <listitem>
@@ -1736,17 +1866,19 @@
     </variablelist>
   </sect3>
 
-  <sect3 lang="en;fr">
-    <!--TODO de;es;it;no;pl;ru-->
+  <sect3 lang="en;fr;ru">
+    <!--TODO de;es;it;no;pl-->
     <title>
         <phrase lang="en">Actual practice</phrase>
         <phrase lang="fr">En pratique</phrase>
+        <phrase lang="ru">Применение</phrase>
       </title>
 
     <figure>
       <title>
         <phrase lang="en">A very under-exposed image</phrase>
         <phrase lang="fr">Une image très sous-exposée</phrase>
+        <phrase lang="ru">Недовыдержанное изображение</phrase>
       </title>
       <mediaobject>
         <imageobject>
@@ -1760,6 +1892,7 @@
           <para lang="fr">
             Image d'origine
           </para>
+          <para lang="ru">Искомое изображение</para>
         </caption>
       </mediaobject>
       <mediaobject>
@@ -1776,6 +1909,9 @@
             L'histogramme montre une prédominance des tons sombres et un
             manque de couleurs claires.
           </para>
+          <para lang="ru">
+            Гистограмма показывает преобладание теней и недостаток бликов.
+          </para>
         </caption>
       </mediaobject>
     </figure>
@@ -1783,6 +1919,7 @@
       <title>
         <phrase lang="en">Setting the white point</phrase>
         <phrase lang="fr">Réglage du point blanc</phrase>
+        <phrase lang="ru">Установка белой точки</phrase>
       </title>
       <mediaobject>
         <imageobject>
@@ -1797,6 +1934,10 @@
           <para lang="fr">
             Le curseur blanc a été déplacé jusqu'au début des tons clairs
             bien marqués. L'image s'éclaircit.
+          </para>
+          <para lang="ru">
+            Белый ползунок передвинулся к началу хорошо выраженных бликов.
+            Изображение осветляется.
           </para>
         </caption>
       </mediaobject>
@@ -1814,6 +1955,9 @@
             L'histogramme résultant (en bas) montre la présence de tons
             clairs, mais les tons sombres sont toujours prédominants.
           </para>
+          <para lang="ru">
+            Гистограмма (ниже) показывает блики, но тени всё ещё преобладают.
+          </para>
         </caption>
       </mediaobject>
     </figure>
@@ -1823,6 +1967,7 @@
           Highlights</phrase>
         <phrase lang="fr">Réglage de l'équilibre entre les tons sombres et
         les tons clairs</phrase>
+        <phrase lang="ru">Установка баланса между тенями и бликами</phrase>
       </title>
       <mediaobject>
         <imageobject>
@@ -1839,6 +1984,10 @@
             Le curseur moyen a été déplacé vers la gauche, ce qui aboutit à
             diminuer la proportion de tons sombres au profit des tons clairs.
           </para>
+          <para lang="ru">
+            Средний ползунок передвинулся влево. Это уменьшает пропорцию теней
+            и увеличивает пропорцию бликов.
+          </para>
         </caption>
       </mediaobject>
       <mediaobject>
@@ -1853,6 +2002,9 @@
           <para lang="fr">
             L'histogramme résultant (en bas) confirme la réduction des tons
             sombres.
+          </para>
+          <para lang="ru">
+            Гистограмма (ниже) подтверждает уменьшение теней.
           </para>
         </caption>
       </mediaobject>
