@@ -303,7 +303,7 @@ uninstall-local:
 check-local: validate
 
 if GIMP_HELP_BUILD
-all-local: validate html index
+all-local: validate html-local index
 endif
 
 dist-hook: dist-copy-images
