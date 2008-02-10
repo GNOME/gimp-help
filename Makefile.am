@@ -280,7 +280,7 @@ install-data-local:
 
 	@echo "** Installing images: (G=gif, J=jpg, M=mng, P=png, X=xcf)"
 
-	@cd $(top_srcdir) && find images $(image_find_predicates) | \
+	@(cd $(top_srcdir) && find images $(image_find_predicates)) | \
 	while read file; do \
 		case "$$file" in \
 		  *.png) echo -n P ;; \
