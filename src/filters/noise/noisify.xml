@@ -9,9 +9,9 @@
   050930 de replaced informalfigure by axel.wernicke
   050826 de added by axel.wernicke
 -->
-<!-- TODO: cs es fr it no ru: Scatter RGB ==> RGB Noise in Gimp-2.4 -->
+<!-- TODO: cs es fr it ru: Scatter RGB ==> RGB Noise in Gimp-2.4 -->
 <sect2 id="plug-in-rgb-noise" lang="en;es;cs;de;fr;it;no;ru">
-  <sect2info lang="en;de;fr" role="cvs">
+  <sect2info lang="en;de;fr;no" role="cvs">
     <revhistory>
       <revision lang="en">
         <revnumber>$Revision$</revnumber>
@@ -28,6 +28,11 @@
         <date>2006-11-19</date>
         <authorinitials>j.h</authorinitials>
       </revision>
+      <revision lang="no">
+        <revnumber>$Revision$</revnumber>
+        <date>2008-02-10</date>
+        <authorinitials>kost</authorinitials>
+      </revision>
     </revhistory>
   </sect2info>
 
@@ -38,7 +43,7 @@
     <phrase lang="es">Ruido RGB</phrase>
     <phrase lang="fr">Dispersion RVB</phrase>
     <phrase lang="it">Dispersione RGB</phrase>
-    <phrase lang="no">Strø RGB</phrase>
+    <phrase lang="no">RGB-støy</phrase>
     <phrase lang="ru">Разбросать RGB</phrase>
   </title>
 
@@ -80,9 +85,9 @@
   <indexterm lang="no">
     <primary>Filter</primary>
     <secondary>Støy</secondary>
-    <tertiary>Strø RGB</tertiary>
+    <tertiary>RGB-støy</tertiary>
   </indexterm>
-  <indexterm lang="no"><primary>Strø RGB (støyfilter)</primary></indexterm>
+  <indexterm lang="no"><primary>RGB-støy (støyfilter)</primary></indexterm>
 
   <indexterm lang="ru">
     <primary>Фильтр</primary><secondary>шум</secondary>
@@ -133,7 +138,9 @@
         <phrase lang="it">
           Esempio di applicazione del filtro Dispersione RGB
         </phrase>
-        <phrase lang="no">Eksempel på bruk av filteret</phrase>
+        <phrase lang="no">
+          Eksempel på bruk av filteret <quote>RGB-støy</quote>
+        </phrase>
         <phrase lang="ru">
           Изображение до и после применения фильтра
           <quote>Разбросать RGB</quote>
@@ -148,7 +155,7 @@
         <caption lang="en;de;no">
           <para lang="en">Original image</para>
           <para lang="de">Originalbild</para>
-          <para lang="no">Originalbilete</para>
+          <para lang="no">Originalbiletet</para>
         </caption>
       </mediaobject>
       <mediaobject>
@@ -160,7 +167,7 @@
         <caption lang="en;de;no">
           <para lang="en">Filter <quote>RGB Noise</quote> applied</para>
           <para lang="de">Filter <quote>RGB-Rauschen</quote> angewandt</para>
-          <para lang="no">Etter bruk av filteret <quote>Strø RGB</quote></para>
+          <para lang="no">Etter bruk av filteret <quote>RGB-støy</quote></para>
         </caption>
       </mediaobject>
     </figure>
@@ -305,16 +312,8 @@
     </para>
 
     <para lang="no">
-      Du har tilgang til filteret frå biletmenyen via
-      <menuchoice>
-        <guimenu>Filter</guimenu>
-        <guisubmenu>Støy</guisubmenu>
-        <guimenuitem>Strø RGB</guimenuitem>
-      </menuchoice>
-    </para>
-    <para lang="no">
       Dette filteret legg til normalfordelt støy i fargane raud, grøn og blå
-      i det aktive laget eller i den aktive markeringa ved å bruke av
+      i det aktive laget eller i det aktive utvalet ved å bruke av
       fargemodellen RGB. At støyen er normalfordelt, betyr at dei fleste
       pikslane i det berørte området bare blir tilsett ein liten grad av støy,
       medan noen få pikslar blir tilsett svært mykje støy. Bruker du dette
@@ -347,9 +346,10 @@
     </para>
   </sect3>
 
-  <sect3 lang="de">
+  <sect3 lang="de;no">
     <title>
       <phrase lang="de">Filteraufruf</phrase>
+      <phrase lang="no">Aktivering</phrase>
     </title>
     <para lang="de">
       Dieses Filter lässt sich über das Menü
@@ -359,6 +359,14 @@
         <guimenuitem><accel>R</accel>GB-Rauschen</guimenuitem>
       </menuchoice>
       im Bildfenster aufrufen.
+    </para>
+    <para lang="no">
+      Du har tilgang til filteret frå biletmenyen via
+      <menuchoice>
+        <guimenu>Filter</guimenu>
+        <guisubmenu>Støy</guisubmenu>
+        <guimenuitem>RGB-støy</guimenuitem>
+      </menuchoice>
     </para>
   </sect3>
 
@@ -387,7 +395,7 @@
           Options du filtre <quote>Dispersion RVB</quote>
         </phrase>
         <phrase lang="no">
-          Innstillingane for filteret <quote>Strø RGB</quote>
+          Innstillingane for filteret <quote>RGB-støy</quote>
         </phrase>
         <phrase lang="ru">
           Параметры фильтра <quote>Разбросать RGB</quote>
@@ -512,15 +520,11 @@
           </para>
           <para lang="no">
             Når det er kryssa av for denne, vil støymengda vere avhengig av
-            pikselverdiane. Ein høgare pikselverdi fører til meir støy, og
-            såleis også naturlegvis at ein lågare pikselverdi fører til mindre
-            støy. Mørke område blir spesielt påverka.
-            <footnote>
-              <para lang="no">
-                Forklaringa i den engelske versjonen (originalen) er i
-                skrivande stund feil.
-              </para>
-            </footnote>
+            pikselverdiane slik at høge verdiar vil gi meir støy enn låge. 
+            Mørke område blir svært lite påverka. Er det ikkje kryssa av for
+            denne, vil støyen vere meir jamnt fordelt. (Korrelatert støy blir
+            også kalla <quote>spetting</quote> ut frå at resultatet blir
+            spetta).
           </para>
           <para lang="ru">
             Шум может быть дополнительным (несопоставимым) или преумножающим
