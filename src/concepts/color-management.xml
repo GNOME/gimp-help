@@ -8,7 +8,7 @@
 -->
 <sect1 id="gimp-concepts-color-management"
        xmlns:xi="http://www.w3.org/2001/XInclude"
-       lang="en;de;fr;it">
+       lang="en;de;fr;it;ru">
   <sect1info role="cvs">
     <revhistory>
       <revision lang="en">
@@ -39,6 +39,7 @@
     <phrase lang="de">Farbmanagement in GIMP</phrase>
     <phrase lang="fr">Gestion de la couleur dans GIMP</phrase>
     <phrase lang="it">Gestione del colore in GIMP</phrase>
+    <phrase lang="ru">Управление цветами в <acronym>GIMP</acronym></phrase>
   </title>
 
   <indexterm lang="en"><primary>color</primary></indexterm>
@@ -62,6 +63,11 @@
   <indexterm lang="it"><primary>gestione del colore</primary></indexterm>
   <indexterm lang="it"><primary>profilo colore</primary></indexterm>
   <indexterm lang="it"><primary>profilo ICC</primary></indexterm>
+
+  <indexterm lang="ru"><primary>Цвет</primary></indexterm>
+  <indexterm lang="ru"><primary>Управление цветами</primary></indexterm>
+  <indexterm lang="ru"><primary>Цветовой профиль</primary></indexterm>
+  <indexterm lang="ru"><primary>Профиль ICC</primary></indexterm>
 
   <para lang="en">
     Many devices you use in your design or photography workflow, like digital
@@ -100,18 +106,27 @@
     questi fattori rendendo possibile avere risultati ottimizzati per il
     WEB e la stampa.
   </para>
+  <para lang="ru">
+    У многих устройств в процессе дизайна или фотографии, как у цифровых
+    фотоаппаратов, сканнеров, экранов, принтеров и т.д., есть свои особенности
+    воспризводства цветов. Если на них не обращать внимания во время открытия,
+    редактирования и сохранения, то изображения получать неприятные
+    преобразования. С <acronym>GIMP</acronym> можно получить надёжный результат
+    и для сети, и для распечатки.
+  </para>
 
-  <figure lang="en;fr">
+  <figure lang="en;fr;ru">
     <title>
       <phrase lang="en">Image Processing Workflow</phrase>
       <phrase lang="de">Prozess der Bildbearbeitung</phrase>
       <phrase lang="fr">Processus de production d'une image</phrase>
       <phrase lang="it">Flusso di produzione nell'elaborazione delle
       immagini</phrase>
+      <phrase lang="ru">Процесс преобразования изображения</phrase>
     </title>
 
-    <mediaobject lang="en;fr">
-      <imageobject lang="en">
+    <mediaobject lang="en;fr;ru">
+      <imageobject lang="en;ru">
         <imagedata format="PNG"
           fileref="../images/using/colormanagement-workflow1.png" />
       </imageobject>
@@ -124,11 +139,12 @@
         <para lang="de">Prozess ohne Farbmanagement</para>
         <para lang="fr">Production sans gestion de la couleur</para>
         <para lang="it">Flusso di produzione senza gestione del colore</para>
+        <para lang="ru">Процесс без управления цветами</para>
       </caption>
     </mediaobject>
 
-    <mediaobject lang="en;fr">
-      <imageobject lang="en">
+    <mediaobject lang="en;fr;ru">
+      <imageobject lang="en;ru">
         <imagedata format="PNG"
           fileref="../images/using/colormanagement-workflow2.png" />
       </imageobject>
@@ -141,6 +157,7 @@
         <para lang="de">Prozess mit Farbmanagement</para>
         <para lang="fr">Production avec gestion de la couleur</para>
         <para lang="it">Elaborazione comprensiva di gestione del colore</para>
+        <para lang="ru">Процесс с управлением цветами</para>
       </caption>
     </mediaobject>
   </figure>
@@ -157,6 +174,7 @@
       </phrase>
       <phrase lang="it">Problemi di un flusso di produzione senza gestione
       del colore</phrase>
+      <phrase lang="ru">Проблеммы процесса без управления цветами</phrase>
     </title>
     
     <para lang="en">
@@ -178,6 +196,11 @@
       adeguata gestione del colore è semplicemente che non si può vedere
       cosa si sta facendo effettivamente. Questo problema comprende due
       aree differenti:
+    </para>
+    <para lang="ru">
+      Основная проблема преобразования изображений без цветового управления -
+      это просто невозможность видеть результатов операций. Это затрагивает две
+      области:
     </para>
 
     <orderedlist>
@@ -202,6 +225,10 @@
           caratteristiche di dispositivi diversi come macchine
           fotografiche, telecamere, digitalizzatori, schermi o stampanti.
         </para>
+        <para lang="ru">
+          Есть различия в цветах из-за разных характеристик разных устройств,
+          таких как фотоаппаратов, сканнеров, экранов и принтеров.
+        </para>
       </listitem>
 
       <listitem>
@@ -221,6 +248,10 @@
           Altre differenze nel colore sono dovute alle limitazioni dello
           spazio colore gestibile da uno specifico dispositivo presente
           nella catena di produzione.
+        </para>
+        <para lang="ru">
+          Если различия в цветах когда устройство не способно отобразить всю
+          цветовую модель.
         </para>
       </listitem>
     </orderedlist>
@@ -248,6 +279,11 @@
       problemi. L'approccio considerato implica l'aggiunta di una
       descrizione delle caratteristiche di colore di un'immagine o di un
       dispositivo.
+    </para>
+    <para lang="ru">
+      Главная цель управления цветами избежать таких проблем. Принятый подход к
+      решению заключается в добавлении описания цветовых характеристик
+      изображения или устройств.
     </para>
 
     <para lang="en">
@@ -289,6 +325,14 @@
       colore di un dispositivo può essere usato per simulare come i colori
       verranno resi su quel particolare dispositivo.
     </para>
+    <para lang="ru">
+      Эти описания называются <emphasis>цветовой профиль</emphasis>. Цветовой
+      профиль по сути таблица ссылок для перевода особых цветовых характеристик
+      устройства в цветовую модель, не зависимую от устройств - рабочую цветовую
+      модель. Все преобразования изображения делаются в рабочей модели. Также
+      профиль используется для проверки того, как цвета будут выглядеть на этом
+      устройстве.
+    </para>
 
     <para lang="en">
       The creation of color profiles is most often done by the manufacturer
@@ -322,6 +366,13 @@
       profilo-ICC che descrive come i profili di colore devono essere
       memorizzati nei file e incorporati nelle immagini.
     </para>
+    <para lang="ru">
+      Создание цветового профиля лежит в компетенции производителя устройств.
+      Чтобы сделать эти профили полезными и независимыми от платформ и
+      операционных систем, ICC (International Color Consortium) создал стандарт,
+      называемый профиль ICC, который описывает, как цветовые профиля сохраняются
+      в файлах или встраиваются в изображения.
+    </para>
   </sect2>
 
 
@@ -331,6 +382,7 @@
       <phrase lang="de">Bearbeitungsprozess mit Farbmanagement</phrase>
       <phrase lang="fr">Production avec gestion de la couleur</phrase>
       <phrase lang="it">Flusso di produzione con gestione del colore</phrase>
+      <phrase lang="ru">Процесс управления цветами</phrase>
     </title>
 
     <tip>
@@ -356,6 +408,11 @@
         essere impostati nelle preferenze di GIMP. Vedere la sezione 
         <xref linkend="gimp-prefs-color-management" /> per i dettagli.
       </para>
+      <para lang="ru">
+        Большинство параметров и профилей здесь описаных можно установить в
+        настройках <acronym>GIMP</acronym>. За дополнительной информацией
+        обратитесь к главе <xref linkend="gimp-prefs-color-management" />.
+      </para>
     </tip>
 
     <variablelist>
@@ -364,6 +421,7 @@
         <term lang="de">Bilderzeugung und Import</term>
         <term lang="fr">En entrée</term>
         <term lang="it">Inserimento</term>
+        <term lang="ru">Ввод</term>
 
         <listitem>
           <para lang="en">
@@ -390,6 +448,12 @@
             digitalizzazione (scanners) normalmente aggiungono un profilo
             di colore alle immagini che producono.
           </para>
+          <para lang="ru">
+            Большинство цифровых фотоаппаратов встраивают цветовой профиль в
+            каждую фотографию без задействия пользователя. У цифровых сканнеров
+            также есть цветовой профиль, который они встраивают в сканнируемые
+            изображения.
+          </para>
 
           <figure>
             <title>
@@ -399,9 +463,10 @@
               </phrase>
               <phrase lang="fr">Appliquer un profil ICC</phrase>
               <phrase lang="it">Applicazione del profilo ICC</phrase>
+              <phrase lang="ru">Применение профиля ICC</phrase>
             </title>
 
-            <mediaobject lang="en">
+            <mediaobject lang="en;ru">
               <imageobject>
                 <imagedata format="PNG"
                   fileref="../images/using/icc-apply.png" />
@@ -459,6 +524,13 @@
             possibile decidere di mantenere il profilo di colore
             incorporato, e l'immagine sarà comunque mostrata correttamente.
           </para>
+          <para lang="ru">
+            При открытии изображения с цветовым профилем <acronym>GIMP</acronym>
+            предлагает преобразовать изображение в цветовую модель RGB для
+            работы. По умолчанию это sRGB, и рекомендуется работать в этой
+            модели. Если сохранить строеный цветовой профиль и не удалять, то
+            изображение всё равно будет показано правильно.
+          </para>
 
           <!-- TODO: en de it - lexa asks: so how exactly is a new Profile
                applied to an image? -->
@@ -483,6 +555,10 @@
             dovrebbe essere, è possibile assegnarne uno manualmente
             all'immagine.
           </para>
+          <para lang="ru">
+            Если цветовой профиль не встроен в изображение, но он известен, или
+            его можно угадать, его можно встроить в изображение.
+          </para>
         </listitem>
       </varlistentry>
 
@@ -491,6 +567,7 @@
         <term lang="de">Anzeige</term>
         <term lang="fr">Affichage</term>
         <term lang="it">Schermo</term>
+        <term lang="ru">Экран</term>
 
         <listitem>
           <para lang="en">
@@ -522,6 +599,12 @@
             i colori dell'immagine verranno mostrati con la massima
             accuratezza possibile.
           </para>
+          <para lang="ru">
+            Для получения лучших результатов необходим цветовой профиль экрана.
+            Если цветовой профиль экрана можно настроить, либо для всей системы,
+            либо в диалоге настроек <acronym>GIMP</acronym>, изображение будет
+            показано наиболее аккуратно.
+          </para>
 
           <para lang="en">
             One of the most important GIMP commands to work with the color
@@ -542,6 +625,10 @@
             Uno dei comandi più importanti di GIMP per lavorare con la
             gestione del colore è descritto in
             <xref linkend="gimp-display-filter-dialog"/>.
+          </para>
+          <para lang="ru">
+            Одна из важных комманд <acronym>GIMP</acronym> по работе с цветами
+            описана в главе <xref linkend="gimp-display-filter-dialog"/>.
           </para>
 
           <para lang="en">
@@ -583,6 +670,16 @@
             <xref linkend="bibliography-online-lprof" />
             per creare un profilo di colore.
           </para>
+          <para lang="ru">
+            Если нет цветового профиля экрана, его сожно создать с помощью
+            калибровочных устройств и измерительных приборов. На системах
+            UNIX необходима
+            <productname>Система цветового управления Argyll</productname>
+            <xref linkend="bibliography-online-argyllcms" /> или
+            <productname>LProf</productname>
+            <xref linkend="bibliography-online-lprof" /> для создания цветовых
+            профилей.
+          </para>
         </listitem>
       </varlistentry>
 
@@ -591,6 +688,7 @@
         <term lang="de">Drucksimulation</term>
         <term lang="fr">Simulation d'impression</term>
         <term lang="it">Simulazione di stampa</term>
+        <term lang="ru">Симуляция отпечатки</term>
 
         <listitem>
           <para lang="en">
@@ -631,6 +729,14 @@
             essere opzionalmente essere evidenziati con un colore grigio
             neutro, permettendo la correzione di tali errori prima di
             mandare l'immagine alla stampante.
+          </para>
+          <para lang="ru">
+            С помощью <acronym>GIMP</acronym> можно получить просмотр того, как
+            изображение будет выглядеть на бумаге. В зависимости от цветового
+            профиля принтера, экран можно переключить в режим электронной
+            проверки. В такой симулированой отпечатке цвета, не воспроизводимые
+            на бумаге, будут помечены (по усмотрению) нейтральным серым цветом,
+            позволяя исправить изображение до отправки его на принтер.
           </para>
         </listitem>
       </varlistentry>
