@@ -68,6 +68,7 @@
 
 
   <glossentry id="glossary-alpha" lang="cs;de;en;es;fr;it;ko;no;sv;zh_CN">
+    <!--TODO de;es;it;ko;no;sv-->
     <glossterm>
       <phrase lang="cs">Alfa</phrase>
       <phrase lang="en;de;fr;sv">Alpha</phrase>
@@ -95,15 +96,62 @@
       </para>
 
       <para lang="en">
-        An Alpha value indicates the transparency of a pixel. The smaller the
-        alpha value of a pixel, the more visible the colors below it. A pixel
-        with an alpha value of 0 is completely transparent.
+        An Alpha value indicates the transparency of a pixel. Besides its
+        Red, Green and Blue values, a pixel has an alpha value. The smaller
+        the alpha value of a pixel, the more visible the colors below it. A
+        pixel with an alpha value of 0 is completely transparent. A pixel
+        with an alpha value of 255 is fully opaque. You can know the alpha
+        value of a pixel in a layer by using the
+        <menuchoice>
+          <guimenu>Dialogs</guimenu>
+          <guimenuitem>Pointer</guimenuitem>
+        </menuchoice>
+        with a one pixel Pencil tool.
       </para>
       <para lang="en">
-         Within <acronym>GIMP</acronym>, Alpha values can be associated
-         with the image as a whole (the Alpha Channel) and with individual
-         layers (a Layer Mask). You can view these by using the Channels
-         dialog and the Layers dialog, respectively.
+        There is no grayscale representation of the alpha of a layer. The
+        Alpha Channel you can see in the Channel Dialog is that of the
+        whole composite image. If a pixel is opaque only in a layer and
+        transparent in all other layers, it will be white in the Alpha
+        Channel.
+      </para>
+      <para lang="en">
+        Nevertheless, you can have a representation of th Alpha of a layer
+        in several ways:
+        <itemizedlist>
+          <listitem>
+            <para>
+               By using the
+               <menuchoice>
+                 <guimenu>Layers</guimenu>
+                 <guisubmenu>Transparency</guisubmenu>
+                 <guimenuitem>Alpha to selection</guimenuitem>
+               </menuchoice> command then the
+               <menuchoice>
+                 <guimenu>Select</guimenu>
+                 <guimenuitem>Save to Channel</guimenuitem>
+               </menuchoice> command. The new channel which shows up in the
+               Channel Dialog is named <quote>Selection Mask Copy</quote>.
+             </para>
+           </listitem>
+           <listitem>
+             <para>
+               You can also
+               <menuchoice>
+                 <guimenu>Colors</guimenu>
+                 <guisubmenu>Components</guisubmenu>
+                 <guimenuitem>Decompose</guimenuitem>
+               </menuchoice> the layer to RGBA: you get an
+               <quote>Alpha</quote> layer.
+             </para>
+           </listitem>
+           <listitem>
+             <para>
+               At last, a layer mask created from the Alpha channel of the
+               layer of course contains this Alpha channel.
+             </para>
+           </listitem>
+         </itemizedlist>
        </para>
        <para lang="en">
          With some image
@@ -120,10 +168,10 @@
          vollkommen transparent.
        </para>
        <para lang="de">
-        Ein Fachartikel, welcher sich ausführlich mit dem Thema beschäftigt,
-        findet sich bei Wikipedia
-        <xref linkend="bibliography-online-wkpd-alphakanal" />.
-      </para>
+         Ein Fachartikel, welcher sich ausführlich mit dem Thema beschäftigt,
+         findet sich bei Wikipedia
+         <xref linkend="bibliography-online-wkpd-alphakanal" />.
+       </para>
 
        <para lang="es">
          Se refiere a la transparencia. Un canal alfa permite controlar la
@@ -134,17 +182,64 @@
        </para>
 
        <para lang="fr">
-         Se rapporte à la transparence. Un canal Alpha permet de contrôler la
-         transparence des pixels. Plus la valeur de l'alpha est faible, et
-         plus le pixel est transparent. Un pixel avec une valeur Alpha à 0 est
-         complètement transparent.
+         L'Alpha se rapporte à la transparence. Outre ses valeurs de Rouge,
+         de Vert et de Bleu, chaque pixel d'un calque possède une valeur
+         Alpha. Plus la valeur de l'alpha est faible, et plus le pixel est
+         transparent. Un pixel avec une valeur Alpha à 0 est complètement
+         transparent. Un pixel avec une valeur à 255 est complètement opaque.
+         Vous pouvez connaître la valeur Alpha d'un pixel dans le calque
+         actif en utilisant le Pointeur avec le crayon muni d'une pointe d'un
+         seul pixel.
        </para>
        <para lang="fr">
-         La transparence peut s'appliquer à l'ensemble de l'image (canal
-         Alpha) ou à un calque particulier (Masque de calque). Vous pouvez
-         voir, dans les fenêtres de dialogue des Canaux et des Calques, si un
-         canal Alpha ou un masque de calque existe.
+         Il n'existe pas, normalement, de représentation des valeurs Alpha
+         d'un calque. En effet, le canal Alpha que vous voyez dans la Fenêtre
+         des canaux est celui de l'ensemble des calques de l'image composite.
+         Il suffit que le pixel en cause ait une opacité complète dans un des
+         calques superposés pour que sa représentation soit le blanc dans le
+         canal Alpha, même si ce pixel est transparent dans le calque actif.
        </para>
+       <para lang="fr">
+         Vous pouvez néanmoins avoir une représentation des valeurs Alpha du
+         calque actif de différentes façons :
+         <itemizedlist>
+           <listitem>
+             <para>
+               En utilisant la commande
+               <menuchoice>
+                 <guimenu>Calques</guimenu>
+                 <guisubmenu>Transparence</guisubmenu>
+                 <guimenuitem>Alpha vers sélection</guimenuitem>
+               </menuchoice> puis la commande
+               <menuchoice>
+                 <guimenu>Sélection</guimenu>
+                 <guimenuitem>Enregistrer dans un canal</guimenuitem>
+               </menuchoice>
+               Le nouveau canal qui apparaît dans la fenêtre du Dialogue des
+               canaux s'appelle <quote>Copie de masque de sélection</quote>.
+             </para>
+           </listitem>
+           <listitem>
+             <para>
+               Vous pouvez aussi
+               <menuchoice>
+                 <guimenu>Couleurs</guimenu>
+                 <guisubmenu>Composants</guisubmenu>
+                 <guimenuitem>Décomposer</guimenuitem>
+               </menuchoice>
+               le calque en mode RVBA : vous obtenez un calque
+               nommé <quote>Alpha</quote>.
+             </para>
+           </listitem>
+           <listitem>
+             <para>
+               Enfin, un masque de calque créé à partir du canal Alpha du
+               calque représente bien sûr ce canal Alpha.
+             </para>
+           </listitem>
+         </itemizedlist>
+       </para>
+
        <para lang="fr">
          Certains formats d'image, le format GIF et le format PNG indexé en
          255 couleurs, ne permettent qu'une transparence à deux niveaux:
