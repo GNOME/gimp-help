@@ -2,17 +2,14 @@
 
 SUBDIRS = quickreference
 
-# languages we want to exclude from installing images
-image_find_exclude = \
-	\( \
-	-name 'zh_CN' -type d -o \
-	-name 'cs' -type d -o \
-	-name 'hr' -type d \
-	\)
-
-image_find_predicates = \
+# Options for the "find images" command:
+image_find_predicates =     \
 	-name '.svn' -prune \
-	-o $(image_find_exclude) -prune \
+	-o \
+	  -type d \
+	  \( -name '[a-z][a-z]' -o -name '[a-z][a-z]_[A-Z][A-Z]' \) \
+	  $(image_lang_exclude) \
+	  -prune \
 	-o \
 	\( \
 	-name '*.png' -o \
@@ -21,6 +18,15 @@ image_find_predicates = \
 	-name '*.xcf' -o \
 	-name '*.gif'    \
 	\) -print
+
+# languages we want to exclude from installing images
+image_lang_exclude = \
+	$(shell echo $(strip $(ALL_LINGUAS)) | \
+	        sed -e '/^$$/d; \
+		        s/[[:blank:]]/ -o -name /g; \
+			s/^/! \\( -name /; \
+			s/$$/ \\)/ ' \
+	)
 
 html_files_find_predicates = \
 	-type f -name '*.*' \
