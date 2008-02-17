@@ -15,8 +15,8 @@
     <revhistory>
       <revision lang="de">
         <revnumber>$Revision$</revnumber>
-        <date>2007-10-07</date>
-        <authorinitials>lexa</authorinitials>
+        <date>2008-02-17</date>
+        <authorinitials>ude</authorinitials>
       </revision>
       <revision lang="fr">
         <revnumber>$Revision$</revnumber>
@@ -1596,7 +1596,7 @@
             Unter <guilabel>Ähnliche Farben finden</guilabel> sind drei
             Einstellungen untergebracht: <guilabel>Transparente Bereiche
             füllen</guilabel>, <guilabel>Vereinigung abtasten</guilabel> und
-            der <guilabel>Schwellwert</guilabel>.
+            <guilabel>Schwelle</guilabel>.
           </para>
           <para lang="es">
             Bajo esta sección puede encontrar dos opciones:
@@ -1862,8 +1862,9 @@
                 </para>
                 <para lang="de">
                   Mit dieser Eigenschaft legen Sie fest, welche Komponente des
-                  Bildes von GIMP zur Berechnung der Ähnlichkeit verwendet
-                  wird, um die Grenzen des Füllens zu bestimmen.
+                  Bildes von <acronym>GIMP</acronym> zur Berechnung der
+                  Ähnlichkeit verwendet wird, um die Grenzen des Füllens zu
+                  bestimmen.
                 </para>
                 <para lang="pl">
                   Opcja ta pozwala na wybór części obrazu, której program
@@ -1878,6 +1879,7 @@
 
                 <para lang="en">
                   The components you can choose from are
+                  <guimenuitem>Composite</guimenuitem>,
                   <guimenuitem>Red</guimenuitem>,
                   <guimenuitem>Green</guimenuitem>,
                   <guimenuitem>Blue</guimenuitem>,
@@ -1886,7 +1888,8 @@
                   <guimenuitem>Value</guimenuitem>.
                 </para>
                 <para lang="de">
-                  Die Komponenten, welche hier zur Auswahl stehen umfassen
+                  Die Komponenten, welche hier zur Auswahl stehen, umfassen
+                  <guimenuitem>Zusammensetzung</guimenuitem>,
                   <guimenuitem>Rot</guimenuitem>,
                   <guimenuitem>Grün</guimenuitem>,
                   <guimenuitem>Blau</guimenuitem>,
@@ -1894,6 +1897,7 @@
                   <guimenuitem>Sättigung</guimenuitem> und
                   <guimenuitem>Wert</guimenuitem>.
                 </para>
+                <!--TODO pl ru: new?: "Composite"-->
                 <para lang="pl">
                   Wypełnienie posiada następujące opcje:
                   <guimenuitem>Czerwony</guimenuitem>,
@@ -1913,13 +1917,21 @@
                   <guimenuitem>Яркость</guimenuitem>.
                 </para>
 
-                <!--TODO de;es;it;no;pl-->
+                <!--TODO es;it;no;pl-->
                 <para lang="en">
                   This option is not easy to understand. You have chosen,
                   for example, the Red channel. When you click on any pixel,
                   the tool searches for contiguous pixels similar for
                   <emphasis>the red channel</emphasis> to the clicked pixel,
                   according to the set threshold. Here is an example:
+                </para>
+                <para lang="de">
+                  Diese Eigenschaft ist nicht ganz einfach zu verstehen.
+                  Angenommen, Sie haben Rot ausgewählt. Wenn Sie nun auf
+                  irgendein Pixel klicken, sucht das Werkzeug nach
+                  zusammenhängenden Pixeln, die im <emphasis>roten
+                  Kanal</emphasis> einen - entsprechend dem festgelegten
+                  Schwellwert - ähnlichen Wert haben. Dazu ein paar Beispiele:
                 </para>
                 <para lang="fr">
                   Cette option n'est pas facile à comprendre. Vous avez ,
@@ -1942,6 +1954,12 @@
                   (0;0;255). We are going to use the Bucket-fill tool
                   with the magenta color and a Threshold set to 15.
                 </para>
+                <para lang="de">
+                  <emphasis>Originalbild:</emphasis> drei Streifen mit
+                  Farbverläufen in reinem Rot (255,0,0), Grün (0,255,0) und
+                  Blau (0,0,255). Das Fülleimer-Werkzeug wird mit der Farbe
+                  Magenta (255,0,255) und Schwellwert 15 angewendet.
+                </para>
                 <para lang="fr">
                   Image d'origine : trois bandes de dégradés de
                   couleurs pures. Rouge (255;0;0), Vert (0;255;0), Bleu
@@ -1958,6 +1976,12 @@
                   Image 1: Fill By = Composite. We successively clicked in the
                   three color strips. Every strip is filled according
                   to the threshold.
+                </para>
+                <para lang="de">
+                  <emphasis>Beispiel 1:</emphasis> Füllen nach
+                  <guilabel>Zusammensetzung</guilabel>.  Es werden
+                  nacheinander alle drei Streifen angeklickt. Jeder Streifen
+                  wird gemäß Schwellwert gefüllt.
                 </para>
                 <para lang="fr">
                   Image 1 : Remplir via = Composite. Nous avons cliqué
@@ -1978,6 +2002,17 @@
                   of pixels in the red channel is 0, very much different from
                   the red channel value of the clicked pixel: the color
                   doesn't spread to them.
+                </para>
+                <para lang="de">
+                  <emphasis>Beispiel 2:</emphasis> Füllen nach
+                  <guilabel>Rot</guilabel>. Der rote Streifen wird angeklickt.
+                  Das Werkzeug sucht nach zusammenhängenden Pixel, die im
+                  roten Kanal einen ähnlichen Wert haben, so wie durch den
+                  Schwellwert festgelegt. Nur ein kleiner Bereich entspricht
+                  diesen Anforderungen. Im grünen und blauen Streifen ist der
+                  Wert des Pixels im roten Kanal 0, also weit entfernt vom
+                  roten Kanalwert des angeklickten Pixels. Diese Streifen
+                  werden also nicht gefüllt.
                 </para>
                 <para lang="fr">
                   Image 2 : Remplir via = Rouge. Nous avons cliqué sur la
@@ -2002,6 +2037,13 @@
                   0. All pixels in the green and the blue strips have the
                   same red channel value (0): they are all painted.
                 </para>
+                <para lang="de">
+                  <emphasis>Beispiel 3:</emphasis> Füllen nach
+                  <guilabel>Rot</guilabel>. Der grüne Streifen wird
+                  angeklickt. Dort ist der rote Kanalwert des angeklickten
+                  Pixels 0. Alle Pixel haben im grünen und blauen Kanal
+                  denselben Wert (0), also werden sie alle gefüllt.
+                </para>
                 <para lang="fr">
                   Image 3 : Remplir via = Rouge. Nous avons cliqué sur la
                   bande verte. Là, la valeur du pixel cliqué dans le canal
@@ -2015,12 +2057,20 @@
                   они зарисуются.
                 </para>
 
-
-                <figure lang="en;fr;ru">
+                <figure lang="en;de;fr;ru">
                   <title>
-                    <phrase lang="en">Example for <quote>Fill By</quote></phrase>
-                    <phrase lang="fr">Exemple pour <quote>Remplir via</quote></phrase>
-                    <phrase lang="ru">Пример для <quote>Заполнить</quote></phrase>
+                    <phrase lang="en">
+                      Example for <quote>Fill By</quote>
+                    </phrase>
+                    <phrase lang="de">
+                      Beispiel für <quote>Füllen nach</quote>
+                    </phrase>
+                    <phrase lang="fr">
+                      Exemple pour <quote>Remplir via</quote>
+                    </phrase>
+                    <phrase lang="ru">
+                      Пример для <quote>Заполнить</quote>
+                    </phrase>
                   </title>
                   <mediaobject>
                     <imageobject>
@@ -2028,12 +2078,9 @@
                         fileref="../images/toolbox/fill-by-0.png" />
                     </imageobject>
                     <caption>
-                      <para lang="en">
-                        Original image
-                      </para>
-                      <para lang="fr">
-                        Image d'origine
-                      </para>
+                      <para lang="en">Original image</para>
+                      <para lang="de">Originalbild</para>
+                      <para lang="fr">Image d'origine</para>
                       <para lang="ru">Искомое изображение</para>
                     </caption>
                   </mediaobject>
@@ -2043,9 +2090,8 @@
                                  fileref="../images/toolbox/fill-by-1.png" />
                     </imageobject>
                     <caption>
-                      <para lang="en;fr">
-                        Image 1
-                      </para>
+                      <para lang="en;fr">Image 1</para>
+                      <para lang="de">Beispiel 1</para>
                       <para lang="ru">Изображение  1</para>
                     </caption>
                   </mediaobject>
@@ -2055,9 +2101,8 @@
                                  fileref="../images/toolbox/fill-by-2.png" />
                     </imageobject>
                     <caption>
-                      <para lang="en;fr">
-                        Image 2
-                      </para>
+                      <para lang="en;fr">Image 2</para>
+                      <para lang="de">Beispiel 2</para>
                       <para lang="ru">Изображение 2</para>
                     </caption>
                   </mediaobject>
@@ -2067,9 +2112,8 @@
                                  fileref="../images/toolbox/fill-by-3.png" />
                     </imageobject>
                     <caption>
-                      <para lang="en;fr">
-                        Image 3
-                      </para>
+                      <para lang="en;fr">Image 3</para>
+                      <para lang="de">Beispiel 3</para>
                       <para lang="ru">Изображение 3</para>
                     </caption>
                   </mediaobject>
