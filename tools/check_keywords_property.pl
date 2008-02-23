@@ -5,9 +5,9 @@
 # This script checks for every xml file if the 'svn:keywords' property
 # is set correctly.
 #
-# It calls "svn propget 'svn:keywords'" for every file and writes the
-# file name to stdout if no property set, plus optionally property
-# in parantheses if non-default property set.
+# It calls "svn --recursive propget 'svn:keywords' src" and writes
+# file names to stdout if no property or non-default property set,
+# and optionally its non-default property (in parantheses).
 #
 # Usage:
 #     cd <top_srcdir>  # where src/ and tools/ are
@@ -16,11 +16,12 @@
 #     perl tools/check_keywords_property.pl [-v]
 #
 
-require 5.008;	# for the special "open" list form used
 use warnings;
 use strict;
 use Getopt::Long;
-use File::Find;
+
+eval { require 5.008; };	# needed for the special "open()" list form
+my $HAVE_NEW_OPEN = $@ ? 0 : 1;
 
 
 # --------------------------------------------------------------
@@ -29,7 +30,6 @@ use File::Find;
 
 my $Default_property='Author Date Id Revision';
 my %property;	# (filename, property) pairs
-my $seen = "";	# any value except 'undef'
 my $verbose = 0;
 
 
@@ -67,126 +67,68 @@ unless (-d 'src' && -d '.svn' && system('svn info >/dev/null 2>&1') == 0) {
 
 
 # --------------------------------------------------------------
-#  Find all *.xml files in the "src/" directory hierarchy
-#  and add the file names to the %property hash
+#  Print 'svn:keywords' properties
 # --------------------------------------------------------------
 
-print STDERR "Searching for missing/wrong properties:\n",
-             "    searching xml files ...\n"             if $verbose;
-
-find( sub { /^\.svn/ and ($File::Find::prune = 1)
-                             or
-            /\.xml$/ and ($property{$File::Find::name} = $seen)
-      },
-      "src" );
-
-
-# --------------------------------------------------------------
-#  Print 'svn:keywords' property for every xml file
-# --------------------------------------------------------------
-
-print STDERR "    checking ", scalar keys %property, " xml files ...\n"
+print STDERR "Searching for files with missing/wrong properties...\n"
     if $verbose;
 
-# See below for detailed description.
-print_properties();
-
-# --------------------------------------------------------------
-#  The "print_properties()" subroutine produces a list of
-#  file names and its 'svn:keywords' properties to be read
-#  from the main program's STDIN:
-#  (1) First a child is forked connected to STDIN.
-#  (2) This child creates another process ("xargs svn ..."), and
-#      pipes the list of file names stored in the %property hash
-#      to it.
-#  (3) The "xargs" process recieves this file list from STDIN
-#      and executes
-#          "xargs svn propget svn:keywords <file> ..."
-#      to produce a list of file names and properties on STDOUT,
-#      which is the main program's STDIN, due to (1).
-# --------------------------------------------------------------
-
-sub print_properties {
-    my $pid = open(STDIN, '-|') and return;  # parent (reads from pipe)
-    die "Cannot fork: $!\n" unless defined $pid;
-
-    # pipe output to command
-    open(PIPE_TO_XARGS_SVN, "|-",
-         '/usr/bin/env',
-         'xargs',
-         'svn', 'propget', 'svn:keywords',
-         # Format of "svn propget svn:keywords <file1> <file2> ... " output is
-         #     <file_1> - <property>             
-         #     ...
-         #     <file_n> - <property>             
-         # However, when there is only one remaining xargs argument, then we
-         # will get the output (if any) from "svn propget svn:keywords <file>":
-         #     <property>
-         # So we insert an additional filename as argument, forcing the
-         # argument list to have at least two elements:
-         'src/gimp.xml'
-    )
+if ($HAVE_NEW_OPEN) {
+    open(PROPLIST, '-|', 'svn', '--recursive', 'propget', 'svn:keywords', 'src')
         or die "Cannot open pipe to SVN: $!\n";
-
-    # Pass list of files to "xargs svn" process:
-    foreach (keys %property) { print PIPE_TO_XARGS_SVN $_, "\n" }
-
-    close(PIPE_TO_XARGS_SVN) or die "Cannot close pipe to SVN: $!\n";
-    exit;
+} else {
+    open(PROPLIST, "svn --recursive propget svn:keywords src |")
+        or die "Cannot open pipe to SVN: $!\n";
 }
+
 
 # --------------------------------------------------------------
 #  Read list of file names and 'svn:keywords' properties
-#  and add the properties to the %property hash
+#  and add files to the %property hash if they don't have the
+#  default property
 # --------------------------------------------------------------
 
-while (<>) {
+my $nfiles = 0;
+
+while (<PROPLIST>) {
     # Format of svn output:
     #     <file-name> <space> '-' <space> <svn-properties>
     #     ...
-    if (/^(\S+) - *([^[:space:]].*)?$/) {
-        # 'undef' will indicate default property ("nothing to do")
+    chomp;
+    if (/^(\S+) - *(\S.*)?$/) {
+        ++$nfiles;
         if (defined $2) {
-            $property{$1} = ($2 eq $Default_property) ? undef : $2
+            $property{$1} = $2 if ($2 ne $Default_property);
         } else {
             $property{$1} = "";
         }
     }
 }
-close(STDIN) or die "Cannot close pipe from SVN: $!\n";
+close(PROPLIST) or die "Cannot close pipe from SVN: $!\n";
 
 
 # --------------------------------------------------------------
 #  Read the %property hash:
 #      key:   file name
 #      value: svn:keywords property:
-#           undef  if default property
 #              ""  if no property
 #          string  if non-default property
 # --------------------------------------------------------------
 
-my %matches;
+print STDERR "Found ", scalar keys(%property), " of $nfiles files",
+             (scalar keys(%property) > 0 ? ":" : "."), "\n"
+    if $verbose;
 
-# Read list and prepare for output:
-while ( (my $file, my $prop) = each(%property) ) {
-    next unless defined $prop;	# skip files with default property
-    $matches{$file} = ($prop && $verbose) ? " ($prop)" : ""; 
-}
-
-print STDERR "Found ", scalar keys %matches,
-             " file", (keys %matches != 1 ? "s" : ""),
-             " with missing/wrong property",
-             (keys %matches > 0 ? ":" : "."), "\n"    if $verbose;
 # Print sorted list of matches:
-foreach (sort keys(%matches)) {
-    print $_, $matches{$_}, "\n";
+foreach (sort keys(%property)) {
+    print $_, ($property{$_} ? " ($property{$_})" : ""), "\n";
 }
 
 
 # Exit code:
 #       0  if no file without default property found,
-#     254  if one or more files without default property found,
+#     128  if one or more files without default property found,
 #       *  on error.
-exit((scalar keys(%matches)) ? 254 : 0);
+exit((scalar keys(%property)) ? 128 : 0);
 
 
