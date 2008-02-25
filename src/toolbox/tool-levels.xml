@@ -22,8 +22,8 @@
       </revision>
       <revision lang="de">
         <revnumber>$Revision$</revnumber>
-        <date>2005-07-08</date>
-        <authorinitials>a.w</authorinitials>
+        <date>2008-02-25</date>
+        <authorinitials>ude</authorinitials>
       </revision>
       <revision lang="es">
         <revnumber>$Revision$</revnumber>
@@ -215,6 +215,16 @@
       <quote>Werte</quote> zu aktivieren:
     </para>
     <itemizedlist lang="de">
+      <listitem>
+        <para>
+          über das Menü
+          <menuchoice>
+            <guimenu><accel>F</accel>arben</guimenu>
+            <guimenuitem><accel>W</accel>erte</guimenuitem>
+          </menuchoice>
+          im Bildfenster,
+        </para>
+      </listitem>
       <listitem>
         <para>
           über das Menü
@@ -510,10 +520,10 @@
           <para lang="de">
             Diese Eigenschaft bestimmt, auf welchem Kanal das Werkzeug
             ausgeführt wird. Es stehen folgende Werte zur Auswahl:
-            <guilabel>Wert</guilabel> beeinflusst die Helligkeit,
+            <guilabel>Wert</guilabel> bestimmt die Helligkeit,
             <guilabel>Rot</guilabel>, <guilabel>Grün</guilabel> und
-            <guilabel>Blau</guilabel> die jeweiligen Farbkanäle sowie
-            <guilabel>Alpha</guilabel>, sofern vorhanden.
+            <guilabel>Blau</guilabel> den jeweiligen Farbkanal sowie
+            <guilabel>Alpha</guilabel> die Transparenz (sofern vorhanden).
           </para>
           <para lang="es">
             Puede seleccionar el canal específico que será modificado por la
@@ -673,14 +683,19 @@
           <para lang="de">
             Dieser Bereich zeigt das aktuelle
             <link linkend="glossary-histogram">Histogramm</link> des Bildes
-            an. In diesem werden die Helligkeitswerte von dunkel bis hell
-            darstellt. Unterhalb des Histogrammes befinden sich ein
-            Farbverlauf sowie drei dreieckige Regler Diese repräsentieren,
-            korrespondierend mit den darunter liegenden Pipetten, die
-            dunklen, mittleren und hellen Bereiche des aktuellen Bildes.
+            an. In diesem werden die dunklen, mittleren und hellen Bereiche
+            der aktiven Ebene oder Auswahl auf der waagerechten  Achse von 0
+            (dunkel) bis 255 (hell) darstellt. Die schwarze Fläche unterhalb
+            der Kurve repräsentiert alle Pixel für den ausgewählten Kanal. Ein
+            farblich ausgewogenes Bild entspricht einer Gleichverteilung der
+            drei Helligkeitsbereiche auf dem gesamten Wertebereich. Bei einem
+            Bild mit beispielsweise Blau als dominanter Farbe wird der grüne
+            und rote Kanal im Histogramm nach links verschoben sein, was durch
+            den Mangel an hellen grünen und roten Farbanteilen verursacht
+            wird.
           </para>
           <para lang="de">
-            Die Werte können auf drei Wegen verändert werden:
+            Die Werte können auf drei Wege verändert werden:
           </para>
 
           <para lang="es">
@@ -816,17 +831,35 @@
                 Tři posuvné trojúhelníky, černý pro tmavé, šedý pro střední
                 (též známý jako hodnota gama) a bílý pro světlé tóny.
               </para>
+
               <para lang="de">
-                Wie schon beschrieben, repräsentieren die drei Dreiecke
-                dunkle, mittlere und helle Bildbereiche. Der mittlere Regler
-                repräsentiert dabei den
-                <link linkend="glossary-gamma">Gammawert</link>.
-                Sie können diese Dreiecke jeweils nach links oder rechts
-                verschieben, um eine Veränderung der Helligkeit für diesen
-                Bildbereich sichtbar zu machen. Verschieben Sie zum Beispiel
-                das mittleren Dreieck nach rechts, wird das Bild zunehmend
-                dunkler.
+                Mit den drei Schiebereglern in Form von Dreiecken, die die
+                dunklen (Schatten), mittleren (Gamma) und hellen
+                (Glanzlichter) Bildbereiche repräsentieren.
               </para>
+              <para lang="de">
+                Der schwarze Schieberegler legt den
+                <emphasis>Schwarzpunkt</emphasis> fest: alle Pixel mit diesem
+                oder einem kleineren Wert werden schwarz (farblos, wenn ein
+                Farbkanal ausgewählt wurde, bzw. transparent, wenn der
+                Alphakanal gewählt wurde).
+              </para>
+              <para lang="de">
+                Der weiße Schieberegler legt den
+                <emphasis>Weißpunkt</emphasis> fest: alle Pixel mit diesem
+                oder einem größeren Wert werden weiß (farbig, wenn ein
+                Farbkanal ausgewählt wurde, vollständig deckend, wenn der
+                Alphakanal gewählt wurde).
+              </para>
+              <para lang="de">
+                Der mittlere, graue Schieberegler legt den
+                <link linkend="glossary-gamma">Gammawert</link> fest.
+                Verschieben Sie ihn zum Beispiel nach links, wird das Bild
+                zunehmend heller (farbiger bzw. weniger transparent).
+                Verschieben Sie ihn nach rechts, wird das Bild dunkler
+                (farbloser bzw. transparenter).
+              </para>
+
               <para lang="es">
                 Tres triángulos como deslizadores: uno negro para los tonos
                 oscuros, uno gris para los medios (a menudo, llamado valor
@@ -903,7 +936,7 @@
             </listitem>
 
             <listitem>
-              <!--TODO de;es;it;no;pl v2.4-->
+              <!--TODO es;it;no;pl v2.4-->
               <para lang="en">
                 Two eye-droppers: when you click them, the mouse pointer
                 becomes an eye-dropper. Then clicking on the image determines
@@ -918,10 +951,10 @@
                 zobrazení/Informační okno (karta Kurzor).
               </para>
               <para lang="de">
-                Alternativ zur Benutzung der Dreiecke können Sie die Pipetten
-                verwenden, um auf dunkle, mittlere und helle Pixel im Bild zu
-                klicken. Damit können die Pipetten Helligkeitswerte der Pixel
-                aufnehmen.
+                Alternativ zur Benutzung der Dreiecke können Sie die zwei
+                Pipetten verwenden. Der Mauszeiger nimmt dann die Form einer
+                Pipette an. Ein Klick in das Bild legt dann den Weiß- (rechte
+                Pipette) bzw. Schwarzpunkt (linke Pipette) fest. 
               </para>
               <para lang="es">
                 Dos cuentagotas: use el izquierdo  para coger el color más
@@ -981,7 +1014,7 @@
               </para>
               <para lang="de">
                 Die Eingabefelder neben den Pipetten lassen eine direkte
-                Werteingaben zu.
+                Werteingabe zu.
               </para>
               <para lang="es">Tres casillas para entrar valores
                 directamente.
@@ -1008,14 +1041,23 @@
             </listitem>
           </itemizedlist>
 
+          <!--TODO es;it;no;pl-->
           <para lang="en">
-            <!--TODO de;es;it;no;pl-->
             Input Levels are used to lighten highlights (bright tones),
             darken shadows (dark tones), change the balance of bright and
             dark tones. Move sliders to the left to increase lightness
             (increase the choosen color / increase opacity). Move the sliders
             to the right to lessen lightness (lessen the choosen color /
             lessen opacity)).
+          </para>
+          <para lang="de">
+            Zusammenfassung: Mit den Quellwerten werden Glanzlichter
+            aufgehellt, Schatten verdunkelt und das Verhältnis von hellen und
+            dunklen Tönen verändert. Wenn Sie die Dreiecke nach links
+            verschieben, erhöhen Sie die Helligkeit (durch Erhöhung der Farbe
+            oder der Deckkraft). Wenn Sie sie nach rechts verschieben,
+            vermindern Sie die Helligkeit (Verminderung der gewählten Farbe
+            bzw. der Deckkraft).
           </para>
           <para lang="fr">
             Les Niveaux d'entrée sont utilisés pour éclaircir les tons
@@ -1032,7 +1074,8 @@
             цвет или прозрачность). Движение ползунков вправо уменьшает
             светлость (выбранный цвет или прозрачность).
           </para>
-          <mediaobject>
+
+          <mediaobject lang="en;fr;ru">
             <imageobject>
               <imagedata format="PNG"
                          fileref="../images/toolbox/levels-input-1.png" />
@@ -1055,8 +1098,9 @@
               </para>
             </caption>
           </mediaobject>
+
           <figure lang="en;fr;ru">
-            <!--TODO de;es;it;no;pl-->
+            <!--TODO es;it;no;pl-->
             <title>
               <phrase lang="en">Example for Input Levels</phrase>
               <phrase lang="fr">Exemple pour Niveaux d'entrée</phrase>
@@ -1127,6 +1171,72 @@
               </caption>
             </mediaobject>
           </figure>
+
+          <orderedlist lang="de">
+            <title>
+              <phrase lang="en">Examples for Input Levels</phrase>
+              <phrase lang="de">Beispiele für Quellwerte</phrase>
+            </title>
+            <para lang="en">
+              The original images is a gray-scaled image....
+            </para>
+            <para lang="de">
+              Das Ausgangsbild ist ein Graustufenbild mit drei Streifen:
+              Schatten (64), mittlere Helligkeit, (127), Glanzlicht (192). Das
+              Histogramm zeigt drei Zacken, für jeden Helligkeitsbereich
+              einen:
+            </para>
+            <mediaobject>
+              <imageobject lang="de">
+                <imagedata format="PNG"
+                  fileref="../images/toolbox/de/levels-input-ex0.png" />
+              </imageobject>
+              <caption>
+                <para lang="en">Original image</para>
+                <para lang="de">Ausgangsbild</para>
+              </caption>
+            </mediaobject>
+
+            <listitem>
+              <para lang="de">
+                Der Kanal <quote>Wert</quote> ist ausgewählt. Der schwarze
+                Regler (Schatten) wurde bis zum ersten Ausschlag (Schatten)
+                verschoben.  Der Wert 64 wird zu 0 und der dunkle Streifen
+                wird schwarz (0).  Der graue Regler (Gamma) wurde automatisch
+                in die Mitte des Farbbereichs versetzt. Die Mitten wurden
+                dunkler (84), ebenso die Glanzlichter (171).
+              </para>
+              <mediaobject>
+                <imageobject lang="de">
+                  <imagedata format="PNG"
+                    fileref="../images/toolbox/de/levels-input-ex1.png" />
+                </imageobject>
+                <caption>
+                  <para lang="en">Black slider moved</para>
+                  <para lang="de">Schwarzer Regler verschoben</para>
+                </caption>
+              </mediaobject>
+            </listitem>
+            <listitem>
+              <para lang="de">
+                Der weiße Regler (Glanzlichter) wurde bis zum nächsten Ausschlag
+                (Glanzlichter) verschoben. Der Wert 192 wird zu 255 und der helle
+                Streifen wird weiß (255). Der graue Regler (Gamma) wurde
+                automatisch in die Mitte des Farbbereichs versetzt. Die Mitten
+                wurden heller (169), ebenso die Schatten (85).
+              </para>
+              <mediaobject>
+                <imageobject lang="de">
+                  <imagedata format="PNG"
+                    fileref="../images/toolbox/de/levels-input-ex2.png" />
+                </imageobject>
+                <caption>
+                  <para lang="en">White slider moved</para>
+                  <para lang="de">Weißer Regler verschoben</para>
+                </caption>
+              </mediaobject>
+            </listitem>
+          </orderedlist>
         </listitem>
       </varlistentry>
 
@@ -1150,33 +1260,9 @@
             Levels.
           </para>
           <para lang="en">
-            <!--TODO de;es;it;no;pl-->
+            <!--TODO es;it;no;pl-->
             Output levels force the tone range to fit the new limits you have
             set.
-            <itemizedlist>
-              <listitem>
-                <para>
-                  Working with Value: values are compressed and look more
-                  alike; so contrast is reduced. Shadows are made lighter:
-                  new details can show up but contrast is less; a compromise
-                  is necessary. Hightlights are made darker.
-                </para>
-              </listitem>
-              <listitem>
-                <para>
-                  Working with Color channels: if you the use the green
-                  channel for example and set the output levels between 100
-                  and 140, all pixels with some green, even a low value, will
-                  have their green channel value shifted between 100 and 140.
-                </para>
-              </listitem>
-              <listitem>
-                <para>
-                  Working with Alpha channel: all Alpha values will be
-                  shifted to the range you have set.
-                </para>
-              </listitem>
-            </itemizedlist>
           </para>
 
           <para lang="cs">
@@ -1184,6 +1270,7 @@
             Hodnoty můžete zadávat přímo do vstupních polí nebo použít
             posuvné trojúhelníčky.
           </para>
+
           <para lang="de">
             Die Zielwerte legen den Bereich fest, in den die Änderungen an
             den Quellwerten abgebildet werden. Standardmäßig bilden die
@@ -1192,6 +1279,7 @@
             Abbildungsbereich einschränken. Alternativ können Sie die beiden
             Eingabefelder verwenden, um direkt Werte einzutragen.
           </para>
+
           <para lang="es">
             Los niveles de salida permiten una selección manual de un rango
             de salida de niveles. Hay unas flechas aquí, que se pueden usar
@@ -1202,30 +1290,6 @@
             Là aussi vous disposez de curseurs et de boîtes de texte qui vous
             permettent de contraindre le champ tonal que vous avez paramétré
             en entrée à occuper un intervalle particulier.
-            <itemizedlist>
-              <listitem>
-                <para>
-                  Avec Valeur : Les valeurs sont comprimées et se ressemblent
-                  plus : le contraste est donc diminué. des détails nouveaux
-                  peuvent apparaître dans l'image, mais le contraste est
-                  diminué. Un compromis est nécessaire.
-                </para>
-              </listitem>
-              <listitem>
-                <para>
-                  Avec un canal de couleur : si, par exemple, vous avez
-                  choisi le canal vert et fixé l'intervalle de sortie entre
-                  100 et 140, tous les pixels ayant tant soit peu de vert
-                  verront leur vert prendre une valeur entre 100 et 140.
-                </para>
-              </listitem>
-              <listitem>
-                <para>
-                  Avec le canal Alpha : toutes les valeurs de transparence
-                  prendront une valeur dans les limites de l'intervalle fixé.
-                </para>
-              </listitem>
-            </itemizedlist>
           </para>
 
           <para lang="it">
@@ -1252,46 +1316,97 @@
           <para lang="ru">
             Уровни на выходе заставляют тональный диапазон вместиться в новые
             ограничения.
-            <itemizedlist>
-              <listitem>
-                <para>
-                  Работа с яркостью: значения компрессуются и становятся более
-                  похожи друг на друга; контраст уменьшается. Тени становятся
-                  светлее: могут появиться новые детали, но с меньшим
-                  контрастом. Блики становятся темнее.
-                </para>
-              </listitem>
-              <listitem>
-                <para>
-                  Работа с цветовыми каналами: если, на пример, для зелёного
-                  канала установить уровни на выходе от 100 до 140, все точки
-                  станут зелёными. Даже малые значения точек в зелёном канале
-                  подтянутся до диапазона от 100 до 140.
-                </para>
-              </listitem>
-              <listitem>
-                <para>
-                  Работа с каналом альфа: все значения передвинутся к
-                  выбранному диапазону.
-                </para>
-              </listitem>
-            </itemizedlist>
           </para>
           <para lang="zh_CN">
             输入色阶允许人工选择所要输出的色阶范围。也可以用三角箭头交互地控制输出色阶。
           </para>
 
-          <figure lang="en;fr;ru">
-            <!--TODO de;es;it;no;pl-->
+          <itemizedlist lang="en;de;fr;ru">
+            <listitem>
+              <para lang="en">
+                Working with Value: values are compressed and look more
+                alike; so contrast is reduced. Shadows are made lighter:
+                new details can show up but contrast is less; a compromise
+                is necessary. Hightlights are made darker.
+              </para>
+              <para lang="de">
+                Kanal <quote>Wert</quote>: der Wertebereich wird gestaucht,
+                die Werte werden ähnlicher, der Kontrast also verringert.
+                Schatten werden heller, so dass neue Details sichtbar werden
+                können. Da der Kontrast vermindert ist, werden hier gewisse
+                Kompromisse notwendig sein. Glanzlichter werden dunkler.
+              </para>
+              <para lang="fr">
+                Avec Valeur : Les valeurs sont comprimées et se ressemblent
+                plus : le contraste est donc diminué. des détails nouveaux
+                peuvent apparaître dans l'image, mais le contraste est
+                diminué. Un compromis est nécessaire.
+              </para>
+              <para lang="ru">
+                Работа с яркостью: значения компрессуются и становятся более
+                похожи друг на друга; контраст уменьшается. Тени становятся
+                светлее: могут появиться новые детали, но с меньшим
+                контрастом. Блики становятся темнее.
+              </para>
+            </listitem>
+            <listitem>
+              <para lang="en">
+                Working with Color channels: if you the use the green
+                channel for example and set the output levels between 100
+                and 140, all pixels with some green, even a low value, will
+                have their green channel value shifted between 100 and 140.
+              </para>
+              <para lang="de">
+                Farbkanäle: wenn Sie beispielsweise den grünen Kanal auswählen
+                und den Zielwertebereich auf 100-140 einstellen, wird bei
+                allen Pixeln mit einem noch so geringen Grünanteil der Wert
+                des grünen Kanals auf den Bereich 100-140 verschoben.
+              </para>
+              <para lang="fr">
+                Avec un canal de couleur : si, par exemple, vous avez choisi
+                le canal vert et fixé l'intervalle de sortie entre 100 et 140,
+                tous les pixels ayant tant soit peu de vert verront leur vert
+                prendre une valeur entre 100 et 140.
+              </para>
+              <para lang="ru">
+                Работа с цветовыми каналами: если, на пример, для зелёного
+                канала установить уровни на выходе от 100 до 140, все точки
+                станут зелёными. Даже малые значения точек в зелёном канале
+                подтянутся до диапазона от 100 до 140.
+              </para>
+            </listitem>
+            <listitem>
+              <para lang="en">
+                Working with Alpha channel: all Alpha values will be
+                shifted to the range you have set.
+              </para>
+              <para lang="de">
+                Alphakanal: alle Alphakanalwerte werden auf den festgelegten
+                Bereich verschoben.
+              </para>
+              <para lang="fr">
+                Avec le canal Alpha : toutes les valeurs de transparence
+                prendront une valeur dans les limites de l'intervalle fixé.
+              </para>
+              <para lang="ru">
+                Работа с каналом альфа: все значения передвинутся к выбранному
+                диапазону.
+              </para>
+            </listitem>
+          </itemizedlist>
+
+          <figure lang="en;de;fr;ru">
+            <!--TODO es;it;no;pl-->
             <title>
               <phrase lang="en">Example for Output Levels</phrase>
+              <phrase lang="de">Beispiel für Zielwerte</phrase>
               <phrase lang="fr">Exemple pour Niveaux de sortie</phrase>
               <phrase lang="ru">Пример уровней выхода</phrase>
             </title>
             <mediaobject>
               <imageobject>
                 <imagedata format="PNG"
-                            fileref="../images/toolbox/levels-output-1.png" />
+                  fileref="../images/toolbox/levels-output-1.png" />
               </imageobject>
               <caption>
                 <para lang="en">
@@ -1302,6 +1417,17 @@
                     <guimenu>Dialogs</guimenu>
                     <guimenuitem>Histogram</guimenuitem>
                   </menuchoice>.
+                </para>
+                <para lang="de">
+                  <emphasis role="bold">Originalbild</emphasis>:
+                  Ein RGB-Farbverlauf von Schwarz (0,0,0) bis Weiß (255,255,255).
+                  Für die Zielwerte gibt es kein Histogramm, daher wurde
+                  ersatzweise
+                  <menuchoice>
+                    <guimenu>Dialoge</guimenu>
+                    <guimenuitem>Histogramm</guimenuitem>
+                  </menuchoice>
+                  verwendet.
                 </para>
                 <para lang="fr">
                   <emphasis role="bold">Image d'origine</emphasis> :
@@ -1337,6 +1463,14 @@
                   pixel is less than 63, and no pixel is more than 189. In
                   the image, Shadows are lighter and Highlights are darker:
                   contrast is reduced.
+                </para>
+                <para lang="de">
+                  Der Kanal <quote>Wert</quote> ist ausgewählt.
+                  Der schwarze Regler wurde auf 63 verschoben, der weiße auf
+                  189. Das Histogramm zeigt, wie die Pixelwerte gestaucht werden:
+                  kein Pixel hat einen Wert kleiner als 63, keins einen Wert
+                  größer als 189. Im Bild sind die Schatten heller und die
+                  Glanzlichter dunkler, der Kontrast ist reduziert.
                 </para>
                 <para lang="fr">
                   Canal Valeur sélectionné.
@@ -1385,7 +1519,7 @@
             of the levels.
           </para>
           <para lang="en">
-            <!--TODO de;es;it;no;pl-->
+            <!--TODO es;it;no;pl-->
             <guilabel>Three eyedroppers</guilabel>: These three buttons
             respectively represent a white, a gray and a black eye-dropper.
             When you click one of these buttons, the mouse pointer takes the
@@ -1433,7 +1567,7 @@
             drei Pipetten haben Sie schnellen Zugriff, um Helligkeitswerte
             aus dem Bild aufzunehmen. Diese Pipetten unterscheiden sich nicht
             von den bereits für den Bereich <guilabel>Quellwerte</guilabel>
-            beschriebenen. Mit der Schaltfläche <guilabel>Auto</guilabel>
+            beschriebenen. Mit der Schaltfläche <guilabel>Automatisch</guilabel>
             können Sie <acronym>GIMP</acronym> die Belichtung des Bildes
             überlassen.
           </para>
@@ -1581,10 +1715,11 @@
             <guilabel>三个颜色拾取器</guilabel>: 它们控制灰度上的三个点。“黑点”以下的都是黑色，“白点”以上的都是白色。“灰点”必须在它们之间，指灰色的中间值。
           </para>
 
-          <figure lang="en;fr;ru">
-            <!--TODO de;es;it;no;pl-->
+          <figure lang="en;de;fr;ru">
+            <!--TODO es;it;no;pl-->
             <title>
               <phrase lang="en">Example for Levels eye-droppers</phrase>
+              <phrase lang="de">Beispiel für die Benutzung der Pipetten</phrase>
               <phrase lang="fr">Exemple pour les pipettes Niveaux</phrase>
               <phrase lang="ru">Пример пипеток уровней</phrase>
             </title>
@@ -1599,6 +1734,12 @@
                   result after clicking with the white eye-dropper: all
                   pixels with a value higher than that of the clicked pixel
                   turned to white.
+                </para>
+                <para lang="de">
+                  Ein Farbverlauf von Schwarz nach Weiß. Darunter das
+                  Ergebnis, wenn man mit der weißen Pipette ins Bild klickt:
+                  alle Pixel mit einem größeren Wert als der des angeklickten
+                  Pixels werden weiß.
                 </para>
                 <para lang="fr">
                   En haut, un dégradé du noir vers le blanc. En bas, le
@@ -1675,21 +1816,24 @@
         </listitem>
       </varlistentry>
     </variablelist>
+  </sect3>
+
+  <sect3 lang="en;cs;de;es;fr;it;no;pl;ru">
+    <title>
+      <phrase lang="en">Tool Options dialog</phrase>
+      <phrase lang="cs">Volby nástroje Křivky</phrase>
+      <phrase lang="de">Eigenschaften</phrase>
+      <phrase lang="fr">Dialogue Options des outils</phrase>
+      <phrase lang="it">Finestra opzioni dello strumento</phrase>
+      <phrase lang="no">Verktøyinnstillingar</phrase>
+      <phrase lang="pl">Оkno opcji narzędzia</phrase>
+      <phrase lang="ru">Окно параметров инструмента</phrase>
+      <phrase lang="zh_CN">工具选项对话框</phrase>
+    </title>
 
     <variablelist>
-      <title>
-        <phrase lang="en">Tool Options dialog</phrase>
-        <phrase lang="cs">Volby nástroje Křivky</phrase>
-        <phrase lang="de">Eigenschaften</phrase>
-        <phrase lang="fr">Dialogue Options des outils</phrase>
-        <phrase lang="it">Finestra opzioni dello strumento</phrase>
-        <phrase lang="no">Verktøyinnstillingar</phrase>
-        <phrase lang="pl">Оkno opcji narzędzia</phrase>
-        <phrase lang="ru">Окно параметров инструмента</phrase>
-        <phrase lang="zh_CN">工具选项对话框</phrase>
-      </title>
-
-      <para  lang="de;no">
+      <!--TODO en es fr it pl ru: add screenshot(?)-->
+      <para lang="de;no"><!--no figure allowed here-->
         <figure>
           <title>
             <phrase lang="de">
@@ -1866,10 +2010,11 @@
     </variablelist>
   </sect3>
 
-  <sect3 lang="en;fr;ru">
-    <!--TODO de;es;it;no;pl-->
+  <sect3 lang="en;de;fr;ru">
+    <!--TODO es;it;no;pl-->
     <title>
         <phrase lang="en">Actual practice</phrase>
+        <phrase lang="de">Eine praktische Übung</phrase>
         <phrase lang="fr">En pratique</phrase>
         <phrase lang="ru">Применение</phrase>
       </title>
@@ -1877,6 +2022,7 @@
     <figure>
       <title>
         <phrase lang="en">A very under-exposed image</phrase>
+        <phrase lang="de">Ein sehr unterbelichtetes Bild</phrase>
         <phrase lang="fr">Une image très sous-exposée</phrase>
         <phrase lang="ru">Недовыдержанное изображение</phrase>
       </title>
@@ -1886,12 +2032,9 @@
             fileref="../images/filters/examples/colors-retinex1.png" />
         </imageobject>
         <caption>
-          <para lang="en">
-            Original image
-          </para>
-          <para lang="fr">
-            Image d'origine
-          </para>
+          <para lang="en">Original image</para>
+          <para lang="de">Originalbild</para>
+          <para lang="fr">Image d'origine</para>
           <para lang="ru">Искомое изображение</para>
         </caption>
       </mediaobject>
@@ -1904,6 +2047,10 @@
           <para lang="en">
             The histogram shows a predominance of Shadows and missing
             Highlights.
+          </para>
+          <para lang="de">
+            Das Histogramm zeigt eine Dominanz der Schatten und fehlende
+            Glanzlichter.
           </para>
           <para lang="fr">
             L'histogramme montre une prédominance des tons sombres et un
@@ -1918,6 +2065,7 @@
     <figure>
       <title>
         <phrase lang="en">Setting the white point</phrase>
+        <phrase lang="de">Den Weißpunkt einstellen</phrase>
         <phrase lang="fr">Réglage du point blanc</phrase>
         <phrase lang="ru">Установка белой точки</phrase>
       </title>
@@ -1930,6 +2078,10 @@
           <para lang="en">
             The white slider has been moved to the start of well marked
             Highlights. The image lightens up.
+          </para>
+          <para lang="de">
+            Der weiße Schieberegler wurde bis zum deutlichen Beginn der
+            Glanzlichter verschoben. Das Bild wird heller.
           </para>
           <para lang="fr">
             Le curseur blanc a été déplacé jusqu'au début des tons clairs
@@ -1951,6 +2103,10 @@
             The resulting histogram (down) shows Highlights now, but Shadows
             are still predominant.
           </para>
+          <para lang="de">
+            Das Ergebnis (unten) zeigt nun Glanzlichter an, aber die Schatten
+            dominieren immer noch.
+          </para>
           <para lang="fr">
             L'histogramme résultant (en bas) montre la présence de tons
             clairs, mais les tons sombres sont toujours prédominants.
@@ -1963,10 +2119,15 @@
     </figure>
     <figure>
       <title>
-        <phrase lang="en">Setting the balance between Shadows and
-          Highlights</phrase>
-        <phrase lang="fr">Réglage de l'équilibre entre les tons sombres et
-        les tons clairs</phrase>
+        <phrase lang="en">
+          Setting the balance between Shadows and Highlights
+        </phrase>
+        <phrase lang="de">
+          Das Verhältnis von Schatten und Glanzlichtern einstellen.
+        </phrase>
+        <phrase lang="fr">
+          Réglage de l'équilibre entre les tons sombres et les tons clairs
+        </phrase>
         <phrase lang="ru">Установка баланса между тенями и бликами</phrase>
       </title>
       <mediaobject>
@@ -1979,6 +2140,11 @@
             The mid slider has been moved to the left. This results in
             reducing the proportion of Shadows and increasing the proportion
             of Highlights.
+          </para>
+          <para lang="de">
+            Der mittlere Regler wurde nach links verschoben. Das führt zu
+            einem veränderten Verhältnis von Schatten (vermindert) und
+            Glanzlichtern (erhöht).
           </para>
           <para lang="fr">
             Le curseur moyen a été déplacé vers la gauche, ce qui aboutit à
@@ -1998,6 +2164,10 @@
         <caption>
           <para lang="en">
             The resulting histogram (down) confirms the reduction of Shadows.
+          </para>
+          <para lang="de">
+            Das resultierende Histogramm (unten) bestätigt die Verminderung
+            der Schatten.
           </para>
           <para lang="fr">
             L'histogramme résultant (en bas) confirme la réduction des tons
