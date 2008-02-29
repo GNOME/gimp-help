@@ -4,7 +4,7 @@
                 "http://www.docbook.org/xml/4.3/docbookx.dtd">
 
 <!-- section history:
-  2008-02-25 ude: corrected procedure; some enhancements 
+  2008-02-25 ude: corrected procedure; some enhancements
   2007-10-31 ude: added "apply to selection" procedure
   2007-08-14 ude: created ('en','de')
 -->
@@ -177,7 +177,7 @@
     </para>
     <para lang="fr"><!--TODO fr: enabled if *active layer* has alpha-->
       Les entrées de ce menu ne sont activées que si votre image possède un
-      canal Alpha. Si vous voyez que ces entrées sont en grisé, 
+      canal Alpha. Si vous voyez que ces entrées sont en grisé,
       <link linkend="gimp-layer-alpha-add">Ajoutez un canal Alpha</link>.
     </para>
     <para lang="it"><!--TODO it: enabled if *active layer* has alpha-->
@@ -192,15 +192,15 @@
       finn at alle menyvala er gråa ut, og altså utilgjengelege, kan du
       prøve å <link linkend="gimp-layer-alpha-add">legge til ein
       alfakanal</link>.
-    </para>    
+    </para>
     <para lang="ru"><!--TODO ru: enabled if *active layer* has alpha-->
       Пункты меню и их функции доступны только когда у изображения есть канал
-      альфа. Если меню не доступно, добавьте к изображению 
+      альфа. Если меню не доступно, добавьте к изображению
       <!--link linkend="gimp-layer-alpha-add"-->канал альфа<!--/link-->.
     </para>
   </note>
 
-  <!--TODO fr it no ru: translate (and review/enhance!) new content--> 
+  <!--TODO it no ru: translate (and review/enhance!) new content-->
   <para lang="en">
     The filter effect will always be applied according to the alpha values.
     The <link linkend="glossary-alpha">alpha</link> of any pixel has a value
@@ -216,6 +216,7 @@
     alpha channel</link> by transferring the alpha values to the channel which
     represents the selection, and then work on the selection.
   </para>
+
   <para lang="de">
     Der Filtereffekt wird immer entsprechend dem Alphawert angewendet. Der
     <link linkend="glossary-alpha">Alphawert</link> jedes Pixels liegt
@@ -232,11 +233,23 @@
     Auswahl repräsentiert, und arbeiten dann mit der Auswahl.
   </para>
 
-  <!--TODO fr it no ru: replace with procedure title--> 
   <para lang="fr">
-    Si vous désirez appliquer un filtre <quote>Alpha vers logo</quote> à une
-    sélection, quelques clics supplémentaires sont nécessaires : 
+    Le filtre s'applique toujours selon les valeurs alpha. L'
+    <link linkend="glossary-alpha">alpha</link> de chaque pixel possède un
+    intervale de 0 (transparent) à 255 (complètement opaque). Le filtre peut
+    être appliqué partiellement à certains pixels en utilisant des valeurs de
+    1 à 254.
   </para>
+  <para lang="fr">
+    Vous noterez que cela est la même chose que <link
+    linkend="gimp-concepts-selection">sélectionner</link> des pixels
+    partiellement. En fait, ces filtres créent toujours une
+    <link linkend="gimp-layer-alpha-selection-replace">sélection à partir du
+    canal Alpha</link> en transférant les valeurs alpha au canal qui
+    représente la sélection, puis il agit sur la sélection.
+  </para>
+
+  <!--TODO it no ru: replace with procedure title-->
   <para lang="it">
     Se si vuole applicare un filtro <quote>Alfa a logotipo</quote> ad una
     selezione saranno necessari alcuni passi aggiuntivi:
@@ -250,10 +263,10 @@
     необходимо проделать следующие операции:
   </para>
 
-  <!--TODO fr it no ru: translate changed content,
+  <!--TODO it no ru: translate changed content,
       the procedure here was nonsense - sorry folks :-( -->
   <orderedlist lang="en;de;fr;it;no;ru">
-    <title lang="en;de">
+    <title lang="en;de;fr">
       <phrase lang="en">
         How to apply an <quote>Alpha to Logo</quote> filter to a selection?
       </phrase>
@@ -261,10 +274,15 @@
         Wie wendet man eine <quote>Alpha-als-Logo</quote>-Filter auf eine
         Auswahl an?
       </phrase>
+      <phrase lang="fr">
+        Comment appliquer un filtre <quote>Alpha vers Logo</quote> à une
+        sélection ?
+      </phrase>
     </title>
     <listitem>
-      <para lang="en">
-        Make sure that the active layer has an alpha channel, otherwise
+      <para lang="en"><!--Changed 2008-02-26-->
+        If the active layer is the background layer, make sure that an
+        alpha channel exists, otherwise
         <link linkend="gimp-layer-alpha-add">add an alpha channel</link>.
       </para>
       <para lang="de">
@@ -273,33 +291,52 @@
         Alphakanal hinzufügen</link>.
       </para>
       <para lang="fr">
-        <link linkend="gimp-selection-to-channel">Enregistrer la
-        sélection dans un canal</link>
+        Si le calque actif est le calque d'arrière-plan, assurez-vous qu'il
+        existe un canal Alpha, sinon
+        <link linkend="gimp-selection-to-channel">Ajoutez un canal
+        alpha</link>.
       </para>
       <para lang="it">
         <link linkend="gimp-selection-to-channel">Salvare la selezione in un
         canale.</link>
       </para>
       <para lang="no">
-        <link linkend="gimp-selection-to-channel">Lagra utvalet i ein 
+        <link linkend="gimp-selection-to-channel">Lagra utvalet i ein
         kanal</link>.
       </para>
       <para lang="ru">
         <!--link linkend="gimp-selection-to-channel"-->Сохранить выделение в канал.
         <!--/link-->
       </para>
+      <tip lang="en;fr">
+        <para lang="en">
+          If a layer name in the Layer Dialog is in bold, then this layer has
+          no Alpha channel.
+        </para>
+        <para lang="fr">
+          Si le nom d'un calque est en gras dans la fenêtre du dialogue des
+          calques, c'est que ce calque n'a pas de canal Alpha.
+        </para>
+      </tip>
     </listitem>
     <listitem>
       <para lang="en">
-        <link linkend="gimp-selection-invert">Invert</link> the selection.
+        Do
+        <menuchoice>
+          <guimenu>Selection</guimenu>
+          <guimenuitem>Invert</guimenuitem>
+        </menuchoice>
       </para>
       <para lang="de">
         <link linkend="gimp-selection-invert">Invertieren</link> Sie die
         Auswahl.
       </para>
       <para lang="fr">
-        <link linkend="gimp-layer-mask-add">Ajouter un masque de calque
-        </link> au calque et initialisez le masque avec ce canal.
+        Faites
+        <menuchoice>
+          <guimenu>Sélection</guimenu>
+          <guimenuitem>Inverser</guimenuitem>
+         </menuchoice>
       </para>
       <para lang="it">
         <link linkend="gimp-layer-mask-add">Aggiungere una maschera di
@@ -316,15 +353,24 @@
     </listitem>
     <listitem>
       <para lang="en">
-        <link linkend="gimp-edit-clear">Clear</link> the (inverted) selection.
+        Do
+        <menuchoice>
+          <guimenu>Edit</guimenu>
+          <guimenuitem>Clear</guimenuitem>
+         </menuchoice>
+        the (inverted) selection.
       </para>
       <para lang="de">
         <link linkend="gimp-edit-clear">Löschen</link> Sie die (invertierte)
         Auswahl.
       </para>
       <para lang="fr">
-        N'oubliez pas d'<link linkend="gimp-layer-mask-apply">Appliquer le
-        masque de calque</link>.
+        Faites
+        <menuchoice>
+          <guimenu>Édition</guimenu>
+          <guimenuitem>Effacer</guimenuitem>
+         </menuchoice>
+         la sélection (inversée).
       </para>
       <para lang="it">
         Non si dimentichi di <link linkend="gimp-layer-mask-apply">applicare
@@ -349,13 +395,14 @@
         Asuwahl, Sie müssen Sie also nicht wieder invertieren).
       </para>
       <para lang="fr">
-        Appliquez le filtre <quote>Alpha vers logo</quote>.
+        Appliquez le filtre <quote>Alpha vers logo</quote> (le filtre ignore
+        la sélection et vous n'avez pas besoin de la ré-inverser).
       </para>
       <para lang="it">
         Applicare il filtro <quote>Alfa a logotipo</quote>.
       </para>
       <para lang="no">
-        Til slutt bruker du det ønskte <quote>alfa til 
+        Til slutt bruker du det ønskte <quote>alfa til
         logo</quote>-filteret.
       </para>
       <para lang="ru">
