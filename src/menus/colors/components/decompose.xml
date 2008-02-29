@@ -4,6 +4,7 @@
                 "http://www.docbook.org/xml/4.3/docbookx.dtd">
 
 <!-- section history:
+  2008-02-29 lexa: fixed help-id and switched from filter to command
   2007-11-29 ciampix: added italian translation
   2007-11-24 j.h : updated to v2.4; "registration color" documented.
   2007-10-20 ude: moved here from filters/color/decompose.xml ('en','de')
@@ -14,8 +15,11 @@
   2005-09-30 de replaced informalfigure by axel.wernicke
   2005-08-25 de added by axel.wernicke
 -->
-<!--TODO ru: update/review-->
-<sect2 id="plug-in-decompose-registered" lang="en;de;es;fr;it;lt;no;ru">
+<!-- 
+  TODO ru: update/review
+  TODO es;fr;it;lt;no;ru: this is not a filter but a command -> update!  
+ -->
+<sect2 id="plug-in-decompose" lang="en;de;es;fr;it;lt;no;ru">
   <sect2info lang="en;de;es;fr;it;no" role="cvs">
     <revhistory>
       <revision lang="en">
@@ -63,17 +67,22 @@
     <phrase lang="ru">Разобрать</phrase>
   </title>
 
+  <indexterm lang="en;de;es;no"><primary>CMYK</primary></indexterm>
+  <indexterm lang="en;de;es;no"><primary>HSV</primary></indexterm>
+  <indexterm lang="en;de;es;no"><primary>RGB</primary></indexterm>
+  <indexterm lang="en;de;es;no"><primary>YUV</primary></indexterm>
+  <indexterm lang="en;de;es;no"><primary>YCbCr</primary></indexterm>
+
   <indexterm lang="en">
     <primary>Colors</primary>
     <secondary>Components</secondary>
     <tertiary>Decompose</tertiary>
   </indexterm>
   <indexterm lang="en"><primary>Decompose</primary></indexterm>
-  <indexterm lang="en;de;es;no"><primary>CMYK</primary></indexterm>
-  <indexterm lang="en;de;es;no"><primary>HSV</primary></indexterm>
-  <indexterm lang="en;de;es;no"><primary>RGB</primary></indexterm>
-  <indexterm lang="en;de;es;no"><primary>YUV</primary></indexterm>
-  <indexterm lang="en;de;es;no"><primary>YCbCr</primary></indexterm>
+  <indexterm lang="en"><primary>Compose</primary></indexterm>
+  <indexterm lang="en"><primary>Channel</primary></indexterm>
+  <indexterm lang="en"><primary>Layer</primary></indexterm>
+
 
   <!--TODO: ru: update indexterms-->
   <indexterm lang="cs">
@@ -82,11 +91,11 @@
     <tertiary>Dekomponovat</tertiary>
   </indexterm>
 
-  <indexterm lang="de">
-    <primary>Farbe</primary>
-    <secondary>Komponenten</secondary>
-  </indexterm>
+  <indexterm lang="de"><primary>Farbe</primary></indexterm>
   <indexterm lang="de"><primary>Zerlegen</primary></indexterm>
+  <indexterm lang="de"><primary>Zusammensetzen</primary></indexterm>
+  <indexterm lang="de"><primary>Ebene</primary></indexterm>
+  <indexterm lang="de"><primary>Kanal</primary></indexterm>
 
   <indexterm lang="es">
     <primary>Colores</primary>
@@ -166,14 +175,14 @@
       <phrase lang="no">Oversyn</phrase>
       <phrase lang="ru">Общая информация</phrase>
     </title>
-
-    <figure lang="en;de;es;fr;it;lt;no;ru">
+                  
+    <figure>
       <title>
         <phrase lang="en">
-          Example for the <quote>Decompose</quote> filter
+          Example for the <quote>Decompose</quote> command
         </phrase>
         <phrase lang="de">
-          Anwendungsbeispiel für das Filter <quote>Zerlegen</quote>
+          Anwendungsbeispiel für das Kommando <quote>Zerlegen</quote>
         </phrase>
         <phrase lang="es">
           Ejemplo para el filtro <quote>Descomponer</quote>
@@ -193,11 +202,12 @@
           <quote>Разобрать</quote> (на RGB)
         </phrase>
       </title>
+
       <mediaobject>
         <imageobject>
-          <imagedata fileref="../images/menus/taj_orig_2.png"
-            format="PNG" />
+          <imagedata format="PNG" fileref="../images/menus/taj_orig_2.png" />
         </imageobject>
+
         <caption lang="en;de;es;lt;no;it">
           <para lang="en">Original image</para>
           <para lang="de">Originalbild</para>
@@ -227,7 +237,7 @@
         </imageobject>
         <caption lang="en;de;es;fr;lt;no;it">
           <para lang="en">
-            Filter <quote>Decompose</quote> applied (RGB decomposition) with
+            Command <quote>Decompose</quote> applied (RGB decomposition) with
             <guilabel>Decompose to layers</guilabel> unchecked.
           </para>
           <para lang="de">
@@ -272,13 +282,12 @@
       </title>
       <mediaobject>
         <imageobject>
-          <imagedata
-                    fileref="../images/menus/decompose-ex2.png"
-                    format="PNG" />
+          <imagedata format="PNG" fileref="../images/menus/decompose-ex2.png" />
         </imageobject>
+
         <caption lang="en;de;es;fr;lt;no;it">
           <para lang="en">
-            Filter <quote>Decompose</quote> applied (RGB decomposition) with
+            Command <quote>Decompose</quote> applied (RGB decomposition) with
             <guilabel>Decompose to layers</guilabel> checked.
           </para>
           <para lang="de">
@@ -309,29 +318,28 @@
 
 
     <para lang="en">
-      This filter separates the channels (RGB, HSV, CMYK...) of an image
+      This command separates the channels (RGB, HSV, CMYK...) of an image
       into separated images or layers.
     </para>
     <para lang="de">
-      Das Filter trennt die Farbkanäle eines Bildes in einzelne Komponenten
-      auf, die dann jeweils in eine Ebene eingefügt werden.
-      So können Sie sehr einfach drei Ebenen erzeugen, von denen eine den
-      Rotkanal, eine den Grünkanal und eine den Blaukanal enthält (alternativ
-      auch CMYK, HSV, Lab und andere). Diese Zerlegung kann über das Filter
-      <link linkend="plug-in-recompose">Wieder zusammenfügen</link> umgekehrt
-      werden.
+      Das Kommando trennt die Farbkanäle eines Bildes in einzelne Komponenten
+      auf, die dann jeweils in eine Ebene eingefügt werden. So können Sie sehr
+      einfach drei Ebenen erzeugen, von denen eine den Rotkanal, eine den
+      Grünkanal und eine den Blaukanal enthält (alternativ auch CMYK, HSV, Lab
+      und andere). Diese Zerlegung kann über das Kommando
+      <xref linkend="plug-in-recompose" /> umgekehrt werden.
     </para>
     <para lang="es">
       Este filtro separa los canales (RGB, HSV, CMYK...) de una imagen en
       imágenes o capas separadas.
     </para>
     <para lang="fr">
-      Ce filtre extrait les différents canaux (RVB, TSV, CMJN...)composant
-      une image dans autant d'images séparées ou de calques.
+      Ce filtre extrait les différents canaux (RVB, TSV, CMJN...)composant une
+      image dans autant d'images séparées ou de calques.
     </para>
     <para lang="lt">
-      Šis filtras išskaido paveikslėlio kanalus (RGB, HSV, CMYK...)
-      į atskirus paveikslėlius arba sluoksnius.
+      Šis filtras išskaido paveikslėlio kanalus (RGB, HSV, CMYK...) į atskirus
+      paveikslėlius arba sluoksnius.
     </para>
     <para lang="no">
       Dette filteret separerer fargane i biletet og oppretter eit biletlag av
@@ -345,7 +353,6 @@
       immagini o livelli separati.
     </para>
 
-    <!--TODO: ru: update menuentries (and move to next sect3)-->
     <para lang="cs">
       Tento filtr lze vyvolat z nabídky okna obrázku volbou
       <menuchoice>
@@ -359,6 +366,7 @@
       HSV, CMYK...).
     </para>
 
+    <!--TODO: ru: update menuentries (and move to next sect3)-->
     <para lang="ru">
       Этот фильтр находится в меню
       <menuchoice>
@@ -374,11 +382,12 @@
   </sect3>
 
 
+  <!-- FIXME: ru missing -->
   <sect3 lang="en;de;es;fr;it;lt;no">
     <title>
-      <phrase lang="en">Activate the filter</phrase>
+      <phrase lang="en">Activate the command</phrase>
       <phrase lang="cs">Aktivace filtru</phrase>
-      <phrase lang="de">Filteraufruf</phrase>
+      <phrase lang="de">Aufruf des Kommandos</phrase>
       <phrase lang="es">Activar el filtro</phrase>
       <phrase lang="fr">Ouverture du filtre</phrase>
       <phrase lang="it">Attivazione del filtro</phrase>
@@ -389,7 +398,7 @@
     </title>
 
     <para lang="en">
-      You can find this filter in the image window menu under
+      You can find this command in the image window menu under
       <menuchoice>
         <guimenu>Colors</guimenu>
         <guisubmenu>Components</guisubmenu>
@@ -397,7 +406,7 @@
       </menuchoice>.
     </para>
     <para lang="de">
-      Dieses Filter lässt sich über das Menü
+      Dieses Kommando lässt sich über das Menü
       <menuchoice>
         <guimenu><accel>F</accel>arben</guimenu>
         <guisubmenu><accel>K</accel>omponenten</guisubmenu>
@@ -461,13 +470,13 @@
       <phrase lang="ru">Параметры</phrase>
     </title>
 
-    <figure lang="en;de;es;fr;it;lt;no;ru">
+    <figure>
       <title>
         <phrase lang="en">
-          <quote>Decompose</quote> filter options
+          <quote>Decompose</quote> command options
         </phrase>
         <phrase lang="de">
-          Eigenschaften für das Filter <quote>Zerlegen</quote>
+          Eigenschaften für das Kommando <quote>Zerlegen</quote>
         </phrase>
         <phrase lang="es">
           Opciones del filtro <quote>Descomponer</quote>
@@ -486,41 +495,36 @@
           Параметры фильтра <quote>Разобрать</quote>
         </phrase>
       </title>
-      <!--TODO ru: new image-->
+
+      <!-- TODO ru: new image -->
       <mediaobject>
         <imageobject lang="en;ru">
-          <imagedata
-             fileref="../images/menus/colors-components-decompose.png"
-             format="PNG"/>
+          <imagedata format="PNG"
+            fileref="../images/menus/colors-components-decompose.png" />
         </imageobject>
         <imageobject lang="de">
           <imagedata format="PNG"
              fileref="../images/menus/de/colors-components-decompose.png" />
         </imageobject>
         <imageobject lang="es">
-          <imagedata
-             fileref="../images/menus/es/colors-components-decompose.png"
-             format="PNG"/>
+          <imagedata format="PNG"
+            fileref="../images/menus/es/colors-components-decompose.png" />
         </imageobject>
         <imageobject lang="fr">
-          <imagedata
-             fileref="../images/menus/fr/colors-components-decompose.png"
-             format="PNG"/>
+          <imagedata format="PNG"
+            fileref="../images/menus/fr/colors-components-decompose.png" />
         </imageobject>
         <imageobject lang="it">
-          <imagedata
-             fileref="../images/menus/it/colors-components-decompose.png"
-             format="PNG"/>
+          <imagedata format="PNG"
+            fileref="../images/menus/it/colors-components-decompose.png" />
         </imageobject>
         <imageobject lang="lt">
-          <imagedata
-             fileref="../images/menus/lt/colors-components-decompose.png"
-             format="PNG"/>
+          <imagedata format="PNG"
+            fileref="../images/menus/lt/colors-components-decompose.png" />
         </imageobject>
         <imageobject lang="no">
-          <imagedata
-             fileref="../images/filters/no/options-colors-decompose.png"
-             format="PNG"/>
+          <imagedata format="PNG"
+            fileref="../images/filters/no/options-colors-decompose.png" />
         </imageobject>
       </mediaobject>
     </figure>
@@ -538,47 +542,47 @@
 
       <para lang="en">
         Following options are described with
-        <link linkend="plug-in-decompose-registered-to-layers">Decompose to
+        <link linkend="plug-in-decompose-to-layers">Decompose to
         layers</link> checked.
       </para>
       <para lang="cs">
         Následující volby jsou popsány tak, jako by byla volba
-        <link linkend="plug-in-decompose-registered-to-layers">Dekomponovat do
+        <link linkend="plug-in-decompose-to-layers">Dekomponovat do
         vrstev</link> aktivní.
       </para>
       <para lang="de">
         Die folgenden Eigenschaften werden für den Fall beschrieben, dass
-        <link linkend="plug-in-decompose-registered-to-layers">In Ebenen
+        <link linkend="plug-in-decompose-to-layers">In Ebenen
         zerlegen</link> aktiviert ist.
       </para>
       <para lang="es">
         Las opciones siguientes se describen con la opción
-        <link linkend="plug-in-decompose-registered-to-layers">Descomponer en
+        <link linkend="plug-in-decompose-to-layers">Descomponer en
         capas</link> marcada.
       </para>
       <para lang="fr">
         Les options suivantes sont décrites avec
-        <link linkend="plug-in-decompose-registered-to-layers">Décomposer en
+        <link linkend="plug-in-decompose-to-layers">Décomposer en
         calques</link> cochée.
       </para>
       <para lang="it">
         Per la descrizione delle opzioni seguenti si assume che l'opzione
-        <link linkend="plug-in-decompose-registered-to-layers">Decomposizione
+        <link linkend="plug-in-decompose-to-layers">Decomposizione
         in livelli</link> sia abilitata.
       </para>
       <para lang="lt">
         Šios parinktys yra aprašytos pažymėjus parinktį
-        <link linkend="plug-in-decompose-registered-to-layers">Iškomponuoti
+        <link linkend="plug-in-decompose-to-layers">Iškomponuoti
         į sluoksnius</link>.
       </para>
       <para lang="no">
         I beskrivingane under er
-        <link linkend="plug-in-decompose-registered-to-layers">Del opp i
+        <link linkend="plug-in-decompose-to-layers">Del opp i
         lag</link> markert som aktiv.
       </para>
       <para lang="ru">
         При выборе параметра
-        <link linkend="plug-in-decompose-registered-to-layers">Разбор на
+        <link linkend="plug-in-decompose-to-layers">Разбор на
         слои</link> следующие параметры определяют дальнейшую работу фильтра.
       </para>
 
@@ -622,10 +626,10 @@
                 </para>
                 <para lang="cs">
                   Tato funkce je zajímavá ve spojení s nástrojem Práh. Také
-                  lze s její pomocí provádět libovolné operace na
-                  jednotlivých RGB kanálech. Extrahovanou škálu šedi lze
-                  použít jako výběr nebo masku uložením do kanálu (kliknutí
-                  pravým tlačítkem myši --&gt; Výběr --&gt; Uložit do kanálu).
+                  lze s její pomocí provádět libovolné operace na jednotlivých
+                  RGB kanálech. Extrahovanou škálu šedi lze použít jako výběr
+                  nebo masku uložením do kanálu (kliknutí pravým tlačítkem
+                  myši --&gt; Výběr --&gt; Uložit do kanálu).
                 </para>
 
                 <para lang="de">
@@ -1076,7 +1080,7 @@
                   zařízení pracujících v režimu CMY.
                 </para>
                 <para lang="de">
-                  Mit dieser Einstellung wird das Filter das Originalbild in
+                  Mit dieser Einstellung wird das Kommando das Originalbild in
                   drei Ebenen mit Graustufen zerlegen. Jeweils eine Ebene für
                   Cyan, Magenta und Gelb
                   (<foreignphrase>Yellow</foreignphrase>).
@@ -1350,7 +1354,7 @@
                   například program Adobe Photoshop.
                 </para>
                 <para lang="de">
-                  Diese Einstellung bewirkt, dass das Filter das Bild in drei
+                  Diese Einstellung bewirkt, dass das Kommando das Bild in drei
                   Ebenen aus Graustufen zerlegt. Eine Ebene <quote>L</quote>
                   für die Leuchtkraft (Luminanz), eine Ebene
                   <quote>a</quote>, welche die Farbtöne zwischen Grün und Rot
@@ -1599,7 +1603,7 @@
     </variablelist>
 
     <variablelist>
-      <varlistentry id="plug-in-decompose-registered-to-layers">
+      <varlistentry id="plug-in-decompose-to-layers">
         <term lang="en">Decompose to Layers</term>
         <term lang="cs">Dekomponovat do vrstev</term>
         <term lang="de">In Ebenen Zerlegen</term>
