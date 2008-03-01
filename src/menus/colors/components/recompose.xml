@@ -4,6 +4,7 @@
                 "http://www.docbook.org/xml/4.3/docbookx.dtd">
 
 <!-- section history:
+  2008-03-01 lexA: changed from filter description to command description
   2007-10-20 ude: adapted from filters/color/compose.xml ('en','de')
   2007-07-06 Added Spanish translation by AntI
   2007-04-05 KoSt: added 'no'
@@ -12,10 +13,9 @@
   2005-09-30 de replaced informalfigure by axel.wernicke
   2005-08-25 de added by axel.wernicke
 -->
-
 <!--
   TODO ru: update/review
-  FIXME en;de;es;fr;it;lt;no;ru: this is not a filter, but a command, please fix
+  FIXME es;fr;it;lt;no;ru: this is not a filter, but a command, please fix
 -->
 <sect2 id="plug-in-recompose" lang="en;de;es;fr;lt;it;no;ru">
   <sect2info lang="en;de;es;fr;it;no" role="cvs">
@@ -65,6 +65,12 @@
     <phrase lang="ru">TODO</phrase>
   </title>
 
+  <indexterm lang="en;de;es;it;lt;no;ru"><primary>CMYK</primary></indexterm>
+  <indexterm lang="en;de;es;it;lt;no;ru"><primary>HSV</primary></indexterm>
+  <indexterm lang="en;de;es;it;lt;no;ru"><primary>RGB</primary></indexterm>
+  <indexterm lang="en;de;es;it;lt;no;ru"><primary>YUV</primary></indexterm>
+  <indexterm lang="en;de;es;it;lt;no;ru"><primary>YCbCr</primary></indexterm>
+
   <indexterm lang="en">
     <primary>Colors</primary>
     <secondary>Components</secondary>
@@ -79,11 +85,11 @@
     <tertiary>Komponovat</tertiary>
   </indexterm>
 
-  <indexterm lang="de">
-    <primary>Farbe</primary>
-    <secondary>Komponenten</secondary>
-  </indexterm>
+  <indexterm lang="de"><primary>Farbe</primary></indexterm>
+  <indexterm lang="de"><primary>Zerlegen</primary></indexterm>
   <indexterm lang="de"><primary>Zusammensetzen</primary></indexterm>
+  <indexterm lang="de"><primary>Ebene</primary></indexterm>
+  <indexterm lang="de"><primary>Kanal</primary></indexterm>
 
   <indexterm lang="es">
     <primary>Colores</primary>
@@ -98,6 +104,11 @@
     <tertiary>Re-composer l'image à partir de ses composants</tertiary>
   </indexterm>
   <indexterm lang="fr"><primary>Composer</primary></indexterm>
+  <indexterm lang="fr"><primary>CMJN</primary></indexterm>
+  <indexterm lang="fr"><primary>TSV</primary></indexterm>
+  <indexterm lang="fr"><primary>RVB</primary></indexterm>
+  <indexterm lang="fr"><primary>LAB</primary></indexterm>
+  <indexterm lang="fr"><primary>YCbCr</primary></indexterm>
 
   <indexterm lang="it">
     <primary>Filtri</primary>
@@ -129,19 +140,6 @@
     <primary>滤镜</primary><secondary>颜色</secondary><tertiary>合成</tertiary>
   </indexterm>
 
-  <indexterm lang="en;de;es;it;lt;no;ru"><primary>CMYK</primary></indexterm>
-  <indexterm lang="en;de;es;it;lt;no;ru"><primary>HSV</primary></indexterm>
-  <indexterm lang="en;de;es;it;lt;no;ru"><primary>RGB</primary></indexterm>
-  <indexterm lang="en;de;es;it;lt;no;ru"><primary>YUV</primary></indexterm>
-  <indexterm lang="en;de;es;it;lt;no;ru"><primary>YCbCr</primary></indexterm>
-  <indexterm lang="fr"><primary>Composer</primary></indexterm>
-  <indexterm lang="fr"><primary>CMJN</primary></indexterm>
-  <indexterm lang="fr"><primary>TSV</primary></indexterm>
-  <indexterm lang="fr"><primary>RVB</primary></indexterm>
-  <indexterm lang="fr"><primary>LAB</primary></indexterm>
-  <indexterm lang="fr"><primary>YCbCr</primary></indexterm>
-
-
   <sect3>
     <title>
       <phrase lang="en">Overview</phrase>
@@ -159,10 +157,10 @@
     <figure lang="en;de;es;fr;it;lt;no;ru">
       <title>
         <phrase lang="en">
-          Example for the <quote>Recompose</quote> filter
+          Example for the <quote>Recompose</quote> command
         </phrase>
         <phrase lang="de">
-          Anwendungsbeispiel für das Filter <quote>Zusammensetzen</quote>
+          Anwendungsbeispiel für das Kommando <quote>Zusammensetzen</quote>
         </phrase>
         <phrase lang="es">
           Ejemplo para el filtro <quote>Recomponer</quote>
@@ -205,9 +203,9 @@
         </imageobject>
 
         <caption lang="en;de;es;fr;it;lt;no">
-          <para lang="en">Filter <quote>Recompose</quote> applied</para>
+          <para lang="en">Command <quote>Recompose</quote> applied</para>
           <para lang="de">
-            Filter <quote>Wieder zusammenfügen</quote> angewandt
+            Kommando <quote>Wieder zusammenfügen</quote> angewandt
           </para>
           <para lang="es">Filtro <quote>Recomponer</quote> aplicado</para>
           <para lang="fr">Après application du filtre</para>
@@ -223,12 +221,12 @@
     </figure>
 
     <para lang="en">
-      This filter reconstructs an image from its RGB, HSV... components
+      This command reconstructs an image from its RGB, HSV... components
       directly, unlike the <link linkend="plug-in-compose">Compose</link>
-      filter which uses a dialog.
+      command which uses a dialog.
     </para>
     <para lang="de">
-      Dieses Filter kehrt die Wirkung des Filters
+      Dieses Kommando kehrt die Wirkung des Kommandos
       <link linkend="plug-in-decompose">Zerlegen</link> um. Es fügt
       ein Bild aus extrahierten Farbkomponenten zusammen.
     </para>
@@ -261,47 +259,23 @@
       linkend="plug-in-decompose">separer</link>.
     </para>
 
-    <!--TODO: es ru: update menuentries (and move to next sect3)-->
-    <para lang="cs">
-      Tento filtr lze vyvolat z nabídky okna obrázku volbou
-      <menuchoice>
-        <guimenu>Filtry</guimenu>
-        <guisubmenu>Barvy</guisubmenu>
-        <guimenuitem>Komponovat</guimenuitem>
-      </menuchoice>.
-      Filtr je aktivní po použití filtru Dekomponovat.
-    </para>
     <para lang="cs">
       Tento filtr rekonstruuje obrázek z jeho RGB, HSV či jiných komponent.
-    </para>
-
-    <para lang="ru">
-      Этот фильтр находится в меню
-      <menuchoice>
-        <guimenu>Фильтры</guimenu>
-        <guisubmenu>Цвета</guisubmenu>
-        <guimenuitem>Собрать</guimenuitem>
-      </menuchoice>
     </para>
     <para lang="ru">
       Этот фильтр реконструирует изображение из его составляющих RGB, HSV...
       Он становится доступным после активации фильтра
       <quote>Разобрать</quote>.
     </para>
-
-    <para lang="zh_CN">
-      该滤镜在<guimenuitem>图像&gt;滤镜/颜色/合成</guimenuitem>。
-    </para>
-    <para lang="zh_CN">
-      该滤镜从 RGB，HSV等组件重建整个图像。
-    </para>
+    <para lang="zh_CN">该滤镜从 RGB，HSV等组件重建整个图像。</para>
   </sect3>
 
-  <sect3 lang="en;es;de;fr;it;lt;no">
+
+  <sect3>
     <title>
-      <phrase lang="en">Activate the filter</phrase>
+      <phrase lang="en">Activate the command</phrase>
       <phrase lang="cs">Aktivace filtru</phrase>
-      <phrase lang="de">Filteraufruf</phrase>
+      <phrase lang="de">Aufruf des Kommandos</phrase>
       <phrase lang="es">Activar el filtro</phrase>
       <phrase lang="fr">Ouverture du filtre</phrase>
       <phrase lang="it">Attivazione del filtro</phrase>
@@ -309,68 +283,93 @@
       <phrase lang="ru">Активация фильтра</phrase>
       <phrase lang="zh_CN">使用这个滤镜</phrase>
     </title>
-    <para lang="en">
-      This filter is found in the image window menu under
-      <menuchoice>
-        <guimenu>Colors</guimenu>
-        <guisubmenu>Components</guisubmenu>
-        <guimenuitem>Recompose</guimenuitem>
-      </menuchoice>:
-      This filter is active after using Decompose.
-    </para>
-    <para lang="de">
-      Dieses Filter lässt sich über das Menü
-      <menuchoice>
-        <guimenu><accel>F</accel>arben</guimenu>
-        <guisubmenu><accel>K</accel>omponenten</guisubmenu>
-        <guimenuitem>Wieder Zusammenfügen</guimenuitem>
-      </menuchoice>
-      im Bildfenster aufrufen.
-    </para>
-    <para lang="es">
-      Puede encontrar este filtro en
-      <menuchoice>
-        <guimenu>Colores</guimenu>
-        <guisubmenu>Componentes</guisubmenu>
-        <guimenuitem>C<accel>o</accel>mponer</guimenuitem>
-      </menuchoice>
-      Este filtro está activo después de usar descomponer.
-    </para>
-    <para lang="fr">
-      Ce filtre se trouve dans
-      <menuchoice>
-        <guimenu>Couleurs</guimenu>
-        <guisubmenu>Composants</guisubmenu>
-        <guimenuitem>Recomposer</guimenuitem>
-      </menuchoice>
-      Ce filtre devient actif dans Filtres/Couleurs après utilisation de
-      Décompose.
-    </para>
-    <para lang="it">
-      Questo filtro si trova nel menu immagine:
-      <menuchoice>
-        <guimenu><accel>C</accel>olori</guimenu>
-        <guisubmenu><accel>C</accel>omponenti</guisubmenu>
-        <guimenuitem>R<accel>i</accel>componi</guimenuitem>
-      </menuchoice>.
-      Questo filtro è abilitato nel menu solo dopo aver usato Decomponi.
-    </para>
-    <para lang="lt">
-      Šį filtrą galima rasti paveikslėlio lango meniu juostoje:
-      <menuchoice>
-        <guimenu>Spalvos</guimenu>
-        <guisubmenu>Komponentai</guisubmenu>
-        <guimenuitem>Perkomponuoti</guimenuitem>
-      </menuchoice>:
-      šis filtras yra aktyvus panaudojus filtrą Iškomponuoti.
-    </para>
-    <para lang="no">
-      Du har tilgang til filteret frå biletmenyen via
-      <menuchoice>
-        <guimenu>Fargar</guimenu>
-        <guisubmenu>Komponentar</guisubmenu>
-        <guimenuitem>Set saman på nytt</guimenuitem>
-      </menuchoice>
-    </para>
+
+    <itemizedlist>
+      <listitem>
+        <para lang="en">
+          This command is found in the image window menu under
+          <menuchoice>
+            <guimenu>Colors</guimenu>
+            <guisubmenu>Components</guisubmenu>
+            <guimenuitem>Recompose</guimenuitem>
+          </menuchoice>:
+          This command is active after using Decompose.
+        </para>
+        <para lang="cs">
+          Tento filtr lze vyvolat z nabídky okna obrázku volbou
+          <menuchoice>
+            <guimenu>Filtry</guimenu>
+            <guisubmenu>Barvy</guisubmenu>
+            <guimenuitem>Komponovat</guimenuitem>
+          </menuchoice>.
+          Filtr je aktivní po použití filtru Dekomponovat.
+        </para>
+        <para lang="de">
+          Dieses Kommando lässt sich über das Menü
+          <menuchoice>
+            <guimenu><accel>F</accel>arben</guimenu>
+            <guisubmenu><accel>K</accel>omponenten</guisubmenu>
+            <guimenuitem>Wieder Zusammenfügen</guimenuitem>
+          </menuchoice>
+          im Bildfenster aufrufen.
+        </para>
+        <para lang="es">
+          Puede encontrar este filtro en
+          <menuchoice>
+            <guimenu>Colores</guimenu>
+            <guisubmenu>Componentes</guisubmenu>
+            <guimenuitem>C<accel>o</accel>mponer</guimenuitem>
+          </menuchoice>
+          Este filtro está activo después de usar descomponer.
+        </para>
+        <para lang="fr">
+          Ce filtre se trouve dans
+          <menuchoice>
+            <guimenu>Couleurs</guimenu>
+            <guisubmenu>Composants</guisubmenu>
+            <guimenuitem>Recomposer</guimenuitem>
+          </menuchoice>
+          Ce filtre devient actif dans Filtres/Couleurs après utilisation de
+          Décompose.
+        </para>
+        <para lang="it">
+          Questo filtro si trova nel menu immagine:
+          <menuchoice>
+            <guimenu><accel>C</accel>olori</guimenu>
+            <guisubmenu><accel>C</accel>omponenti</guisubmenu>
+            <guimenuitem>R<accel>i</accel>componi</guimenuitem>
+          </menuchoice>.
+          Questo filtro è abilitato nel menu solo dopo aver usato Decomponi.
+        </para>
+        <para lang="lt">
+          Šį filtrą galima rasti paveikslėlio lango meniu juostoje:
+          <menuchoice>
+            <guimenu>Spalvos</guimenu>
+            <guisubmenu>Komponentai</guisubmenu>
+            <guimenuitem>Perkomponuoti</guimenuitem>
+          </menuchoice>:
+          šis filtras yra aktyvus panaudojus filtrą Iškomponuoti.
+        </para>
+        <para lang="no">
+          Du har tilgang til filteret frå biletmenyen via
+          <menuchoice>
+            <guimenu>Fargar</guimenu>
+            <guisubmenu>Komponentar</guisubmenu>
+            <guimenuitem>Set saman på nytt</guimenuitem>
+          </menuchoice>
+        </para>
+        <para lang="ru">
+          Этот фильтр находится в меню
+          <menuchoice>
+            <guimenu>Фильтры</guimenu>
+            <guisubmenu>Цвета</guisubmenu>
+            <guimenuitem>Собрать</guimenuitem>
+          </menuchoice>
+        </para>
+        <para lang="zh_CN">
+          该滤镜在<guimenuitem>图像&gt;滤镜/颜色/合成</guimenuitem>。
+        </para>
+      </listitem>
+    </itemizedlist>
   </sect3>
 </sect2>

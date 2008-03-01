@@ -4,6 +4,7 @@
                 "http://www.docbook.org/xml/4.3/docbookx.dtd">
 
 <!-- section history:
+  2008-03-01 lexA: changed from filter description to command description
   2007-12-24 ciampix: added italian translation
   2007-11-17 Some changes.
   2007-10-20 ude: moved here from filters/color/compose.xml ('en','de')
@@ -16,7 +17,7 @@
 -->
 <!--
   TODO ru: update/review
-  FIXME en;de;es;fr;it;lt;no;ru: this is not a filter, but a command, please fix
+  FIXME es;fr;it;lt;no;ru: this is not a filter, but a command, please fix
 -->
 <sect2 id="plug-in-compose" lang="en;de;es;fr;it;lt;no;ru">
   <sect2info lang="en;de;es;fr;it;no" role="cvs">
@@ -67,6 +68,12 @@
     <phrase lang="zh_CN">合成</phrase>
   </title>
 
+  <indexterm lang="en;de;es;it;lt;no;ru"><primary>CMYK</primary></indexterm>
+  <indexterm lang="en;de;es;it;lt;no;ru"><primary>HSV</primary></indexterm>
+  <indexterm lang="en;de;es;it;lt;no;ru"><primary>RGB</primary></indexterm>
+  <indexterm lang="en;de;es;it;lt;no;ru"><primary>YUV</primary></indexterm>
+  <indexterm lang="en;de;es;it;lt;no;ru"><primary>YCbCr</primary></indexterm>
+
   <indexterm lang="en">
     <primary>Colors</primary>
     <secondary>Components</secondary>
@@ -74,17 +81,17 @@
   </indexterm>
   <indexterm lang="en"><primary>Compose</primary></indexterm>
 
-  <!--TODO: cs ru zh_CN: update indexterms-->
   <indexterm lang="cs">
     <primary>Filtry</primary>
     <secondary>Barvy</secondary>
     <tertiary>Komponovat</tertiary>
   </indexterm>
 
-  <indexterm lang="de">
-    <primary>Farbe</primary><secondary>Komponenten</secondary>
-  </indexterm>
+  <indexterm lang="de"><primary>Farbe</primary></indexterm>
+  <indexterm lang="de"><primary>Zerlegen</primary></indexterm>
   <indexterm lang="de"><primary>Zusammensetzen</primary></indexterm>
+  <indexterm lang="de"><primary>Ebene</primary></indexterm>
+  <indexterm lang="de"><primary>Kanal</primary></indexterm>
 
   <indexterm lang="es">
     <primary>Colores</primary>
@@ -98,6 +105,11 @@
     <tertiary>Re-composer l'image à partir de ses composants</tertiary>
   </indexterm>
   <indexterm lang="fr"><primary>Composer</primary></indexterm>
+  <indexterm lang="fr"><primary>CMJN</primary></indexterm>
+  <indexterm lang="fr"><primary>TSV</primary></indexterm>
+  <indexterm lang="fr"><primary>RVB</primary></indexterm>
+  <indexterm lang="fr"><primary>LAB</primary></indexterm>
+  <indexterm lang="fr"><primary>YCbCr</primary></indexterm>
 
   <indexterm lang="it">
     <primary>Colore</primary>
@@ -128,18 +140,6 @@
     <primary>滤镜</primary><secondary>颜色</secondary><tertiary>合成</tertiary>
   </indexterm>
 
-  <indexterm lang="en;de;es;it;lt;no;ru"><primary>CMYK</primary></indexterm>
-  <indexterm lang="en;de;es;it;lt;no;ru"><primary>HSV</primary></indexterm>
-  <indexterm lang="en;de;es;it;lt;no;ru"><primary>RGB</primary></indexterm>
-  <indexterm lang="en;de;es;it;lt;no;ru"><primary>YUV</primary></indexterm>
-  <indexterm lang="en;de;es;it;lt;no;ru"><primary>YCbCr</primary></indexterm>
-
-  <indexterm lang="fr"><primary>Composer</primary></indexterm>
-  <indexterm lang="fr"><primary>CMJN</primary></indexterm>
-  <indexterm lang="fr"><primary>TSV</primary></indexterm>
-  <indexterm lang="fr"><primary>RVB</primary></indexterm>
-  <indexterm lang="fr"><primary>LAB</primary></indexterm>
-  <indexterm lang="fr"><primary>YCbCr</primary></indexterm>
 
 
   <sect3>
@@ -156,13 +156,13 @@
       <phrase lang="zh_CN">概述</phrase>
     </title>
 
-    <figure lang="en;de;es;fr;it;lt;no;ru">
+    <figure>
       <title>
         <phrase lang="en">
-          Example for the <quote>Compose</quote> filter
+          Example for the <quote>Compose</quote> command
         </phrase>
         <phrase lang="de">
-          Anwendungsbeispiel für das Filter <quote>Zusammensetzen</quote>
+          Anwendungsbeispiel für das Kommando <quote>Zusammensetzen</quote>
         </phrase>
         <phrase lang="es">
           Ejemplo para el filtro <quote>Componer</quote>
@@ -186,9 +186,8 @@
 
       <mediaobject>
         <imageobject>
-          <imagedata
-            fileref="../images/filters/examples/color-taj-decompose.jpg"
-            format="JPG" />
+          <imagedata format="JPG"
+            fileref="../images/filters/examples/color-taj-decompose.jpg" />
         </imageobject>
 
         <caption>
@@ -203,6 +202,7 @@
           <para lang="no">Originalbiletet (Separert RGB)</para>
         </caption>
       </mediaobject>
+
       <mediaobject>
         <imageobject>
           <imagedata format="JPG"
@@ -210,8 +210,10 @@
         </imageobject>
 
         <caption>
-          <para lang="en">Filter <quote>Compose</quote> applied</para>
-          <para lang="de">Filter <quote>Zusammensetzen</quote> angewandt</para>
+          <para lang="en">Command <quote>Compose</quote> applied</para>
+          <para lang="de">
+            Kommando <quote>Zusammensetzen</quote> angewandt
+          </para>
           <para lang="es">Filtro <quote>Componer</quote> aplicado</para>
           <para lang="fr">Filtre <quote>Composer</quote> appliqué</para>
           <para lang="it">Filtro <quote>componi</quote> applicato</para>
@@ -224,34 +226,33 @@
     </figure>
 
     <para lang="en">
-      This filter constructs an image from several grayscale images or
-      layers, for instance from extracted RGB, HSV... components. You can
-      also build an image from grayscale images or layers created
-      independently.
+      This command constructs an image from several grayscale images or
+      layers, for instance from extracted RGB, HSV... components. You can also
+      build an image from grayscale images or layers created independently.
     </para>
     <para lang="de">
-      Dieses Filter fügt ein Bild aus mehreren Graustufenbildern,
+      Dieses Kommando fügt ein Bild aus mehreren Graustufenbildern,
       beispielsweise extrahierten Farbkomponenten, zusammen. Sie können damit
       auch ein Bild aus unabhängig erzeugten Graustufenbildern erstellen.
     </para>
     <para lang="es">
-      Este filtro recompone una imagen a partir de varias imágenes o capas
-      en escala de grises, por ejemplo desde los componentes RGB, HSV,...
-      extraidos. También se puede construir una imagen a partir de
-      imágenes o capas en escala de grises creadas independientemente.  
+      Este filtro recompone una imagen a partir de varias imágenes o capas en
+      escala de grises, por ejemplo desde los componentes RGB, HSV,...
+      extraidos. También se puede construir una imagen a partir de imágenes o
+      capas en escala de grises creadas independientemente.
     </para>
     <para lang="fr">
-      Ce filtre recompose une image à partir de plusieurs images ou calques
-      en niveaux de gris, par exemple obtenus par extraction des composants
-      RVB, TSV... Mais vous pouvez aussi construire une image à partir
-      d'images ou de calques en niveaux de gris créés indépendamment.
+      Ce filtre recompose une image à partir de plusieurs images ou calques en
+      niveaux de gris, par exemple obtenus par extraction des composants RVB,
+      TSV... Mais vous pouvez aussi construire une image à partir d'images ou
+      de calques en niveaux de gris créés indépendamment.
     </para>
     <para lang="it">
       Questo filtro costruisce un'immagine da diverse immagini in scala di
-      grigi o da livelli, come quelli provenienti, per esempio, dai
-      componenti di un'immagine RGB o HSV. È comunque possibile creare
-      un'immagine partendo da immagini in scala di grigi create in maniera
-      indipendente l'una dall'altra.
+      grigi o da livelli, come quelli provenienti, per esempio, dai componenti
+      di un'immagine RGB o HSV. È comunque possibile creare un'immagine
+      partendo da immagini in scala di grigi create in maniera indipendente
+      l'una dall'altra.
     </para>
     <para lang="lt">
       Šis filtras sudaro paveikslėlį iš kelių pilkų atspalvių paveikslėlių
@@ -264,49 +265,14 @@
       dei einskilde komponentane (RGB, HSV osv.) laga ved hjelp av filteret
       <guilabel>Separer</guilabel>.
     </para>
-
-    <!--TODO: cs ru zh_CN: update menuentries (and move to next sect3)-->
-    <para lang="cs">
-      Tento filtr lze vyvolat z nabídky okna obrázku volbou
-      <menuchoice>
-        <guimenu>Filtry</guimenu>
-        <guisubmenu>Barvy</guisubmenu>
-        <guimenuitem>Komponovat</guimenuitem>
-      </menuchoice>.
-      Filtr je aktivní po použití filtru Dekomponovat.
-    </para>
-    <para lang="cs">
-      Tento filtr rekonstruuje obrázek z jeho RGB, HSV či jiných komponent.
-    </para>
-
-    <para lang="ru">
-      Этот фильтр находится в меню
-      <menuchoice>
-        <guimenu>Фильтры</guimenu>
-        <guisubmenu>Цвета</guisubmenu>
-        <guimenuitem>Собрать</guimenuitem>
-      </menuchoice>
-    </para>
-    <para lang="ru">
-      Этот фильтр реконструирует изображение из его составляющих RGB, HSV...
-      Он становится доступным после активации фильтра
-      <quote>Разобрать</quote>.
-    </para>
-
-    <para lang="zh_CN">
-      该滤镜在<guimenuitem>图像&gt;滤镜/颜色/合成</guimenuitem>。
-    </para>
-    <para lang="zh_CN">
-      该滤镜从 RGB，HSV等组件重建整个图像。
-    </para>
   </sect3>
 
 
   <sect3 lang="en;de;es;fr;it;lt;no">
     <title>
-      <phrase lang="en">Activate the filter</phrase>
+      <phrase lang="en">Activate the command</phrase>
       <phrase lang="cs">Aktivace filtru</phrase>
-      <phrase lang="de">Filteraufruf</phrase>
+      <phrase lang="de">Aufruf des Kommandos</phrase>
       <phrase lang="es">Activar el filtro</phrase>
       <phrase lang="fr">Ouverture du filtre</phrase>
       <phrase lang="it">Attivazione del filtro</phrase>
@@ -316,67 +282,104 @@
       <phrase lang="zh_CN">使用这个滤镜</phrase>
     </title>
 
-    <para lang="en">
-      You can find this filter in the image window menu under
-      <menuchoice>
-        <guimenu>Colors</guimenu>
-        <guisubmenu>Components</guisubmenu>
-        <guimenuitem>Compose</guimenuitem>
-      </menuchoice>.
-      It is enabled if your image is grayscale.
-    </para>
-    <para lang="de">
-      Dieses Filter lässt sich über das Menü
-      <menuchoice>
-        <guimenu><accel>F</accel>arben</guimenu>
-        <guisubmenu><accel>K</accel>omponenten</guisubmenu>
-        <guimenuitem><accel>Z</accel>usammensetzen</guimenuitem>
-      </menuchoice>
-      im Bildfenster aufrufen.
-    </para>
-    <para lang="es">
-      Puede encontrar este filtro en
-      <menuchoice>
-        <guimenu>Colores</guimenu>
-        <guisubmenu>Componentes</guisubmenu>
-        <guimenuitem>C<accel>o</accel>mponer</guimenuitem>
-      </menuchoice>
-      Este filtro está activo si la imagen está en escala de grises.
-    </para>
-    <para lang="fr">
-      Ce filtre se trouve dans
-      <menuchoice>
-        <guimenu>Couleurs</guimenu>
-        <guisubmenu>Composants</guisubmenu>
-        <guimenuitem>Composer</guimenuitem>
-      </menuchoice>.
-      Il est activé si votre image est en niveaux de gris.
-    </para>
-    <para lang="it">
-      Questo filtro si trova selezionando nel menu immagine:
-      <menuchoice>
-        <guimenu><accel>C</accel>olori</guimenu>
-        <guisubmenu><accel>C</accel>omponenti</guisubmenu>
-        <guimenuitem>C<accel>o</accel>mponi</guimenuitem> </menuchoice>.
-        Questo filtro è abilitato solo se l'immagine è in scala di grigi.
-    </para>
-    <para lang="lt">
-      Šį filtrą galite rasti paveikslėlio lango meniu:
-      <menuchoice>
-        <guimenu>Spalvos</guimenu>
-        <guisubmenu>Komponentai</guisubmenu>
-        <guimenuitem>Komponuoti</guimenuitem>
-      </menuchoice>.
-      Jis įjungtas, jeigu jūsų paveikslėlis yra pilkų atspalvių.
-    </para>
-    <para lang="no">
-      Du har tilgang til filteret frå biletmenyen via
-      <menuchoice>
-        <guimenu>Fargar</guimenu>
-        <guisubmenu>Komponentar</guisubmenu>
-        <guimenuitem>Kombiner</guimenuitem>
-      </menuchoice>
-    </para>
+    <itemizedlist>
+      <listitem>
+        <para lang="en">
+          You can find this command in the image window menu under
+          <menuchoice>
+            <guimenu>Colors</guimenu>
+            <guisubmenu>Components</guisubmenu>
+            <guimenuitem>Compose…</guimenuitem>
+          </menuchoice>.
+          It is enabled if your image is grayscale.
+        </para>
+
+        <para lang="cs">
+          Tento filtr lze vyvolat z nabídky okna obrázku volbou
+          <menuchoice>
+            <guimenu>Filtry</guimenu>
+            <guisubmenu>Barvy</guisubmenu>
+            <guimenuitem>Komponovat</guimenuitem>
+          </menuchoice>.
+          Filtr je aktivní po použití filtru Dekomponovat.
+        </para>
+        <para lang="cs">
+          Tento filtr rekonstruuje obrázek z jeho RGB, HSV či jiných komponent.
+        </para>
+
+        <para lang="de">
+          Dieses Kommando lässt sich über das Menü
+          <menuchoice>
+            <guimenu><accel>F</accel>arben</guimenu>
+            <guisubmenu><accel>K</accel>omponenten</guisubmenu>
+            <guimenuitem><accel>Z</accel>usammensetzen…</guimenuitem>
+          </menuchoice>
+          im Bildfenster aufrufen.
+        </para>
+        <para lang="es">
+          Puede encontrar este filtro en
+          <menuchoice>
+            <guimenu>Colores</guimenu>
+            <guisubmenu>Componentes</guisubmenu>
+            <guimenuitem>C<accel>o</accel>mponer</guimenuitem>
+          </menuchoice>
+          Este filtro está activo si la imagen está en escala de grises.
+        </para>
+        <para lang="fr">
+          Ce filtre se trouve dans
+          <menuchoice>
+            <guimenu>Couleurs</guimenu>
+            <guisubmenu>Composants</guisubmenu>
+            <guimenuitem>Composer</guimenuitem>
+          </menuchoice>.
+          Il est activé si votre image est en niveaux de gris.
+        </para>
+        <para lang="it">
+          Questo filtro si trova selezionando nel menu immagine:
+          <menuchoice>
+            <guimenu><accel>C</accel>olori</guimenu>
+            <guisubmenu><accel>C</accel>omponenti</guisubmenu>
+            <guimenuitem>C<accel>o</accel>mponi</guimenuitem> </menuchoice>.
+            Questo filtro è abilitato solo se l'immagine è in scala di grigi.
+        </para>
+        <para lang="lt">
+          Šį filtrą galite rasti paveikslėlio lango meniu:
+          <menuchoice>
+            <guimenu>Spalvos</guimenu>
+            <guisubmenu>Komponentai</guisubmenu>
+            <guimenuitem>Komponuoti</guimenuitem>
+          </menuchoice>.
+          Jis įjungtas, jeigu jūsų paveikslėlis yra pilkų atspalvių.
+        </para>
+        <para lang="no">
+          Du har tilgang til filteret frå biletmenyen via
+          <menuchoice>
+            <guimenu>Fargar</guimenu>
+            <guisubmenu>Komponentar</guisubmenu>
+            <guimenuitem>Kombiner</guimenuitem>
+          </menuchoice>
+        </para>
+    
+        <para lang="ru">
+          Этот фильтр находится в меню
+          <menuchoice>
+            <guimenu>Фильтры</guimenu>
+            <guisubmenu>Цвета</guisubmenu>
+            <guimenuitem>Собрать</guimenuitem>
+          </menuchoice>
+        </para>
+        <para lang="ru">
+          Этот фильтр реконструирует изображение из его составляющих RGB, HSV...
+          Он становится доступным после активации фильтра
+          <quote>Разобрать</quote>.
+        </para>
+    
+        <para lang="zh_CN">
+          该滤镜在<guimenuitem>图像&gt;滤镜/颜色/合成</guimenuitem>。
+        </para>
+        <para lang="zh_CN">该滤镜从 RGB，HSV等组件重建整个图像。</para>
+      </listitem>
+    </itemizedlist>
   </sect3>
 
 
@@ -396,9 +399,9 @@
 
     <figure>
       <title>
-        <phrase lang="en"><quote>Compose</quote> filter options</phrase>
+        <phrase lang="en"><quote>Compose</quote> command options</phrase>
         <phrase lang="de">
-          Eigenschaften für das Filter <quote>Zusammensetzen</quote>
+          Eigenschaften für das Kommando <quote>Zusammensetzen</quote>
         </phrase>
         <phrase lang="es">Opciones del filtro <quote>Componer</quote></phrase>
         <phrase lang="fr">Options du filtre «Composer»</phrase>
@@ -413,33 +416,32 @@
       <!--TODO cs ru: new image-->
       <mediaobject>
         <imageobject lang="en;cs;ru">
-          <imagedata fileref="../images/menus/colors-components-compose.png"
-            format="PNG" />
+          <imagedata format="PNG"
+            fileref="../images/menus/colors-components-compose.png" />
         </imageobject>
         <imageobject lang="de">
           <imagedata format="PNG"
             fileref="../images/menus/de/colors-components-compose.png" />
         </imageobject>
         <imageobject lang="es">
-          <imagedata fileref="../images/menus/es/colors-components-compose.png"
-            format="PNG" />
+          <imagedata format="PNG"
+            fileref="../images/menus/es/colors-components-compose.png" />
         </imageobject>
         <imageobject lang="fr">
-          <imagedata fileref="../images/menus/fr/colors-components-compose.png"
-            format="PNG" />
+          <imagedata format="PNG"
+            fileref="../images/menus/fr/colors-components-compose.png" />
         </imageobject>
         <imageobject lang="it">
-          <imagedata fileref="../images/menus/it/colors-components-compose.png"
-            format="PNG" />
+          <imagedata format="PNG"
+            fileref="../images/menus/it/colors-components-compose.png" />
         </imageobject>
         <imageobject lang="lt">
-          <imagedata fileref="../images/menus/lt/colors-components-compose.png"
-            format="PNG" />
+          <imagedata format="PNG"
+            fileref="../images/menus/lt/colors-components-compose.png" />
         </imageobject>
         <imageobject lang="no">
-          <imagedata
-       fileref="../images/filters/no/options-colors-compose.png"
-             format="PNG"/>
+          <imagedata format="PNG"
+            fileref="../images/filters/no/options-colors-compose.png" />
         </imageobject>
       </mediaobject>
     </figure>
@@ -472,7 +474,7 @@
           <para lang="de">
             Hier wählen Sie aus, aus welchen Farbkomponenten das Bild
             zusammengesetzt werden soll. Zur Auswahl stehen verschiedene
-            Farbmodelle, welche bei der Beschreibung des Filters
+            Farbmodelle, welche bei der Beschreibung des Kommandos
             <link linkend="plug-in-decompose">Zerlegen</link>
             ausführlich erläutert werden.
           </para>
@@ -514,6 +516,7 @@
         </listitem>
       </varlistentry>
 
+      <!--TODO all: If you know what this option is useful for, please document it-->
       <varlistentry>
         <term lang="en">Channel Representation</term>
         <term lang="cs">Reprezentace kanálů</term>
@@ -528,14 +531,12 @@
 
         <listitem>
           <para lang="en">
-            Allows you to select which channel will be affected to each
-            image channel.
+            Allows you to select which channel will be affected to each image
+            channel.
           </para>
           <para lang="en">
             <guilabel>Mask Value</guilabel> : every channel has this option.
             It allows you to give the channel a value from 0 to 255.
-            <!--TODO all: If you know what this option is useful for,
-                please document it-->
           </para>
 
           <para lang="cs">
@@ -554,7 +555,6 @@
             Vous permet de choisir quel canal sera affecté à chaque canal de
             l'image, ce qui autorise des remplacements de couleur.
           </para>
-
           <para lang="fr">
             <guilabel>Valeur du masque</guilabel> : chaque canal possède
             cette option. Elle vous permet d'attribuer au canal une valeur
@@ -579,7 +579,7 @@
             选择用哪个通道影响每个图像中的通道。
           </para>
 
-          <tip lang="en;de;es;fr;it;lt;no;ru">
+          <tip>
             <para lang="en">
               If Compose options are different from Decompose ones, for
               instance an image decomposed to
