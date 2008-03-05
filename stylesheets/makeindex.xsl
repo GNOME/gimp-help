@@ -82,7 +82,6 @@
               <xsl:choose>
                 <xsl:when test="$xreftext.normalized != ''">
                   <!-- case 3: "obj" has "xreftext" attribute -->
-                  <xsl:value-of select="$xreftext.normalized" />
                   <xsl:value-of select="concat('(', $xreftext.normalized, ')')" />
                   <xsl:if test="$obj.title.debug = 1">
                     <xsl:message>
