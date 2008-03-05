@@ -141,7 +141,7 @@ endif
 if GIMP_HELP_BUILD
 
 # Main text
-html/%/index.html: xml/%.xml stylesheets/plainhtml.xsl
+html/%/index.html: xml/%.xml stylesheets/plainhtml.xsl stylesheets/htmlalternate.xsl
 	@rm -rf html/$*
 	@$(mkdir_p) html/$*
 	@test -d html/images || $(LN_S) $(abs_top_srcdir)/images html/
@@ -209,6 +209,48 @@ preview-%: html/%/index.html html/%/gimp-help.xml
 	$(mkdir_p) preview-$*
 	cd preview-$* && $(LN_S) ../html/$* .
 	cd preview-$* && $(LN_S) $(abs_top_srcdir)/images .
+
+#### HTML draft (single page preview)
+
+%.draft: %.xml
+	@echo "Making draft page (ignore any XSLT complaints):"
+	@for lang in $(ALL_LINGUAS); do \
+		test -d $(builddir)/html/$$lang && continue || \
+		$(mkdir_p) $(builddir)/html/$$lang; \
+		cp -fp $(srcdir)/stylesheets/*.css $(builddir)/html/$$lang; \
+		for file in $(srcdir)/stylesheets/$$lang/*.css; do \
+			test -f $$file || continue; \
+			cp -fp $$file $(builddir)/html/$$lang/; \
+		done; \
+	done
+
+	@id=`sed -e 's/.*id=.//; tmatch; d; :match; s/["'"'"'].*//; q' $<`; \
+	test -n "$$id" || id=noname; \
+	for lang in $(ALL_LINGUAS); do \
+		echo "Making $(builddir)/html/$$lang/$$id.html ... "; \
+		$(XSLTPROC) \
+		    $(XSLTFLAGS) \
+		    $(XSLTEXTRAFLAGS) \
+		    --xinclude \
+		    --stringparam profile.lang $$lang \
+		    --novalid \
+		    $(srcdir)/stylesheets/profile.xsl \
+		    $< \
+		| \
+		sed -e 's/xmlns[:a-z]*="[^"]*" //' \
+		    -e 's/lang="[A-Za-z_;]*"/lang="'$$lang'"/' \
+		    -e '/^[ \t]*$$/d' \
+		| \
+		$(XSLTPROC) \
+		    $(XSLTFLAGS) $(XSLTEXTRAFLAGS) \
+		    --xinclude \
+		    --stringparam l10n.gentext.default.language $* \
+		    --novalid \
+		    --output $(builddir)/html/$$lang/$$id.html \
+		    $(srcdir)/stylesheets/drafthtml.xsl \
+		    - \
+		; \
+	done
 
 #### Language-specific HTML tarballs for distribution
 
