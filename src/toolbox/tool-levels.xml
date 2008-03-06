@@ -13,7 +13,7 @@
   050807 de reviewed by axel.wernicke
 -->
 <sect2 id="gimp-tool-levels" lang="en;cs;de;es;fr;it;no;pl;ru;zh_CN">
-  <sect2info lang="en;de;es;fr">
+  <sect2info lang="en;de;es;fr;no">
     <revhistory>
       <revision lang="en">
         <revnumber>$Revision$</revnumber>
@@ -35,6 +35,11 @@
         <date>2008-01-17</date>
         <authorinitials>j.h</authorinitials>
       </revision>
+      <revision lang="no">
+        <revnumber>$Revision$</revnumber>
+        <date>2008-03-02</date>
+        <authorinitials>kost</authorinitials>
+      </revision>
     </revhistory>
   </sect2info>
 
@@ -45,7 +50,7 @@
     <phrase lang="es">Niveles</phrase>
     <phrase lang="fr">Niveaux</phrase>
     <phrase lang="it">Livelli</phrase>
-    <phrase lang="no">Nivåverktøyet</phrase>
+    <phrase lang="no">Nivå</phrase>
     <phrase lang="pl">Poziomy</phrase>
     <phrase lang="ru">Уровни</phrase>
     <phrase lang="zh_CN">色阶工具</phrase>
@@ -142,9 +147,9 @@
   </para>
 
   <para lang="no">
-    Tonenivåverktøyet liknar nokså mykje på <link
+    Nivåverktøyet liknar nokså mykje på <link
     linkend="glossary-histogram">histogramverktøyet</link>, men kan i
-    tillegg gjere endringar i intensiteten til eit lag eller ei markering.
+    tillegg gjere endringar i intensiteten til eit lag eller eit utval.
     Kan vere nyttig t.d. når du skal korrigera over- eller undereksponerte
     digitalbilete.
   </para>
@@ -312,17 +317,26 @@
     </para>
 
     <para lang="no">
-      Du kan hente fram dette verktøyet på to måtar:
+      Du kan hente fram dette verktøyet på fleire måtar:
     </para>
     <itemizedlist lang="no">
       <listitem>
         <para>
-          Frå biletmenyen via
+          frå biletmenyen via
+          <menuchoice>
+            <guimenu>Fargar</guimenu>
+            <guisubmenu>Nivå</guisubmenu>
+          </menuchoice>,
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          frå biletmenyen via
           <menuchoice>
             <guimenu>Verktøy</guimenu>
-            <guisubmenu>Fargeverktøy</guisubmenu>
+            <guisubmenu>Fargeverktøya</guisubmenu>
             <guimenuitem>Nivå</guimenuitem>
-          </menuchoice>.
+          </menuchoice>
         </para>
       </listitem>
       <listitem>
@@ -336,9 +350,9 @@
               </imageobject>
             </inlinemediaobject>
           </guiicon>
-          i verktøyskrinet dersom du har installert fargeverktøya der.
-          Sjå om eventuell installasjon i kapitlet om
-          <link linkend="gimp-tools-dialog">verktøydialogar</link>.
+          i verktøykassa dersom du har installert fargeverktøya der.
+          (Installeringa er forklart i
+          <link linkend="gimp-tools-dialog">verktøydialogen</link>).
         </para>
       </listitem>
     </itemizedlist>
@@ -406,7 +420,7 @@
       <phrase lang="es">Opciones</phrase>
       <phrase lang="fr">Options</phrase>
       <phrase lang="it">Opzioni</phrase>
-      <phrase lang="no">Verktøyinnstillingar</phrase>
+      <phrase lang="no">Verktøyinnstillingane</phrase>
       <phrase lang="pl">Opcje narzędzia</phrase>
       <phrase lang="ru">Параметры</phrase>
       <phrase lang="zh_CN">选项</phrase>
@@ -581,12 +595,41 @@
             annulla i cambiamenti effettuati sul canale selezionato.
           </para>
           <para lang="no">
-            Her kan du velja kva for kanal endringane skal gjelde for. Valet
-            <guilabel>Verdi</guilabel> vil gjere endringane gyldige for alle
-            biletpunkta i eit bilete. Vel du i staden ein av fargekanalane
-            eller alfakanalen, vil innstillingane gjelde verdiane for den
-            valde kanalen. Du kan også stilla verdiane tilbake til slik dei
-            var med knappen <guilabel>Tilbakestill kanal</guilabel>.
+            Her kan du velje kva for kanal verktøyet skal arbeide på.
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <guilabel>Verdi</guilabel>: Forandrar lysverdien for alle
+                  RGB-kanalane i biletet og gjer på den måten biletet mørkare
+                  eller lysare.
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <guilabel>Raud</guilabel>, <guilabel>Grøn</guilabel> og
+                  <guilabel>Blå</guilabel>: Gjer at verktøyet arbeider på den
+                  valde fargekanalen. Biletet får meir eller mindre av den
+                  aktuelle fargen. Det kan vere greitt å hugse på at når du
+                  legg til eller fjernar ein farge, blir samstundes 
+                  kompilmentærfargen fjerna eller lagt til.
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <guilabel>Alfa</guilabel>: Gjer at verktøyet arbeider på
+                  gjennomsiktige lag eller utval. Dess mørkare farge dess
+                  meir gjennomsikt. Kvit farge betyr ingen gjennomsikt i
+                  det heile. Biletet må ha ein alfakanal for at dette valet
+                  skal vere tilgjengeleg.
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <guilabel>Tilbakestill kanal</guilabel> stiller kanalen 
+                  tilbake til slik han var då du opna verktøyet.
+                </para>
+              </listitem>
+            </itemizedlist>
           </para>
           <para lang="pl">
             Można wybrać określony kanał do zmiany narzędziem:
@@ -754,8 +797,8 @@
             <link linkend="glossary-histogram">histogram</link> av mengda av
             mørke toner, mellomtoner og lyse toner i biletet. Dei er
             plasserte på x-aksen i ein skala frå 0 (svart) til 255 (kvit).
-            Talet på pikslar på kvart nivå er plasserte på y-aksen.
-            Diagramoverflata representerer alle pikslane i biletet. Eit godt
+            Talet på pikslar på kvart nivå er sett inn på y-aksen.
+            Kurveoverflata representerer alle pikslane i biletet. Eit godt
             balansert bilete har pikslane godt fordelte over heile skalaen.
             Eit bilete dominert av t.d. blått, vil lage eit histogram med
             overtyngde til venstre i kanalane raud og grøn. Du vil
@@ -893,14 +936,36 @@
                 scuri, uno grigio per le tonalità medie (chiamate anche
                 valori gamma) e uno bianco per i toni chiari.
               </para>
+
               <para lang="no">
-                Med dei tre triangelforma glidebrytarane, ein svart for
-                dei mørke tonene, ein grå for mellomtonane (ofte kalla
-                <link
-                linkend="glossary-gamma"><quote>gammaverdiane</quote></link>)
-                og ein kvit for dei lyse tonene. Drar du for eksempel
-                den midtre trekanten mot høgre, vil biletet bli mørkare.
+                Med dei tre trekantane. Den svarte for dei mørke 
+                fargetonene, den grå for mellomtonene og den kvite for 
+                dei lyse fargetonene.
               </para>
+              <para lang="no">
+                Den svarte glidebrytaren bestemmer 
+                <emphasis>svartpunktet</emphasis>. Dette betyr at alle 
+                pikslane med denne eller lågare verdi blir svarte, eller
+                utan farge dersom du arbeider på ein av fargekanalane.
+                Arbeider du på alfakanalen, vil desse pikslane bli
+                fullstendig gjennomsiktige.
+              </para>
+              <para lang="no">
+                Den kvite glidebrytaren bestemmer 
+                <emphasis>kvitpunktet</emphasis>. Dette betyr at alle 
+                pikslane med denne eller høgare verdi blir kvite, eller
+                med full farge dersom du arbeider på ein av fargekanalane.
+                Arbeider du på alfakanalen, vil desse pikslane bli
+                fullstendig ugjennomsiktige.
+              </para>
+              <para lang="no">
+                Den grå brytaren er <emphasis>midtpunktet</emphasis>.
+                Flytter du denne mot venstre, mot svart,  blir biletet lysare
+                (meir farge eller mindre gjennomsiktig). Flytter du 
+                brytaren mot høgre, mot kvit, vil biletet bli mørkare 
+                (mindre farga eller meir gjennomsiktig).
+              </para>
+              
               <para lang="pl">
                 Тrzy trójkąty występują w roli suwaka: czarny dla ciemnych
                 odcieni, szary dla średnich (inna jego nazwa to wartość
@@ -936,7 +1001,7 @@
             </listitem>
 
             <listitem>
-              <!--TODO es;it;no;pl v2.4-->
+              <!--TODO es;it;pl v2.4-->
               <para lang="en">
                 Two eye-droppers: when you click them, the mouse pointer
                 becomes an eye-dropper. Then clicking on the image determines
@@ -977,14 +1042,10 @@
                 (scheda Cursore) per trovare questi colori.
               </para>
               <para lang="no">
-                Med dei to pipettene. Den til venstre bruker du for å
-                bestemme den mørkaste fargen, og den høgre for å setje den
-                lysaste fargen i biletet. Du kan også buke
-                <menuchoice>
-                  <guimenu>Vis</guimenu>
-                  <guisubmenu>Informasjonsvindauge</guisubmenu>
-                </menuchoice>
-                frå biletmenyen for å vise fargane i pipetta.
+                Med dei to pipettene. Den til venstre bruker du for å  
+                velje svartpunktet, og den høgre for å velje kvitpunktet.
+                Når du bruker desse, blir musemarkøren omforma til ei 
+                pipette når du fører han over biletet.
               </para>
               <para lang="ru">
                 <guilabel>Две пипетки</guilabel>: определяют две точки на
@@ -1041,7 +1102,7 @@
             </listitem>
           </itemizedlist>
 
-          <!--TODO es;it;no;pl-->
+          <!--TODO es;it;pl-->
           <para lang="en">
             Input Levels are used to lighten highlights (bright tones),
             darken shadows (dark tones), change the balance of bright and
@@ -1067,6 +1128,13 @@
             l'opacité). Déplacez les curseurs vers la droite pour assombrir
             (diminuer la couleur choisie /diminuer l'opacité).
           </para>
+          <para lang="no">
+            Inn-nivåa blir brukte for å gjere lyse fargetoner lysare, gjere
+            skyggane mørkare og for å endre balansen mellom mørke og
+            lyse fargar. Flytt brytaren mot venstre for å gjere biletet lysare,
+            (auke fargemengda / auke dekkevna) og mot høgre for å
+            gjere biletet mørkare (minske fargemengda / minske dekkevna).
+          </para>
           <para lang="ru">
             Уровни на входе используются для осветления отблесков (яркие тона),
             затемнения теней (тёмные тона), исменения баланса светлых и тёмных
@@ -1075,7 +1143,7 @@
             светлость (выбранный цвет или прозрачность).
           </para>
 
-          <mediaobject lang="en;fr;ru">
+          <mediaobject lang="en;fr;no;ru">
             <imageobject>
               <imagedata format="PNG"
                          fileref="../images/toolbox/levels-input-1.png" />
@@ -1091,6 +1159,11 @@
                 tons moyens (127), tons clairs (192). L'histogramme montre
                 trois pics, un pour chacun des trois tons.
               </para>
+              <para lang="no">
+                Eit gråskalabilete. Tre striper: skygge (64), mellomtoner
+                (127) og høglys (192). Histogrammet viser tre toppar, ein
+                for kvar av desse fargetonene.
+              </para>
               <para lang="ru">
                 Серое изображение. Три полосы: тени (64), средние тона (127),
                 блики (192). Гистограмма показывает три вершины, одну на каждый
@@ -1099,11 +1172,12 @@
             </caption>
           </mediaobject>
 
-          <figure lang="en;fr;ru">
-            <!--TODO es;it;no;pl-->
+          <figure lang="en;fr;no;ru">
+            <!--TODO es;it;pl-->
             <title>
               <phrase lang="en">Example for Input Levels</phrase>
               <phrase lang="fr">Exemple pour Niveaux d'entrée</phrase>
+              <phrase lang="no">Eksempel på inn-nivå</phrase>
               <phrase lang="ru">Пример уровней на входе</phrase>
             </title>
             <mediaobject>
@@ -1129,6 +1203,13 @@
                   milieu de l'intervalle tonal et la bande de tons moyens
                   prend la valeur 84. La bande de tons clairs est également
                   assombrie à 171.
+                </para>
+                <para lang="no">
+                  Verdikanalen er aktiv. Den svarte brytaren er flytt opp til
+                  skyggesøyla. Verdiane opp til 64 blir sette til 0 og 
+                  skyggestripa blir svart (0). Mellomtonebrytaren er 
+                  automatisk flytt til midten av toneområdet. Mellomtonene 
+                  er blitt mørkare (84). Det er også dei lyse tonene (171).
                 </para>
                 <para lang="ru">
                   Выбран канал яркости. Чёрный ползунок (тени) передвинут к
@@ -1160,6 +1241,12 @@
                   pour rester au milieu de l'intervalle tonal. La bande de
                   tons moyens est éclaircie à 169 et la bande des tons
                   sombres à 84.
+                </para>
+                <para lang="no">
+                  Den kvite brytaren er flytt til høglyssøyla. Verdiane høgare
+                  enn 192 er forandra til 255. Den lyse stripa er blitt kvit. 
+                  Mellomtonebrytaren blir automatisk flytt til midten av 
+                  toneområdet (169). Skyggane har fått grenseverdien 84.
                 </para>
                 <para lang="ru">
                   Белый ползунок (блики) передвинут к вершине бликов. Значение
@@ -1260,7 +1347,7 @@
             Levels.
           </para>
           <para lang="en">
-            <!--TODO es;it;no;pl-->
+            <!--TODO es;it;pl-->
             Output levels force the tone range to fit the new limits you have
             set.
           </para>
@@ -1298,11 +1385,16 @@
             triangolini che possono essere usati per cambiare
             interattivamente i livelli di uscita.
           </para>
+          
           <para lang="no">
-            Til vanleg vil utverdiane spenna over heile gråskalaen frå 0
-            til 255. Du kan avgrensa dette ved å setje andre utverdiar ved
-            hjelp av glidebrytarane.
+            Desse glidebrytarane, og innskrivingsboksane, gir deg høve til 
+            å snevre inn utnivået.
           </para>
+          <para lang="no">
+            Nivå ut tvingar toneområdet til å passe innføre dei nye grensene
+            du har sett.
+          </para>
+          
           <para lang="pl">
             Pozwala ręcznie wprowadzić оgraniczoną skalę poziomów
             wyjściowych. Są też strzałki zmieniające poziomy w realnej skali
@@ -1321,7 +1413,7 @@
             输入色阶允许人工选择所要输出的色阶范围。也可以用三角箭头交互地控制输出色阶。
           </para>
 
-          <itemizedlist lang="en;de;fr;ru">
+          <itemizedlist lang="en;de;fr;no;ru">
             <listitem>
               <para lang="en">
                 Working with Value: values are compressed and look more
@@ -1341,6 +1433,14 @@
                 plus : le contraste est donc diminué. des détails nouveaux
                 peuvent apparaître dans l'image, mais le contraste est
                 diminué. Un compromis est nécessaire.
+              </para>
+              <para lang="no">
+                Når du arbeider på lysverdikanalen, blir verdiane 
+                komprimerte og meir like kvarandre. Kontrasten blir mindre
+                og skyggane lysare. Dette kan føre til at nye detaljar blir
+                synlege i biletet. Samstundes blir dei lysaste partia mørkare.
+                Som oftast må ein gjere eit val ut frå kva som er viktigast
+                i biletet, detaljar eller kontrast.
               </para>
               <para lang="ru">
                 Работа с яркостью: значения компрессуются и становятся более
@@ -1368,6 +1468,13 @@
                 tous les pixels ayant tant soit peu de vert verront leur vert
                 prendre une valeur entre 100 et 140.
               </para>
+              <para lang="no">
+                Når du arbeider på fargekanalane, vil alle fargane i den
+                valde kanalen bli avgrensa til å vere mellom dei utverdiane
+                du har sett. Set du grønnivået til å vere mellom 100 og
+                140, vil alle pikslane med aldri så lite grønt få ein verdi
+                mellom 100 og 140.
+              </para>
               <para lang="ru">
                 Работа с цветовыми каналами: если, на пример, для зелёного
                 канала установить уровни на выходе от 100 до 140, все точки
@@ -1388,6 +1495,10 @@
                 Avec le canal Alpha : toutes les valeurs de transparence
                 prendront une valeur dans les limites de l'intervalle fixé.
               </para>
+              <para lang="no">
+                Når du arbeider på alfakanalen, vil alle alfaverdiane bli sett
+                til ein stad innføre det nivået du har vald.
+              </para>
               <para lang="ru">
                 Работа с каналом альфа: все значения передвинутся к выбранному
                 диапазону.
@@ -1395,12 +1506,13 @@
             </listitem>
           </itemizedlist>
 
-          <figure lang="en;de;fr;ru">
-            <!--TODO es;it;no;pl-->
+          <figure lang="en;de;fr;no;ru">
+            <!--TODO es;it;pl-->
             <title>
               <phrase lang="en">Example for Output Levels</phrase>
               <phrase lang="de">Beispiel für Zielwerte</phrase>
               <phrase lang="fr">Exemple pour Niveaux de sortie</phrase>
+              <phrase lang="no">Eksempel på bruk av nivå ut</phrase>
               <phrase lang="ru">Пример уровней выхода</phrase>
             </title>
             <mediaobject>
@@ -1438,6 +1550,16 @@
                     <guimenu>Boîtes de dialogue</guimenu>
                     <guimenuitem>Histogramme</guimenuitem>
                   </menuchoice>.
+                </para>
+                <para lang="no">
+                  <emphasis role="bold">Originalbiletet</emphasis>:
+                  Viser ein RGB fargeovergang frå svart (0,0,0) til kvit
+                  (255,255,255). (Sidan det ikkje finst noe histogram for
+                  nivå ut, har vi brukt 
+                  <menuchoice>
+                    <guimenu>Dialogar</guimenu>
+                    <guimenuitem>Histogram</guimenuitem>
+                  </menuchoice>).
                 </para>
                 <para lang="ru">
                   <emphasis role="bold">Искомое изображение</emphasis>:
@@ -1481,6 +1603,13 @@
                   sombres sont plus clairs et les tons clairs sont plus
                   sombres : le contraste est diminué.
                 </para>
+                <para lang="no">
+                  Verdikanalen er vald. Den svarte brytaren er flytt til 63 og den
+                  kvite til 189. Histogrammet viser at pikslane er komprimerte.
+                  Ingen piksel har lågare verdi enn 63 og ingen har høgare
+                  verdi enn 189. På biletet er skyggane er blitt lysare og dei 
+                  lyse områda mørkare. Kontrasten er redusert.
+                </para>
                 <para lang="ru">
                   Выбран канал яркости. Чёрный ползунок передвинут до 63, а
                   белый до 189. Гистограмма показывает компрессию точек. Нет
@@ -1519,7 +1648,7 @@
             of the levels.
           </para>
           <para lang="en">
-            <!--TODO es;it;no;pl-->
+            <!--TODO es;it;pl-->
             <guilabel>Three eyedroppers</guilabel>: These three buttons
             respectively represent a white, a gray and a black eye-dropper.
             When you click one of these buttons, the mouse pointer takes the
@@ -1658,8 +1787,10 @@
             <quote>svartpunktet</quote> blir svarte og alle verdiane lysare
             enn <quote>kvitpunktet</quote> blir kvite.
             <quote>Gråpunktet</quote>, som må vere mellom dei to andre,
-            bestemmer midtnivået for grått. Alle gradene av grått blir rekna
-            ut frå desse tre innstillingane.
+            bestemmer midtnivået for grått. Alle gradane av grått blir rekna
+            ut frå desse tre innstillingane. Desse innstillingane verkar på
+            alle kanalane sjølv om du har vald å arbeide på ein bestemt
+            kanal.
           </para>
 
           <para lang="pl">
@@ -1715,12 +1846,13 @@
             <guilabel>三个颜色拾取器</guilabel>: 它们控制灰度上的三个点。“黑点”以下的都是黑色，“白点”以上的都是白色。“灰点”必须在它们之间，指灰色的中间值。
           </para>
 
-          <figure lang="en;de;fr;ru">
-            <!--TODO es;it;no;pl-->
+          <figure lang="en;de;fr;no;ru">
+            <!--TODO es;it;pl-->
             <title>
               <phrase lang="en">Example for Levels eye-droppers</phrase>
               <phrase lang="de">Beispiel für die Benutzung der Pipetten</phrase>
               <phrase lang="fr">Exemple pour les pipettes Niveaux</phrase>
+              <phrase lang="no">Eksempel på bruk av pipettene</phrase>
               <phrase lang="ru">Пример пипеток уровней</phrase>
             </title>
             <mediaobject>
@@ -1746,6 +1878,12 @@
                   résultat après avoir cliqué avec la pipette blanche: tous
                   les pixels dont la valeur est supérieure à celle du pixel
                   cliqué sont devenus blancs.
+                </para>
+                <para lang="no">
+                  Først originalbiletet med ein fargeovergang frå svart til
+                  kvit. Deretter resultatet av å klikke med pipetta for val
+                  av kvitpunkt. Alle pikslane med verdi høgare enn den
+                  pikselen det blei klikka på er nå kvite.
                 </para>
                 <para lang="ru">
                   Внизу градиент от чёрного до белого. Ниже - результат после
@@ -1825,7 +1963,7 @@
       <phrase lang="de">Eigenschaften</phrase>
       <phrase lang="fr">Dialogue Options des outils</phrase>
       <phrase lang="it">Finestra opzioni dello strumento</phrase>
-      <phrase lang="no">Verktøyinnstillingar</phrase>
+      <phrase lang="no">Verktøyinnstillingane</phrase>
       <phrase lang="pl">Оkno opcji narzędzia</phrase>
       <phrase lang="ru">Окно параметров инструмента</phrase>
       <phrase lang="zh_CN">工具选项对话框</phrase>
@@ -1833,7 +1971,7 @@
 
     <variablelist>
       <!--TODO en es fr it pl ru: add screenshot(?)-->
-      <para lang="de;no"><!--no figure allowed here-->
+      <para lang="de;no"><!--no figure allowed here. Why? -->
         <figure>
           <title>
             <phrase lang="de">
@@ -2010,12 +2148,13 @@
     </variablelist>
   </sect3>
 
-  <sect3 lang="en;de;fr;ru">
-    <!--TODO es;it;no;pl-->
+  <sect3 lang="en;de;fr;no;ru">
+    <!--TODO es;it;pl-->
     <title>
         <phrase lang="en">Actual practice</phrase>
         <phrase lang="de">Eine praktische Übung</phrase>
         <phrase lang="fr">En pratique</phrase>
+        <phrase lang="no">Ei praktisk øving</phrase>
         <phrase lang="ru">Применение</phrase>
       </title>
 
@@ -2024,6 +2163,7 @@
         <phrase lang="en">A very under-exposed image</phrase>
         <phrase lang="de">Ein sehr unterbelichtetes Bild</phrase>
         <phrase lang="fr">Une image très sous-exposée</phrase>
+        <phrase lang="no">Dette biletet er svært undereksponert</phrase>
         <phrase lang="ru">Недовыдержанное изображение</phrase>
       </title>
       <mediaobject>
@@ -2035,6 +2175,7 @@
           <para lang="en">Original image</para>
           <para lang="de">Originalbild</para>
           <para lang="fr">Image d'origine</para>
+          <para lang="no">Originalbiletet</para>
           <para lang="ru">Искомое изображение</para>
         </caption>
       </mediaobject>
@@ -2056,6 +2197,9 @@
             L'histogramme montre une prédominance des tons sombres et un
             manque de couleurs claires.
           </para>
+          <para lang="no">
+            Histogrammet viser at biletet inneheld mykje skygge og lite høglys.
+          </para>
           <para lang="ru">
             Гистограмма показывает преобладание теней и недостаток бликов.
           </para>
@@ -2067,6 +2211,7 @@
         <phrase lang="en">Setting the white point</phrase>
         <phrase lang="de">Den Weißpunkt einstellen</phrase>
         <phrase lang="fr">Réglage du point blanc</phrase>
+        <phrase lang="no">Set kvitpunktet</phrase>
         <phrase lang="ru">Установка белой точки</phrase>
       </title>
       <mediaobject>
@@ -2086,6 +2231,10 @@
           <para lang="fr">
             Le curseur blanc a été déplacé jusqu'au début des tons clairs
             bien marqués. L'image s'éclaircit.
+          </para>
+          <para lang="no">
+            Den kvite brytaren er flytt til byrjinga på det godt markerte
+            høglysområdet. Biletet blir lysare.
           </para>
           <para lang="ru">
             Белый ползунок передвинулся к началу хорошо выраженных бликов.
@@ -2111,6 +2260,10 @@
             L'histogramme résultant (en bas) montre la présence de tons
             clairs, mais les tons sombres sont toujours prédominants.
           </para>
+          <para lang="no">
+            Histogrammet viser dei nye høglysverdiane. Skyggane er framleis
+            dominerande.
+          </para>
           <para lang="ru">
             Гистограмма (ниже) показывает блики, но тени всё ещё преобладают.
           </para>
@@ -2127,6 +2280,9 @@
         </phrase>
         <phrase lang="fr">
           Réglage de l'équilibre entre les tons sombres et les tons clairs
+        </phrase>
+        <phrase lang="no">
+          Å finne balansen mellom skyggar og høglys.
         </phrase>
         <phrase lang="ru">Установка баланса между тенями и бликами</phrase>
       </title>
@@ -2150,6 +2306,10 @@
             Le curseur moyen a été déplacé vers la gauche, ce qui aboutit à
             diminuer la proportion de tons sombres au profit des tons clairs.
           </para>
+          <para lang="no">
+            Den midtre brytaren er flytt mot venstre. Skyggane er nå 
+            reduserte medan høglysområdet er større.
+          </para>
           <para lang="ru">
             Средний ползунок передвинулся влево. Это уменьшает пропорцию теней
             и увеличивает пропорцию бликов.
@@ -2172,6 +2332,9 @@
           <para lang="fr">
             L'histogramme résultant (en bas) confirme la réduction des tons
             sombres.
+          </para>
+          <para lang="no">
+            Histogrammet bekreftar reduksjonen av skyggane.
           </para>
           <para lang="ru">
             Гистограмма (ниже) подтверждает уменьшение теней.
