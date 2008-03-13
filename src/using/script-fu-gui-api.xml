@@ -5,9 +5,10 @@
 
 <!-- section history:
   2007-11-27 ude: created (en,de)
+  2008-03-12 jpl: fr & en update
 -->
 
-<sect3 id="gimp-using-script-fu-api" lang="en;de">
+<sect3 id="gimp-using-script-fu-api" lang="en;de;fr">
   <title>
     <phrase lang="en">
       The Script-Fu parameter API<footnote><para>
@@ -19,6 +20,12 @@
         Dieser Abschnitt ist nicht Teil des ursprünglichen Tutorials.
       </para></footnote>
     </phrase>
+    <phrase lang="fr">
+      Les paramètres de l'API Script-Fu<footnote><para>
+        Cette section ne fait pas partie du didacticiel d'origine.
+      </para></footnote>
+    </phrase>
+
   </title>
 
   <note>
@@ -38,11 +45,21 @@
       <filename>plug-ins/script-fu/scripts/test-sphere.scm</filename>,
       das mit den <acronym>GIMP</acronym>-Quelldateien ausgeliefert wird.
     </para>
+    <para lang="fr">
+      En plus des paramètres de types ci-dessus, il en existe d'autres pour
+      le mode interactif, chacun d'eux créant une zone de dialogue dans la
+      fenêtre de dialogue du script-fu. Vous trouverez la description de ces
+      paramètres et des exemples dans le script de test
+      <filename>plug-ins/script-fu/scripts/test-sphere.scm</filename>
+      fourni avec le code source de <acronym>GIMP</acronym>.
+    </para>
+
   </note>
 
-  <!-- Consider describing the paramters here ...
+<!--    Consider describing the paramters here ... -->
   <informaltable rowsep="1" colsep="1" frame="all">
-    <tgroup cols="3">
+<!--     <tgroup cols="3"> -->
+    <tgroup cols="2">
       <colspec colwidth="2" />
       <colspec colwidth="5" />
       <colspec colwidth="3" />
@@ -69,7 +86,7 @@
             <para lang="no">Beskriving</para>
           </entry>
   
-          <entry>
+<!--          <entry>
             <para lang="en">Example</para>
             <para lang="cs">Příklad</para>
             <para lang="de">Beispiel</para>
@@ -77,7 +94,7 @@
             <para lang="fr">Exemple</para>
             <para lang="it">Esempio</para>
             <para lang="no">Eksempel</para>
-          </entry>
+          </entry>-->
         </row>
       </thead>
   
@@ -86,16 +103,492 @@
           <entry><para>SF-ADJUSTMENT</para></entry>
           <entry>
             <para lang="en">
-              TODO: Description
+              In interactive mode it creates an adjustment widget in the dialog.
             </para>
-            <para lang="cs;de;es;fr;it;no">
+            <para lang="en">
+              SF-ADJUSTMENT "label" '(value lower upper step_inc page_inc digits type)
+            </para>
+            <para lang="en">
+              "label" : Text printed before the widget.
+            </para>
+            <para lang="en">
+              value : Value print at the start.
+            </para>
+            <para lang="en">
+              lower / upper : the lower / upper values (range of choice).
+            </para>
+            <para lang="en">
+              step_inc : increment/decrement value.
+            </para>
+            <para lang="en">
+              page_inc : increment/decrement value using page key.
+            </para>
+            <para lang="en">
+              digits : digits after the point (decimal part).
+            </para>
+            <para lang="en">
+              type : is one of: SF-SLIDER or 0, SF-SPINNER or 1
+            </para>
+
+            <para lang="fr">
+              En mode interactif il crée une zone de dialogue dans la fenêtre de
+              dialogue du script-fu.
+            </para>
+            <para lang="fr">
+              SF-ADJUSTMENT "label" '(value lower upper step_inc page_inc digits type)
+            </para>
+            <para lang="fr">
+              "label" : Texte affiché devant la zone de dialogue.
+            </para>
+            <para lang="fr">
+              value : Valeur affichée par défaut au départ.
+            </para>
+            <para lang="fr">
+              lower / upper : valeurs mini / maxi (détermine la plage de choix).
+            </para>
+            <para lang="fr">
+              step_inc : valeur pour incrémenter/décrémenter.
+            </para>
+            <para lang="fr">
+              digits : nombre de chiffres après la virgule (partie décimale).
+            </para>
+            <para lang="fr">
+              type : SF-SLIDER ou 0 (glissière), SF-SPINNER ou 1 (bouton à flèches).
+            </para>
+
+            <para lang="cs;de;es;it;no">
               TODO: Description
             </para>
           </entry>
-          <entry><para>'(50 1 1000 1 10 0 1)</para></entry>
+<!--           <entry><para>'(50 1 1000 1 10 0 1)</para></entry> -->
+        </row>
+        <row>
+          <entry><para>SF-COLOR</para></entry>
+          <entry>
+            <para lang="en">
+              Creates a color button in the dialog.
+            </para>
+            <para lang="en">
+              SF-COLOR "label" '(red green blue)
+            </para>
+            <para lang="en">
+              or
+            </para>
+            <para lang="en">
+              SF-COLOR "label" "color"
+            </para>
+            <para lang="en">
+              "label" : Text printed before the widget.
+            </para>
+            <para lang="en">
+              '(red green blue) : list of three values for the red, green and
+              blue components.
+            </para>
+            <para lang="en">
+              "color" : a color name in CSS notatation.
+            </para>
+
+            <para lang="fr">
+              Crée un bouton de choix de couleur.
+            </para>
+            <para lang="fr">
+              SF-COLOR "label" '(red green blue)
+            </para>
+            <para lang="fr">
+              ou
+            </para>
+            <para lang="fr">
+              SF-COLOR "label" "color"
+            </para>
+            <para lang="fr">
+              "label" : Texte affiché devant la zone de dialogue.
+            </para>
+            <para lang="fr">
+              '(red green blue) : liste de trois valeurs pour les composantes
+              rouge, vert et bleu de la couleur par défaut.
+            </para>
+            <para lang="fr">
+              "color" : un nom de couleur en notatation CSS pour la couleur par
+              défaut.
+            </para>
+
+            <para lang="cs;de;es;it;no">
+              TODO: Description
+            </para>
+          </entry>
+        </row>
+        <row>
+          <entry><para>SF-FONT</para></entry>
+          <entry>
+            <para lang="en">
+              Creates a font-selection widget in the dialog. It returns a
+              fontname as a string. There are two new gimp-text procedures to
+              ease the use of this return parameter:
+            </para>
+            <para lang="en">
+              (gimp-text-fontname image drawable x-pos y-pos text border antialias size unit font)
+            </para>
+            <para lang="en">
+              (gimp-text-get-extents-fontname text size unit font)
+            </para>
+            <para lang="en">
+              where font is the fontname you get. The size specified in the
+              fontname is silently ignored. It is only used in the font-selector.
+              So you are asked to set it to a useful value (24 pixels is a good
+              choice).
+            </para>
+            <para lang="en">
+              SF-FONT "label" "fontname"
+            </para>
+            <para lang="en">
+              "label" : Text printed before the widget.
+            </para>
+            <para lang="en">
+              "fontname" : name of the défault font.
+            </para>
+
+            <para lang="fr">
+              Crée une zone de sélection de fonte. Retourne le nom de la fonte
+              sous la forme d'une chaîne de caractères. Il existe deux nouvelles
+              procédures de type gimp-text pour utiliser facilement ce paramètre
+              que retourne la fonction:
+            </para>
+            <para lang="fr">
+              (gimp-text-fontname image drawable x-pos y-pos text border antialias size unit font)
+            </para>
+            <para lang="fr">
+              (gimp-text-get-extents-fontname text size unit font)
+            </para>
+            <para lang="fr">
+              dans lesquelles le paramètre "font" est le nom de la fonte que vous
+              obtenez. La taille spécifiée dans fontname est ignorée. Elle est
+              utilisée seulement dans le sélecteur de fonte. On vous demandera
+              de donner une valeur utilisable (24 pixels est un choix correct).
+            </para>
+            <para lang="fr">
+              SF-FONT "label" "fontname"
+            </para>
+            <para lang="fr">
+              "label" : Texte affiché devant la zone de dialogue.
+            </para>
+            <para lang="fr">
+              "fontname" : nom de la fonte par défaut.
+            </para>
+
+            <para lang="cs;de;es;it;no">
+              TODO: Description
+            </para>
+          </entry>
+        </row>
+        <row>
+          <entry><para>SF-BRUSH</para></entry>
+          <entry>
+            <para lang="en">
+              It will create a widget in the control dialog. The widget consists
+              of a preview area (which when pressed will produce a popup
+              preview ) and a button with the "..." label. The button will popup
+              a dialog where brushes can be selected and each of the
+              characteristics of the brush can be modified.
+            </para>
+            <para lang="en">
+              SF-BRUSH "Brush" '("Circle (03)" 100 44 0)
+            </para>
+            <para lang="en">
+              Here the brush dialog will be popped up with a default brush of
+              Circle (03) opacity 100 spacing 44 and paint mode of Normal
+              (value 0).
+            </para>
+            <para lang="en">
+              If this selection was unchanged the value passed to the function
+              as a parameter would be '("Circle (03)" 100 44 0).
+            </para>
+
+            <para lang="fr">
+              Crée une zone de choix de brosse : prévisualisation de la brosse
+              et à sa droite, bouton "Parcourir". Cliquer sur ce dernier fait
+              apparaître la boite de dialogue des brosses avec possibilité de
+              choisir une brosse ainsi que son espacement, son opacité et son
+              mode.
+            </para>
+            <para lang="fr">
+              SF-BRUSH "Brush" '("Circle (03)" 100 44 0)
+            </para>
+            <para lang="fr">
+              Dans ce cas la brosse par défaut sera un Cercle (03) avec une
+              opacité de 100, un espacement de 44 et en mode normal (0).
+            </para>
+            <para lang="fr">
+              Si cette sélection reste inchangée la valeur passée à la fonction
+              comme paramètre sera '("Circle (03)" 100 44 0).
+            </para>
+
+            <para lang="cs;de;es;it;no">
+              TODO: Description
+            </para>
+          </entry>
+        </row>
+        <row>
+          <entry><para>SF-PATTERN</para></entry>
+          <entry>
+            <para lang="en">
+              It will create a widget in the control dialog. The widget consists
+              of a preview area (which when pressed will produce a popup
+              preview ) and a button with the "..." label. The button will popup
+              a dialog where patterns can be selected.
+            </para>
+            <para lang="en">
+              SF-PATTERN "Pattern" "Maple Leaves"
+            </para>
+            <para lang="en">
+              The value returned when the script is invoked is a string
+              containing the pattern name. If the above selection was not
+              altered the string would contain "Maple Leaves".
+            </para>
+
+            <para lang="fr">
+              Crée une zone de choix de motif : prévisualisation du motif et à
+              sa droite, bouton "Parcourir". Cliquer sur ce dernier fait
+              apparaître la boite de dialogue des motifs.
+            </para>
+            <para lang="fr">
+              SF-PATTERN "Pattern" "Maple Leaves"
+            </para>
+            <para lang="fr">
+              La valeur retournée quand le script est appelé est une chaîne de
+              caractères contenant le nom du motif. Si la sélection par défaut
+              ci-dessus n'est pas modifiée, la chaîne contiendra "Maple Leaves".
+            </para>
+
+            <para lang="cs;de;es;it;no">
+              TODO: Description
+            </para>
+          </entry>
+        </row>
+        <row>
+          <entry><para>SF-GRADIENT</para></entry>
+          <entry>
+            <para lang="en">
+              It will create a widget in the control dialog. The widget consists
+              of a button containing a preview of the selected gradient.
+            </para>
+            <para lang="en">
+              If the button is pressed a gradient selection dialog will popup.
+            </para>
+            <para lang="en">
+              SF-GRADIENT "Gradient" "Deep Sea"
+            </para>
+            <para lang="en">
+              The value returned when the script is invoked is a string
+              containing the gradient name. If the above selection was not
+              altered the string would contain "Deep Sea".
+            </para>
+
+            <para lang="fr">
+              Crée un bouton contenant une prévisualisation du dégradé.
+            </para>
+            <para lang="en">
+              Cliquer sur celui-ci fait apparaître la boite de dialogue des
+              dégradés.
+            </para>
+            <para lang="fr">
+              SF-GRADIENT "Gradient" "Deep Sea"
+            </para>
+            <para lang="fr">
+              La valeur retournée quand le script est appelé est une chaîne de
+              caractères contenant le nom du dégradé. Si la sélection par défaut
+              ci-dessus n'est pas modifiée, la chaîne contiendra "Deep Sea".
+            </para>
+
+            <para lang="cs;de;es;it;no">
+              TODO: Description
+            </para>
+          </entry>
+        </row>
+        <row>
+          <entry><para>SF-PALETTE</para></entry>
+          <entry>
+            <para lang="en">
+              It will create a widget in the control dialog. The widget consists
+              of a button containing the name of the selected palette.
+            </para>
+            <para lang="en">
+              If the button is pressed a palette selection dialog will popup.
+            </para>
+            <para lang="en">
+              SF-PALETTE "Palette" "Named Colors"
+            </para>
+            <para lang="en">
+              The value returned when the script is invoked is a string
+              containing the palette name. If the above selection was not
+              altered the string would contain "Named Colors".
+            </para>
+
+            <para lang="fr">
+              Crée un bouton contenant le nom de la palette sélectionnée.
+            </para>
+            <para lang="en">
+              Cliquer sur celui-ci fait apparaître la boite de dialogue des
+              palettes.
+            </para>
+            <para lang="fr">
+              SF-PALETTE "Palette" "Named Colors"
+            </para>
+            <para lang="fr">
+              La valeur retournée quand le script est appelé est une chaîne de
+              caractères contenant le nom de la palette. Si la sélection par
+              défaut ci-dessus n'est pas modifiée, la chaîne contiendra
+              "Named Colors".
+            </para>
+
+            <para lang="cs;de;es;it;no">
+              TODO: Description
+            </para>
+          </entry>
+        </row>
+        <row>
+          <entry><para>SF-FILENAME</para></entry>
+          <entry>
+            <para lang="en">
+              It will create a widget in the control dialog. The widget consists
+              of a button containing the name of a file.
+            </para>
+            <para lang="en">
+              If the button is pressed a file selection dialog will popup.
+            </para>
+            <para lang="en">
+              SF-FILENAME "Environment Map" (string-append "" gimp-data-directory "/scripts/beavis.jpg")
+            </para>
+            <para lang="en">
+              The value returned when the script is invoked is a string
+              containing the filename.
+            </para>
+
+            <para lang="fr">
+              Crée un bouton contenant le nom d'un fichier.
+            </para>
+            <para lang="fr">
+              Cliquer sur celui-ci fait apparaître la boite de dialogue de
+              sélection de fichiers.
+            </para>
+            <para lang="fr">
+              SF-FILENAME "Environment Map" (string-append "" gimp-data-directory "/scripts/beavis.jpg")
+            </para>
+            <para lang="fr">
+              La valeur retournée quand le script est appelé est une chaîne de
+              caractères contenant le nom du fichier.
+            </para>
+
+            <para lang="cs;de;es;it;no">
+              TODO: Description
+            </para>
+          </entry>
+        </row>
+        <row>
+          <entry><para>SF-DIRNAME</para></entry>
+          <entry>
+            <para lang="en">
+              Only useful in interactive mode. Very similar to SF-FILENAME, but
+              the created widget allows to choose a directory instead of a file.
+            </para>
+            <para lang="en">
+              SF-DIRNAME "Image Directory" "/var/tmp/images"
+            </para>
+            <para lang="en">
+              The value returned when the script is invoked is a string
+              containing the dirname.
+            </para>
+
+            <para lang="fr">
+              Similaire à SF-FILENAME, mais permet de choisir un dossier.
+            </para>
+            <para lang="fr">
+              SF-DIRNAME "Image Directory" "/var/tmp/images"
+            </para>
+            <para lang="fr">
+              La valeur retournée quand le script est appelé est une chaîne de
+              caractères contenant le nom du dossier.
+            </para>
+
+            <para lang="cs;de;es;it;no">
+              TODO: Description
+            </para>
+          </entry>
+        </row>
+        <row>
+          <entry><para>SF-OPTION</para></entry>
+          <entry>
+            <para lang="en">
+              It will create a widget in the control dialog. The widget is a
+              combo-box showing the options that are passed as a list.
+            </para>
+            <para lang="en">
+              The first option is the default choice.
+            </para>
+            <para lang="en">
+              SF-OPTION "Orientation" '("Horizontal" "Vertical")
+            </para>
+            <para lang="en">
+              The value returned when the script is invoked is the number of the
+              chosen option, where the option first is counted as 0.
+            </para>
+
+            <para lang="fr">
+              Crée une boîte de choix (combo-box) pour des options possibles.
+            </para>
+            <para lang="fr">
+              La première option est l'option par défaut.
+            </para>
+            <para lang="fr">
+              SF-OPTION "Orientation" '("Horizontal" "Vertical")
+            </para>
+            <para lang="fr">
+              La valeur retournée quand le script est appelé est le numéro de
+              l'option choisie (0 correspondant à la 1ère option...).
+            </para>
+
+            <para lang="cs;de;es;it;no">
+              TODO: Description
+            </para>
+          </entry>
+        </row>
+        <row>
+          <entry><para>SF-ENUM</para></entry>
+          <entry>
+            <para lang="en">
+              It will create a widget in the control dialog. The widget is a
+              combo-box showing all enum values for the given enum type. This
+              has to be the name of a registered enum, without the "Gimp"
+              prefix. The second parameter speficies the default value, using
+              the enum value's nick.
+            </para>
+            <para lang="en">
+              SF-ENUM "Interpolation" '("InterpolationType" "linear")
+            </para>
+            <para lang="en">
+              The value returned when the script is invoked corresponds to
+              chosen enum value.
+            </para>
+
+            <para lang="fr">
+              Crée une boîte de choix (combo-box) montrant toutes les valeurs
+              possibles pour un type donné. Le premier paramètre doit être un
+              nom d'énumération de valeurs du "Gimp", sans le préfixe Gimp. Le
+              second spécifie la valeur par défaut.
+            </para>
+            <para lang="fr">
+              SF-ENUM "Interpolation" '("InterpolationType" "linear")
+            </para>
+            <para lang="fr">
+              La valeur retournée quand le script est appelé est la valeur
+              choisie de l'énumération.
+            </para>
+
+            <para lang="cs;de;es;it;no">
+              TODO: Description
+            </para>
+          </entry>
         </row>
       </tbody>
     </tgroup>
   </informaltable>
-  -->
 </sect3>
