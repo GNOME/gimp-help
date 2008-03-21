@@ -2,7 +2,7 @@
 # _*_ coding: latin1 -*_
 
 # gimp-help-2 -- Validate image file references
-# Copyright (C) 2006 Róman Joost 
+# Copyright (C) 2006 Róman Joost
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -27,9 +27,9 @@ except ImportError:
 try:
     from xml import xpath
     from xml.dom import minidom
-    have_xml = True
+    HAVE_XML = True
 except ImportError:
-    have_xml = False
+    HAVE_XML = False
 
 import sys
 import os
@@ -37,13 +37,14 @@ import getopt
 import re
 
 # xpath expressions of filereferences in a DocBook XML file
-REFERENCESTOTEST = ['//imagedata[@fileref]', '//graphic[@fileref]']
+REFERENCESTOTEST = ['//imagedata[@fileref]', '//graphic[@fileref]',
+                    '//inlinegraphic[@fileref]']
 
 # check only xml files
-xmlfile_exp = re.compile('[\w-]*.xml$')
+xmlfile_exp = re.compile('[\w-]*\.xml$')
 
 # check only png and jpg files
-imagefile_exp = re.compile('[\w-]*.(png|jpg)$')
+imagefile_exp = re.compile('[\w-]*\.(png|jpg)$')
 
 class XMLReferenceValidator(object):
     """A validator to validate filereferences in a DocBook complient
@@ -68,11 +69,11 @@ class XMLReferenceValidator(object):
         imagefp = "/".join(mangeled)
         # now put everything together
         imagefp = os.path.join(base, imagefp)
-            
+
         # save the filename in our list
         if imagefp not in self.img_references:
             self.img_references.append(imagefp)
-        
+
         return imagefp
 
     def _validation_helper(self, imagefp):
@@ -89,7 +90,7 @@ class XMLReferenceValidator(object):
 class LxmlValidator(XMLReferenceValidator):
     """A validator to validate filereferences in a DocBook complient
        XML file.
-       
+
        >>> str = '<sect1><imagedata '\
                  'fileref="../images/toolbox/toolbox-flip.png" /></sect1>'
        >>> val = LxmlValidator(REFERENCESTOTEST[0], xmlstr=str)
@@ -103,7 +104,7 @@ class LxmlValidator(XMLReferenceValidator):
        >>> val = LxmlValidator(REFERENCESTOTEST[0], xmlstr=str)
        >>> val.validate_imagepath_references()
        [(0, './foobar/toolbox/toolbox-flip.png')]
-      
+
        >>> str = '<sect2><graphic '\
                  'fileref="../foobar/math/dot-for-dot.png" /></sect2>'
        >>> val = LxmlValidator(REFERENCESTOTEST[1], xmlstr=str)
@@ -119,20 +120,20 @@ class LxmlValidator(XMLReferenceValidator):
             doc = etree.parse(open(self.filepath))
         return doc.xpath(self.xpath_expr)
 
-    
+
     def validate_imagepath_references(self):
         """Validates all references
-            
+
            returns a tuple (xmlfilepath, imagefilepath) if the reference
            is broken
         """
         elements = self.get_elements_by_xpath()
-            
+
         for el in elements:
             # mangle the filepath
             fileref = el.get('fileref')
             imagefp = self.get_imagefp(fileref)
-            
+
             result = self._validation_helper(imagefp)
             if result is not None:
                 self.invalid.append(result)
@@ -156,7 +157,7 @@ class LibXMLValidator(XMLReferenceValidator):
        >>> val = LibXMLValidator(REFERENCESTOTEST[0], xmlstr=str)
        >>> val.validate_imagepath_references()
        [(0, './foobar/toolbox/toolbox-flip.png')]
-        
+
        >>> str = '<sect2><graphic '\
                  'fileref="../foobar/math/dot-for-dot.png" /></sect2>'
        >>> val = LibXMLValidator(REFERENCESTOTEST[1], xmlstr=str)
@@ -173,14 +174,14 @@ class LibXMLValidator(XMLReferenceValidator):
 
     def validate_imagepath_references(self):
         """Validates all references
-            
+
            returns a tuple (xmlfilepath, imagefilepath) if the reference
            is broken
         """
         for el in self.get_elements_by_xpath():
             fileref = el.getAttribute('fileref')
             imagefp = self.get_imagefp(fileref)
-            
+
             result = self._validation_helper(imagefp)
             if result is not None:
                 self.invalid.append(result)
@@ -195,12 +196,12 @@ class FileLookup(object):
        >>> fl.get_image_root()
        'images'
     """
-    
+
     def __init__(self, verbose=0, absolute=1, gimp_help_root='.'):
         self.verbose = verbose
         self.absolute = absolute
         self.gimp_help_root = gimp_help_root
-        
+
         self.all_img_references = []
         self.brokenimages = []
 
@@ -209,14 +210,14 @@ class FileLookup(object):
         """
         result = None
         root = self.gimp_help_root
-        h, t = os.path.split(root) 
-        
+        h, t = os.path.split(root)
+
         # if we are already in the gimp-help-root we don't need to do
         # the traversal
         if os.path.exists(os.path.join(root, 'images')) and\
            os.path.exists(os.path.join(root, 'src')):
             return os.path.join(root, 'images')
-        
+
         while root:
             # if we hit the gimp_help_root, we need to check if an
             # 'images' dir exist
@@ -224,9 +225,9 @@ class FileLookup(object):
                h.endswith('src'):
                 result = os.path.join(h, 'images')
                 break
-            
+
             root = h
-            h, t = os.path.split(root) 
+            h, t = os.path.split(root)
 
             if not t:
                 break
@@ -236,7 +237,7 @@ class FileLookup(object):
     def validate_imagefiles(self):
         """checks if each image file is referenced in the XML files"""
         imageroot = self.get_image_root()
-        
+
         if not self.all_img_references:
             return
 
@@ -245,68 +246,55 @@ class FileLookup(object):
                              " you're in do not contain an 'images"\
                              " directory.\n")
             return
-        
+
         for root, dirs, files in os.walk(imageroot):
             # XXX this filtering of dirs is awkward, but I couldn't come
             # up with a better method yet
-            if 'CVS' in dirs:
-                dirs.remove('CVS')
-            if 'callouts' in dirs:
-                dirs.remove('callouts')
-            
-            for file in files:
-                if not imagefile_exp.match(file):
-                    continue
-                 
+            for prune in [ 'callouts', '.svn' ]:
+                if prune in dirs:
+                    dirs.remove(prune)
+
+            # ignore images in the first level of the images dir
+            if root.endswith('images'):
+                continue
+
+            # don't care about other files than images files
+            for file in filter(imagefile_exp.match, files):
                 filepath = os.path.join(root, file)
-                # ignore images in the first level of the images dir
-                h, t = os.path.split(filepath)
-                if h.endswith('images') and imagefile_exp.match(t):
-                    continue
-                
-                # remove the filepath
-                # everything which can't be removed is b0rked
-                try:
-                    self.all_img_references.remove(filepath)
-                except ValueError:
-                    if self.absolute:
-                        filepath = os.path.abspath(filepath)
-                    
+                if filepath not in self.all_img_references:
                     sys.stdout.write(filepath + "\n")
-            
+
     def validate_refs(self):
         """walks to each xml file directory, reads each xml file and
            validates the references
         """
         top = os.path.join(self.gimp_help_root, 'src')
         for root, dirs, files in os.walk(top):
-            # don't visit CVS directories
-            if 'CVS' in dirs:
-                dirs.remove('CVS') 
+            # don't visit .svn directories
+            if '.svn' in dirs:
+                dirs.remove('.svn')
 
             if self.verbose:
                 sys.stdout.write("Checking %s\n" %root)
-            
-            for file in files:
-                # don't care about other files than xml files
-                if not xmlfile_exp.match(file):
-                    continue
+
+            # don't care about other files than xml files
+            for file in filter(xmlfile_exp.match, files):
 
                 # puzzle together the relative filepath
+                xml_filepath = os.path.join(root, file)
+
                 for xpathexpr in REFERENCESTOTEST:
-                    xml_filepath = os.path.join(root, file)
-                    
                     if HAVE_LXML:
-                        val = LxmlValidator(xpathexpr, 
+                        val = LxmlValidator(xpathexpr,
                                             xml_filepath)
                     else:
                         val = LibXMLValidator(xpathexpr,
                                               xml_filepath)
-                    
+
                     result = val.validate_imagepath_references()
                     if result is not []:
                         self.brokenimages.append(result)
-                        
+
                         # XXX thats kinda stupid, because we have two lists
                         # which save the filepaths of the images
                         self.all_img_references += val.img_references
@@ -326,21 +314,22 @@ class FileLookup(object):
                     errormsg = "%s invalid: <%s>\n" %(item)
                 sys.stdout.write(errormsg)
 
-            
+
 def main():
     verbose = 0
     absolute = 0
-    gimp_help_root = os.curdir 
+    gimp_help_root = os.curdir
 
     try:
         opts, args = getopt.getopt(sys.argv[1:], "hivaf:x:")
     except getopt.GetoptError:
         usage()
         sys.exit(2)
-    
+
     for o, a in opts:
         if o == "-h":
             usage()
+            sys.exit(0)
         if o == "-v":
             verbose = 1
         if o == "-a":
@@ -350,7 +339,7 @@ def main():
             for xpath_expr in REFERENCESTOTEST:
                 if HAVE_LXML:
                     val = LxmlValidator(xpath_expr, a)
-                elif have_xml:
+                elif HAVE_XML:
                     val = LibXMLValidator(xpath_expr, a)
                 else:
                     sys.exit(1)
@@ -379,14 +368,14 @@ validate_references - Copyright 2006 Roman Joost (gimp-help-2)
 validates file references in docbook xml files.
 
 usage: validate_references.py [options]
-    
+
     options:
         -h          this help
         -v          verbose
         -a          print relative paths as absolute paths
         -i          check for orphaned image files
         -f  <file>  check only <file>
-        -x  <path>  specify another root of xml files""" )
-    
+        -x  <path>  specify another root of xml files \n""")
+
 if __name__ == "__main__":
     main()
