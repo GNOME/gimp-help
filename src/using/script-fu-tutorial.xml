@@ -645,7 +645,7 @@
         <acronym>GIMP</acronym>, dersom du ikkje alt har gjort det, og finn
         fram til
         <menuchoice>
-          <guimenu>Utvid</guimenu>
+          <guimenu>Utvidingar</guimenu>
           <guimenuitem>Script-Fu</guimenuitem>
           <guimenuitem>Konsoll for Script-Fu</guimenuitem>
         </menuchoice>.
@@ -3184,7 +3184,10 @@
         ei liste? Det er fullt mogleg, men Scheme har ein noe merkeleg,
         og tungvindt, måte å gjere det på i høve til andre språk. Du må
         rett og slett plukka ut hovudet til halen passeleg mange gonger
-        til du kjem fram til det elementet du ønskjer. Eksempel:
+        til du kjem fram til det elementet du ønskjer. Altså for
+        eksempel hovudet til hovudet for listehalen 
+        (<code>caadr</code>) eller halen til halen i ei liste
+        (<code>cddr</code>).
       </para>
 
       <para lang="en">
@@ -3214,38 +3217,8 @@
         le teste e le code quindi
       </para>
       <para lang="no">
-        Vi har lista (<quote>ein</quote> <quote>to</quote>
-        <quote>tre</quote> <quote>fire</quote> <quote>fem</quote>) og
-        ønskjer å ta ut det tredje elementet, <quote>tre</quote>. Først
-        tar vi ut den siste delen av lista med
-     </para>
-      <para lang="no">
-       Resultatet blir den nye lista ("to" "tre" "fire" "fem").
-       Deretter tar vi ut den siste delen av denne nye lista:
-     </para>
-      <para lang="no">
-       og ender opp med lista ("tre" "fire" "fem").
-       Tar vi nå ut hovudet på denne siste lista,
-     </para>
-      <para lang="no">
-       vil vi endeleg sitje att med det tredje elementet.
-       Køyrer vi dette saman på ei linje, får vi
-     </para>
-      <para lang="no">
-       eller på ein <quote>enklare</quote> måte:
-     </para>
-      <para lang="no">
-        Dersom du framleis er med, skal eg gjere eit forsøk på å forklare
-        denne mystiske kommandoen. Ser vi på linja
-      </para>
-      <para lang="no">
-        er ho tilsynelatande sett saman av kommandoane <code>car</code>,
-        <code>cdr</code> og <code>cdr</code>. Den eigentlege kommandoen
-        er <code>c...r</code>. Innimellom desse bokstavane set du
-        bokstaven <quote>a</quote> for listehovudet og <quote>d</quote>
-        for listehalen. Ein <quote>a</quote> for det første hovudet,
-        <quote>d</quote> for halen og <quote>d</quote> for halen. Eit
-        anna eksempel. Uttrykket
+        Den grunnleggande namnesetjinga er enklare. <quote>a</quote> 
+        står for hovudet og <quote>d</quote> for halen til lista, så 
       </para>
 
       <programlisting>(car (cdr (car x) ) )</programlisting>
@@ -3470,8 +3443,8 @@
       Procediamo con la quarta lezione, il primo script Script-Fu.
     </para>
     <para lang="no">
-      Dersom du ikkje har behov for ein pause for å få igjen pusten, burde
-      du nå vere klar for den fjerde leksjonen — det første skriptet ditt i
+      Du har kanskje hatt ein velfortent pause for å få igjen pusten? I alle fall
+      burde du nå vere klar for den fjerde leksjonen — det første skriptet ditt i
       Script-Fu.
     </para>
 
@@ -3483,9 +3456,7 @@
         <phrase lang="es">Crear un código: una caja de texto</phrase>
         <phrase lang="fr">Création d'un Script Boîte de Texte</phrase>
         <phrase lang="it">Creare uno script Text Box</phrase>
-        <phrase lang="no">
-          Vi lager eit skript for å lage tekstvindauge
-        </phrase>
+        <phrase lang="no">Vi lager eit tekstboks-skript</phrase>
       </title>
 
       <para lang="en">
@@ -3659,7 +3630,10 @@
       </para>
       <para lang="no">
         Til nå har du arbeidd på Script-Fu konsollen. Nå går vi over til å
-        skriva dei som tekstfiler.
+        skriva dei som tekstfiler. Du kan bruke ein rein tekstbehandlar
+        som ikkje legg inn ekstra koder i skriptet. Sjølv bruker eg 
+        Notepad++ sett til skriftkoden UTF-8, men det finst sikkert andre
+        som fungerer like bra. (OA)
       </para>
 
       <para lang="en">
@@ -3719,6 +3693,12 @@
         scripts in this directory to the Script-Fu database. You
         should place your personal scripts here.
       </para>
+      <!-- TODO en cs de es fr it: Perhaps a useful tip for the user?          
+      <para lang="en">
+        You may find the address for this directory in the  
+        <link linkend="gimp-prefs-dialog">preferences</link> in
+        Folders/Script.
+      </para> -->
       <para lang="cs">
         V adresáři <filename>.gimp-2.4</filename>, který GIMP vytvořil ve
         vašem domovském adresáři, byste měli najít podadresář jménem
@@ -3763,13 +3743,21 @@
         personali in questa directory.
       </para>
       <para lang="no">
-        I katalogen <filename>.gimp-2.4</filename> (eller kva versjon du
-        har) vil du finna ein underkatalog kalla <filename>scripts</filename>.
-        Dette er ein god plass å legge skripta dine fordi
-        <acronym>GIMP</acronym> søker gjennom denne katalogen og legg det
-        som måtte finnast der inn i databasen for Script-Fu.
+        Ein eller annan stad i maskinen din har <acronym>GIMP</acronym>
+        laga ei privat filmappe med namnet <filename>gimp-2.4</filename>.
+        I denne mappa finn du undermappa <filename>scripts</filename>.
+        Dette er normalt den perfekte plassen å legge skripta dine i. (Skulle
+        likevel det merkelege skje at du får feilmeldingar frå GIMP når du
+        oppdaterer skripta, kan du svært forsiktig prøve GIMP si mappe
+        før du går ut frå at feilen ligg i skriptet. Det hender at skriptet i den
+        private mappa av ein eller annan grunn ikkje kan køyrast, sjølv om
+        det er perfekt).
       </para>
-
+      <para lang="no">
+        Du kan finne plasseringa av den personleg mappa di i 
+        <link linkend="gimp-prefs-dialog">brukarinnstillingane</link> 
+        under Mapper/Skript. 
+      </para>
       <para lang="no">
         Du har kanskje oppdaga at eg tilsynelatande er litt vinglande i
         norsken i dette kapitlet. Grunnen er at det er vanleg, av omsyn til
@@ -3817,7 +3805,7 @@
         principale dello script. Questa è la funzione dove si fa il lavoro.
       </para>
       <para lang="no">
-        Kvart einaste Script-Fu skript må definera minst ein funksjon, og det
+        Kvart einaste skript i Script-Fu må definera minst ein funksjon, og det
         er hovudfunksjonen for skriptet. Det er her du definerer kva skriptet
         skal gjere.
       </para>
@@ -3908,7 +3896,7 @@
       <para lang="no">
         Setninga ovanfor definerer ein ny funksjon som vi har kalla
         script-fu-text-box. Funksjonen har i tillegg fire parametrar, som
-        seinare vil bli tilordna noe tekst, (<quote>inText</quote>), ein
+        seinare vil bli tilordna noe tekst (<quote>inText</quote>), ein
         skrifttype (<quote>inFont</quote>), ein skriftstorleik
         (<quote>inFontSize</quote>) og ein tekstfarge
         (<quote>inTextColor</quote>). (Eigentleg kunne vi like gjerne ha
@@ -3993,7 +3981,7 @@
       <para lang="no">
         Eigentleg godtar Scheme fleire måtar å skriva namn på. Har du gode
         vanar med deg frå andre språk, kan du stort sett nytta desse. Som i
-        alle (?) programmeringsspråk, kan du ikkje dele opp eit namn med
+        alle(?) programmeringsspråk, kan du ikkje dele opp eit namn med
         mellomrom. I Scheme er det difor vanleg praksis å gjere samansette
         ord meir forståelege ved å dela dei opp med bindestrek (-) slik du
         ser det er brukt i funksjonsnamnet. Dette blir av mange også brukt
@@ -4002,7 +3990,7 @@
         <quote>in</quote> framføre for å markera at dette er inndata og
         ikkje noe som er lagt til seinare. (Eg har lagt med til den vanen å
         bruke prefikset <quote>the</quote> framføre variablar som blir
-        kreerte inne i skriptet).
+        oppretta inne i skriptet).
       </para>
 
       <para lang="en">
@@ -4044,7 +4032,7 @@
       </para>
       <para lang="no">
         For at programma dine skal bli lista ut i funksjonsdatabasen som
-        script-fu, og såleis ikkje bli blanda saman med tilleggsprogramma,
+        script-fu, og såleis ikkje bli blanda saman med programtillegga,
         er det tilrådd i <acronym>GIMP</acronym> å gi alle skripta namnet
         <quote>script-fu-uniktNamn</quote>. (Du forsto vel at
         <quote>uniktNamn</quote> er namnet du gir programmet?)
@@ -4145,7 +4133,7 @@
         gli argomenti):
       </para>
       <para lang="no">
-        HerHer er utlistinga av programbiten som registrerer denne funksjonen
+        Her er utlistinga av programbiten som registrerer denne funksjonen
        (forklaringa kjem etterpå):
       </para>
 
@@ -4277,18 +4265,18 @@
         Dersom du lagrar dette i skriptkatalogen som ei tekstfil med
         filutvidinga <filename>.scm</filename> og deretter vel
         <menuchoice>
-          <guimenu>Utvid</guimenu>
+          <guimenu>Utvidingar</guimenu>
           <guisubmenu>Script-Fu</guisubmenu>
           <guimenuitem>Oppdater skript</guimenuitem>
         </menuchoice>,
         vil dette skriptet dukke opp i
         <menuchoice>
-          <guimenu>Utvid</guimenu>
-
+          <guimenu>Utvidingar</guimenu>
           <guisubmenu>Script-Fu</guisubmenu>
           <guisubmenu>Text</guisubmenu>
           <guimenuitem>Text Box</guimenuitem>
-        </menuchoice>.
+        </menuchoice>. (Seinare i kurset vil namnet bli fornorska til 
+        <guimenuitem>Tekstboks</guimenuitem>).
       </para>
 
       <para lang="en">
@@ -4380,7 +4368,7 @@
       <para lang="no">
         Dersom du aktiverer prosedyrelesaren (
         <menuchoice>
-          <guimenu>Utvid</guimenu>
+          <guimenu>Utvidingar</guimenu>
           <guimenuitem>Prosedyrelesar</guimenuitem>
         </menuchoice>)
         vil du finna at scriptet ditt nå er registrert i databasen.
@@ -4724,7 +4712,7 @@
               <guimenuitem>Text Box</guimenuitem>
             </menuchoice>, eller på norsk:
             <menuchoice>
-              <guimenu>Utvid</guimenu>
+              <guimenu>Utvidingar</guimenu>
               <guisubmenu>Script-Fu</guisubmenu>
               <guisubmenu>Text</guisubmenu>
               <guimenuitem>Text Box</guimenuitem>
@@ -5332,7 +5320,7 @@
       </informaltable>
     </sect3>
 
-    <!--TODO es it no: add/translate new content-->
+    <!--TODO es it: add/translate new content-->
     <!-- The Script-Fu parameter API -->
     <xi:include href="script-fu-gui-api.xml" /> <!-- id="gimp-using-script-fu-api" -->
 
@@ -5347,7 +5335,7 @@
       <phrase lang="es">Dar algo de sustancia a nuestro script</phrase>
       <phrase lang="fr">Donner un peu plus de corps à votre script</phrase>
       <phrase lang="it">Dare un corpo allo script</phrase>
-      <phrase lang="no">Sprit opp skriptet</phrase>
+      <phrase lang="no">Blås liv i skriptet</phrase>
     </title>
 
     <para lang="cs">
@@ -7291,16 +7279,18 @@
     </sect3>
   </sect2>
 
-  <sect2 lang="en;fr" id="gimp-using-script-fu-tutorial-result">
+  <sect2 lang="en;fr;no" id="gimp-using-script-fu-tutorial-result">
     <title>
       <phrase lang="en">Your script and its working</phrase>
       <phrase lang="fr">Votre script et son fonctionnement</phrase>
+      <phrase lang="no">Skriptet og resultatet av det</phrase>
     </title>
 
-    <sect3 lang="en;fr">
+    <sect3 lang="en;fr;no">
       <title>
         <phrase lang="en">What you write</phrase>
         <phrase lang="fr">Ce que vous avez écrit</phrase>
+        <phrase lang="no">Det du skriv</phrase>
       </title>
 
       <para lang="en">
@@ -7308,6 +7298,11 @@
       </para>
       <para lang="fr">
         Ci-dessous le script dans sa totalité:
+      </para>
+      <para lang="no">
+        Studerer du skriptet, vil du finne at eg har lagt inn norsk
+        tekst for det som kjem fram på skjermen. Elles ingen endringar.
+        Her er det fullstendige skriptet:
       </para>
 
       <programlisting>
@@ -7396,20 +7391,26 @@
       </programlisting>
     </sect3>
 
-    <sect3 lang="en;fr">
+    <sect3 lang="en;fr;no">
       <title lang="en">
         What you obtain:
       </title>
       <title lang="fr">
         Ce que vous obtenez:
       </title>
-      <figure lang="en;fr">
+      <title lang="no">
+        Resultatet:
+      </title>
+      <figure lang="en;fr;no">
         <title>
           <phrase lang="en">
             And the result on the screen.
           </phrase>
           <phrase lang="fr">
             Et le résultat à l'écran.
+          </phrase>
+          <phrase lang="no">
+            Øvst tekstboksen, nedst resultatet
           </phrase>
         </title>
         <mediaobject>
@@ -7419,6 +7420,10 @@
           </imageobject>
           <imageobject lang="fr">
             <imagedata fileref="../images/using/fr/script-fu-screen.png"
+              format="PNG" />
+          </imageobject>
+          <imageobject lang="no">
+            <imagedata fileref="../images/using/no/script-fu-screen.png"
               format="PNG" />
           </imageobject>
         </mediaobject>
