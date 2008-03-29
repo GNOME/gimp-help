@@ -227,7 +227,7 @@ preview-%: html/%/index.html html/%/gimp-help.xml
 	@id=`sed -e 's/.*id=.//; tmatch; d; :match; s/["'"'"'].*//; q' $<`; \
 	test -n "$$id" || id=noname; \
 	for lang in $(ALL_LINGUAS); do \
-		echo "Making $(builddir)/html/$$lang/$$id.html ... "; \
+		echo "Making $(builddir)/html/$$lang/$${id}-draft.html ... "; \
 		$(XSLTPROC) \
 		    $(XSLTFLAGS) \
 		    $(XSLTEXTRAFLAGS) \
@@ -246,11 +246,12 @@ preview-%: html/%/index.html html/%/gimp-help.xml
 		    --xinclude \
 		    --stringparam l10n.gentext.default.language $* \
 		    --novalid \
-		    --output $(builddir)/html/$$lang/$$id.html \
+		    --output $(builddir)/html/$$lang/$${id}-draft.html \
 		    $(srcdir)/stylesheets/drafthtml.xsl \
 		    - \
 		; \
-	done
+	done && \
+	echo "(Remember that links won't work in a draft file.)"
 
 #### Language-specific HTML tarballs for distribution
 
