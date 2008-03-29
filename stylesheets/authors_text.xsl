@@ -113,8 +113,17 @@
     <xsl:if test="$langid = 'cz'">
       <xsl:text>Czech</xsl:text>
     </xsl:if>
+    <xsl:if test="$langid = 'hr'">
+      <xsl:text>Croatian</xsl:text>
+    </xsl:if>
+    <xsl:if test="$langid = 'lt'">
+      <xsl:text>Lithuanian</xsl:text>
+    </xsl:if>
     <xsl:if test="$langid = 'nl'">
       <xsl:text>Dutch</xsl:text>
+    </xsl:if>
+    <xsl:if test="$langid = 'no'">
+      <xsl:text>Norwegian</xsl:text>
     </xsl:if>
     <xsl:if test="$langid = 'zh_CN'">
       <xsl:text>Chinese</xsl:text>
