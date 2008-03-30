@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # _*_ coding: latin1 -*_
-
+#
 # gimp-help-2 -- Validate image file references
-# Copyright (C) 2006, 2007, 2008 R�man Joost
+# Copyright (C) 2006, 2007, 2008 Róman Joost
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -18,251 +18,90 @@
 #   along with this program; if not, write to the Free Software
 #   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
+
 import sys
 import os
 import getopt
 import re
-import unittest
-import doctest
-import StringIO
-
-try:
-    import lxml.etree
-    HAVE_LXML = True
-except ImportError:
-    HAVE_LXML = False
-
-try:
-    import xml.xpath
-    import xml.dom.minidom
-    HAVE_XML = True
-except ImportError:
-    HAVE_XML = False
-
-# xpath expressions of filereferences in a DocBook XML file
-REFERENCESTOTEST = ['//imagedata[@fileref]', '//graphic[@fileref]',
-                    '//inlinegraphic[@fileref]']
-
-# check only xml files
-XMLFILE_EXP = re.compile('[\w-]*\.xml$')
-
-# check only png and jpg files
-IMAGEFILE_EXP = re.compile('[\w-]*\.(png|jpg)$')
+import xml.sax
 
 
-class XMLReferenceValidator(object):
-    """A validator to validate filereferences in a DocBook complient
-       XML file.
+# Nodes containing filereferences in a DocBook XML file
+IMAGE_NODES = ["imagedata", "graphic", "inlinegraphic"]
+
+# Regular expression for image files to be checked (png and jpg files only)
+IMAGEFILE_REGEX = re.compile('[\w+-]*\.(png|jpg)$')
+# Regular expression for image files to be skipped
+IGNORE_IMAGE_REGEX = re.compile('callout')
+
+
+class FileNameContainer(object):
+    """A special purpose container base class.
+
+    This class stores filenames and provides some basic
+    access methods common to both derived List classes.
+
     """
-
-    def __init__(self, xpath_expr, filepath=None, xmlstr=None):
-        self.xpath_expr = xpath_expr
-        self.filepath = filepath
-        self.xmlstr = xmlstr
-        self.img_references = []
-        self.invalid = []
-
-    def get_imagefp(self, fileref):
-        """Creates the absolute filepath.
-
-        The fileref is an attribute value from a gimp-help-2 compliant
-        DocBook/XML file.
-        """
-        mangeled = fileref.split('/')[1:]
-        base = os.curdir
-        imagefp = "/".join(mangeled)
-        # now put everything together
-        imagefp = os.path.join(base, imagefp)
-
-        # save the filename in our list
-        if imagefp not in self.img_references:
-            self.img_references.append(imagefp)
-
-        return imagefp
-
-    def _validation_helper(self, imagefp):
-        """Helper method, which checks if the given imagefilepath is
-           correct.
-        """
-        imagefp = imagefp.encode()
-        if not os.path.exists(imagefp) and self.filepath is not None:
-            return (self.filepath, imagefp)
-        elif not os.path.exists(imagefp) and self.xmlstr is not None:
-            return (0, imagefp)
-
-    def validate_imagepath_references(self):
-        raise ValueError("Implemented in sublcasses.")
-
-
-class LxmlValidator(XMLReferenceValidator):
-    """A validator to validate filereferences in a DocBook complient
-       XML file.
-
-       >>> str = '<sect1><imagedata '\
-                 'fileref="../images/toolbox/toolbox-flip.png" /></sect1>'
-       >>> val = LxmlValidator(REFERENCESTOTEST[0], xmlstr=str)
-       >>> val.validate_imagepath_references()
-       []
-
-       Create a scrambled reference and check if the validator throws an
-       error.
-       >>> str = '<sect1><imagedata '\
-                 'fileref="../foobar/toolbox/toolbox-flip.png" /></sect1>'
-       >>> val = LxmlValidator(REFERENCESTOTEST[0], xmlstr=str)
-       >>> val.validate_imagepath_references()
-       [(0, './foobar/toolbox/toolbox-flip.png')]
-
-       >>> str = '<sect2><graphic '\
-                 'fileref="../foobar/math/dot-for-dot.png" /></sect2>'
-       >>> val = LxmlValidator(REFERENCESTOTEST[1], xmlstr=str)
-       >>> val.validate_imagepath_references()
-       [(0, './foobar/math/dot-for-dot.png')]
-    """
-
-    def get_elements_by_xpath(self):
-        """Returns the elements to test as a list."""
-        if self.xmlstr is not None:
-            doc = lxml.etree.parse(StringIO.StringIO(self.xmlstr))
-        else:
-            try:
-                doc = lxml.etree.parse(open(self.filepath))
-            except:
-                print self.filepath
-        return doc.xpath(self.xpath_expr)
-
-
-    def validate_imagepath_references(self):
-        """Validates all references
-
-           returns a tuple (xmlfilepath, imagefilepath) if the reference
-           is broken
-        """
-        elements = self.get_elements_by_xpath()
-
-        for elm in elements:
-            # mangle the filepath
-            fileref = elm.get('fileref')
-            imagefp = self.get_imagefp(fileref)
-
-            result = self._validation_helper(imagefp)
-            if result is not None:
-                self.invalid.append(result)
-
-        return self.invalid
-
-
-class LibXMLValidator(XMLReferenceValidator):
-    """ It is not important to have a valid DocBook/XML file here. We
-       just test, if the method pics up the correct filepath and
-       validates it.
-       >>> str = '<sect1><imagedata '\
-                 'fileref="../images/toolbox/toolbox-flip.png" /></sect1>'
-       >>> val = LibXMLValidator(REFERENCESTOTEST[0], xmlstr=str)
-       >>> val.validate_imagepath_references()
-       []
-
-       Create a scrambled reference and check if the validator throws an
-       error.
-       >>> str = '<sect1><imagedata '\
-                 'fileref="../foobar/toolbox/toolbox-flip.png" /></sect1>'
-       >>> val = LibXMLValidator(REFERENCESTOTEST[0], xmlstr=str)
-       >>> val.validate_imagepath_references()
-       [(0, './foobar/toolbox/toolbox-flip.png')]
-
-       >>> str = '<sect2><graphic '\
-                 'fileref="../foobar/math/dot-for-dot.png" /></sect2>'
-       >>> val = LibXMLValidator(REFERENCESTOTEST[1], xmlstr=str)
-       >>> val.validate_imagepath_references()
-       [(0, './foobar/math/dot-for-dot.png')]
-    """
-
-    def get_elements_by_xpath(self):
-        """Returns the elements to test as a list."""
-        if self.xmlstr is not None:
-            dom = xml.dom.minidom.parseString(self.xmlstr)
-        else:
-            dom = xml.dom.minidom.parse(self.filepath)
-        return xml.xpath.Evaluate(self.xpath_expr, dom)
-
-    def validate_imagepath_references(self):
-        """Validates all references
-
-           returns a tuple (xmlfilepath, imagefilepath) if the reference
-           is broken
-        """
-        for elm in self.get_elements_by_xpath():
-            fileref = elm.getAttribute('fileref')
-            imagefp = self.get_imagefp(fileref)
-
-            result = self._validation_helper(imagefp)
-            if result is not None:
-                self.invalid.append(result)
-
-        return self.invalid
-
-
-class FileLookup(object):
-    """Runs through each directory of <gimp_help_root> and checks each
-       xml file it can find.
-
-       >>> fl = FileLookup(gimp_help_root='src/toolbox')
-       >>> fl.get_image_root()
-       'images'
-    """
-
-    def __init__(self, verbose=0, absolute=1, gimp_help_root='.'):
+    def __init__(self, verbose=0):
         self.verbose = verbose
-        self.absolute = absolute
-        self.gimp_help_root = gimp_help_root
+        self.data    = {}
 
-        self.all_img_references = []
-        self.brokenimages = []
+    def contains(self, key):
+        """Is there an entry 'key'?."""
+        return self.data.has_key(key)
 
-    def get_image_root(self):
-        """Returns the absolute path to the images directory
+    def add(self, key, val=True):
+        """Add a (key, value) pair to the container, e.g.
+           filename and some info corresponding to this filename.
         """
-        result = None
-        root = self.gimp_help_root
-        _head, _tail = os.path.split(root)
+        self.data[key] = val
 
-        # if we are already in the gimp-help-root we don't need to do
-        # the traversal
-        if os.path.exists(os.path.join(root, 'images')) and\
-           os.path.exists(os.path.join(root, 'src')):
-            return os.path.join(root, 'images')
+    def remove(self, key):
+        """Mark an entry as invalid, i.e. set the info to False,
+           so that this method may be used with an iterator.
+        """
+        if self.data.has_key(key):
+            self.data[key] = False
 
-        while root:
-            # if we hit the gimp_help_root, we need to check if an
-            # 'images' dir exist
-            if os.path.exists(os.path.join(_head, 'images')) and not\
-               _head.endswith('src'):
-                result = os.path.join(_head, 'images')
-                break
+    def size(self):
+        """Return the number of data entries."""
+        return len(self.data)
 
-            root = _head
-            _head, _tail = os.path.split(root)
+    def sort_out_valid(self, other):
+        """Same as 'difference(self,other)'. When common entries
+           have been removed, the remaining filenames are just
+           the orphaned files, or the broken links, respectively.
+        """
+        self.difference(other)
 
-            if not _tail:
-                break
+    def difference(self, other):
+        """Remove entries common to 'self' and 'other'."""
+        for key in self.data.iterkeys():
+            if other.contains(key):
+                self.remove(key)
+                other.remove(key)
+        self.data = dict((key, self.data[key])
+                         for key in self.data if self.data.get(key))
 
-        return result
 
-    def validate_imagefiles(self):
-        """checks if each image file is referenced in the XML files"""
-        imageroot = self.get_image_root()
+class ImageFilesList(FileNameContainer):
+    """A container for image file names.
 
-        if not self.all_img_references:
-            return
+    This class is used to collect and save all image files
+    in the gimp-help-2 'images/' directory.
 
-        if imageroot is None:
-            sys.stderr.write("The path you specified or the directory"\
-                             " you're in do not contain an 'images"\
-                             " directory.\n")
-            return
+    """
+    def __init__(self, verbose=0):
+        super(ImageFilesList, self).__init__(verbose)
+
+    def find(self, imageroot = "images"):
+        """Search for PNG and JPG files in the image directory."""
+        if self.verbose:
+            sys.stderr.write("searching images ... ")
+            if self.verbose > 1:
+                sys.stderr.write("\n")
 
         for root, dirs, files in os.walk(imageroot):
-            # XXX this filtering of dirs is awkward, but I couldn't come
-            # up with a better method yet
             for prune in [ 'callouts', '.svn' ]:
                 if prune in dirs:
                     dirs.remove(prune)
@@ -272,129 +111,240 @@ class FileLookup(object):
                 continue
 
             # don't care about other files than images files
-            for file in filter(IMAGEFILE_EXP.match, files):
-                filepath = os.path.join(root, file)
-                if filepath not in self.all_img_references:
-                    sys.stdout.write(filepath + "\n")
+            for filename in (name for name in files
+                                  if IMAGEFILE_REGEX.match(name)):
+                filepath = os.path.join(root, filename)
+                if self.verbose > 1:
+                    sys.stderr.write(filepath + '\n')
+                self.add(filepath.replace("images/", ""))
 
-    def validate_refs(self):
-        """walks to each xml file directory, reads each xml file and
-           validates the references
+        if self.verbose:
+            sys.stderr.write(str(len(self.data)) + "\n")
+
+    def report(self):
+        """Print the list of orphaned image files, i.e. image files
+           which are not referenced in the XML source files.
         """
-        top = os.path.join(self.gimp_help_root, 'src')
-        for root, dirs, files in os.walk(top):
-            # don't visit .svn directories
-            if '.svn' in dirs:
-                dirs.remove('.svn')
+        if self.verbose:
+            sys.stderr.write(str(self.size()) + " orphaned image file")
+            if self.size() != 1: sys.stderr.write("s")
+            if self.size() != 0: sys.stderr.write(":")
+            sys.stderr.write("\n")
+        for imagefile in sorted(self.data.keys()):
+            print "ORPHANED:", "images/" + imagefile
 
-            if self.verbose:
-                sys.stdout.write("Checking %s\n" %root)
 
-            # don't care about other files than xml files
-            for file in filter(XMLFILE_EXP.match, files):
+class ImageReferencesList(FileNameContainer):
+    """A container for image file references.
 
-                # puzzle together the relative filepath
-                xml_filepath = os.path.join(root, file)
+    This class is used to collect and save all image file
+    references in the XML source files, i.e. it saves
+    ('image-file', 'source-file') pairs.
 
-                for xpathexpr in REFERENCESTOTEST:
-                    if HAVE_LXML:
-                        val = LxmlValidator(xpathexpr,
-                                            xml_filepath)
-                    else:
-                        val = LibXMLValidator(xpathexpr,
-                                              xml_filepath)
+    """
+    def __init__(self, source, verbose=0):
+        super(ImageReferencesList, self).__init__(verbose)
+        self.source    = source
+        self.cur_files = []	# stack for files in progress
+        self.all_files = 0	# visited files
+        self.handler   = XMLHandler(self)
+        self.parser    = self.make_parser()
 
-                    result = val.validate_imagepath_references()
-                    if result is not []:
-                        self.brokenimages.append(result)
-
-                        # XXX thats kinda stupid, because we have two lists
-                        # which save the filepaths of the images
-                        self.all_img_references += val.img_references
-
-    def print_broken_imagefilepaths(self):
-        """Prints out which xml files have broken references to
-           images.
+    def make_parser(self):
+        """Create and return an initialized SAX XMLReader object,
+           i.e. an XML parser. A content handler is attached to
+           the parser and some appropriate features are set.
         """
-        for itemlist in self.brokenimages:
-            for item in itemlist:
-                if self.absolute:
-                    item = os.path.abspath(item)
-                if self.verbose:
-                    errormsg = "File %s \ncontains invalid references"\
-                               " to\n%s\n\n" %(item)
-                else:
-                    errormsg = "%s invalid: <%s>\n" %(item)
-                sys.stdout.write(errormsg)
+        parser = xml.sax.make_parser()
+        parser.setContentHandler(self.handler)
+        parser.setFeature(xml.sax.handler.feature_namespaces, 0)
+        parser.setFeature(xml.sax.handler.feature_external_ges, 0)
+        parser.setFeature(xml.sax.handler.feature_external_pes, 0)
+        return parser
+        
+    def find(self):
+        """Parse XML files and extract image references."""
 
-def run_doctests():
-    doctest.testmod()
+        if self.verbose:
+            sys.stderr.write("parsing XML files ... ")
+            if self.verbose > 1: sys.stderr.write("\n")
+
+        self.push_file(self.source)
+        self.parser.parse(self.source)
+
+        assert(len(self.cur_files) == 1)
+
+        if self.verbose:
+            if self.verbose > 1: sys.stderr.write("parsed ")
+            sys.stderr.write(str(self.all_files) + " files, " +
+                             str(self.size()) + " references\n")
+
+    def report(self):
+        """Print the list of broken image referencess
+           in the XML source file(s).
+        """
+        if self.verbose:
+            sys.stderr.write(str(self.size()) + " broken image reference")
+            if self.size() != 1: sys.stderr.write("s")
+            if self.size() != 0: sys.stderr.write(":")
+            sys.stderr.write("\n")
+        for imagefile in sorted(self.data.keys()):
+            print "BROKEN:", imagefile, "IN", self.data[imagefile]
+
+    # Internal stack methods to keep track of the opened files
+
+    def current_file(self):
+        """The file currently parsed."""
+        return self.cur_files[-1]	# top of filenames stack
+
+    def push_file(self, filename):
+        """Add entry to internal stack of filenames."""
+        self.cur_files.append(filename)
+        self.all_files += 1
+
+    def pop_file(self):
+        """Remove top entry from internal stack of filenames."""
+        return self.cur_files.pop()
+
+
+class XMLHandler(xml.sax.handler.ContentHandler):
+    """A content handler class as defined by the SAX API."""
+    def __init__(self, owner):
+        #super(XMLHandler, self).__init__()
+        self.owner = owner
+    def startElement(self, name, attrs):
+        """Handle image nodes."""
+        if name in IMAGE_NODES:
+            fileref = attrs.getValue('fileref').replace("../images/", "")
+            if not IGNORE_IMAGE_REGEX.match(fileref):
+                self.owner.add(fileref, self.owner.current_file())
+        if name == "xi:include" and attrs.has_key('href'):
+            filename = os.path.join(os.path.dirname(self.owner.current_file()),
+                                    attrs.getValue('href'))
+            if self.owner.verbose > 1:
+                sys.stderr.write("parsing " + str(filename) + "\n")
+            self.owner.push_file(filename)
+            parser = self.owner.make_parser()
+            parser.parse(filename)
+            self.owner.pop_file()
+
 
 def main():
-    verbose = 0
-    absolute = 0
-    gimp_help_root = os.curdir
+    """The main program (hmm, what did you expect?).
+       
+       The algorithm for validating image files and references is
+       very simple:
+
+       Let
+           (1) I := (set of) all image files,
+           (2) R := (set of) all image file references,
+       then
+           (3) B := R \ I = R \ (R ∩ I)
+       is the set containing files in R but not in I, that is the set
+       of broken references,
+           (4) O := I \ R = I \ (R ∩ I)
+       is the set containing files in I but not in R, that is the set
+       of images not referenced in the XML files (orphaned images).
+    """
+    verbose                = 0
+    gimp_help_root_dir     = "."
+    xml_root_file          = "src/gimp.xml"
+    find_orphaned_images   = False
+    find_broken_references = False
 
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "hivatf:x:")
+        opts, args = getopt.getopt(sys.argv[1:], "hvr:bliof:",
+                                   ["help", "verbose", "root", "broken",
+                                   "links", "orphaned", "images", "file"])
     except getopt.GetoptError:
-        usage()
-        sys.exit(2)
+        usage(64)
 
-    for o, a in opts:
-        if o == "-h":
+    for opt, arg in opts:
+        if opt == "-h" or opt == "--help":
             usage()
-            sys.exit(0)
-        if o == "-v":
-            verbose = 1
-        if o == "-a":
-            absolute = 1
-        if o == "-t":
-            run_doctests()
-            sys.exit(0)
-        if o == "-f":
-            result = []
-            for xpath_expr in REFERENCESTOTEST:
-                if HAVE_LXML:
-                    val = LxmlValidator(xpath_expr, a)
-                elif HAVE_XML:
-                    val = LibXMLValidator(xpath_expr, a)
-                else:
-                    sys.exit(1)
-                result += val.validate_imagepath_references()
+        elif opt == "-v" or opt == "--verbose":
+            verbose = verbose + 1
+        elif opt in ["-r", "--root"]:
+            gimp_help_root_dir = arg
+        elif opt in ["-b", "-l", "--broken", "--links"]:
+            find_broken_references = True
+        elif opt in ["-i", "-o", "--orphaned", "--images"]:
+            find_orphaned_images = True
+        elif opt == "-f" or opt == "--file":
+            find_broken_references = True
+            xml_root_file = arg
 
-            for r in result:
-                print "%s invalid: %s" %(r)
-            sys.exit(1)
+    # Change to user specified root dir.
+    if gimp_help_root_dir != ".":
+        try:
+            os.chdir(gimp_help_root_dir)
+        except OSError, (errno, strerror):
+            sys.stderr.write("Error: " + strerror + ": " + \
+                             gimp_help_root_dir +"\n")
+            sys.exit(errno)
 
-        if o == "-x":
-            gimp_help_root = a
-        if o == "-i":
-            filelookup = FileLookup(verbose, absolute, gimp_help_root)
-            filelookup.validate_refs()
-            filelookup.validate_imagefiles()
-            sys.exit(1)
+    # Check for the correct directory.
+    if not (os.path.isdir("images/") and os.path.isdir("src/")):
+        usage(66, "This script must be called from the " +
+                   "gimp-help-2 root directory.")
 
-    filelookup = FileLookup(verbose, absolute, gimp_help_root)
-    filelookup.validate_refs()
-    filelookup.print_broken_imagefilepaths()
-    sys.exit(1)
+    # We need an existing xml source file to parse.
+    if not os.path.isfile(xml_root_file):
+        usage(66, "Cannot find " + xml_root_file + ".")
 
-def usage():
+    # When finding orphaned images, we must parse all xml files.
+    if find_orphaned_images and (xml_root_file != "src/gimp.xml"):
+        usage(64, "'--file <file>' and '--orphaned' are mutually exclusive.")
+
+    # If no action specified: search for broken image references.
+    if not (find_orphaned_images or find_broken_references):
+        find_broken_references = True
+
+    # Step 1: find all image files. 
+    image_files = ImageFilesList(verbose) 
+    image_files.find()
+
+    # Step 2: find all image references.
+    image_refs = ImageReferencesList(xml_root_file, verbose)
+    image_refs.find()
+
+    # Step 3: remove intersection of image references and images files,
+    # the result is the list of invalid (broken) references.
+    if find_broken_references:
+        image_refs.sort_out_valid(image_files)
+        image_refs.report()
+
+    # Step 4: remove intersection of image references and images files,
+    # the result is the list of orphaned image files.
+    if find_orphaned_images:
+        image_files.sort_out_valid(image_refs)
+        image_files.report()
+
+
+def usage(exitcode=0, msg=""):
+    """Help the user."""
+    if msg:
+        sys.stderr.write("Error: " + msg + "\n")
+    else:
+        sys.stderr.write ( """\
+validate_references - Copyright (C) 2006-2008 Róman Joost (gimp-help-2)
+validates file references in docbook xml files.\n""")
     sys.stderr.write ( """\
-validate_references - Copyright 2006 Roman Joost (gimp-help-2)
-validates file references in docbook xml files.
 
 usage: validate_references.py [options]
 
     options:
-        -h          this help
-        -t          run doctests
-        -v          verbose
-        -a          print relative paths as absolute paths
-        -i          check for orphaned image files
-        -f  <file>  check only <file>
-        -x  <path>  specify another root of xml files \n""")
+        -h | --help      this help
+        -v | --verbose   verbose; doubling (-v -v) is possible
+        -r <dir>         specify the gimp-hel-2 root directory
+        --root <dir>     same as '-r'
+        -o | --orphaned  check for orphaned image files
+        -i | --images    same as '-o'
+        -b | --broken    check for broken links
+                         (this is the default action)
+        -f  <file>       check only <file>
+                         (implies '-b', conflicts with '-o')\n""")
+    sys.exit(exitcode)
 
 if __name__ == "__main__":
     main()
