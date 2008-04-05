@@ -8,7 +8,7 @@
   2005-08-29 de added by axel.wernicke
 -->
 <sect2 id="filters-edges-introduction" lang="en;cs;de;es;fr;it;no;ru">
-  <sect2info lang="en;de;es;fr;no" role="cvs">
+  <sect2info lang="en;de;es;fr;it;no" role="cvs">
     <revhistory>
       <revision lang="en">
         <revnumber>$Revision$</revnumber>
@@ -30,6 +30,11 @@
         <date>2006-11-23</date>
         <authorinitials>j.h</authorinitials>
       </revision>
+      <revision lang="it">
+        <revnumber>$Revision$</revnumber>
+        <date>2008-04-02</date>
+        <authorinitials>ciampix</authorinitials>
+      </revision>
       <revision lang="no">
         <revnumber>$Revision$</revnumber>
         <date>2007-04-09</date>
@@ -44,7 +49,7 @@
     <phrase lang="de">Einführung</phrase>
     <phrase lang="es">Introducción</phrase>
     <phrase lang="fr">Introduction à la détection des bords</phrase>
-    <phrase lang="it">Introduzione al rilevamento bordi</phrase>
+    <phrase lang="it">Introduzione</phrase>
     <phrase lang="no">Innleiing</phrase>
     <phrase lang="ru">Введение в выделение края</phrase>
   </title>
@@ -77,7 +82,8 @@
 
   <indexterm lang="it">
     <primary>Filtri</primary>
-    <secondary>Rilevamento bordi</secondary>
+    <secondary>Rilevamento contorni</secondary>
+    <tertiary>Introduzione</tertiary>
   </indexterm>
   <indexterm lang="it"><primary>Introduzione</primary></indexterm>
 
@@ -137,7 +143,7 @@
   </para>
 
   <para lang="it">
-    I filtri di rilevamento dei bordi cercano i confini tra le aree di colore
+    I filtri di rilevamento contorni cercano i confini tra le aree di colore
     differente e quindi trovano i contorni degli oggetti.
   </para>
   <para lang="it">
@@ -162,29 +168,43 @@
     художественных целей.
   </para>
 
-  <mediaobject lang="en;de;es;it;ru">
+  <mediaobject lang="en;de;es;ru">
     <imageobject>
-      <imagedata fileref="../images/filters/filters-edgedetect-fig.png"
-                 format="PNG" />
+      <imagedata 
+        fileref="../images/filters/filters-edgedetect-fig.png"
+        format="PNG" />
     </imageobject>
   </mediaobject>
 
   <mediaobject lang="cs" >
     <imageobject>
-      <imagedata fileref="../images/filters/cs/filters-edgedetect-fig.png"
-                 format="PNG" />
+      <imagedata 
+        fileref="../images/filters/cs/filters-edgedetect-fig.png"
+        format="PNG" />
     </imageobject>
   </mediaobject>
 
   <mediaobject lang="fr" >
     <imageobject>
-      <imagedata fileref="../images/filters/fr/filters-edgedetect-fig-fr.png" format="PNG" />
+      <imagedata 
+        fileref="../images/filters/fr/filters-edgedetect-fig-fr.png"
+        format="PNG" />
+    </imageobject>
+  </mediaobject>
+
+  <mediaobject lang="it">
+    <imageobject>
+      <imagedata
+        fileref="../images/filters/it/filters-edgedetect-fig.png"
+        format="PNG" />
     </imageobject>
   </mediaobject>
 
   <mediaobject lang="no" >
     <imageobject>
-      <imagedata fileref="../images/filters/no/filters-edgedetect-fig.png" format="PNG" />
+      <imagedata 
+        fileref="../images/filters/no/filters-edgedetect-fig.png"
+        format="PNG" />
     </imageobject>
   </mediaobject>
 
@@ -212,14 +232,14 @@
   </para>
 
   <para lang="cs">
-    Většina metod detekce hran je založena na metodách výpočtu gradientu a tvoří
-    silné hraniční linie. Podívejte se na graf 1, který vyjadřuje změny v
-    intenzitě barev. Vlevo je pozvolný gradient, který hranu netvoří. Vpravo
-    je ostrý přechod, který hranu tvoří. Nyní spočítejme gradient, rychlost
-    změny na této hraně, čili první derivaci (graf 2). Je nutno rozhodnou o
-    velikosti prahu, který musí gradient přesáhnout, aby byla nalezena hrana
-    (přesná hrana je na vrcholu křivky). Ve většině případů je práh pod
-    vrcholem a hrana je silná.
+    Většina metod detekce hran je založena na metodách výpočtu gradientu a
+    tvoří silné hraniční linie. Podívejte se na graf 1, který vyjadřuje
+    změny v intenzitě barev. Vlevo je pozvolný gradient, který hranu
+    netvoří. Vpravo je ostrý přechod, který hranu tvoří. Nyní spočítejme
+    gradient, rychlost změny na této hraně, čili první derivaci (graf
+    2). Je nutno rozhodnou o velikosti prahu, který musí gradient
+    přesáhnout, aby byla nalezena hrana (přesná hrana je na vrcholu
+    křivky). Ve většině případů je práh pod vrcholem a hrana je silná.
   </para>
   <para lang="cs">
     Laplaceova metoda hledání hran používá druhou derivaci (graf 3).
@@ -313,29 +333,31 @@
 
   <para lang="it">
     La maggior parte di essi è basata su metodi di calcolo dei gradienti e
-    restituisce linee di bordo spesse. Osservate la figura 1 che raffigura
-    la variazione dell'intensità di colore. Sulla sinistra c'è una variazione
-    graduale di colore che non è un bordo. Sulla destra c'è una variazione
-    rapida che è un bordo. Calcoliamo ora il gradiente (la velocità di
-    variazione) di questo bordo, cioè la sua derivata prima (figura 2).
-    Dobbiamo decidere se un bordo venga rilevato quando il gradiente supera un
+    restituisce linee di bordo spesse. Si osservi la figura 1: essa
+    raffigura la variazione dell'intensità di colore. Sulla sinistra c'è
+    una variazione graduale di colore che non è un margine mentre sulla
+    destra c'è invece una variazione rapida del colore che rappresenta un
+    margine. Calcoliamo ora il gradiente (la velocità di variazione) di
+    questo bordo, cioè la sua derivata prima (figura 2).  Dobbiamo
+    innescare la rilevazione del bordo quando il gradiente supera un certo
     valore di soglia (il bordo esatto si trova in corrispondenza della cima
-    della curva ma questa cima varia a seconda dei bordi). Nella maggioranza dei
-    casi la linea di soglia si trova sotto la cima e il bordo corrispondente è
-    spesso.
+    della curva ma questa cima varia a seconda dei bordi). Nella
+    maggioranza dei casi la linea di soglia si trova sotto la cima e il
+    bordo corrispondente è spesso.
   </para>
   <para lang="it">
-    Il rilevamento bordi laplaciano utilizza la derivata seconda (figura 3).
-    La cima della curva corrisponde allo zero ed è identificata chiaramente.
-    Questo è il motivo per il quale il filtro di Laplace restituisce bordi
-    sottili larghi un pixel. Tuttavia questa derivata restituirà parecchi zeri
-    corrispondenti a piccole oscillazioni di colore che si traducono in falsi
-    bordi.
+    Il rilevamento contorni laplaciano utilizza la derivata seconda (figura
+    3).  La cima della curva corrisponde allo zero è chiaramente
+    identificata.  Questo è il motivo per il quale il filtro di Laplace
+    restituisce bordi sottili larghi un pixel. Tuttavia questa derivata
+    restituirà parecchi zeri corrispondenti a piccole oscillazioni di
+    colore che si traducono in falsi bordi.
   </para>
   <para lang="it">
-    E' spesso necessaria una leggera sfumatura prima di applicare i filtri di
-    rilevamento dei bordi perchè attenua le piccole oscillazioni di colore e
-    previene il rilevamento di falsi bordi.
+    È spesso conveniente applicare una leggera sfumatura all'immagine prima
+    di applicare i filtri di rilevamento dei bordi, perchè questa attenua
+    le piccole oscillazioni di colore di conseguenza previene il
+    rilevamento di contorni inesistenti o indesiderati.
   </para>
 
   <para lang="no">
