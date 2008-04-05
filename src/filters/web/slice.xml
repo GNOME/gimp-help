@@ -1,0 +1,810 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+                "http://www.docbook.org/xml/4.3/docbookx.dtd">
+
+<!-- section history:
+  2008-04-05 ude: created 'en','de'
+-->
+<sect2 id="python-fu-slice" lang="en;de">
+  <sect2info>
+    <revhistory>
+      <revision lang="en">
+        <revnumber>$Revision$</revnumber>
+        <date>2008-04-05</date>
+        <authorinitials>ude</authorinitials>
+      </revision>
+      <revision lang="de">
+        <revnumber>$Revision$</revnumber>
+        <date>2008-04-05</date>
+        <authorinitials>ude</authorinitials>
+      </revision>
+      <revision lang="es">
+        <revnumber>$Revision$</revnumber>
+        <date><!-- yyyy-mm-dd --></date>
+        <authorinitials><!-- author --></authorinitials>
+      </revision>
+      <revision lang="fr">
+        <revnumber>$Revision$</revnumber>
+        <date><!-- yyyy-mm-dd --></date>
+        <authorinitials><!-- author --></authorinitials>
+      </revision>
+      <revision lang="it">
+        <revnumber>$Revision$</revnumber>
+        <date><!-- yyyy-mm-dd --></date>
+        <authorinitials><!-- author --></authorinitials>
+      </revision>
+      <revision lang="no">
+        <revnumber>$Revision$</revnumber>
+        <date><!-- yyyy-mm-dd --></date>
+        <authorinitials>kost</authorinitials>
+      </revision>
+    </revhistory>
+  </sect2info>
+
+  <!--TODO es fr it lt no ru: translate new content (and review 'en')-->
+  <title>
+    <phrase lang="en">Slice</phrase>
+    <phrase lang="cs"><!-- Filter name cs --></phrase>
+    <phrase lang="de">Zerteilen</phrase>
+    <phrase lang="es"><!-- Filter name es --></phrase>
+    <phrase lang="fr"><!-- Filter name fr --></phrase>
+    <phrase lang="it"><!-- Filter name it --></phrase>
+    <phrase lang="no"><!-- Filter name no --></phrase>
+    <phrase lang="ru"><!-- Filter name ru --></phrase>
+  </title>
+
+  <indexterm lang="en">
+    <primary>Filters</primary>
+    <secondary>Web</secondary>
+    <tertiary>Clickable image</tertiary>
+  </indexterm>
+  <indexterm lang="en"><primary>Slice</primary></indexterm>
+
+  <indexterm lang="de">
+    <primary>Filter</primary><secondary>Web</secondary>
+  </indexterm>
+  <indexterm lang="de"><primary>Zerteilen</primary></indexterm>
+
+  <indexterm lang="es">
+    <primary>Filtros</primary>
+    <secondary><!-- Category --></secondary>
+    <tertiary><!--Filter name or what the filter does--></tertiary>
+  </indexterm>
+  <indexterm lang="es"><primary><!-- Filter name es --></primary></indexterm>
+
+  <indexterm lang="fr">
+    <primary>Filtres</primary>
+    <secondary>Web</secondary>
+    <tertiary>Image cliquable</tertiary>
+  </indexterm>
+  <indexterm lang="es"><primary><!-- Filter name fr --></primary></indexterm>
+
+  <indexterm lang="it">
+    <primary>Filtri</primary><secondary>Web</secondary>
+    <tertiary><!--Filter name or what the filter does : this tertiary is
+      necessary to get entries in Index one above the other instead of side by
+      side (and not only page number in PDF)-->
+    </tertiary>
+  </indexterm>
+  <indexterm lang="it"><primary><!-- Filter name it --></primary></indexterm>
+
+  <indexterm lang="no">
+    <primary>Filter</primary>
+    <secondary>Nettsider</secondary>
+    <tertiary><!--Filter name or what the filter does--></tertiary>
+  </indexterm>
+  <indexterm lang="no"><primary><!-- Filter name no --> (filter)</primary></indexterm>
+
+  <indexterm lang="ru">
+    <primary>Фильтры</primary>
+    <secondary>Интернет</secondary>
+    <tertiary><!-- Filter name ru --></tertiary>
+  </indexterm>
+  <indexterm lang="ru"><primary><!-- Filter name ru --></primary></indexterm>
+
+  <sect3>
+    <title>
+      <phrase lang="en">Overview</phrase>
+      <phrase lang="cs">Přehled</phrase>
+      <phrase lang="de">Wirkungsweise</phrase>
+      <phrase lang="es">Generalidades</phrase>
+      <phrase lang="fr">Généralités</phrase>
+      <phrase lang="it">Panoramica</phrase>
+      <phrase lang="no">Oversyn</phrase>
+      <phrase lang="ru">Общая информация</phrase>
+      <phrase lang="zh_CN">概述</phrase>
+    </title>
+
+    <figure>
+      <title>
+        <phrase lang="en">
+          Example for the <quote>Slice</quote> filter
+        </phrase>
+        <phrase lang="de">
+          Anwendungsbeispiel für das Filter <quote>Zerteilen</quote>
+        </phrase>
+        <phrase lang="es">
+          Ejemplo para el filtro <quote><!-- Filter name es --></quote>
+        </phrase>
+        <phrase lang="fr">
+          Exemple d'application pour le filtre <quote><!-- Filter name fr --></quote>
+        </phrase>
+        <phrase lang="it">
+          Esempio di applicazione del filtro <quote><!-- Filter name it --></quote>
+        </phrase>
+        <phrase lang="no">
+          Eksempel på bruk av filteret <quote><!-- Filter name no --></quote>
+        </phrase>
+        <phrase lang="ru">
+          Пример применения фильтра <quote><!-- Filter name ru --></quote>
+        </phrase>
+      </title>
+
+      <mediaobject>
+        <imageobject>
+          <imagedata format="JPG"
+            fileref="../images/filters/examples/taj_guides.jpg" />
+        </imageobject>
+        <caption>
+          <para lang="en">Original image with guides</para>
+          <para lang="de">Originalbild mit Hilfslinien</para>
+          <!--TODO es fr it no ru: non-default caption-->
+          <para lang="es">Original</para>
+          <para lang="fr">Image d'origine</para>
+          <para lang="it">Immagine originale</para>
+          <para lang="no">Originalbiletet</para>
+          <para lang="ru">Искомое изображение</para>
+        </caption>
+      </mediaobject>
+
+      <mediaobject>
+        <imageobject>
+          <imagedata format="JPG"
+            fileref="../images/filters/examples/web-taj-slice.jpg" />
+        </imageobject>
+
+        <caption>
+          <para lang="en"><quote>Slice</quote> applied</para>
+          <para lang="de">
+            Filter <quote>Zerteilen</quote> angewandt
+          </para>
+          <para lang="es">
+            <quote><!-- Filter name es --></quote> aplicado
+          </para>
+          <para lang="fr">
+            Après application du filtre <quote><!-- Filter name fr --></quote>
+          </para>
+          <para lang="it">
+            Dopo l'applicazione del filtro <quote><!-- Filter name it --></quote>
+          </para>
+          <para lang="no">
+            Etter bruk av filteret <quote><!-- Filter name no --></quote>
+          </para>
+          <para lang="ru">
+            После применения фильтра <quote><!-- Filter name ru --></quote>
+          </para>
+        </caption>
+      </mediaobject>
+    </figure>
+
+    <para lang="en">
+      This filter is a simple and easy to use helper for creating sensitive
+      images to be used in HTML files. The filter slices up the source image
+      (like the <link linkend="plug-in-guillotine">Guillotine</link> command
+      does) along its horizontal and vertical guides, and produces a set of
+      sub-images. At the same time it creates a piece of HTML code for a table
+      saved in a text file. Every table cell contains one part of the image.
+      The text file should then be embedded in an HTML document.
+    </para>
+    <para lang="de">
+      Dieses Filter ist eine simple und leicht zu benutzende Hilfe, um
+      klickbare Grafiken zu erstellen, die in HTML-Dateien verwendet werden
+      sollen. Das Filter zerschneidet die Bilddatei entlang ihrer
+      horizontalen und vertikalen Hilflinien (so wie es das Kommando
+      <link linkend="plug-in-guillotine">Guillotine</link> macht) und erzeugt
+      daraus einen Satz von Teilbildern. Gleichzeitig erzeugt es den
+      HTML-Code für eine Tabelle und schreibt diesen in eine Textdatei. Jede
+      Zelle dieser Tabelle enthält eines dieser Teilbilder. Die Textdatei
+      sollte dann in ein HTML-Dokument eingebettet werden.
+    </para>
+
+    <para lang="en">
+      Note that this filter is really a very simple helper. A typical HTML
+      code produced by the filter may be not much more than this:
+    </para>
+    <para lang="de">
+      Wie gesagt ist dieses Filter wirklich nur eine ganz einfache Hilfe.
+      Typischerweise ist der produzierte HTML-Code wirklich nicht viel mehr
+      als eine solche HTML-Tabelle:
+    </para>
+
+    <example>
+      <title>
+        <phrase lang="en">
+          Simple <quote>Slice</quote> filter example output
+        </phrase>
+        <phrase lang="de">
+          Einfache Beispielausgabe des Filters <quote>Zerteilen</quote>
+        </phrase>
+      </title>
+
+      <programlisting>
+<!--
+        <![CDATA[
+<table cellpadding="0" border="0" cellspacing="0">
+  <tr>
+    <td><a href="#"><img alt="" src="slice_0_0.png"/></a></td>
+    <td><a href="#"><img alt="" src="slice_0_1.png"/></a></td>
+    <td><a href="#"><img alt="" src="slice_0_2.png"/></a></td>
+    <td><a href="#"><img alt="" src="slice_0_3.png"/></a></td>
+  </tr>
+  <tr>
+    <td><a href="#"><img alt="" src="slice_1_0.png"/></a></td>
+    <td><a href="#"><img alt="" src="slice_1_1.png"/></a></td>
+    <td><a href="#"><img alt="" src="slice_1_2.png"/></a></td>
+    <td><a href="#"><img alt="" src="slice_1_3.png"/></a></td>
+  </tr>
+  <tr>
+    <td><a href="#"><img alt="" src="slice_2_0.png"/></a></td>
+    <td><a href="#"><img alt="" src="slice_2_1.png"/></a></td>
+    <td><a href="#"><img alt="" src="slice_2_2.png"/></a></td>
+    <td><a href="#"><img alt="" src="slice_2_3.png"/></a></td>
+  </tr>
+</table>
+        ]]>
+-->
+        <![CDATA[
+<table cellpadding="0" border="0" cellspacing="0">
+  <tr>
+    <td><img alt="" src="slice_0_0.png"/></td>
+    <td><img alt="" src="slice_0_1.png"/></td>
+  </tr>
+  <tr>
+    <td><img alt="" src="slice_1_0.png"/></td>
+    <td><img alt="" src="slice_1_1.png"/></td>
+  </tr>
+</table>
+        ]]>
+      </programlisting>
+
+      <para lang="en">
+        Produced HTML code; the <quote>style</quote> attribute has been
+        omitted.
+      </para>
+      <para lang="de">
+        Erzeugter HTML-Code; das <quote>style</quote>-Attribut wurde
+        weggelassen.
+      </para>
+    </example>
+
+    <para lang="en">
+      When there are no guides in the image, the filter will no nothing. If,
+      however, the guides are just hidden, the filter will work.
+    </para>
+    <para lang="de">
+      Wenn es keine Hilfslinien im Bild gibt, macht das Filter gar nichts.
+      Falls die Hilfslinien aber nur ausgeblendet sind, dann schon.
+    </para>
+
+    <tip>
+      <para lang="en">
+        The <link linkend="plug-in-imagemap">ImageMap</link> filter is a much
+        more powerful and sophisticated tool for creating sensitive images.
+        (But it is also much more complex...)
+      </para>
+      <para lang="de">
+        Das <link linkend="plug-in-imagemap">ImageMap</link>-Filter ist ein
+        sehr viel mächtigeres und ausgefeilteres Werkzeug, um klickbare
+        Garfiken zu erzeugen. (Leider ist es auch sehr viel komplexer...)
+      </para>
+    </tip>
+  </sect3>
+
+
+  <sect3>
+    <title>
+      <phrase lang="en">Activate the filter</phrase>
+      <phrase lang="cs">Aktivace filtru</phrase>
+      <phrase lang="de">Filteraufruf</phrase>
+      <phrase lang="es">Activar el filtro</phrase>
+      <phrase lang="fr">Ouverture du filtre</phrase>
+      <phrase lang="it">Attivazione del filtro</phrase>
+      <phrase lang="no">Aktivering</phrase>
+      <phrase lang="ru">Активация фильтра</phrase>
+      <phrase lang="zh_CN">使用这个滤镜</phrase>
+    </title>
+
+    <para lang="en">
+      This filter is found in the image window menu under
+      <menuchoice>
+        <guimenu><accel>F</accel>ilters</guimenu>
+        <guisubmenu><accel>W</accel>eb</guisubmenu>
+        <guimenuitem><accel></accel>Slice</guimenuitem>
+      </menuchoice>.
+    </para>
+
+    <para lang="de">
+      Das Filter lässt sich über das Menü
+      <menuchoice>
+        <guimenu><accel>F</accel>ilter</guimenu>
+        <guisubmenu><accel>W</accel>eb</guisubmenu>
+        <guimenuitem><accel>Z</accel>erteilen</guimenuitem>
+      </menuchoice>
+      im Bildfenster aufrufen.
+    </para>
+
+    <para lang="es">
+      Puede encontrar este filtro en
+      <menuchoice>
+        <guimenu><accel>F</accel>iltros</guimenu>
+        <guisubmenu><accel></accel><!-- filter category --></guisubmenu>
+        <guimenuitem><accel></accel><!-- Filter name es --></guimenuitem>
+      </menuchoice>.
+    </para>
+
+    <para lang="fr">
+      On accède à ce filtre par
+      <menuchoice>
+        <guimenu>Filtres</guimenu>
+        <guisubmenu><!-- filter category --></guisubmenu>
+        <guimenuitem><!-- Filter name fr --></guimenuitem>
+      </menuchoice>.
+    </para>
+
+    <para lang="it">
+      Questo filtro si trova nel menu immagine:
+      <menuchoice>
+        <guimenu>Filt<accel>r</accel>i</guimenu>
+        <guisubmenu><accel></accel><!-- filter category --></guisubmenu>
+        <guisubmenu><accel></accel><!-- Filter name it --></guisubmenu>
+      </menuchoice>.
+    </para>
+
+    <para lang="no">
+      Du har tilgang til filteret frå biletmenyen via
+      <menuchoice>
+        <guimenu>Filter</guimenu>
+        <guisubmenu><!-- filter category --></guisubmenu>
+        <guimenuitem><!-- Filter name no --></guimenuitem>
+      </menuchoice>.
+    </para>
+
+    <para lang="ru">
+      Этот фильтр находится в меню изображения
+      <menuchoice>
+        <guimenu>Фильтры</guimenu>
+        <guisubmenu><!-- filter category --></guisubmenu>
+        <guimenuitem><!-- Filter name ru --></guimenuitem>
+      </menuchoice>.
+    </para>
+  </sect3>
+
+
+  <sect3>
+    <title>
+      <phrase lang="en;fr">Options</phrase>
+      <phrase lang="cs">Volby</phrase>
+      <phrase lang="de">Eigenschaften</phrase>
+      <phrase lang="es">Opciones</phrase>
+      <phrase lang="it">Opzioni</phrase>
+      <phrase lang="no">Innstillingar</phrase>
+      <phrase lang="ru">Параметры</phrase>
+      <phrase lang="zh_CN">选项</phrase>
+    </title>
+
+    <figure>
+      <title>
+        <phrase lang="en"><quote>Slice</quote> options</phrase>
+        <phrase lang="de">
+          Eigenschaften des Filters <quote>Zerteilen</quote>
+        </phrase>
+        <phrase lang="es">
+          Opciones del filtro <quote><!-- Filter name es --></quote>
+        </phrase>
+        <phrase lang="fr">
+          Options du filtre <quote><!-- Filter name fr --></quote>
+        </phrase>
+        <phrase lang="it">
+          Opzioni del filtro <quote><!-- Filter name it --></quote>
+        </phrase>
+        <phrase lang="no">
+          Innstillingane for filteret <quote><!-- Filter name no --></quote>
+        </phrase>
+        <phrase lang="ru">
+          Параметры фильтра <quote><!-- Filter name ru --></quote>
+        </phrase>
+      </title>
+
+      <mediaobject>
+        <imageobject lang="en">
+          <imagedata format="PNG"
+            fileref="../images/filters/options-web-slice.png" />
+        </imageobject>
+        <imageobject lang="de">
+          <imagedata format="PNG"
+            fileref="../images/filters/de/options-web-slice.png" />
+        </imageobject>
+      </mediaobject>
+    </figure>
+
+    <variablelist>
+      <para lang="en">
+        Most options are self-explanatory, but nevertheless:
+      </para>
+      <para lang="de">
+        Die meisten Eigenschaften erklären sich von selbst, aber
+        nichtsdestotrotz:
+      </para>
+
+      <varlistentry>
+        <term>
+          <phrase lang="en">Path for HTML export</phrase>
+          <phrase lang="de">Pfad für den HTML-Export</phrase>
+        </term>
+
+        <listitem>
+          <para lang="en">
+            Where the HTML file and the image files will be saved. By default
+            these files will be stored in the current working directory.
+            Clicking on the buttom to the right opens a pull-down menu, where
+            you can select a different location.
+          </para>
+          <para lang="de">
+            Wo die HTML-Datei und die Bilddateien gespeichert werden. Per
+            Voreinstellung ist dies das aktuelle Arbeitsverzeichnis. Wenn Sie
+            auf die Schaltfläche rechts klicken, öffnet sich ein Klappmenü,
+            mit dessen Hilfe Sie ein anderes Verzeichnis auswählen können.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>
+          <phrase lang="en">Filename for export</phrase>
+          <phrase lang="de">Dateiname für den Export</phrase>
+        </term>
+
+        <listitem>
+          <para lang="en">
+            The name of the HTML file. You can change the filename using the
+            textbox.
+          </para>
+          <para lang="de">
+            Der Name der HTML-Datei. Mit Hilfe des Textfeldes können Sie einen
+            anderen Dateinamen wählen.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>
+          <phrase lang="en">Image name prefix</phrase>
+          <phrase lang="de">Präfix des Dateinamens</phrase>
+        </term>
+
+        <listitem>
+          <para lang="en">
+            The name of an image file produced by this filter is
+            <filename>prefix_i_k.ext</filename>, where
+            <filename>prefix</filename> is that part of the filename which you
+            can freely select using the textbox to the right, by default:
+            <filename>slice</filename>.
+            (<filename>i</filename> and <filename>k</filename> are the numbers
+            of the row and the column, each starting with 0;
+            <filename class="extension">.ext</filename> is the filename
+            extension depending on the selected
+            <guilabel>Image format</guilabel>.)
+          </para>
+          <para lang="de">
+            Der Name einer Bilddatei, die dieses Filter erzeugt, lautet
+            <filename>praefix_i_k.erw</filename>, wobei
+            <filename>praefix</filename> der Teil des Namens ist, den Sie mit
+            Hilfe des Eingabefeldes rechts frei wählen können, standardmäßig:
+            <filename>slice</filename>.  (<filename>i</filename> und
+            <filename>k</filename> ist die Zeilen- bzw. Spaltennummer,
+            angefangen mit 0; <filename class="extension">.erw</filename> ist
+            die Dateinamenserweiterung, die durch das gewählte
+            <guilabel>Grafikformat</guilabel> bestimmt wird.)
+          </para>
+
+          <para lang="en">
+            This options is particularly useful when you want to create
+            <guilabel>Javascript for onmouseover and clicked</guilabel> and
+            need different sets of images.
+          </para>
+          <para lang="de">
+            Diese Eigenschaft ist insbesondere dann nützlich, wenn Sie
+            <guilabel>Javascript für onmouseover und clicked</guilabel>
+            erzeugen wollen und mehrere Sätze Bilder benötigen.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>
+          <phrase lang="en">Image format</phrase>
+          <phrase lang="de">Grafikformat</phrase>
+        </term>
+
+        <listitem>
+          <para lang="en">
+            You can choose to create image files in the
+            <link linkend="glossary-gif">GIF</link>,
+            <link linkend="glossary-jpeg">JPG</link>, or
+            <link linkend="glossary-png">PNG</link>
+            <link linkend="glossary-fileformat">file format</link>.
+          </para>
+          <para lang="de">
+            Sie haben die Wahl, Bilddateien im
+            <link linkend="glossary-gif">GIF</link>-,
+            <link linkend="glossary-jpeg">JPG</link>- oder
+            <link linkend="glossary-png">PNG</link>- <link
+            linkend="glossary-fileformat">Dateiformat</link> zu erstellen.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>
+          <phrase lang="en">
+            Separate image folder; Folder for image export
+          </phrase>
+          <phrase lang="de">
+            Extra Grafikordner; Ordner für die zu exportierenden Grafiken
+          </phrase>
+        </term>
+
+        <listitem>
+          <para lang="en">
+            When <guilabel>Separate image folder</guilabel> is enabled, a
+            folder will be created where the image files will be placed. By
+            default, the name of this destination folder is
+            <filename class="directory">images</filename>, but you can change
+            it in the <guilabel>Folder for image export</guilabel> textbox.
+          </para>
+          <para lang="de">
+            Wenn <guilabel>Extra Grafikordner</guilabel> aktiviert ist, wird
+            ein Verzeichnis erstellt, in dem die Bilddateien platziert werden.
+            Per Voreinstellung ist dies
+            <filename class="directory">images</filename>, was Sie aber mit
+            Hilfe des Eingabefeldes rechts von <guilabel>Ordner für die zu
+            exportierenden Grafiken</guilabel> ändern können.
+          </para>
+
+          <example>
+            <title>
+              <phrase lang="en">With separate image folder</phrase>
+              <phrase lang="de">Mit extra Grafikordner</phrase>
+            </title>
+<!--
+            <programlisting>
+              <![CDATA[
+<table>
+  <tr>
+    <td><img src="images/slice_0_0.png"/></a></td>
+              ]]>
+            </programlisting>
+-->
+            <mediaobject>
+              <imageobject>
+                <imagedata format="PNG"
+                  fileref="../images/filters/examples/slice-folder.png"/>
+              </imageobject>
+              <caption>
+                <para lang="en">
+                  Result of enabled <quote>Separate image folder</quote>
+                </para>
+                <para lang="de">
+                  Wenn <quote>Extra Grafikordner</quote> aktiviert ist
+                </para>
+              </caption>
+            </mediaobject>
+          </example>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>
+          <phrase lang="en">Space between table elements</phrase>
+          <phrase lang="de">Abstand zwischen den Tabellenzellen</phrase>
+        </term>
+
+        <listitem>
+          <para lang="en">
+            This value (0-15) will be passed as <quote>cellspacing</quote>
+            attribute to the HTML table. The result is, that horizontal and
+            vertical guides will be replaced with stripes of the specified
+            width:
+          </para>
+          <para lang="de">
+            Dieser Wert (0-15) wird zum <quote>cellspacing</quote>-Attribut in
+            der HTML-Tabelle. Das führt dazu, dass die horizontalen und
+            vertikalen Hilfslinien durch Streifen der angegebenen Breite
+            ersetzt werden:
+          </para>
+
+          <example>
+            <title>
+              <phrase lang="en">Space between table elements</phrase>
+              <phrase lang="de">Abstand zwischen den Tabellenzellen</phrase>
+            </title>
+<!--
+            <programlisting>
+              <![CDATA[
+<table  cellspacing="5">
+              ]]>
+            </programlisting>
+-->
+            <mediaobject>
+              <imageobject>
+                <imagedata format="PNG"
+                  fileref="../images/filters/examples/slice-cellspacing.png"/>
+              </imageobject>
+              <caption>
+                <para lang="en">Corresponding HTML code snippet</para>
+                <para lang="de">Zugehöriges HTML-Codefragment</para>
+              </caption>
+            </mediaobject>
+          </example>
+
+          <para lang="en">
+            Note that the image will not be enlarged by the size of these
+            stripes. Instead, the resulting HTML image will look like you have
+            drawn the stripes with the Eraser tool. 
+          </para>
+          <para lang="de">
+            Allerdings wird das Bild keineswegs um die Breite dieser Streifen
+            vergrößert. Statt dessen sieht das resultierende HTML-Bild so
+            aus, als hätten Sie die Streifen mit Hilfe des Radiergummis
+            erzeugt.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>
+          <phrase lang="en">Javascript for onmouseover and clicked</phrase>
+          <phrase lang="de">Javascript für onmouseover und clicked</phrase>
+        </term>
+
+        <listitem>
+          <para lang="en">
+            When this option is enabled, the filter will also add some
+            JavaScript code. Like the HTML code, this code does not work as
+            is, rather it's a good starting point for adding some dynamic
+            functionality. The JavaScript code provides a function to handle
+            events like <quote>onmouseover</quote>:
+          </para>
+          <para lang="de">
+            Wenn diese Eigenschaft aktiviert ist, fügt das Filter zusätzlich
+            JavaScript-Code hinzu. Wie beim HTML-Code auch können Sie diesen
+            Code nicht so wie er ist benutzen, sondern müssen ihn noch
+            bearbeiten, Er ist aber ein guter Ausgangspunkt, um Ihrer
+            HTML-Datei dynamische Funktionalität hinzuzufügen. Der
+            JavaScript-Code stellt eine Funktion zur Verfügung, die
+            Ereignisse wie <quote>onmouseover</quote> behandelt:
+          </para>
+
+          <example>
+            <title>
+              <phrase lang="en">JavaScript code snippet</phrase>
+              <phrase lang="de">JavaScript-Codefragment</phrase>
+            </title>
+            <programlisting>
+              <![CDATA[
+function exchange (image, images_array_name, event)
+  {
+    name = image.name;
+    images = eval (images_array_name);
+
+    switch (event)
+      {
+        case 0:
+          image.src = images[name + "_plain"].src;
+          break;
+        case 1:
+          image.src = images[name + "_hover"].src;
+          break;
+        case 2:
+          image.src = images[name + "_clicked"].src;
+          break;
+        case 3:
+          image.src = images[name + "_hover"].src;
+          break;
+      }
+  }
+              ]]>
+            </programlisting>
+          </example>
+        </listitem>
+      </varlistentry>
+
+      <!--
+        Does anybody have some JavaScript knowledge/experiences?
+        Should we add a complete example?
+        I made it work, but I don't know if this is the right way:
+            ...
+            <img src="images/slice_0_0.png" name="0_0"
+                 onmouseover="exchange(this,images_slice,1)"
+                 onmouseout="exchange(this,images_slice,0)" />
+            ...
+            images_slice["0_0_hover"] = new  Image();
+            images_slice["0_0_hover"].src = "images/hover_0_0.png";
+            ...                                    2008-04-05 (ude)
+      -->
+
+      <varlistentry>
+        <term>
+          <phrase lang="en">Skip animation for table caps</phrase>
+          <phrase lang="de">Animation für Tabellenkopf überspringen</phrase>
+        </term>
+
+        <listitem>
+          <para lang="en">
+            When disabled, the filter will add a
+            <code language="HTML">&lt;a href="#"&gt; ... &lt;/a&gt;</code>
+            hyperlink stub to every table cell. When enabled (this is the
+            default) and there are at least two horizontal or two vertical
+            guides, the filter will not add a hyperlink stub to the first and
+            last cell in a column or row. This may be useful when you have an
+            image with border and you don't want to make the border sensitive.
+          </para>
+          <para lang="de">
+            Wenn diese Eigenschaft nicht aktiviert ist, fügt das Filter für
+            jede Zelle in der Tabelle ein Hyperlink-Codefragment
+            <code language="HTML"> &lt;a href="#"&gt; ...  &lt;/a&gt;</code>
+            hinzu. Wenn diese Eigenschaft aktiviert ist (das ist die
+            Voreinstellung) und es mindestens zwei horizontale oder zwei
+            vertikale Hilfslinien gibt, fügt das Filter für die erste und
+            letzte Zelle jeder Reihe oder Spalte kein solches
+            Hyperlink-Codefragment hinzu. Dies kann dann ganz nützlich sein,
+            wenn Sie ein Bild mit einem Rahmen haben, der nicht klickbar
+            werden soll.
+          </para>
+
+          <example>
+            <title>
+              <phrase lang="en">
+                Skipped animation for table caps (simplified HTML code)
+              </phrase>
+              <phrase lang="de">
+                Keine Animation für Tabellenkopf (vereinfachter HTML-Code)
+              </phrase>
+            </title>
+            <programlisting>
+              <![CDATA[
+<table cellpadding="0" border="0" cellspacing="0">
+  <tr>
+    <td><img alt="" src="images/slice_0_0.png"/></td>
+    <td><img alt="" src="images/slice_0_1.png"/></td>
+    <td><img alt="" src="images/slice_0_2.png"/></td>
+    <td><img alt="" src="images/slice_0_3.png"/></td>
+  </tr>
+  <tr>
+    <td><img alt="" src="images/slice_1_0.png"/></td>
+    <td><a href="#"><img alt="" src="images/slice_1_1.png"/></a></td>
+    <td><a href="#"><img alt="" src="images/slice_1_2.png"/></a></td>
+    <td><img alt="" src="images/slice_1_3.png"/></td>
+  </tr>
+  <tr>
+    <td><img alt="" src="images/slice_2_0.png"/></td>
+    <td><img alt="" src="images/slice_2_1.png"/></td>
+    <td><img alt="" src="images/slice_2_2.png"/></td>
+    <td><img alt="" src="images/slice_2_3.png"/></td>
+  </tr>
+</table>
+              ]]>
+            </programlisting>
+            <para lang="en">
+              Only inner cells have (empty) hyperlinks.
+            </para>
+            <para lang="de">
+              Nur die inneren Zellen haben (leere) Hyperlinks.
+            </para>
+          </example>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </sect3>
+</sect2>
