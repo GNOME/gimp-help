@@ -302,6 +302,41 @@ validate:
 
 endif
 
+#### Miscellaneous checks
+
+.PHONY: checks check-lang-attributes check-svn-property check-image-references
+
+# Note that the default (autoconf) target name is "check".
+checks: check-lang-attributes check-svn-property check-image-references
+
+check-lang-attributes:
+	@if cd $(srcdir) && test -e tools/check_lang_attributes.pl && \
+	type perl >/dev/null 2>&1; then \
+	    echo "*** Checking lang attributes ... "; \
+	    perl tools/check_lang_attributes.pl --verbose --path src || true; \
+	else \
+	    echo >&2 "*** Cannot check lang attributes (no Perl installed?) ***"; \
+	fi
+
+check-svn-property:
+	@if cd $(srcdir) && test -e tools/check_keywords_property.pl && \
+	type perl >/dev/null 2>&1; then \
+	    echo "*** Checking svn property ... "; \
+	    perl tools/check_keywords_property.pl -v || true; \
+	else \
+	    echo >&2 "*** Cannot check svn property (no Perl installed?) ***"; \
+	fi
+
+check-image-references:
+	@if cd $(srcdir) && test -e tools/validate_references.py && \
+	type python >/dev/null 2>&1; then \
+	    echo "*** Checking image references ... "; \
+	    python tools/validate_references.py --verbose --broken --orphaned || true; \
+	else \
+	    echo >&2 "*** Cannot check image references (no Python installed?) ***"; \
+	fi
+
+
 #### AUTHORS file creation
 
 authors: stylesheets/authors.xml stylesheets/authors_text.xsl

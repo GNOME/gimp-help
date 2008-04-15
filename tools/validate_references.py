@@ -189,7 +189,7 @@ class ImageReferencesList(FileNameContainer):
             if self.size() != 0: sys.stderr.write(":")
             sys.stderr.write("\n")
         for imagefile in sorted(self.data.keys()):
-            print "BROKEN:", imagefile, "IN", self.data[imagefile]
+            print "BROKEN:", "images/" + imagefile, "IN", self.data[imagefile]
 
     # Internal stack methods to keep track of the opened files
 
