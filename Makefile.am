@@ -35,9 +35,12 @@ html_files_find_predicates = \
 src_find_predicates =       \
 	-name '.svn' -prune \
 	-o                  \
+	-name '$(notdir $(AUTHORS_DOCBOOK_XML))' -prune \
+	-o                  \
 	-name '*.xml' -print
 
-XML_FILES := $(shell cd $(top_srcdir) && find src $(src_find_predicates))
+XML_FILES = $(shell cd $(top_srcdir) && find src $(src_find_predicates)) \
+	    $(AUTHORS_DOCBOOK_XML)
 
 COMMON_CSS_FILES = \
 	stylesheets/gimp-help-plain.css	\
@@ -57,6 +60,7 @@ XSL_FILES = \
 	stylesheets/profile.xsl
 
 EXTRA_DIST = \
+	AUTHORS				\
 	HACKING				\
 	INSTALL				\
 	TERMINOLOGY			\
@@ -339,11 +343,21 @@ check-image-references:
 
 #### AUTHORS file creation
 
-authors: stylesheets/authors.xml stylesheets/authors_text.xsl
-	@echo "Creating AUTHORS"
-	$(XSLTPROC) stylesheets/authors_text.xsl stylesheets/authors.xml > AUTHORS
-	@echo "Creating src/preface/authors.xml"
-	$(XSLTPROC) stylesheets/authors_docbook.xsl stylesheets/authors.xml > $(AUTHORS_DOCBOOK_XML)
+AUTHORS: stylesheets/authors.xml stylesheets/authors_text.xsl $(AUTHORS_DOCBOOK_XML)
+	@echo "Creating $@"
+	@$(XSLTPROC) \
+	  $(XSLTFLAGS) \
+	  $(srcdir)/stylesheets/authors_text.xsl \
+	  $< \
+	  > $@
+	
+$(AUTHORS_DOCBOOK_XML): stylesheets/authors.xml src/preface/titles.xml stylesheets/authors_*.xsl
+	@echo "Creating $@"
+	@$(XSLTPROC) \
+	  $(XSLTFLAGS) \
+	  $(srcdir)/stylesheets/authors_docbook.xsl \
+	  $< \
+	  > $@
 
 
 #### Installation
@@ -387,7 +401,7 @@ uninstall-local:
 check-local: validate
 
 if GIMP_HELP_BUILD
-all-local: validate html-local index
+all-local: validate html-local index AUTHORS
 endif
 
 dist-hook: dist-copy-images
