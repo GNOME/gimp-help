@@ -41,7 +41,7 @@
     <phrase lang="cs">Roztřepení RGB</phrase>
     <phrase lang="de">RGB-Rauschen</phrase>
     <phrase lang="es">Ruido RGB</phrase>
-    <phrase lang="fr">Dispersion RVB</phrase>
+    <phrase lang="fr">Brouillage RVB</phrase>
     <phrase lang="it">Disturbo RGB</phrase>
     <phrase lang="no">RGB-støy</phrase>
     <phrase lang="ru">Разбросать RGB</phrase>
@@ -73,9 +73,9 @@
   <indexterm lang="fr">
     <primary>Filtres</primary>
     <secondary>Bruit</secondary>
-    <tertiary>Dispersion RVB</tertiary>
+    <tertiary>Brouillage RVB</tertiary>
   </indexterm>
-  <indexterm lang="fr"><primary>Dispersion RVB</primary></indexterm>
+  <indexterm lang="fr"><primary>Brouillage RVB</primary></indexterm>
 
   <indexterm lang="it">
     <primary>Filtri</primary><secondary>Disturbo</secondary>
@@ -133,7 +133,7 @@
           Anwendungsbeispiel für das Filter <quote>RGB-Rauschen</quote>
         </phrase>
         <phrase lang="fr">
-          Exemple d'application du filtre Dispersion RVB
+          Exemple d'application du filtre Brouillage RVB
         </phrase>
         <phrase lang="it">
           Esempio di applicazione del filtro Disturbo RGB
@@ -152,9 +152,10 @@
           <imagedata fileref="../images/filters/examples/taj_orig.jpg"
                     format="JPG" />
         </imageobject>
-        <caption lang="en;de;no">
+        <caption lang="en;de;fr;no">
           <para lang="en">Original image</para>
           <para lang="de">Originalbild</para>
+          <para lang="fr">Image d'origine</para>
           <para lang="no">Originalbiletet</para>
         </caption>
       </mediaobject>
@@ -164,9 +165,10 @@
             fileref="../images/filters/examples/noise-taj-scatter-rgb.jpg"
                     format="JPG" />
         </imageobject>
-        <caption lang="en;de;no">
+        <caption lang="en;de;fr;no">
           <para lang="en">Filter <quote>RGB Noise</quote> applied</para>
           <para lang="de">Filter <quote>RGB-Rauschen</quote> angewandt</para>
+          <para lang="fr">Après application du filtre</para>
           <para lang="no">Etter bruk av filteret <quote>RGB-støy</quote></para>
         </caption>
       </mediaobject>
@@ -258,15 +260,7 @@
     </para>
 
     <para lang="fr">
-      On accède à ce filtre par le menu d'image en suivant
-      <menuchoice>
-        <guimenu>Filtres</guimenu>
-        <guisubmenu>Bruit</guisubmenu>
-        <guimenuitem>Dispersion RVB</guimenuitem>
-      </menuchoice>
-    </para>
-    <para lang="fr">
-      Le filtre dispersion RVB ajoute un bruit distribué de façon «normale» à
+      Le filtre Brouillage RVB ajoute un bruit distribué de façon «normale» à
       un calque ou à une sélection. Il utilise le mode de couleur RVB pour
       produire le bruit (le bruit est ajouté aux valeurs de rouge, de vert et
       de bleu de chaque pixel). «Distribution normale» signifie qu'un léger
@@ -346,9 +340,10 @@
     </para>
   </sect3>
 
-  <sect3 lang="de;no">
+  <sect3 lang="de;fr;no">
     <title>
       <phrase lang="de">Filteraufruf</phrase>
+      <phrase lang="fr">Activation du filtre</phrase>
       <phrase lang="no">Aktivering</phrase>
     </title>
     <para lang="de">
@@ -359,6 +354,14 @@
         <guimenuitem><accel>R</accel>GB-Rauschen</guimenuitem>
       </menuchoice>
       im Bildfenster aufrufen.
+    </para>
+    <para lang="fr">
+      On accède à ce filtre par le menu d'image en suivant
+      <menuchoice>
+        <guimenu>Filtres</guimenu>
+        <guisubmenu>Bruit</guisubmenu>
+        <guimenuitem>Brouillage RVB</guimenuitem>
+      </menuchoice>
     </para>
     <para lang="no">
       Du har tilgang til filteret frå biletmenyen via
@@ -372,11 +375,10 @@
 
   <sect3>
     <title>
-      <phrase lang="en">Options</phrase>
+      <phrase lang="en;fr">Options</phrase>
       <phrase lang="cs">Volby</phrase>
       <phrase lang="de">Eigenschaften</phrase>
       <phrase lang="es">Opciones</phrase>
-      <phrase lang="fr">Options</phrase>
       <phrase lang="it">Opzioni</phrase>
       <phrase lang="no">Innstillingar</phrase>
       <phrase lang="ru">Параметры</phrase>
@@ -392,7 +394,7 @@
           Eigenschaften für das Filter <quote>RGB-Rauschen</quote>
         </phrase>
         <phrase lang="fr">
-          Options du filtre <quote>Dispersion RVB</quote>
+          Options du filtre <quote>Brouillage RVB</quote>
         </phrase>
         <phrase lang="no">
           Innstillingane for filteret <quote>RGB-støy</quote>
@@ -506,11 +508,12 @@
             los canales en cada píxel, y de esta forma conseguir que no cambie
             mucho la tonalidad de los píxeles.
           </para>
-          <!-- CHECK  fr:  en changed, does it correspond to fr? -->
           <para lang="fr">
             Quand cette option est cochée, un algorithme de <quote>bruit
-            corrélé</quote> est appliqué au résultat : l'histogramme est
-            étalé, le contraste renforcé.
+            corrélé</quote> est appliqué au résultat : chaque valeur dans les
+            canaux est multiplié par une certaine valeur. Le bruit dépend donc
+            des valeurs dans les canaux : des valeurs élevées entraînent plus de
+            bruit, tandis que les valeurs faibles (sombres) sont peu modifiées.
           </para>
           <para lang="it">
             Se selezionato, questo radio button fa muovere i cursori R, G e B
@@ -678,7 +681,7 @@
           </para>
 
           <para lang="fr">
-            Ces curseurs, et les boîtes de saisie adjacentes, permettent de
+            Ces curseurs, et les boîtes de texte adjacentes, permettent de
             fixer le niveau de bruit (de 0 à 1) dans chaque canal. Le canal
             Alpha n'est présent que si votre image possède un tel canal. dans
             le cas d'un image en niveaux de gris, un <guilabel>Gris</guilabel>
@@ -725,7 +728,7 @@
             i ein kanal.
           </para>
           <tip lang="no">
-            <para lang="no">
+            <para>
               Minner avsnittet ovanfor om ei førelesing i statistikk, er
               du ikkje heilt på jordet. Om du ikkje forsto noe av det, gjer
               det ingen ting. Tenk heller på at glidebrytarane bestemmer
