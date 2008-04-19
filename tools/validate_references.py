@@ -25,6 +25,9 @@ import getopt
 import re
 import xml.sax
 
+# TODO: use the Python logging system(!?)
+#import logging
+
 
 # Nodes containing filereferences in a DocBook XML file
 IMAGE_NODES = ["imagedata", "graphic", "inlinegraphic"]
@@ -221,12 +224,19 @@ class XMLHandler(xml.sax.handler.ContentHandler):
         if name == "xi:include" and attrs.has_key('href'):
             filename = os.path.join(os.path.dirname(self.owner.current_file()),
                                     attrs.getValue('href'))
-            if self.owner.verbose > 1:
-                sys.stderr.write("parsing " + str(filename) + "\n")
-            self.owner.push_file(filename)
-            parser = self.owner.make_parser()
-            parser.parse(filename)
-            self.owner.pop_file()
+            if os.path.isfile(filename):
+                if self.owner.verbose > 1:
+                    sys.stderr.write("parsing " + str(filename) + "\n")
+                self.owner.push_file(filename)
+                parser = self.owner.make_parser()
+                try:
+                    parser.parse(filename)
+                except:
+                    sys.stderr.write("ERROR reading " + str(filename) + "\n")
+                self.owner.pop_file()
+            else:
+                if self.owner.verbose > 1:
+                    sys.stderr.write("skipping " + str(filename) + "\n")
 
 
 def main():
