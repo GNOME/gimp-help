@@ -6,7 +6,7 @@
 <!-- section history:
   2008-04-16 ude: initial release ('en','de')
 -->
-<sect2 id="script-fu-3d-outline-logo-alpha" lang="en;de">
+<sect2 id="script-fu-3d-outline-logo-alpha" lang="en;de;fr">
   <sect2info>
     <revhistory>
       <revision lang="en">
@@ -26,7 +26,7 @@
       </revision>
       <revision lang="fr">
         <revnumber>$Revision$</revnumber>
-        <date><!-- yyyy-mm-dd --></date>
+        <date>2008-04-18</date>
         <authorinitials>j.h</authorinitials>
       </revision>
       <revision lang="it">
@@ -42,13 +42,13 @@
     </revhistory>
   </sect2info>
 
-  <!--TODO es fr it ko lt nl pl ru sv: translate new content, review 'en'-->
+  <!--TODO es it ko lt nl pl ru sv: translate new content, review 'en'-->
   <title>
     <phrase lang="en">3D Outline</phrase>
     <phrase lang="cs"><!-- Filter name cs --></phrase>
     <phrase lang="de">3-D-Umriss</phrase>
     <phrase lang="es"><!-- Filter name es --></phrase>
-    <phrase lang="fr"><!-- Filter name fr --></phrase>
+    <phrase lang="fr">Contour 3D</phrase>
     <phrase lang="it"><!-- Filter name it --></phrase>
     <phrase lang="no"><!-- Filter name no --></phrase>
     <phrase lang="ru"><!-- Filter name ru --></phrase>
@@ -76,9 +76,9 @@
   <indexterm lang="fr">
     <primary>Filtres</primary>
     <secondary>Alpha vers logo</secondary>
-    <tertiary><!--Filter name fr--></tertiary>
+    <tertiary>Contour 3D</tertiary>
   </indexterm>
-  <indexterm lang="es"><primary><!-- Filter name fr --></primary></indexterm>
+  <indexterm lang="es"><primary>Contour 3D</primary></indexterm>
 
   <indexterm lang="it">
     <primary>Filtri</primary>
@@ -127,7 +127,7 @@
           Ejemplo para el filtro <quote><!-- Filter name es --></quote>
         </phrase>
         <phrase lang="fr">
-          Exemple d'application pour le filtre <quote><!-- Filter name fr --></quote>
+          Exemple d'application pour le filtre <quote>Contour 3D</quote>
         </phrase>
         <phrase lang="it">
           Esempio di applicazione del filtro <quote><!-- Filter name it --></quote>
@@ -153,7 +153,7 @@
             <quote><!-- Filter name es --></quote> aplicado
           </para>
           <para lang="fr">
-            Après application du filtre <quote><!-- Filter name fr --></quote>
+            Après application du filtre <quote>Contour 3D</quote>
           </para>
           <para lang="it">
             Dopo l'applicazione del filtro <quote><!-- Filter name it --></quote>
@@ -173,7 +173,7 @@
         <caption>
           <para lang="en">The <quote>3D Outline</quote> logo</para>
           <para lang="de">Das Logo <quote>3-D-Umriss</quote></para>
-          <para lang="fr">Le logo <quote><!-- Filter name fr --></quote></para>
+          <para lang="fr">Le logo <quote>Contour 3D</quote></para>
           <para lang="it">Il logotipo <quote><!-- Filter name it --></quote></para>
           <para lang="no">Logoen <quote><!-- Filter name no --></quote></para>
           <para lang="ru">Логотип <quote><!-- Filter name ru --></quote></para>
@@ -204,11 +204,11 @@
     </para>
 
     <para lang="fr">
-      Il dérive du script-fu <quote>Luisant</quote>
+      Il dérive du script-fu <quote>Contour 3D</quote>
       (<menuchoice>
         <guimenu>Exts</guimenu>
         <guisubmenu>Logos</guisubmenu>
-        <guimenuitem><!-- Filter name fr --></guimenuitem>
+        <guimenuitem>Contour 3D</guimenuitem>
       </menuchoice> dans la Boîte à outils),
     </para>
 
@@ -239,15 +239,23 @@
     </para>
 
     <para lang="en">
-      The filter outlines the alpha with a pattern and adds a drop shadow.
-      Here, <emphasis>alpha</emphasis> is area of the active layer defined by
-      the non-transparent pixels.
+      The filter outlines the non-transparent areas of the active layer
+      (determined from the Alpha channel) with a pattern and adds a drop
+      shadow.
+      Here, we will use the <emphasis>alpha</emphasis> term to refer to these
+      areas of the active layer defined by the non-transparent pixels.
     </para>
     <para lang="de">
       Das Filter umreißt den Alphakanal mit einem Muster und fügt einen
       Schlagschatten hinzu. Hier ist mit <emphasis>Alphakanal</emphasis> (oder
       kurz: <emphasis>Alpha</emphasis>) der Bereich der aktiven Ebene gemeint,
       der durch die nicht-transparenten Pixel definiert wird.
+    </para>
+    <para lang="fr">
+      Ce filtre entoure d'un motif les pixels non transparents (déterminés à
+      partir du canal Alpha) et ajoute une ombre portée. Nous pourrons
+      utiliser le terme <quote>Alpha</quote> pour désigner ces aires non
+      transparentes.
     </para>
 
     <!-- Still looking for the best way to describe the term "alpha"...
@@ -288,9 +296,9 @@
       <para lang="no">
         I beskrivinga vil vi her bruke <emphasis>alfa</emphasis> som ei
         forkorting for det området av det aktive laget som blir definert av
-        dei ugjennomsiktige pikslane. Du kan sjå på det som eit 
+        dei ugjennomsiktige pikslane. Du kan sjå på det som eit
         <quote>utval av det som er synleg</quote>. Å legge ein effekt
-        <quote>til alfa</quote> betyr altså å legge denne effekten til 
+        <quote>til alfa</quote> betyr altså å legge denne effekten til
         alle dei synlege pikslane i det aktive laget.
       </para>
     </note>
@@ -301,9 +309,10 @@
       The filter uses the <link linkend="plug-in-edge">Sobel edge
       detect</link> filter to get the alpha's outline. So with a simple alpha,
       for example a cleared rectangle selection, you will just get the
-      boundary. But when you use a layer mask like in the following example
-      intimated, the edge detector will find more edges and thus the filter
-      effect will be applied to these edges too.
+      boundary. But when you use a layer mask (don't forget to Apply the
+      Layer Mask), as in the following example, the edge detector will find
+      more edges and thus the filter effect will be applied to these edges
+      too.
     </para>
     <para lang="de">
       Das Filter verwendet die
@@ -315,11 +324,23 @@
       angedeutet, findet der Kantenerkennungs-Algorithmus mehr Kanten, und der
       Filtereffekt wird auch auf diese Kanten angewendet.
     </para>
+    <para lang="fr">
+      Ce filtre utilise le filtre <link linkend="plug-in-edge">Detection des
+      bords Sobel</link> pour définir le contour des pixels non transparents.
+      Avec une sélection rectangulaire que vous aurez effacée, vous obtiendrez
+      uniquement le contour. Mais si vous utilisez un masque de calque pour
+      modifier la transparence (n'oubliez pas d'Appliquer le masque de
+      calque) comme dans l'exemple suivant, d'autres bords seront détectés et
+      le filtre s'y appliquera.
+    </para>
 
     <figure>
       <title>
         <phrase lang="en">Example based on multicolored layer mask</phrase>
         <phrase lang="de">Beispiel mit mehrfarbiger Ebenemaske</phrase>
+        <phrase lang="fr">
+          Exemple basé sur un masque de calque à plusieurs couleurs
+        </phrase>
       </title>
 
       <mediaobject>
@@ -330,6 +351,7 @@
         <caption>
           <para lang="en">With an layer mask (alpha) like this ...</para>
           <para lang="de">Mit einer solchen Ebenenmaske (Alpha) ...</para>
+          <para lang="fr">Avec un masque de calque tel celui-ci ...</para>
         </caption>
       </mediaobject>
       <mediaobject>
@@ -340,6 +362,7 @@
         <caption>
           <para lang="en">... you will get this.</para>
           <para lang="de">... erhalten Sie das.</para>
+          <para lang="fr">... vous obtiendrez ceci.</para>
         </caption>
       </mediaobject>
     </figure>
@@ -369,7 +392,7 @@
   </sect3>
 
 
-  <sect3 lang="en;de">
+  <sect3 lang="en;de;fr">
     <title>
       <phrase lang="en">Activate the filter</phrase>
       <phrase lang="cs">Aktivace filtru</phrase>
@@ -415,7 +438,7 @@
       <menuchoice>
         <guimenu>Filtres</guimenu>
         <guisubmenu>Alpha vers logo</guisubmenu>
-        <guimenuitem><!-- Filter name fr --></guimenuitem>
+        <guimenuitem>Contour 3D</guimenuitem>
       </menuchoice>.
     </para>
 
@@ -454,9 +477,13 @@
       Das Filter funktioniert nur, wenn die aktive Ebene einen Alphakanal hat,
       andernfalls ist der Menüeintrag deaktiviert und ausgegraut.
     </para>
+    <para lang="fr">
+      Ce filtre ne marche que si le calque actif a un canal Alpha. Dans le
+      cas contraire, l'entrée du menu est désactivée et en gris.
+    </para>
     <para lang="it">
-      Questo filtro funziona unicamente se il livello attivo è dotato di canale
-      alfa, in caso contrario la voce di menu è inattiva.
+      Questo filtro funziona unicamente se il livello attivo è dotato di
+      canale alfa, in caso contrario la voce di menu è inattiva.
     </para>
     <para lang="no">
       Dette filteret er aktivt bare dersom det aktive laget har alfakanal.
@@ -487,7 +514,7 @@
           Opciones del filtro <quote><!-- Filter name es --></quote>
         </phrase>
         <phrase lang="fr">
-          Options du filtre <quote><!-- Filter name fr --></quote>
+          Options du filtre <quote>Contour 3D</quote>
         </phrase>
         <phrase lang="it">
           Opzioni del filtro <quote><!-- Filter name it --></quote>
@@ -509,6 +536,10 @@
           <imagedata format="PNG"
             fileref="../images/filters/de/options-logo-3d-outline.png" />
         </imageobject>
+        <imageobject lang="fr">
+          <imagedata format="PNG"
+             fileref="../images/filters/fr/options-logo-3d-outline.png" />
+        </imageobject>
       </mediaobject>
     </figure>
 
@@ -516,6 +547,7 @@
       <varlistentry>
         <term lang="en">Pattern</term>
         <term lang="de">Muster</term>
+        <term lang="fr">Motif</term>
 
         <listitem>
           <para lang="en">
@@ -531,13 +563,19 @@
             <guibutton>Durchsuchen</guibutton>, öffnet sich ein Dialogfenster,
             wo Sie ein anderes Muster auswählen können.
           </para>
+          <para lang="fr">
+            Ici, vous pouvez voir et changer le motif actif. Si vous cliquez
+            sur le motif, un motif agrandi apparaît. En cliquant sur le
+            bouton <guibutton>Parcourir</guibutton>, vous ouvrez le
+            sélecteur de motif.
+          </para>
         </listitem>
       </varlistentry>
 
       <varlistentry>
         <term lang="en">Outline blur radius</term>
         <term lang="de">Umriss weichzeichnen (Radius)</term>
-
+        <term lang="fr">Rayon de flou du contour</term>
         <listitem>
           <para lang="en">
             This radius is used to <link linkend="plug-in-gauss">blur</link>
@@ -554,6 +592,13 @@
             Wert führt daher zu einem verbreiterten, aber verschmierten
             Muster:
           </para>
+          <para lang="fr">
+            Ce rayon est utilisé pour rendre <link
+            linkend="plug-in-gauss">flou</link> l'alpha avant que le filtre
+            <link linkend="plug-in-edge">Contour</link> ne détermine la zone
+            à remplir avec le motif. C'est pourquoi une valeur élevée donne
+            un motif large mais flou:
+          </para>
 
           <figure>
             <title>
@@ -561,8 +606,11 @@
               <phrase lang="de">
                 Beispiel für Umriss-Weichzeichnenradius
               </phrase>
+              <phrase lang="fr">
+                Exemple pour Rayon de flou du contour
+              </phrase>
             </title>
-      
+
             <mediaobject>
               <imageobject>
                 <imagedata format="JPG"
@@ -570,6 +618,7 @@
               </imageobject>
               <caption>
                 <para lang="en;de">Radius: 5</para>
+                <para lang="fr">Rayon: 5</para>
               </caption>
             </mediaobject>
 
@@ -580,6 +629,7 @@
               </imageobject>
               <caption>
                 <para lang="en;de">Radius: 20</para>
+                <para lang="fr">Rayon: 20</para>
               </caption>
             </mediaobject>
 
@@ -590,6 +640,7 @@
               </imageobject>
               <caption>
                 <para lang="en;de">Radius: 40</para>
+                <para lang="fr">Rayon: 40</para>
               </caption>
             </mediaobject>
           </figure>
@@ -599,6 +650,7 @@
       <varlistentry>
         <term lang="en">Shadow blur radius</term>
         <term lang="de">Schatten weichzeichnen (Radius)</term>
+        <term lang="fr">Rayon de flou de l'ombre</term>
 
         <listitem>
           <para lang="en">
@@ -610,6 +662,11 @@
             <link linkend="plug-in-gauss">weichgezeichnet</link>. Ein hoher
             Wert verschmiert den Schatten:
           </para>
+          <para lang="fr">
+            Ce rayon est utilisé pour rendre <link
+            linkend="plug-in-gauss">flou</link> l'ombre portée. Une valeur
+            élevée la rend floue :
+          </para>
 
           <figure>
             <title>
@@ -617,8 +674,11 @@
               <phrase lang="de">
                 Beispiel für Schatten-Weichzeichnenradius
               </phrase>
+              <phrase lang="fr">
+                Exemple pour Rayon de flou de l'ombre
+              </phrase>
             </title>
-      
+
             <mediaobject>
               <imageobject>
                 <imagedata format="JPG"
@@ -626,6 +686,7 @@
               </imageobject>
               <caption>
                 <para lang="en;de">Radius: 10</para>
+                <para lang="fr">Rayon: 10</para>
               </caption>
             </mediaobject>
 
@@ -636,6 +697,7 @@
               </imageobject>
               <caption>
                 <para lang="en;de">Radius: 20</para>
+                <para lang="fr">Rayon: 20</para>
               </caption>
             </mediaobject>
 
@@ -646,6 +708,7 @@
               </imageobject>
               <caption>
                 <para lang="en;de">Radius: 40</para>
+                <para lang="fr">Rayon: 40</para>
               </caption>
             </mediaobject>
           </figure>
@@ -655,7 +718,7 @@
       <varlistentry>
         <term lang="en">Bumpmap (alpha layer) blur radius</term>
         <term lang="de">Weichzeichnen-Radius der Bump-Map (Alpha-Ebene)</term>
-
+        <term lang="fr">Rayon de flou du bosselage</term>
         <listitem>
           <para lang="en">
             The <link linkend="plug-in-bump-map">Bump Map</link> used to
@@ -675,13 +738,20 @@
             Weichzeichner</link> mit dem angegebenen Radius darauf angewendet.
             Daher verringert ein hoher Wert den 3D-Effekt.
           </para>
+          <para lang="fr">
+            Le filtre <link linkend="plug-in-bump-map">Repoussage</link>
+            utilisé pour créer l'effet 3D est appliqué après
+            <link linkend="plug-in-edge">Contour</link> et
+            <link linkend="plug-in-gauss">Flou gaussien</link> avec le rayon
+            fixé. Une valeur élevée réduira donc l'ffet 3D.
+          </para>
         </listitem>
       </varlistentry>
 
       <varlistentry>
         <term lang="en">Default bumpmap settings</term>
         <term lang="de">Standard-Bump-Map-Einstellungen</term>
-
+        <term lang="fr">Réglage par défaut du bosselage</term>
         <listitem>
           <para lang="en">
             If checked (this is the default) the bump map plug-in will be
@@ -701,12 +771,20 @@
             <keycap>Abbrechen</keycap>-Schalters verlassen, wird überhaupt
             keine Bump-Map angewendet.
           </para>
+          <para lang="fr">
+            Cette option est cochée par défaut et le filtre Repoussage est
+            appliqué avec ses options par défaut. Si cette option n'est pas
+            cochée, la fenêtre de dialogue Repoussage s'ouvrira et vous
+            pourrez choisir d'autres options. Notez que si vous cliquez sur
+            <keycap>Annuler</keycap>, aucun bosselage ne sera appliqué.
+          </para>
         </listitem>
       </varlistentry>
 
       <varlistentry>
         <term lang="en">Shadow X offset; Shadow Y offset</term>
         <term lang="de">Schattenversatz X; Y</term>
+        <term lang="fr">Décalage de l'ombre en X, et en Y</term>
 
         <listitem>
           <para lang="en">
@@ -722,22 +800,33 @@
             gibt, wird durch das Verschieben der ursprüngliche Bereich
             gelöscht:
           </para>
+          <para lang="fr">
+            C'est le nombre de pixels pour le décalage de l'ombre vers la
+            droite (X) ou vers le bas (Y). le calque sera alors rogné à la
+            taille de l'image. Notez qu'il n'y apas de calque d'arrière-plan
+            et que le déplacement de l'ombre effacera l'emplacement
+            d'origine.
+          </para>
 
           <figure>
             <title>
               <phrase lang="en">Shadow offset example</phrase>
               <phrase lang="de">Beispiel für Schattenversatz</phrase>
+              <phrase lang="fr">
+                Exemple pour le déplacement de l'ombre
+              </phrase>
             </title>
-      
+
             <mediaobject>
               <imageobject>
                 <imagedata format="JPG"
                   fileref="../images/filters/examples/3d-outline-moved.jpg" />
               </imageobject>
-      
+
               <caption>
                 <para lang="en">X offset: 50; Y offset: 20</para>
                 <para lang="de">X-Versatz: 50, Y-Versatz: 20</para>
+                <para lang="fr">décalage en X: 50; Décalage en Y: 20</para>
               </caption>
             </mediaobject>
           </figure>
