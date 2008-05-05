@@ -7,8 +7,8 @@
   2007-08-23 AntI: added 'es'
   2007-04-17 KoSt: added 'no'
   2005-12-07 replaced <simplesect> by <sect3> by lexa
-  050830 de replaced informalfigure by axel.wernicke
-  050901 de added by axel.wernicke
+  2005-08-30 de replaced informalfigure by axel.wernicke
+  2005-09-01 de added by axel.wernicke
 -->
 <sect2 id="plug-in-convmatrix" lang="en;cs;de;es;fr;it;no;ru">
   <sect2info lang="en;de;es;fr" role="cvs">
@@ -20,8 +20,8 @@
       </revision>
       <revision lang="de">
         <revnumber>$Revision$</revnumber>
-        <date>2006-11-04</date>
-        <authorinitials>lexa</authorinitials>
+        <date>2008-05-05</date>
+        <authorinitials>ude</authorinitials>
       </revision>
       <revision lang="es">
         <revnumber>$Revision$</revnumber>
@@ -221,7 +221,7 @@
     <para lang="de">
       Das Filter betrachtet nacheinander jedes Pixel des Bildes. Für das
       aktive Pixel und seine 8 Nachbarpixel wird eine Multiplikation mit den
-      zugehörigen Elementen des Kernes durchgeführt. Die Ergebnisse dieser
+      entsprechenden Elementen des Kernes durchgeführt. Die Ergebnisse dieser
       Multiplikationen werden als neuer Wert des aktuellen Pixels übernommen.
     </para>
     <para lang="de">Die nachfolgende Abbildung verdeutlicht den Ablauf:</para>
@@ -443,12 +443,18 @@
       простой пример:
     </para>
 
-    <!--TODO: en cs de fr it no: Maybe this example would be even better,
-              if the left numbers were unique instead of 50, 100.-->
-    <mediaobject lang="en;cs;de;es;fr;it;no;ru">
-      <imageobject>
+    <!--TODO: en cs fr it no: check/compare these 2 example images-->
+    <!--IMHO, the example image seems to be a bit misleading: what about the
+        surrounding pixels, they can't be both source and dest values!?-->
+    <mediaobject>
+      <imageobject lang="en;cs;es;fr;it;no;ru">
         <imagedata fileref="../images/filters/examples/convolution-example1.png"
                    format="PNG" />
+      </imageobject>
+      <!--What about this one: better? or even worse?-->
+      <imageobject lang="de">
+        <imagedata format="PNG"
+          fileref="../images/filters/examples/convolution-calculate.png"/>
       </imageobject>
     </mediaobject>
 
@@ -462,12 +468,13 @@
       Here is what happened: the filter read successively, from left to right
       and from top to bottom, all the pixels of the kernel action area. It
       multiplied the value of each of them by the kernel corresponding value
-      and added results: (100*0)+(50*1)+(50*0)*(100*0)+(100*0)
-      +(100*0)+(100*0)+(100*0)+(100*0)+(100*0) = 50. The initial pixel took
-      the value 50. Previously, when the initial pixel had value=50, it took
-      the value 100 of the above pixel (the filter doesn't work on the image
-      but on a copy) and so disappeared into the "100" background pixels. As a
-      graphical result, the initial pixel moved a pixel downwards.
+      and added results: (100*0)+(50*1)+(50*0) + (100*0)+(100*0)+(100*0) + 
+      (100*0)+(100*0)+(100*0) = 50. The initial pixel took the value 50.
+      <!--Hmm!? What does the following sentence mean?-->
+      Previously, when the initial pixel had value=50, it took the value 100
+      of the above pixel (the filter doesn't work on the image but on a copy)
+      and so disappeared into the "100" background pixels.
+      As a graphical result, the initial pixel moved a pixel downwards.
     </para>
     <para lang="cs">
       Vlevo je matice obrázku: každý pixel je popsán svou hodnotou. Aktuální
@@ -488,16 +495,19 @@
       Farbwerte werden durch Zahlen repräsentiert. Das aktuell bearbeitete
       Pixel ist rot umrandet. Der Bereich, auf den der Kern angewendet wird,
       ist grün umrandet. In der Mitte des Bildes sehen Sie den Kern. Auf der
-      rechten Seite das Bild nach Anwendung des Kerns, also das Ergebnis der
-      Faltung.
+      rechten Seite das bearbeitete Pixel nach Anwendung des Kerns, also das
+      Ergebnis der Faltung.
     </para>
     <para lang="de">
       Was ist nun genau passiert? Das Filter liest, von links nach rechts,
       Zeile für Zeile alle Werte des Bereiches, auf das der Kern angewendet
       wird. Dabei werden die Werte der Bildmatrix mit den korrespondierenden
-      Werten des Kerns multipliziert und die Ergebnisse addiert:
-      (100*0)+(50*1)+(50*0)*(100*0)+(100*0)+(100*0)+(100*0)+(100*0)+(100*0)+(100*0)
-      = 50. Das aktuell bearbeitete Pixel bekommt also den Wert 50.
+      Werten des Kerns multipliziert und die Ergebnisse addiert. Welchen Wert
+      erhält also das aktuell bearbeitete Pixel? Nun, die Antwort ist 42:
+      (40*0)+(42*1)+(46*0) + (46*0)+(50*0)+(55*0) + (52*0)+(56*0)+(58*0) = 42.
+      (Natürlich führt das Filter die Berechnungen mit Hilfe einer Kopie
+      durch). Das sichtbare Ergebnis bei diesem Kern ist, dass jedes Pixel
+      eine Position nach unten verschoben wird.
     </para>
     <para lang="es">
       A la izquierda, la imagen de la matriz: cada píxel está marcado con su
