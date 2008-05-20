@@ -43,7 +43,7 @@
     <phrase lang="es">Matriz de convolución</phrase>
     <phrase lang="fr">Matrice de convolution</phrase>
     <phrase lang="it">Matrice di convoluzione</phrase>
-    <phrase lang="no">Konturutjamningsmatrise</phrase>
+    <phrase lang="no">Konvolusjonsmatrise</phrase>
     <phrase lang="ru">Матрица конволюции</phrase>
   </title>
 
@@ -86,11 +86,11 @@
 
   <indexterm lang="no">
     <primary>Filter</primary>
-    <secondary>Generiske</secondary>
-    <tertiary>Konturutjamningsmatrise</tertiary>
+    <secondary>Uspesifiserte</secondary>
+    <tertiary>Konvolusjonsmatrise</tertiary>
   </indexterm>
   <indexterm lang="no">
-    <primary>Konturutjamningsmatrise (filter)</primary>
+    <primary>Konvolusjonsmatrise (filter)</primary>
   </indexterm>
 
   <indexterm lang="ru">
@@ -353,35 +353,30 @@
       Un semplice esempio:
     </para>
 
-
     <para lang="no">
-      Du har tilgang til filteret frå biletmenyen via
-      <menuchoice>
-        <guimenu>Filter</guimenu>
-        <guisubmenu>Generiske</guisubmenu>
-        <guimenuitem>Konturutjamningsmatrise</guimenuitem>
-      </menuchoice>
-    </para>
-    <para lang="no">
-      Dette er nok matematikarane sitt domene, men med prøving og feiling
-      kan også andre få til svært så sofistikerte filtre ved hjelp av denne
-      matrisen. Dei fleste filtra i <acronym>GIMP</acronym> er sett opp
-      ved hjelp av denne matrisen. (Ei matrise er i denne samanhengen eit
-      mønster sett opp i tabellform).
+      Dette filteret blir mest brukt for å lage og å prøve ut eigne filter. Når du
+      bruker filteret, set du opp ei konvolusjonsmatrise, den såkalla kjernen,
+      som så blir brukt på biletet. Dette er eigentleg høgare matematikk, men
+      forklaringa nedanfor skulle gi eit godt grunnlag for å ta i bruk filteret
+      sjølv om du ikkje er matematikar. Skulle du ha behov for meir matematikk,
+      kan du prøve Wikipedia eller andre oppslagsver. Sidan mange av filtra i
+      <acronym>GIMP</acronym> er laga med same matematikken, bør du ikkje
+      bli forundra om du kjenner igjen noen av sekvensane.
     </para>
     <para lang="no">
       Kva i all verda er eigentleg ei <emphasis
-      role="bold">kantutjamningsmatrise</emphasis>, eller som det
-      også blir kalla, ei <emphasis
-      role="bold">konvolusjonsmatrise</emphasis>? Konvolusjon er å
-      kombinere ei matrise med ei anna matrise på ein eller annan måte.
+      role="bold">konvolusjonsmatrise</emphasis>? For å ta det siste
+      først. Ei matrise er i denne samanhengen eit mønster sett opp i 
+      tabellform. Konvolusjon er å kombinere to matrise på ein eller 
+      annan måte og overføre resultatet til den første matrisa. 
     </para>
     <para lang="no">
-      Dette matrisefilteret bruker det biletet som skal behandlast som den
-      første matrisa. Biletet blir her sett på som ei todimmensjonal samling
-      av pikslar i rektangulære ruter. Filteret er i denne samanhengen
-      <emphasis>kjernematrisa</emphasis>, og innhaldet i
-      denne matrisa er avhengig av kva effekt du ønskjer av filteret.
+      I konvolusjonsfilteret blir biletet oppfatta som den første matrisa, 
+      ei todimensjonal samling av pikslar set opp i rektangulære ruter. 
+      Den andre matrisa, den såkalla 
+      <emphasis>kjernematrisa</emphasis> blir sett opp av deg. 
+      Innhaldet i denne matrisa er avhengig av kva effekt du ønskjer
+      av filteret.
     </para>
     <para lang="no">
       <acronym>GIMP</acronym> bruker 5 × 5 eller 3 × 3 matriser. Her
@@ -399,7 +394,7 @@
       verdien til initialpikselen blir summen av desse multiplikasjonane.
     </para>
     <para lang="no">
-      Eit lite eksempel:
+      Kanskje dette eksemplet vil vere til hjelp:
     </para>
 
     <para lang="ru">
@@ -446,13 +441,15 @@
     <!--TODO: en cs fr it no: check/compare these 2 example images-->
     <!--IMHO, the example image seems to be a bit misleading: what about the
         surrounding pixels, they can't be both source and dest values!?-->
+    <!--IMO the 'de' example is better anyway becauce of using different values
+        in the cells. (kost)    -->
     <mediaobject>
-      <imageobject lang="en;cs;es;fr;it;no;ru">
+      <imageobject lang="en;cs;es;fr;it;ru">
         <imagedata fileref="../images/filters/examples/convolution-example1.png"
                    format="PNG" />
       </imageobject>
       <!--What about this one: better? or even worse?-->
-      <imageobject lang="de">
+      <imageobject lang="de;no">
         <imagedata format="PNG"
           fileref="../images/filters/examples/convolution-calculate.png"/>
       </imageobject>
@@ -565,19 +562,19 @@
     </para>
     <para lang="no">
       Figuren til venstre viser matrisa for biletet. Kvar rute representerer
-      ein piksel og tala i ruta pikselverdien. Initialpikselen er markert med
-      ein raud kant. Området som blir påverka av kjernematrisa er markert
-      med ei grøn ramme. Biletet i midten viser kjernen og biletet til høgre
-      det ferdige resultatet.
+      ein piksel og tala i ruta pikselverdien. Initialpikselen er i sentrum og 
+      er markert med ein raud kant. Området som blir påverka av 
+      kjernematrisa er markert med ei grøn ramme. Biletet i midten viser 
+      kjernen og biletet til høgre det ferdige resultatet.
     </para>
     <para lang="no">
       Filteret les piksel for piksel frå venstre mot høgre og frå topp til botn
       gjennom heile området som blir påverka av kjernen. Verdien for kvar
       piksel blir multiplisert med tilsvarande verdi i kjernen og resultatet
-      blir lagt til dei andre verdiane slik: (100 × 0) + (50 × 1) + (50 × 0)
-      + (100 × 0) + (100 × 0) + (100 × 0) + (100 × 0) + (100 × 0) +
-      (100 × 0) + (100 × 0) = 50. Verdien av initialpikselen blir her altså
-      50.
+      blir lagt til dei andre verdiane slik: (40 × 0) + (42× 1) + (46 × 0)
+      + (46 × 0) + (50 × 0) + (55 × 0) + (52 × 0) + (52 × 0) +
+      (56 × 0) + (58 × 0) = 42. Den nye verdien for initialpikselen blir 
+      i eksemplet altså 42. 
     </para>
     <para lang="ru">
       Слева - матрица изображения: каждый пиксель помечен своим значением. У
@@ -598,9 +595,10 @@
   </sect3>
 
 
-  <sect3 lang="de">
+  <sect3 lang="de;no">
     <title>
       <phrase lang="de">Filteraufruf</phrase>
+      <phrase lang="no">Aktivering</phrase>
     </title>
 
     <para lang="de">
@@ -611,6 +609,14 @@
         <guimenuitem><accel>F</accel>altungsmatrix</guimenuitem>
       </menuchoice>
       im Bildfenster aufrufen.
+    </para>
+    <para lang="no">
+      Du har tilgang til filteret frå biletmenyen via
+      <menuchoice>
+        <guimenu>Filter</guimenu>
+        <guisubmenu>Uspesifiserte</guisubmenu>
+        <guimenuitem>Konvolusjonsmatrise</guimenuitem>
+      </menuchoice>
     </para>
   </sect3>
 
@@ -642,7 +648,7 @@
           Options du filtre <quote>Matrice de convolution</quote>
         </phrase>
         <phrase lang="no">
-          Innstillingane for filteret <quote>Konturutjamningsmatrise</quote>
+          Innstillingane for filteret <quote>Konvolusjonsmatrise</quote>
         </phrase>
         <phrase lang="ru">
           Параметры фильтра <quote>Матрица конволюции</quote>
@@ -756,7 +762,7 @@
             matrice del kernel, che restituisce la media dei valori del pixel.
           </para>
           <para lang="no">
-            <guilabel>Divisor</guilabel>: Resultatet av tidlegare kalkulasjon
+            <guilabel>Divisor</guilabel>: Resultatet av kalkulasjonane
             blir dividert med dette talet. Dermed kan du unngå alt for store
             fargeverdiar.
           </para>
@@ -800,9 +806,9 @@
             può esso stesso essere negativo.
           </para>
           <para lang="no">
-            <guilabel>Forskyving</guilabel>
-            : Dette talet blir lagt til resultatet av divisjonen for å unngå
-            negativt resultat. Forskyvinga kan også vere negativ.
+            <guilabel>Forskyving</guilabel>:
+            Dette talet blir lagt til resultatet av divisjonen for å unngå
+            negativt resultat. Forskyvinga kan derimot vere negativ.
           </para>
           <para lang="ru">
             <guilabel>Смещение</guilabel>
@@ -1116,8 +1122,8 @@
           <para lang="no">
             Når det er merka av for dette valet, vil divisor bli sett
             automatisk. Dersom resultatet blir 0 (det er ikkje råd å dele med
-            0) blir det lagt til 128. Blir resultatet eit negativt tal (det er
-            ikkje råd å ha negative fargeverdiar), blir det lagt til 255.
+            0) blir det lagt til 128. Sidan negative fargeverdiar ikkje finst, vil
+            eit negativt resultat bli invertert (dvs. det blir lagt til 255).
           </para>
           <para lang="ru">
             При этом выборе, <quote>Делитель</quote> берёт результат
@@ -1253,9 +1259,10 @@
             fileref="../images/filters/examples/convolution-sharpen.png"
             format="PNG" />
         </imageobject>
-        <caption lang="de">
+        <caption lang="de;no">
           <para lang="en">Kernel</para>
           <para lang="de">Kern</para>
+          <para lang="no">Kjerne</para>
         </caption>
       </mediaobject>
       <mediaobject>
@@ -1263,8 +1270,9 @@
           <imagedata fileref="../images/filters/examples/generic-taj-convmatrix-sharpen.jpg"
                      format="JPG"/>
         </imageobject>
-        <caption lang="de">
+        <caption lang="de;no">
           <para lang="de">Schärfen angewandt</para>
+          <para lang="no">Resultatet</para>
         </caption>
       </mediaobject>
     </figure>
@@ -1286,9 +1294,10 @@
           <imagedata fileref="../images/filters/examples/convolution-blur.png"
             format="PNG" />
         </imageobject>
-        <caption lang="de">
+        <caption lang="de;no">
           <para lang="en">Kernel</para>
           <para lang="de">Kern</para>
+          <para lang="no">Kjerne</para>
         </caption>
       </mediaobject>
       <mediaobject>
@@ -1296,8 +1305,9 @@
           <imagedata fileref="../images/filters/examples/generic-taj-convmatrix-blur.jpg"
                      format="JPG"/>
         </imageobject>
-        <caption lang="de">
+        <caption lang="de;no">
           <para lang="de">Weichzeichnen angewandt</para>
+          <para lang="no">Resultatet</para>
         </caption>
       </mediaobject>
     </figure>
@@ -1319,9 +1329,10 @@
           <imagedata fileref="../images/filters/examples/convolution-edge.png"
             format="PNG" />
         </imageobject>
-        <caption lang="de">
+        <caption lang="de;no">
           <para lang="en">Kernel</para>
           <para lang="de">Kern</para>
+          <para lang="no">Kjerne</para>
         </caption>
       </mediaobject>
       <mediaobject>
@@ -1329,8 +1340,9 @@
           <imagedata fileref="../images/filters/examples/generic-taj-convmatrix-edge-enhance.jpg"
                      format="JPG"/>
         </imageobject>
-        <caption lang="de">
+        <caption lang="de;no">
           <para lang="de"><quote>Kanten verstärken</quote> angewandt</para>
+          <para lang="no">Resultatet</para>
         </caption>
       </mediaobject>
     </figure>
@@ -1353,9 +1365,10 @@
             fileref="../images/filters/examples/convolution-edge-detect1.png"
             format="PNG" />
         </imageobject>
-        <caption lang="de">
+        <caption lang="de;no">
           <para lang="en">Kernel</para>
           <para lang="de">Kern</para>
+          <para lang="no">Kjerne</para>
         </caption>
       </mediaobject>
       <mediaobject>
@@ -1363,8 +1376,9 @@
           <imagedata fileref="../images/filters/examples/generic-taj-convmatrix-edge-detect.jpg"
                      format="JPG"/>
         </imageobject>
-        <caption lang="de">
+        <caption lang="de;no">
           <para lang="de"><quote>Kanten erkennen</quote> angewandt</para>
+          <para lang="no">Resultatet</para>
         </caption>
       </mediaobject>
     </figure>
@@ -1387,9 +1401,10 @@
             fileref="../images/filters/examples/convolution-emboss.png"
             format="PNG" />
         </imageobject>
-        <caption lang="de">
+        <caption lang="de;no">
           <para lang="en">Kernel</para>
           <para lang="de">Kern</para>
+          <para lang="no">Kjerne</para>
         </caption>
       </mediaobject>
       <mediaobject>
@@ -1397,8 +1412,9 @@
           <imagedata fileref="../images/filters/examples/generic-taj-convmatrix-emboss.jpg"
                      format="JPG"/>
         </imageobject>
-        <caption lang="de">
+        <caption lang="de;no">
           <para lang="de">Relief angewandt</para>
+          <para lang="no">Resultatet</para>
         </caption>
       </mediaobject>
     </figure>
