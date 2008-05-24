@@ -38,7 +38,7 @@
       <revision lang="ru">
         <revnumber>$Revision$</revnumber>
         <date>2008-02-12</date>
-        <authorinitials>vitali</authorinitials>
+        <authorinitials>vitaly</authorinitials>
       </revision>
     </revhistory>
   </sect1info>
@@ -613,13 +613,13 @@
         값입니다. 기존에 이미지에 내장된 색상 프로필을 유지할 수도 있습니다.
         하지만 이럴 경우 이미지가 정확하게 표시되지 않을 수도 있습니다.
       </para>
-        <para lang="ru">
-          При открытии изображения с цветовым профилем <acronym>GIMP</acronym>
-          предлагает преобразовать изображение в цветовую модель RGB для
-          работы. По умолчанию это sRGB, и рекомендуется работать в этой
-          модели. Если сохранить строеный цветовой профиль и не удалять, то
-          изображение всё равно будет показано правильно.
-        </para>
+      <para lang="ru">
+        При открытии изображения с цветовым профилем <acronym>GIMP</acronym>
+        предлагает преобразовать изображение в цветовую модель RGB для
+        работы. По умолчанию это sRGB, и рекомендуется работать в этой
+        модели. Если сохранить строеный цветовой профиль и не удалять, то
+        изображение всё равно будет показано правильно.
+      </para>
 
       <!-- TODO: en de it - lexa asks: so how exactly is a new Profile
         applied to an image? -->
@@ -648,8 +648,9 @@
         색상 프로필을 첨부시킬 수도 있습니다.
       </para>
       <para lang="ru">
-        Если цветовой профиль не встроен в изображение, но он известен, или
-        его можно угадать, его можно встроить в изображение.
+        Если по какой-либо причине цветовой профиль не встроен в изображение,
+        но он известен, или его можно угадать, его можно встроить в изображение
+        вручную.
       </para>
     </sect3>
 
@@ -795,11 +796,12 @@
       </para>
 
 
-      <sect4 id="gimp-concepts-cm-display-profiling" lang="en;de;ko">
+      <sect4 id="gimp-concepts-cm-display-profiling" lang="en;de;ko;ru">
         <title>
           <phrase lang="en">Display Calibration and Profiling</phrase>
           <phrase lang="de">Monitorkalibrierung und Profilerstellung</phrase>
           <phrase lang="ko">화면 측정과 프로필 만들기</phrase>
+          <phrase lang="ru">Профилирование и калибровка экрана</phrase>
         </title>
 
         <indexterm lang="en"><primary>color management</primary></indexterm>
@@ -810,6 +812,8 @@
 
         <indexterm lang="ko"><primary>color management(색상 관리)</primary></indexterm>
         <indexterm lang="ko"><primary>color profile(색상 프로필)</primary></indexterm>
+        <indexterm lang="ru"><primary>управление цветами</primary></indexterm>
+        <indexterm lang="ru"><primary>цветовой профиль</primary></indexterm>
 
         <para lang="en">
           For displays there are two steps involved. One is called calibration
@@ -856,6 +860,21 @@
           합니다(하나는 노만 코렌(Norman Koren)과 같은 웹사이트를 통한
           간단한 측정이고, 다른 하나는 xgamma를 이용해 감마값을 불러옵니다).
         </para>
+        <para lang="ru">
+          Настройка экрана требует двух шагов. Первый называется калибровка,
+          второй - профилирование. Калибровка обычно включает в себя два шага.
+          Сначала необходимо отрегулировать внешние настройки монитора, такие
+          как контраст, яркость, температура цвета. Это сильно зависит от
+          отдельных мониторов. Дополнительные настройки загружаются в память
+          видеокарты, чтобы наиболее приблизить монитор к стандартным условиям.
+          Эта информация сохраняется в профиле монитора в так-называемом тэге
+          vgct. Скорей всего в операционных системах Windows XP или Mac OS эта
+          информация загружается при загрузке системы. В Linux на настоящий
+          момент необходимо использовать программы xcalib или dispwin. Если
+          совершается простая калибровка при помощи странички интернета (на
+          пример Norman Koren), тогда нужна только программа xgamma для загрузки
+          значения гамма.
+        </para>
 
         <para lang="en">
           The second step, profiling, derives a set of rules which allow GIMP
@@ -878,6 +897,14 @@
           변환하는 규칙을 찾아내는 단계로, 프로파일링이라고 부릅니다. 이 역시
           모니터 프로필에 저장됩니다. 이는 이미지의 RGB 값을 바꾸지는 않습니다.
           다만 비디오 카드로 보내지는 (vgct LUT 를 포함한) 값을 변경할 뿐입니다.
+        </para>
+        <para lang="ru">
+          После второго этапа, профилирования, получается список правил,
+          позволяющий <acronym>GIMP</acronym> переводить значения RGB
+          в изображении в соответствующие цвета на экране. Этот список также
+          сохраняется в профиле монитора. Он не изменяет значения RGB в
+          изображении, но изменяет значения, посылаемые на видеокарту, уже
+          содержащую тэг vgct.
         </para>
 
         <!-- PENDING en: the following paragraphs still need to be validated.
