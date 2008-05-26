@@ -4,6 +4,8 @@
                 "http://www.docbook.org/xml/4.3/docbookx.dtd">
 
 <!-- section history:
+  2008-05-23 j.h: tried to give more intelligible explanations for bucket
+  size
   2007-12-22 alex falappa: moved here from color filters and translated missing parts
   2007-10-22 ude: moved here from filters/color/borderaverage.xml ('en','de')
   2007-07-3 Added Spanish translation by AntI
@@ -22,8 +24,8 @@
   <sect2info lang="en;de;es;fr;it;no" role="cvs">
     <revhistory>
       <revision lang="en">
-        <revnumber>$Revision$</revnumber>
-        <date>2007-10-22</date>
+        <revnumber>$Revision:$</revnumber>
+        <date>200805-23</date>
         <authorinitials>ude</authorinitials>
       </revision>
       <revision lang="de">
@@ -204,14 +206,15 @@
       </mediaobject>
     </figure>
 
-    <para lang="en">
+    <para lang="en"><!--changed 08-05-23-->
       This plug-in calculates the most often used color in a specified border
-      of the the active layer or selection, allowing a specified range to not
-      be exact. The calculated color becomes the foreground color in the
-      Toolbox. This filter is interesting when you have to find a Web page
-      color background that differs as little as possible from your image
-      border. The action of this filter is not registered in Undo History
-      and can't be deleted with Ctrl+Z.
+      of the the active layer or selection. It can gather similar colors
+      together so that they become predominant. The calculated color becomes
+      the foreground color in the Toolbox. This filter is interesting when
+      you have to find a Web page color background that differs as little as
+      possible from your image border. The action of this filter is not
+      registered in Undo History and can't be deleted with Ctrl+Z : it
+      doesn't modify the image.
     </para>
     <para lang="de">
       Dieses Filter berechnet die am häufigsten vorkommende Farbe in einem
@@ -223,13 +226,15 @@
       daher nicht mit Strg-Z rückgängig gemacht werden.
     </para>
     <para lang="fr">
-      Cet outil calcule la couleur la plus utilisée dans une bordure
-      entourant le calque actif ou la sélection. La couleur calculée devient
-      la couleur de premier-plan dans la Boîte à outils. Ce filtre  est
-      intéressant quand vous devez trouver la couleur de fond d'une page Web
-      différant aussi peu que possible du bord de votre image. L'action de ce
-      filtre n'est pas enregistrée dans l'historique des actions et n'est pas
-      annulée par Ctrl+Z
+      Cette commande calcule la couleur la plus utilisée dans une bordure
+      entourant le calque actif ou la sélection. Elle peut regrouper les
+      couleurs similaires qui deviennent ainsi prédominantes. La couleur
+      calculée devient la couleur de premier-plan dans la Boîte à outils. Ce
+      filtre  est intéressant quand vous devez trouver la couleur de fond
+      d'une page Web différant aussi peu que possible du bord de votre image.
+      L'action de ce filtre, qui ne modidifie pas l'image, n'est pas
+      enregistrée dans l'historique des actions et n'est pas annulée par
+      Ctrl+Z.
     </para>
     <para lang="it">
       Questo filtro calcola il colore medio in un bordo attorno al livello
@@ -361,7 +366,7 @@
     </para>
 
     <para lang="fr">
-      On accède à ce filtre par le menu d'image en suivant
+      On accède à cette commande par le menu d'image en suivant
       <menuchoice>
         <guimenu>Couleurs</guimenu>
         <guisubmenu>Information</guisubmenu>
@@ -567,12 +572,16 @@
             mejores resultados (ver ejemplo abajo).
           </para>
           <para lang="fr">
-            Le logiciel répartit les couleurs similaires dans un certain
-            nombre de <quote>godets</quote>. Une taille de godet faible
-            (c.-à-d un grand nombre de godets) vous donne une meilleure
-            précision dans le calcul de la couleur moyenne. Notez qu'une
-            meilleure précision ne donne pas forcément un meilleur résultat
-            (voir l'exemple qui suit).
+            <guilabel>Taille des pôts de peinture</guilabel> vous permet de
+            contrôler le nombre de peintures similaires dans un même pôt. En
+            effet, le logiciel répartit toutes les couleurs rencontrées dans
+            un nombre limité de <quote>pôts de peinture</quote>  ou <quote>
+            godets</quote> en fonction de leur plus ou moins grande
+            ressemblance. Une taille de pôt faible (c.-à-d un grand nombre de
+            pôts) vous donne une meilleure précision dans le calcul de la
+            couleur moyenne. Notez qu'une meilleure précision ne
+            donne pas forcément un meilleur résultat (voir l'exemple qui
+            suit).
           </para>
           <para lang="it"><!--changed 2007-06-21-->
             <guilabel>Dimensione del secchiello</guilabel> consente di impostare
@@ -661,10 +670,11 @@
         </imageobject>
 
         <caption>
+          <!--TODO de;es;it;lt;no;ru-->
           <para lang="en">
             Original image: colors are pure Red (255;0;0), pure Blue
             (0;0;255), and different but similar kinds of Green
-            (00******;11******;00******).
+            ( 0;255;0 , 63;240;63 , 48;224;47 , 0;192;38 ).
           </para>
           <para lang="de">
             Originalbild: die Farben sind reines Rot (255;0;0), reines Blau
@@ -678,7 +688,7 @@
           <para lang="fr">
             Image d'origine: les couleurs sont Rouge pur (255;0;0), Bleu pur
             (0;0;255) et différentes mais similaires sortes de Vert
-            (00******;11******;00******).
+            ( 0;255;0 , 63;240;63 , 48;224;47 , 0;192;38 ).
           </para>
           <para lang="it">
             Immagine originale: i colori sono rosso puro (255;0;0), blu puro
@@ -767,10 +777,10 @@
       </mediaobject>
     </figure>
 
-    <para lang="en"><!--changed 2007-05-12-->
-      The most frequent color on the image border is pure Red (255,0,0).
-      Since the bucket size is low, the different Green tones are not
-      recognized as the same color. The resulting color is a nearly pure
+    <para lang="en"><!--changed 2008-05-23-->
+      The bucket size is low. So the bucket number is high. All color shades
+      can be stored in different buckets. Here, the bucket containing red is
+      the most filled. The resulting color is a nearly pure
       Red (254,2,2) and becomes the foreground color of the Toolbox.
       </para>
     <para lang="de"><!--changed 2007-05-12-->
@@ -789,11 +799,12 @@
       herramientas.
       </para>
     <para lang="fr">
-      La couleur la plus fréquente sur la bordure d'image est le rouge pur
-      (255,0,0). Comme la taille des godets est basse, les différents tons de
-      vert ne sont pas reconnus comme similaires. La couleur résultante
-      (254,2,2) diffère peu du rouge pur. La couleur résultante est devenue
-      la couleur de premier-plan de la Boîte à Outils.
+      La taille des godets est faible. Ils sont donc nombreux et toutes les
+      nuances de vert, bien que peu différentes, sont logées séparément, dans
+      des godets différents. Le godet le plus rempli est celui réservé à la
+      couleur rouge. La couleur résultante (254,2,2) diffère peu du rouge
+      pur. La couleur résultante est devenue la couleur de premier-plan de la
+      Boîte à Outils.
     </para>
     <para lang="it"><!--changed 2007-05-12-->
       Il colore più frequente sul bordo dell'immagine è il rosso puro (255,0,0).
@@ -888,12 +899,21 @@
     <para lang="en"> <!-- Where comes the green (0-63,192-255,0-63) from and how
     can it be averaged to (32,224,32) if only the two most significant bits are counting?
     Would it be more readable using hexcode?-->
-      Here the bucket size is high, the number of buckets low. The
-      filter looks at only the two most significant bits of every color
-      channel value. Now Green (0-63,192-255,0-63) is the most frequent
-      color. The resulting color is Green (32,224,32), which is the
-      average of all colors possibly counted by this
-      <quote>bucket</quote>.
+      <!--TODO de;es;it;lt;no;ru-->
+      <!--08-05-23: I took this information from the gimp-plugin registry when
+      border average was a plug-in. Now, it is no longer in the registry and
+      this information disapeared :-( -->
+      Here the bucket size is high, the number of buckets low. Similar colors
+      (here green) are stored in a same bucket. This <quote>green</quote>
+      bucket is now the most filled. In this bucket, color red channels range
+      from 0 to 63, green channels from 192 to 255, blue channels from 0 to
+      63. The resulting color is Green (32,224,32), which, for every channel,
+      is the average between the limits of the channel range (63 + 0)/2,
+      (255+192)/2 , (63+0)/2.
+    </para>
+    <para lang="en"> <!--added 080525-->
+      With this method, if your border has a lot of different colors, then
+      channels will even out and the resulting color will be gray.
     </para>
     <para lang="de">
       Hier sind die <quote>Eimer</quote> groß genug, um die
@@ -912,9 +932,17 @@
     </para>
     <para lang="fr">
       Ici, la taille des godets est grande, et le nombre de godets faible.
-      Le filtre recherche les deux bits les plus significatifs de la valeur
-      de chaque canal de couleur. La couleur la plus fréquente est alors le
-      vert (0-63,192-255,0-63) et la couleur résultante le vert (32,224,32).
+      Les couleurs similaires sont stockées dans un même godet. Du coup,
+      le godet contenant les teintes de vert est le plus rempli. Dans ce
+      godet, les canaux rouges des différents pixels vont de 0 à 63, les
+      canaux verts de 192 à 255 et les bleus de 0 à 63. La couleur résultante
+      est un vert, moyenne de ces valeurs extrêmes : 32,224,32 , ((0+63)/2,
+      (192+255)/2, (0+63)/2).
+    </para>
+    <para lang="fr">
+      Avec ce système, si votre bordure possède de nombreuses couleurs
+      différentes, les moyennes des canaux s'équilibreront et la couleur
+      résultante sera le gris.
     </para>
     <para lang="it">
       In questo caso la dimensione del secchiello è grande e il loro numero
