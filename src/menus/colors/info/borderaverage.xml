@@ -4,11 +4,10 @@
                 "http://www.docbook.org/xml/4.3/docbookx.dtd">
 
 <!-- section history:
-  2008-05-23 j.h: tried to give more intelligible explanations for bucket
-  size
+  2008-05-23 j.h: tried to give more intelligible explanations for bucket size
   2007-12-22 alex falappa: moved here from color filters and translated missing parts
   2007-10-22 ude: moved here from filters/color/borderaverage.xml ('en','de')
-  2007-07-3 Added Spanish translation by AntI
+  2007-07-03 Added Spanish translation by AntI
   2007-06-21 alex falappa: translated new bucket size related stuff in italian
   2007-05-12 ude: fixed bucket size related stuff incl. examples
   2007-04-15 ude: moved examples to <sect3>
@@ -24,13 +23,13 @@
   <sect2info lang="en;de;es;fr;it;no" role="cvs">
     <revhistory>
       <revision lang="en">
-        <revnumber>$Revision:$</revnumber>
-        <date>200805-23</date>
-        <authorinitials>ude</authorinitials>
+        <revnumber>$Revision$</revnumber>
+        <date>2008-05-23</date>
+        <authorinitials>j.h</authorinitials>
       </revision>
       <revision lang="de">
         <revnumber>$Revision$</revnumber>
-        <date>2007-10-22</date>
+        <date>2008-06-07</date>
         <authorinitials>ude</authorinitials>
       </revision>
       <revision lang="es">
@@ -345,6 +344,7 @@
       This filter is found in the image window menu under
       <menuchoice>
         <guimenu>Colors</guimenu>
+        <guimenu>Info</guimenu>
         <guimenuitem><accel>B</accel>order Average</guimenuitem>
       </menuchoice>.
     </para>
@@ -352,6 +352,7 @@
       Dieses Filter lässt sich über das Menü
       <menuchoice>
         <guimenu><accel>F</accel>arben</guimenu>
+        <guisubmenu>Information</guisubmenu>
         <guimenuitem><accel>R</accel>andmittelwert</guimenuitem>
       </menuchoice>
       im Bildfenster aufrufen.
@@ -384,6 +385,7 @@
       Šį filtrą galima rasti paveikslėlio lango meniu juostoje:
       <menuchoice>
         <guimenu>Spalvos</guimenu>
+        <!--TODO lt: add Info submenu-->
         <guimenuitem><accel>R</accel>ėmelio vidurkis</guimenuitem>
       </menuchoice>.
     </para>
@@ -561,7 +563,7 @@
             selben <quote>Eimer</quote> gezählt werden. Eine kleine
             Eimergröße (d.h. eine große Anzahl von <quote>Eimern</quote>)
             ergibt eine präzisere Auszählung, was aber nicht notwendigerweise
-            ein besseres Ergebnis bedeutet (siehe das nachfoldene Beispiel).
+            ein besseres Ergebnis bedeutet (siehe das nachfolgende Beispiel).
           </para>
           <para lang="es">
             El <guilabel>Tamaño del bucket</guilabel> le deja controlar el
@@ -670,15 +672,17 @@
         </imageobject>
 
         <caption>
-          <!--TODO de;es;it;lt;no;ru-->
+          <!--TODO es;it;lt;no;ru-->
           <para lang="en">
             Original image: colors are pure Red (255;0;0), pure Blue
             (0;0;255), and different but similar kinds of Green
             ( 0;255;0 , 63;240;63 , 48;224;47 , 0;192;38 ).
           </para>
           <para lang="de">
-            Originalbild: die Farben sind reines Rot (255;0;0), reines Blau
-            und verschiedene Grüntöne (00******;11******;00******).
+            Originalbild: die Randfarben sind reines Rot (255,0,0) und reines
+            Blau (0,0,255), ferner verschiedene Grüntöne (0,255,0),
+            (63,240,63), (48,224,47), (0,192,38) mit der bitweisen Darstellung
+            (00******;11******;00******) (<quote>*</quote> = 0 oder 1).
           </para>
           <para lang="es">
             Imagen original: colores rojo (255;0;0), azul
@@ -783,13 +787,17 @@
       the most filled. The resulting color is a nearly pure
       Red (254,2,2) and becomes the foreground color of the Toolbox.
       </para>
-    <para lang="de"><!--changed 2007-05-12-->
-      Die am häufigsten vorkommende Randfarbe ist Rot (255,0,0). Die
+    <para lang="de"><!--updated 2008-06-07-->
+      Die Eimergröße ist klein, die Anzahl der Eimer daher groß. Die
+      verschiedenen Farbtöne können somit in verschiedenen
+      <quote>Eimern</quote> gezählt werden. Der vollste Eimer ist der, der die
+      Farbe Rot enthält.
+      <!--ALT: Die am häufigsten vorkommende Randfarbe ist Rot (255,0,0). Die
       Farbe Grün kommt zwar häufiger am Bildrand vor, aber wegen der
       geringen Eimergröße werden die verschiedenen Farbtöne einzeln
-      gezählt, daher wird das Rot vom Filter ausgewählt. Die
-      resultierende Farbe ist ein fast reines Rot (254,2,2), sie wird
-      dann zur aktiven Vordergrundfarbe.
+      gezählt, daher wird das Rot vom Filter ausgewählt.-->
+      Die resultierende Farbe ist ein fast reines Rot (254,2,2), sie wird dann
+      zur aktiven Vordergrundfarbe.
     </para>
     <para lang="es">
       El color más frecuente en el borde de la imagen es el rojo (255,0,0).
@@ -896,32 +904,51 @@
       </mediaobject>
     </figure>
 
-    <para lang="en"> <!-- Where comes the green (0-63,192-255,0-63) from and how
+    <!-- Where comes the green (0-63,192-255,0-63) from and how
     can it be averaged to (32,224,32) if only the two most significant bits are counting?
     Would it be more readable using hexcode?-->
-      <!--TODO de;es;it;lt;no;ru-->
       <!--08-05-23: I took this information from the gimp-plugin registry when
       border average was a plug-in. Now, it is no longer in the registry and
-      this information disapeared :-( -->
+      this information disappeared :-( -->
+    <!-- Julien's enhanced explanation is good and readable, but if there are
+      still questions, I tried to explain the filter internals;
+      see the notes at the bottom of this file - ude, 08-06-06 -->
+    <!--TODO es;it;lt;no;ru-->
+    <para lang="en"><!--changed 2008-06-07-->
       Here the bucket size is high, the number of buckets low. Similar colors
       (here green) are stored in a same bucket. This <quote>green</quote>
-      bucket is now the most filled. In this bucket, color red channels range
-      from 0 to 63, green channels from 192 to 255, blue channels from 0 to
-      63. The resulting color is Green (32,224,32), which, for every channel,
-      is the average between the limits of the channel range (63 + 0)/2,
-      (255+192)/2 , (63+0)/2.
+      bucket is now the most filled.
+      All colors in this bucket have the same values for the two most
+      significant bits: (00******;11******;00******). The remaining 6 bits
+      may have any values from 0 to 63 for the respective channel. So
+      in this bucket, color red channels range from 0 to 63, green channels
+      from 192 to 255, blue channels from 0 to 63. The resulting color is
+      Green (32,224,32), which, for every channel, is the average between the
+      limits of the channel range (63 + 0)/2, (255+192)/2 , (63+0)/2.
     </para>
-    <para lang="en"> <!--added 080525-->
+    <!--FIXME fr: that's wrong! (see below)
+    <para lang="en"> <!==added 080525==>
       With this method, if your border has a lot of different colors, then
       channels will even out and the resulting color will be gray.
-    </para>
+    </para>-->
     <para lang="de">
-      Hier sind die <quote>Eimer</quote> groß genug, um die
-      verschiedenen Grüntöne zusammen zu zählen. Das Filter betrachtet
-      dabei nur die beiden höchstwertigen Bits jedes Farbkanalwerts.
-      Daher ist nun Grün (0-63,192-255,0-63) die häufigste Farbe. Das
-      Ergebnis ist der Durchschnitt aller möglichen vom Filter als ähnlich
-      betrachteten und zusammen gezählten Farben: Grün (32,224,32).
+      Hier sind die Eimer groß und die Anzahl der Eimer ist gering. Ähnliche
+      Grüntöne werden daher im selben Eimer gezählt. Dieser Eimer enthält nun
+      die meisten Pixel. Alle Farben in diesem Eimer stimmen in den beiden
+      höchstwertigen Bits der drei Grundfarben Rot, Grün und Blau überein:
+      (00******, 11******, 00******). Die restlichen 6 Bits können dabei
+      beliebige Werte jeweils zwischen 0 und 63 annehmen. Die Farben in diesem
+      Eimer haben also einen roten Kanalwert zwischen 0 und 63, einen grünen
+      zwischen 192 und 255 und einen blauen zwischen 0 und 63. Die
+      resultierende Farbe ergibt sich aus den durchschnittlichen Werten für
+      die drei Kanäle: (63 + 0)/2, (255+192)/2 , (63+0)/2. Das Ergebnis ist
+      also Grün (32,224,32).
+      <!--ALT: Hier sind die <quote>Eimer</quote> groß genug, um die
+      verschiedenen Grüntöne zusammen zu zählen. Das Filter betrachtet dabei
+      nur die beiden höchstwertigen Bits jedes Farbkanalwerts. Daher ist nun
+      Grün (0-63,192-255,0-63) die häufigste Farbe. Das Ergebnis ist der
+      Durchschnitt aller möglichen vom Filter als ähnlich betrachteten und
+      zusammen gezählten Farben: Grün (32,224,32).-->
     </para>
     <para lang="es">
       Aquí el tamaño del bucket es alto, el número de buckets bajo. El filtro
@@ -939,6 +966,8 @@
       est un vert, moyenne de ces valeurs extrêmes : 32,224,32 , ((0+63)/2,
       (192+255)/2, (0+63)/2).
     </para>
+    <!--FIXME fr: That's wrong! The number of pixels in the bucket doesn't
+        matter, so any bucket may win... -->
     <para lang="fr">
       Avec ce système, si votre bordure possède de nombreuses couleurs
       différentes, les moyennes des canaux s'équilibreront et la couleur
@@ -951,9 +980,7 @@
       frequente. Il colore risultante è un verde (32,224,32), che è la media di
       tutti i colori inclusi nel <quote>secchiello</quote>.
     </para>
-    <para lang="lt"> <!-- Where comes the green (0-63,192-255,0-63) from and how
-    can it be averaged to (32,224,32) if only the two most significant bits are counting?
-    Would it be more readable using hexcode?-->
+    <para lang="lt">
       Čia kibirėlio dydis yra didelis, o kibirėlių skaičius mažas.
       Filtras atsižvelgia tik į du svarbiausius kiekvieno spalvos
       kanalo reikšmės bitus. Dabar žalia (0-63,192-255,0-63) yra
@@ -976,3 +1003,32 @@
     </para>
   </sect3>
 </sect2>
+
+<!--
+  Ok, it *is* a bit tricky. And the example colors and values are
+  definitely not the best choice.
+
+  Let's see what the filter will return in the above example with
+  "number of colors" = 64 (cf. source file "common/border-average.c"):
+
+  The filter uses
+    bucket size      = 64  (input via dialog)
+    bucket exponent  =  6  (2 ** 6 = 64)        :  "noise"
+    reverse exponent =  2  (8 - bucket exponent):  significant color bits
+    bucket number    = 64  (64 = 4*4*4;  4 = 2 ** reverse exponent)
+    Now bucket #12 (binary: 001100; note: 6 Bits, 2**6 = 64) will count
+    *any* color with
+        red   = 00****** (bit7 = 0, bit6 = 0, bit5, ..., bit0 = 0 or 1),
+        green = 11****** (bit7 = 1, bit6 = 1, bit5, ..., bit0 = 0 or 1),
+        blue  = 00******.
+    Let this bucket contain the max number of pixels, then the filter returns
+       R = 0 * 2**6 + 2**5  =  32
+       G = 3 * 2**6 + 2**5  = 224  (binary 11 = decimal 3) 
+       B = 0 * 2**6 + 2**5  =  32
+    32 is the mean value of
+      bit7=0, bit6=0, bit5=...=bit0=0 (00000000 = 0) and
+      bit7=0, bit6=0, bit5=...=bit0=1 (00111111 = 63).
+    So we have 64 (bucket number) distinct colors (buckets) and a 6 bit
+    "noise" (bucket size) to each color.
+    (Note that generally bucket size != bucket number.)
+-->
