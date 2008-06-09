@@ -23,7 +23,7 @@ image_find_predicates =     \
 image_lang_exclude = \
 	$(shell echo $(strip $(ALL_LINGUAS)) | \
 	        sed -e '/^$$/d; \
-		        s/[[:blank:]]/ -o -name /g; \
+		        s/ / -o -name /g; \
 			s/^/! \\( -name /; \
 			s/$$/ \\)/ ' \
 	)
