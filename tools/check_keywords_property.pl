@@ -19,6 +19,7 @@
 use warnings;
 use strict;
 use Getopt::Long;
+use File::Find;
 
 eval { require 5.008; };	# needed for the special "open()" list form
 my $HAVE_NEW_OPEN = $@ ? 0 : 1;
@@ -67,11 +68,25 @@ unless (-d 'src' && -d '.svn' && system('svn info >/dev/null 2>&1') == 0) {
 
 
 # --------------------------------------------------------------
-#  Print 'svn:keywords' properties
+#  Find all *.xml files in the "src/" directory hierarchy
+#  and add the file names to the %property hash
 # --------------------------------------------------------------
 
-print STDERR "Searching for files with missing/wrong properties...\n"
-    if $verbose;
+print STDERR "Searching for missing/wrong properties:\n" if $verbose;
+print STDERR "    searching xml files... "               if $verbose;
+
+find( sub { /^\.svn/ and ($File::Find::prune = 1)
+                             or
+            /\.xml$/ and ($property{$File::Find::name} = "")
+      },
+      "src" );
+
+print STDERR scalar keys(%property), "\n"                if $verbose;
+
+
+# --------------------------------------------------------------
+#  Print 'svn:keywords' properties
+# --------------------------------------------------------------
 
 if ($HAVE_NEW_OPEN) {
     open(PROPLIST, '-|', 'svn', '--recursive', 'propget', 'svn:keywords', 'src')
@@ -83,25 +98,27 @@ if ($HAVE_NEW_OPEN) {
 
 
 # --------------------------------------------------------------
-#  Read list of file names and 'svn:keywords' properties
-#  and add files to the %property hash if they don't have the
-#  default property
+#  Read list of file names and 'svn:keywords' properties.
+#  Undefine entries of files which have default property, or
+#  add entries if the respective files have non-default property.
 # --------------------------------------------------------------
-
-my $nfiles = 0;
 
 while (<PROPLIST>) {
     # Format of svn output:
     #     <file-name> <space> '-' <space> <svn-properties>
     #     ...
+    # Sometimes(?) files without svn:keywords property won't be
+    # displayed, their property values remain empty.
     chomp;
     if (/^(\S+) - *(\S.*)?$/) {
-        ++$nfiles;
         if (defined $2) {
-            $property{$1} = $2 if ($2 ne $Default_property);
+            $property{$1} = ($2 eq $Default_property) ? undef : $2
         } else {
+            # Just in case...
             $property{$1} = "";
         }
+    } else {
+        die "Invalid SVN output: $_\n";
     }
 }
 close(PROPLIST) or die "Cannot close pipe from SVN: $!\n";
@@ -115,13 +132,22 @@ close(PROPLIST) or die "Cannot close pipe from SVN: $!\n";
 #          string  if non-default property
 # --------------------------------------------------------------
 
-print STDERR "Found ", scalar keys(%property), " of $nfiles files",
-             (scalar keys(%property) > 0 ? ":" : "."), "\n"
+# Read list and prepare for output:
+my %matches;
+while ( (my $file, my $prop) = each(%property) ) {
+    next unless defined $prop;	# skip files with default property
+    $matches{$file} = ($prop && $verbose) ? " ($prop)" : ""; 
+}
+
+print STDERR "Found ", scalar keys(%matches),
+             " file", ((scalar keys(%matches) != 1) ? "s" : ""),
+             " with missing/wrong property",
+             (scalar keys(%matches) > 0 ? ":" : "."), "\n"
     if $verbose;
 
 # Print sorted list of matches:
-foreach (sort keys(%property)) {
-    print $_, ($property{$_} ? " ($property{$_})" : ""), "\n";
+foreach (sort keys(%matches)) {
+    print $_, $matches{$_}, "\n";
 }
 
 
@@ -129,6 +155,6 @@ foreach (sort keys(%property)) {
 #       0  if no file without default property found,
 #     128  if one or more files without default property found,
 #       *  on error.
-exit((scalar keys(%property)) ? 128 : 0);
+exit((scalar keys(%matches)) ? 128 : 0);
 
 
