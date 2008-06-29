@@ -247,10 +247,12 @@
     <para lang="no">
       Dette filteret finn ut kva for farge som er den mest brukte rundt
       kantane av biletet og legg denne fargen som forgrunnsfarge i
-      verktøykassa. Dette filteret kan vere interessant når du
-      har bruk for å finne ein bakgrunnsfarge som avvik minst mogleg
-      frå biletfargen, t.d. for ei nettside. Bruken av filteret blir ikkje
-      registrert i angreloggen og kan heller ikkje angrast på andre måtar.
+      verktøykassa. Filteret kan samla fargar som liknar kvarandre i 
+      grupper og rekne ut frekvensen for desse grupperingane. 
+      Dette filteret kan vere interessant når du har bruk for å finne ein 
+      bakgrunnsfarge som avvik minst mogleg frå biletfargen, t.d. for ei 
+      nettside. Sidan filteret ikkje forandrar noe i biletet, blir bruken
+      av det ikkje registrert i angreloggen.
     </para>
     <para lang="es">
       Este filtro calcula el color más usado en un borde específico en
@@ -434,7 +436,7 @@
           Filtro <quote>Rėmelio vidurkis</quote> parinktys
         </phrase>
         <phrase lang="no">
-          Innstillingane for filteret <quote>Kantgjennomsnitt</quote>
+          Innstillingane for filteret <quote>kantgjennomsnitt</quote>
         </phrase>
         <phrase lang="ru">
           Параметры фильтра <quote>Средний цвет рамки</quote>
@@ -604,15 +606,14 @@
             esantį pavyzdį).
           </para>
           <para lang="no"><!--changed-->
-            I <guilabel>bøttestorleik</guilabel> bestemmer du kor store
-            bøtter, eller malingspann om du vil, som skal brukast for å
-            finne gjennomsnittsfargen. Vel du store bøtter, vil kvar bøtte
-            innehalde farge som er sett saman av fleire fargar som liknar på
-            kvarandre. Vel du i staden å bruke små, men mange, bøtter
-            vil kvar bøtte ha reinare farge. Dette gjer at utrekninga av
-            gjennomsnittsverdien blir meir nøyaktig. Eit meir nøyaktig
-            resultat treng likevel ikkje vere det same som eit betre
-            resultat. Sjå eksemplet nedanfor.
+            Filteret samlar fargane i større eller mindre 
+            <quote>bøtter</quote>. Store bøtter bettyr at filteret samlar
+            mange liknande fargar i ei bøtte. Små bøtter betyr at filteret
+            får mange bøtter til rådvelde, og kan såleis sortera fargane 
+            meir nøyaktig. I <guilabel>bøttestorleik</guilabel> bestemmer 
+            du kor store desse bøttene skal vere. Små bøtter gir eit meir
+            nøyaktig resultat, men dette treng likevel ikkje vere det same 
+            som eit betre resultat. Sjå eksemplet nedanfor.
           </para>
           <para lang="ru">
             <guilabel>Размер ячейки</guilabel> Определяет сколько цветов
@@ -672,7 +673,7 @@
         </imageobject>
 
         <caption>
-          <!--TODO es;it;lt;no;ru-->
+          <!--TODO es;it;lt;ru-->
           <para lang="en">
             Original image: colors are pure Red (255;0;0), pure Blue
             (0;0;255), and different but similar kinds of Green
@@ -705,9 +706,9 @@
             spalvos atspalviai (00******;11******;00******).
           </para>
           <para lang="no">
-            Fargane er: rein raud (255;0;0), rein blå (0;0;255) og ulike
-            grøntoner
-            (00******;11******;00******).
+            Originalbiletet: Fargane er: rein raud (255;0;0), rein blå 
+            (0;0;255) og 4 ulike grøntoner (0;255;0, 63;240;63, 
+            48;224;47, 0;192;38).
           </para>
           <para lang="ru">
             В искомом изображение есть чистый красный цвет (255;0;0), чистый
@@ -828,11 +829,11 @@
       raudona (254,2,2), ji įrankinėje nustatoma fono spalva.
     </para>
     <para lang="no"><!--changed 2007-07-17-->
-      Den vanlegaste fargen i biletkanten er rein raud (255, 0, 0). Sidan det
-      her er brukt små bøtter, vil dei ulike variantane av grønt bli sett på
-      som ulike fargar og ikkje som ulike grøntoner. Resultatfargen som
-      blir lagt inn som forgrunnsfarge i verktøykassa blir nesten rein
-      raud (254, 2, 2)..
+      Sidan bøttene er små, blir det mange av dei. Alle sjatteringar av
+      ulike fargar kan bli lagra i ulike bøtter. Her er det mest farge i 
+      bøtta med raudfarge. Resultatfargen som blir lagt inn som
+      forgrunnsfarge i verktøykassa er difor nesten reint raudt
+      (254, 2, 2).
     </para>
     <para lang="ru">
       Наиболее частый цвет - чистый красный (255,0,0). Поскольку размер ячейки
@@ -913,7 +914,7 @@
     <!-- Julien's enhanced explanation is good and readable, but if there are
       still questions, I tried to explain the filter internals;
       see the notes at the bottom of this file - ude, 08-06-06 -->
-    <!--TODO es;it;lt;no;ru-->
+    <!--TODO es;it;lt;ru-->
     <para lang="en"><!--changed 2008-06-07-->
       Here the bucket size is high, the number of buckets low. Similar colors
       (here green) are stored in a same bucket. This <quote>green</quote>
@@ -988,12 +989,20 @@
       kuri yra visų spalvų šio <quote>kibirėlio</quote> apskaičuotas
       vidurkis.
     </para>
-    <para lang="no"><!--changed 2007-07-17-->
-      I dette eksemplet er det brukt store, og difor få, bøtter. Filteret
-      ser bare på dei to mest signifikante bits for kvar farge. I dette tilfellet
-      blir grønt (0-63,192-255,0-63) den fargen det er mest av, og
-      gjennomsnittsverdien, slik det kjem fram i verktøykassa, er difor
-      grønt (32,224,32).
+    <para lang="no">
+      I dette eksemplet er det brukt store, og difor få, bøtter. Fargar som
+      liknar kvarandre (her grønt) blir lagra i same bøtta. Bøtta med grønt
+      blir difor den med mest farge i. Dersom vi skriv fargane i 
+      hex-notasjon ser vi at alle fargane i den grøne bøtta har dei to
+      mest signifikante bits felles: (00******;11******;00******). 
+      Dei resterande 6 bits (merka med *) kan ha kva verdi som helst. 
+      Sidan hex 111111 er det same som 63, betyr dette fargeverdiane
+      kan vere frå 0 til 63. I den grøne bøtta kan såleis raudkanalen vere
+      mellom 0 og 63, grønkanalen mellom 192 og 255 og blåkanalen
+      mellom 0 og 63. Resultatfargen er grøn (32,224,32). Dette er
+      gjennomsnittet for grenseverdiane for kvar einskild kanal:
+      (63 + 0)/2, (255+192)/2 , (63+0)/2. (Dersom du beherskar 
+      hex-notasjon, vil det faktisk bli meir forståeleg om du skriv alt i hex).
     </para>
     <para lang="ru">
       Когда размер ячейки большой, число ячеек мало. Фильтр смотрит только на
