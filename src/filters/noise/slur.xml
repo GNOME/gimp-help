@@ -10,7 +10,7 @@
   050826 de added by axel.wernicke
 -->
 <sect2 id="plug-in-randomize-slur" lang="en;es;cs;de;fr;it;no;ru">
-  <sect2info lang="en;de;fr" role="cvs">
+  <sect2info lang="en;de;fr;no" role="cvs">
     <revhistory>
       <revision lang="en">
         <revnumber>$Revision$</revnumber>
@@ -27,6 +27,11 @@
         <date>2006-11-19</date>
         <authorinitials>j.h</authorinitials>
       </revision>
+      <revision lang="no">
+        <revnumber>$Revision$</revnumber>
+        <date>2008-06-30</date>
+        <authorinitials>kost</authorinitials>
+      </revision>
     </revhistory>
   </sect2info>
 
@@ -37,7 +42,7 @@
     <phrase lang="es">Manchar</phrase>
     <phrase lang="fr">Mélanger</phrase>
     <phrase lang="it">Macchia</phrase>
-    <phrase lang="no">Smelt</phrase>
+    <phrase lang="no">Nedsmelting</phrase>
     <phrase lang="ru">Таянье</phrase>
   </title>
 
@@ -78,9 +83,9 @@
   <indexterm lang="no">
     <primary>Filter</primary>
     <secondary>Støy</secondary>
-    <tertiary>Smelt</tertiary>
+    <tertiary>Nedsmelting</tertiary>
   </indexterm>
-  <indexterm lang="no"><primary>Smelt (støyfilter)</primary></indexterm>
+  <indexterm lang="no"><primary>Nedsmelting (filter)</primary></indexterm>
 
   <indexterm lang="ru">
     <primary>Фильтр</primary><secondary>Шум</secondary>
@@ -152,7 +157,7 @@
           <para lang="en">Filter <quote>Slur</quote> applied</para>
           <para lang="de">Filter <quote>Schmelzen</quote> angewandt</para>
           <para lang="no">
-            Etter bruk av filteret <quote>Smelt</quote>
+            Etter bruk av filteret <quote>nedsmelting</quote>
           </para>
         </caption>
       </mediaobject>
@@ -197,14 +202,6 @@
         <guisubmenu>Dist<accel>u</accel>rbo</guisubmenu>
         <guimenuitem><accel>M</accel>acchia</guimenuitem>
       </menuchoice>.
-    </para>
-    <para lang="no">
-      Du har tilgang til filteret frå biletmenyen via
-      <menuchoice>
-        <guimenu>Filter</guimenu>
-        <guisubmenu>Støy</guisubmenu>
-        <guimenuitem>Smelt</guimenuitem>
-      </menuchoice>
     </para>
     <para lang="ru">
       Этот фильтра находится в меню
@@ -279,7 +276,7 @@
       Dersom ein piksel skal <quote>smeltast</quote>, er det 80 % sjanse
       for at han blir bytt ut med pikselen direkte ovanfor. Elles blir ein av
       pikslane på kvar side brukt i staden. Alle, eller bare ein del av
-      pikslane i det aktive laget eller den aktive markeringa blir
+      pikslane i det aktive laget eller det aktive utvalet blir
       påverka av filteret, avhengig av innstillinga på glidebrytaren
       <guilabel>Slumpmengde (%)</guilabel>.
     </para>
@@ -294,9 +291,10 @@
   </sect3>
 
 
-  <sect3 lang="de">
+  <sect3 lang="de;no">
     <title>
       <phrase lang="de">Filteraufruf</phrase>
+      <phrase lang="no">Aktivering</phrase>
     </title>
     <para lang="de">
       Dieses Filter lässt sich über das Menü
@@ -306,6 +304,14 @@
         <guimenuitem><accel>S</accel>chmelzen</guimenuitem>
       </menuchoice>
       im Bildfenster aufrufen.
+    </para>
+    <para lang="no">
+      Du har tilgang til filteret frå biletmenyen via
+      <menuchoice>
+        <guimenu>Filter</guimenu>
+        <guisubmenu>Støy</guisubmenu>
+        <guimenuitem>Nedsmelting</guimenuitem>
+      </menuchoice>
     </para>
   </sect3>
 
@@ -330,7 +336,7 @@
         </phrase>
         <phrase lang="fr">Options du filtre Mélanger</phrase>
         <phrase lang="no">
-          Innstillingane for filteret <quote>Smelt</quote>
+          Innstillingane for filteret <quote>nedsmelting</quote>
         </phrase>
       </title>
       <mediaobject>
@@ -461,19 +467,18 @@
 
           <para lang="no">
             Verdien du set i kontrollen <guilabel>Startfrø</guilabel>
-            bestemmer til ein viss grad kor tilfeldig filteret skal arbeide.
-            Bruker du det same startfrøet som sist, og ingenting anna heller
-            er forandra, vil filteret gi ut nøyaktig det same resultatet. Legg
-            du inn ein ny verdi for slumpfrøet, vil også resultatet bli eit anna,
-            sjølv om ingenting anna er forandra. Du kan skrive inn verdiar
-            for slumpfrøet for hand, eller du kan velje ein tilfeldig startverdi
-            med knappen <guibutton>Nytt frø</guibutton>.
+            bestemmer kor tilfeldig nedsmeltinga skal bli. Bruker du det same
+            startfrøet som sist, og ingenting anna er forandra, vil filteret gi ut
+            nøyaktig det same resultatet. Legg du inn ein ny verdi for startfrøet,
+            vil også resultatet bli eit anna, sjølv om ingenting anna er forandra.
+            Du kan skrive inn startverdiane for hand, eller du kan velje ein 
+            tilfeldig startverdi med knappen <guibutton>Nytt frø</guibutton>.
           </para>
           <para lang="no">
-            Er det merka av for <guilabel>Bare tilfeldig</guilabel>, blir
+            Er det merka av for <guilabel>Slump</guilabel>, blir
             innskrivinga av frø sperra. I staden blir det generert eit nytt frø
             kvar gong du køyrer filteret. Er det ikkje kryssa av for dette valet,
-            vil filteret bruke same frøet kvar gong.
+            vil filteret bruke det innskrivne frøet kvar gong.
           </para>
 
           <para lang="ru">
@@ -551,8 +556,8 @@
           </para>
           <para lang="no">
             Glidebrytaren <guibutton>Slumpmengde</guibutton> bestemmer
-            kor mange prosent av pikslane i det aktive laget eller den aktive
-            markeringa som skal bli påverka av filteret. Dess høgare verdi,
+            kor mange prosent av pikslane i det aktive laget eller det aktive
+            utvalet som skal bli påverka av filteret. Dess høgare verdi,
             dess fleire pikslar bli forandra.
           </para>
           <para lang="ru">
