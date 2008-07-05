@@ -52,6 +52,7 @@
 
   <xsl:template match="obj">
     <xsl:if test="@targetptr and starts-with(@targetptr, 'gimp-')
+              and not(@element = 'anchor')
               and not(@element = 'footnote')
               and not(@element = 'figure')">
       <help-item>
