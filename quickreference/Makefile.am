@@ -6,6 +6,8 @@ PO_FILES = \
 	po/es.po	\
 	po/fr.po	\
 	po/it.po	\
+	po/ko.po	\
+	po/no.po	\
 	po/sv.po	\
 	po/ru.po
 
