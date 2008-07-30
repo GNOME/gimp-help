@@ -1,0 +1,870 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+          "http://www.docbook.org/xml/4.3/docbookx.dtd">
+
+<!-- section history:
+  2008-04-17 JPL reviewed fr
+  2007-11-12 KoSt: added 'no'
+  2007-11-06 ude: added German translation
+  2007-10-27 j.h: created
+-->
+<sect2 id="gimp-tool-heal" xmlns:xi="http://www.w3.org/2001/XInclude"
+       lang="en;de;fr;it;no;pl">
+  <sect2info role="cvs">
+    <revhistory>
+      <revision lang="en">
+        <revnumber>$Revision$</revnumber>
+        <date>2007-10-27</date>
+        <authorinitials>j.h</authorinitials>
+      </revision>
+      <revision lang="de">
+        <revnumber>$Revision$</revnumber>
+        <date>2007-11-06</date>
+        <authorinitials>ude</authorinitials>
+      </revision>
+      <revision lang="fr">
+        <revnumber>$Revision$</revnumber>
+        <date>2007-10-27</date>
+        <authorinitials>j.h</authorinitials>
+      </revision>
+      <revision lang="it">
+        <revnumber>$Revision$</revnumber>
+        <date>2007-11-03</date>
+        <authorinitials>ciampix</authorinitials>
+      </revision>
+      <revision lang="no">
+        <revnumber>$Revision$</revnumber>
+        <date>2007-11-09</date>
+        <authorinitials>KoSt</authorinitials>
+      </revision>
+      <revision lang="pl">
+        <revnumber>$Revision$</revnumber>
+        <date>2007-12-12</date>
+        <authorinitials>colete</authorinitials>
+      </revision>
+    </revhistory>
+  </sect2info>
+
+  <title>
+    <phrase lang="en">Heal</phrase>
+    <phrase lang="de">Heilen</phrase>
+    <phrase lang="fr">Correcteur</phrase>
+    <phrase lang="it">Cerotto</phrase>
+    <phrase lang="no">Helbred</phrase>
+    <phrase lang="pl">Łatka</phrase>
+  </title>
+
+  <indexterm lang="en">
+    <primary>Tools</primary><secondary>Heal</secondary>
+  </indexterm>
+  <indexterm lang="en"><primary>Heal</primary></indexterm>
+
+  <indexterm lang="de">
+    <primary>Werkzeug</primary><secondary>Heilen</secondary>
+  </indexterm>
+  <indexterm lang="de"><primary>Heilen</primary></indexterm>
+
+  <indexterm lang="fr">
+    <primary>Outils</primary><secondary>Correcteur</secondary>
+  </indexterm>
+  <indexterm lang="fr"><primary>Correcteur</primary></indexterm>
+
+  <indexterm lang="it">
+    <primary>Strumenti</primary><secondary>Cerotto</secondary>
+  </indexterm>
+  <indexterm lang="it"><primary>Cerotto</primary></indexterm>
+
+  <indexterm lang="no">
+    <primary>Verktøy</primary>
+    <secondary>Helbred</secondary>
+  </indexterm>
+  <indexterm lang="no"><primary>Helbred</primary></indexterm>
+
+  <indexterm lang="pl">
+    <primary>Narzędzia</primary><secondary>Łatka</secondary>
+  </indexterm>
+  <indexterm lang="pl"><primary>Łatka</primary></indexterm>
+
+  <figure>
+    <title>
+      <phrase lang="en">The <quote>Heal tool</quote> in the Toolbox</phrase>
+      <phrase lang="de"><quote>Heilen</quote> im Werkzeugfenster</phrase>
+      <phrase lang="fr">
+        L'outil <quote>Correcteur</quote> dans la Boîte à outils
+      </phrase>
+      <phrase lang="it">
+        L'icona dello <quote>strumento cerotto</quote> nella barra degli
+        strumenti
+      </phrase>
+      <phrase lang="no">
+        Verktøyet <quote>helbred</quote> i verktøykassa
+      </phrase>
+      <phrase lang="pl"><quote>Łatka</quote> na pasku narzędzi</phrase>
+    </title>
+
+    <mediaobject>
+      <imageobject lang="en;fr;it;pl">
+        <imagedata format="PNG" fileref="../images/toolbox/toolbox-heal.png" />
+      </imageobject>
+      <imageobject lang="de">
+        <imagedata format="PNG"
+          fileref="../images/toolbox/de/toolbox-heal.png" />
+      </imageobject>
+      <imageobject lang="no">
+            <imagedata format="PNG" fileref="../images/toolbox/no/toolbox-heal.png"/>
+          </imageobject>
+    </mediaobject>
+  </figure>
+
+  <para lang="en">
+    This tool was once described as <quote>The healing brush looks like a
+    smart clone tool on steroids</quote>. And indeed the Healing Tool is a
+    close relative to the Clone Tool, but it is more smart to remove small
+    failures in images. A typical usage is the removal of wrinkles in
+    photographs. To do so, pixels are not simply copied from source to
+    destination, but the area around the destination is taken into account
+    before cloning is applied. The algorithm used for this, is described in
+    a scientific paper by Todor Georgiev
+    <xref linkend="bibliography-online-georgiev" />.
+  </para>
+  <para lang="de">
+    Dieses Werkzeug ist ein Verwandter des
+    <link linkend="gimp-tool-clone">Klonen</link>-Werkzeuges, im Gegensatz zu
+    diesem aber auf das Reparieren kleiner Fehlstellen spezialisiert. Hierzu
+    eine Stelle im Bild gewählt, welche der Fehlstelle farblich ähnlich ist.
+    Mit diesem Quellpunkt wird dann die Zielstelle bemalt. Im Gegensatz zum
+    Klonen Werkzeug wird dabei jedoch die Struktur und Umgebung des
+    Zielbereiches berücksichtigt. Der hierzu angewendete Algorithmus ist in
+    einem wissenschaftlichen Paper von Todor Georgiev beschrieben
+    <xref linkend="bibliography-online-georgiev" />.
+  </para>
+  <para lang="pl">
+    Narzędzie zostało niegdyś opisane jako <quote>pędzle, wyglądające
+    jak mądre Klonowanie</quote>. I rzeczywiście Łatka jest bliskim krewnym
+    Klonowania, jednak jest na tyle mądra, że potrafi usuwać niewielkie
+    nieregularności z obrazu. Najbardziej popularnym zastosowaniem narzędzia
+    jest usuwanie nierówności z fotografii. Odbywa się to nie tyle poprzez
+    kopiowanie punktów ze źródła do obrazu docelowego, ile przeniesienie
+    obszaru wokół punktu docelowego przed zastosowaniem klonowania. Algorytm
+    operacji został opisany przez Todora Georgieva w prasie naukowej
+    <!--xref linkend="bibliography-online-georgiev" /-->.
+  </para>
+
+  <para lang="en">
+    To use it, first choose a brush with a size adapted to the defect. Then
+    <keycap>Ctrl</keycap>-click on the area you want to reproduce. Release the
+    <keycap>Ctrl</keycap> key and drag the sample to the defect. Click. If the
+    defect is slight, not very
+    different from its surrounding, it will be corrected as soon. Else, you
+    can correct it with repeated clicks, but with a risk of daubing
+  </para>
+  <para lang="de">
+    Das Werkzeug wird folgendermaßen benutzt: Zunächst wählen
+    Sie einen Pinsel mit einer dem Defekt entsprechenden Größe. Dann Klicken
+    Sie bei gedrückter <keycap>Strg</keycap>-Taste auf den Bereich, den Sie
+    kopieren wollen. Lassen Sie die <keycap>Strg</keycap>-Taste los und ziehen
+    Sie den gewählten Bereich auf den Defekt. Klicken Sie dann. Ein kleiner
+    Defekt, der sich nur unwesentlich von der Umgebung unterscheidet, wird
+    unmittelbar korrigiert. Ansonsten müssen Sie mehrfach Klicken, allerdings
+    mit dem Risiko, den Bereich zu verschmieren.
+  </para>
+  <para lang="fr">
+    Cet outil permet de corriger les petits défauts d'une image, par exemple
+    les petits boutons sur le visage d'une jolie fille. Il évoque l'outil de
+    clonage, mais travaille différemment.
+  </para>
+  <para lang="fr">
+    Pour l'utiliser, choisissez une brosse d'une taille adaptée au défaut à
+    corriger puis <keycap>Ctrl</keycap>-cliquez sur la zone que vous voulez
+    reproduire. Relâchez la touche <keycap>Ctrl</keycap> et faites glisser le
+    prélèvement sur le défaut à corriger. Cliquez. Si ce défaut est léger, peu
+    différent de son environnement, il sera corrigé d'emblée. Sinon, vous
+    pourrez le corriger par des clics successifs, mais avec un risque d'effet de
+    barbouillage.
+  </para>
+  <para lang="fr">
+    L'alogorythme utilisé est décrit dans une note scientifique de Todor Georgiev
+    <xref linkend="bibliography-online-georgiev" />.
+  </para>
+  <para lang="it">
+    Questo strumento permette di correggere i piccoli difetti che possono
+    essere presenti in un'immagine, per esempio macchie presenti sulla
+    pelle di un viso. Somiglia allo strumento <quote>clona</quote>, ma
+    funziona in modo differente. Per usarlo, prima scegliere un pennello di
+    dimensione adatta al difetto. Poi fare Ctrl-clic sull'area che si
+    desidera riprodurre. Rilasciare il tasto Ctrl e trascinare il campione
+    sul difetto. Fare clic. Se il difetto è leggero, non troppo differente
+    da ciò che lo circonda, sarà velocemente corretto. Altrimenti, sarà
+    necessario ripetere più volte il clic per correggerlo, ma ci sarà il
+    rischio che la correzione divenga visibile.
+  </para>
+  <para lang="no">
+    Dette verktøyet blir brukt for å utbetra småfeil i biletet, for eksempel
+    flekker i eit portrett. Før du bruker verktøyet, må du velje ein pensel
+    omlag like stor som feilen. Deretter <keycap>Ctrl</keycap>-klikk på
+    det området du ønskjer å bruke til utbetringa. Slepp opp
+    <keycap>Ctrl</keycap>-tasten og klikk på området der feilen er.
+    Dersom feilen er liten, dvs. avvik lite frå omgivnadane, kan det vere
+    nok å klikke ei gong. Er feilen større, kan det hende du må klikke fleire
+    gonger, men då med fare for å smøre biletet utover.
+  </para>
+  <para lang="pl">
+    Aby zastosować narzędzie należy wybrać pędzel, dopasowany do
+    nieregularności, a następnie kliknąć obszar do skopiowania
+    jednocześnie przytrzymując <keycap>Ctrl</keycap>. Kolejnym krokiem
+    jest puszczenie <keycap>Ctrl</keycap>, przeciągnięcie próbki na
+    nieregularność i kliknięcie. Jeśli defekt jest niewielki, tylko w
+    nieznacznym stopniu odróżniający się od otoczenia, zostanie naprawiony
+    szybko. Można go również naprawić powtarzając kliknięcia, jednak
+    w tym wypadku istnieje niebezpieczeństwo rozmazania.
+  </para>
+
+  <sect3>
+    <title>
+      <phrase lang="en">Activate Tool</phrase>
+      <phrase lang="cs">Aktivace nástroje</phrase>
+      <phrase lang="de">Werkzeugaufruf</phrase>
+      <phrase lang="es">Activación de la herramienta</phrase>
+      <phrase lang="fr">Activation de l'outil</phrase>
+      <phrase lang="it">Attivazione dello strumento</phrase>
+      <phrase lang="no">Aktivering</phrase>
+      <phrase lang="pl">Aktywacja narzędzia</phrase>
+      <phrase lang="zh_CN">启动工具</phrase>
+    </title>
+
+    <para lang="en">
+      There are different possibilities to activate the tool:
+    </para>
+    <para lang="de">
+      Sie haben verschiedene Möglichkeiten, das Werkzeug <quote>Heilen</quote>
+      zu aktivieren:
+    </para>
+    <para lang="fr">On accède à cet outil de différentes façons :</para>
+    <para lang="it">Lo strumento può essere attivato in modi diversi:</para>
+    <para lang="no">
+      Du kan aktivere dette verktøyet på fleire måtar:
+    </para>
+    <para lang="pl">Narzędzie można aktywować na kilka sposobów:</para>
+
+    <itemizedlist>
+      <listitem>
+        <para lang="en">
+          From the image-menu:
+          <menuchoice>
+            <guimenu><accel>T</accel>ools</guimenu>
+            <guisubmenu><accel>P</accel>aint tools</guisubmenu>
+            <guimenuitem><accel>H</accel>eal</guimenuitem>
+          </menuchoice>,
+        </para>
+        <para lang="de">
+          Über das Menü
+          <menuchoice>
+            <guimenu><accel>W</accel>erkzeuge</guimenu>
+            <guisubmenu><accel>M</accel>alwerkzeuge</guisubmenu>
+            <guimenuitem><accel>H</accel>eilen</guimenuitem>
+          </menuchoice>
+          im Bildfenster.
+        </para>
+        <para lang="fr">
+          À partir de la barre de menus de l'image :
+          <menuchoice>
+            <guimenu><accel>O</accel>utils</guimenu>
+            <guisubmenu>Outils de <accel>p</accel>einture</guisubmenu>
+            <guimenuitem>C<accel>o</accel>rrecteur</guimenuitem>
+          </menuchoice>,
+        </para>
+        <para lang="it">
+          dalla barra del menu immagine:
+          <menuchoice>
+            <guimenu>S<accel>t</accel>rumenti</guimenu>
+            <guisubmenu>Strumenti di <accel>d</accel>isegno</guisubmenu>
+            <guimenuitem><accel>C</accel>erotto</guimenuitem>
+          </menuchoice>
+        </para>
+        <para lang="no">
+          Frå biletmenyen via
+          <menuchoice>
+            <guimenu>Verktøy</guimenu>
+            <guisubmenu>Teikneverktøy</guisubmenu>
+            <guimenuitem>Helbred</guimenuitem>
+          </menuchoice>,
+        </para>
+        <para lang="pl">
+          poprzez menu obrazu:
+          <menuchoice>
+            <guimenu><accel>N</accel>arzędzia</guimenu>
+            <guisubmenu>Narzędzia <accel>r</accel>ysownicze</guisubmenu>
+            <guimenuitem><accel>Ł</accel>atka</guimenuitem>
+          </menuchoice>,
+        </para>
+      </listitem>
+
+      <listitem>
+        <para lang="en">
+          The Tool can also be called by clicking the tool icon:
+          <guiicon>
+            <inlinemediaobject>
+              <imageobject>
+                <imagedata fileref="../images/toolbox/stock-tool-heal-22.png" />
+              </imageobject>
+            </inlinemediaobject>
+          </guiicon>
+          in the Toolbox,
+        </para>
+        <para lang="de">
+          Mit einen Mausklick auf das Symbol
+          <guiicon>
+            <inlinemediaobject>
+              <imageobject>
+                <imagedata format="PNG"
+                  fileref="../images/toolbox/stock-tool-heal-22.png" />
+              </imageobject>
+            </inlinemediaobject>
+          </guiicon>
+          im Werkzeugfenster.
+        </para>
+        <para lang="fr">
+          En cliquant sur l'icône de l'outil
+          <guiicon>
+            <inlinemediaobject>
+              <imageobject>
+                <imagedata fileref="../images/toolbox/stock-tool-heal-22.png" />
+              </imageobject>
+            </inlinemediaobject>
+          </guiicon>
+          dans la Boîte à outils,
+        </para>
+        <para lang="it">
+          oppure premendo, nella casella degli strumenti, il pulsante con
+          la seguente icona:
+          <guiicon>
+            <inlinemediaobject>
+              <imageobject>
+                <imagedata format="PNG"
+                  fileref="../images/toolbox/stock-tool-heal-22.png" />
+              </imageobject>
+            </inlinemediaobject>
+          </guiicon>
+        </para>
+        <para lang="no">
+          ved å klikke på symbolet
+          <guiicon>
+            <inlinemediaobject>
+              <imageobject>
+                <imagedata format="PNG"
+                  fileref="../images/toolbox/stock-tool-heal-22.png" />
+              </imageobject>
+            </inlinemediaobject>
+          </guiicon>
+          i verktøykassa eller
+        </para>
+        <para lang="pl">
+          klikając ikonę
+          <guiicon>
+            <inlinemediaobject>
+              <imageobject>
+                <imagedata fileref="../images/toolbox/stock-tool-heal-22.png" />
+              </imageobject>
+            </inlinemediaobject>
+          </guiicon>
+          na pasku narzędzi
+        </para>
+      </listitem>
+
+      <listitem>
+        <para lang="en">
+          or by clicking on the <keycap>H</keycap> keyboard shortcut.
+        </para>
+        <para lang="de">
+          Über das Tastenkürzel <keycap>H</keycap>.
+        </para>
+        <para lang="fr">
+          ou en utilisant le raccourci-clavier <keycap>H</keycap>.
+        </para>
+        <para lang="fr">
+          Le nom anglais de cet outil est <quote>Heal</quote>.
+        </para>
+        <para lang="it">
+          o ancora tramite la scorciatoia di tastiera <keycap>H</keycap>.
+        </para>
+        <para lang="no">
+          eller med tastesnarvegen <keycap>H</keycap>.
+        </para>
+        <para lang="pl">
+          za pomocą skrótu klawiszowego <keycap>H</keycap>.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </sect3>
+
+  <sect3>
+    <title>
+      <phrase lang="en">Key modifiers (Defaults)</phrase>
+      <phrase lang="de">Tastenkombinationen (Vorgabe-Einstellungen)</phrase>
+      <phrase lang="es">Teclas modificadoras (por omisión)</phrase>
+      <phrase lang="fr">Touches de contrôle (Par défaut)</phrase>
+      <phrase lang="it">Tasti modificatori (predefiniti)</phrase>
+      <phrase lang="no">Valtastane (førehandsvalde)</phrase>
+      <phrase lang="pl">Klawisze modyfikujące (Domyślne)</phrase>
+      <phrase lang="zh_CN">相关按键(默认值)</phrase>
+    </title>
+
+    <variablelist>
+      <varlistentry>
+        <term lang="cs;en;es;fr;it;no;pl;zh_CN"><keycap>Ctrl</keycap></term>
+        <term lang="de"><keycap>Strg</keycap></term>
+
+        <listitem>
+          <para lang="en">
+            The Ctrl key is used to select the source. You can heal from any
+            layer of any image, by clicking on the image display, with the
+            Ctrl key held down, while the layer is active (as shown in the
+            Layers dialog). If Alignment is set to <quote>Non-aligned</quote>
+            or <quote>Aligned</quote> in Tool Options, then the point you
+            click on becomes the origin for healing: the image data at that
+            point will be used when you first begin painting with the Heal
+            tool. In source-selection mode, the cursor changes to a
+            crosshair-symbol.
+          </para>
+          <para lang="de">
+            Die Taste <keycap>Strg</keycap> wird verwendet, um eine Stelle im
+            Bild zu definieren, die vom Werkzeug als Quelle zum Heilen
+            verwendet wird. Wenn die Eigenschaft
+            <guilabel>Ausrichtung</guilabel> auf den Wert
+            <guilabel>Ausgerichtet</guilabel> oder
+            <guilabel>Nicht ausgerichtet</guilabel> eingestellt ist, wird der
+            Bildpunkt, auf den Sie bei gedrückter <keycap>Strg</keycap>
+            klicken, als Quelle für das Heilen definiert. Der Bildinhalt an
+            dieser Stelle ist das, was beim Zeichnen verwendet wird. Wenn Sie
+            im Modus <quote>Quellpunkt auswählen</quote> sind, erkennen Sie
+            das auch am Mauszeiger, der sich in ein Kreuzsymbol verwandelt.
+          </para>
+          <para lang="fr">
+            Appuyer sur la touche <keycap>Ctrl</keycap> permet de choisir la
+            source de correction. Vous pouvez corriger à partir de n'importe
+            quel calque actif de n'importe quelle image, en
+            <keycap>Ctrl</keycap>-cliquant sur l'image (calque mis en
+            surbrillance dans le dialogue des calques). Le curseur devient alors
+            <guiicon>
+              <inlinemediaobject>
+                <imageobject>
+                  <imagedata fileref="../images/toolbox/heal-cross.png" />
+                </imageobject>
+              </inlinemediaobject>
+            </guiicon>.
+            Si l'option Alignement est <quote>Aucun</quote> ou
+            <quote>Aligné</quote>, le point cliqué sera l'origine pour la
+            correction : le pixel en ce point sera utilisé au début de
+            l'utilisation de l'outil de correction.
+          </para>
+          <para lang="it">Ctrl-clic permette di selezionare una nuova
+          sorgente per lo strumento.</para>
+          <para lang="no">
+            Ctrl-tasten blir brukt for å markere kva område verktøyet skal
+            hente biletdata frå. Hald nede Ctrl-tasten medan du klikkar i
+            det aktive biletlaget der du vil hente data frå. Du kan bruke data
+            frå kva biletlag eller bilete som helst. Kva for eit lag som er aktivt
+            kan du sjå i lagdialogen. Biletdata frå det punktet du klikka på
+            bli brukte når du byrjar å helbrede biletet. Når du held nede
+            Ctrl-tasten vil markøren syne dette ved å vise eit kryss.
+          </para>
+          <para lang="pl">
+            Ctrl służy do wyboru źródła. Łatkę można zastosować dla
+            dowolnej warstwy dowolnego obrazu poprzez kliknięcie na
+            obrazie przy jednoczesnym przytrzymywaniu Ctrl (warstwa
+            musi być aktywna, co widać w oknie Warstw). Jeśli dla
+            Wyrównania wybrana została opcja <quote>Brak</quote> lub
+            <quote>Wyrównany</quote>, to punkt kliknięcia staje się
+            oryginałem dla Łatki: dane obrazu w tym punkcie zostaną
+            użyte w momencie rozpoczęcia pracy z narzędziem. W trybie
+            wyboru źródła obok kursora pojawia się symbol krzyża.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term lang="cs;en;es;no;pl;zh_CN"><keycap>Shift</keycap></term>
+        <term lang="de"><keycap>Umschalt</keycap></term>
+        <term lang="fr"><keycap>Maj</keycap></term>
+        <term lang="it"><keycap>Maiusc</keycap></term>
+
+        <listitem>
+          <para lang="en">
+            <!--Once the source is set, pressing this key allows you to draw a
+            line which will be <quote>healed</quote>.-->
+            <!--
+              I've adapted the relevant text from
+              "src/toolbox/tool-brush.xml" (see id="gimp-tools-brush-modifiers")
+            -->
+            Once the source is set, if you press this key, you will see a
+            thin line connecting the previously clicked point with the current
+            pointer location. If you click again, while going on holding
+            the <keycap>Shift</keycap> key down, the tool will
+            <quote>heal</quote> along this line.
+          </para>
+          <para lang="de">
+            Wenn eine Heilquelle ausgewählt ist und Sie diese Taste drücken,
+            erscheint eine dünne Hilfslinie. Nach einem weiteren Mausklick
+            wird entlang dieser Linie <quote>geheilt</quote>.
+          </para>
+          <para lang="fr">
+            Une fois la source fixée, si vous cliquez sur la touche
+            <keycap>Maj</keycap>, une mince ligne apparaît entre l'ancienne
+            position du pointeur et sa position actuelle. Si vous cliquez à
+            nouveau, tout en appuyant sur la touche <keycap>Maj</keycap>, la
+            correction s'effectuera selon cette ligne.
+          </para>
+          <para lang="it">
+            Una volta impostata la sorgente, premendo questi tasto si può
+            disegnare una linea che verrà <quote>curata</quote> (cioè
+            corretta) dallo strumento.
+          </para>
+          <para lang="no">
+            Dersom du trykker denne tasten, vil du sjå ein tynn strek mellom
+            det punktet du sist klikka på som kjeldeområde og til musepeikaren.
+            Dersom du klikkar igjen, medan du held nede
+            <keycap>Shift</keycap>-tasten, vil verktøyet <quote>helbrede</quote>
+            langs denne linja.
+          </para>
+          <para lang="pl">
+            Kiedy źródło jest wybrane, przytrzymanie klawisza spowoduje
+            pojawienie się cienkiej linii łączącej punkt kliknięcia z
+            kursorem. Ponowne kliknięcie (przy wciąż przytrzymywanym
+            klawiszu <keycap>Shift</keycap>) pozwoli na
+            <quote>usuwanie nieregularności</quote> wzdłuż tej linii.
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </sect3>
+
+
+  <sect3>
+    <title>
+      <phrase lang="en">Options</phrase>
+      <phrase lang="cs">Volby</phrase>
+      <phrase lang="de">Eigenschaften</phrase>
+      <phrase lang="es">Opciones</phrase>
+      <phrase lang="fr">Options</phrase>
+      <phrase lang="it">Opzioni</phrase>
+      <phrase lang="no">Verktøyinnstillingar</phrase>
+      <phrase lang="pl">Opcje narzędzia</phrase>
+      <phrase lang="zh_CN">选项</phrase>
+    </title>
+
+    <figure>
+      <title>
+        <phrase lang="en">Heal Tool options</phrase>
+        <phrase lang="de">
+          Werkzeugeinstellungen für <quote>Heilen</quote>
+        </phrase>
+        <phrase lang="fr">Options de l'outil Correcteur</phrase>
+        <phrase lang="it">
+          Le opzioni dello strumento <quote>cerotto</quote> </phrase>
+        <phrase lang="no">
+          Innstillingane for verktøyet <quote>helbred</quote>
+        </phrase>
+        <phrase lang="pl">Opcje Łatki</phrase>
+      </title>
+
+      <mediaobject>
+        <imageobject lang="en;pl">
+          <imagedata format="PNG"
+            fileref="../images/toolbox/tool-options-heal.png" />
+        </imageobject>
+        <imageobject lang="de">
+          <imagedata format="PNG"
+            fileref="../images/toolbox/de/tool-options-heal.png" />
+        </imageobject>
+        <imageobject lang="fr">
+          <imagedata format="PNG"
+            fileref="../images/toolbox/fr/heal-options.png" />
+        </imageobject>
+        <imageobject lang="it">
+          <imagedata format="PNG"
+            fileref="../images/toolbox/it/heal-options.png" />
+        </imageobject>
+        <imageobject lang="no">
+          <imagedata fileref="../images/toolbox/no/tool-options-heal.png"
+                     format="PNG" />
+        </imageobject>
+      </mediaobject>
+    </figure>
+
+    <para lang="en">
+      The available tool options can be accessed by double clicking the
+      Heal tool icon.
+      <guiicon>
+        <inlinemediaobject>
+          <imageobject>
+            <imagedata fileref="../images/toolbox/stock-tool-heal-22.png" />
+          </imageobject>
+        </inlinemediaobject>
+      </guiicon>
+      in the Toolbox.
+    </para>
+    <para lang="en">
+      The options of this tool are common with the other painting tools
+      and are described in <link linkend="gimp-tool-painting">Common options
+      of painting tools</link>. The <quote>Alignment</quote> option is
+      described in <link linkend="gimp-tool-clone">Clone tool</link>.
+    </para>
+
+    <para lang="de">
+      Die aktuellen Werkzeugeinstellungen für das <quote>Heilen</quote>
+      lassen sich durch einen (Doppel)klick auf das Symbol
+      <guiicon>
+        <inlinemediaobject>
+          <imageobject>
+            <imagedata fileref="../images/toolbox/stock-tool-heal-22.png" />
+          </imageobject>
+        </inlinemediaobject>
+      </guiicon>
+      anzeigen.
+    </para>
+
+    <para lang="fr">
+      On accède aux options de cet outil par un double clic sur l'icône
+      <guiicon>
+        <inlinemediaobject>
+          <imageobject>
+            <imagedata fileref="../images/toolbox/stock-tool-heal-22.png" />
+          </imageobject>
+        </inlinemediaobject>
+      </guiicon>
+      dans la Boîte à outils.
+    </para>
+
+    <para lang="it">
+      Le opzioni dello strumento si possono richiamare facendo clic due
+      volte sull'icona dello strumento cerotto.
+      <guiicon>
+        <inlinemediaobject>
+          <imageobject>
+            <imagedata fileref="../images/toolbox/stock-tool-heal-22.png" />
+          </imageobject>
+        </inlinemediaobject>
+      </guiicon>
+    </para>
+
+    <para lang="no">
+      Du får fram verktøyinnstillingane for helbredingsverktøyet
+      ved å (dobbelt-)klikka på symbolet
+      <guiicon>
+        <inlinemediaobject>
+          <imageobject>
+            <imagedata fileref="../images/toolbox/stock-tool-heal-22.png" />
+          </imageobject>
+        </inlinemediaobject>
+      </guiicon>
+      i verktøykassa
+    </para>
+    <para lang="pl">
+      Opcje narzędzia są wyświetlane po podwójnym kliknięciu ikony
+      <guiicon>
+        <inlinemediaobject>
+          <imageobject>
+            <imagedata fileref="../images/toolbox/stock-tool-heal-22.png" />
+          </imageobject>
+        </inlinemediaobject>
+      </guiicon>
+      na pasku narzędzi.
+    </para>
+
+    <variablelist lang="en;de;fr;no;pl">
+      <varlistentry lang="en;de;fr;no;pl;ru">
+        <term lang="en">
+          Mode; Opacity; Brush; Pressure Sensitivity, Fade out, Apply Jitter,
+          Hard Edges
+        </term>
+        <term lang="de">
+          Modus; Deckkraft; Pinsel; Druckempfindlichkeit; Verblassen; Zittern
+          hinzufügen; Harte Kante
+        </term>
+        <term lang="fr">
+          Mode; Opacité; Brosse; Sensibilité à la pression; Estomper; Contour dur
+        </term>
+        <term lang="no">
+          Modus, dekkevne, pensel, skalering, trykkfølsemd, uttoning, hard kant, sitring
+        </term>
+        <term lang="pl">
+          Tryb; Krycie; Pędzel; Czułość nacisku; Zanikanie; Drganie;
+          Twarda krawędź
+        </term>
+        <term lang="ru">
+          Непрозрачность; Кисть; Чуствительность к нажиму; Блекность; Жёсткие
+          края
+        </term>
+
+        <listitem lang="en;de;fr;no;pl">
+          <!-- A note about common features with link to description: -->
+          <xi:include href="about-common-brush-options.xml" />
+        </listitem>
+      </varlistentry>
+
+      <!-- TODO: it translation missing -->
+      <varlistentry lang="en;de;fr;no;pl">
+        <term lang="en">Sample merged</term>
+        <term lang="de">Vereinigung prüfen</term>
+        <term lang="fr">Échantillonner sur tous les calques</term>
+        <term lang="no">Flett synlege</term>
+        <term lang="pl">Próbkuj wszystkie warstwy</term>
+
+        <listitem>
+          <para lang="en">
+            If you enable this option, healing is not calculated only
+            from the values of the active layer, but from all visible layers.
+          </para>
+          <para lang="de">
+            Wenn diese Eigenschaft aktiviert ist, wird die Berechnung des
+            Heilen-Werkzeuges nicht nur mit den Werten der aktiven Ebene,
+            sondern mit den Werten aller Ebenen des Bildes berechnet.
+          </para>
+          <para lang="fr">
+            Quand cette option est cochée, la correction n'est pas calculée
+            seulement à partir du calque actif, mais à partir de tous les
+            calques visibles.
+          </para>
+          <para lang="no">
+            Dersom denne er aktivisert, vil verktøyet hente data frå alle
+            synleg laga i biletet, ikkje bare frå det aktive laget.
+          </para>
+          <para lang="pl">
+            Jeśli pole zostało wybrane, Łatka korzysta z wartości
+            wszystkich warstw, a nie tylko warstwy aktywnej.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry lang="en;de;fr;no;pl">
+        <term lang="en">Alignment</term>
+        <term lang="de">Ausrichtung</term>
+        <term lang="fr">Alignement</term>
+        <term lang="no">Innretting</term>
+        <term lang="pl">Zanikanie</term>
+
+        <listitem>
+          <para lang="en">
+            This option is described in <link linkend="gimp-tool-clone">Clone
+            tool</link>.
+          </para>
+          <para lang="de">
+            Diese Eigenschaft ist in <xref linkend="gimp-tool-clone" />
+            beschrieben.
+          </para>
+          <para lang="fr">
+            Cette option est décrite dans
+            <link linkend="gimp-tool-clone">Clonage</link>.
+          </para>
+          <para lang="no">
+            Denne innstillinga er omtalt under<link
+            linkend="gimp-tool-clone">kloneverktøyet</link>.
+          </para>
+          <para lang="pl">
+            Opcja została opisana na <link linkend="gimp-tool-clone">Klonowanie</link>.
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+ </sect3>
+
+ <sect3>
+   <title>
+     <phrase lang="en">Healing is not cloning</phrase>
+     <phrase lang="de">Heilen heißt nicht Klonen</phrase>
+     <phrase lang="fr">Corriger n'est pas cloner</phrase>
+     <phrase lang="it">Correggere non è clonare</phrase>
+     <phrase lang="no">Helbreding er ikkje kloning</phrase>
+     <phrase lang="pl">Łatka nie klonuje</phrase>
+   </title>
+
+   <para lang="en">
+     Although the Heal tool has common features with the Clone tool on using,
+     the result is quite different.
+   </para>
+   <para lang="de">
+     Auch wenn das Werkzeug <quote>Heilen</quote> hinsichtlich der Benutzung
+     einiges mit dem <link linkend="gimp-tool-clone">Klonen</link> gemeinsam
+     hat, sind die Ergebnisse unterschiedlich:
+   </para>
+   <para lang="fr">
+     Bien que l'outil Correcteur ait des points communs avec l'outil de
+     clonage dans son utilisation, le résultat est très différent.
+   </para>
+   <para lang="it">
+     Malgrado lo strumento cerotto abbia diverse caratteristiche di
+     utilizzo in comune con lo strumento clona, i risultati sono molto
+     differenti.
+   </para>
+   <para lang="no">
+     Sjølv om helbredverktøyet har mange brukseigenskapar felles med
+     kloneverktøya, er resultatet heilt anleis.
+   </para>
+   <para lang="pl">
+     Łatka posiada opcje wspólne z Klonowaniem, jednak efekty jej użycia
+     są zupełnie różne.
+   </para>
+
+   <figure>
+     <title>
+       <phrase lang="en">
+         Comparing <quote>Heal</quote> and <quote>Clone</quote>
+       </phrase>
+       <phrase lang="de">
+         Vergleich <quote>Heilen</quote> und <quote>Klonen</quote>
+       </phrase>
+       <phrase lang="fr">
+         Comparaison entre <quote>Correcteur</quote> et <quote>Clonage</quote>
+       </phrase>
+       <phrase lang="it">
+         Confronto tra <quote>Cerotto</quote> e <quote>Clona</quote>
+       </phrase>
+       <phrase lang="no">
+         Ei samanlikning mellom <quote>Helbred</quote> og <quote>Kloning</quote>
+       </phrase>
+       <phrase lang="pl">
+         Porównanie <quote>Łatki</quote> i <quote>Klonowania</quote>
+       </phrase>
+     </title>
+
+     <mediaobject>
+       <imageobject>
+         <imagedata format="PNG" fileref="../images/toolbox/heal-compar.png" />
+       </imageobject>
+       <caption>
+         <para lang="en">
+           Two black spots in the red area. Zoom x800. The source is where the
+           four colors meet. Cloning on the left spot. Healing on the right
+           spot.
+         </para>
+         <para lang="de">
+           Zwei schwarze Flecken im roten Bereich (800-fache Vergrößerung).
+           Die Quelle ist der Schnittpunkt der vier Farben. Beim linken Fleck
+           wird geklont, der rechte Fleck wird geheilt.
+         </para>
+         <para lang="fr">
+           Deux taches noires dans la zone rouge. Zoom x800. La source se
+           situe à la jonction des quatre couleurs. Clonage sur la tache de
+           gauche. Correction sur la tache de droite.
+         </para>
+         <para lang="it">
+           Due punti neri in un'area rossa. Zoom x800. La sorgente viene
+           impostatat nel punto di congiunzione dei quattro colori. Clona
+           nell'esempio a sinistra. Cerotto in quello a destra.
+         </para>
+         <para lang="no">
+           To svarte prikkar i det raude området er forstørra 800 gonger. Kjelda
+           er der dei fire fargane møtest. Den venstre prikken er klona, den
+           høgre er helbreda.
+         </para>
+         <para lang="pl">
+           Dwa czarne punkty na czerwonym tle. Zoom x800. Źródłem jest
+           miejsce styku czterech kolorów. Efekty Klonowania zostały
+           przedstawione na lewym punkcie, zaś Łatki - na prawym.
+         </para>
+       </caption>
+     </mediaobject>
+   </figure>
+ </sect3>
+</sect2>

@@ -1,0 +1,1889 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE glossdiv PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+                   "http://www.docbook.org/xml/4.3/docbookx.dtd">
+
+<!-- section history:
+  2008-01-11 ciampix: channel entry rearranged
+  2007-08-18 alex falappa: fixed link to Alpha Channel example
+  2007-07-21 alessandro falappa: italian translation of aplha channel added
+  2007-02-01 alessandro falappa: some italian translations added
+  2006-09-06 scb: thorough review and/or rewrite of English
+  2006-07-29 lexa: patch from julien that includes suggestions by Sally
+  2006-05-14 added Korean translation by Dust
+  2006-03-08 norwegian added by kolbjørn
+  2005-08-26 lexa: de added CMYK by axel.wernicke
+  2005-06-11 de reviewed by axel.wernicke
+-->
+<glossdiv lang="cs;de;en;es;fr;it;ko;no;ru;zh_CN">
+  <title>C</title><anchor id="glossary-c" />
+
+  <glossentry id="glossary-layer" lang="es">
+    <glossterm>
+      <phrase lang="es">Capa</phrase>
+    </glossterm>
+
+    <indexterm lang="es"><primary>Capa</primary></indexterm>
+
+    <glossdef>
+      <para lang="es">
+        Puedes pensar a las capas de una imagen como una pila de
+        filminas o como la ropa sobre tu cuerpo.  Cada elemento que
+        vistes es una capa en el
+        <link linkend="gimp-layer-dialog">diálogo de capas</link>.
+        Las capas se apilan una sobre otra.  La capa de más abajo es
+        el fondo de la imagen y las demás se superponen para formar la
+        imagen.
+      </para>
+      <para lang="es">Representación de una imagen con capas:</para>
+
+      <para>
+        <inlinemediaobject>
+          <imageobject>
+            <imagedata fileref="../images/dialogs/layers_overview.png"
+            format="PNG"/>
+          </imageobject>
+        </inlinemediaobject>
+      </para>
+
+      <para lang="es">La imagen final:</para>
+
+      <para>
+        <inlinemediaobject>
+          <imageobject>
+            <imagedata fileref="../images/dialogs/layers_example.png"
+            format="PNG"/>
+          </imageobject>
+        </inlinemediaobject>
+      </para>
+
+    </glossdef>
+  </glossentry>
+
+  <glossentry id="glossary-samplemerge" lang="it">
+    <glossterm lang="it">Campionamento diffuso</glossterm>
+
+    <glossdef>
+      <para lang="it">
+        Il campionamento diffuso è una tecnica utile quando si lavora con più
+        di un livello dove le operazioni che coinvolgono un livello potrebbero
+        avvantaggiarsi dalle informazioni sui pixel o sui colori di tutti i
+        livelli visibili. Considerate la selezione per colore come un esempio
+        nel quale questa funzione potrebbe tornare utile.
+      </para>
+    </glossdef>
+  </glossentry>
+
+
+  <glossentry id="layer-fr" lang="fr">
+    <glossterm lang="fr">Calque</glossterm>
+
+    <glossdef>
+      <para lang="fr">
+        Représentez-vous les calques comme une pile de diapositives plus ou
+        moins transparentes. Chaque calque représente un aspect de l'image et
+        l'image est la somme de tous ces aspects. Le calque le plus bas est le
+        calque d'Arrière-plan. Les calques situés au-dessus du calque
+        d'arrière-plan sont des composants du Premier-plan.
+      </para>
+      <para lang="fr">Représentation d'une image avec calques:</para>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="../images/dialogs/layers_overview.png"
+            format="PNG" />
+        </imageobject>
+      </mediaobject>
+      <para lang="fr">L'image finale:</para>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="../images/dialogs/layers_example.png"
+            format="PNG" />
+        </imageobject>
+      </mediaobject>
+    </glossdef>
+  </glossentry>
+
+
+  <glossentry id="glossary-channels" lang="en;es;fr;it;ko;sv;zh_CN">
+    <glossterm>
+      <phrase lang="en">Channels</phrase>
+      <!-- cs MARK: see glossentry "Kanály" -->
+      <!-- de MARK: see phrase "Kanäle" -->
+      <phrase lang="es">Canales</phrase>
+      <phrase lang="fr">Canaux</phrase>
+      <phrase lang="it">Canali</phrase>
+      <phrase lang="ko">채널(Channels)</phrase>
+      <!-- no MARK: see glossentry "Kanalar" -->
+      <phrase lang="sv">Channels</phrase>
+      <phrase lang="zh_CN">Channels(通道)</phrase>
+    </glossterm>
+
+    <indexterm lang="en">
+      <primary>Channel</primary>
+      <secondary>Introduction</secondary>
+    </indexterm>
+    <indexterm lang="es"><primary>Canales</primary></indexterm>
+    <indexterm lang="fr">
+      <primary>Canal</primary>
+      <secondary>Introduction</secondary>
+    </indexterm>
+    <indexterm lang="it">
+      <primary>Canali</primary>
+      <secondary>Introduzione</secondary>
+    </indexterm>
+    <indexterm lang="sv"><primary>Channel</primary></indexterm>
+
+    <glossdef>
+      <para lang="en">
+        A Channel is a single component of a pixel's color. For a colored
+        pixel in <acronym>GIMP</acronym>, these components are usually Red,
+        Green, Blue and sometimes transparency (Alpha). For a
+        <link linkend="glossary-graylevel">Grayscale</link> image, they are
+        Gray and Alpha and for an
+        <link linkend="glossary-indexedcolors">Indexed</link> color image,
+        they are Indexed and Alpha.
+      </para>
+      <para lang="en">
+        The entire rectangular array of any one of the color components for
+        all of the pixels in an image is also referred to as a Channel. You
+        can see these color channels with the Channels dialog.
+      </para>
+      <para lang="en">
+        When the image is displayed, <acronym>GIMP</acronym> puts these
+        components together to form the pixel colors for the screen, printer,
+        or other output device. Some output devices may use different
+        channels from Red, Green and Blue. If they do,
+        <acronym>GIMP</acronym>'s channels are converted into the
+        appropriate ones for the device when the image is displayed.
+      </para>
+      <para lang="en">
+        Channels can be useful when you are working on an image which needs
+        adjustment in one particular color. For example, if you want to
+        remove <quote>red eye</quote> from a photograph, you might work on
+        the Red channel.
+      </para>
+      <para lang="en">
+        You can look at channels as masks which allow or restrict the output
+        of the color that the channel represents. By using Filters on the
+        channel information, you can create many varied and subtle effects
+        on an image. A simple example of using a Filter on the color
+        channels is the
+        <link linkend="plug-in-colors-channel-mixer">Channel Mixer</link>
+        filter.
+      </para>
+      <para lang="en">
+        In addition to these channels, <acronym>GIMP</acronym> also allows
+        you to create other channels (or more correctly, Channel Masks),
+        which are displayed in the lower part of the Channels dialog. You
+        can convert a selection to a channel mask by using the <link
+        linkend="gimp-selection-to-channel">Save to Channel</link>
+        command. You can also create a channel by right-clicking in the
+        Channels dialog and using the <link linkend="gimp-channel-new">New
+        channel</link> command.  See the glossary entry on <link
+        linkend="glossary-masks">Masks</link> for more information about
+        Channel Masks.
+      </para>
+
+      <para lang="es">
+        Cada imagen es dividida en canales y luego recombinada antes de ser
+        enviada al dispositivo de salida. El dispositivo de salida más usual
+        es la pantalla. Los canales utilizados para representar imágenes en la
+        pantalla son Rojo, Verde y Azul. Otros dispositivos de salida pueden
+        utilizar canales diferentes.
+      </para>
+      <para lang="es">
+        Los canales son útiles cuando se necesita retocar un color en
+        particular. Si, por ejemplo, se desea remover los
+        <quote>ojos rojos</quote>, la
+        solución más obvia es trabajar sobre el canal Rojo. Los canales pueden
+        pensarse como máscaras que permiten o prohíben la salida del color que
+        representan. Corriendo filtros sobre la información de un canal, el
+        usuario experto puede lograr efectos muy variados y un refinado manejo
+        del <acronym>GIMP</acronym>.
+      </para>
+
+      <para lang="fr">
+        Un canal de couleur est la représentation en niveaux de gris de
+        chacune des couleurs de base Rouge, Vert et Bleu des pixels d'une
+        image. Vous pouvez voir ces canaux dans le Dialogue des Canaux. Si
+        votre image comporte plusieurs calques (ou si vous avez ajouté un
+        Canal Alpha à un calque unique), ce dialogue possèdera aussi un
+        quatrième canal appelé canal Alpha, représentant la transparence de
+        l'image.
+      </para>
+      <para lang="fr">
+        Ces canaux de couleur sont recombinée avant d'être envoyés sur le
+        périphérique de sortie (la plupart du temps l'écran). Les canaux
+        employés pour l'affichage écran sont le rouge, le vert et le bleu.
+        D'autres périphériques de sortie peuvent utiliser des canaux
+        différents.
+      </para>
+      <para lang="fr">
+        Un autre type de canal peut être présent dans le Dialogue des Canaux:
+        les <emphasis>Masques de canal</emphasis>, encore appelés
+        <emphasis>Canaux de sélection</emphasis> ou <emphasis>Masques
+        de sélection</emphasis>, qui permettent de sauvegarder les sélections
+        (les limites, pas le contenu) d'une image sous forme de masque.
+      </para>
+      <para lang="fr">
+        Les canaux de couleur peuvent être utiles lors de l'ajustement d'une
+        couleur particulière d'une image. Par exemple, si le but est de
+        supprimer les yeux rouges, un travail sur le canal rouge est sans
+        doute la solution. Finalement, les canaux de couleur peuvent être vus
+        comme des  masques qui autoriseraient ou non l'affichage de la
+        couleur qu'ils représentent. En appliquant des filtres sur les
+        informations des canaux, de nombreux effets subtils et variés peuvent
+        être accomplis par l'utilisateur averti de <acronym>GIMP</acronym>.
+      </para>
+
+      <para lang="it">
+        Un canale è un singolo componente del colore di un pixel.  Per un
+        pixel colorato in <acronym>GIMP</acronym>, questi componenti sono
+        spesso il rosso, il verde, e il blu e alle volte la trasparenza
+        (Alfa). Per un'immagine in <link linkend="glossary-graylevel">scala
+        di grigi</link>, questi canali sono solo Grigio e Alfa e per
+        un'immagine a colori <link
+        linkend="glossary-indexedcolors">indicizzata</link>, sono
+        indicizzati e alfa.
+      </para>
+      <para lang="it">
+        Anche l'intero insieme rettangolare di una di questi componenti di
+        colore per tutti i pixel in un'immagine viene chiamato Canale. Si
+        possono osservare questi canali di colore all'interno della
+        finestra dei canali.
+      </para>
+      <para lang="it">
+        Quando l'immagine viene mostrata, <acronym>GIMP</acronym> mette
+        assieme questi componenti per formare il colore dei pixel sullo
+        schermo, sulla stampante o su altri dispositivi di uscita. Alcuni
+        dispositivi di uscita possono usare canali differenti dal rosso,
+        verde e blu (chiamato anche RGB). Se lo fanno, i canali di
+        <acronym>GIMP</acronym> vengono convertiti nella forma appropriata
+        per il dispositivo quando l'immagine viene emessa.
+      </para>
+      <para lang="it">
+        I canali possono essere utili quando si lavora su un'immagine che
+        abbisogna di un ritocco solamente in un particolare colore. Per
+        esempio, se si vuole rimuovere l'effetto <quote>occhi rossi</quote>
+        da una foto, è utile poter lavorare solo sul canale del rosso.
+      </para>
+      <para lang="it">
+        I canali possono essere visti come delle maschere che permettono o
+        restringono l'uscita del colore che quel canale rappresenta. Usando
+        i filtri solle informazioni di canale, è possibile creare molti
+        effetti particolari sull'immagine. Un semplice esempio dell'uso di
+        un filtro sui canali di colore è il filtro <link
+        linkend="plug-in-colors-channel-mixer">mixer dei canali</link>.
+      </para>
+      <para lang="it">
+        In aggiunta a questi canali, <acronym>GIMP</acronym> permette anche
+        di creare altri canali (o più correttamente, maschere di colore),
+        mostrate nella parte bassa della finestra di dialogo dei canali. È
+        possibile convertire una selezione in una maschera di canale usando
+        il comando <link linkend="gimp-selection-to-channel">salva nel
+        canale</link>. È anche possibile creare un canale facendo clic con
+        il tasto destro del mouse nella finestra dei canali e usando il
+        comando <link linkend="gimp-channel-new">nuovo canale</link>.
+        Vedere la voce del glossario <link
+        linkend="glossary-masks">maschere</link> per ulteriori informazioni
+        sulle maschere di canale.
+      </para>
+
+      <para lang="ko">
+        각 이미지는 각각의 채널로 분리된다음 출력장치로 보내지기 전에 다시
+        합쳐진다. 이 출력장치는 대부분 모니터인데, 여기서는 이미지를 빨강,
+        녹색, 파랑으로 나눠 모니터에 표현하는데 쓰인다. 물론 다른 출력
+        장치에서는 다른 채널을 사용할 수도 있다.
+      </para>
+      <para lang="ko">
+        채널은 특정색을 조정해야 할때 사용된다. 예를 들어 "적목현상"
+        없애기를 할 경우에, 적색 채널에서 작업을 하는 것이 보편적인
+        해결책이다. 그리고 채널이 표현하는 색상의 허용이나 제한을 하는
+        마스크처럼 사용할 수도 있다. 이러한 채널의 속성에 반하는 필터를
+        사용하면 굉장히 다양하고 독특한 효과를 낼 수 있다.
+      </para>
+
+      <para lang="sv">
+        Varje bild är uppdelad i olika sorters kanaler och sätts sedan ihop
+        innan de skickas till enheten för utdata. En enehet för utdata är
+        oftast en skärm. De kanaler som används när en bild renderas till
+        skärmen är Röd, Grön och Blå. Andra enheter för utdata använder ibland
+        andra sorters kanaler.
+      </para>
+      <para lang="sv">
+        Kanaler kan vara användbara vid arbete av bilder där en färg behöver
+        justeras. Om, till exmpel, borttagning av <quote>röda-ögon</quote>
+        är målet, arbete mot den Röda kanalen är oftast det förutsatta valet.
+      </para>
+
+      <para lang="zh_CN">
+        每个图像都被分成单独的通道然后再发送到输出设备前重新组合。输出设备通
+        常是屏幕。屏幕上的渲染图像时使用的是通道是红，绿和蓝。其他的输出设备
+        可能使用的是不同的通道。
+      </para>
+      <para lang="zh_CN">
+        当使用的图像需要被调节成某一种颜色时，通道是很有用的。例如，目标是删
+        除“红眼”，使用红色通道明显是能立刻解决问题的办法。通道可以视为是允许
+        或是限制色彩输出的蒙板。通过运行与通道信息匹配的滤镜程序，熟练的
+        GIMP 用户可以作出各种微妙的效果。
+      </para>
+    </glossdef>
+  </glossentry>
+
+  <glossentry id="glossary-alpha-channel" lang="fr;it"><!--Added 070620-->
+    <glossterm>
+      <phrase lang="fr">Canal Alpha</phrase>
+      <phrase lang="it">Canale alfa</phrase>
+    </glossterm>
+    <glossdef>
+      <indexterm lang="fr">
+        <primary>Transparence</primary>
+        <secondary>Canal Alpha</secondary>
+      </indexterm>
+      <indexterm lang="fr">
+        <primary>Canal</primary>
+        <secondary>Canal Alpha</secondary>
+      </indexterm>
+
+      <indexterm lang="it">
+        <primary>Trasparenza</primary>
+        <secondary>Canale alfa</secondary>
+      </indexterm>
+      <indexterm lang="it">
+        <primary>Canale</primary>
+        <secondary>Canale alfa</secondary>
+      </indexterm>
+
+      <para lang="fr">
+        Un canal Alpha représente la transparence d'une image. Imaginez que
+        vous pouvez voir à travers l'image. Ce canal Alpha est
+        automatiquement ajouté à l'image dès que vous ajoutez un deuxième
+        calque. Vous pouvez le voir dans le Dialogue des Canaux. Il donne aux
+        calques la possibilité d'être transparents. Mais cette possibilité
+        n'est pas donnée au calque d'Arrière-plan : pour cela, vous devez
+        utiliser la commande <quote>Ajouter un canal Alpha</quote>.
+      </para>
+      <para lang="fr">
+        Vous pouvez aussi considérer qu'un canal Alpha, bien que non
+        représenté, est attribué à chacun des calques sauf au calque
+        d'Arrière-plan. Le canal Alpha de l'image est la somme des canaux
+        Alpha des calques.
+      </para>
+      <para lang="fr">
+        Voyez <link linkend="alpha-channel-example">Exemple pour le Canal
+          Alpha </link>. <!--cf concepts/layers.xml-->
+      </para>
+
+      <para lang="it">
+        Un canale alfa rappresenta il livello di trasparenza dell'immagine.
+        Tutti i livelli aggiunti ad una immagine sono dotati di canale alfa,
+        lo si può vedere nella finestra dei Canali. Il livello di sfondo non
+        è normalmente dotato di canale alfa, per aggiungerlo si utilizzi il
+        comando <quote>Aggiungi canale alfa</quote>.
+      </para>
+      <para lang="it">
+        Il canale alfa di un'immagine è la somma di tutti i canali alfa dei
+        singoli livelli.
+      </para>
+      <para lang="it">
+        Si veda anche l'<link linkend="alpha-channel-example">esempio di canale
+        alfa</link>.  <!--esempio in concepts/layers.xml -->
+      </para>
+    </glossdef>
+  </glossentry>
+
+  <glossentry id="glossary-path-fr" lang="fr">
+    <glossterm lang="fr">Chemins</glossterm>
+
+    <glossdef>
+      <para lang="fr">
+        Un <emphasis>Chemin</emphasis>
+        est un tracé linéaire, polygonal ou en forme de courbe, ou un
+        mélange de segments des deux types. Le dessin vectoriel en fait grand
+        usage, mais, dans <acronym>GIMP</acronym>, leur utilisation se
+        limite à marquer les bords
+        d'une sélection ou à tracer des dessins géométriques. Voyez
+        <link linkend="gimp-concepts-paths">Chemins</link>
+        pour une information de base sur les chemins et l'
+        <link linkend="gimp-tool-path">Outil Chemin</link>
+        pour savoir comment créer et éditer les chemins.
+      </para>
+    </glossdef>
+  </glossentry>
+
+
+  <glossentry id="glossary-clipboard" lang="en;ko;zh_CN">
+    <glossterm>
+      <phrase lang="en">Clipboard</phrase>
+      <!-- de MARK: see glossterm "Zwischenablage" -->
+      <!-- es MARK: see glossterm "Portapapeles" -->
+      <!-- fr MARK: see glossterm "Presse-papier" -->
+      <!-- it MARK: see glossterm "Appunti" -->
+      <phrase lang="ko">클립보드(Clipboard)</phrase>
+      <!-- no MARK: see glossterm "Utklippstavle" -->
+      <phrase lang="zh_CN">Clipboard(剪切板)</phrase>
+    </glossterm>
+
+    <glossdef>
+      <para lang="en">
+        The Clipboard is a temporary area of memory which is used to
+        transfer data between applications or documents. It is used when you
+        Cut, Copy or Paste data in <acronym>GIMP</acronym>.
+      </para>
+      <para lang="en">
+        The clipboard is implemented slightly differently under different
+        operating systems. Under Linux/XFree, <acronym>GIMP</acronym> uses
+        the XFree clipboard for text and the <acronym>GIMP</acronym>
+        internal image clipboard for transferring images between image
+        documents. Under other operating systems, the clipboard may work
+        somewhat differently. See the <acronym>GIMP</acronym> documentation
+        for your operating system for further information.
+      </para>
+      <para lang="ko">
+        클립보드는 응용 프로그램이나 문서 사이에 전송되는데 사용되는
+        메모리의 임시 공간을 가리킨다. 김프에서는 다른 운영체제에서 사용하는
+        클립보드와 다소 다른 클립보드를 사용한다. Linux/XFree 에서는 XFree
+        의 클립보드는 텍스트를 저장하고, 김프 내부의 이미지 클립보드는
+        이미지 문서사이에 사용되는 이미지를 저장한다. 김프가 운영체제의
+        클립보드를 사용한다면 그 차이는 명백하게 드러날 것이다. 이
+        차이점들은 김프의 각 패키지에 따른 특수한 문서에서 볼 수 있다.
+      </para>
+      <para lang="zh_CN">
+        剪切板可以看成是在应用程序或文件间传输数据的临时内存区域。在不同的操
+        作系统下，GIMP剪切板的使用方法稍有不同。在 Linux/XFree 系统下，
+        XFree 剪切板适用于文本，而 GIMP 内部图像剪切板适用于图像间的数据交换。
+        当 GIMP 在其他操作系统下运行时，差异可能会比较明显。任何差异在操作系
+        统上的个人GIMP 软件包中的特定文件都应当标明。
+      </para>
+
+      <para lang="en">
+        The basic operations provided by the clipboard are
+        <quote>Cut</quote>, <quote>Copy</quote>, and <quote>Paste</quote>.
+        Cut means that the item is removed from the document and copied to
+        the clipboard. Copy leaves the item in the document and copies it to
+        the clipboard. Paste copies the contents of the clipboard to the
+        document. The <acronym>GIMP</acronym> makes an intelligent decision
+        about what to paste depending upon the target. If the target is a
+        canvas, the Paste operation uses the image clipboard. If the target
+        is a text entry box, the paste operation uses the text clipboard.
+      </para>
+      <para lang="ko">
+        대부분의 기본 작업들은 클립보드로 잘라내기, 복사하기, 붙여넣기 등을
+        사용할 수 있다. 잘라내기는 아이템을 클립보드로 보낸 후 삭제할 때
+        쓰이고 복사하기는 문서에 아이템을 남긴채 클립보드로
+        복사한다. 붙여넣기는 클립보드에 무엇이 있던간에 문서로
+        복사한다. 여기서 김프는 해당 문서에 어떤 것을 붙여넣을지 지능적으로
+        결정을 하게 된다. 타겟이 캔버스라면, 붙여넣기 작업은 이미지
+        클립보드를 사용하고, 텍스트 박스라면 텍스트 클립보드를 사용한다.
+      </para>
+      <para lang="zh_CN">
+        剪切板接口提供的最基本操作有剪切，复制和粘贴。剪切是用来显示被发送到
+        剪切板上已删除项。复制保留原文件中的项，并将它拷贝到剪切板。粘贴是指
+        拷贝到文件中，而不管剪切板中发生什么变化。GIMP 会根据目标而作出适当
+        的决定来粘贴。如果目标是画布，粘贴操作会使用图像剪切板。如果目标是文
+        本显示框，粘贴操作会使用文本剪切板。
+      </para>
+    </glossdef>
+  </glossentry>
+
+
+  <glossentry id="glossary-colordepth" lang="en;fr;it">
+    <glossterm>
+      <phrase lang="en">Color depth</phrase>
+      <phrase lang="fr">Couleur, profondeur de</phrase>
+      <phrase lang="it">Colore, profondità di</phrase>
+    </glossterm>
+
+    <indexterm lang="en">
+      <primary>Color depth</primary>
+    </indexterm>
+
+    <indexterm lang="en;fr">
+      <primary>bpp</primary>
+    </indexterm>
+
+    <indexterm lang="fr">
+      <primary>Profondeur de couleur</primary>
+    </indexterm>
+    <indexterm lang="fr">
+      <primary>Couleur</primary>
+      <secondary>Profondeur</secondary>
+    </indexterm>
+
+    <glossdef>
+      <para lang="en">
+        Color Depth is simply the number of bits used to represent a color
+        (bits per pixel : bpp). There are 3 channels for a pixel (for Red,
+        Green and Blue). <acronym>GIMP</acronym> can supprt 8 bits per
+        channel, referred as <emphasis>eight-bit color</emphasis>. So, GIMP
+        color depth is 8 * 3 = 24, which allows 256 * 256 * 256 =  16,777,216
+        possible colors (8 bits allow 256 colors).
+      </para>
+      <para lang="fr">
+        La profondeur de couleur est simplement le nombre de bits utilisés
+        pour représenter les couleurs (bits par pixel : bpp). Il y a 3 canaux
+        pour un pixel (rouge, Vert, Beu). <acronym>GIMP</acronym> peut gérer
+        8 bits par canal. On dit que c'est un système
+        <emphasis>8-bits</emphasis>. La profondeur de couleur de GIMP est
+        donc 8 * 3 = 24., ce qui permet d'afficher
+        256 * 256 * 256 =  16,777,216 couleurs (8 bits autorisent 256
+        couleurs).
+      </para>
+      <para lang="it">
+        La profondità di colore è il numero di bit utilizzato per
+        rappresentare un colore. Con una profondità pari a 1 l'immagine può
+        contenere unicamente pixel bianchi o neri. Con una profondità di
+        colore pari a 4 si possono rappresentare 16 colori. I colori in
+        <acronym>GIMP</acronym> hanno una profondità pari a 24 bit, suddivisi
+        a gruppi di 8 rispettivamente per la componente rossa, verde e blu
+        del colore, in tutto sono rappresentabili 16.777.216 colori.
+      </para>
+    </glossdef>
+  </glossentry>
+
+
+  <glossentry id="glossary-colormodel" lang="en;es;fr;it;ko;ru;zh_CN">
+    <glossterm>
+      <phrase lang="en">Color model</phrase>
+      <!-- de MARK: see phrase "Farbmodelle" -->
+      <phrase lang="es">Color, modos de</phrase>
+      <phrase lang="fr">Couleur: modèles</phrase>
+      <phrase lang="it">Colore, modalità di</phrase>
+      <phrase lang="ko">색상 모드(Color modes)</phrase>
+      <!-- no MARK: see glossentry "Fargemodus" -->
+      <phrase lang="ru">Цветовая модель</phrase>
+      <phrase lang="zh_CN">Color modes(色彩模式)</phrase>
+    </glossterm>
+
+    <indexterm lang="en"><primary>Color model</primary></indexterm>
+    <indexterm lang="es"><primary>Color, modos de</primary></indexterm>
+    <indexterm lang="fr"><primary>Couleur: modèles</primary></indexterm>
+    <indexterm lang="it"><primary>Colore, modalità di</primary></indexterm>
+
+    <glossdef>
+      <para lang="en">
+        <!-- Reorganised "color models" to be more like de. There's no need
+             to repeat the information again.  scb -->
+        A color model is a way of describing and specifying a color. The term
+        is often used loosely to refer to both a color space system and the
+        color space on which it is based.
+      </para>
+      <para lang="es">
+        Un modelo de color es una manera de describir y especificar un color.
+        El término se emplea aveces para referirse tanto al sistema del
+        espacio de color como al espacio de color en que se basa.
+      </para>
+      <para lang="fr">
+        Un modèle de couleur est une façon de décrire les couleurs. C'est un
+        ensemble de couleurs pouvant être affichées ou reconnues par un
+        périphérique d'entrée ou de sortie (comme un scanneur, un moniteur,
+        une imprimante...). Les couleurs d'un espace de couleurs sont
+        spécifiées dans un système de coordonnées spatiales, le plus
+        souvent à trois axes. Il existe 30 ou 40 systèmes d'espaces de
+        couleurs. Les plus importants sont :
+      </para>
+
+      <para lang="en">
+        A color space is a set of colors which can be displayed or
+        recognized by an input or output device (such as a scanner, monitor,
+        printer, etc.). The colors of a color space are specified as values
+        in a color space system, which is a coordinate system in which the
+        individual colors are described by coordinate values on various axes.
+        Because of the structure of the human eye, there are three axes in
+        color spaces which are intended for human observers. The practical
+        application of that is that colors are specified with three
+        components (with a few exceptions). There are about 30 to 40 color
+        space systems in use. Some important examples are:
+      </para>
+      <para lang="es">
+        Un espacio de color es un conjunto de colores que puede mostrar o
+        reconocer un dispositivo de entrada o salida (como un escáner, un
+        monitor, o una impresora).  Los colores de un espacio de color se
+        especifican como valores de un sistema de espacio de colores, que es
+        un sistema de coordenadas en donde cada color se describe por sus
+        coordenadas sobre los distintos ejes.  Debido a la estructura del ojo
+        humano, hay tres ejes en los sistemas que pretenden mostrar color.
+        Hay unos 30 o 40 sistemas de espacios de color en uso.  Los más
+        importantes son:
+      </para>
+
+      <itemizedlist lang="en;es;fr">
+        <listitem>
+          <para lang="en;es"><link linkend="glossary-rgb">RGB</link></para>
+          <para lang="fr"><link linkend="glossary-rgb">RVB</link></para>
+        </listitem>
+        <listitem>
+          <para lang="en;es"><link linkend="glossary-hsv">HSV</link></para>
+          <para lang="fr"><link linkend="glossary-hsv">TSV</link></para>
+        </listitem>
+        <listitem>
+          <para lang="en;es">
+            <link linkend="glossary-cmyk">CMY(K)</link>
+          </para>
+          <para lang="fr"><link linkend="glossary-cmyk">CMJN</link></para>
+        </listitem>
+        <listitem>
+          <para><link linkend="glossary-yuv">YUV</link></para>
+        </listitem>
+        <listitem>
+          <para><link linkend="glossary-ycbcr">YCbCr</link></para>
+        </listitem>
+      </itemizedlist>
+
+      <para lang="ru">
+        Цветовая модель это метод описания цвета. //TODO
+      </para>
+      <itemizedlist lang="ru">
+        <listitem>
+          <para><link linkend="glossary-hsv">HSV</link></para>
+        </listitem>
+      </itemizedlist>
+
+      <variablelist lang="it;ko;zh_CN">
+        <varlistentry>
+          <term lang="it">RGB: Rosso Verde Blu</term>
+          <term lang="ko">RGB : 빨강 녹색 파랑</term>
+          <term lang="zh_CN">RGB：红绿蓝</term>
+
+          <listitem lang="it">
+            <mediaobject>
+              <imageobject>
+                <imagedata
+                   fileref="../images/glossary/color-model-additive.png"
+                   format="PNG" />
+              </imageobject>
+            </mediaobject>
+            <para>
+              Questo modello viene usato per rappresentare i colori sui
+              computer e sui monitor televisivi. Questi colori sono emessi dai
+              fosfori o da altri elementi dello schermo e non riflessi come
+              per i disegni. Il colore risultante è una combinazione dei tre
+              colori primari con differenti combinazioni di luminosità degli
+              stessi. Se si guarda da vicino lo schermo di una televisione, la
+              cui risoluzione è inferiore a quella dello schermo di un
+              computer, si potrà vedere gli elementi rossi verdi e blu
+              illuminati in maniera differente. Si dice che questo modello di
+              colore è <emphasis>additivo</emphasis>
+            </para>
+            <para>
+              <acronym>GIMP</acronym> usa otto (8) bit per canale per ogni
+              colore primario e così sono possibili 256 valori di intensità
+              che producono 256×256×256 = 16.777.216 colori (chiamati True
+              Color).
+            </para>
+            <para>
+              Non è evidente perché queste combinazioni pruducono questi
+              colori. Perché, per esempio, 229R+205G+229B dà un tipo di rosa?
+              Ciò dipende dal nostro occhio e dalla nostra mente. Non ci sono
+              colori in Natura, solo una variazione continua della lunghezza
+              d'onda della luce. Nella retina ci sono tre tipi coni. La stessa
+              onda agisce sui tre coni stimolandoli in maniera diversa e la
+              mente dopo milioni di anni di evoluzione ora riconosce un colore
+              in base a queste differenze.
+            </para>
+            <para>
+              Si può facilmente capire che da nessuna luce (0R+0G+0B) si
+              ottiene il buio completo cioè il nero e che dalla piena luce
+              (255R+255G+255B) invece si ottiene il bianco. Da un'intensità
+              uguale per tutti i canali invece si ottengono gradazioni di
+              grigio, perciò è possibile ottenere solo 256 livelli di grigio.
+            </para>
+            <para>
+              Mescolando due <emphasis>colori primari</emphasis> in
+              modalità RGB si ottiene un <emphasis>colore
+              secondario</emphasis> che è un colore della modalità
+              CMY. Così, combinando il rosso e il verde si ottiene il
+              giallo, verde e blu danno il ciano e, blu e rosso danno il
+              magenta. Non si confonda i colori secondari con
+              i <emphasis>colori complementari</emphasis> che sono
+              diametralmente opposti ai colori primari nella ruota dei
+              colori:
+              <mediaobject>
+                <imageobject>
+                  <imagedata
+                     fileref="../images/glossary/colorcircle.png"
+                     format="PNG" />
+                </imageobject>
+              </mediaobject>
+              Mescolando un colore primario con il suo complementare si
+              ottiene un grigio (colore neutro).
+            </para>
+            <para>
+              È importante sapere cosa succede quando si gestiscono i colori.
+              La regola da ricordare è che decrementando l'intensità di un
+              colore primario si ottiene un'incremento della saturazione del
+              colore complementare (ed il contrario). Ecco la spiegazione:
+              quando si decrementa il valore di un canale, per esempio il
+              verde, si incrementa l'importanza relativa degli altri due,
+              nell'esempio il rosso e il blu. La combinazione di questi due
+              canali è il colore secondario magenta che è il colore
+              complementare del verde.
+            </para>
+            <para>
+              <emphasis>Esercizio</emphasis>: controllare l'operazione
+              seguente. Creare una nuova immagine con solo lo sfondo bianco
+              (255R+255G+255B). Aprire la finestra
+              <menuchoice>
+                <guimenu>Strumenti</guimenu>
+                <guisubmenu>Strumenti di colore</guisubmenu>
+                <guimenuitem>Livelli</guimenuitem>
+              </menuchoice>
+              e selezionare il canale rosso. Se si
+              desidera, si può abilitare l'anteprima. Spostare il cursore
+              bianco a sinistra per decrementare il valore del
+              rosso. Noterete che lo sfondo dell'immagine diventa di colore
+              sempre più simile al ciano. Ora decrementare il valore del
+              canale blu: rimarrà solo il verde. Per esercizio tornare
+              indietro, aggiungere colore e provare a indovinare che
+              tonalità apparirà.
+            </para>
+            <para>
+              Lo strumento di <link
+              linkend="gimp-tool-color-picker">prelievo colore</link>
+              permette di sapere i valori RGB di un pixel ed il valore in
+              notazione <link
+              linkend="glossary-html-notation">esadecimale</link> del
+              colore, utile per le pagine HTML.
+            </para>
+          </listitem>
+
+          <listitem lang="ko">
+            <mediaobject>
+              <imageobject>
+                <imagedata
+                   fileref="../images/glossary/color-model-additive.png"
+                   format="PNG" />
+              </imageobject>
+            </mediaobject>
+            <para lang="ko">
+              이 모델은 컴퓨터나 텔레비젼 모니터에 색상을 표현하는 방법이다.
+              이 색상들은 스크린 엘리먼트에 쏘아지는데, 이때 이미지에 있는
+              색들은 반사되지 않는다. 최종 색상은 이 RGB 3원색의 조합과
+              밝기의 차이로 결정된다. 텔레비젼 스크린을 가까이에서 보면
+              도트 간격이 컴퓨터 스크린보다 넓을 것을 볼 수 있다. 그리고
+              빨강, 녹색, 파랑의 각 요소가 다르게 빛나는 것을 볼 수 있다.
+              따라서 이 색상 모델을 <emphasis>가산</emphasis> 혼합이라고
+              한다.
+            </para>
+            <para lang="ko">
+              김프는 각 기본 색상에 8비트의 채널을 사용한다. 이는 256개의
+              농도를 가지게 되므로 256×256×256 = 16,777,216 개의
+              색상(트루 컬러)을 사용할 수 있다.
+            </para>
+            <para lang="ko">
+              그런데 이러한 조합이 어째서 특정한 색을 만들 수 있는 것일까?
+              예를 들어 229R+205G+229B 는 분홍인 것일까? 그것은 우리의 눈과
+              뇌와 연관된 것이다. 자연에는 색이라는 것이 없다. 다만 빛의
+              파동길이에 따른 연속적인 변화만이 있을 뿐이다.
+              망막에는 세
+              가지의 추상체가 있다. 같은 파장은 세 가지의 추상체에서
+              다르게 추상화된다. 그리고 이러한 것이 수만년의 진화끝에 그
+              차이를 통해 색을 구별하는 법을 배우게 된 것이다.
+            </para>
+            <para lang="ko">
+              빛이 없으면(0R+0G+0B) 완벽하게 어두운 검은색이 되고, 빛이
+              가득하면(255R+255G+255B) 흰색이 되는 것을 생각하면 이해하기
+              쉬울 것이다. 각 채널의 농도 값이 모두 같으면 회색이 된다.
+              따라서 총 256개의 회색을 갖게 되는 것이다.
+            </para>
+            <para lang="ko">
+              RGB 모드에서 두 가지 <emphasis>1차색</emphasis>을 혼합하면
+              <emphasis>2차색</emphasis>이 만들어지는데, 이것이 CMY 모드의
+              색상이다. 빨강과 녹색을 섞으면 노란색이 되고, 녹색과 파랑을
+              섞으면 시안(cyan, 청록색), 파랑과 빨강을 섞으면
+              마젠타(magenta, 자홍)이 된다. 유채색 상환에서 1차색과
+              정반대의 위치를 갖는 <emphasis>보색</emphasis>과 2차색을
+              혼동하면 안된다.
+            </para>
+            <mediaobject>
+              <imageobject>
+                <imagedata
+                   fileref="../images/glossary/colorcircle.png"
+                   format="PNG" />
+              </imageobject>
+            </mediaobject>
+            <para lang="ko">
+              1차색과 보색을 혼합하면 회색이 된다.
+            </para>
+            <para lang="ko">
+              색상을 조절할 때 어떻게 조절되는지 아는 것은 중요한 일이다.
+              가장 기본적인 법칙은 1차색의 값을 줄이는 것은 보색의 채도를
+              증가시키는 것과 같다라는 것이다. 다시 말해 예를 들어 녹색
+              채널의 값을 줄이면, 빨강과 파랑의 값이 상대적으로 높아지게
+              된다라는 것이다. 그리고 그것은 두 채널의 혼합인
+              마젠타(magenta, 자홍)에 영향을 주는데, 이는 녹색의 보색이다.
+            </para>
+            <para lang="ko">
+              <emphasis>연습</emphasis>
+              : 흰색(255R+255G+255B) 배경의 새 이미지를 만든다. 도구/색상
+              도구/레벨 대화상
+              자를 열고 빨강색 채널을 선택한다. 그리고
+              필요하다면 미리보기 박스에 체크를 한다. 이제 출력레벨의
+              흰색 슬라이더를 왼쪽으로 움직여 빨간색을 감소시킨다. 그러면
+              이미지의 배경색이 점점 청록색에 가까워짐을 확인할 수 있다.
+              그러면 이제 파랑색 채널을 감소시켜보자. 이젠 녹색만 남아있게
+              될 것이다. 다시 처음으로 돌아가서 이번엔 색을 칠한 다음에
+              과정을 반복했을 때 어떤 색으로 변할지 생각해 보자.
+            </para>
+            <para lang="ko">
+              <!--PENDING: ko <link linkend="gimp-tool-color-picker">색상
+                   추출</link> -->
+              색상 추출 도구는 특정 픽셀의 RGB 값과 HTML 에서 쓸 수 있는
+              <link linkend="glossary-html-notation">16진수값</link> 을
+              보여준다.
+            </para>
+          </listitem>
+
+          <listitem lang="zh_CN">
+            <mediaobject>
+              <imageobject>
+                <imagedata
+                   fileref="../images/glossary/color-model-additive.png"
+                   format="PNG" />
+              </imageobject>
+            </mediaobject>
+            <para>
+              该模型被用作表现电脑和电视显示器上的色彩。这些颜色通过荧光体发
+              射出来的而不同于颜料中的颜色。最终图像是由三种 RGB 原色和不同
+              明亮等级组合而成。如果您走近仔细看电视机的显示屏，就能看见红色，
+              绿色和蓝色的荧光在分别地发光。该色彩模型是<emphasis>累加(
+              additive)</emphasis>的。
+            </para>
+            <para>
+              GIMP 每个主色使用 8 位通道，因此 256 个可用亮度产生
+              256×256×256 = 16,777,216 种颜色(叫做真彩色)。
+            </para>
+            <para>
+              为什么这些组合会产生如此意想不到的颜色？比如，229R+205G+229B
+              得到一种粉红色。这主要由我们的眼和脑决定。自然界本无色彩，只有
+              多种连续的的光波。在视网膜上则是三种圆锥体。同一光波作用在三种
+              圆锥体上产生不同的刺激，而我们的头脑在经过几百万年的进化后，知
+              道如何通过这些区别来辨别一种颜色。
+            </para>
+            <para>
+              比较容易理解不亮 (0R+0G+0B) 是完全黑暗，黑色的，而全亮
+              (255R+255G+255B)得到白色。所有通道中强度值相同则得到一个灰度，
+              所以只能有 256 种灰度。
+            </para>
+            <para>
+              将RGB模式中两种<emphasis>原色</emphasis>混合就得到一个用在CMY
+              模式中<emphasis>合成色</emphasis>。所以红绿组合为黄，蓝绿为青，
+              红蓝为洋红。不要错误地将原色和<emphasis>补色</emphasis>混为一
+              谈，因为补色是和其对应原色在色环上直径方向相反的那一个颜色：
+              <mediaobject>
+                <imageobject>
+                  <imagedata
+                     fileref="../images/glossary/colorcircle.png"
+                     format="PNG" />
+                </imageobject>
+              </mediaobject>
+              混合一个原色和其补色得到灰色(中性色)。
+            </para>
+            <para>
+              明白您处理颜色时发生了什么非常重要。需要记住的规则是：减少一个
+              原色意味着增加其补色的饱和度，相反也一样。解释如下：当您减少一
+              个通道的量，比如说绿色，也就相对增加了其它所有通道的重要性，这
+              里是红和蓝。现在混合这些通道就得到合成色，洋红，而那就是绿色的
+              补色。
+            </para>
+            <para>
+              <emphasis>练习</emphasis>: 您可以这样检验。新建个只有一个白色
+              (255R+255G+255B) 背景的图像。打开“工具/颜色工具/ 色阶”对话框并
+              选择红色通道。如果有必要，勾选“预览”框。把白色滑条移向左边来减
+              少红色量。您会发现您图像背景变得越来越呈青色。现在减少蓝色通道，
+              只保持绿色不变。随着训练的进行，可以添加颜色并试着猜测将出现什
+              么色调。
+            </para>
+            <para>
+              <link linkend="gimp-tool-color-picker">颜色拾取</link>工具可以
+              知道一个像素的RGB 值和其颜色的
+              HTML <link linkend="glossary-html-notation">hextriplet</link>。
+            </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+
+      <variablelist lang="it;ko;zh_CN">
+        <varlistentry>
+          <term lang="it">HSV: tonalità, saturazione, valore</term>
+          <term lang="ko">HSV: 색상 채도 값(Hue Saturation Value)</term>
+          <term lang="zh_CN">HSV：色调 饱和度 亮度</term>
+
+          <listitem lang="it">
+            <para>
+              La modalità RGB è adatta agli schermi dei computer ma non
+              permette di descrivere bene cosa vediamo nella vita di tutti i
+              giorni: un verde pallido, un rosso vivo... la modalità HSV tiene
+              conto di queste situazioni. HSV e RGB non sono indipendenti,
+              come si può vedere attraverso lo strumento di prelievo del
+              colore: quando si cambia una, cambia anche l'altra. Per
+              approfondire è una buona guida il libro
+              <emphasis>Grokking the GIMP</emphasis>.
+            </para>
+
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <guilabel>Tonalità</guilabel>: è il colore vero e
+                  proprio che risulta dalla combinazione dei colori
+                  primari. Tutte le sfumatura di colore (eccetto i
+                  livelli di grigio) sono rappresentate in una
+                  <emphasis>ruota dei colori</emphasis>: giallo e blu,
+                  ma anche viola, arancio... Va da 0° a 360°.
+                  (il termine <quote>colore</quote> viene spesso usato al
+                  posto di
+                  <quote>tonalità</quote>. Per es. colori RGB sono
+                  <quote>colori primari</quote>).
+                </para>
+              </listitem>
+
+              <listitem>
+                <para>
+                  <guilabel>Saturazione</guilabel>
+                  : questo parametro descrive l'inverso della "pallidità" del
+                  colore, come quando si aggiunge del colore bianco in un
+                  barattolo di vernice: un colore completamente saturo sarà
+                  puro. Poco saturo se andrà verso il pastello. Molto poco
+                  saturo sarà quasi bianco. La saturazione va da 0 a 100, dal
+                  bianco al colore più puro.
+                </para>
+              </listitem>
+
+              <listitem>
+                <para>
+                  <guilabel>Valore</guilabel>
+                  : è la quantità di luce emessa dal colore, la luminosità. Si
+                  notano cambiamenti di luminosità quando il colore va
+                  dall'ombra alla luce del sole o quando si aumenta la
+                  luminosita dello schermo. Varia da 0 a 100. I valori dei
+                  punti nei tre canali sono anche delle luminosità: il
+                  <quote>valore</quote>
+                  è la somma vettoriale di questi valori elementari nello
+                  spazio RGB.
+                </para>
+              </listitem>
+            </itemizedlist>
+            <para>
+              Vedere anche alla voce <link linkend="glossary-hsv">HSV</link>.
+            </para>
+          </listitem>
+
+          <listitem lang="ko">
+            <para>
+              RGB 모드는 컴퓨터 스크린에는 적합하지만 일상생활에서 볼 수 있는
+              것들을 표현하기에는 부적합하다. 밝은 녹색, 연한 분홍, 밝은 빨강
+              등.. HSV 모드는 이러한 표현에 적합하다. HSV와 RGB는 서로
+              독립적인 것은 아닌데, 이는 색상 추출기에서 한 가지 모드의
+              색상을 바꾸면 다른 모드도 바뀌는 것으로 확인할 수 있다.
+            </para>
+            <para>
+              <guilabel>색상(Hue)</guilabel>: 이는 1차색의 혼합으로 생긴 색
+              자체이다. 회색을 제외한 모든 색의 단계는 <emphasis>유채색
+              상환</emphasis>에 표시된다.  : 노랑, 파랑, 보라, 주황 등이 0°
+              에서 360° 에 걸쳐 표현된다.  ("색"은 종종 "색상" 대신
+              쓰인다. 그리고 RGB는 "1차색"을 말한다.)
+            </para>
+            <para>
+              <guilabel>채도(Saturation)</guilabel>:
+              이것은 마치 흰색을 덧칠했을 때와 비슷한 느낌의 색상의
+              엷음 정도를 나타낸다. 완전한 채도값을 갖는 색상은 순수하다.
+              그리고 채도가 낮아질수록, 파스텔톤이 되어간다. 채도값은
+              0 부터 100 까지로 흰색에서 순수한 색까지의 값이다.l
+            </para>
+            <para>
+              <guilabel>명암(Value)</guilabel>:
+              이것은 밝기의 강도로 색상에 의해 발산되는 빛의 총량이다.
+              색상을 그늘에서 햇빛쪽으로 움직이거나 모니터의 밝기를
+              조절하면 이 변화를 확인할 수 있다. 0 부터 100 까지의 값을
+              가지며, 세 채널의 각 픽셀도 밝기를 가진다. "명암" 은
+              RGB 공간에서 각 요소들의 벡터합이다.
+            </para>
+          </listitem>
+
+          <listitem lang="zh_CN">
+            <para>
+              RGB 模式非常适合电脑屏幕，但无法描述日常生活中我们所见到的：浅
+              绿色，淡粉色，鲜红色... HSV 模式用来描述这些特征。HSV 和 RGB
+              并不是独立的。您可以在颜色拾取中看到：改变其中一个同时另一个也
+              被改变。勇敢者可以看《Grokking the GIMP》，其中解释了它们的关
+              系。
+            </para>
+
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <guilabel>色调</guilabel>: 即颜色本色，由原色组合而成。所
+                  有颜色变化(除了灰度)都在一个<emphasis>色环</emphasis>上表
+                  现：黄，蓝，还有紫，橘黄... 它从 0° 到360°。(“色调”常常被
+                  叫作“色彩”。RGB 颜色是“原色”。)
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <guilabel>饱和度</guilabel> 该参数描述如同向一通油漆中加入
+                  白色时，其颜色有多淡：一个完全饱和的色调是纯色。如果不太饱
+                  和，则会是淡色。非常不饱和几乎是白色。饱和度值从 0 到
+                  100, 白色到最纯色。
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <guilabel>亮度</guilabel>: 即发光度，发光强度。它是一种色
+                  彩发出光线的数量。当改变一种色彩从阴暗到明亮或增加您显示屏
+                  的发光度时，您会注意到这种亮度变化。它的范围是 0 到100。在
+                  三个通道上的像素亮度也是发光度：“亮度”是在 RGB 空间的这些
+                  元素亮度的矢量和。
+                </para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+
+      <variablelist lang="it;ko;zh_CN">
+        <varlistentry>
+          <term lang="it">CMYK: (C)iano (M)agenta (Y)Giallo (K)Nero</term>
+          <term lang="ko">
+            CMYK: 시안(Cyan) 마젠타(Magenta) 노랑(Yellow) 검정(black)
+          </term>
+          <term lang="zh_CN">CMYK：青 洋红 黄 黑</term>
+
+          <listitem lang="it">
+            <mediaobject>
+              <imageobject>
+                <imagedata
+                   fileref="../images/glossary/color-model-subtractive.png"
+                   format="PNG" />
+              </imageobject>
+            </mediaobject>
+
+            <para>
+              Prima di tutto chiariamo che <acronym>GIMP</acronym>
+              non supporta la modalità CMYK. Un plug-in sperimentale che
+              fornisce un rudimentale supporto alla modalità CMYK si può
+              trovare su
+              <xref linkend="bibliography-online-plugin-separate" />.)
+            </para>
+
+            <para>
+              Questa modalità serve per stampare, dato che le stampanti
+              solitamente contengono questi colori. È la modalità della
+              pittura e di tutti gli oggetti che ci circondano, dove la luce
+              non è emessa ma riflessa. Gli oggetti assorbono parte della onde
+              luminose e noi vediamo solo la parte riflessa. Notare che il
+              nostro occhio con i suoi coni, vede la luce in modalità RGB. Un
+              oggetto è rosso perché il verde e il blu sono stati assorbiti.
+              La combinazione di verde e blu dà il ciano. Così il ciano viene
+              assorbito quando si aumenta il rosso e viceversa quando si
+              aumenta il ciano il rosso complementare viene assorbito: questo
+              sistema è <emphasis>sottrattivo</emphasis>.
+              Se si aumenta il giallo si diminuisce il blu e, se si aumenta
+              il magenta si diminuisce il verde.
+            </para>
+
+            <para>
+              Perciò si può conseguentemente pensare che mescolando ciano,
+              magenta e giallo si sta sottraendo il rosso, il verde e il blu e
+              quindi i nostri occhi non vedranno nulla se non il nero. La
+              questione è leggermente più complessa. In effetti si vede un
+              marrone scuro. Ecco perché questa modalità ha anche il colore
+              nero e così anche la stampante. È anche più economico: la
+              stampante non deve mescolare tre colori per ottenere un nero di
+              bassa qualità. Basta aggiungere il nero.
+            </para>
+          </listitem>
+
+          <listitem lang="ko">
+            <mediaobject>
+              <imageobject>
+                <imagedata
+                  fileref="../images/glossary/color-model-subtractive.png"
+                  format="PNG" />
+              </imageobject>
+            </mediaobject>
+            <para>
+              먼저 말해두어야 할것은 김프는 CMYK 모드를 지원하지 않는다라는
+              것이다(하지만 기초적인 CMYK를 지원하는 플러그인이 있으며,
+              그것은 이곳에서 찾을 수 있다.
+              <xref linkend="bibliography-online-plugin-separate" />.)
+            </para>
+            <para>
+              이 모드는 인쇄와 관계된 것으로, 프린터의 카트리지에 들어있는
+              색들이다. 그리고 빛을 반사할 뿐 발산하지 않는 우리 주변의 모든
+              물체나 그림을 표현하기 위한 것이다. 물체들은 빛 파장의 일부를
+              흡수하고 나머지는 반사하는데, 우리는 그 반사된 빛을 보는 것이다.
+              그리고 우리 눈에 있는 추상체는 이 반사된 빛을 RGB 모드로
+              감지하게 된다. 즉, 녹색과 파란색이 흡수된 물체는 빨간색인
+              것이다. 그럼 녹색과 파랑의 혼합은 시안(Cyan)이다. 따라서
+              빨강을 첨가하면 시안(Cyan)이 흡수된 것과 같다. 반대로
+              시안(Cyan)을 첨가하면 그 보색인 빨강이 흡수되게 된다. 이러한
+              방식을 <emphasis>감산</emphasis> 혼합이라고 한다. 그리고 노랑을
+              첨가하면 파란색이 감소하고, 마젠타(Magenta)를 첨가하면 녹색이
+              감소한다.
+            </para>
+            <para>
+              시안(Cyan), 마젠타(Magenta), 노랑의 혼합에 의해 빨강, 녹색,
+              파랑이 감소하는 것은 논리적으로 생각해 볼 수 있는 것이다.
+              그리고 빛이 없어 아무것도 볼 수 없다면 그것은 검정이다.
+              그런데 왜 굳이 이 모드에 검정색에 있는지나 프린터에 검정색
+              카트리지가 있는지에 대한 질문은 다소 복잡한 문제이다. 이는
+              단순히 세 가지의 다른 잉크를 섞어 검정색을 만드는 것보다 그냥
+              검정색 잉크를 쓰는 것이 더 싸기 때문이다.
+            </para>
+          </listitem>
+
+          <listitem lang="zh_CN">
+            <mediaobject>
+              <imageobject>
+                <imagedata
+                  fileref="../images/glossary/color-model-subtractive.png"
+                  format="PNG" />
+              </imageobject>
+            </mediaobject>
+            <para>
+              首先申明 GIMP 不支持 CMYK 模式(有一个提供基本的 CMYK 支持的实
+              验性插件可以 在<xref
+              linkend="bibliography-online-plugin-separate" /> 找到。)
+            </para>
+            <para>
+              该模式用作打印，即您的打印机的墨盒中包括这些颜色。它是打印和所
+              有我们周围物体的模式，即光线不是发射而是反射。物体吸收一部分光
+              波，我们看到的则是反射部分。注意我们眼睛及其圆锥体用 RGB 模式
+              对待这些反射光。物体呈红色是因为绿色和蓝色都被吸收了。现在，绿
+              和蓝组成为青色，因此，当您添加红色时，青色就被吸收。同理，如果
+              添加青色，红色就被吸收：该系统即<emphasis>减色法</emphasis>。
+              添加黄色，蓝色被减少；添加洋红，绿色被减少。
+            </para>
+            <para>
+              您可以逻辑上认为通过掺合青，洋红和黄就移除了红，绿和蓝，这样眼
+              睛就完全无法看到光线，也就是黑色。该问题更加复杂。实际上您将看
+              到一个深褐色。这就是该模式还有一个黑色和您的打印机还需要个黑色
+              墨盒的原因。最终答案很简单：打印机无法通过混合这三种颜色来产生
+              完美的黑色。它只能添加一些黑色。
+            </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+
+      <variablelist lang="es;fr;it;ko;zh_CN">
+        <varlistentry>
+          <term lang="es">Escala de grises</term>
+          <term lang="fr">Niveaux de gris</term>
+          <term lang="it">Livelli di grigio</term>
+          <term lang="ko">회색톤(Grayscale)</term>
+          <term lang="zh_CN">灰度</term>
+
+          <!--Please keep one listitem per language-->
+          <listitem lang="es">
+            <para>
+              Cuando creas una nueva imagen puedes escoger el modo de Escala
+              de grises (la puedes luego colorear transformándola a modo RGB).
+              También puedes transformar una imagen existente en Escala de
+              grises (pero no todos los formatos admiten esta transformación)
+              por medio del comando<!--link linkend="gimp-image-mode"-->
+              Escala de grises<!--/link-->.
+            </para>
+            <para>
+              Como hemos explicado en el modo RGB, las imágenes de 24 bits del
+              <acronym>GIMP</acronym>
+              no pueden tener más de 256 niveles de gris, codificados en 8
+              bits por canal. Si cambias desde el modo Escala de grises al
+              modo RGB le proporcionas a tu imagen una estructura RGB de tres
+              canales pero por supuesto tu imagen permanece gris.
+            </para>
+            <para lang="es">
+              Los archivos de imágenes en Escala de grises (8-bit) son más
+              pequeños que los archivos de imágenes RGB.
+            </para>
+            <para>
+              También puedes transformar una imagen RGB a Escala de
+              grises desaturándola gracias a la opción HSV del filtro
+              <!--link
+              linkend="plug-in-decompose-registered"-->Descomponer<!--/link-->,
+              la herramienta <!--link
+              linkend="gimp-tool-colorize"-->Colorear<!--/link-->, o
+              la herramienta <!--link
+              linkend="gimp-tool-hue-saturation"--> Tono-Saturación
+              <!--/link-->.
+            </para>
+          </listitem>
+
+          <listitem lang="fr">
+            <para>
+              Quand vous créez une nouvelle image, vous pouvez choisir
+              qu'elle soit en niveaux de gris (que vous pourrez colorier
+              ensuite en passant en mode RVB). Vous pouvez aussi
+              transformer une image existante en niveaux de gris (mais
+              tous les formats ne supportent pas cette transformation)
+              grâce à la commande <link
+              linkend="gimp-image-mode">Niveaux de gris</link>.
+            </para>
+            <para>
+              Comme nous l'avons expliqué à propos du mode RVB, les images
+              24-bits de <acronym>GIMP</acronym> ne peuvent avoir que 256
+              niveaux de gris, codés
+              sur 8 bits. Si vous passez du mode Niveaux de gris au mode RVB,
+              vous donnez à votre image une structure RVB avec 3 canaux de
+              couleurs mais bien entendu l'image reste grise.
+            </para>
+            <para>
+              Les fichiers d'images en niveaux de gris, en 8-bits, sont plus
+              petits que les fichiers RVB.
+            </para>
+            <note>
+              <para>
+                Vous pouvez aussi transformer en niveaux de gris une image
+                existante en la désaturant, en utilisant l'option TSV du
+                filtre <link
+                linkend="plug-in-decompose-registered">Décomposer</link>,
+                le filtre <link
+                linkend="gimp-tool-colorize">Coloriser</link>, ou encore
+                l'outil <link
+                linkend="gimp-tool-hue-saturation">Teinte-Saturation</link>
+                en réduisant la saturation à -100 sur l'ensemble des
+                teintes.  Mais il ne s'agit pas de véritable Niveau de gris
+                puisque l'image conserve trois canaux de couleurs et reste
+                donc en 24-bits. Vous perdez donc l'avantage de la
+                réduction de fichier, mais vous gardez la possibilité de
+                modifier les canaux.
+              </para>
+            </note>
+            <para>
+              Les <emphasis>images en noir et blanc</emphasis>,
+              uniquement du noir et du blanc sans les demi-teintes des
+              niveaux de gris, sont un cas particulier.  On les appelle
+              aussi <quote>dessin au trait</quote> (line-art en anglais),
+              comme un
+              trait que l'on trace avec un crayon noir sur une feuille
+              blanche. Elles sont codées sur 1 bit et outre leur taille
+              de fichier très réduite, elles offrent souvent un aspect
+              artistique intéressant.
+            </para>
+            <para>
+              Vous obtenez ce type d'image avec l'option
+              <quote>Trait</quote> des
+              scanneurs. Vous pouvez aussi les créer dans
+              <acronym>GIMP</acronym> de
+              différentes façons:
+              <itemizedlist mark="opencircle">
+                <listitem>
+                  <para>
+                    Avec l'option
+                    <guilabel>Utiliser la palette noir et blanc (1-bit)</guilabel>
+                    du dialogue
+                    <menuchoice>
+                      <guimenu>Image</guimenu>
+                      <guisubmenu>Image</guisubmenu>
+                      <guisubmenu>Mode</guisubmenu>
+                      <guimenuitem>Indexé</guimenuitem>
+                    </menuchoice>.
+                  </para>
+                </listitem>
+                <listitem>
+                  <para>
+                    Avec l'outil
+                    <menuchoice>
+                      <guimenu>Image</guimenu>
+                      <guisubmenu>Outils</guisubmenu>
+                      <guisubmenu>outils de couleurs</guisubmenu>
+                      <guimenuitem>Seuils</guimenuitem>
+                    </menuchoice>.
+                  </para>
+                </listitem>
+              </itemizedlist>
+            </para>
+          </listitem>
+
+          <listitem lang="it">
+            <para>
+              Quando si crea una nuova immagine è possibile scegliere la
+              modalità in bianco e nero (si può sempre colorarla dopo
+              trasformandola in modalità RGB). È possibile anche
+              trasformare un'immagine preesitente in sfumature di grigi (ma
+              non tutti i formati lo consentono) grazie al comando<!--link
+              linkend="gimp-image-mode" FIXME it --> scala di
+              grigi<!--/link-->.
+            </para>
+            <para>
+              Come spiegato in modalità RGB, le immagini di
+              <acronym>GIMP</acronym>
+              a 24 bit non possono avere più di 256 livelli di grigio,
+              codificati in 8 bit. Se si passa dai livelli di grigio alla
+              modalità RGB si trasforma la struttura dell'immagine da uno a
+              tre canali ma l'immagine rimane grigia naturalmente.
+            </para>
+            <para>
+              I file delle immagini a livelli di grigio (8-bit) sono più
+              piccoli delle corrispondenti file RGB.
+            </para>
+            <para>
+              È anche possibile trasformare un'immagine RGB in livelli di
+              grigio desaturandola grazie all'opzione HSV del
+              filtro <!--link linkend="plug-in-decompose-registered"
+              FIXME it -->decomponi<!--/link-->, dello strumento
+              <link linkend="gimp-tool-colorize">colora</link>, o del
+              filtro <link linkend="gimp-tool-hue-saturation">tonalità -
+              saturazione</link>.
+            </para>
+          </listitem>
+
+          <listitem lang="ko">
+            <para>
+              이미지를 만들때 회색톤 모드로 선택할 수 있다(이것은 후에 RGB
+              모드로 변환할 수 있다). 혹은
+              <!--PENDING: ko <link linkend="gimp-image-mode">grayscale</link>
+              -->
+              회색톤
+              명령을 이용해 기존의 이미지를 회색톤으로 변환
+              시킬 수도 있다(하지만 모든 포맷에서 가능한 것은 아니다).
+            </para>
+            <para>
+              RGB 모드에서 설명한대로, 김프는 24비트 이미지에서도 8비트로
+              표현되는 256개의 회색톤 이상을 사용하지 못한다.
+              따라서
+              회색톤
+              모드에서 RGB 모드로 변환하면 이미지는 세 가지 채널을
+              가진 RGB 구조를 갖게 되지만, 회색의 이미지는 여전히 남아있게
+              된다.
+            </para>
+            <para>
+              회색톤 이미지 파일(8-bit) 는 RGB 파일보다 용량이 작다.
+            </para>
+            <para>
+              그리고
+              <!--PENDING: ko <link
+                   linkend="plug-in-decompose-registered">Decompose</link>
+              --> Decompose 필터나
+              <!--PENDING: ko <link linkend="gimp-tool-colorize">컬러화</link>
+              --> 컬러화 도구,
+              <!--PENDING: ko <link
+                  linkend="gimp-tool-hue-saturation">색상-채도</link>
+              -->
+              색상-채도
+              도구의 HSV 옵션을 이용하면 RGB 이미지를 회색톤으로
+              변환시킬 수 있다.
+            </para>
+          </listitem>
+
+          <listitem lang="zh_CN">
+            <para>
+              当您新建一个图像时可以选择灰度模式(以后可以通过将它转换为 RGB
+              模式使它变成彩色)。也能够通过<link linkend="gimp-image-mode">
+              灰度</link>命令来将一个原有图像转换为灰度。
+            </para>
+            <para>
+              正如我们在 RGB 模式中所解释的，24位 GIMP 图像不可能有超过
+              256(8 位) 的灰度等级。当将灰度转换为 RGB 模式时，您的图像将有
+              一个带三个颜色通道的 RGB 结构，不过当然您的图像还是灰色的。
+            </para>
+            <para>
+              灰度图像文件 (8 位)比 RGB 文件小。
+            </para>
+            <para>
+              您也能够通过使用<!--<link
+              linkend="plug-in-decompose-registered"> -->分解滤镜，<link
+              linkend="gimp-tool-colorize">单色化</link>工具，或<link
+              linkend="gimp-tool-hue-saturation">色调-饱和度</link>滤镜中的
+              HSV 选项来减少其饱和度从而达到转变一个 RGB 图像到灰度的目的。
+            </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+
+      <variablelist lang="es;fr;it;ko;zh_CN">
+        <varlistentry>
+          <term lang="es">Colores indexados</term>
+          <term lang="fr">Couleurs indexées</term>
+          <term lang="it">Colori indicizzati</term>
+          <term lang="ko">인덱스 컬러</term>
+          <term lang="zh_CN">索引色</term>
+
+           <!--Please keep one listitem per language-->
+          <listitem lang="es">
+            <para>
+              El modo indexado ha sido inventado por Compuserve en los inicios
+              de la Web para crear pequeños archivos de imágenes a color, para
+              que pudieran ser transmitidos fácilmente. GIF (Graphic
+              Interchange Format) fue el primer formato indexado.
+            </para>
+            <para>
+              El método consiste en dar códigos a cada píxel y adjuntar al
+              archivo una tabla con el color correspondiente a cada código.
+              Los píxeles con el mismo código comparten el mismo color.
+            </para>
+            <para>
+              Puedee ver la paleta de una imagen abierta una imagen GIF
+              empleando el diálogo
+              <menuchoice>
+                <guimenu>Diálogos</guimenu>
+                <guimenuitem>Paleta indexada</guimenuitem>
+              </menuchoice>.
+              Además le permite editar y modificar cada color.
+            </para>
+            <para>
+              Vea también <link linkend=
+             "gimp-indexed-palette-dialog">Paleta indexada</link>.
+            </para>
+            <para>
+              En una imagen GIF, la transparencia es codificada con un solo
+              bit: cada píxel puede ser totalmente transparente o totalmente
+              opaco.
+            </para>
+          </listitem>
+
+          <listitem lang="fr">
+            <indexterm><primary>Couleurs indexées</primary></indexterm>
+            <para>
+              Compuserve a été le premier à utiliser les images indexées, au
+              début du Web, avec son format GIF (Graphic Interchange
+              Format), pour créer des fichiers d'images en couleurs de
+              petite taille, utilisant un nombre limité de couleurs, faciles
+              à transmettre, avec l'espoir que les couleurs seraient vues de
+              manière identique quel que soit l'ordinateur.
+            </para>
+            <para>
+              Le principe consiste à coder, dans une table jointe à l'image
+              (la palette) avec un nombre limité de couleurs, la couleur de
+              chaque pixel. Le fait de changer une couleur dans la palette
+              changera la couleur de tous les pixels se référant à cette
+              couleur de palette.
+            </para>
+            <para>
+              Vous pouvez voir cette palette après avoir ouvert une image
+              GIF grâce à la boîte de dialogue
+              <menuchoice>
+                <guimenu>Dialogues</guimenu>
+                <guimenuitem>Palette Indexée</guimenuitem>
+              </menuchoice>
+              qui vous donnera la possibilité d'éditer et de modifier
+              chacune des couleurs.
+            </para>
+            <para>
+              Voir aussi <link linkend="gimp-indexed-palette-dialog">
+                Palette indexée
+              </link>
+            </para>
+            <para>
+              Les formats indexés sont limités à 256 couleurs. Le format GIF
+              n'accepte que deux niveaux de transparence. Le format PNG,
+              plus récent, accepte 256 niveaux de transparence.
+            </para>
+          </listitem>
+
+          <listitem lang="it">
+            <para>
+              La modalità indicizzata è stata inventata da Compuserve ai
+              primi tempi del Web per creare file immagine colorati di
+              piccola dimensione che potessero essere facilmente trasmessi.
+              Il formato GIF (Formato di scambIo Grafico) fu il primo
+              formato indicizzato.
+            </para>
+            <para>
+              Il principio è di codificare ogni punto colorato in una
+              tabella legata all'immagine dove tutti i punti che hanno lo
+              stesso colore condividono lo stesso codice.
+            </para>
+            <para>
+              È possibile osservare questa tavolozza aprendo un'immagine GIF
+              grazie alla finestra che si trova in
+              <menuchoice>
+                <guimenu>Finestre</guimenu>
+                <guimenuitem>Tavolozza indicizzata</guimenuitem>
+              </menuchoice>. Questa finestra permette anche di modificare
+              ogni colore.
+            </para>
+            <para>
+              Vedere anche
+              <link linkend="gimp-indexed-palette-dialog">
+              Tavolozza indicizzata</link> e
+              <!--link linkend="gimp-image-convert-indexed"
+              FIXME it -->Convertire un'immagine a colori
+              indicizzati<!--/link-->.
+            </para>
+            <para>
+              In un file immagine GIF la trasparenza è codificata in un bit:
+              trasparente o no.
+            </para>
+          </listitem>
+
+          <listitem lang="ko">
+            <para>
+              인덱스 모드는 인터넷 초창기에 전송이 편리한 작은 이미지를
+              만들기 위해 Compuserve(미국의 컴퓨터 네트워크 회사 및
+              동사(同社) 제공의 온라인 정보 검색 서비스;정식명은 Compuserve
+              Information Service)에 의해 개발된 것이다. GIF(Graphic
+              Interchange Format)는 최초의 인덱스 포맷이다.
+            </para>
+            <para>
+              기본 원칙은 이미지에 있는 각 픽셀 색상에 코드를 할당하는 것이다.
+              그리하면 같은 색상은 모두 같은 코드를 갖게 된다.j
+            </para>
+            <para>
+              GIF 이미지를 열면 인덱스 색상표가 나타나는데, 여기서 각
+              색상들을 편집할 수 있다.
+            </para>
+          </listitem>
+
+          <listitem lang="zh_CN">
+            <para>
+              索引图像由 Compuserve 在互联网的开始阶段发明，用作创建能被容
+              易地传输的小型彩色图像。GIF (图形交换格式)是第一个索引文件。
+            </para>
+            <para>
+              其规则就是用图像的附表记录每个像素颜色的代码，颜色相同的所有
+              像素都有相同的代码。
+            </para>
+            <para>
+              当您打开一个 GIF 文件后能通过 对话框/颜色表 来编辑修改该附表中
+              每个颜色。
+            </para>
+            <para>
+              GIF 文件中，透明度由一个比特位控制：透明还是不透明。
+            </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </glossdef>
+  </glossentry>
+
+  <glossentry id="glossary-cmyk" lang="en;de;es;fr;no">
+    <glossterm>
+      <phrase lang="en;de;es;no">CMY, CMYK</phrase>
+      <phrase lang="fr">CMJN</phrase>
+    </glossterm>
+
+    <indexterm><primary>CMYK</primary></indexterm>
+    <indexterm lang="en">
+      <primary>Color</primary>
+      <secondary>Subtractive color synthesis</secondary>
+    </indexterm>
+
+    <indexterm lang="fr"><primary>CMJN</primary></indexterm>
+    <indexterm lang="fr">
+      <primary>Couleur</primary>
+      <secondary>Synthèse de couleur soustractive</secondary>
+    </indexterm>
+
+    <glossdef>
+      <para lang="en">
+        CMYK is a <link linkend="glossary-colormodel">color model</link>
+        which has components for Cyan, Magenta, Yellow and Black. It is a
+        subtractive color model, and that fact is important when an image
+        is printed. It is complementary to the
+        <link linkend="glossary-rgb">RGB</link> color model.
+      </para>
+      <para lang="de">
+        CMYK steht für <foreignphrase>Cyan</foreignphrase> (Türkis),
+        <foreignphrase>Magenta</foreignphrase> (Fuchsinrot),
+        <foreignphrase>Yellow</foreignphrase> (Gelb) und
+        <foreignphrase>Key</foreignphrase> (Schlüsselfarbe) und ist ein
+        subtraktives Farbmodell, welches bei Druckverfahren eine Rolle spielt.
+        Es ist komplementär zum RGB-Farbmodell.
+      </para>
+      <para lang="es">
+        CMYK es un <link linkend="glossary-colormodel">modelo de color</link>
+        que tiene como componentes al cian, al magenta, al amarillo, y al
+        negro.  Es un modelo de color sustractivo, y de heho es importante
+        cuando se imprime una imagen.  Es complementario al modelo <link
+        linkend="glossary-rgb">RGB</link>.
+      </para>
+      <para lang="fr">
+        CMJN est un <link linkend="glossary-colormodel">Modèle de couleur
+        </link> dont les composants sont les couleurs cyan, magenta, jaune et
+        noir. C'est un modèle de couleur soustractif utilisé pour imprimer.
+      </para>
+      <para lang="no">
+        CMYK er sett saman av dei engelske fargenamna
+        <foreignphrase>Cyan</foreignphrase> (turkis),
+        <foreignphrase>Magenta</foreignphrase> (ein raudfarge),
+        <foreignphrase>Yellow</foreignphrase> (gul) og
+        <foreignphrase>Key</foreignphrase> (nøkkelfarge, dvs. svart).
+        CMYK-modellen er komplementær til RGB-modellen.
+      </para>
+
+      <para lang="en">
+        The values of the individual colors vary between 0% and 100%, where 0%
+        corresponds to an unprinted color, and 100% corresponds to a
+        completely printed area of color. Colors are formed by mixing the
+        three basic colors.
+      </para>
+      <para lang="de">
+        Der Wertebereich jeder einzelnen Farbe geht von 0% bis 100%, wobei 0%
+        einer unbedruckten und 100% einer Volltonfläche entspricht. Durch
+        Mischen der drei Grundfarben entsteht der Farbraum.
+      </para>
+      <para lang="es">
+        En este modelo los valores de cada uno de sus colores primarios
+        varían entre 0% y 100%. Si es 0% el color no se imprime, y si es
+        100% se imprime todo el área de este color<!--este color se imprime
+        completamente-->.  Los colores se forman mezclando los tres colores
+        primarios.
+      </para>
+      <para lang="fr">
+        Les valeurs des couleurs de base varient de 0% à 100%. 0% correspond à
+        une couleur qui ne sera pas imprimée et 100% à une aire de couleur
+        complètement imprimée. les couleurs se forment en mélangeant les
+        couleurs de base.
+      </para>
+      <para lang="no">
+        Verdien for kvar einskild farge går frå 0% til 100%, der 0% er ei
+        flate utan farge, medan 100% er full fargedekning. Ein bestemt farge
+        kan såleis beskrivast ut frå kor mange prosent fargen inneheld av
+        kvar av grunnfargane. Det er same prinsippet som du kjenner frå
+        fargehandlaren.
+      </para>
+
+      <para lang="en">
+        The last of these values, K (Black), doesn't contribute to
+        the color, but merely serves to darken the other colors.  The
+        letter K is used for Black to prevent confusion, since B usually
+        stands for Blue.
+      </para>
+      <para lang="de">
+        Die Schlüsselfarbe K zu sämtlichen Helligkeitsstufen, Schwarz, dient
+        nicht der Farbgebung, sondern lediglich zum Abdunkeln von Farben.
+        Der Begriff <quote>Key</quote> beziehungsweise Black oder auch Kontrast
+        (Schwarz) wird anstelle von <quote>Black</quote> verwendet, um
+        Missverständnissen mit dem <quote>B</quote> vorzubeugen, das im
+        Englischen für <quote>Blue</quote> steht.
+      </para>
+      <para lang="es">
+        El último de estos valores, K (negro), no añade color, sino que sirve
+        para oscurecerlos.
+      </para>
+      <para lang="fr">
+        La valeur K sert à obscurcir les couleurs. On utilise la lettre K
+        pour le Noir (BlacK) pour éviter la confusion avec Blue (Bleu).
+      </para>
+      <para lang="no">
+        Reint logisk burde du nå kunne gå ut frå at dersom du blandar cyan,
+        magenta og gul vil du subtrahera raud, grøn og blå slik at du
+        ikkje ser noe farge i det heile, altså svart. Prøver du dette, vil
+        du sjå at resultatet blir mørke brunt. Dei tre grunnfargane er
+        ikkje reine sekundærfargar, og oppfører seg i praksis ikkje slik
+        ein teoretisk skulle venta det. Difor må skrivaren også ha ei
+        kassett med svart for å kompensera for denne feilen. I tillegg er
+        det litt billegare å skrive svart med ein eigen kassett enn å
+        køyre ut med alle tre fargane.
+      </para>
+
+      <figure>
+        <title>
+          <phrase lang="en">Subtractive color model</phrase>
+          <phrase lang="de">
+            Schematische Darstellung des CMYK-Farbmodells
+          </phrase>
+          <phrase lang="es">Modelo de color sustractivo</phrase>
+          <phrase lang="fr">Modèle de couleur soustractif</phrase>
+          <phrase lang="no">Subtraktiv fargemodell</phrase>
+        </title>
+
+        <mediaobject>
+          <imageobject>
+            <imagedata
+              fileref="../images/glossary/color-model-subtractive.png"
+              format="PNG" />
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para lang="en">
+        <acronym>GIMP</acronym> does not currently support the CMYK model.
+        (An experimental plug-in providing rudimentary CMYK support can be
+        found <xref linkend="bibliography-online-plugin-separate" />.)
+      </para>
+      <para lang="de">
+        Das CMYK-Farbmodell wird von <acronym>GIMP</acronym> momentan
+        noch nicht direkt unterstützt. Ein experimentelles Modul,
+        welches diese Unterstützung bietet, ist verfügbar
+        <xref linkend="bibliography-online-plugin-separate" /> verfügbar.
+      </para>
+      <para lang="es">
+        El <acronym>GIMP</acronym> no puede trabajar todavía con el modelo
+        CMYK.  Pero hay un complemento experimental que lo proporciona
+        rudimentariamente en
+        <xref linkend="bibliography-online-plugin-separate" />.
+      </para>
+      <para lang="fr">
+        <acronym>GIMP</acronym> ne gère pas le modèle de couleur CMJN.
+        (Un greffon expérimental fournissant un gestionnaire rudimentaire du
+        CMJN peut être trouvé à
+        <xref linkend="bibliography-online-plugin-separate" />.
+      </para>
+      <para lang="no">
+        <acronym>GIMP</acronym> har ikkje støtte for CMYK, men du kan finne
+        eit eksperimentelt tilleggsprogram med litt støtte for CMYK i
+        <xref linkend="bibliography-online-plugin-separate" />.
+      </para>
+
+      <para lang="en">
+        This is the mode used in printing. These are the colors in the ink
+        cartridges in your printer. It is the mode used in painting and in all
+        the objects around us, where light is reflected, not emmitted. Objects
+        absorb part of the light waves and we see only the reflected part.
+        Note that the cones in our eyes see this reflected light in RGB mode.
+        An object appears Red because Green and Blue have been absorbed. Since
+        the combination of Green and Blue is Cyan, Cyan is absorbed when you
+        add Red. Conversely, if you add Cyan, its complementary color, Red, is
+        absorbed. This system is <emphasis>subtractive</emphasis>.
+        If you add Yellow, you decrease Blue, and if you add Magenta, you
+        decrease Green.
+      </para>
+      <para lang="de">
+        Dieses Farbmodell wird beim Drucken verwendet. Ihr Farbdrucker enthält
+        diese Farben in seinen Kartuschen. Es ist das Modell, in dem gemalt
+        wird, das immer dann verwendet wird, wenn Licht nicht ausgestrahlt,
+        sondern reflektiert wird. Objekte reflektieren dabei Licht bestimmter
+        Wellenlängen, während der Rest absorbiert wird. Vom menschlichen Auge
+        werden nur die reflektieren Wellenlängen wahrgenommen. Ein rotes
+        Objekt erscheint rot, weil der blaue und grüne Anteil des Lichtes
+        absorbiert wird. Grün und Blau kombiniert ergibt bekanntlich Cyan. Es
+        wird also Cyan absorbiert, wenn Sie Rot hinzufügen. Umgekehrt wird,
+        wenn Sie Cyan hinzufügen, das komplementäre Rot absorbiert. Daher
+        zählt das CMYK-Farbmodell zu den <emphasis>subtraktiven</emphasis>
+        Farbmodellen. Wenn Sie Gelb hinzufügen, wird Blau reduziert, und wenn
+        Sie Magenta hinzufügen, wird Grün reduziert.
+      </para>
+      <para lang="es">
+        Este es el modelo utilizado en la impresión. Sus los colores son los
+        mismos que contienen los cartuchos de una impresora. Es el modelo
+        empleado en la pintura, y el de todos los objetos que nos rodean, en
+        los que la luz no es emitida sino reflejada. Los objetos absorben
+        parte de la onda de luz y nosotros vemos sólo la parte reflejada. Note
+        que nuestros ojos con sus conos ven esta luz reflejada en el modo RGB.
+        Un objeto es rojo porque el verde y el azul fueron absorbidos. Ahora,
+        la combinación de verde y azul es cian. Así que cuando un objeto se ve
+        rojo, es porque el cian fue absorbido. A la inversa, si se ve cian, es
+        porque su color complementario, rojo, fue absorbido. Este sistema es
+        <emphasis>sustractivo</emphasis>. Si se agrega amarillo, se decrementa
+        el azul, y si se agrega magenta, se decrementa el verde.
+      </para>
+      <para lang="fr">
+        Ce mode est celui de l'impression, celui de votre imprimante où
+        les cartouches d'encre contiennent ces quatre couleurs. C'est le
+        mode de la peinture et de tous les objets qui nous entourent, où
+        la lumière n'est pas émise mais réfléchie. Les objets absorbent
+        une partie de l'onde lumineuse et nous ne voyons que la partie
+        réfléchie. Notre oeil, lui, avec ses cônes, voit cette lumière
+        réfléchie en mode RGB. Si un objet est rouge, c'est parce que le
+        Vert et le Bleu ont été absorbés. Or, la combinaison du Vert et
+        du Bleu est le Cyan. C'est donc le Cyan qui est absorbé quand
+        vous ajoutez du Rouge. Inversement, si vous ajoutez du Cyan,
+        c'est la complémentaire Rouge qui sera absorbée. Ce système est
+        <emphasis>soustractif</emphasis>.
+        Si vous ajoutez du Jaune, vous soustrayez du Bleu et si vous
+        ajoutez du Magenta, vous soustrayez du Vert.
+      </para>
+      <para lang="no">
+        Det er dette fargesystemet du brukar når du skal skriva ut eit bilete
+        i trykkeriet eller på skrivaren, eller når du blandar maling for å
+        setje litt farge på stovegolvet. Kort sagt alle fargane vi ser som eit
+        resultat av reflektert lys. Noen av lysbølgjene som treff eit objekt
+        blir absorberte av objektet, andre blir reflekterte. Vi ser bare dei
+        lysstrålane som blir sende tilbake, reflekterte, frå overflata. Når
+        bilen ser raud ut, er det fordi overflata på bilen syg til seg det
+        grøne og blå lyset. Kombinasjonen av grønt og blått er cyan, så dersom
+        du legg til raudt, vil cyan bli absorbert. Omvendt vil sjølvsagt raudt
+        bli absorbert dersom du set til komplementærfargen cyan. Fargesystemet
+        CMYK er det vi kallar for <emphasis>subtraktivt</emphasis>.
+        Dette betyr i praksis at vi lager nye fargar ved å redusera mengda
+        av andre fargar eller legge til ein komplementærfarge. Set du til
+        gult, vil mengda av blå bli redusert, medan du kan redusera grønfargen
+        ved å setje til litt magenta.
+      </para>
+
+      <para lang="en">
+        It would be logical to think that by mixing Cyan, Magenta and Yellow,
+        you would subtract Red, Green and Blue, and the eye would see no light
+        at all, that is, Black. But the question is more complex. In fact, you
+        would see a dark brown. That is why this mode also has a Black value,
+        and why your printer has a Black cartridge. It is less expensive that
+        way. The printer doesn't have to mix the other three colors to create
+        an imperfect Black, it just has to add Black.
+      </para>
+      <para lang="de">
+        Sie könnten sich logisch herleiten, dass durch das Mischen von Cyan,
+        Magenta und Gelb, welches ja einer Reduktion von Rot, Grün und Blau
+        entspricht, Schwarz entsteht. Leider ist die Sache ein wenig
+        komplizierter. Wenn Sie es tatsächlich ausprobieren, werden Sie
+        feststellen, dass sich statt Schwarz ein dunkler Braunton ergibt. Das
+        liegt daran, dass der Zusammendruck der drei anderen Farben zwar
+        theoretisch (subtraktives Farbmodell), aber nicht praktisch Schwarz
+        ergibt, da die im Druck verwendeten Cyan-, Magenta- und
+        Gelb-Farbstoffe keine perfekten Sekundärfarben sind. Aus diesem Grund
+        verfügt das Farbmodell, ebenso wie CMYK-basierte Drucker, zusätzlich
+        über ein reines Schwarz. Dieses Vorgehen spart außerdem noch Geld, da
+        Schwarz nicht in schlechter Qualität aus Farbtinte gemischt werden
+        muss.
+      </para>
+      <para lang="es">
+        Por lógica, si se mezclan cian, magenta y amarillo, al mismo tiempo,
+        se está sustrayendo rojo, verde y azul, y por esto el ojo no vería luz
+        alguna, y en consecuencia se forma negro.  La cuestión es un poco más
+        compleja.  En realidad se obtendrá un marrón oscuro.  Es por esto que
+        el modelo también tiene al negro, y por lo cual su impresora tiene un
+        cartucho de negro.  También es más económico: la impresora no tiene
+        que gastar en la mezcla de los otros tres colores para crear un negro
+        imperfecto, sólo tiene que agregar negro.
+      </para>
+      <para lang="fr">
+        Vous pourriez logiquement penser qu'en mélangeant du Cyan, du
+        Magenta et du Jaune, vous allez soustraire du Rouge, du Vert et
+        du Bleu si bien que l'oeil ne verra que du noir. C'est plus
+        complexe. En fait, vous ne verrez qu'un marron très foncé. C'est
+        pourquoi ce système comporte du noir en plus, et que votre
+        imprimante a aussi une cartouche d'encre noire. Ce qui
+        finalement est plus économique car pour créer ce marron foncé
+        imparfait, l'imprimante devrait puiser dans les trois autres
+        cartouches alors qu'il lui suffit d'ajouter un peu de noir.
+      </para>
+    </glossdef>
+  </glossentry>
+
+
+  <glossentry id="glossary-path-cs" lang="cs">
+    <glossterm lang="cs">Cesta</glossterm>
+
+    <glossdef>
+      <para lang="cs">
+        <emphasis>Cesta</emphasis> je vektorová křivka (zaoblená, polygonální
+        či kombinace obou těchto typů, v nejjednodušším případě úsečka).
+        V Gimpu slouží cesty buď k tvorbě hranic výběrů, nebo mohou být
+        <emphasis>vykresleny</emphasis>, a tak v obrázku vytvořit viditelné
+        křivky.
+      </para>
+    </glossdef>
+  </glossentry>
+
+
+  <glossentry id="glossary-quantization" lang="es">
+    <glossterm>
+      <phrase lang="es">Cuantización</phrase>
+    </glossterm>
+
+    <indexterm lang="es"><primary>Cuantización</primary></indexterm>
+
+    <glossdef>
+      <para lang="es">
+        La cuantización es el proceso de reducir el color de un píxel a uno de
+        varios valores fijos, haciendo coincidir su color con el color más
+        próximo del mapa de colores.  Los valores originales de los píxeles
+        pueden tener mucha más presición que los niveles discretos que puede
+        representar un display.  Si el rango del display es muy pequeño,
+        probablemente aparezcan cambios abruptos en los colores, como bordes o
+        bandas.  Esto se da especialmente en las imágenes indizadas, que
+        pueden poseer tienen hasta 256 colores discretos.
+      </para>
+      <para lang="es">
+        Se pueden reducir los efectos de la cuantización si se utiliza <link
+        linkend="glossary-dithering">difuminado</link>.  Las operaciones del
+        <acronym>GIMP</acronym> que admiten difuminado son la <link
+        linkend="gimp-tool-blend">herramienta Mezcla</link> (si activa la
+        opción) y el comando <link
+        linkend="gimp-image-convert-indexed">Convertir a indexado</link>.  Sin
+        embargo, sólo funcionan en imágenes RGB, y no en imágenes indizadas.
+      </para>
+
+    </glossdef>
+  </glossentry>
+</glossdiv>

@@ -1,0 +1,2133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+                "http://www.docbook.org/xml/4.3/docbookx.dtd">
+
+<!-- section history:
+  2007-11-14 AntI: Added "es"
+  2007-05-13 KoSt: added 'no'
+  2005-12-08 <simplesect> replaced by <sect3> by lexa
+  2005-10-11 en;fr updated by julien hardelin
+  2005-09-19 de added by axel.wernicke
+-->
+<sect2 id="plug-in-ifsfractal" lang="en;de;es;fr;it;no;ru;zh_CN">
+  <sect2info lang="en;de;es;fr" role="cvs">
+    <revhistory>
+      <revision lang="en">
+        <revnumber>$Revision$</revnumber>
+        <date>2006-12-16</date>
+        <authorinitials>j.h</authorinitials>
+      </revision>
+      <revision lang="de">
+        <revnumber>$Revision$</revnumber>
+        <date>2006-11-04</date>
+        <authorinitials>lexa</authorinitials>
+      </revision>
+      <revision lang="es">
+        <revnumber>$Revision$</revnumber>
+        <date>2007-11-15</date>
+        <authorinitials>AntI</authorinitials>
+      </revision>
+      <revision lang="fr">
+        <revnumber>$Revision$</revnumber>
+        <date>2006-12-16</date>
+        <authorinitials>j.h</authorinitials>
+      </revision>
+    </revhistory>
+  </sect2info>
+
+  <title>
+    <phrase lang="en">IFS Fractal</phrase>
+    <phrase lang="de">IFS-Fraktal</phrase>
+    <phrase lang="es">FactralIFS</phrase>
+    <phrase lang="fr">Fractaliser</phrase>
+    <phrase lang="it">Frattale IFS</phrase>
+    <phrase lang="no">IFS-Fraktal</phrase>
+    <phrase lang="zh_CN">IFS 分形</phrase>
+    <phrase lang="ru">IFS Собрать</phrase>
+  </title>
+
+  <indexterm lang="en">
+    <primary>Filters</primary>
+    <secondary>Render</secondary>
+    <tertiary>Fractal Composition</tertiary>
+  </indexterm>
+  <indexterm lang="en"><primary>IFS Fractal</primary></indexterm>
+
+  <indexterm lang="de">
+    <primary>Filter</primary>
+    <secondary>Render</secondary>
+  </indexterm>
+  <indexterm lang="de"><primary>IFS-Fraktal</primary></indexterm>
+
+  <indexterm lang="es">
+    <primary>Filtros</primary>
+    <secondary>Renderizado</secondary>
+    <tertiary>Composición fractal</tertiary>
+  </indexterm>
+  <indexterm lang="es"><primary>Factral IFS</primary></indexterm>
+
+  <indexterm lang="fr">
+    <primary>Filtres</primary>
+    <secondary>Rendu</secondary>
+    <tertiary>Fractaliser</tertiary>
+  </indexterm>
+  <indexterm lang="fr"><primary>Fractaliser</primary></indexterm>
+
+  <indexterm lang="it">
+    <primary>Filtri</primary>
+    <secondary>Render</secondary>
+  </indexterm>
+  <indexterm lang="it"><primary>Frattale IFS</primary></indexterm>
+
+  <indexterm lang="no">
+    <primary>Filter</primary>
+    <secondary>Teiknefilter</secondary>
+    <tertiary>IFS-fraktal</tertiary>
+  </indexterm>
+  <indexterm lang="no"><primary>IFS-fraktal (filter)</primary></indexterm>
+
+  <indexterm lang="ru">
+    <primary>Фильтры</primary>
+    <secondary>Визуализация</secondary>
+    <tertiary>IFS Собрать</tertiary>
+  </indexterm>
+  <indexterm lang="ru"><primary>IFS Фрактал</primary></indexterm>
+
+  <indexterm lang="zh_CN">
+    <primary>滤镜</primary>
+    <secondary>绘制</secondary>
+    <tertiary>IFS 分形</tertiary>
+  </indexterm>
+
+  <mediaobject lang="en">
+    <imageobject>
+      <imagedata fileref="../images/filters/filters-render-ifsfractal.png"
+        format="PNG" />
+    </imageobject>
+  </mediaobject>
+
+  <mediaobject lang="es">
+    <imageobject>
+      <imagedata fileref="../images/filters/es/filters-render-ifsfractal.png"
+        format="PNG" />
+    </imageobject>
+  </mediaobject>
+
+  <mediaobject lang="fr">
+    <imageobject>
+      <imagedata fileref="../images/filters/fr/filters-render-ifsfractal.png"
+        format="PNG" />
+    </imageobject>
+  </mediaobject>
+
+  <mediaobject lang="it">
+    <imageobject>
+      <imagedata fileref="../images/filters/it/filters-render-ifsfractal.png"
+        format="PNG" />
+    </imageobject>
+  </mediaobject>
+
+  <mediaobject lang="zh_CN">
+    <imageobject>
+      <imagedata
+        fileref="../images/filters/zh_CN/filters-render-ifsfractal.png"
+        format="PNG" />
+    </imageobject>
+  </mediaobject>
+
+
+  <sect3>
+    <title>
+      <phrase lang="en">Overview</phrase>
+      <phrase lang="cs">Přehled</phrase>
+      <phrase lang="de">Wirkungsweise</phrase>
+      <phrase lang="es">Generalidades</phrase>
+      <phrase lang="fr">Généralités</phrase>
+      <phrase lang="it">Panoramica</phrase>
+      <phrase lang="it">Panoramica</phrase>
+      <phrase lang="no">Oversyn</phrase>
+      <phrase lang="ru">Общая информация</phrase>
+      <phrase lang="zh_CN">概述</phrase>
+    </title>
+
+    <figure lang="en;de;es;fr;it;no;ru">
+      <title>
+        <phrase lang="en">Applying example for the IFS Compose filter</phrase>
+        <phrase lang="de">
+          Anwendungsbeispiel für das Filter <quote>IFS-Fraktal</quote>
+        </phrase>
+        <phrase lang="es">
+          Ejemplo de aplicación del filtro factral ifs
+        </phrase>
+        <phrase lang="fr">
+          Exemple d'application du filtre Fractaliser
+        </phrase>
+        <phrase lang="it">
+          Esempio di applicazione del filtro Frattale IFS
+        </phrase>
+        <phrase lang="no">Eksempel på bruk av filteret</phrase>
+        <phrase lang="ru">
+          Пример применения фильтра <quote>IFS Фрактал</quote>
+        </phrase>
+      </title>
+
+<!--
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/taj_orig.jpg"
+            format="JPG" />
+        </imageobject>
+
+        <caption lang="en;de;no">
+          <para lang="en">Original image</para>
+          <para lang="de">Originalbild</para>
+          <para lang="no">Originalbiletet</para>
+        </caption>
+      </mediaobject>
+-->
+      <mediaobject>
+        <imageobject>
+          <imagedata
+            fileref="../images/filters/examples/render-taj-ifscompose.jpg"
+            format="JPG" />
+        </imageobject>
+
+        <caption lang="en;de;es;no">
+          <para lang="en">Filter <quote>IFS Fractal</quote> applied</para>
+          <para lang="de">Filter <quote>IFS-Fraktal</quote> angewandt</para>
+          <para lang="es">Filtro <quote>Factral IFS</quote> aplicado</para>
+          <para lang="no">
+            Etter bruk av filteret <quote>IFS-fraktal</quote>
+          </para>
+        </caption>
+      </mediaobject>
+    </figure>
+
+    <para lang="en">
+      You can find this filter through
+      <menuchoice>
+        <guimenu>Filte<accel>r</accel>s</guimenu>
+        <guisubmenu><accel>R</accel>ender</guisubmenu>
+        <guisubmenu><accel>N</accel>ature</guisubmenu>
+        <guimenuitem><accel>I</accel>FS fractal</guimenuitem>
+      </menuchoice>
+    </para>
+    <para lang="es">
+      Puede encontrar este filtro en
+      <menuchoice>
+        <guimenu><accel>F</accel>iltros</guimenu>
+        <guisubmenu><accel>R</accel>enderizado</guisubmenu>
+        <guisubmenu><accel>N</accel>aturaleza</guisubmenu>
+        <guimenuitem><accel>F</accel>actral IFS</guimenuitem>
+      </menuchoice>
+    </para>
+    <para lang="fr">
+      On accède à ce filtre par le menu d'image en suivant
+      <menuchoice>
+        <guimenu>Filt<accel>r</accel>es</guimenu>
+        <guisubmenu><accel>R</accel>endu</guisubmenu>
+        <guisubmenu><accel>N</accel>ature</guisubmenu>
+        <guimenuitem><accel>C</accel>omposition fractale</guimenuitem>
+      </menuchoice>
+    </para>
+    <para lang="it">
+      Questo filtro si trova nel menu immagine:
+      <menuchoice>
+        <guimenu>Filt<accel>r</accel>i</guimenu>
+        <guisubmenu><accel>R</accel>ender</guisubmenu>
+        <guisubmenu><accel>N</accel>atura</guisubmenu>
+        <guimenuitem>Frattale <accel>I</accel>FS</guimenuitem>
+      </menuchoice>
+    </para>
+    <para lang="no">
+      Du har tilgang til filteret frå biletmenyen via
+      <menuchoice>
+        <guimenu>Filter</guimenu>
+        <guisubmenu>Teiknefilter</guisubmenu>
+        <guisubmenu>Natur</guisubmenu>
+        <guimenuitem>IFS-fraktal</guimenuitem>
+      </menuchoice>
+    </para>
+    <para lang="ru">
+      Этот фильтр находится в
+      <menuchoice>
+        <guimenu>Филтры</guimenu>
+        <guisubmenu>Визуализация</guisubmenu>
+        <guisubmenu>Натуральная</guisubmenu>
+        <guimenuitem>IFS фрактал</guimenuitem>
+      </menuchoice>
+    </para>
+    <para lang="zh_CN">
+      该滤镜在<guimenuitem>图像&gt;滤镜/绘制/自然/IFS 分形</guimenuitem>。
+    </para>
+
+    <para lang="en">
+      This fractal-based plug-in is truly wonderful! With this
+      versatile instrument, you can create amazingly naturalistic
+      organic shapes, like leaves, flowers, branches, or even whole
+      trees.  (<quote>IFS</quote> stands for <quote>Iterated Function System
+      </quote>.)
+    </para>
+    <para lang="de">
+      Dieses auf
+      <ulink url="http://de.wikipedia.org/wiki/Fraktal">Fraktalen</ulink>
+      basierende Filter ist wahrhaft wundervoll! Mit diesem universellen
+      Werkzeug können Sie verblüffend natürliche organische Formen wie
+      Blätter, Zweige oder sogar ganze Bäume erzeugen.
+    </para>
+    <para lang="es">
+      ¡Este complemento basado en factrales es realmente fantástico! Con
+      este instrumento versátil, puede crear formas naturales orgánicas
+      como hojas, flores, ramas o árboles enteros. (<quote>IFS</quote>
+      viene de <quote>Iterated Function System
+      </quote>.)
+    </para>
+    <para lang="fr">
+      Ce filtre opérant sur les fractales est vraiment merveilleux !
+      Avec cet outil polyvalent vous pourrez créer des figures organiques
+      originales telles que des feuilles, des fleurs, des branches ou même
+      des arbres. Le nom original du greffon est composition IFS qui
+      est l'acronyme de <quote>Iterated Function System</quote>
+      soit : Système de fonctions itératives.
+    </para>
+    <para lang="it">
+      Questo filtro basato su algoritmi frattali è veramente fantastico! Con
+      questo strumento versatile si possono creare forme naturali ed organiche
+      quali foglie, fiori, rami o anche interi alberi ("IFS" sta per Iterated
+      Function Systems ovvero Sistemi di Funzioni Iterate).
+    </para>
+    <para lang="no">
+      Også dette filteret er fraktal-basert, og er bare nydeleg. Med dette
+      allsidige filteret kan du lage utruleg naturalistiske organiske
+      figurar, frå enkle blader via blomster og greiner til heile tre.
+      (<quote>IFS</quote> står for det engelske <quote>Iterated
+      Function System</quote> som betyr noe slikt som
+      <quote>Repeterande funksjonssystem</quote>.)
+    </para>
+    <para lang="ru">
+      Это фрактальное дополнение просто замечательно! Этим гибким инструментом
+      вы можете создать превосходные естественные формы как листья, цветы,
+      ветки, или целые деревья. (<quote>IFS</quote> означает <quote>Iterated
+      Function System - повторимые функциональные системы</quote>.)
+    </para>
+    <para lang="zh_CN">
+      这个基于分形的插件的确非常棒！这些多功能的指令可以产生让人震惊的自然物体形状，如树叶，花朵，树枝，甚至是整棵树。(“IFS” 代表 “迭代函数系统”。)
+    </para>
+
+    <para lang="en">
+      The key to use this plug-in lies in making very small and precise
+      movements in fractal space. The outcome is always hard to predict, and
+      you have to be extremely gentle when you change the pattern. If you make
+      a component triangle too big, or if you move it too far (even ever so
+      slightly), the preview screen will black out, or more commonly, you'll
+      get stuck with a big shapeless particle cloud.
+    </para>
+    <para lang="de">
+      Der Schlüssel zur erfolgreichen Anwendung des Filters liegt in sehr
+      kleinen und präzisen Bewegungen im Raum der Fraktale. Das Ergebnis ist
+      sehr schwer vorherzusagen, und Sie sollten sehr rücksichtsvoll sein,
+      wenn Sie das Muster verändern. Wenn Sie ein Komponentendreieck zu groß
+      machen oder es zu weit bewegen, kann sich die Vorschau augenblicklich
+      schwarz oder, was wahrscheinlicher ist, in eine große, formlose
+      Pixelwolke verwandeln.
+    </para>
+    <para lang="es">
+      La llave para usar este complemento está en hacer pequeños y
+      precisos movimientos en el espacio del fractal. El resultado es
+      difícil de predecir, y debe ser extremadamente meticuloso cuando
+      cambia el patrón. Si hace demasiado grande un componente triángulo,
+      o si lo mueve demasiado lejos (), la vista previa se volverá negra,
+      o más comunmente, se obtendrá una nube de partículas sin forma.
+    </para>
+    <para lang="fr">
+      La clé pour utiliser ce filtre est de faire de petits et précis
+      mouvements dans l'espace fractal. Le résultat est toujours difficile à
+      prédire et vous devez être très méticuleux avec votre générateur
+      fractal. Si vous faites un composant en forme de triangle trop gros ou
+      si vous vous le bougez trop rapidement, l'aperçu sera noir, ou plus
+      communément vous allez être déçu d'obtenir un gros nuage de particules.
+    </para>
+    <para lang="it">
+      E' importante durante l'uso di questo filtro effettuare trasformazioni
+      piccole e precise nello spazio frattale. Il risultato è sempre difficile
+      da prevedere e occorre spostarsi di poco per cambiare motivo. Se si
+      utilizza un triangolo componente troppo grande o se lo si muove troppo
+      la schermata di anteprima si oscurerà o più precisamente si otterrà
+      semplicemente una nuvola di particelle senza forma.
+    </para>
+    <para lang="no">
+      Nøkkelen til bruken av dette filteret ligg i å gjere små og nøyaktige
+      flyttingar i fraktalområdet. Det er alltid vanskeleg å vite resultatet
+      på førehand, så du må vere svært varsam når du gjer forandringar i
+      mønsteret. Dersom du gjer eitt av komponenttriangla for stort eller
+      flytter det for langt av stad, vil resultatet som oftast bli ei stor,
+      uformeleg partikkelsky, eller at førehandsvisinga rett og slett blankar
+      ut.
+    </para>
+    <para lang="ru">
+      Ключ к использованию этого дополнения лежит маленьких и точных движениях
+      в пространстве фракткалов. Результат трудно предсказать, поэтому нужно
+      очень осторожно менят структуру. Если треугольный компонени слишком
+      большой, или сдвинут слишком далеко, то окно просмотра станет сплошным
+      чёрным или изобразит бесформенное облако частиц.
+    </para>
+    <para lang="zh_CN">
+      使用该插件的关键是在分形空间中进行细微而精确地移动。其结果比较难预测，而且您改变图案时需要特别地小心。当组件三角过大，或把它移地太远时(甚至只是有一点远)，其预览屏幕会黑掉，更常见的情况是，出现一个让您心烦的巨大不成形的块状云。
+    </para>
+
+    <para lang="en">
+      A word of advice: When you have found a pattern you want to work with,
+      make only small changes, and stick to variations of that pattern. It's
+      all too easy to lose a good thing. Contrary to what you might believe,
+      it's really much easier to create a leaf or a tree with IFS Compose than
+      to make a defined geometrical pattern (where you actually know what
+      you're doing, and end up with the pattern you had in mind).
+    </para>
+    <para lang="es">
+      Un consejo: Cuando encuntre un patrón con el que quiera trabajar,
+      haga solo pequeños cambios, y explore las variaciones de ese patrón.
+      Es bastante fácil perder una buena configuración. Contrariamente a
+      lo que pueda crear, es realmente mucho más fácil crear una hoja o un
+      árbol con factral IFS que definir un patrón geometricamente.
+    </para>
+    <para lang="fr">
+      Un conseil d'ami : quand vous avez trouvé un motif générateur avec
+      lequel vous souhaitez travailler, ne faites que de petits changements.
+      Il est vraiment trop facile de perdre un bon motif. Au contraire de ce
+      que vous pensez, il est beaucoup plus facile de créer une feuille ou un
+      arbre avec la Composition IFS que de créer un motif géométrique précis.
+    </para>
+    <para lang="it">
+      Si consiglia una volta trovato un motivo interessante di effettuare solo
+      piccoli cambiamenti ed esplorare variazioni di quel motivo. E' molto
+      facile perdere una buona configurazione. Contrariamente a quanto si
+      possa pensare è molto facile creare una foglia o un albero con Frattale
+      IFS piuttosto che crearlo con un procedimento geometrico (cioè con un
+      processo in cui si sa cosa si sta facendo e si crea esattamente il
+      motivo che si ha in mente).
+    </para>
+    <para lang="no">
+      Eit lite råd: Når du har funne eit mønster som du vil arbeide vidare på,
+      gjer bare svært små forandringar ved kvart forsøk og hald deg til
+      variasjonar over dette mønsteret. Det er så altfor lett å miste eit
+      godt mønster. Med dette filteret er det lettare å lage eit blad på eit tre
+      enn ein på førehand definert geometrisk figur.
+    </para>
+    <para lang="ru">
+      Совет: когда вы нашли желаемую текстуру, делайте только небольшие
+      изменения и придерживайтесь к вариациям текстуры. Очень просто потерять
+      хорошую вещь. Но также намного проще создать лист или дерево при помощи
+      <quote>IFS Собрать</quote> чем вручную задать геометрическую форму,
+      имея полный контроль над каждым шагом.
+    </para>
+    <para lang="zh_CN">
+      这里是一些建议：当您对一个图案进行处理了，只进行细微的改变，然后在其变体上操作。这样就不会使那些好的东西丢失。在该滤镜中产生一个树叶或整棵树要比产生那些有准确几何尺寸的图案容易。
+    </para>
+
+    <!-- FIXME: ru fix bibliography -->
+    <para lang="en">
+      For a brief introduction to IFS's see Foley and van Dam, et
+      al,. <citetitle pubwork="book">Computer Graphics, Principles and
+      Practice</citetitle><xref linkend="bibliography-books-foley01" />.
+    </para>
+    <para lang="de">
+      Um eine kurze Einführung in IFS (englisch für "Iterated Function
+      System") zu erhalten, sei Ihnen das Buch
+      <citetitle pubwork="book">Computer Graphics, Principles and
+      Practice</citetitle> <xref linkend="bibliography-books-foley01" />
+      empfohlen.
+    </para>
+    <para lang="es">
+      Para una introducción rápida a IFS mire Foley and van Dam, et
+      al,. <citetitle pubwork="book">Computer Graphics, Principles and
+      Practice</citetitle><xref linkend="bibliography-books-foley01" />.
+    </para>
+    <para lang="fr">
+      Pour une introduction rapide à l'IFS voyez Foley et van Dam
+      <citetitle pubwork="book">Computer Graphics, Principles and
+      Practice</citetitle><xref linkend="bibliography-books-foley01" />.
+    </para>
+    <para lang="it">
+      Per una breve introduzione agli IFS si veda
+      <citetitle pubwork="book">Computer Graphics, Principles and
+      Practice</citetitle> <xref linkend="bibliography-books-foley01" />.
+    </para>
+    <para lang="no">
+      For ein nærare gjennomgang av IFS, sjå Foley og van Dam, et
+      al,. <citetitle pubwork="book">Computer Graphics, Principles and
+      Practice</citetitle><xref linkend="bibliography-books-foley01" />.
+    </para>
+    <para lang="ru">
+      За коротким введением в IFS обратитесь к Foley, van Dam, и др.
+      <citetitle pubwork="book">Computer Graphics, Principles and
+      Practice</citetitle>, 2nd Ed., (Addison Wesley, 1990).
+    </para>
+    <para lang="zh_CN">
+      关于 IFS 的简明介绍请看 Foley 和 Van Dam 等所写的<citetitle pubwork="book">Computer Graphics, Principles and Pratice</citetitle>, 第二版. (Addison Wesley, 1990).
+    </para>
+  </sect3>
+
+
+  <sect3 lang="de">
+    <title>
+      <phrase lang="de">Filteraufruf</phrase>
+    </title>
+
+    <para lang="de">
+      Dieses Filter lässt sich über das Menü
+      <menuchoice>
+        <guimenu><accel>F</accel>ilter</guimenu>
+        <guisubmenu><accel>R</accel>ender</guisubmenu>
+        <guisubmenu><accel>N</accel>atur</guisubmenu>
+        <guimenuitem><accel>I</accel>FS-Fraktal</guimenuitem>
+      </menuchoice>
+      im Bildfenster aufrufen.
+    </para>
+  </sect3>
+
+
+  <sect3>
+    <title>
+      <phrase lang="en">Options</phrase>
+      <phrase lang="de">Eigenschaften</phrase>
+      <phrase lang="es">Opciones</phrase>
+      <phrase lang="fr">Options</phrase>
+      <phrase lang="it">Opzioni</phrase>
+      <phrase lang="no">Innstillingar</phrase>
+      <phrase lang="ru">Параметры</phrase>
+      <phrase lang="zh_CN">选项</phrase>
+    </title>
+
+    <figure lang="de;no">
+      <title>
+        <phrase lang="de">
+          Eigenschaften (Raumtransformation) für das Filter
+          <quote>IFS-Fraktal</quote>
+        </phrase>
+        <phrase lang="no">
+          Innstillingane for filteret <quote>IFS-fraktal</quote>
+        </phrase>
+      </title>
+
+      <mediaobject>
+        <imageobject lang="de">
+          <imagedata
+            fileref="../images/filters/de/options-render-ifscompose1.png"
+            format="PNG" />
+        </imageobject>
+        <imageobject lang="no">
+          <imagedata
+            fileref="../images/filters/no/options-render-ifscompose1.png"
+            format="PNG" />
+        </imageobject>
+      </mediaobject>
+    </figure>
+
+    <variablelist>
+      <varlistentry>
+        <term lang="en">The Main Interface</term>
+        <term lang="de">Aufbau des Dialogfensters</term>
+        <term lang="es">El interfaz principal</term>
+        <term lang="fr">L'interface principale</term>
+        <term lang="it">L'interfaccia principale</term>
+        <term lang="no">Dialogvindauget</term>
+        <term lang="ru">Главный диалог</term>
+        <term lang="zh_CN">主界面</term>
+
+        <listitem>
+          <para lang="en">
+            The plug-in interface consists of the compose area to the left, a
+            preview screen to the right, and some tabs and option buttons at
+            the bottom of the dialog. The Default setting (in the preview
+            window) is three equilateral triangles. (This gives rise to a
+            fractal pattern called the
+            <emphasis>Sierpinski Triangle</emphasis>).
+          </para>
+          <para lang="de">
+            Das Dialogfenster für dieses Filter besteht aus verschiedenen
+            Bereichen. Am oberen Rand befindet sich eine Funktionsleiste mit
+            verschiedenen Schaltflächen zur Bearbeitung der Fraktalform.
+            Darunter sehen Sie zwei Bereiche, die in den Vorgabe-Einstellungen
+            des Filters eine Menge von Dreiecken beinhalten. Der linke dient
+            zur Bearbeitung der Fraktalform, der rechte beinhaltet eine
+            Vorschau. Unterhalb sehen Sie zwei Reiter mit weiteren
+            Eigenschaften. Darunter befinden sich, am unteren Rand des
+            Fensters, weitere Schaltflächen.
+          </para>
+          <para lang="es">
+            El interfaz del complemento se compone del área de componer a
+            la izquierda, una pantalla de vista previa a la derecha, y
+            algunas solapas y botones de opciones en la parte inferior del
+            diálogo. La configuración predeterminada (en la ventana de
+            vista previa) son tres triángulos equiláteros. (Esto genera un
+            patrón factral llamado el
+            <emphasis>Triágulo Sierpinski</emphasis>).
+          </para>
+          <para lang="fr">
+            L'interface du filtre consiste en une zone de composition à
+            gauche, un aperçu à droite et quelques options et boutons en bas.
+            Le motif générateur par défaut est composé de trois triangles
+            équilatéraux (ceci est connu sous le nom de
+            <emphasis>Triangle de Sierpinski</emphasis>).
+          </para>
+          <para lang="it">
+            L'interfaccia del filtro è costituita dall'area di composizione
+            a sinistra, un'area di anteprima a destra e alcune linguette e
+            pulsanti di controllo nella parte inferiore della finestra di
+            dialogo. L'impostazione predefinita (nella finestra di anteprima)
+            è tre triangoli equilateri (questa impostazione da origine al
+            motivo frattale noto come <emphasis>Triangolo di
+            Sierpinski</emphasis>).
+          </para>
+          <para lang="no">
+            Dialogvindauget for dette filteret er sett saman av eit
+            komponeringsområde oppe til venstre, ei førehandsvising oppe
+            til høgre og eit område med innstillingar og knapper nedst i
+            vindauget. Trykker du knappen <guilabel>Nullstill</guilabel>,
+            vil filteret vise tre likesida trekantar som er grunnlaget for
+            eit fraktalmønster som blir kalla
+            <emphasis>Sierpinski-triangelet</emphasis>.
+          </para>
+          <para lang="ru">
+            Интерактивная часть дополнения включает область композиции слева,
+            окно просмотра справа, и закладки с параметрами внизу.
+            Начальные настройки показывают три равносторонних треугольника и
+            дают фрактальную текстуру под названием <emphasis>Треугольник
+            Серпинского</emphasis>.
+          </para>
+          <para lang="zh_CN">
+            该滤镜界面包括左边的创作区域，右边的预览屏幕和对话框底部的一些页签和选项按钮。默认的设置(预览窗口中)是三个等边三角形。(在分形图案中它们叫 <emphasis>Sierpinski 三角形</emphasis>)。
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term lang="en;zh_CN">Toolbar</term>
+        <term lang="de">Funktionsleiste</term>
+        <term lang="es">Barra de herramientas</term>
+        <term lang="fr">La barre d'outils</term>
+        <term lang="it">Barra degli strumenti</term>
+        <term lang="no">Funksjonsliste</term>
+        <term lang="ru">Панель инструментов</term>
+
+        <listitem>
+          <para lang="en">
+            Some tools are directly visible in this tool bar:
+            <guibutton>Move</guibutton>,
+            <guibutton>Rotate</guibutton>, <guibutton>Stretch</guibutton>,
+            <guibutton>New</guibutton>,
+            <guibutton>Delete</guibutton>, <guibutton>Undo</guibutton>
+            , <guibutton>Redo</guibutton>,
+            <guibutton>Select All</guibutton>.
+            You can see others, if your window is not wide enough, by
+            clicking on the drop-down list button on the right of tool bar:
+            <guibutton>Recenter</guibutton>  and
+            <guibutton>Render Options</guibutton> where you have have
+            several parameters:
+          </para>
+          <para lang="de">
+            Die Funktionsleiste beinhaltet verschiedene Schaltflächen, die
+            Ihnen bei der Bearbeitung der Fraktalform helfen. Dies umfasst
+            Funktionen zum <guibutton>Verschieben</guibutton>,
+            <guibutton>Drehen</guibutton>, <guibutton>Dehnen</guibutton>,
+            <guibutton>Neu</guibutton> anlegen,
+            <guibutton>Löschen</guibutton>, <guibutton>Rückgängig</guibutton>
+            machen, <guibutton>Wiederholen</guibutton>,
+            <guibutton>Alles Auswählen</guibutton>,
+            <guibutton>Zentrieren</guibutton> sowie zum Einstellen der
+            <guibutton>Rendereigenschaften</guibutton>.
+          </para>
+          <para lang="es">
+            Algunas herramientas son visibles directamente en esta barra
+            de herramientas:
+            <guibutton>Mover</guibutton>,
+            <guibutton>Rotar</guibutton>, <guibutton>Estirar</guibutton>,
+            <guibutton>Nuevo</guibutton>,
+            <guibutton>Borrar</guibutton>, <guibutton>Deshacer</guibutton>
+            , <guibutton>Rehacer</guibutton>,
+            <guibutton>Seleccionar todo</guibutton>.
+            Puede ver otras, si la ventana no es lo suficientemente ancha,
+            pulsando en el botón de lista desplegable a la derecha de la
+            barra de herramientas:
+            <guibutton>Recentrar</guibutton>  y
+            <guibutton>Opciones de renderizado</guibutton> donde tiene
+            varios parámetros:
+          </para>
+          <para lang="fr">
+            Certains outils sont directement visibles dans cette barre:
+            <guibutton>Déplacer</guibutton>,
+            <guibutton>Pivoter</guibutton>, <guibutton>Étendre</guibutton>,
+            <guibutton>Nouveau</guibutton>,
+            <guibutton>Supprimer</guibutton>, <guibutton>Défaire</guibutton>
+            , <guibutton>Refaire</guibutton>,
+            <guibutton>Tout sélectionner</guibutton>.
+            D'autres sont accessibles par le bouton de liste déroulante tout
+            à droite de la barre, si votre fenêtre n'est pas assez large:
+            <guibutton>Recentrer</guibutton>  et
+            <guibutton>Options de rendu</guibutton> où vous disposez de
+            plusieurs paramètres:
+          </para>
+          <para lang="it">
+            Alcuni strumenti sono direttamente visibili in questa barra:
+            <guibutton>Sposta</guibutton>,
+            <guibutton>Ruota</guibutton>, <guibutton>Stira</guibutton>,
+            <guibutton>Nuovo</guibutton>,
+            <guibutton>Elimina</guibutton>, <guibutton>Annulla</guibutton>
+            , <guibutton>Ripeti</guibutton>,
+            <guibutton>Seleziona tutto</guibutton>.
+            Se la finestra non è sufficientemente larga, premendo sul pulsante
+            a discesa posto sulla destra della barra si possono vedere altri
+            strumenti:
+            <guibutton>Riccalcola centro</guibutton>  e
+            <guibutton>Preferenze</guibutton> attraverso cui si accede a
+            parecchie impostazioni, quali:
+          </para>
+          <para lang="no">
+            Alle, eller noen av desse funksjonane er synlege i menyen:
+            <guibutton>Flytt</guibutton>,
+            <guibutton>Roter</guibutton>, <guibutton>Strekk</guibutton>,
+            <guibutton>Ny</guibutton>,<guibutton>Slett</guibutton>,
+            <guibutton>Angra</guibutton>, <guibutton>Gjer om</guibutton>,
+            <guibutton>Vel alle</guibutton>, <guibutton>Sentrer</guibutton>
+            og <guibutton>Teikneinnstillingar</guibutton>.
+            Dersom du ikkje ser alle i dialogvindauget, vil dei som ikkje er
+            synlege ligge bak ein nedtrekksmeny heilt til høgre på
+            menylinja. Trykker du på
+            <guibutton>Teikneinnstillingar</guibutton>, vil det dukke opp
+            eit nytt vindauge med følgjande innstillingar:
+          </para>
+          <para lang="ru">
+            Некоторые инструменты видны прямо с планки инструментов:
+            <guibutton>Переместить</guibutton>,
+            <guibutton>Повернуть</guibutton>,
+            <guibutton>Растянуть</guibutton>, <guibutton>Новый</guibutton>,
+            <guibutton>Удалить</guibutton>, <guibutton>Отменить</guibutton>,
+            <guibutton>Повторить</guibutton>,
+            <guibutton>Выделить все</guibutton>.
+            Чтобы увидеть все (если окно всех не вмещает), нажмите на кнопку
+            в правой части планки:
+            <guibutton>Пересчитать центр</guibutton> и
+            <guibutton>Параметры визуализации</guibutton>.
+          </para>
+
+          <variablelist>
+            <varlistentry>
+              <term lang="en">Render Options</term>
+              <term lang="de">Render-Einstellungen</term>
+              <term lang="es">Opciones de renderizado</term>
+              <term lang="fr">Options de rendu</term>
+              <term lang="it">Impostazioni di render</term>
+              <term lang="no">Teikneinnstillingar</term>
+              <term lang="ru">Параметры визуализации</term>
+              <term lang="zh_CN">绘制选项</term>
+
+              <listitem>
+                <variablelist>
+                  <varlistentry>
+                    <term lang="en">Memory</term>
+                    <term lang="de">Max. Speicher</term>
+                    <term lang="es">Memoria max.</term>
+                    <term lang="fr">Mémoire max.</term>
+                    <term lang="it">Memoria</term>
+                    <term lang="no">Maks. minne</term>
+                    <term lang="ru">Память</term>
+                    <term lang="zh_CN">最大内存</term>
+                    <listitem>
+                      <para lang="en">
+                        Enables you to speed up rendering time. This is
+                        especially useful when working with a large spot
+                        radius; just remember to use even multiples of the
+                        default value: 4096, 8192, 16384, ...
+                      </para>
+                      <para lang="de">
+                        Mit dieser Eigenschaft können Sie den maximalen
+                        Verbrauch an Hauptspeicher für das Filter einstellen.
+                        Eine Erhöhung des Wertes kann die Berechnung, gerade
+                        für große <guilabel>Punkt-Radius</guilabel>-Werte
+                        enorm beschleunigen. Setzten Sie den Wert immer auf
+                        ein Vielfaches des Standardwertes (4096), also 8192,
+                        16384 etc.
+                      </para>
+                      <para lang="es">
+                        Permite acelerar el renderizado. Es especialmente
+                        útil cuando trabaja con con un radio de puntos
+                        elevado; recuerde usar múltiplos del valor por
+                        defecto: 4096, 8192, 16384, ...
+                      </para>
+                      <para lang="fr">
+                        Rend possible d'accélérer le rendu. C'est
+                        particulièrement utile lorsque vous travaillez avec
+                        un <parameter>rayon de point</parameter> élevé.
+                        Souvenez-vous simplement d'utiliser des multiples de
+                        la valeur par défaut : 4096, 8192, 16384, ...
+                      </para>
+                      <para lang="it">
+                        Permette di diminuire il tempo di rendering. E'
+                        particolarmente utile lavorando con un raggio molto
+                        ampio; si consiglia di usare multipli esatti del
+                        valore predefinito: 4096, 8192, 16384, ...
+                      </para>
+                      <para lang="no">
+                        Dersom utrekningane går for sakte, kan du auke farten
+                        ved å definere bruk av meir minne. Dette er særleg
+                        aktuelt når du arbeider med stor punktradius. Hugs bare
+                        på at tala du skriv inn må vere 4096 multiplisert med
+                        eit partal. (4096 × 2 = 8192, 4096 × 4 = 16 384 osv).
+                      </para>
+                      <para lang="ru">
+                        Позволяет сэкономить время визуализации. Особенно
+                        годится при больших значениях радиуса пятна.
+                        Значение должно быть делимым на начальное значение:
+                        4096, 8192, 16384, ...
+                      </para>
+                      <para lang="zh_CN">
+                        它可以加速渲染时间。在处理大的点半径时特别有效;不过要记住使用默认值的倍数：4096，8192,16384, ...
+                      </para>
+                    </listitem>
+                  </varlistentry>
+
+                  <varlistentry>
+                    <term lang="en">Iterations</term>
+                    <term lang="de">Iterationen</term>
+                    <term lang="es">Iteraciones</term>
+                    <term lang="fr">Itérations</term>
+                    <term lang="it">Iterazioni</term>
+                    <term lang="no">Iterasjonar</term>
+                    <term lang="ru">Число повторов</term>
+                    <term lang="zh_CN">迭代次数</term>
+                    <listitem>
+                      <para lang="en">
+                        Determines how many times the fractal will repeat
+                        itself. (A high value for Subdivide and Iterations is
+                        for obvious reasons a waste of process time unless
+                        your image is very large.)
+                      </para>
+                      <para lang="de">
+                        Mit dieser Eigenschaft können Sie einstellen wie oft
+                        das Fraktal sich selbst beinhalten soll. Ein großer
+                        Wert ist jedoch nur für sehr große Bilder sinnvoll,
+                        andernfalls wird einfach nur länger gerechnet, aber es
+                        werden keine weiteren Details im Bild sichtbar sein.
+                      </para>
+                      <para lang="es">
+                        Determina las veces que se repite el factral. (Un
+                        valor alto para subdividir e iteraciones es por
+                        razones obvias un despilfarro de tiempo de proceso
+                        al menos si su imagen es muy grande).
+                      </para>
+                      <para lang="fr">
+                        Détermine combien de fois la fractale sera répétée
+                        (une valeur élevée pour les subdivisions d'itérations
+                        est pour des raisons évidentes un processus gourmand
+                        en temps CPU selon la taille de votre image).
+                      </para>
+                      <para lang="it">
+                        Determina quante volte il frattale si ripeterà (un
+                        alto valore per Suddividi e Iterazioni è per ovvi
+                        motivi uno spreco di tempo macchina a meno che non si
+                        lavori con grandi immagini)
+                      </para>
+                      <para lang="no">
+                        Dette talet bestemmer kor mange gonger fraktalen skal
+                        gjenta seg sjølv. Dersom du ikkje arbeider med svært
+                        store bilete, er det sløsing med prosesstid å bruke
+                        store tal på denne funksjonen.
+                      </para>
+                      <para lang="ru">
+                        Определяет, сколько раз фрактал повторится. Чем больше
+                        число повторов, тем дольше ведутся вычисления.
+                        Нецелесообразно использовать при маленьком
+                        изображении.
+                      </para>
+                      <para lang="zh_CN">
+                        决定分形重复自己的次数。(除非是图像特别大，不然很显然细分和迭代次数越大，耗费的处理时间就越多。)
+                      </para>
+                    </listitem>
+                  </varlistentry>
+
+                  <varlistentry>
+                    <term lang="en">Subdivide</term>
+                    <term lang="de">Unterteilung</term>
+                    <term lang="es">Subdividir</term>
+                    <term lang="fr">Subdiviser</term>
+                    <term lang="it">Suddividi</term>
+                    <term lang="no">Vidaredeling</term>
+                    <term lang="ru">Подразделять</term>
+                    <term lang="zh_CN">细分</term>
+
+                    <listitem>
+                      <para lang="en">Controls the level of detail.</para>
+                      <para lang="de">
+                        Mit dieser Eigenschaft kontrollieren Sie, wie viele
+                        Details im Fraktal dargestellt werden. Ein großer
+                        Wert ist jedoch nur für sehr große Bilder sinnvoll,
+                        andernfalls wird einfach nur länger gerechnet, aber es
+                        werden keine weiteren Details im Bild sichtbar sein.
+                      </para>
+                      <para lang="es">Controla el nivel de detalle.</para>
+                      <para lang="fr">
+                        Contrôle le niveau de détail du rendu.
+                      </para>
+                      <para lang="it">
+                        Controlla il livello di dettaglio.
+                      </para>
+                      <para lang="no">
+                        Dette talet styrer kor detaljrik fraktalen skal bli.
+                        Dersom du ikkje arbeider med svært store bilete, er
+                        det også her sløsing med prosesstid å bruke store tal 
+                        på denne funksjonen.
+                      </para>
+                      <para lang="ru">Определяет уровень деталей.</para>
+                      <para lang="zh_CN">控制细节级别。</para>
+                    </listitem>
+                  </varlistentry>
+
+                  <varlistentry>
+                    <term lang="en">Spot Radius</term>
+                    <term lang="de">Punkt-Radius</term>
+                    <term lang="es">Radio de puntos</term>
+                    <term lang="fr">Rayon du point</term>
+                    <term lang="it">Raggio</term>
+                    <term lang="no">Punktradius</term>
+                    <term lang="ru">Радиус пятна</term>
+                    <term lang="zh_CN">点半径</term>
+
+                    <listitem>
+                      <para lang="en">
+                        Determines the density of the
+                        <quote>brushstrokes</quote>
+                        in the rendered image. A low spot radius is good for
+                        thin particle clouds or spray, while a high spot
+                        radius produces thick, solid color strokes much like
+                        watercolor painting. Be careful not to use too much
+                        spot radius -- it takes a lot of time to render.
+                      </para>
+                      <para lang="de">
+                        Mit dieser Eigenschaft können Sie die Dichte der
+                        <quote>Pinselstriche</quote>
+                        einstellen, mit denen das Bild gemalt wird. Ein
+                        kleiner Wert ist sehr gut geeignet für Partikelwolken
+                        oder Spray, während ein großer Wert zu dicken Linien,
+                        ähnlich dem Malen mit Wasserfarben, führt. Außerdem
+                        benötigt ein großer Radius erheblich mehr Zeit zur
+                        Berechnung als ein kleiner. Die Einstellung können Sie
+                        mittels eines Schiebereglers oder des zugeordneten
+                        Eingabefeldes im Bereich von 0,0 bis 5,0 vornehmen.
+                      </para>
+                      <para lang="es">
+                        Determinala densidad de las
+                        <quote>pinceladas</quote> en la imagen
+                        renderizada. Un valor bajo, es bueno para nubes de
+                        partículas finas o pulverizado, mientras que un
+                        valor alto produce pinceladas de color sólido como
+                        de pintura de acuarelas. Tenga en cuenta que un
+                        valor alto de radio de puntos necesita un tiempo
+                        elevado de renderizado.
+                      </para>
+                      <para lang="fr">
+                        Détermine la densité du tracé de la brosse dans
+                        l'image rendue. Un rayon faible est meilleur pour les
+                        nuages de particules fines ou un spray tandis qu'un
+                        rayon élevé produit des couleurs unies de de type
+                        peinture à l'eau. Soyez attentif à ne pas utiliser un
+                        rayon trop grand qui entraînerait un temps de rendu
+                        très long.
+                      </para>
+                      <para lang="it">
+                        Determina la densità delle "pennellate" nell'immagine
+                        calcolata. Un raggio basso è adatto a nuvole di
+                        piccole particelle mentre un raggio elevato produce
+                        pennellate spesse di colore pieno più vicino alla
+                        pittura ad acquarello. Fare attenzione a non eccedere
+                        con il raggio pena un aumento vertiginoso dei tempi di
+                        resa.
+                      </para>
+                      <para lang="no">
+                        Du kan sjå på dette som eit tal for breidda på
+                        <quote>penselstroka</quote>. Bruk ein liten radius for
+                        partikkelskyer eller spray, medan ein større radius vil
+                        gi meir akvarelliknande strok. Stor radius kan gi 
+                        irriterande lang prosesstid.
+                      </para>
+                      <para lang="ru">
+                        Определяет плотность мазков в конечном изображении.
+                        Малые значения параметра хороши для облаков частиц или
+                        распыла. Большие значения дают толстые мазки сплошного
+                        цвета, как в акварели. Чем больше радиус пятна, тем
+                        дольше ведутся вычисления.
+                      </para>
+                      <para lang="zh_CN">
+                        它决定绘制图像中“画笔笔划”的密度。小的点半径适合于薄而分散的块状云，而大的点半径产生厚而像水彩画一样的纯色笔划。注意不要用过大的点半径--它会耗费很多时间渲染。
+                      </para>
+                    </listitem>
+                  </varlistentry>
+                </variablelist>
+              </listitem>
+            </varlistentry>
+          </variablelist>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term lang="en">Spatial Transformation</term>
+        <term lang="de">Reiter Raumtransformation</term>
+        <term lang="es">Transformación espacial</term>
+        <term lang="fr">Transformation spatiale</term>
+        <term lang="it">Trasformazione spaziale</term>
+        <term lang="no">Romtransformasjon</term>
+        <term lang="ru">Пространственное преобразование</term>
+        <term lang="zh_CN">空间变换</term>
+
+        <listitem>
+          <para lang="en">
+            Gives you information on the active fractal, and allows you to
+            type a value instead of changing it manually. Changing parameters
+            with the mouse isn't very accurate, so this is a useful option
+            when you need to be exact.
+          </para>
+          <para lang="de">
+            In diesem Reiter finden Sie verschiedene Eigenschaften zum aktiven
+            Dreieck. Sie können die Eigenschaften <guilabel>X</guilabel>,
+            <guilabel>Y</guilabel>, <guilabel>Skalierung</guilabel>,
+            <guilabel>Winkel</guilabel>, <guilabel>Asymmetrie</guilabel>
+            sowie <guilabel>Scheren</guilabel> über Eingabefelder
+            einstellen. Dies ist gegenüber der Manipulation der Werte mit der
+            Maus sehr viel genauer und leichter kontrollierbar.
+          </para>
+          <para lang="es">
+            Da información del factral activo, y permite poner un valor en
+            vez de cambiarlo manualmente. Cambiar parámetros con el ratón
+            no es muy preciso, así que una opción útil cuando necesita
+            precisión.
+          </para>
+          <para lang="fr">
+            Vous donne des informations sur la fractale active et vous permet
+            de rentrer une valeur au lieu de la changer à l'aide souris qui
+            n'a pas la même précision.
+          </para>
+          <para lang="it">
+            Fornisce informazioni sul frattale attivo e permette di digitare
+            un valore invece di cambiarlo graficamente. Cambiare i parametri
+            attraverso il mouse non è molto accurato quindi questa è una
+            possibilità utile quando occorre essere precisi.
+          </para>
+          <para lang="no">
+            Dette området viser ulike data for fraktalen. Du kan også skrive
+            direkte i rutene i staden for å bruke den nokså unøyaktige
+            musepeikaren. Dei tilgjengelege innstillingane er
+            <parameter>X</parameter>, <parameter>Y</parameter>,
+            <parameter>Skalering</parameter>,
+            <parameter>Vinkel</parameter>,
+            <parameter>Asymmetri</parameter> og
+            <parameter>Forskyv</parameter>.
+          </para>
+          <para lang="ru">
+            Даёт информацию о текущем фрактале и позволяет набрать значение,
+            вручную. Изменение параметров с помощью мышки не всегда точно,
+            поэтому даётся возможность набрать точное значение.
+          </para>
+          <para lang="zh_CN">
+            提供活动分形的信息并让您准确地输入这些参数的数值。
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term lang="en;zh_CN">Color transformation</term>
+        <term lang="de">Reiter Farbtransformation</term>
+        <term lang="es">Transformación de color</term>
+        <term lang="fr">Onglet Transformation de couleur</term>
+        <term lang="it">Trasformazione colore</term>
+        <term lang="no">Fargetransformasjon</term>
+        <term lang="ru">Преобразование цветов</term>
+
+        <listitem>
+          <figure lang="en;de;es;fr;it;no;ru">
+            <title>
+              <phrase lang="en">
+                <quote>Color transformation</quote> tab options
+              </phrase>
+              <phrase lang="de">
+                Eigenschaften (Farbtransformation) für das Filter
+                <quote>IFS-Fraktal</quote>
+              </phrase>
+              <phrase lang="es">
+                Opciones de la solapa <quote>Transformación de color</quote>
+              </phrase>
+              <phrase lang="fr">
+                Options de l'onglet <quote>Transformation de couleur</quote>
+              </phrase>
+              <phrase lang="it">
+                Opzioni della linguetta "Trasformazione colore"
+              </phrase>
+              <phrase lang="no">
+                Innstillingane for fanen <quote>Fargetransformasjon</quote>
+              </phrase>
+              <phrase lang="ru">
+                Параметры закладки <quote>Преобразование цветов</quote>
+              </phrase>
+            </title>
+
+            <mediaobject>
+              <imageobject lang="en;ru">
+                <imagedata
+                  fileref="../images/filters/options-render-ifscompose2.png"
+                  format="PNG" />
+              </imageobject>
+              <imageobject lang="de">
+                <imagedata
+                  fileref="../images/filters/de/options-render-ifscompose2.png"
+                  format="PNG" />
+              </imageobject>
+              <imageobject lang="es">
+                <imagedata
+                  fileref="../images/filters/es/options-render-ifscompose2.png"
+                  format="PNG" />
+              </imageobject>
+              <imageobject lang="it">
+                <imagedata
+                  fileref="../images/filters/it/options-render-ifscompose2.png"
+                  format="PNG" />
+              </imageobject>
+              <imageobject lang="fr">
+                <imagedata
+                  fileref="../images/filters/fr/options-render-ifscompose2.png"
+                  format="PNG" />
+              </imageobject>
+              <imageobject lang="no">
+                <imagedata
+                  fileref="../images/filters/no/options-render-ifscompose2.png"
+                  format="PNG" />
+              </imageobject>
+            </mediaobject>
+          </figure>
+
+          <para lang="de">
+            In diesem Reiter können Sie verschiedene Eigenschaften einstellen,
+            welche die Farbgebung des Fraktals betreffen.
+          </para>
+          <para lang="no">
+            I denne fanen finn du ulike innstillingar som har med fargen i
+            fraktalen å gjere.
+          </para>
+
+          <variablelist>
+            <varlistentry>
+              <term lang="en">Simple color transformation</term>
+              <term lang="de">Einfach</term>
+              <term lang="es">Transformación de color simple</term>
+              <term lang="fr">Transformation de couleur simple</term>
+              <term lang="it">Trasformazione colore Semplice</term>
+              <term lang="no">Enkel</term>
+              <term lang="ru">Простое преобразование цветов</term>
+              <term lang="zh_CN">简单颜色变换</term>
+
+              <listitem>
+                <para lang="en">
+                  Changes the color of the currently selected fractal
+                  component (default is the foreground color in the toolbox)
+                  to a color of your choice.
+                </para>
+                <para lang="de">
+                  In dieser Einstellung können Sie die Farbe der aktiven
+                  Fraktalkomponente einstellen. Die Farbgebung beginnt mit der
+                  aktuellen Vordergrundfarbe und endet mit einer Farbe, die
+                  Sie durch einen Klick auf die Farbschaltfläche selbst
+                  festlegen können.
+                </para>
+                <para lang="es">
+                  Cambia el color del componente activo del fractal
+                  seleccionado (por defecto es el color de frente de la
+                  caja de herramienta) al color que elija.
+                </para>
+                <para lang="fr">
+                  Change la couleur du composant actif de la fractale (qui
+                  utilise normalement la couleur de premier plan de la boîte à
+                  outils)
+                </para>
+                <para lang="it">
+                  Cambia il colore della componente del frattale correntemente
+                  selezionata (che parte come colore di primo piano nella
+                  casella strumenti) in un colore a scelta.
+                </para>
+                <para lang="no">
+                  Her bestemmer du fargen for den aktive fraktalkomponenten.
+                  Fargen vil byrje med den aktive forgrunnsfargen i
+                  verktøykassa og ende opp med den fargen du har vald her.
+                </para>
+                <para lang="ru">
+                  Меняет цвет текущего компонента фрактала на выбранный.
+                  Начальный цвет фрактала берётся с цвета переднего плана
+                  панели инструментов.
+                </para>
+                <para lang="zh_CN">改变当前选中分形组件的颜色，它从工具栏中的背景色开始到您所选择的颜色。</para>
+              </listitem>
+            </varlistentry>
+
+            <varlistentry>
+              <term lang="en">Full color transformation</term>
+              <term lang="de">Ganz</term>
+              <term lang="es">Transformación de color total</term>
+              <term lang="fr">Transformation de couleur complète</term>
+              <term lang="it">Trasformazione di colore Tutto</term>
+              <term lang="no">Heile</term>
+              <term lang="ru">Полное преобразование цветов</term>
+              <term lang="zh_CN">完全颜色变换</term>
+
+              <listitem>
+                <para lang="en">
+                  Like the Simple color transformation but this time you can
+                  manage the color transformation for each color channel and
+                  for the alpha channel (shown as a black channel).
+                </para>
+                <para lang="de">
+                  Mit dieser Einstellung können Sie ebenfalls die Farbe
+                  der aktuellen Fraktalkomponente bestimmen. In diesem Fall
+                  jedoch für jeden Farbkanal und den Alphakanal (schwarz
+                  angezeigt) getrennt.
+                </para>
+                <para lang="es">
+                  Como en la transformación de color simple pero esta vez
+                  gestiona la transformación de color para cada canal de
+                  color y para el canal alfa (mostrado como un canal
+                  negro).
+                </para>
+                <para lang="fr">
+                  Comme la Transformation de couleur simple mais cette fois
+                  vous gérez la transformation de couleur pour chaque canal de
+                  couleur et pour le canal Alpha (représenté en noir).
+                </para>
+                <para lang="it">
+                  Come la trasformazione di colore Semplice ma in questo caso
+                  si può controllare la trasformazione per ciascun canale di
+                  colore e per il canale alfa (visualizzato come un canale di
+                  colore nero).
+                </para>
+                <para lang="no">
+                  Som den enkle fargeomfprminga, men her kan du bestemme
+                  fargeovergangen for alle tre fargekanalane og for
+                  alfakanalen (vist som svart).
+                </para>
+                <para lang="ru">
+                  Как простое преобразование цветов, но позволяет руководить
+                  цветовым преобразованием для каждого цветового канала и
+                  канала альфа (показан как чёрный канал).
+                </para>
+                <para lang="zh_CN">
+                  和简单颜色变换相似，但是在这里能够控制每个颜色通道和 Alpha 通道(显示为黑色通道)单独的颜色变换。
+                </para>
+              </listitem>
+            </varlistentry>
+
+            <varlistentry>
+              <term lang="en">Scale Hue/Value</term>
+              <term lang="de">Farbton/Wert skalieren mit</term>
+              <term lang="es">Escala tono/valor</term>
+              <term lang="fr">Échelle de Teinte/Luminosité</term>
+              <term lang="it">Scala tonalità</term>
+              <term lang="no">Skaler kulør/lysverdi</term>
+              <term lang="ru">Насыщенность/яркость</term>
+              <term lang="zh_CN">色调/亮度缩放</term>
+              <listitem>
+                <para lang="en">
+                  When you have many fractals with different colors, the
+                  colors blend into each other. So even if you set
+                  <quote>pure red</quote> for a fractal, it might actually
+                  be quite blue in some places, while another <quote>red
+                  </quote> fractal might have a lot of yellow in it. Scale
+                  Hue/Value changes the color strength of the active
+                  fractal, or how influential that fractal color should be.
+                </para>
+                <para lang="de">
+                  Wenn Sie viele verschiedene Fraktale mit verschiedenen
+                  Farben haben, werden die Farben ineinander übergeblendet.
+                  Daher wird ein Fraktal, auch wenn Sie es mit reinem Rot
+                  eingestellt haben, möglicherweise verfärbt. Mit diesen
+                  beiden Eigenschaften können Sie die Farbstärke (Dominanz)
+                  der aktuellen Fraktalkomponente einstellen. Hierzu stehen
+                  Ihnen je ein Schieberegler und ein Eingabefeld zur
+                  Verfügung. Die Einstellung erfolgt im Bereich von 0,0 bis
+                  1,0.
+                </para>
+                <para lang="es">
+                  Cunado tienen muchos fractales con diferentes colores,
+                  los colores se mezclan. Así que si selecciona
+                  <quote>rojo puro</quote> para un fractal, podría ser
+                  bastante azul en algunos lugares, mientras otro factral
+                  <quote>rojo</quote> podría tener un montón de amarillo.
+                  Escala tono/valor cambia la fuerza del color del factral
+                  activo, o como debería ser la influencia del color del
+                  factral.
+                </para>
+                <para lang="fr">
+                  Quand vous avez plusieurs fractales avec plusieurs couleurs,
+                  les couleurs se mélangent entre elles. Ainsi même si vous
+                  indiquez <quote>entièrement rouge</quote> pour une
+                  fractale il se peut qu'il y ait du bleu quelque part ou
+                  qu'une autre fractale <quote>rouge</quote> produise du
+                  jaune. <guilabel>Échelle de Teinte/Luminosité</guilabel>
+                  change l'intensité de la couleur de la fractale active ou
+                  fixe quelle influence cette couleur de fractale devrait
+                  avoir.
+                </para>
+                <para lang="it">
+                  Quando si hanno molti frattali con colori diversi i colori
+                  si mescolano l'un l'altro. Cosicchè se si imposta "rosso
+                  puro" per un frattale può in realtà essere blu in alcune
+                  posizioni mentre un altro frattale "rosso" può avere molte
+                  parti gialle. L'opzione Scala tonalità altera la forza del
+                  colore del frattale corrente o quanto influente debba essere
+                  questo colore.
+                </para>
+                <para lang="no">
+                  Når du har mange fraktalar med ulike fargar, vil fargane
+                  gli over i kvarandre. Enda om du set fargen for ein
+                  fraktal til <quote>rein raud</quote>, kan han likevel vere
+                  nokså blå somme stader. Ein annan <quote>raud</quote>
+                  fraktal kan bli nokså gul. Desse glidebrytarane styrer
+                  fargestyrken for den aktive fraktalen, og såleis kor mykje
+                  desse fargane skal påverka andre fraktalfargar.
+                </para>
+                <para lang="ru">
+                  При наличие многоцветных фракталов, их цвета сливаются друг
+                  с другом. Может получится так, что один красный фрактал
+                  будет синеватым в некорых местах, а другой, тоже красный,
+                  будет жёлтого оттенка. Ползунок насыщенность/яркость
+                  определяет цвет текущего фрактала, или влияние цвета
+                  фрактала на другие компоненты изображения.
+                </para>
+                <para lang="zh_CN">
+                  当有多个不同颜色的分形时，这些颜色就相互混和在一起。因此即使是赋予分形“纯红色”，它也可能在某些地方是偏蓝的，而在其它地方的“红色”分形则有可能包含很多黄色。色调/亮度缩放改变活动分形的颜色强度，也就是分形的颜色影响力的大小。
+                </para>
+              </listitem>
+            </varlistentry>
+          </variablelist>
+
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term lang="en">Relative Probability</term>
+        <term lang="de">Rel. Wahrscheinlichkeit</term>
+        <term lang="es">Probabilidad Relativa</term>
+        <term lang="fr">Probabilité relative</term>
+        <term lang="it">Probabilità relativa</term>
+        <term lang="no">Relativ tilfeldig</term>
+        <term lang="ru">Относительная вероятность</term>
+        <term lang="zh_CN">相对概率</term>
+
+        <listitem>
+          <para lang="en">
+            Determines influence or total impact of a certain fractal.
+          </para>
+          <para lang="de">
+            Mit dieser Eigenschaft können Sie den Einfluss und die
+            Auswirkungen einer bestimmten Fraktalkomponente auf das gesamte
+            Fraktal einstellen. Hierzu stehen Ihnen ein Schieberegler sowie
+            ein zugeordnetes Eingabefeld zur Verfügung. Die Einstellung kann
+            im Bereich von 0,0 bis 5,0 vorgenommen werden.
+          </para>
+          <para lang="es">
+            Determina la influencia o el impacto total de un cierto
+            factral.
+          </para>
+          <para lang="fr">
+            Détermine l'influence d'un composant déterminé de la fractale sur
+            l'ensemble de la fractale.
+          </para>
+          <para lang="it">
+            Determina l'influenza o l'impatto totale di una certa componente
+            frattale.
+          </para>
+          <para lang="no">
+            Denne glidebrytaren styrer kor mykje den aktive fraktalen kan
+            påverka dei andre fraktalane.
+          </para>
+          <para lang="ru">Определяет влияние отдельного фрактала.</para>
+          <para lang="zh_CN">决定一个特定分形的影响和总的效果。</para>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+  </sect3>
+
+  <!-- TODO: en de es it no: move this to the pro tutorial section -->
+  <sect3 lang="en;de;es;fr;it;no;ru">
+    <title>
+      <phrase lang="en">A Brief Tutorial</phrase>
+      <phrase lang="de">Kurzanleitung</phrase>
+      <phrase lang="es">Un tutorial</phrase>
+      <phrase lang="fr">Un bref didacticiel</phrase>
+      <phrase lang="it">Un breve tutorial</phrase>
+      <phrase lang="no">Eit kortkurs</phrase>
+      <phrase lang="ru">Короткая инструкция</phrase>
+    </title>
+
+    <para lang="en">
+      This is a rather complex plug-in, so to help you understand it, we'll
+      guide you through an example where you'll create a leaf or branch.
+    </para>
+    <para lang="de">
+      Das Filter <quote>IFS-Fraktal</quote> ist eines der komplexeren Filter
+      in <acronym>GIMP</acronym>. Daher soll Ihnen diese Kurzanleitung
+      einen Einblick in die Arbeit mit Fraktalen geben. Anhand der Anleitung
+      werden Sie sehen, wie Sie ein Blatt oder einen Zweig erstellen können.
+    </para>
+    <para lang="es">
+      Es un complemento bastante complejo, así que le ayudaremos a
+      entenderlo, le guiaremos mediante un ejemplo de creación de una hoja
+      o rama.
+    </para>
+    <para lang="fr">
+      Comme il s'agit d'un filtre complexe, et pour vous aider à le
+      comprendre, nous allons vous guider à travers un exemple où vous créerez
+      une feuille ou une branche.
+    </para>
+    <para lang="it">
+      Questo filtro è molto complicato quindi per migliorarne la comprensione
+      si fornisce un esempio di creazione di una foglia o ramo.
+    </para>
+    <para lang="no">
+      Dette filteret er nokså komplekst, så kanskje dette lille kurset vil
+      vere til hjelp. Eksemplet viser korleis filteret kan brukast for å lage
+      eit bregneliknande blad.
+    </para>
+    <para lang="ru">
+      Это достаточно сложное дополнение, и чтобы вам было легче понять его
+      работу, предоставляется пошаговая инструкция по тому, как создать лист
+      и стебель.
+    </para>
+
+    <para lang="en">
+      Many forms of life, and especially plants, are built like
+      mathematical fractals, i.e., a shape that reproduces or repeats
+      itself indefinitely into the smallest detail. You can easily
+      reproduce the shape of a leaf or a branch by using four (or
+      more) fractals. Three fractals make up the tip and sides of the
+      leaf, and the fourth represents the stem.
+    </para>
+    <para lang="de">
+      Viele natürliche Formen, besonders bei Pflanzen, sind fraktal aufgebaut.
+      Dies bedeutet, dass sich eine bestimmte Form immerfort bis in das
+      kleinste Detail wiederholt. Sie können die Form eines Blattes oder
+      Zweiges sehr leicht mit Hilfe von vier (oder mehr) Fraktalen
+      nachbilden. Drei Fraktale bilden dabei die Spitze und die Seiten des
+      Blattes, während das vierte den Stiel bildet.
+    </para>
+    <para lang="es">
+      Muchas formas de vida, y especialmente las plantas, están
+      construidas como factrales matemáticos, es decir, una forma que se
+      repite a si misma indefinidamente en lod detalles más pequeños.
+      Facilmente, puede reproducir la forma de una hoja o una rama
+      utilizando cuatro o más factrales. Tres factrales dan forma a la
+      punta y los lados de la hoja y el cuarto representa el tallo.
+    </para>
+    <para lang="fr">
+      De nombreuses formes de vie, et spécialement les plantes, sont
+      construites sur un mode fractal, c.-à-d celui d'un motif simple qui se
+      répète indéfiniment jusque dans ses plus petits détails. Vous pouvez
+      facilement reproduire la forme d'une feuille ou d'une branche en
+      utilisant quatre (ou plus) fractales. Trois fractales donnent la
+      pointe et les bords de la feuille, et la quatrième la tige.
+    </para>
+    <para lang="it">
+      Molte forme di vita, in particolar modo i vegetali, sono rappresentabili
+      matematicamente tramite frattali cioè hanno una forma che riproduce
+      o ripete se stessa indefinitamente fino al livello di dettaglio più
+      piccolo. Si può riprodurre la forma di una foglia o di un ramo usando
+      quattro o più componenti frattali. Tre frattali daranno forma alla
+      punta e ai lati della foglia mentre il quarto originerà il gambo.
+    </para>
+    <para lang="no">
+      Mange organiske former, spesielt planter, er sett saman på ein måte
+      som kan likne på eit matematisk fraktalmønster, dvs. ei form som
+      reproduserer seg sjølv (i teorien) uendeleg inntil den minste detaljen.
+      Du kan relativt lett komponera forma på eit blad ved hjelp av fire
+      fraktalar ved å bruke tre fraktalar for å lage sidene og spissen på
+      bladet og den fjerde for å lage stilken.
+    </para>
+    <para lang="ru">
+      Многие формы жизни, особенно растения, построены по модели фракталов,
+      т.е. форма, которая воспроизводит и повторяет себя бесконечно в
+      малейших деталях. Вы легко можете симитировать форму листа или ветки,
+      используя четыре (или больше) фрактала. Три фрактала сделают кончик и
+      края листа, а червёртый - стебель.
+    </para>
+
+    <orderedlist>
+      <listitem>
+        <para lang="en">
+          Before invoking the filter: Select
+          <menuchoice>
+            <guimenu>File</guimenu>
+            <guimenuitem>New Image</guimenuitem>
+          </menuchoice>
+          Add a transparent layer with
+          <menuchoice>
+            <guimenu>Layers</guimenu>
+            <guisubmenu>Layers and Channels</guisubmenu>
+            <guimenuitem>New Layer</guimenuitem>
+          </menuchoice>
+          Set the foreground color in the toolbox to black, and
+          set the background to white.
+        </para>
+        <para lang="de">
+          Zur Vorbereitung erzeugen Sie zunächst mittels
+          <menuchoice>
+            <guimenu>Datei</guimenu>
+            <guimenuitem>Neu</guimenuitem>
+          </menuchoice>
+          ein neues Bild und fügen mit
+          <menuchoice>
+            <guimenu>Ebene</guimenu>
+            <guimenuitem>Neue Ebene</guimenuitem>
+          </menuchoice>
+          eine neue, transparente Ebene hinzu. Außerdem stellen Sie bitte
+          die aktuelle Vordergrundfarbe auf Schwarz und die Hintergrundfarbe
+          auf Weiß.
+        </para>
+        <para lang="es">
+          Antes de activar el filtro: Seleccione
+          <menuchoice>
+            <guimenu>Archivo</guimenu>
+            <guimenuitem>Nuevo</guimenuitem>
+          </menuchoice>
+          Añada un capa transparente con
+          <menuchoice>
+            <guimenu>Capas</guimenu>
+            <guimenuitem>Capa nueva</guimenuitem>
+          </menuchoice>
+          Seleccione el color de frente en la caja de herramientas a
+          negro, y el de fondo a blanco.
+        </para>
+        <para lang="fr">
+          Avant d'invoquer le filtre, choisissez
+          <menuchoice>
+            <guimenu>Fichier</guimenu>
+            <guimenuitem>Nouvelle Image</guimenuitem>
+          </menuchoice>
+          Ajoutez un calque transparent avec
+          <menuchoice>
+            <guimenu>Calques</guimenu>
+            <guisubmenu>Calques et canaux</guisubmenu>
+            <guimenuitem>Nouveau calque</guimenuitem>
+          </menuchoice>
+          Réglez la couleur de premier plan de la Boîte à outils sur Noir
+          et la couleur d'arrière-plan sur Blanc.
+        </para>
+        <para lang="it">
+          Prima di invocare il filtro: selezionare
+          <menuchoice>
+            <guimenu>File</guimenu>
+            <guimenuitem>Nuovo</guimenuitem>
+          </menuchoice>.
+          Aggiungere un livello contenitore con
+          <menuchoice>
+            <guimenu>Livello</guimenu>
+            <guimenuitem>Nuovo livello</guimenuitem>
+          </menuchoice>.
+          Impostare il colore di primo piano nella casella strumenti al nero e
+          il colore di sfondo a bianco.
+        </para>
+        <para lang="no">
+          Før du aktiverer filteret, lager du eit nytt bilete:
+          <menuchoice>
+            <guimenu>Fil</guimenu>
+            <guimenuitem>Nytt bilete</guimenuitem>
+          </menuchoice>
+          Legg til eit gjennomsiktig lag med
+          <menuchoice>
+            <guimenu>Lag</guimenu>
+            <guimenuitem>Nytt lag</guimenuitem>
+          </menuchoice>
+          der du vel fylltype gjennomsikt. Sett forgrunnsfargen i
+          verktøykassa til svart og bakgrunnsfargen til kvit.
+        </para>
+        <para lang="ru">
+          До запуска фильтра выберите пункт меню
+          <menuchoice>
+            <guimenu>Файл</guimenu>
+            <guimenuitem>Новое изображение</guimenuitem>
+          </menuchoice>;
+          Добавьте прозрачный слой с помощью меню
+          <menuchoice>
+            <guimenu>Слои</guimenu>
+            <guisubmenu>Слои и каналы</guisubmenu>
+            <guimenuitem>Новый слой</guimenuitem>
+          </menuchoice>;
+          Установите цвет переднего плана в панели инструментов на чёрный, а
+          цвет фона на белый.
+        </para>
+      </listitem>
+
+      <listitem>
+        <para lang="en">
+          Open IFS Compose. Start by rotating the right and bottom triangles,
+          so that they point upward. You'll now be able to see the outline of
+          what's going to be the tip and sides of the leaf. (If you have
+          problems, it may help to know that the three vertices of a triangle
+          are not equivalent.)<indexterm lang="en">
+            <primary>Docks</primary>
+            <secondary>Add tab</secondary>
+          </indexterm>
+          <indexterm lang="fr">
+            <primary>Onglets</primary>
+            <secondary>Ajouter un onglet</secondary>
+          </indexterm>
+        </para>
+        <para lang="de">
+          Rufen Sie das Filter <quote>IFS-Fraktal</quote>
+          auf. Beginnen Sie damit, das rechte und das untere der Dreiecke so zu
+          drehen, dass diese nach oben zeigen. Sie sind nun in der Lage, grob
+          zu erkennen, wo sich die Blattspitze und die Seiten der Blätter
+          befinden werden.
+        </para>
+        <para lang="es">
+          Abra fractal IFS. Empiece rotando los triángulos derecho e
+          inferior, para que apunten hacia arriba. Ahora, podrá ver el
+          contorno de lo que será la punta y los lados de la hoja. (Si
+          tiene problemas, podría ayudarle saber que los tres vértices de
+          un triángulo no son equivalentes).
+        </para>
+        <para lang="fr">
+          Ouvrez Fractaliser. Commencez par une rotation des
+          triangles de droite et du bas, de façon à ce qu'ils pointent vers le
+          haut. Vous devriez voir le contour de ce qui va devenir la pointe et
+          les côtés de la feuille. (Si vous avez des difficultés, sachez que
+          les trois sommets de chaque triangle ne sont pas équivalents.)
+        </para>
+        <para lang="it">
+          Invocare il filtro Frattale IFS. Iniziare ruotando i triangoli di
+          destra e inferiore in modo che puntino verso l'alto. Si può iniziare
+          a vedere quella che sarà la punta e i lati della foglia (se si hanno
+          problemi può essere utile sapere che i tre vertici di un triangolo
+          non sono equivalenti).
+        </para>
+        <para lang="no">
+          Opna IFS-fraktal og roter det høgre og det nedre triangelet slik at
+          spissane peikar oppover. Nå bør du kunne sjå omrisset av det som
+          skal bli såissen og sidene i bladet. Har du problem, kan det
+          kanskje vere til hjelp å hugse på at det er ikkje likegyldig kva side
+          i trianglet som vender nedover.
+        </para>
+        <para lang="ru">
+          Откройте <guilabel>IFS Собрать</guilabel>. Начните с вращения
+          нижнего и правого треугольников так, чтобы они указывали вверх.
+          Вы увидите контур кончика и краёв будущего листа. Помните, что
+          у каждого из углов треугольника разная функция.
+        </para>
+        <figure>
+          <title>
+            <phrase lang="en">Tutorial Step 2</phrase>
+            <phrase lang="de">Kurzanleitung Schritt 2</phrase>
+            <phrase lang="es">Tutorial Paso 2</phrase>
+            <phrase lang="fr">2ème étape</phrase>
+            <phrase lang="it">Tutorial Passo 2</phrase>
+            <phrase lang="no">Steg 2</phrase>
+            <phrase lang="ru">Шаг 2</phrase>
+          </title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="../images/filters/examples/ifscompose-tut1.png"
+                         format="PNG"/>
+            </imageobject>
+            <caption>
+              <para lang="en">
+                Start by rotating triangles 2 and 3, trying to keep them nearly
+                the same size.
+              </para>
+              <para lang="de">
+                Drehen Sie die Dreiecke 2 und 3. Versuchen Sie diese möglichst
+                gleich groß zu machen.
+              </para>
+              <para lang="es">
+                Empiece rotando los triángulos 2 y 3, y trate de
+                mantenerlos del mismo tamaño.
+              </para>
+              <para lang="fr">
+                Commencez par une rotation des triangles 1 et 2, en
+                essayant de leur conserver à peu près la même taille.
+              </para>
+              <para lang="it">
+                Iniziare ruotando i triangolo 2 e 3 cercando di renderli delle
+                stesse dimensioni.
+              </para>
+              <para lang="no">
+                Start med å rotere triangel 2 og 3, mest mogleg utan å endra
+                storleik.
+              </para>
+              <para lang="ru">
+                Начните с вращения треугольников 2 и 3, стараясь чтобы их
+                размер был одинаковым.
+              </para>
+            </caption>
+          </mediaobject>
+        </figure>
+      </listitem>
+
+      <listitem>
+        <para lang="en">
+          To make the leaf symmetrical, adjust the bottom triangle to
+          point slightly to the left, and the right triangle to point
+          slightly to the right.
+        </para>
+        <para lang="de">
+          Um das Blatt symmetrisch zu machen, stellen Sie das untere Dreieck
+          so ein, dass es leicht nach links zeigt. Ebenso sollte das rechte
+          Dreieck leicht nach rechts zeigen.
+        </para>
+        <para lang="es">
+          Para hacer la hoja simétrica, ajuste el triángulo inferior para
+          que apunte ligeramnete a la izquierda, y el triángulo derecho
+          que apunte ligeramente a la derecha.
+        </para>
+        <para lang="fr">
+          Pour rendre la feuille symétrique, ajustez le triangle du bas
+          pour qu'il pointe légèrement vers la gauche, et le triangle de
+          droite légèrement vers la droite.
+        </para>
+        <para lang="it">
+          Per rendere la foglia simmetrica regolare il triangolo inferiore in
+          maniera che punti leggermente a sinistra e il triangolo di destra
+          in maniera che punti leggermente a destra.
+        </para>
+        <para lang="no">
+          For å gjere bladet symmetrisk, kan du setje triangel 3 slik at det
+          peikar litegrann mor venstre, og la triangel 2 peike litegrann til
+          høgre.
+        </para>
+        <para lang="ru">
+          Чтобы сделать лист симметричным, направьте нижний треугольник
+          слегка влево, а правый - вправо.
+        </para>
+      </listitem>
+
+      <listitem>
+        <para lang="en">
+          Press <guibutton>New</guibutton> to add a component to the
+          composition. This is going to be the stem of the leaf, so we
+          need to make it long and thin. Press
+          <guibutton>Stretch</guibutton>, and drag to
+          stretch the new triangle. Don't be alarmed if this messes up
+          the image, just use <guibutton>Scale</guibutton> to adjust
+          the size of the overlong
+          triangle. You'll probably also have to move and rotate the
+          new fractal to make it look convincing.
+        </para>
+        <para lang="de">
+          Fügen Sie durch Betätigen der Schaltfläche
+          <guibutton>Neu</guibutton> eine weitere Komponente hinzu. Diese wird
+          den Stiel des Blattes bilden. Hierzu machen Sie diese lang und dünn.
+          Dazu aktivieren Sie <guibutton>Stretch</guibutton> und ziehen, um
+          das neue Dreieck zu dehnen. Lassen Sie sich nicht irritieren, wenn
+          das Bild dadurch zunächst etwas unerwartet aussieht, verwenden Sie
+          <guilabel>Skalieren</guilabel>, um die Größe des überlangen
+          Dreiecks einzustellen. Sie müssen das neue Fraktal möglicherweise
+          noch etwas verschieben und drehen, um mit dem Ergebnis zufrieden zu
+          sein.
+        </para>
+        <para lang="es">
+          Pulse el botón <guibutton>Nuevo</guibutton> para añadir un
+          componente a la composición. Este será el tallo de la hoja, así
+          que necesitamos hacerlo largo y fino. Pulsamos
+          <guibutton>Estirar</guibutton>, y arrastramos para estirar el
+          nuevo triángulo. No se alarme si se echa a perder la imagen, use
+          <guibutton>Escalar</guibutton> para ajustar el tamaño del
+          triángulo extralargo. Probablemente, también tendrá que mover y
+          rotar el factral nuevo para que parezca convincente.
+        </para>
+        <para lang="fr">
+          Cliquez sur sur le bouton <guibutton>Nouveau</guibutton> pour
+          ajouter un composant à la composition. Ce sera la tige de la
+          feuille et nous le ferons long et fin. Appuyez sur le bouton
+          <guibutton>Étendre</guibutton> et faites glisser le pointeur pour
+          étendre le nouveau triangle. Ne vous inquiétez pas si cela
+          crée une image peu satisfaisante; utilisez simplement la boîte de
+          saisie <guilabel>Échelle</guilabel> de l'onglet
+          <guilabel>Transformation spatiale</guilabel> pour régler
+          la taille du triangle trop allongé. Vous aurez certainement à
+          déplacer et faire tourner le nouveau composant pour le rendre plus
+          convaincant.
+        </para>
+        <para lang="it">
+          Premete il pulsante <guibutton>Nuovo</guibutton> per aggiungere una
+          componente frattale. La nuova componente costituirà il gambo della
+          foglia quindi deve essere reso lungo e sottile. Premete
+          <guibutton>Stira</guibutton> e trascinate il mouse per stirare il
+          nuovo triangolo. Non preoccuparsi se questo scombina l'immagine ma
+          utilizzare <guibutton>Scala</guibutton> per regolare le dimensioni
+          del triangolo allungato. Probabilmente occorrerà spostare e ruotare
+          la nuova componente per renderla convincente.
+        </para>
+        <para lang="no">
+          Trykk knappen <guibutton>Ny</guibutton> for å legge eit nytt
+          triangel til fraktalen. Sidan dette skal bli stilken i bladet, må vi
+          gjere denne lang og tynn. Dette gjer du ved å trykke knappen
+          <guibutton>Strekk</guibutton> og deretter dra ut trekanten
+          med musepeikaren. Ikkje bry deg om at dette roter til biletet,
+          det kan du rette opp igjen ved å gå ned på boksen
+          <guibutton>Skalering</guibutton> og redusera trekanten til
+          biletet igjen ser normalt ut. Truleg må du også flytte og rotere
+          trekant 4 for å finne den rette plassen for stilkane.
+        </para>
+        <para lang="ru">
+          Нажмите на кнопку <guibutton>Новый</guibutton> чтобы добавить
+          компонент к композиции. Это будет стебель листа, так что сделайте
+          его тонким и длинным. Нажмите на кнопку
+          <guibutton>Растянуть</guibutton>, и подвигайте курсором чтобы
+          растянуть новый треугольник. Не беспокойтесь, если это ухудшит
+          изображение. Просто нажмите на <guibutton>Масштаб</guibutton>
+          чтобы отрегулировать размер длинного треугольника. Вам скорее
+          придётся подвигать и покрутить новый фрактал, чтобы он выглядел
+          убедительно.
+        </para>
+
+        <figure>
+          <title>
+            <phrase lang="en">Tutorial Step 3</phrase>
+            <phrase lang="de">Kurzanleitung Schritt 3</phrase>
+            <phrase lang="es">Tutorial Paso 3</phrase>
+            <phrase lang="fr">3ème étape</phrase>
+            <phrase lang="it">Tutorial Passo 3</phrase>
+            <phrase lang="no">Steg 3</phrase>
+            <phrase lang="ru">Шаг 3</phrase>
+          </title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="../images/filters/examples/ifscompose-tut2.png"
+                         format="PNG"/>
+            </imageobject>
+            <caption>
+              <para lang="en">
+                Add a fourth component, then stretch, scale, and move it
+                as shown.
+              </para>
+              <para lang="de">
+                Fügen Sie eine vierte Komponente hinzu. Dann dehnen, skalieren
+                und verschieben Sie es wie im Bild ersichtlich.
+              </para>
+              <para lang="es">
+                Añadir un cuarto componente, estirar, escalar, y moverlo
+                como se muestra.
+              </para>
+              <para lang="fr">
+                Ajoutez un quatrième composant puis étirez-le, changez sa
+                taille et déplacez-le comme indiqué.
+              </para>
+              <para lang="it">
+                Aggiungere una quarta componente quindi stirarla, scalarla e
+                spostarla come mostrato.
+              </para>
+              <para lang="no">
+                Legg til ein fjerde komponent og strekk, flytt og skalér denne
+                som vist.
+              </para>
+              <para lang="ru">
+                Добавте четвёртый компонент, растяните его, укажите масштаб,
+                и двиньте его как показано.
+              </para>
+            </caption>
+          </mediaobject>
+        </figure>
+      </listitem>
+
+      <listitem>
+        <para lang="en">
+          You still have to make it look more leaf-like. Increase the
+          size of the top triangle, until you think it's thick and
+          leafy enough. Adjust all fractals until you're happy with
+          the shape. Right-click to get the pop-up menu, and choose
+          <guibutton>Select all</guibutton>. Now all components are
+          selected, and you can scale
+          and rotate the entire leaf.
+        </para>
+        <para lang="de">
+          Sie werden noch einige kleine Korrekturen vornehmen müssen, um das
+          Bild einem Blatt noch ähnlicher erscheinen zu lassen. Vergrößern Sie
+          zunächst die Größe des oberen Dreiecks, bis es dick und einem Blatt
+          ähnlich erscheint. Stellen Sie alle Fraktale ein, bis Sie mit dem
+          Ergebnis zufrieden sind. Wählen Sie <guibutton>Alles
+          auswählen</guibutton> aus dem Kontextmenü aus. Hiernach sind alle
+          Komponenten ausgewählt und sie können das gesamte Blatt drehen und
+          die Größe ändern.
+        </para>
+        <para lang="es">
+          Todavía tiene que hacer que se parezca más a una hoja.
+          Incremente el tamaño del triángulo superior, hasta que piense
+          que es lo suficientemente espeso. Ajuste los cuatro fractales
+          hasta conseguir la forma deseada. Pulse a la derecha para que
+          aparezca el menú, y elija
+          <guibutton>Seleccionar todo</guibutton>. Ahora todos los
+          componentes están seleccionados, y puede escala y rotar la hoja
+          entera.
+        </para>
+        <para lang="fr">
+          Vous devez encore accentuer l'aspect de feuille. Augmentez la
+          taille du triangle du haut jusqu'à ce qu'il vous paraisse
+          suffisamment gros et feuillu. Ajustez tous les composants
+          jusqu'à ce que vous soyez satisfait de leur forme. Faites un clic
+          droit pour ouvrir le menu d'image et sélectionner le tout. Vous
+          pouvez alors changer la taille de l'ensemble de la feuille et la
+          faire tourner.
+        </para>
+        <para lang="it">
+          Si deve ancora rendere il risultato più simile ad una foglia.
+          Aumentare le dimensioni del triangolo superiore finchè si ritiene
+          sia sufficientemente spesso. Regolare tutte le componenti fino ad
+          ottenere la forma voluta. Premere il tasto destro del mouse per
+          richiamare il menu contestuale e scegliere
+          <guibutton>Seleziona tutto</guibutton>. Ora tutte le componenti
+          risultano selezionate ed è possibile ruotare e scalare l'intera
+          foglia.
+        </para>
+        <para lang="no">
+          Truleg må du justere litt for at bladet skal likne på eit blad.
+          Her må du bare prøve deg fram og justere alle fraktalane
+          til resultatet blir i nærleiken av eit naturleg blad. Har du behov
+          for å flytte eller gjere endringar på heile bladet, trykker du på
+          knappen <guibutton>Vel alle</guibutton>, eller høgreklikkar og
+          vel frå menyen som dukkar opp.
+        </para>
+        <para lang="ru">
+          Вам всё ещё нужно изменить фрактал, чтобы он выглядел как лист.
+          Увеличьте размер верхнего триугольника пока он не станет толще и
+          по форме похож на лист. Измените все фракталы пока форма не
+          определится. Нажмите на правую кнопку мышки чтобы получить
+          меню, нажмите на пункт <guibutton>Выбрать все</guibutton>. Теперь
+          все компоненты выбраны указать масштаб и повернуть весь лист.
+        </para>
+
+        <figure>
+          <title>
+            <phrase lang="en">Tutorial Step 4</phrase>
+            <phrase lang="de">Kurzanleitung Schritt 4</phrase>
+            <phrase lang="es">Tutorial Paso 4</phrase>
+            <phrase lang="fr">4ème étape</phrase>
+            <phrase lang="it">Tutorial Passo 4</phrase>
+            <phrase lang="no">Steg 4</phrase>
+            <phrase lang="ru">Шаг 4</phrase>
+          </title>
+
+          <mediaobject>
+            <imageobject>
+              <imagedata
+                fileref="../images/filters/examples/ifscompose-tut3.png"
+                format="PNG" />
+            </imageobject>
+            <caption>
+              <para lang="en">
+                Enlarge component 1, arrange the other components
+                appropriately, then select all, scale and rotate.
+              </para>
+              <para lang="de">
+                Vergrößern Sie die Komponente 1, arrangieren Sie die anderen
+                Komponenten passend, wählen Sie alle Komponenten aus,
+                drehen und dehnen Sie diese.
+              </para>
+              <para lang="es">
+                Alargar el componente 1, arreglar de manera adecuada los
+                otros componentes, después seleccionar todo, escalr y
+                rotar.
+              </para>
+              <para lang="fr">
+                Agrandissez le composant 1, arranger correctement les autres
+                composants, puis sélectionnez le tout, changez la taille et
+                faites tourner.
+              </para>
+              <para lang="it">
+                Allargare la componente 1, risistemare in maniera appropriata
+                le altre componenti quindi selezionare tutto, scalare e
+                ruotare.
+              </para>
+              <para lang="no">
+                Forstørr trekant 1, arranger dei andre komponentane etter
+                behov, marker alle og skaler og roter.
+              </para>
+              <para lang="ru">
+                Увеличьте компонент 1, сгруппируйте другие компоненты как
+                надо, затем выберите все компоненты и установите масштаб и
+                поворот.
+              </para>
+            </caption>
+          </mediaobject>
+        </figure>
+      </listitem>
+
+      <listitem>
+
+        <para lang="en">
+          The final step is to adjust color. Click on the
+          <guibutton>Color Transformation</guibutton> tab, and choose
+          a different color for each fractal. To do this, check
+          <guibutton>Simple</guibutton> and press the right color
+          square. A color circle appears, where you can click or
+          select to choose a color.
+        </para>
+        <para lang="de">
+          Der letzte Schritt besteht in der Zuweisung der Farben zu den
+          Komponenten. Aktivieren Sie den Reiter
+          <guilabel>Farbtransformation</guilabel> und wählen Sie eine
+          unterschiedliche Farbe für jede Komponente. Hierzu wählen Sie
+          <guilabel>Einfach</guilabel> aus und klicken auf die rechte
+          Farbschaltfläche. In dem erscheinenden Farbauswahldialog können Sie
+          die Farbe einstellen.
+        </para>
+        <para lang="es">
+          El paso final es ajustar el color. Pulse sobre la solapa
+          <guibutton>Transformación de color</guibutton>, y elija un color
+          diferente para cada factral. Para hacer esto, marque
+          <guibutton>Simple</guibutton> y presione el cuadro de color
+          derecho. Aparecerá un círculo de color, en donde puede pulsar o
+          seleccionar un color.
+        </para>
+        <para lang="fr">
+          La dernière étape est l'ajustement de la couleur. Cliquez sur
+          l'onglet <guilabel>Transformation de couleur</guilabel> et
+          choisissez une couleur différente pour chaque élément de la
+          fractale. Pour cela, cochez le bouton-radio <guibutton>Simple
+          </guibutton> et cliquez sur le carré de couleur de droite: un
+          sélecteur de couleur apparaît.
+        </para>
+        <para lang="it">
+          Il passo finale è quello di regolare il colore. Selezionare la
+          linguetta <guibutton>Trasformazione colore</guibutton> e scegliere
+          un colore differente per ciascuna componente frattale. Per far ciò
+          selezionate <guibutton>Semplice</guibutton> e premete il pulsante
+          attiguo per scegliere un colore tramite un opportuno selettore.
+        </para>
+        <para lang="no">
+          Det siste steget går ut på å fargelegge fraktalane. Klikk på
+          fanen <guibutton>Fargetransformasjon</guibutton> og vel ulike
+          fargar for kvar fraktal. Dette gjer du ved å aktivere
+          <guibutton>Enkel</guibutton> og velje farge ved å trykke på
+          fargeruta til høgre for merkelappen. Dette gjer du for alle fire
+          komponentane i fraktalen.
+        </para>
+        <para lang="ru">
+          Последний шаг заключается в нивелировании цвета. Выберите закладку
+          <guibutton>Цветовые преобразования</guibutton>, и выберите разный
+          цвет для каждого фрактала. Для этого, выберите
+          <guibutton>Простое</guibutton> и нажмите на правый цветовой
+          квадрат. Покажется цветовой круг, где вы можете выбрать цвет.
+        </para>
+        <figure>
+          <title>
+            <phrase lang="en">Tutorial Step 5</phrase>
+            <phrase lang="de">Kurzanleitung Schritt 5</phrase>
+            <phrase lang="es">Tutorial Paso 5</phrase>
+            <phrase lang="fr">5ème étape</phrase>
+            <phrase lang="it">Tutorial Passo 5</phrase>
+            <phrase lang="no">Steg 5</phrase>
+            <phrase lang="ru">Шаг 5</phrase>
+          </title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="../images/filters/examples/ifscompose-tut4.png"
+                         format="PNG"/>
+            </imageobject>
+            <caption>
+              <para lang="en">
+                Assign a brownish color to component 4, and various shades
+                of green to the other components.
+              </para>
+              <para lang="de">
+                Weisen Sie der Komponente 4 einen Braunton und den anderen
+                Komponenten Grünschattierungen zu.
+              </para>
+              <para lang="es">
+                Asigne un color marrón al componente 4 y varios verdes
+                para los otros componentes.
+              </para>
+              <para lang="fr">
+                Donnez une couleur brune au composant 4 et diverses nuances
+                de vert aux autres composants.
+              </para>
+              <para lang="it">
+                Assegnare un colore marroncino alla componente 4 e varie
+                gradazioni di verde alle altre componenti.
+              </para>
+              <para lang="no">
+                Her har komponent 4 fått ein brunfarge medan dei andre
+                komponentane har fått ulike grader av grønt.
+              </para>
+              <para lang="ru">
+                Примените коричневатый цвет к компоненту 4 и разные оттенки
+                зелёного к другим компонентам.
+              </para>
+            </caption>
+          </mediaobject>
+        </figure>
+      </listitem>
+
+      <listitem>
+        <para lang="en">
+          Press OK to apply the image, and voilà, you've just made a
+          perfect fractal leaf! Now that you've got the hang of it,
+          you'll just have to experiment and make your own
+          designs. All plant-imitating fractals (be they oak trees,
+          ferns or straws) are more or less made in this fashion,
+          which is leaves around a stem (or several stems). You just
+          have to twist another way, stretch and turn a little or add
+          a few more fractals to get a totally different plant.
+        </para>
+        <para lang="de">
+          Klicken sie auf <guibutton>OK</guibutton> und - voilà - Sie haben
+          ein perfektes fraktales Blatt erstellt! Nun können Sie nach
+          Herzenslust experimentieren und Ihre eigenen Muster entwerfen. Alle
+          Fraktale, die Pflanzen nachbilden, werden nach dem hier vorgestellten
+          Prinizip erstellt. Egal ob es sich dabei um Blätter, Eichbäume oder
+          Farne handelt. Alles was sie tun müssen, ist, ein paar mehr Stiele
+          einzufügen und hier und da ein bisschen zu drehen und zu dehnen. Das
+          Ergebnis wird eine völlig andere Pflanze sein.
+        </para>
+        <para lang="es">
+          Pulse aceptar para aplicar la imagen, y listo, acaba de hacer
+          una hoja factral pefecta. Ahora que lo entiende, puede
+          experimentar y hacer sus propios diseños. Todos los fractales
+          imitando plantas están hechos más o menos de esta manera,
+          alrededor de un tallo (o varios). Solo tiene que probar otra
+          manera, estirar y girar un poco o añadir unos pocos fractales
+          para obtener una planta totalmente diferente.
+        </para>
+        <para lang="fr">
+          Cliquez sur <guibutton>Valider</guibutton> et voilà, vous venez
+          de réaliser une feuille fractale parfaite! Maintenant que vous
+          avez pris le coup, il ne vous reste plus qu'à expérimenter et
+          créer vos propres dessins. Toutes les fractales imitant les
+          végétaux (qu'il s'agisse d'arbres, de fougères ou de chaumes) sont
+          faits à peu près de la même façon, avec des feuilles autour d'une
+          tige (ou plusieurs tiges). Il vous suffit de faire tourner d'une
+          autre façon, d'étirer un peu plus, ou d'ajouter quelques autres
+          fractales pour obtenir une plante totalement différente.
+        </para>
+        <para lang="it">
+          Premere OK per applicare all'immagine e la foglia frattale è pronta.
+          Si consiglia ora di sperimentare. Tutti i frattali di tipo vegetale
+          sono più o meno creabili in questo modo, cioè foglie attorno ad
+          un gambo centrale (o più gambi). Occorre solamente distorcere da
+          un'altra parte, strirare o ruotare un poco o aggiungere qualche
+          componente per ottenere piante totalmente diverse.
+        </para>
+        <para lang="no">
+          Trykk på knappen <guibutton>OK</guibutton> og nyt resultatet. Du
+          har laga eit perfekt bilete av eit blad. Nå er det bare å
+          eksperimentera vidare. Alle fraktalar som skal imitere ulike former
+          for bladverk, er sett saman omlag som denne øvinga. Altså med lauv
+          rundt ein stilk eller ei eller fleire bladnerver. Treng du meir
+          bladverk, er det bare å legge til fleire komponentar. Lykke til.
+        </para>
+        <para lang="ru">
+          Нажмите на кнопку <guibutton>OK</guibutton> чтобы применить
+          изображение, и вы получите фрактальный лист. С этим опытом вы
+          теперь можете сами экспериметировать. Все фракталы, имитирующие
+          растения, будь то дерево дуба, папоротник или колос, сделаны по
+          одному и тому же принципу: листья вокруг ветки или веток.
+          Требуются всего лишь небольшие изменения в растяжении или повороте
+          чтобы получить новое растение.
+        </para>
+      </listitem>
+    </orderedlist>
+  </sect3>
+</sect2>
+

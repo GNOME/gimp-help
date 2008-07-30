@@ -1,0 +1,849 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+          "http://www.docbook.org/xml/4.3/docbookx.dtd">
+
+<!-- section history:
+  2008-04-01 Fixed edge mode option (wrap, smear, black)
+  2007-08-17 Added Spanish translation by AntI
+  2007-04-10 KoSt: added 'no'
+  2006-11-19 Change in Parameter Settings en;fr by j.h
+  2005-12-07 replaced <simplesect> by <sect3> by lexa
+  2005-09-30 de replaced informalfigure by axel.wernicke
+  2005-08-29 de added by axel.wernicke
+-->
+<sect2 id="plug-in-edge" lang="en;cs;de;es;fr;it;no;ru">
+  <sect2info lang="en;de;es;fr;it;no" role="cvs">
+    <revhistory>
+      <revision lang="en">
+        <revnumber>$Revision$</revnumber>
+        <date>2008-04-01</date>
+        <authorinitials>ude</authorinitials>
+      </revision>
+      <revision lang="de">
+        <revnumber>$Revision$</revnumber>
+        <date>2008-04-01</date>
+        <authorinitials>ude</authorinitials>
+      </revision>
+      <revision lang="es">
+        <revnumber>$Revision$</revnumber>
+        <date>2007-08-17</date>
+        <authorinitials>AntI</authorinitials>
+      </revision>
+      <revision lang="it">
+        <revnumber>$Revision$</revnumber>
+        <date>2008-04-02</date>
+        <authorinitials>ciampix</authorinitials>
+      </revision>
+      <revision lang="fr">
+        <revnumber>$Revision$</revnumber>
+        <date>2008-04-14</date>
+        <authorinitials>j.h</authorinitials>
+      </revision>
+      <revision lang="no">
+        <revnumber>$Revision$</revnumber>
+        <date>2008-05-06</date>
+        <authorinitials>kost</authorinitials>
+      </revision>
+    </revhistory>
+  </sect2info>
+
+  <title>
+    <phrase lang="en">Edge</phrase>
+    <phrase lang="cs">Hrana</phrase>
+    <phrase lang="de">Kanten</phrase>
+    <phrase lang="es">Arista</phrase>
+    <phrase lang="fr">Contours</phrase>
+    <phrase lang="it">Contorni</phrase>
+    <phrase lang="no">Kantar</phrase>
+    <phrase lang="ru">Край</phrase>
+  </title>
+
+  <indexterm lang="en">
+    <primary>Filters</primary>
+    <secondary>Edge Detect</secondary>
+    <tertiary>Edge</tertiary>
+  </indexterm>
+  <indexterm lang="en"><primary>Edge</primary></indexterm>
+  <indexterm lang="en"><primary>Sobel</primary></indexterm>
+  <indexterm lang="en"><primary>Laplace</primary></indexterm>
+  <indexterm lang="en"><primary>Roberts</primary></indexterm>
+  <indexterm lang="en"><primary>Gradient</primary></indexterm>
+  <indexterm lang="en"><primary>Prewitt</primary></indexterm>
+  <indexterm lang="en"><primary>Differential</primary></indexterm>
+
+  <indexterm lang="cs">
+    <primary>Hrana</primary>
+  </indexterm>
+
+  <indexterm lang="de">
+    <primary>Filter</primary><secondary>Kantenerkennung</secondary>
+  </indexterm>
+  <indexterm lang="de"><primary>Sobel</primary></indexterm>
+  <indexterm lang="de"><primary>Laplace</primary></indexterm>
+  <indexterm lang="de"><primary>Roberts</primary></indexterm>
+  <indexterm lang="de"><primary>Verlauf</primary></indexterm>
+  <indexterm lang="de"><primary>Prewitt</primary></indexterm>
+  <indexterm lang="de"><primary>Differentiell</primary></indexterm>
+
+  <indexterm lang="es">
+    <primary>Filtros</primary>
+    <secondary>Detectar bordes</secondary>
+    <tertiary>Arista</tertiary>
+  </indexterm>
+  <indexterm lang="es"><primary>Sobel</primary></indexterm>
+  <indexterm lang="es"><primary>Laplace</primary></indexterm>
+  <indexterm lang="es"><primary>Roberts</primary></indexterm>
+  <indexterm lang="es"><primary>Degradado</primary></indexterm>
+  <indexterm lang="es"><primary>Prewitt</primary></indexterm>
+  <indexterm lang="es"><primary>Diferencial</primary></indexterm>
+
+  <indexterm lang="fr">
+    <primary>Filtres</primary>
+    <secondary>Détection de bords</secondary>
+    <tertiary>Contour</tertiary>
+  </indexterm>
+  <indexterm lang="fr"><primary>Contour</primary></indexterm>
+  <indexterm lang="fr"><primary>Sobel</primary></indexterm>
+  <indexterm lang="fr"><primary>Laplace</primary></indexterm>
+  <indexterm lang="fr"><primary>Roberts</primary></indexterm>
+  <indexterm lang="fr"><primary>Dégradé</primary></indexterm>
+  <indexterm lang="fr"><primary>Prewitt</primary></indexterm>
+  <indexterm lang="fr"><primary>Différentiel</primary></indexterm>
+
+  <indexterm lang="it">
+    <primary>Filtro</primary>
+    <secondary>Rilevamento contorni</secondary>
+  </indexterm>
+  <indexterm lang="it"><primary>Contorni</primary></indexterm>
+  <indexterm lang="it"><primary>Sobel</primary></indexterm>
+  <indexterm lang="it"><primary>Laplace</primary></indexterm>
+  <indexterm lang="it"><primary>Roberts</primary></indexterm>
+  <indexterm lang="it"><primary>Gradiente</primary></indexterm>
+  <indexterm lang="it"><primary>Prewitt</primary></indexterm>
+  <indexterm lang="it"><primary>Differenziale</primary></indexterm>
+
+  <indexterm lang="no">
+    <primary>Filter</primary><secondary>Kantfinning</secondary>
+  </indexterm>
+  <indexterm lang="no"><primary>Sobel</primary></indexterm>
+  <indexterm lang="no"><primary>Laplace</primary></indexterm>
+  <indexterm lang="no"><primary>Roberts</primary></indexterm>
+  <indexterm lang="no"><primary>Gradient</primary></indexterm>
+  <indexterm lang="no"><primary>Prewitt</primary></indexterm>
+  <indexterm lang="no"><primary>Differentiel</primary></indexterm>
+
+  <indexterm lang="ru"><primary>Фильтр</primary></indexterm>
+  <indexterm lang="ru"><primary>Край</primary></indexterm>
+  <indexterm lang="ru"><primary>Собел</primary></indexterm>
+  <indexterm lang="ru"><primary>Лаплас</primary></indexterm>
+  <indexterm lang="ru"><primary>Робертс</primary></indexterm>
+  <indexterm lang="ru"><primary>Градиент</primary></indexterm>
+  <indexterm lang="ru"><primary>Превитт</primary></indexterm>
+  <indexterm lang="ru"><primary>Дифференциальный</primary></indexterm>
+
+  <mediaobject lang="cs;ru">
+    <imageobject>
+      <imagedata fileref="../images/filters/edge-options.png" format="PNG"/>
+    </imageobject>
+  </mediaobject>
+
+  <sect3>
+    <title>
+      <phrase lang="en">Overview</phrase>
+      <phrase lang="cs">Přehled</phrase>
+      <phrase lang="de">Wirkungsweise</phrase>
+      <phrase lang="es">Generalidades</phrase>
+      <phrase lang="fr">Généralités</phrase>
+      <phrase lang="it">Panoramica</phrase>
+      <phrase lang="no">Oversyn</phrase>
+      <phrase lang="ru">Общая информация</phrase>
+    </title>
+
+    <para lang="en">
+      You can find this filter through
+      <menuchoice>
+        <guimenu>Filters</guimenu>
+        <guisubmenu>Edge Detect</guisubmenu>
+        <guimenuitem>Edge...</guimenuitem>
+      </menuchoice>.
+    </para>
+    <para lang="cs">
+      Tento filtr lze spustit volbou
+      <guimenuitem>Obrázek&gt;/Filtry/Detekce hran/Hrana</guimenuitem>
+      z nabídky okna obrázku.
+    </para>
+    <para lang="es">
+      Puede encontrar este filtro en
+      <menuchoice>
+        <guimenu>Filtros</guimenu>
+        <guisubmenu>Detectar bordes</guisubmenu>
+        <guimenuitem>Arista</guimenuitem>
+      </menuchoice>.
+    </para>
+    <para lang="fr">
+      On accède à ce filtre par
+      <menuchoice>
+        <guimenu>Filtres</guimenu>
+        <guisubmenu>Détection de bord</guisubmenu>
+        <guimenuitem>Contour...</guimenuitem>
+      </menuchoice>.
+    </para>
+    <para lang="it">
+      Questo filtro si trova nel menu immagine:
+      <menuchoice>
+        <guimenu>Filt<accel>r</accel>i</guimenu>
+        <guisubmenu>Rilevamen<accel>t</accel>o contorni</guisubmenu>
+        <guimenuitem><accel>C</accel>ontorni</guimenuitem>
+      </menuchoice>.
+    </para>
+    <para lang="no">
+      Du har tilgang til filteret frå biletmenyen via
+      <menuchoice>
+        <guimenu>Filter</guimenu>
+        <guisubmenu>Kontur</guisubmenu>
+        <guimenuitem>Kant</guimenuitem>
+      </menuchoice>
+    </para>
+    <para lang="ru">
+      Этот фильтр находится в меню
+      <menuchoice>
+        <guimenu>Фильтры</guimenu>
+        <guisubmenu>Выделение края</guisubmenu>
+        <guimenuitem>Край</guimenuitem>
+      </menuchoice>.
+    </para>
+
+    <figure lang="en;de;es;fr;it;no;ru">
+      <title>
+        <phrase lang="en">Applying example for the Edge filter</phrase>
+        <phrase lang="de">Beispiele für Kantenerkennungsfilter</phrase>
+        <phrase lang="es">Ejemplo de aplicación del filtro arista</phrase>
+        <phrase lang="fr">Exemple d'application du filtre Contour</phrase>
+        <phrase lang="it">Esempio di applicazione del filtro
+        <quote>contorni</quote></phrase>
+        <phrase lang="no">Eksempel på bruk av kantfilteret</phrase>
+        <phrase lang="ru">Пример фильтра выделения края (1)</phrase>
+      </title>
+
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/taj_orig.jpg"
+            format="JPG" />
+        </imageobject>
+        <caption>
+          <para lang="en">Original image</para>
+          <para lang="de">Originalbild</para>
+          <para lang="es">Original</para>
+          <para lang="fr">Image d'origine</para>
+          <para lang="it">Originale</para>
+          <para lang="no">Originalbilete</para>
+          <para lang="ru">Искомое изображение</para>
+        </caption>
+      </mediaobject>
+
+      <mediaobject>
+        <imageobject>
+          <imagedata
+            fileref="../images/filters/examples/edge-taj-edge-sobel.jpg"
+            format="JPG" />
+        </imageobject>
+        <caption>
+          <para lang="en">After applying the filter (Sobel option)</para>
+          <para lang="de">Kantenerkennung (Sobel)</para>
+          <para lang="es">Después de aplicar el filtro (opción Sobel)</para>
+          <para lang="fr">Après application du filtre (option Sobel)</para>
+          <para lang="it">Applicazione del filtro (opzione Sobel)</para>
+          <para lang="no"> Etter bruk av filteret (Algoritme: Sobel)</para>
+          <para lang="ru">По Собелу</para>
+        </caption>
+      </mediaobject>
+    </figure>
+
+    <figure lang="en;de;es;fr;it;no;ru">
+      <title>
+        <phrase lang="en">Applying examples for the Edge filter</phrase>
+        <phrase lang="de">Beispiele für Kantenerkennungsfilter</phrase>
+        <phrase lang="es">Ejemplos de aplicación del filtro arista</phrase>
+        <phrase lang="fr">Exemples d'application du filtre Contour</phrase>
+        <phrase lang="it">Esempio di applicazione del filtro
+        <quote>contorni</quote></phrase>
+        <phrase lang="no">Eksempel på bruk av kantfilteret</phrase>
+        <phrase lang="ru">Пример фильтра выделения края (2)</phrase>
+      </title>
+
+      <mediaobject>
+        <imageobject>
+          <imagedata
+            fileref="../images/filters/examples/edge-taj-edge-prewitt.jpg"
+            format="JPG" />
+        </imageobject>
+        <caption>
+          <para lang="en">After applying the filter (Prewitt option)</para>
+          <para lang="de">Kantenerkennung (Prewitt)</para>
+          <para lang="es">Después de aplicar el filtro (opción Prewitt)</para>
+          <para lang="fr">Après application du filtre (option Prewitt)</para>
+          <para lang="it">Applicazione del filtro (opzione Prewitt)</para>
+          <para lang="no"> Etter bruk av filteret (Algoritme: Prewitt)</para>
+          <para lang="ru">По Превитту</para>
+        </caption>
+      </mediaobject>
+
+      <mediaobject>
+        <imageobject>
+          <imagedata
+            fileref="../images/filters/examples/edge-taj-edge-gradient.jpg"
+            format="JPG" />
+        </imageobject>
+        <caption>
+          <para lang="en">After applying the filter (Gradient option)</para>
+          <para lang="de">Kantenerkennung (Verlauf)</para>
+          <para lang="es">
+            Después de aplicar el filtro (opción Degradado)
+          </para>
+          <para lang="fr">Après application du filtre (option Dégradé)</para>
+          <para lang="it">Applicazione del filtro (opzione Gradiente)</para>
+          <para lang="no"> Etter bruk av filteret (Algoritme: Gradient)</para>
+          <para lang="ru">Градиент</para>
+        </caption>
+      </mediaobject>
+    </figure>
+
+    <figure lang="en;de;es;fr;it;no;ru">
+      <title>
+        <phrase lang="en">Applying example for the Edge filter</phrase>
+        <phrase lang="de">Beispiele für Kantenerkennungsfilter</phrase>
+        <phrase lang="es">Ejemplo de aplicación del filtro arista</phrase>
+        <phrase lang="fr">Exemple d'application du filtre Contour</phrase>
+        <phrase lang="it">Esempio di applicazione del filtro
+        <quote>contorni</quote></phrase>
+        <phrase lang="no">Eksempel på bruk av kantfilteret</phrase> <phrase
+        lang="ru">Пример фильтра выделения края (3)</phrase>
+      </title>
+
+      <mediaobject>
+        <imageobject>
+          <imagedata
+            fileref="../images/filters/examples/edge-taj-edge-roberts.jpg"
+            format="JPG" />
+        </imageobject>
+
+        <caption>
+          <para lang="en">After applying the filter (Roberts option)</para>
+          <para lang="de">Kantenerkennung (Roberts)</para>
+          <para lang="es">
+            Después de aplicar el filtro (opción Roberts)
+          </para>
+          <para lang="fr">Après application du filtre (option Roberts)</para>
+          <para lang="it">Applicazione del filtro (opzione Roberts)</para>
+          <para lang="no"> Etter bruk av filteret (Algoritme: Roberts)</para>
+          <para lang="ru">По Робертсу</para>
+        </caption>
+      </mediaobject>
+
+      <mediaobject>
+        <imageobject>
+          <imagedata
+            fileref="../images/filters/examples/edge-taj-edge-differential.jpg"
+            format="JPG" />
+        </imageobject>
+        <caption>
+          <para lang="de">Kantenerkennung (Differentiell)</para>
+          <para lang="it">Applicazione del filtro (opzione
+          Differenziale)</para>
+          <para lang="no"> Etter bruk av filteret (Algoritme:
+          Differensiell)</para>
+          <para lang="ru">Дифференциальный</para>
+        </caption>
+      </mediaobject>
+    </figure>
+
+    <figure lang="en;de;es;fr;it;no;ru">
+      <title>
+        <phrase lang="en">Applying example for the Edge filter</phrase>
+        <phrase lang="de">Beispiele für Kantenerkennungsfilter</phrase>
+        <phrase lang="es">Ejemplo de aplicación del filtro arista</phrase>
+        <phrase lang="fr">Exemple d'application du filtre Contour</phrase>
+        <phrase lang="it">Esempio di applicazione del filtro
+        <quote>contorni</quote></phrase>
+        <phrase lang="no">Eksempel på bruk av kantfinningsfilteret</phrase>
+        <phrase lang="ru">Пример фильтра выделения края (4)</phrase>
+      </title>
+      <mediaobject>
+        <imageobject>
+          <imagedata
+            fileref="../images/filters/examples/edge-taj-edge-laplace.jpg"
+            format="JPG" />
+        </imageobject>
+        <caption>
+          <para lang="en">After applying the filter (Laplace option)</para>
+          <para lang="de">Kantenerkennung (Laplace)</para>
+          <para lang="es">
+            Después de aplicar el filtro (opción Laplace)
+          </para>
+          <para lang="fr">Après application du filtre (option Laplace)</para>
+          <para lang="it">Applicazione del filtro (opzione Laplace)</para>
+          <para lang="no"> Etter bruk av filteret (Algoritme: Laplace)</para>
+          <para lang="ru">По Лапласу</para>
+        </caption>
+      </mediaobject>
+    </figure>
+
+    <para lang="de">
+      Dieses Filter stellt Ihnen verschiedene Kantenerkennungsalgorithmen zur
+      Verfügung. Diese sind mit ihren Eigenschaften in den nächsten
+      Abschnitten detailliert erklärt.
+    </para>
+    <para lang="no">
+      Kantfilteret bruker ulike algoritmer (matematiske likningar) for å finne
+      konturane. Du finn litt forklaringar på desse i neste avsnitt. (Litt lite
+      forklaring førebels, blir vonleg utvida seinare).
+    </para>
+  </sect3>
+
+
+  <sect3 lang="de">
+    <title>
+      <phrase lang="de">Filteraufruf</phrase>
+    </title>
+
+    <para lang="de">
+      Dieses Filter lässt sich über das Menü
+      <menuchoice>
+        <guimenu><accel>F</accel>ilter</guimenu>
+        <guisubmenu><accel>K</accel>anten finden</guisubmenu>
+        <guimenuitem><accel>K</accel>anten</guimenuitem>
+      </menuchoice>
+      im Bildfenster aufrufen.
+    </para>
+  </sect3>
+
+
+  <sect3>
+    <title>
+      <phrase lang="en">Options</phrase>
+      <phrase lang="cs">Volby</phrase>
+      <phrase lang="de">Eigenschaften</phrase>
+      <phrase lang="es">Opciones</phrase>
+      <phrase lang="fr">Options</phrase>
+      <phrase lang="it">Opzioni</phrase>
+      <phrase lang="no">Innstillingar</phrase>
+      <phrase lang="ru">Параметры</phrase>
+    </title>
+
+    <figure lang="en;de;es;fr;it;no;ru">
+      <title>
+        <phrase lang="en">Edge filter options</phrase>
+        <phrase lang="de">
+          Eigenschaften für das Filter <quote>Kanten</quote>
+        </phrase>
+        <phrase lang="es">Opciones del filtro arista</phrase>
+        <phrase lang="fr">Options du filtre Contours</phrase>
+        <phrase lang="it">Le opzioni del filtro rilevamento
+        contorni</phrase>
+        <phrase lang="no">
+          Innstillingane for filteret <quote>Kantar</quote>
+        </phrase>
+        <phrase lang="ru">Параметры фильтра <quote>Край</quote></phrase>
+      </title>
+
+      <mediaobject>
+        <imageobject lang="en;es;ru">
+          <imagedata fileref="../images/filters/edge-options.png"
+            format="PNG" />
+        </imageobject>
+        <imageobject lang="de">
+          <imagedata fileref="../images/filters/de/options-edge-edge.png"
+            format="PNG" />
+        </imageobject>
+        <imageobject lang="fr">
+          <imagedata fileref="../images/filters/fr/edge-options.png"
+            format="PNG" />
+        </imageobject>
+        <imageobject lang="it">
+          <imagedata fileref="../images/filters/it/edge-options.png"
+            format="PNG" />
+        </imageobject>
+        <imageobject lang="no">
+          <imagedata fileref="../images/filters/no/options-edge-edge.png"
+            format="PNG" />
+        </imageobject>
+      </mediaobject>
+    </figure>
+
+    <variablelist>
+      <varlistentry>
+        <term lang="en">Algorithm</term>
+        <term lang="cs">Algoritmus</term>
+        <term lang="de">Algorithmus</term>
+        <term lang="es">Algoritmo</term>
+        <term lang="fr">Algorithme</term>
+        <term lang="it">Algoritmo</term>
+        <term lang="no">Algoritmer</term>
+        <term lang="ru">Алгоритм</term>
+
+        <listitem>
+          <para lang="en">
+            Edge detector offers several detection methods:
+          </para>
+          <para lang="cs">
+            Detektor hran může využívat řadu různých detekčních algoritmů:
+          </para>
+          <para lang="de">
+            Das Filter erlaubt Ihnen die Verwendung verschiedener Methoden der
+            Kantenerkennung:
+          </para>
+          <para lang="es">
+            Ofrece varios métodos de detección de bordes:
+          </para>
+          <para lang="fr">
+            Contours offre plusieurs méthodes de détection des contours:
+          </para>
+          <para lang="it">
+            Il rilevatore di contorni offre diversi metodi di rilevamento:
+          </para>
+          <para lang="no">
+            Filteret <emphasis>Kantar</emphasis> bruker fleire
+            valfrie metodar for å oppdage kantar i biletet:
+          </para>
+          <para lang="ru">Предлагаются следующие методы выделения края:</para>
+
+          <itemizedlist>
+            <listitem>
+              <para lang="en">
+                <guilabel>Sobel</guilabel>: Here, this method has no options
+                and so is less interesting than the specific Sobel.
+              </para>
+              <para lang="cs">
+                <guilabel>Sobel</guilabel>: Tato verze Sobelovy metody nemá
+                tolik nastavení jako samostatný modul Sobelova metoda a proto
+                není tak zajímavá.
+              </para>
+              <para lang="de">
+                <guilabel>Sobel</guilabel>: Im Kontext dieses Filters wird
+                der Sobeloperator nur mit den Vorgabe-Einstellungen angeboten.
+                Er ist aber als separates Filter zusätzlich verfügbar.
+              </para>
+              <para lang="es">
+                <guilabel>Sobel</guilabel>: Este método no tiene opciones y
+                es menos interesante que el específico Sobel.
+              </para>
+              <para lang="fr">
+                <guilabel>Sobel</guilabel>: Ici, cette méthode est moins
+                intéressante que le Sobel spécifique.
+              </para>
+              <para lang="it">
+                <guilabel>Sobel</guilabel>: questo metodo non ha opzioni ed
+                è quindi meno interessante del filtro specifico Sobel.
+              </para>
+              <para lang="no">
+                <guilabel>Sobel</guilabel>: Denne algoritmen har ingen
+                spesielle innstillingar.
+              </para>
+              <para lang="ru">
+                <guilabel>По Собелу</guilabel>: У этого метода нет
+                параметров, и он менее интересный чем специальный фильтр по
+                Собелу.
+              </para>
+            </listitem>
+
+            <listitem>
+              <para lang="en">
+                <guilabel>Prewitt</guilabel>: Result doesn't look different
+                from Sobel.
+              </para>
+              <para lang="cs">
+                <guilabel>Prewitt</guilabel>: Výsledky se podobají Sobelově
+                metodě.
+              </para>
+              <para lang="de">
+                <guilabel>Prewitt</guilabel>: Das Ergebnis unterscheidet sich
+                nicht wesentlich von Sobel.
+              </para>
+              <para lang="es">
+                <guilabel>Prewitt</guilabel>: El resultado no es muy
+                diferente del Sobel.
+              </para>
+              <para lang="fr">
+                <guilabel>Prewitt</guilabel>: Le résultat ne semble pas
+                différent du Sobel.
+              </para>
+              <para lang="it">
+                <guilabel>Prewitt</guilabel>: non differisce molto dal
+                risultato ottenibile con Sobel.
+              </para>
+              <para lang="no">
+                <guilabel>Prewitt</guilabel>: Resultatet er svært likt det
+                du får med bruk av Sobel.
+              </para>
+              <para lang="ru">
+                <guilabel>По Превитту</guilabel>: Нет заметных отличий от
+                по Собелу.
+              </para>
+            </listitem>
+
+            <listitem>
+              <para lang="en">
+                <guilabel>Gradient</guilabel>: Edges are thinner, less
+                contrasted and more blurred than Sobel.
+              </para>
+              <para lang="cs">
+                <guilabel>Přechod</guilabel>: Hrany jsou tenčí, méně
+                kontrastní a rozostřenější, než v případě Sobelovy metody.
+              </para>
+              <para lang="de">
+                <guilabel>Verlauf</guilabel>: Die Kanten werden dünner, mit
+                weniger Kontrast und unschärfer dargestellt als bei Sobel.
+              </para>
+              <para lang="es">
+                <guilabel>Degradado</guilabel>: Los bordes son más finos,
+                menos contrastados y más borrosos que el Sobel.
+              </para>
+              <para lang="fr">
+                <guilabel>Gradient</guilabel>: Les bords sont plus fins,
+                moins contrastés, plus flous qu'avec le Sobel.
+              </para>
+              <para lang="it">
+                <guilabel>Gradiente</guilabel>: i bordi sono più sottili,
+                meno contrastati e più sfumati del metodo Sobel.
+              </para>
+              <para lang="no">
+                <guilabel>Gradient</guilabel>: Kantane er smalare, med mindre
+                kontrast og meir sløra enn ved bruk av Sobel.
+              </para>
+              <para lang="ru">
+                <guilabel>Градиент</guilabel>: Края тоньше, менее контрастные
+                и более размазанные чем по Собелу.
+              </para>
+            </listitem>
+
+            <listitem>
+              <para lang="en">
+                <guilabel>Roberts</guilabel>: No evident difference from Sobel.
+              </para>
+              <para lang="cs">
+                <guilabel>Roberts</guilabel>: Výsledky se podobají Sobělově
+                metodě.
+              </para>
+              <para lang="de">
+                <guilabel>Roberts</guilabel>: Kein großer Unterschied zu
+                Sobel.
+              </para>
+              <para lang="es">
+                <guilabel>Roberts</guilabel>: No hay diferencias evidentes
+                con el Sobel.
+              </para>
+              <para lang="fr">
+                <guilabel>Roberts</guilabel>: Pas de différence évidente
+                avec le Sobel.
+              </para>
+              <para lang="it">
+                <guilabel>Roberts</guilabel>: nessuna differenza rilevante
+                col metodo Sobel.
+              </para>
+              <para lang="no">
+                <guilabel>Roberts</guilabel>: Ingen synleg skilnad frå Sobel.
+              </para>
+              <para lang="ru">
+                <guilabel>По Робертсу</guilabel>: Нет заметных отличий от
+                по Собелу.
+              </para>
+            </listitem>
+
+            <listitem>
+              <para lang="en">
+                <guilabel>Differential</guilabel>: Edges less bright.
+              </para>
+              <para lang="cs">
+                <guilabel>Diferenciální</guilabel>: Méně jasné hrany.
+              </para>
+              <para lang="de">
+                <guilabel>Differentiell</guilabel>: Die Kanten sind weniger
+                hell als bei Sobel.
+              </para>
+              <para lang="es">
+                <guilabel>Diferencial</guilabel>: Bordes menos claros.
+              </para>
+              <para lang="fr">
+                <guilabel>Différentiel</guilabel>: Bords moins clairs.
+              </para>
+              <para lang="it">
+                <guilabel>Differenziale</guilabel>: i bordi sono meno
+                chiari.
+              </para>
+              <para lang="no">
+                <guilabel>Differential</guilabel>: Ikkje fullt så lyse
+                kantar som med Sobel.
+              </para>
+              <para lang="ru">
+                <guilabel>Дифференциальный</guilabel>: Края менее яркие.
+              </para>
+            </listitem>
+
+            <listitem>
+              <para lang="en">
+                <guilabel>Laplace</guilabel>: Less interesting than the
+                specific one.
+              </para>
+              <para lang="cs">
+                <guilabel>Laplace</guilabel>: Méně zajímavé, než samostatný
+                modul Laplaceova metoda.
+              </para>
+              <para lang="de">
+                <guilabel>Laplace</guilabel>: Im Kontext dieses Filters wird
+                der Laplaceoperator nur mit den Vorgabe-Einstellungen
+                angeboten. Er ist aber als separates Filter zusätzlich
+                verfügbar.
+              </para>
+              <para lang="es">
+                <guilabel>Laplace</guilabel>: Menos interesante que el
+                específico.
+              </para>
+              <para lang="fr">
+                <guilabel>Laplace</guilabel>: Moins intéressant que le
+                Laplace spécifique.
+              </para>
+              <para lang="it">
+                <guilabel>Laplace</guilabel>: meno interessante del filtro
+                specifico.
+              </para>
+              <para lang="no">
+                <guilabel>Laplace</guilabel>: Denne algoritmen har ingen
+                spesielle innstillingar.
+              </para>
+              <para lang="ru">
+                <guilabel>Лаплас</guilabel>: Края тонкие и контрастные.
+              </para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>
+          <phrase lang="en">Amount</phrase>
+          <phrase lang="cs">Míra</phrase>
+          <phrase lang="de">Wert</phrase>
+          <phrase lang="es">Cantidad</phrase>
+          <phrase lang="fr">Quantité</phrase>
+          <phrase lang="it">Quantità</phrase>
+          <phrase lang="no">Mengde</phrase>
+          <phrase lang="ru">Величина</phrase>
+        </term>
+        <listitem>
+          <para lang="en">
+            A low value results in black, high-contrasted image with thin
+            edges. A high value results in thick edges with low contrast and
+            many colors in dark areas.
+          </para>
+          <para lang="cs">
+            Nízká hodnota znamená černý, vysoce kontrastní výsledek s tenkými
+            hranami. Vysoká hodnota znamená silnější hrany, méně kontrastu a
+            mnoho barev ve tmavých oblastech.
+          </para>
+          <para lang="de">
+            Mit dieser Eigenschaft können Sie die Stärke des Filters
+            einstellen. Ein niedriger Wert führt zu einem Bild, in dem nur
+            wenige Kanten erkannt werden, ein hoher zu einem Ergebnis, in dem
+            auch kleinste Kanten dargestellt sind.
+          </para>
+          <para lang="es">
+            Un valor bajo da una imagen negro, muy contrastada con bordes
+            finos. Un valor alto produce bordes espesos con contraste bajo y
+            muchos colores en las zonas oscuras.
+          </para>
+          <para lang="fr">
+            Une valeur faible donne une image noire, bien contrastée avec des
+            bords fins. Une valeur forte donne des bords épais et de
+            multiples couleurs dans les zones sombres.
+          </para>
+          <para lang="it">
+            Un valore basso produce un'immagine nera, molto contrastata con
+            bordi sottili. Un valore alto produce bordi spessi con basso
+            contrasto e molti colori nelle aree scure.
+          </para>
+          <para lang="no">
+             Denne glidebrytaren har ei skala
+            frå 1 til 10. Eit lågt tal resulterer i eit svart bilete med høg
+            kontrast og tynne strekar. Ein høg verdi resulterer i breie
+            kantar med låg kontrast og mange fargar i mørke område.
+          </para>
+          <para lang="ru">
+             При низком значении получается
+            контрастное изображение с тонкими краями. Высокие значения
+            приводят к широким краям, низкому контрасту и многим цветам в
+            тёмных областях.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <!--TODO cs es ru: check, review, and translate new para-->
+      <varlistentry>
+        <term>
+          <phrase lang="en">Wrap, Smear, Black</phrase>
+          <phrase lang="cs">Ohýbání, Šmouha,  Černá</phrase>
+          <phrase lang="de">Umfalten, Verwischen, Schwarz</phrase>
+          <phrase lang="es">Ajustar, Manchar, Negro</phrase>
+          <phrase lang="fr">Enrouler, Étaler, Noir</phrase>
+          <phrase lang="it">Avvolgi, Macchia, Nero</phrase>
+          <phrase lang="no">Linjebryting, Smøre, Svart</phrase>
+          <phrase lang="ru">Завернуть, Размазать, Чёрный</phrase>
+        </term>
+        <listitem>
+          <para lang="en"><!--changed 2008-04-01 (ude)-->
+            Where the edge detector will get adjoining pixels for its
+            calculations when it is working on the image boundaries. This
+            option will only have an effect on the boundaries of the result
+            (if any). <guilabel>Smear</guilabel> is the default and the best
+            choice.
+          </para>
+          <para lang="cs">
+            režim chování na okrajích obrázku. Užitečné pro práci s
+            dlaždicovatelnými obrázky.
+          </para>
+          <para lang="de">
+            Diese Eigenschaft gibt an, wie die Bildkanten behandelt werden,
+            d.h. woher der Kantenerkennungs-Algorithmus benachbarte Pixel
+            holen soll, wenn er Berechnungen an den Bildkanten durchführt. Die
+            Eigenschaft hat höchstens Auswirkungen auf den Bildrand des
+            Resultats. <guilabel>Verwischen</guilabel> ist die Voreinstellung
+            und auch die beste Wahl.
+          </para>
+          <para lang="es">
+            Estas opciones no son operacionales.
+          </para>
+          <para lang="fr">
+            Détermine où le détecteur de contour obtiendra les pixels adjacents
+            pour ses calcul quans il opère sur les bords de l'image. Ces
+            options n'auront donc d'effet que sur les bords. <guilabel>Étaler
+            </guilabel> est l'option par défaut et le meilleur choix.
+          </para>
+          <para lang="it">
+            Dove il rilevatore genererà pixel adiacenti per i suoi calcoli
+            quando lavora sui contorni dell'immagine. Quest'opzione avrà
+            effetto solo sui bordi del risultato (se
+            presenti). <guilabel>Macchia</guilabel> è il valore predefinito
+            e il migliore.
+          </para>
+          <para lang="no">
+            Desse vala er meint å styre korleis biletkantane skal sjå ut, men
+            eg har ikkje fått dette til å verke.
+          </para>
+          <para lang="no">
+            Bestemmer kvar programmet skal sjå etter samanliknbare
+            pikslar når det arbeider på kanten av biletet. Valet vil bare
+            påverka biletkanten, om det i det heile har noen verknad.
+            Som oftast vil valet <guilabel>Smør</guilabel> gi det beste
+            resultatet. Dette er også normalinnstillinga.
+          </para>
+          <para lang="ru">
+            эти параметры на работают.
+            <!--похож на режим <quote>Заворачивать</quote> дополнения
+            <quote>Замещение</quote>.Полезен для бесшовных изображений.-->
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </sect3>
+
+</sect2>

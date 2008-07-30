@@ -1,0 +1,2650 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+                "http://www.docbook.org/xml/4.3/docbookx.dtd">
+
+<!--  section history:
+  2008-02-28 update fr by jpl
+  2007-01-29 added Spanish translation by manuq
+  2006-08-14 added norwegian translation by KoSt
+  2006-08-03 added italian translation by ciampix
+  2006-06-15 added Korean translation by Dust
+  2006-01-06 updated fr
+  2006-01-05 fixed ambigous description of installing new script-fu
+  scripts (#324309)
+ -->
+<sect1 id="gimp-concepts-script-fu" lang="cs;de;es;en;fr;it;ko;no;ru;zh_CN">
+  <sect1info lang="de;es;fr;ko;no">
+    <revhistory>
+      <revision lang="en">
+        <revnumber>$Revision$</revnumber>
+        <date>2008-03-12</date>
+        <authorinitials>jpl</authorinitials>
+      </revision>
+      <revision lang="de">
+        <revnumber>$Revision$</revnumber>
+        <date>2008-06-16</date>
+        <authorinitials>ude</authorinitials>
+      </revision>
+      <revision lang="es">
+        <revnumber>$Revision$</revnumber>
+        <date>2007-01-29</date>
+        <authorinitials>manuq</authorinitials>
+      </revision>
+      <revision lang="fr">
+        <revnumber>$Revision$</revnumber>
+        <date>2008-03-12</date>
+        <authorinitials>jpl</authorinitials>
+      </revision>
+      <revision lang="ko">
+        <revnumber>$Revision$</revnumber>
+        <date>2007-07-17</date>
+        <authorinitials>Mr.Dust</authorinitials>
+      </revision>
+      <revision lang="no">
+        <revnumber>$Revision$</revnumber>
+        <date>2008-03-09</date>
+        <authorinitials>KoSt</authorinitials>
+      </revision>
+    </revhistory>
+  </sect1info>
+
+  <title>
+    <phrase lang="en">Using Script-Fu Scripts</phrase>
+    <phrase lang="cs">Používání Script-Fu skriptů</phrase>
+    <phrase lang="de">Skript-Fu verwenden</phrase>
+    <phrase lang="es">Uso de guiones Script-Fu</phrase>
+    <phrase lang="fr">Utiliser les Script-Fu</phrase>
+    <phrase lang="it">Uso degli script Script-Fu</phrase>
+    <phrase lang="ko">Script-Fu 스크립트 사용하기</phrase>
+    <phrase lang="no">Å bruke Script-Fu</phrase>
+    <phrase lang="ru">Использование скриптов Script-Fu</phrase>
+    <phrase lang="sv">Använda GIMP</phrase>
+    <phrase lang="zh_CN">使用 Script-Fu 脚本</phrase>
+  </title>
+
+  <indexterm lang="cs;es;it;no;ru;zh_CN">
+    <primary>Script-Fu</primary>
+  </indexterm>
+  <indexterm lang="en;fr">
+    <primary>Script-Fu</primary>
+    <secondary>Introduction></secondary>
+  </indexterm>
+  <indexterm lang="de"><primary>Skript-Fu</primary></indexterm>
+  <indexterm lang="ko">
+    <primary>Script-Fu</primary>
+    <secondary>소개></secondary>
+  </indexterm>
+
+
+  <sect2>
+    <title>
+      <phrase lang="en">Script-Fu?</phrase>
+      <phrase lang="cs">Script-Fu?</phrase>
+      <phrase lang="de">Skript-Fu?</phrase>
+      <phrase lang="es">¿Qué es Script-Fu?</phrase>
+      <phrase lang="fr">Script-Fu ?</phrase>
+      <phrase lang="ko">스크립트-푸(Script-Fu)?</phrase>
+      <phrase lang="it">Script-Fu?</phrase>
+      <phrase lang="no">Script-Fu?</phrase>
+      <phrase lang="ru">Script-Fu?</phrase>
+      <phrase lang="zh_CN">Script-Fu？</phrase>
+    </title>
+
+    <para lang="en">
+      Script-Fu is what the Windows world would call "macros" But Script-Fu is
+      more powerful than that. Script-Fu is based on an interpreting language
+      called Scheme, and works by using querying functions to the GIMP
+      database. You can do all kinds of things with Script-Fu, but an ordinary
+      GIMP user will probably use it for automating things that:
+    </para>
+
+    <para lang="cs">
+      Script-Fu je to, čemu by se ve světě Windows říkalo „makra“. Script-Fu
+      je ale mnohem víc. Script-Fu je založeno na interpretovaném jazyku
+      Scheme, což je dialekt Lispu, a při své činnosti se dotazuje na funkce z
+      databáze Gimpu. Script-Fu lze používat k ohromnému množství účelů, ale
+      začátečníci obvykle používají Script-Fu k automatizaci úkonů, které:
+    </para>
+
+    <para lang="de">
+      Skript-Fu ist das, was die Windows-Welt "Makros" nennen würde. Aber
+      Skript-Fu ist viel mehr als das. Skript-Fu basiert auf einer
+      Interpretersprache namens <quote>Scheme</quote> und fragt mittels
+      Funktionen die <acronym>GIMP</acronym>-Datenbank ab. Sie können alles
+      mögliche mit Skript-Fu machen, aber ein typischer Benutzer wird es
+      vermutlich zur Automatisierung einsetzen, insbesondere für Aktionen, die
+    </para>
+
+    <para lang="es">
+      Script-Fu es lo que en el mundo de Windows se llamaría "macros", pero en
+      realidad es mucho más poderoso que éstas.  Se basa en un lenguaje
+      interpretado llamado Scheme, y trabaja consultando funciones a la base
+      de datos del GIMP.  Puede hacer una gran variedad de cosas con
+      Script-Fu, pero en general se utiliza para automatizar tareas que:
+    </para>
+
+    <para lang="fr">
+      Script-Fu est ce que le monde Windows appellerait des "macros" mais
+      Script-Fu est bien plus puissant que cela. Script-Fu est basé sur un
+      langage interprété appelé le Scheme, et fonctionne en utilisant des
+      fonctions de requêtes sur la base de données de GIMP. Vous pouvez faire
+      toutes sortes de choses avec Script-Fu, mais l'utilisateur de base de
+      GIMP l'utilisera pour automatiser des actions :
+    </para>
+
+    <para lang="it">
+      Gli Script-Fu sono quello che nel mondo Windows si chiamano "macro" solo
+      più potenti. Gli Script-Fu sono basati su un linguaggio interpretato
+      chiamato Scheme, e lavorano interrogando le funzioni nel database di
+      GIMP. È possibile fare qualsiasi operazione con gli Script-Fu, anche se
+      gli utenti normali di GIMP li usano prevalentemente per automatizzare
+      operazioni che:
+    </para>
+
+    <para lang="ko">
+      스크립트-푸(Script-Fu) 는 윈도우즈의 "매크로" 와 비슷하지만 조금더
+      강력합니다. Script-Fu 는 Scheme 이라는 인터프리팅 언어에 기반을 두고
+      있으며 김프 데이터베이스에 쿼리문을 요청하는 방식으로 동작합니다.
+      원한다면 Script-Fu 의 모든 기능을 사용할 수 있지만, 일반적인 김프
+      사용자들은 주로 다음과 같은 경우에 사용합니다.
+    </para>
+
+    <para lang="no">
+      Script-Fu er noe av det same som Windows sine <quote>makroar</quote>,
+      men mykje kraftigare. Script-Fu er basert på programmeringsspråket
+      <quote>Scheme</quote> og arbeider ved å nytte spørjefunksjonar mot
+      <acronym>GIMP</acronym> sin database. Du kan eigentleg gjere ganske
+      mykje med Script-Fu, men den vanlege bruken er vel å automatisere
+      ulike oppgåver som for eksempel slike som
+    </para>
+
+    <para lang="ru">
+      Script-Fu это то, что в мире Windows называется "макросами". Но в
+      сравнении с ними Script-Fu явлется более мощным инструментом. Script-Fu
+      основан на интерпретируемом языке, называемом Scheme, и работает с
+      помощью использования запрашиваемых функций из базы данных GIMP. С
+      помощью Script-Fu вы можете производить все виды действий, но обычный
+      пользователь GIMP вероятно использует его для автоматизации таких вещей
+      как:
+    </para>
+
+    <para lang="zh_CN">
+      Script-Fu 在 Windows 世界中叫做“宏”，不过 Script-Fu 比宏更强大。
+      Script-Fu 是基于一个叫 Scheme 的解释语言，通过查询 GIMP 数据库的功能来
+      工作。您可以使用 Script-Fu 干各种各样的事，不过一般的 GIMP 用户可能用
+      它做些自动化的操作如：
+    </para>
+
+    <itemizedlist lang="en">
+      <listitem>
+        <para>You want to do frequently.</para>
+      </listitem>
+      <listitem>
+        <para>Are really complicated to do, and hard to remember.</para>
+      </listitem>
+    </itemizedlist>
+
+    <itemizedlist lang="cs">
+      <listitem>
+        <para>Chce často provádět.</para>
+      </listitem>
+      <listitem>
+        <para>Jsou velmi složité a těžce zapamatovatelné.</para>
+      </listitem>
+    </itemizedlist>
+
+    <itemizedlist lang="de">
+      <listitem>
+        <para>regelmäßig ausgeführt werden sollen oder</para>
+      </listitem>
+      <listitem>
+        <para>kompliziert in der Ausführung und schwer zu merken sind.</para>
+      </listitem>
+    </itemizedlist>
+
+    <itemizedlist lang="es">
+      <listitem>
+        <para>Ud. realiza con frecuencia.</para>
+      </listitem>
+      <listitem>
+        <para>
+          Son realmente complicadas de hacer, y difíciles de recordar.
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <itemizedlist lang="fr">
+      <listitem>
+        <para>qu'il fait fréquemment,</para>
+      </listitem>
+      <listitem>
+        <para>qui sont très compliquées et difficiles à retenir.</para>
+      </listitem>
+    </itemizedlist>
+
+    <itemizedlist lang="it">
+      <listitem>
+        <para>si esegue frequentemente;</para>
+      </listitem>
+      <listitem>
+        <para>molto complesse da eseguire e difficili da ricordare.</para>
+      </listitem>
+    </itemizedlist>
+
+    <itemizedlist lang="ko">
+      <listitem>
+        <para>자주 쓰게 되는 기능</para>
+      </listitem>
+      <listitem>
+        <para>꽤 복잡하며 기억하기 어려운 작업</para>
+      </listitem>
+    </itemizedlist>
+
+    <itemizedlist lang="no">
+      <listitem>
+        <para>du gjer ofte</para>
+      </listitem>
+      <listitem>
+        <para>er kompliserte å gjere og vanskelege å hugsa</para>
+      </listitem>
+    </itemizedlist>
+
+    <itemizedlist lang="ru">
+      <listitem>
+        <para>Часто производимые операции.</para>
+      </listitem>
+      <listitem>
+        <para>Действительно сложные и трудные для запоминания операции.</para>
+      </listitem>
+    </itemizedlist>
+
+    <itemizedlist lang="zh_CN">
+      <listitem>
+        <para>您经常要做的。</para>
+      </listitem>
+      <listitem>
+        <para>做起来很麻烦的和很难记住的。</para>
+      </listitem>
+    </itemizedlist>
+
+    <para lang="en">
+      Remember that you can do a whole lot with Script-Fu. The scripts that
+      come with GIMP can be quite useful, but they can also serve as models
+      for learning Script-Fu, or at least as a framework and source of
+      modification when you make your own script. Read the Script-Fu Tutorial
+      in the next section if you want to learn more about how to make scripts.
+    </para>
+    <para lang="cs">
+      Pamatujte si však, že se Script-Fu můžete dělat mnohem víc. Skripty
+      dodávané s Gimpem mohou být velmi užitečné, ale to nejcennější co vám
+      mohou dát, je studijní materiál, který vás může přivést ke zvládnutí a
+      později i mistrovství ve Script-Fu. Nebo alespoň mohou být základem k
+      úpravám při tvorbě nového skriptu. Pokud ve vás slovo Fu vzbuzuje
+      asociace s mistry bojových umění, hlubokými meditacemi a téměř
+      nadlidskými schopnostmi, nejste daleko od pravdy. Odtud má své jméno.
+      Chcete-li se vydat cestou Script-Fu, pokračujte tutoriálem v následující
+      sekci.
+    </para>
+    <para lang="de">
+      Wie gesagt, Sie können sehr viel mit Skript-Fu machen. Die Skripte, die
+      mit <acronym>GIMP</acronym> ausgeliefert werden, sind sehr nützlich,
+      und sie können überdies als Beispiele dienen, um Skript-Fu zu lernen,
+      oder als Vorlage für Modifikationen, wenn Sie Ihr eigenes Skript
+      schreiben. Lesen Sie das Skript-Fu-Tutorial im nächsten Abschnitt,
+      wenn Sie mehr darüber erfahren möchten, wie man Skripte erstellt.
+    </para>
+    <para lang="es">
+      Tenga en cuenta que puede hacer una gran cantidad de cosas con
+      Script-Fu.  Los guiones que vienen provistos junto con el GIMP pueden
+      resultarle muy útiles, y además pueden servirle como modelos para
+      aprender Script-Fu, o al menos como una plantilla para cuando desee
+      escribir su propio guión.  Lea el tutorial sobre Script-Fu en la próxima
+      sección si desea aprender más acerca de cómo se hacen los guiones.
+    </para>
+    <para lang="fr">
+      Souvenez-vous que vous pouvez faire beaucoup avec Script-Fu. Les scripts
+      qui sont fournis avec le GIMP peuvent être très utiles, mais ils peuvent
+      aussi servir de modèle pour comprendre Script-Fu, ou au moins de
+      charpente et de source lorsque vous faites vos propres scripts. Lisez le
+      Tutoriel Script-Fu dans la section suivante si vous voulez apprendre
+      comment écrire des scripts.
+    </para>
+    <para lang="it">
+      Si può fare molto con gli Script-Fu. Gli script forniti con GIMP possono
+      essere molto utili, e possono servire ottimamente anche come esempi per
+      imparare a creare gli Script-Fu, o per lo meno come struttura e sorgente
+      di ispirazione per la creazione delle proprie procedure. Leggere
+      attentamente il tutorial nella sezione seguente se si desidera
+      cominciare a imparare a creare degli script.
+    </para>
+    <para lang="ko">
+      Script-Fu 를 이용하면 굉장히 많은 일들을 할 수 있습니다. 그리고
+      Script-Fu 를 배우기 위한 모델이나 직접 작성한 스크립트의 수정을 위한
+      프레임워크도 제공됩니다. Script-Fu 에 대해 더 많은 것을 배우고 싶다면
+      다음 장에 있는 Script-Fu 강좌를 읽어보시기 바랍니다.
+    </para>
+    <para lang="no">
+      Skripta som følgjer med <acronym>GIMP</acronym> er nyttige på fleire
+      måtar. Ikkje bare kan dei nyttast direkte slik dei er tenkt, men du
+      kan også bruke dei som mønster for å lære Script-Fu, eller i det minste
+      som grunnlag og kjelde for eigenproduserte skript. Les vidare om dette
+      i neste kapittel.
+    </para>
+    <para lang="ru">
+      Помните, что вы можете сделать множество вещей с помощью Script-Fu.
+      Установливаемые вместе с GIMP скрипты весма полезны, но они также могут
+      служить в качестве примеров для изучения Script-Fu, или как основа и
+      исходник, модифицируя который вы создаёте свой скрипт. Прочитайте
+      руководство по созданию Script-Fu в следующем разделе, если вы желаете
+      узнать больше о том, как создавать скрипты.
+    </para>
+    <para lang="zh_CN">
+      记住您可以用 Script-Fu 做大量的事。GIMP 自带的脚本十分有用，不过您也可
+      以用它们了学习了解 Script-Fu，或是用它们作为您自己编写脚本的框架和参考。
+    </para>
+
+    <para lang="en">
+      We will describe some of the most useful scripts in this chapter, but we
+      won't cover them all. There are simply too many scripts. Some of the
+      scripts are also very simple and you will probably not need any
+      documentation to be able to use them.
+    </para>
+    <para lang="cs">
+      V této kapitole popíšeme některé z nejužitečnějších skriptů, nikoliv
+      však všechny. Je jich totiž prostě příliš mnoho. Některé jsou navíc
+      velmi jednoduché a k jejich používání není třeba žádné dokumentace.
+    </para>
+    <para lang="de">
+      Wir werden in diesem Kapitel einige der nützlichsten Skripte
+      beschreiben, aber wir können nicht alle behandeln - es gibt einfach zu
+      viele Skripte. Einige Skripte sind aber so einfach, dass Sie vermutlich
+      gar keine Dokumentation benötigen, um mit ihnen arbeiten zu können.
+    </para>
+    <para lang="es">
+      En este capítulo se describen algunos de los guiones más útiles, pero no
+      todos.  Simplemente porque hay demasiados guiones.  Algunos de ellos son
+      tan simples que ni siquiera necesitará valerse de documentación para
+      poder utilizarlos.
+    </para>
+    <para lang="fr">
+      Nous décrirons certains des scripts les plus utiles dans ce chapitre,
+      mais nous ne les couvrirons pas tous. Il sont tout simplement trop
+      nombreux. De plus, certains scripts sont très simples et vous n'aurez pas
+      besoin de documentation pour les utiliser.
+    </para>
+    <para lang="it">
+      In questo capitolo verranno descritti alcuni dei più utili script anche
+      se (per ragioni di spazio) non tutti; ce ne sono troppi! Alcuni degli
+      script sono così semplici che non necessitano di nessuna documentazione
+      per padroneggiarne l'uso.
+    </para>
+    <para lang="ko">
+      이 장에서 유용한 스크립트들에 대해 설명을 할 것이지만, 모든
+      스크립트들을 소개하지는 않을 것입니다. 사실 대부분의 스크립트들은 굉장히
+      단순해서 설명서가 없어도 사용하는데 아무런 지장이 없습니다.
+    </para>
+    <para lang="no">
+      I dette kapitlet skal vi sjå på noen av dei mest nyttige skripta, men
+      det er alt for mange skript til at vi kan nå over alle. Enkelte av
+      skripta er i tillegg så enkle at du ikkje treng noe oppskrift på bruken
+      av dei.
+    </para>
+    <para lang="ru">
+      В этой главе мы опишем некоторые из наиболее полезных скриптов, но мы не
+      будем рассматривать все. Просто доступно слишком много скриптов.
+      Некоторые из скриптов также очень просты, и вам вероятно не понадобится
+      никакой документации для обучения их использованию.
+    </para>
+
+    <para lang="en">
+      Script-Fu (a dialect of Scheme) isn't the only scripting language
+      available for GIMP. But Script-Fu is the only scripting language that is
+      installed by default. Other available scripting extensions are Perl and
+      Tcl. You can download and install both extensions at the GIMP Plugin
+      Registry <xref linkend="bibliography-online-gimp-plugin-registry"/>.
+    </para>
+    <para lang="cs">
+      Script-Fu (respektive Scheme) není jediný skriptovací jazyk vhodný pro
+      GIMP. Script-Fu je však jediný skriptovací jazyk dostupný ve výchozí
+      instalaci.
+    </para>
+    <para lang="de">
+      Skript-Fu (ein Scheme-Dialekt) ist nicht die einzige Skriptsprache
+      für <acronym>GIMP</acronym>, aber die einzige, die bereits von
+      vornherein installiert ist. Andere mögliche Skripterweiterungen sind
+      Perl und Tcl. Sie können beide Erweiterungen vom GIMP-Pluginregister
+      <xref linkend="bibliography-online-gimp-plugin-registry"/>
+      herunterladen und installieren.
+    </para>
+    <para lang="es">
+      El lenguaje Script-Fu (que es un dialecto de Scheme) es el único
+      lenguaje de guionado (scripting) que se instala en el sistema.  Pero hay
+      otras extensiones, por ejemplo para Perl y Tcl.  Puede descargar e
+      instalar ambas extensiones desde el GIMP Plugin Registry
+      <xref linkend="bibliography-online-gimp-plugin-registry"/>.
+    </para>
+    <para lang="fr">
+      Script-Fu (un dialecte du Scheme) n'est pas le seul langage de script
+      disponible avec le GIMP. Mais Script-Fu est le seul qui soit installé
+      par défaut. Les autres langages disponibles en extension sont Perl et
+      Tcl. Vous pouvez télécharger et installer ces deux extensions dans le
+      registre des greffons du GIMP
+      <xref linkend="bibliography-online-gimp-plugin-registry" />.
+    </para>
+    <para lang="it">
+      Script-Fu (un dialetto del linguaggio Scheme) non è il solo
+      linguaggio di scripting disponibile per GIMP anche se Script-Fu è
+      l'unico predefinito nell'installazione. Altre estensioni di scripting
+      sono disponibili per il linguaggio Perl e Tcl. Le estensioni sono
+      disponibili da scaricare e da installare sul sito Registro dei Plugin di
+      GIMP <xref linkend="bibliography-online-gimp-plugin-registry"/>.
+    </para>
+    <para lang="ko">
+      Script-Fu(Scheme 의 일종인) 는 김프에서만 사용가능한 언어는 아니지만
+      김프에서 기본으로 설치되는 유일한 스크립팅 언어입니다. 그 외로 Perl
+      이나 Tcl 등의 다른 스크립팅 확장을 사용할 수도 있습니다. 이러한
+      것들은 GIMP Plugin Registry
+      <xref linkend="bibliography-online-gimp-plugin-registry"/>
+      에서 다운로드 받아 설치할 수 있습니다.
+    </para>
+    <para lang="no">
+      Script-Fu, som altså er ein dialekt av Scheme, er ikkje det einaste
+      programmeringsspråket som er tilgjengeleg i <acronym>GIMP</acronym>.
+      Men det er det einaste som blir lagt inn i <acronym>GIMP</acronym> ved
+      installeringa. Andre brukbare språk er Perl og Tcl. Begge desse kan du
+      laste ned frå GIMP Plugin Registry
+      <xref linkend="bibliography-online-gimp-plugin-registry"/>.
+    </para>
+    <para lang="ru">
+      Script-Fu (диалект языка Scheme) не единственный доступный  для
+      GIMP скриптовый язык. Но Script-Fu это единственный  язык, который
+      устанавливается по умолчанию. Другими доступными скриптовыми
+      расширениями являются Perl и Tcl. Вы можете загрузить  и
+      установить оба расширения со страницы  Реестр плагинов GIMP
+      <xref linkend="bibliography-online-gimp-plugin-registry"/>.
+    </para>
+    <para lang="zh_CN">
+      我们在这里要介绍一些最有用的脚本，不过不是全部。因为实在是有太多的脚本，
+      有些也非常简单而不需要任何文档就能使用它们。
+    </para>
+  </sect2>
+
+
+  <sect2 lang="en;de;es;fr;ko;it;no;ru;zh_CN" id="install-script-fu">
+    <title>
+      <phrase lang="en">Installing Script-Fus</phrase>
+      <phrase lang="de">Skript-Fus installieren</phrase>
+      <phrase lang="es">Instalación de guiones Script-Fu</phrase>
+      <phrase lang="fr">Installer des Script-Fu</phrase>
+      <phrase lang="it">Installazione degli Script-Fu</phrase>
+      <phrase lang="ko">Script-Fu 설치하기</phrase>
+      <phrase lang="no">Å installere Script-Fu</phrase>
+      <phrase lang="ru">Установка скриптов</phrase>
+      <phrase lang="zh_CN">安装脚本</phrase>
+    </title>
+
+    <indexterm lang="en">
+      <primary>Script-Fu</primary>
+      <secondary>Install</secondary>
+    </indexterm>
+    <indexterm lang="fr">
+      <primary>Script-Fu</primary>
+      <secondary>Installer</secondary>
+    </indexterm>
+    <indexterm lang="ko">
+      <primary>Script-Fu</primary>
+      <secondary>설치</secondary>
+    </indexterm>
+
+    <para lang="en">
+      One of the great things about Script-Fu is that you can share your
+      script with all your GIMP friends. There are many scripts that come with
+      GIMP by default, but there are also vast quantities of scripts that are
+      available for download all around the Internet.
+    </para>
+    <para lang="de">
+      Einer der Vorteile von Skript-Fu ist, dass Sie Ihr Skript mit all
+      Ihren <acronym>GIMP</acronym>-Freunden teilen können. Viele Skripte
+      werden bereits mit <acronym>GIMP</acronym> ausgeliefert, aber im
+      Internet gibt es noch Unmengen von Skripten zum Herunterladen.
+    </para>
+    <para lang="es">
+      Lo bueno de Script-Fu es que puede compartir sus guiones con todos sus
+      amigos.  Hay muchos guiones que vienen con el GIMP, pero hay una vasta
+      cantidad de guiones que se encuentran disponibles para descargar en
+      Internet.
+    </para>
+    <para lang="fr">
+      Un des points forts de GIMP est que vous pouvez échanger vos
+      scripts avec ceux de vos amis. Nombreux sont les scripts présents
+      par défaut dans GIMP, mais encore plus nombreux ceux que vous
+      pourrez trouver sur la Toile.
+    </para>
+    <para lang="it">
+      Uno dei fattori notevoli degli Script-Fu è che è possibile
+      condividerli con gli amici. Ci sono molti script che vengono forniti
+      predefiniti con GIMP, ma ci sono anche un gran numero di script
+      disponibili per il prelievo su Internet.
+    </para>
+    <para lang="ko">
+      Script-Fu 의 주요 장점중 하나는 스크립트를 다른 김프 사용자들과
+      공유해 쓸수 있다라는 점입니다. 김프 배포판에는 많은 스크립트들이
+      포함되어 있지만 그보다 훨씬 많은 스크립트들을 인터넷에서 다운로드
+      받을 수 있습니다.
+    </para>
+    <para lang="no">
+      Ein av fordelane med Script-Fu er at du kan dela skripta dine med andre.
+      I tillegg til dei skripta som blir leverte saman med
+      <acronym>GIMP</acronym>, finst det uteljande mange tilgjengelege for
+      nedlasting rundt om på Internett.
+    </para>
+    <para lang="ru">
+      Одной из самых замечательный вещей в Script-Fu является возможность
+      делиться скриптами с вашими GIMP'овыми друзьями. Доступно множество
+      скриптов которые установлены по умолчанию вместе с GIMP, но также
+      существует огромное количество скриптов, которые доступны для закачки из
+      Интернет.
+    </para>
+    <para lang="zh_CN">
+      Script-Fu 的一个优点就是您可以将它们共享给所有的 GIMP 朋友。虽然 GIMP
+      默认就安装了许多脚本，但是互联网上还有非常多可下载的脚本。
+    </para>
+
+    <procedure lang="en">
+      <step>
+        <para lang="en">
+          If you have downloaded a script, copy or move it to your
+          scripts directory. It can be found in the Preferences:
+          <link linkend="gimp-prefs-folders">
+            <menuchoice>
+              <guimenu>Folders</guimenu>
+              <guimenuitem>Scripts</guimenuitem>
+            </menuchoice>
+          </link>.
+        </para>
+      </step>
+
+      <step>
+        <para lang="en">
+          Do a refresh by using
+          <menuchoice>
+            <guimenu>Xtns</guimenu>
+            <guisubmenu>Script-Fu</guisubmenu>
+            <guimenuitem>Refresh Scripts</guimenuitem>
+          </menuchoice>
+          from the toolbox.
+          The script will now appear in one of your menus.
+          If you don't find it, look for it under the root file menu
+          filters. If it doesn't appear at all, something was wrong with
+          the script (e.g. it contains syntax errors).
+        </para>
+      </step>
+    </procedure>
+
+    <procedure lang="de">
+      <step>
+        <para lang="de">
+          Wenn Sie ein Skript herunter geladen haben, kopieren oder
+          verschieben Sie es in Ihr Skript-Verzeichnis, das Sie unter
+          Einstellungen finden:
+          <link linkend="gimp-prefs-folders">
+            <menuchoice>
+              <guimenu>Ordner</guimenu>
+              <guimenuitem>Skripte</guimenuitem>
+            </menuchoice>
+          </link>.
+        </para>
+      </step>
+
+      <step>
+        <para lang="de">
+          Laden Sie die Konfiguration neu mit
+          <menuchoice>
+            <guimenu>Extras</guimenu>
+            <guisubmenu>Skript-Fu</guisubmenu>
+            <guimenuitem>Auffrischen</guimenuitem>
+          </menuchoice>.
+          Das Skript wird nun in einem Ihrer Menüs erscheinen.
+          Falls Sie es nicht finden, suchen Sie unter den Filtern des
+          Bildfensters. Wenn es auch da nicht zu sehen ist, ist mit dem
+          Skript irgend etwas nicht in Ordnung (z.B. könnte es Syntaxfehler
+          enthalten).
+        </para>
+      </step>
+    </procedure>
+
+    <procedure lang="es">
+      <step>
+        <para lang="es">
+          Si ha descargado un guión, cópielo o muévalo a su directorio
+          personal de guiones.  Este directorio puede hallarse en las
+          preferencias:
+          <link linkend="gimp-prefs-folders">
+            <menuchoice>
+              <guimenu>Carpetas</guimenu>
+              <guimenuitem>Scripts</guimenuitem>
+            </menuchoice>
+          </link>.
+        </para>
+      </step>
+
+      <step>
+        <para lang="es">
+          Actualice la aplicación seleccionando
+          <menuchoice>
+            <guimenu>Exts</guimenu>
+            <guisubmenu>Script-Fu</guisubmenu>
+            <guimenuitem>Refrescar scripts</guimenuitem>
+          </menuchoice>
+          desde el menú de la caja de herramientas.  El guión debería aparecer
+          ahora en uno de sus menús.  Si no lo encuentra, puede que algo haya
+          ido mal (puede tener errores sintácticos, por ejemplo).
+        </para>
+      </step>
+    </procedure>
+
+    <procedure lang="fr">
+      <step>
+        <para lang="fr">
+          Si vous avez téléchargé un script, copiez-le ou déplacez-le dans
+          votre répertoire de scripts.
+          <footnote>
+            <para>
+              Ce répertoire de scripts peut être trouvé dans les Préférences :
+              <link linkend="gimp-prefs-folders">
+                <menuchoice>
+                  <guimenu>Dossiers</guimenu>
+                  <guimenuitem>Scripts</guimenuitem>
+                </menuchoice>
+              </link>
+            </para>
+          </footnote>.
+        </para>
+      </step>
+
+
+      <step>
+        <para lang="fr">
+          Faites un rafraîchissement en utilisant
+          <menuchoice>
+            <guimenu>Exts</guimenu>
+            <guisubmenu>Script-Fu</guisubmenu>
+            <guimenuitem>Actualiser les scripts</guimenuitem>
+          </menuchoice>
+          dans le menu de la Boîte à outils. Le script doit apparaître dans
+          la liste déroulante du menu Script-Fu. Si vous ne le trouvez pas,
+          voyez dans le menu Scrip-fu de l'image. Et s'il ne s'y trouve pas
+          non plus, c'est qu'il y a une erreur de syntaxe dans le script.
+        </para>
+      </step>
+    </procedure>
+
+    <procedure lang="it">
+      <step>
+        <para lang="it">
+          Se si è scaricato uno script, per usarlo è necessario copiarlo o
+          spostarlo nella cartella personale degli script di GIMP. Questa è
+          definita nella finestra delle preferenze:
+          <link linkend="gimp-prefs-folders">
+            <menuchoice>
+              <guimenu>Cartelle</guimenu>
+              <guimenuitem>Script</guimenuitem>
+            </menuchoice>
+          </link>.
+        </para>
+      </step>
+
+      <step>
+        <para lang="it">
+          Ricaricate l'elenco usando
+          <menuchoice>
+            <guimenu>Xtns</guimenu>
+            <guisubmenu>Script-Fu</guisubmenu>
+            <guimenuitem>Rinfresca gli script</guimenuitem>
+          </menuchoice>
+          dal pannello degli strumenti.
+          Ora gli script scaricati dovrebbero apparire in uno dei menu.
+          Se non lo trovate, cercatelo sotto il menu principale dei
+          filtri. Se non appare da nessuna parte significa che deve
+          esserci un qualche tipo di errore nello script (per es. un
+          errore di sintassi).
+        </para>
+      </step>
+    </procedure>
+
+    <procedure lang="ko">
+      <step>
+        <para lang="ko">
+          스크립트를 다운로드 받아 사용자 스크립트 디렉토리로 옮긴 뒤에
+          기본 설정의
+          <!-- PENDING: ko <link linkend="gimp-prefs-folders">  -->
+            <menuchoice>
+              <guimenu>폴더</guimenu>
+              <guimenuitem>스크립트</guimenuitem>
+            </menuchoice>
+          <!-- </link> -->
+          를 보면 해당 스크립트를 확인할 수 있습니다.
+        </para>
+      </step>
+
+      <step>
+        <para lang="ko">
+          그리고 도구상자의
+          <menuchoice>
+            <guimenu>확장</guimenu>
+            <guisubmenu>Script-Fu</guisubmenu>
+            <guimenuitem>Refresh Scripts</guimenuitem>
+          </menuchoice>
+          를 통해 새로고침을 합니다. 그러면 이제 메뉴에서 스크립트를 볼 수
+          있게 됩니다. 만약 스크립트가 보이지 않는다면 이미지창의 필터
+          메뉴를 찾아 보십시오. 그래도 없다면 스크립트 자체에 문법오류와
+          같은 문제가 있는 것입니다.
+        </para>
+      </step>
+    </procedure>
+
+    <procedure lang="no">
+      <step>
+        <para lang="no">
+          Når du har lasta ned eit skript, kopierar eller flytter du det til
+          mappa di for skript. Kva for mappe dette er, finn du i menyen
+          Innstillingar i hovudmenyen: <link linkend="gimp-prefs-folders">
+          <menuchoice>
+            <guimenu>Mapper</guimenu>
+            <guimenuitem>Skript</guimenuitem>
+          </menuchoice>
+          </link>.
+        </para>
+      </step>
+      <step>
+        <para lang="no">
+          Oppdater skripta frå hovudmenyens
+          <menuchoice>
+            <guimenu>Utvid</guimenu>
+            <guisubmenu>Script-Fu</guisubmenu>
+            <guimenuitem>Oppdater skript</guimenuitem>
+          </menuchoice>.
+          Skriptet skal nå dukka opp i ein av menyane. Den mest sannsynlege
+          er Filtermenyen. Dersom du ikkje finn det i noen av menyane, er det
+          noe gale med skriptet. (Den vanlegaste feilen er syntaksfeil, altså
+          skrivefeil).
+        </para>
+      </step>
+    </procedure>
+
+    <procedure lang="ru">
+      <step>
+        <para>
+          Если вы скачали скрипт, скопируйте или переместите ваш новый скрипт
+          в директорию скриптов. Её можно найти в настройках директорий
+          <link linkend="gimp-prefs-folders">
+            <menuchoice>
+              <guimenu>Директории</guimenu>
+              <guimenuitem>Скрипты</guimenuitem>
+            </menuchoice>
+          </link>.
+        </para>
+      </step>
+      <step>
+        <para>
+          Обновите скрипты через меню панели инструментов
+          <menuchoice>
+            <guimenu>Дополнения</guimenu>
+            <guisubmenu>Script-Fu</guisubmenu>
+            <guimenuitem>Обновить скрипты</guimenuitem>
+          </menuchoice>.
+          Скрипт появится в одном из ваших меню. Если вы его не нашли, поищите в
+          основном меню фильтров. Если он всё еще не появился, с этим скриптом
+          что-то не так (на пример, синтактические ошибки).
+        </para>
+      </step>
+    </procedure>
+
+    <tip lang="zh_CN">
+      <para>
+        下载一个脚本后，将它拷贝或移动
+        到 <filename>.gimp-2.2/scripts</filename> 目录然后刷新，这样该脚本就
+        会在某个菜单中显示。如果没有发现，说明该脚本可能有问题。
+      </para>
+    </tip>
+  </sect2>
+
+  <sect2 lang="de;en;fr;it;ko;no;ru;zh_CN">
+    <title>
+      <phrase lang="en">Do's and Don'ts</phrase>
+      <phrase lang="de">Typische Fehler</phrase>
+      <phrase lang="fr">Ce qu'il faut faire et ne pas faire</phrase>
+      <phrase lang="it">Cose che si possono e che non si possono fare</phrase>
+      <phrase lang="ko">해야 할 것과 하지 말아야 할 것</phrase>
+      <phrase lang="no">Råd og vink</phrase>
+      <phrase lang="ru">Работа и ошибки</phrase>
+      <phrase lang="zh_CN">注意事项</phrase>
+    </title>
+
+    <para lang="en">
+      A common error when you are dealing with Script-Fus is that you simply
+      bring them up and press the OK button. When nothing happens, you
+      probably think that the script is broken or buggy, but there is most
+      likely nothing wrong with it.
+    </para>
+    <para lang="de">
+      Ein häufiger Fehler beim Umgang mit Skript-Fu ist, ein Skript aufzurufen
+      und den OK-Schalter zu drücken. Wenn nichts passiert, glauben Sie
+      vermutlich, dass das Skript einen Fehler hat, aber höchstwahrscheinlich
+      ist mit ihm alles in Ordnung.
+    </para>
+    <para lang="es">
+      Un malentendido muy común que se presenta al utilizar guiones Script-Fu
+      es que el usuario simplemente los inicia y presiona el botón Aceptar.
+      Luego no pasa nada, y el usuario cree que el guión está mal.
+    </para>
+    <para lang="fr">
+      Une erreur classique lorsque vous utilisez un Script-Fu est de
+      simplement le lancer et appuyer sur le bouton OK. Lorsque rien ne se
+      passe vous penserez que le script s'est planté ou est occupé, mais il
+      est plus probable qu'il n'y ait rien d'anormal là-dedans.
+    </para>
+    <para lang="it">
+      Un errore molto frequente quando si sta lavorando con gli Script-Fu
+      accade quando li si porta in primo piano e si preme il punsante di OK
+      e sembra non succedere niente. Si pensa subito che c'è qualcosa che
+      non va con lo script, probabilmente un difetto o altro ma spesso
+      invece non c'è nulla di errato.
+    </para>
+    <para lang="ko">
+      Script-Fu 를 사용하면서 가장 흔하게 저지르는 실수는 Script-Fu 를
+      호출하고 바로 "확인" 버튼을 누르는 것입니다. 이후 아무 변화도 생기지
+      않으면 해당 스크립트가 깨졌거나 오류가 있다고 생각하겠지만, 사실
+      대부분은 정상 작동한 것입니다.
+    </para>
+    <para lang="no">
+      Ein vanleg feil når du arbeider med Script-Fu er å tru at det er
+      noe gale med skriptet fordi du ikkje ser noen forandringar i biletet
+      etter å ha trykt på <quote>OK</quote>-knappen. Den mest sannsynlege
+      forklaringa er at det ikkje er noe gale med skriptet.
+    </para>
+    <para lang="ru">
+      Распространённым убеждением, часто вызывающим ошибку, является убеждение
+      о том, что для работы со скриптами нужно просто вызывать их и нажать
+      кнопку ОК. Когда ничего не происходит, вы вероятно думаете,что работа
+      скрипта прервана или он содержит ошибку.
+    </para>
+    <para lang="zh_CN"> 使用 Script-Fu 最常见的错误就是打开它们然后直接按下
+      “确定”按钮。当什么也没发生时，您可以认为该脚本坏了或有 BUG，其实最可能
+      是它什么问题都没有。
+    </para>
+
+    <para lang="es">
+      Pero si no se lee atentamente la información que brinda el diálogo, y
+      simplemente se presiona el botón, puede que falte alguna entrada que el
+      guión necesita, o se le puede estar proporcionando una entrada
+      incorrecta, y por lo tanto el guión falla.  Un ejemplo de esto ocurre
+      cuando la tipografía especificada en el guión no ha sido instalada en el
+      sistema.  Así que asegúrese de leer la información que brinda el diálogo
+      antes de maldecir al guión.
+    </para>
+    <para lang="de">
+      Denken Sie nochmals nach. Haben Sie die Informationen im Dialog wirklich
+      gelesen oder einfach nur den Schalter gedrückt? Wenn Sie eine vom Skript
+      benötigte Eingabe vergessen oder ihm die falsche Eingabe gegeben haben,
+      wird das Skript nicht funktionieren. Einer der häufigsten Fehler ist das
+      Fehlen der im Skriptdialog angegebenen Schriftart (Font) auf Ihrem
+      System. Bevor Sie also das Skript verantwortlich machen, überprüfen Sie
+      bitte die Informationen im Dialog.
+    </para>
+    <para lang="fr">
+      Réfléchissez. Avez-vous lu les informations dans le dialogue, ou
+      avez-vous juste cliqué ? Si vous avez omis une entrée dont le script a
+      besoin, ou si vous avez fourni une fausse information, le script
+      plantera. L'une des erreurs les plus communes est que la police de
+      caractère spécifiée dans le dialogue du script n'a pas été installée sur
+      votre système. Aussi, s'il vous plaît, vérifiez les informations du
+      dialogue avant de maudire le script.
+    </para>
+    <para lang="it">
+      Ripensandoci. Le informazioni sulla finestra di dialogo sono state lette
+      attentamente o si è premuto semplicemente il pulsante OK senza pensare?
+      Se si dimentica i dati in ingresso che sono necessari per lo script o se
+      si immettono dati errati, lo script non funzionerà. Uno degli errori più
+      comuni è che il tipo di carattere specificato nella finestra di dialogo
+      dello script non è stato installato o non è presente nel sistema.
+      Controllare sempre attentamente le informazioni nella finestra di
+      dialogo prima di incolpare lo script!
+    </para>
+    <para lang="ko">
+      기억을 더듬어 보십시오. 대화상자에 나온 정보들을 제대로 읽어보았는가,
+      아니면 그저 확인 버튼만 눌렀는가? 스크립트에 필요한 입력값을 넣지
+      않았거나 잘못된 값을 입력했다면 스크립트는 제대로 실행되지 않을
+      것입니다. 사실 대부분의 에러는 스크립트 대화상자에 열거된 폰트가
+      시스템에 설치되어 있지 않은 경우에 발생한다. 따라서 괜히 스크립트를
+      탓하기 전에 대화상자의 정보를 확인해두는 것이 좋습니다.
+    </para>
+    <para lang="no">
+      Tenk deg om. Har du lese informasjonen om skriptet skikkeleg? Gløymer du
+      å gi skriptet dei opplysningane det bed om, eller du gir det feil data,
+      vil mange av skriptet feila. Ein vanleg feil er at den skrifttypen
+      skriptet krev, ikkje finst tilgjengeleg i datamaskinen. Så igjen, les
+      opplysningane i dialogvindauget før du legg skulda på skriptet.
+    </para>
+    <para lang="ru">
+      Подумайте снова. Действительно ли вы прочитали содержавшуюся в диалоге
+      информацию, или вы просто нажали кнопку? Если вы забыли ввести
+      необходимые скрипту параметры, или ввели ошибочные данные, он завершится
+      с ошибкой.
+    </para>
+    <para lang="zh_CN">
+      再想想您是不是仔细读了对话框中的信息，或只是简单地按了按钮？如果忘记输
+      入脚本需要的东西或输入错误，它将运行失败。一个最常见的错误就是脚本对话
+      框所需要的字体在您的系统中没被安装。因此请在责怪脚本之前仔细检查对话框
+      中的信息。
+    </para>
+  </sect2>
+
+  <sect2 lang="de;en;fr;it;ko;no;ru;zh_CN">
+    <title>
+      <phrase lang="en">Different Kinds Of Script-Fus</phrase>
+      <phrase lang="de">Verschiedene Skript-Fu-Arten</phrase>
+      <phrase lang="fr">Différentes sortes de Script-Fu</phrase>
+      <phrase lang="it">Tipi differenti di Script-Fu</phrase>
+      <phrase lang="ko">다른 종류의 Script-Fu</phrase>
+      <phrase lang="no">Ulike typar av Script-Fu</phrase>
+      <phrase lang="ru">Виды Скрипт-Фу</phrase>
+      <phrase lang="zh_CN">Script-Fu 的不同类型</phrase>
+    </title>
+
+    <para lang="en">
+      There are two kinds of Script-Fus:
+    </para>
+    <para lang="de">
+      Es gibt zwei Arten von Skript-Fu-Programmen:
+    </para>
+    <para lang="fr">
+      Il y a deux sortes de Script-Fu:
+    </para>
+    <para lang="no">
+      Det er to utgåver av Script-Fu-programma:
+    </para>
+    <para lang="ru">
+      Существует два вида Скрипт-Фу:
+    </para>
+
+    <variablelist lang="en;de;fr;no;ru">
+      <varlistentry>
+        <term lang="en">Standalone Script-Fus</term>
+        <term lang="de">
+          Selbständige (<foreignphrase>standalone</foreignphrase>) Skripte
+        </term>
+        <term lang="fr">Les script-fu autonomes</term>
+        <term lang="no">Sjølvstendige Script-Fu</term>
+        <term lang="ru">Самостоятельные Скрипт-Фу</term>
+        <listitem>
+          <para lang="en">
+            You will find the standalone variants under
+            <menuchoice>
+              <guimenu>Xtns</guimenu>
+               <guisubmenu>Type of Script</guisubmenu>
+            </menuchoice> in the main toolbox menu (see the figure below).
+          </para>
+          <para lang="de">
+            Die selbständigen Skripte finden Sie unter
+            <menuchoice>
+              <guimenu>Extras</guimenu>
+              <guisubmenu>Skript-Fu</guisubmenu>
+              <guimenuitem><replaceable>Skriptart</replaceable></guimenuitem>
+            </menuchoice> im Hauptmenü (siehe nachfolgende Illustration).
+          </para>
+          <para lang="fr">
+            Vous trouverez les scripts <quote>autonomes</quote> dans le menu
+            principal de la boîte à outils sous
+            <menuchoice>
+              <guimenu>Exts</guimenu>
+              <guimenuitem><replaceable>Type de Script</replaceable></guimenuitem>
+            </menuchoice> (voir figure ci-dessous).
+          </para>
+          <para lang="no">
+            Desse finn du i hovudmenyen under
+            <menuchoice>
+              <guimenu>Utvidingar</guimenu>
+               <guisubmenu>Type skript</guisubmenu>
+            </menuchoice> (sjå figuren nedanfor).
+          </para>
+          <para lang="ru">
+            Такие находятся в меню панели инструментов
+            <menuchoice>
+              <guimenu>Расш.</guimenu>
+              <guisubmenu>Скрипт-Фу</guisubmenu>
+              <guimenuitem><replaceable>тип скрипта</replaceable></guimenuitem>
+            </menuchoice> (см. рисунок ниже).
+          </para>
+          <figure lang="en;de;fr;no;ru">
+            <title>
+              <phrase lang="en">Script-Fus by category</phrase>
+              <phrase lang="de">Skript-Fu-Skripte nach Kategorie</phrase>
+              <phrase lang="fr">Liste des Script-Fu par catégorie</phrase>
+              <phrase lang="no">Script-Fu etter kategori</phrase>
+              <phrase lang="ru">Скрипт-Фу по категориям</phrase>
+            </title>
+            <mediaobject>
+              <imageobject lang="en;ru">
+                <imagedata fileref="../images/using/script-fu-exts.png"
+                  format="PNG" />
+              </imageobject>
+              <imageobject lang="de">
+                <imagedata fileref="../images/using/de/script-fu-exts.png"
+                  format="PNG" />
+              </imageobject>
+              <imageobject lang="fr">
+                <imagedata fileref="../images/using/fr/script-fu-exts.png"
+                  format="PNG" />
+              </imageobject>
+              <imageobject lang="no">
+                <imagedata fileref="../images/using/no/script-fu-exts.png"
+                  format="PNG" />
+              </imageobject>
+            </mediaobject>
+          </figure>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term lang="en">Image-dependent Script-Fus</term>
+        <term lang="de">Bildabhängige Skripte</term>
+        <term lang="fr">Les script-fu images</term>
+        <term lang="no">Biletavhengige Script-Fu</term>
+        <term lang="ru">Скрипт-Фу, зависящие от изображения</term>
+        <listitem>
+          <para lang="en">
+            Menus have been reorganized. A new Colors-menu appears. It groups
+            together all scripts that work on colors, for example tools that
+            adjust hue, saturation, lightness..., filters...etc. Filters-menu
+            and Script-Fu-menu are merged in one Filters-menu and it is
+            organized according to new categories. Image-dependent Plug-ins and
+            Script-Fus are now disseminated in the image-menus. For example,
+            Color to Alpha filter is in Colors-menu. At the beginning, it's
+            disconcerting, but you finish to get used to this because it's more
+            logical.
+          </para>
+          <para lang="de">
+            Mit <acronym>GIMP</acronym> 2.4 wurden die Menüs neu angeordnet.
+            So gibt es jetzt beispielsweise ein neues
+            <guimenu>Farben</guimenu>-Menü, welches Befehle, Werkzeuge, Filter
+            und Skripte, die die Farbe betreffen, zusammenfasst. Das
+            Filter-Menü wurde mit dem Skript-Fu-Menü vereint und nach
+            Kategorien geordnet. Bildabhängige Plugins und Skripte sind nun
+            über das Bildmenü verteilt. Beispielsweise ist das Filter
+            <quote>Farbe zu Transparenz</quote> im Menü <quote>Farben</quote>
+            zu finden. Wer die alte Menüstruktur gewohnt war, wird anfangs
+            vielleicht etwas suchen müssen, aber man gewöhnt sich sehr schnell
+            an die neue Ordnung, da sie viel logischer ist.
+          </para>
+          <para lang="fr">
+            Les menus ont été réorganisés. Un menu Couleurs supplémentaire a
+            fait son apparition. Il regroupe tout ce qui concerne les travaux
+            sur les couleurs, par exemple les outils d'ajustement de teinte ou
+            de niveaux, des filtres, etc. Le menu Filtres et le menu Scripts-Fu
+            ont été fusionnés dans un menu Filtres unique et l'ensemble organisé
+            selon de nouvelles catégories. Les scripts (et greffons) qui
+            dépendent de l'image se trouvent maintenant disséminés un peu
+            partout dans les menus, en fonction de leur catégorie d'utilisation.
+            Par exemple le filtre Couleur vers alpha est dans le menu couleur.
+            Cela déconcerte un peu au départ, mais on s'y habitue très vite et
+            c'est tout de même plus logique.
+            <!--Source http://abcdugimp.free.fr &
+            Source http://wiki.gimp-attitude.org/-->
+          </para>
+          <para lang="no">
+            Frå versjon 2.4 blei menyane i GIMP forandra. Alle skripta som har
+            med fargar å gjere blei samla i menyen
+            <guimenu>Fargar</guimenu>. Her vil du finne t.d. verktøy for å
+            justere kulør, metning osv. Den gamle filter-menyen og
+            Script-Fu-menyen er slått saman til ein ny filtermeny som er sett
+            opp i høve til dei nye filterkategoriane. Biletavhengige
+            programtillegg og Script-Fu er nå fordelte i biletmenyane. For
+            eksempel er filteret <quote>farge til alfa</quote> nå lagt i
+            farge-menyen. I det heile skulle menyane nå vere meire logiske.
+            Du finn verktøya stort sett der du ventar å finne dei.
+          </para>
+          <para lang="ru">
+            Меню переорганизовано. Появится новое меню - <quote>Цвета</quote>.
+            Оно группирует скрипты, работающие над цветами, на пример,
+            инструменты по правке тона, насыщенности, яркости и т.д. Меню
+            <quote>Фильтры</quote> и меню <quote>Скрипт-Фу</quote> объединены в
+            одно меню <quote>Фильтры</quote> и оно организовано по категориям.
+            Дополнения и скрипты, зависящие от изображения, помещены в меню
+            изображения, на пример, фильтр <quote>Цвет в альфа</quote> помещён
+            в меню цветов.
+          </para>
+
+          <para lang="en">
+            The figure below show where you can find them in the image-menu.
+          </para>
+          <para lang="de">
+            Die nachfolgende Grafik zeigt, wo im Bildmenü sie sich befinden
+            können. Ältere Plugins können sich durchaus noch im eigentlich
+            nicht mehr existierenden Menü <guimenu>Script-Fu</guimenu>
+            registrieren, welches dadurch wieder zum Leben erweckt wird.
+          </para>
+          <para lang="fr">
+            La figure ci-dessous vous montre où vous les trouverez dans le menu
+            image.
+          </para>
+          <para lang="no">
+            Dersom du legg inn andre programtillegg enn dei som følgjer med
+            GIMP, vil desse ofte legge seg i ein ny
+            <guimenu>Script-Fu</guimenu>-meny. Figuren nedanfor viser kvar
+            du kan finne scripta i biletmenyen.
+          </para>
+          <para lang="ru">
+            Рисунок внизу показывает, где они находятся и меню изображения.
+          </para>
+          <figure lang="en;de;fr;no;ru">
+            <title>
+              <phrase lang="en">Where find Image-dependent scripts</phrase>
+              <phrase lang="de">Bildabhängige Skripte im Bildmenü</phrase>
+              <phrase lang="fr">Où trouver les scripts image</phrase>
+              <phrase lang="no">Plasseringa av biletavhengige skript</phrase>
+              <phrase lang="ru">Скрипты, зависящие от изображения</phrase>
+            </title>
+            <mediaobject>
+              <imageobject lang="en;ru">
+                <imagedata fileref="../images/using/script-fu-image.png"
+                  format="PNG" />
+              </imageobject>
+              <imageobject lang="de">
+                <imagedata fileref="../images/using/de/script-fu-image.png"
+                  format="PNG" />
+              </imageobject>
+              <imageobject lang="fr">
+                <imagedata fileref="../images/using/fr/script-fu-image.png"
+                  format="PNG" />
+              </imageobject>
+              <imageobject lang="no">
+                <imagedata fileref="../images/using/no/script-fu-image.png"
+                  format="PNG" />
+              </imageobject>
+            </mediaobject>
+          </figure>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+
+      <!--TODO it;ko;zh_CN integrate your text in the different parts
+        of the variablelist above. For the imagedata see
+        .../src/images/using/script-fu-exts.xcf.gz-->
+
+    <para lang="it">
+      Ci sono due tipi di Script-Fu -- script a sé stanti e script
+      dipendenti dall'immagine. La variante indipendente si trova sotto
+      <menuchoice>
+        <guimenu>Xtns</guimenu>
+        <guisubmenu>Script-Fu</guisubmenu>
+        <guimenuitem><replaceable>(tipo di script)</replaceable></guimenuitem>
+      </menuchoice> presente nel menu principale del pannello degli strumenti,
+      mentre il tipo dipendente dall'immagine è sistemato sotto
+      <menuchoice>
+        <guimenu>Script-Fu</guimenu>
+        <guimenuitem><replaceable>(tipo di script)</replaceable></guimenuitem>
+      </menuchoice> nel menu immagine.
+    </para>
+    <para lang="ko">
+      스크립트-푸(Script-Fu)는 독립형 스크립트와 이미지 의존형 스크립트가
+      있습니다. 독립형 스크립트는 기본 도구상자 메뉴의
+      <menuchoice>
+        <guimenu>확장</guimenu>
+        <guisubmenu>Script-Fu</guisubmenu>
+        <guimenuitem><replaceable>스크립트 종류</replaceable></guimenuitem>
+      </menuchoice>
+      에서 찾을 수 있고, 이미지 의존형 스크립트는 이미지 메뉴의
+      <menuchoice>
+        <guimenu>Script-Fu</guimenu>
+        <guimenuitem><replaceable>스크립트 종류</replaceable></guimenuitem>
+      </menuchoice>
+      에 있습니다.
+    </para>
+    <para lang="zh_CN">
+      有两种类型的 Script-Fu -- 独立脚本和依赖图像的脚本。独立脚本在工具箱菜单的
+      <menuchoice>
+        <guimenu>扩展</guimenu>
+        <guisubmenu>Script-Fu</guisubmenu>
+      </menuchoice>，而依赖图像的脚本在图像菜单的
+      <menuchoice>
+        <guimenu>Script-Fu</guimenu>
+      </menuchoice>
+    </para>
+  </sect2>
+
+  <!--TODO es: translate-->
+  <sect2 lang="de;en;fr;it;ko;no;ru;zh_CN" id="standalone-script-fu">
+    <title>
+      <phrase lang="en">Standalone Scripts</phrase>
+      <phrase lang="de">Selbständige Skripte</phrase>
+      <phrase lang="fr">Les scripts autonomes</phrase>
+      <phrase lang="it">Script autonomi</phrase>
+      <phrase lang="ko">독립형 스크립트</phrase>
+      <phrase lang="no">Sjølvstendige skript</phrase>
+      <phrase lang="ru">Самостоятельные скрипты</phrase>
+      <phrase lang="zh_CN">独立脚本</phrase>
+    </title>
+
+    <indexterm lang="en">
+      <primary>Script-Fu</primary>
+      <secondary>Standalone</secondary>
+    </indexterm>
+    <indexterm lang="en">
+      <primary>Patterns</primary>
+      <secondary>Making pattern for Web page with Script-fu</secondary>
+    </indexterm>
+
+    <indexterm lang="fr">
+      <primary>Script-Fu</primary>
+      <secondary>Autonome</secondary>
+    </indexterm>
+    <indexterm lang="fr">
+      <primary>Motifs</primary>
+      <secondary>Créer des motifs de page Web avec des script-fu</secondary>
+    </indexterm>
+
+    <indexterm lang="ko">
+      <primary>Script-Fu</primary>
+      <secondary>독립형</secondary>
+    </indexterm>
+    <indexterm lang="ko">
+      <primary>무늬</primary>
+      <secondary>Script-Fu 를 이용해 웹페이지용 무늬 만들기</secondary>
+    </indexterm>
+
+    <indexterm lang="no">
+      <primary>Script-Fu</primary>
+      <secondary>Sjølvstendige skript</secondary>
+    </indexterm>
+    <indexterm lang="no">
+      <primary>Mønster</primary>
+      <secondary>tema for nettsider</secondary>
+    </indexterm>
+    <indexterm lang="ru">
+      <primary>Скрипт-Фу</primary>
+      <secondary>Самостоятельный</secondary>
+    </indexterm>
+    <indexterm lang="ru">
+      <primary>Текстуры</primary>
+      <secondary>Разработка текстур для интернета с помощью Скрипт-Фу</secondary>
+    </indexterm>
+
+    <para lang="en">
+      We will not try to describe every script in depth. Most Script-Fus are
+      very easy to understand and use. At the time of this writing, the
+      following types are installed by default:
+    </para>
+    <para lang="de">
+      Wir werden nicht versuchen, jedes Skript im Detail zu beschreiben. Die
+      meisten sind sehr einfach zu verstehen und zu benutzen. Aktuell sind
+      folgende Arten standardmäßig installiert:
+    </para>
+    <para lang="fr">
+      Nous n'essayerons pas de décrire à fond chaque script. La plupart des
+      Script-Fu sont très faciles à comprendre et à utiliser. Au moment de
+      l'écriture de ce manuel, les catégories suivantes sont installées par
+      défaut :
+    </para>
+    <para lang="it">
+      Non tenteremo di descrivere in dettaglio ogni tipo di script. Molti sono
+      banali da capire e usare. Quando questo capitolo è stato scritto, i tipi
+      seguenti di script erano predefinitivamente installati:
+    </para>
+    <para lang="ko">
+      여기서 모든 스크립트들을 자세하게 다룰 수는 없으며 대부분의
+      스크립트들은 굉장히 쉽게 사용할 수 있습니다. 기본으로 설치되는
+      스크립트의 종류는 다음과 같습니다.
+    </para>
+    <para lang="no">
+      Desse skripta lagar eigne bilete som du eventuelt kan arbeida vidare
+      med. Det er unødvendig å forklara skripta i detalj, dei fleste er
+      sjølvforklarande. For tida er desse skripttypane lagt inn i
+      <acronym>GIMP</acronym> frå starten av:
+    </para>
+    <para lang="ru">
+      Мы не ставим перед собой цель детального описания каждого скрипта.
+      Большинство скрипт-фу очень легки для понимания и использования. На
+      момент написания этих строк, по умолчанию устанавливаются следующие
+      типы:
+    </para>
+    <para lang="zh_CN">
+      我们不会深入介绍每个脚本，大多数 Script-Fu 都很容易使用。截至撰写该文
+      档时，GIMP 默认安装了下列独立脚本：
+    </para>
+
+    <itemizedlist>
+      <listitem>
+        <para lang="en">Patterns</para>
+        <para lang="de">Muster</para>
+        <para lang="fr">Motifs</para>
+        <para lang="it">Motivi</para>
+        <para lang="ko">Patterns</para>
+        <para lang="no">Mønster</para>
+        <para lang="ru">
+          Текстуры<!--в интерфейсе всё ещё "шаблоны-->"
+        </para>
+        <para lang="zh_CN">图案</para>
+      </listitem>
+
+      <listitem>
+        <para lang="en">Web page themes</para>
+        <para lang="de">Webseiten(-Themen)</para>
+        <para lang="fr">Thèmes de page web</para>
+        <para lang="it">Temi per pagine web</para>
+        <para lang="ko">Web page themes</para>
+        <para lang="no">Tema for nettsider</para>
+        <para lang="ru">Темы Web-страниц</para>
+        <para lang="zh_CN">网页主题</para>
+      </listitem>
+
+      <listitem>
+        <para lang="en">Logos</para>
+        <para lang="de">Logos</para>
+        <para lang="fr">Logos</para>
+        <para lang="it">Logotipi</para>
+        <para lang="ko">Logos</para>
+        <para lang="no">Logoar</para>
+        <para lang="ru">Эмблемы</para>
+        <para lang="zh_CN">徽标</para>
+      </listitem>
+
+      <listitem>
+        <para lang="en">Buttons</para>
+        <para lang="de">Schaltflächen</para>
+        <para lang="fr">Boutons</para>
+        <para lang="it">Pulsanti</para>
+        <para lang="ko">Buttons</para>
+        <para lang="no">Knappar</para>
+        <para lang="ru">Кнопки</para>
+        <para lang="zh_CN">按钮</para>
+      </listitem>
+
+<!--      <listitem>
+        <para lang="en">Utils</para>
+        <para lang="de">Hilfsmittel</para>
+        <para lang="fr">Utilitaires</para>
+        <para lang="it">Utilità</para>
+        <para lang="ko">Utils</para>
+        <para lang="no">Hjelpemiddel (ikkje i versjon 2.4)</para>
+        <para lang="ru">Утилиты</para>
+        <para lang="zh_CN">工具</para>
+      </listitem>-->
+
+<!--      <listitem>
+        <para lang="en">Make Brush</para>
+        <para lang="de">Pinsel erstellen</para>
+        <para lang="fr">Créer une brosse</para>
+        <para lang="it">Crea pennello</para>
+        <para lang="ko">Make Brush</para>
+        <para lang="no">Lage pensel (ikkje i versjon 2.4)</para>
+        <para lang="ru">Создать кисть</para>
+        <para lang="zh_CN">制作画笔</para>
+      </listitem>-->
+
+      <listitem>
+        <para lang="en">Misc.</para>
+        <para lang="de">Verschiedenes</para>
+        <para lang="fr">Divers</para>
+        <para lang="it">Varie</para>
+        <para lang="ko">Misc.</para>
+        <para lang="no">Diverse</para>
+        <para lang="ru">Разное</para>
+        <para lang="zh_CN">杂项</para>
+      </listitem>
+    </itemizedlist>
+
+    <variablelist>
+      <varlistentry>
+        <term lang="en">Patterns</term>
+        <term lang="de">Muster</term>
+        <term lang="fr">Motifs</term>
+        <term lang="it">Motivi</term>
+        <term lang="ko">Patterns</term>
+        <term lang="no">Mønster</term>
+        <term lang="ru">Текстуры</term>
+        <term lang="zh_CN">图案</term>
+
+        <listitem>
+          <para lang="en">
+            You will find all kinds of pattern-generating scripts here.
+            Generally, they are quite useful because you can add many
+            arguments to your own patterns.
+          </para>
+          <para lang="en">
+            We'll take a look at the Land script. In this script you have to
+            set the image/pattern size, and specify what levels of random to
+            use for your land creation. The colors used to generate the land
+            map are taken from the currently selected gradient in the gradient
+            editor. You must also supply values for the level of detail, land
+            and sea height/depth and the scale. Scale refers to the scale of
+            your map, just as in an ordinary road map, 1:10 will be typed as
+            10.
+          </para>
+          <para lang="de">
+            Hier finden sie alle möglichen Muster-erstellende Skripte, die
+            normalerweise ziemlich nützlich sind, weil Sie Ihren eigenen
+            Mustern viele Argumente hinzufügen können.
+          </para>
+          <para lang="de">
+            Als Beispiel betrachten wir einmal das
+            <quote>Land</quote>-Skript. In diesem Skript müssen Sie die
+            Bild- und Mustergröße angeben sowie das für die Landerstellung
+            verwendete Zufallsniveau. Die Farben, die zur Erstellung der
+            Landkarte verwendet werden, werden dem aktuell ausgewählten
+            Farbverlauf aus dem Farbverlaufseditor entnommen. Sie müssen
+            außerdem Werte für Detailreichtum, Landhöhe, Wassertiefe und
+            Skalierungen angeben. Skalierungen beziehen sich auf die
+            Skalierung Ihrer Karte, genau wie in einer normalen Landkarte.
+            Eine Skalierung von 1:10 wird beispielsweise als 10 angeben.
+          </para>
+
+          <para lang="fr">
+            Vous trouverez là toutes sortes de scripts générateurs de motifs.
+          </para>
+          <para lang="fr">
+            Prenons par exemple le script Terre (Land). Dans ce script, vous
+            devez régler la taille de l'image/motif, et spécifier quels niveaux
+            de hasard vous désirez pour votre création. Les couleurs utilisées
+            pour générer la carte du paysage sont prises dans le dégradé
+            sélectionné grâce à la fenêtre <guimenu>Sélection du Dégradé
+            Scrip-Fu</guimenu> qui apparaît en cliquant sur le bouton
+            <guimenu>Dégradé</guimenu>. Vous devez aussi préciser le niveau de
+            détails, la hauteur/profondeur de la terre et de la mer ainsi que
+            l'échelle. L'échelle se réfère à l'échelle de votre carte, comme
+            dans une carte de géographie, le 1/10ème étant indiqué 10.
+          </para>
+
+          <para lang="it">
+            Qui si trovano tutti i tipi di script utili per la generazione di
+            motivi. Sono molto utili in quanto è possibile personalizzarli
+            inserendo molti argomenti.
+          </para>
+          <para lang="it">
+            Diamo un'occhiata allo script Paesaggio. In questo script è
+            necessario impostare la dimensione dell'immagine/motivo e
+            specificare il livello di casualità da usare la la creazione
+            dell'immagine della landa. I colori usati per generare la mappa
+            della terra vengono presi dal gradiente attualmente selezionato
+            nell'editor del gradiente. È necessario anche fornire i valori del
+            livello di dettaglio, altezza della terra e profondità del mare e
+            la scala. La scala si riferisce alla scala della mappa, come in
+            una normale carta stradale; 1:10 sarà scritto come 10.
+          </para>
+
+          <para  lang="ko">
+            이곳에는 무늬 생성 스크립트들이 모여 있습니다. 여러가지 인자들을
+            사용해서 다양한 무늬를 만들 수 있습니다.
+          </para>
+          <para  lang="ko">
+            Land 스크립트를 보면, 이미지/무늬 크기, 그리고 Land 생성에
+            필요한 임의 레벨값을 설정해야 합니다. Land map 생성에 사용되는
+            색상은 그라디언트 편집기에서 선택된 그라디언트의 색상입니다.
+            그리고 세밀도 레벨, land 의 높이, sea 의 깊이, 스케일 등도
+            정해줘야 합니다. 스케일은 맵의 배율로, 일반적인 지도와 같이
+            1:10 인 경우 10을 넣어 줍니다.
+          </para>
+
+          <para lang="no">
+            Her er det samla ein del skript som produserer ulike former for
+            mønster. Du kan forandre ein del data og såleis påverke det
+            endelege resultatet.
+          </para>
+          <para lang="no">
+            Dersom du opnar t.d. skriptet <quote>Land</quote>, vil du sjå
+            at det er mogleg å forandre ein del data i dialogvindauget som
+            dukkar opp. Først har du storleiken på biletet og såleis også
+            på mønsteret. Det er også råd å bestemme kor tilfeldig dette landet
+            skal bli. Fargane som blir brukte kan varierast i og med at dei blir
+            henta frå den aktive fargeovergangen. Du kan også bestemme kor
+            detaljert kartet skal bli og kva målestokk det skal ha. Notasjonen
+            for målestokk er som på vanlege kart. Ønskjer du 1 : 10 skriv du
+            10. Som med dei fleste av desse filtra, må du nok prøve deg fram
+            med ulike forslag før du får eit resultat som er brukande i ein
+            bestemt samanheng.
+          </para>
+
+          <para lang="ru">
+            Здесь вы найдете все скрипты, генерирующие текстуры. Вообще, они
+            довольно полезны, поскольку вы можете добавить множество
+            аргументов к своим текстурам.
+          </para>
+          <para lang="ru">
+            Рассмотрм скрипт "Земля". В этом скрипте вы должны установить
+            размер изображения/текстуры, и задать уровень случайности,
+            используемый для создания земли. Используемые для генерации карты
+            цвета взяты из текущего выбранного градиента в редакторе
+            градиентов. Вы также должны установить значения для уровня
+            детализации, высоту/глубину земли и моря, также как в обычной
+            дорожной карте, 1:10 представляется как 10.
+          </para>
+
+          <para lang="zh_CN">这里有生成图案的所有脚本，它们是很有用的可以对
+            您的图案添加很多参数。</para>
+          <para lang="zh_CN">
+            以凹凸地图脚本为例，您需要设置图像/图案尺寸和随机种子数,以及从渐
+            变编辑器中选取生成凹凸地图颜色的渐变，另外必须设定细节等级，地面
+            和海洋的高度/深度和缩放，缩放就是地图的比例，和普通的道路地图中
+            的一样，1:10 就输入 10。
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term lang="en">Web Page Themes</term>
+        <term lang="de">Webseiten</term>
+        <term lang="fr">Thèmes de pages Web</term>
+        <term lang="it">Temi per pagine web</term>
+        <term lang="ko">Web Page Themes</term>
+        <term lang="no">Tema for nettsider</term>
+        <term lang="ru">Темы Web-страниц</term>
+        <term lang="zh_CN">网页主题</term>
+
+        <listitem>
+          <para lang="en">
+            Here is clearly a practical use for scripts. By creating a script
+            for making custom text, logos, buttons arrows, etc., for your web
+            site, you will give them all the same style and shape. You will
+            also be saving a lot of time, because you don't have to create
+            every logo, text or button by hand.
+          </para>
+          <para lang="en">
+            You will find the GIMP.org theme under the Web page theme submenu.
+            If you want to create your own theme, this script will serve as an
+            excellent template that you can modify to create a theme for your
+            web site.
+          </para>
+          <para lang="en">
+            Most of the scripts are quite self-explanatory, but here are some
+            hints:
+          </para>
+
+          <para lang="de">
+            Hier ist ganz klar ein praktischer Nutzen für Skripte. Indem Sie
+            ein Skript schreiben, um individuell entworfenen Text, Logos,
+            Pfeile für Schaltflächen etc. für Ihre Webseite zu erstellen,
+            erhalten diese alle denselben Stil und dieselbe Form.
+            Außerdem ersparen Sie sich eine Menge Zeit, da Sie nicht alle
+            Komponenten per Hand erstellen müssen.
+          </para>
+          <para lang="de">
+            Sie finden das GIMP.org-Thema unter dem Webseiten-Untermenü.
+            Wenn Sie Ihr eigenes Thema erstellen wollen, ist dieses Skript
+            eine ausgezeichnete Vorlage, die Sie modifizieren und
+            so ein Thema für Ihre Webseite erstellen können.
+          </para>
+          <para lang="de">
+            Die meisten Skripte sind selbsterklärend, trotzdem hier noch
+            ein paar kurze Hinweise:
+          </para>
+
+          <para lang="fr">
+            Il y a là un usage très pratique des scripts. En réalisant
+            vous-même des scripts pour créer pour votre page web, des textes
+            sur mesure, des logos, des boutons-flèches...etc, vous donnerez à
+            tous un même style. Et vous économiserez beaucoup de temps puisque
+            vous n'aurez pas à les créer à la main.
+          </para>
+          <para lang="fr">
+            Vous trouverez le thème Classic.Gimp.org dans le sous-menu pages
+            Web.  Ce script vous servira de modèle que vous pourrez modifier
+            pour créer votre propre thème,.
+          </para>
+          <para lang="fr">
+            La plupart des scripts n'ont pas besoin d'explication. Voici
+            néanmoins quelques conseils :
+          </para>
+
+          <para lang="it">
+            Ecco un uso pratico per gli script. Fare uno script per creare
+            testo personalizzato, logotipi, pulsanti frecce, ecc. per il
+            proprio sito web è un modo pratico per mantenere coerente lo stile
+            del sito e contemporaneamente risparmiare molto tempo in queste
+            operazioni ripetitive.
+          </para>
+          <para lang="it">
+            Nel sottomenu dei temi per le pagine web si troverà anche il tema
+            gimp.org. Se si desidera creare un proprio tema, questo script è
+            un eccellente modello personalizzabile per creare il tema del
+            proprio sito.
+          </para>
+          <para lang="it">
+            Molti degli script sono auto-documentati ma ecco un po' di
+            suggerimenti:
+          </para>
+
+          <para  lang="ko">
+            스크립트를 이용해 웹사이트를 위한 텍스트, 로고, 화살표 버튼
+            등을 동일한 스타일로 만들 수 있습니다. 이를 이용하면 모든 로고,
+            텍스트, 버튼 등을 직접 그리지 않아도 되기 때문에 많은 시간을
+            절약할 수 있습니다.
+          </para>
+          <para  lang="ko">
+            Web page theme의 하위 메뉴를 보면 GIMP.org 테마를 볼 수
+            있습니다. 이곳에 있는 스크립트가 제공하는 템플릿을 이용하면
+            근사한 웹사이트용 테마를 만들 수 있습니다.
+          </para>
+          <para  lang="ko">
+            대부분의 스크립트들은 자체적인 설명을 가지고 있지만 몇 가지
+            힌트를 적어봅니다.
+          </para>
+
+          <para lang="no">
+            Her er nytteverdien nokså synleg. Du finn her skript for å lage
+            tekst, logoar, knappar og mykje meir for nettsidene dine. Alle med
+            same stilen og samsvarande utsjånad. Dermed er det råd å spare ein
+            del tid sidan du ikkje treng finpussa detaljane for hand.
+          </para>
+          <para lang="no">
+            I denne avdelinga finn du mellom anna dei tema som er brukte i
+            <quote>GIMP.org</quote>. Dersom du ønskjer å lage eigne tema
+            for nettsidene dine, kan du bruke desse skripta som mønster.
+          </para>
+          <para lang="no">
+            Dialogvindauga til desse skripta er stort sett sjølvforklarande.
+            Har du ønskje om å forandre sjølve skripta, kan desse tipsa vere
+            til litt hjelp:
+          </para>
+
+          <para lang="ru">
+            Вот это очевидное практическое применение скриптов. Создавая
+            скрипт для создания текста, эмблем, кнопок-указателей, и т.д. вы
+            даёте всем им одинаковый стиль и форму. Вы также сохраняете массу
+            времени, поскольку вам не нужно создавать каждую эмблему, текст
+            или кнопку вручную.
+          </para>
+          <para lang="ru">
+            Вы найдёте тему GIMP.org в подменю тем web-страниц. Если вы
+            желаете создать свою собственную тему, этот скрипт может послужить
+            вам отличным шаблоном, модифицируя который вы можете создать тему
+            для своего сайта.
+          </para>
+          <para lang="ru">
+            Большинство скриптов достаточно самодокументированы, но вот
+            несколько подсказок:
+          </para>
+
+          <para lang="zh_CN">
+            这里是一些关于脚本的实际应用。通过一个创建自定义文字， 徽标，按
+            钮箭头等的脚本，可以给您的网页统一的风格和样式。它也可以给您节约
+            很多时间，因为不用自己手动创建每一个徽标，文字和图标。
+          </para>
+          <para lang="zh_CN">
+            在网页主题子菜单下的 GIMP.org 给您创建自己的主题提供一个完美的模
+            板， 通过修改它就可以创建自己的网站主题。
+          </para>
+          <para lang="zh_CN">大部分脚本都很容易理解其用法，不过这里有些有用的提示：</para>
+
+          <itemizedlist>
+            <listitem>
+              <para lang="en">
+                Leave all strange characters like ' and " intact.
+              </para>
+              <para lang="de">
+                Lassen Sie alle ungewöhnlichen Zeichen wie ' und " so wie
+                sie sind.
+              </para>
+              <para lang="fr">
+                Laissez intacts les caractères étranges comme ' et ".
+              </para>
+              <para lang="it">
+                Lasciare tutti quegli strani caratteri come ' e " come sono.
+              </para>
+              <para  lang="ko">' 와 " 같은 특수 문자는 모두 제거한다.</para>
+              <para lang="no">Ikkje rør spesialteikna, slike som ' og "</para>
+              <para lang="ru">
+                Оставьте все странные символы, такие как ' и " нетронутыми.
+              </para>
+              <para lang="zh_CN">保留完整的像 ' 和 " 一样的奇怪字符。</para>
+            </listitem>
+
+            <listitem>
+              <para lang="en">
+                Make sure that the pattern specified in the script exists.
+              </para>
+              <para lang="de">
+                Vergewissern Sie sich, dass es das im Skript angegebene Muster
+                wirklich gibt.
+              </para>
+              <para lang="fr">
+                Assurez-vous que le motif spécifié dans le script existe.
+              </para>
+              <para lang="it">
+                Controllare che il motivo specificato nello script esista.
+              </para>
+              <para  lang="ko">
+                스크립트에 명시된 무늬가 존재하는지 확인한다.
+              </para>
+              <para lang="no">
+                Forsikra deg om at mønsteret du spesifiserer i skriptet
+                verkeleg finst.
+              </para>
+              <para lang="ru">
+                Удостоверьтесь, что указанная в скрипте текстура существует.
+              </para>
+              <para lang="zh_CN">确认脚本中使用的图案是存在的。</para>
+            </listitem>
+
+            <listitem>
+              <para lang="en">
+                Padding refers to the amount of space around your text.
+              </para>
+              <para lang="de">
+                <quote>Padding</quote> (Innenabstand)
+                bezieht sich auf den Rand um Ihren Text.
+              </para>
+              <para lang="fr">
+                Remplissage (padding) se réfère à l'importance de l'espace
+                vide autour de votre texte.
+              </para>
+              <para lang="it">
+                Lo riempimento si riferisce alla quantità di spazio attorno al
+                testo.
+              </para>
+              <para  lang="ko">
+                패딩은 텍스트 주변의 공간에 따라 결정된다.
+              </para>
+              <para lang="no">
+                <quote>Luft</quote> (padding) bestemmer
+                kor mykje plass det skal vere rundt teksten.
+              </para>
+              <para lang="ru">
+                Заполнение определяет колчиество пространства вокруг вашего
+                текста.
+              </para>
+              <para lang="zh_CN">衬垫指文字周围空格的数量。</para>
+            </listitem>
+
+            <listitem>
+              <para lang="en">
+                A high value for bevel width gives the illusion of a higher
+                button.
+              </para>
+              <para lang="de">
+                Ein höherer Wert für <quote>bevel</quote> (Schrägung)
+                ergibt die Illusion eines höheren Schalters.
+              </para>
+              <para lang="fr">
+                Une forte valeur de biseau (bevel) donne l'illusion d'un
+                bouton plus haut.
+              </para>
+              <para lang="it">
+                Un valore alto di spessore smussatura dà l'illusione di un
+                pulsante in rilievo.
+              </para>
+              <para lang="ko">
+                높은 bevel 너비값은 그 상위 버튼의 환영(幻影)을 만든다.
+              </para>
+              <para lang="no">
+                Ein høg verdi for <quote>fasettbreidde</quote>
+                (bevel width) gir ein illusjon av høgare knapp.
+              </para>
+              <para lang="ru">
+                Большое значение ширины скоса создаст иллюзию более высокой
+                кнопки.
+              </para>
+              <para lang="zh_CN">一个高的“斜面宽度”值体现一个更高的按钮。</para>
+            </listitem>
+
+            <listitem>
+              <para lang="en">
+                If you type TRUE for "Press", the button will look pushed
+                down.
+              </para>
+              <para lang="de">
+                Wenn Sie <quote>TRUE</quote> (wahr) für <quote>Press</quote>
+                (Drücken) angeben, wird der Schalter aussehen, als ob er
+                gedrückt wäre.
+              </para>
+              <para lang="fr">
+                Si vous donnez la valeur TRUE (Vrai) à <quote>Press</quote>, le
+                bouton semblera enfoncé.
+              </para>
+              <para lang="it">
+                Se si imposta la casella di "premuto", il pulsante avrà
+                l'effetto premuto.
+              </para>
+              <para lang="ko">
+                "Press" 항목에 TRUE 를 입력하면 눌려진 버튼이 생성된다.
+              </para>
+              <para lang="no">
+                Skriv du <quote>TRUE</quote> for <quote>Press</quote>,
+                (trykt) vil knappen sjå ut som han er trykt ned.
+              </para>
+              <para lang="ru">
+                Если вы отметите пункт "нажатая", кнопка будет выглядеть
+                нажатой.
+              </para>
+              <para lang="zh_CN">勾选“按下”，按钮就好像被按下一样。</para>
+            </listitem>
+
+            <listitem>
+              <para lang="en">
+                Choose transparency if you don't want a solid background. If
+                you choose a solid background, make sure it is the same color
+                as the web page background.
+              </para>
+              <para lang="de">
+                Wählen Sie Transparenz, falls Sie keinen undurchsichtigen
+                Hintergrund wünschen. Im anderen Falle vergewissern Sie sich,
+                dass die Hintergrundfarbe dieselbe ist wie die der Webseite.
+              </para>
+              <para lang="fr">
+                Choisissez la transparence si vous ne voulez pas avoir un fond
+                plein. Si vous choisissez un fond plein, veillez à ce qu'il
+                soit de la même couleur que le fond de votre page Web.
+              </para>
+              <para lang="it">
+                Scegliere la trasparenza se non si vuole uno sfondo pieno. Se
+                si sceglie lo sfondo pieno, assicuratevi che sia dello stesso
+                colore dello sfondo della pagina web.
+              </para>
+              <para lang="ko">
+                단색 배경을 원치 않는다면 투명을 선택한다. 만약 단색 배경을
+                사용한다면 그것이 웹페이지 배경과 같은지 확인해야 한다.
+              </para>
+              <para lang="no">
+                Vel <quote>transparency</quote> dersom du ønskjer eit
+                gjennomsiktig bilete. Vel du ein farga bakgrunn, forsikra deg
+                om at han har same farge som bakgrunnen til nettsidene dine.
+              </para>
+              <para lang="ru">
+                Выберите прозрачность если не хотите сплошной фон. Если вы
+                выберите сплошной фон, удостоверьтесь, что это такой же цвет
+                как и у фона веб страницы.
+              </para>
+              <para lang="zh_CN">如果不想要一个纯色背景就要选择透明。使用纯
+                色背景时要确保它和网页背景颜色相同。</para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term lang="en">Logos</term>
+        <term lang="de">Logos</term>
+        <term lang="fr">Logos</term>
+        <term lang="it">Logotipi</term>
+        <term lang="ko">Logos</term>
+        <term lang="no">Logoar</term>
+        <term lang="ru">Эмблемы</term>
+        <term lang="zh_CN">徽标</term>
+
+        <listitem>
+          <indexterm lang="en">
+            <primary>Script-Fu</primary>
+            <secondary>Logo</secondary>
+          </indexterm>
+          <indexterm lang="en">
+            <primary>Logo</primary>
+            <secondary>Script-Fu for logo</secondary>
+          </indexterm>
+
+          <indexterm lang="fr">
+            <primary>Logo</primary>
+            <secondary>Script-Fu pour logo</secondary>
+          </indexterm>
+          <indexterm lang="fr">
+            <primary>Script-Fu</primary>
+            <secondary>Logo</secondary>
+          </indexterm>
+
+          <indexterm lang="ko">
+            <primary>Script-Fu</primary>
+            <secondary>Logo</secondary>
+          </indexterm>
+          <indexterm lang="ko">
+            <primary>Logo</primary>
+            <secondary>로고를 위한 Script-Fu</secondary>
+          </indexterm>
+
+          <indexterm lang="no">
+            <primary>Script-Fu</primary>
+            <secondary>Logo</secondary>
+          </indexterm>
+          <indexterm lang="no">
+            <primary>Logo</primary>
+            <secondary>Lag logo med Script-Fu</secondary>
+          </indexterm>
+
+          <para lang="en">
+            Here you will find all kinds of logo-generating scripts. This is
+            nice, but use it with care, as people might recognize your logo as
+            being made by a known GIMP script. You should rather regard it as
+            a base that you can modify to fit your needs. The dialog for
+            making a logo is more or less the same for all such scripts:
+          </para>
+          <para lang="de">
+            Hier finden Sie alle möglichen Logo-erstellende Skripte. Das ist
+            ganz nett, aber seien Sie vorsichtig, da man Ihre Logos als von
+            einem bekannten <acronym>GIMP</acronym>-Skript erstellt erkennen
+            könnte. Sie sollten sie eher als Ausgangspunkte betrachten, die
+            Sie nach Ihren Bedürfnissen anpassen können. Der Dialog zum
+            Erstellen eines Logos ist mehr oder weniger derselbe wie für
+            alle solche Skripte:
+          </para>
+          <para lang="fr">
+            Vous trouverez là des scripts pour générer des logos. C'est bien,
+            mais on pourra voir que votre logo a été fait avec un script GIMP
+            connu. Voyez-les plutôt comme une base que vous pouvez modifier
+            pour créer quelque chose d'original. La boîte de dialogue est à
+            peu près la même dans tous ces scripts :
+          </para>
+          <para lang="it">
+            Qui si trovano tutti i tipi di script per la generazione di
+            logotipi. Simpatico ma da usare cum grano salis, dato che è facile
+            che la gente riconosca che il logo è stato fatto con un comune
+            script GIMP. È meglio considerarli come una base modificabile per
+            soddisfare le proprie esigenze dopo una adeguata
+            personalizzazione. La finestra di dialogo per la generazione di un
+            logotipo è più o meno la stessa per tutti gli script:
+          </para>
+          <para lang="ko">
+            여기엔 로고 제작과 관련된 스크립트들이 모여 있습니다. 이것은 꽤
+            유용하지만 조심해서 써야 합니다. 그것은 유명한 김프 스크립트로
+            만든 것이 티날 수도 있기 때문입니다. 따라서 원하는 형태로 만들기
+            위한 기본틀 정도로 생각하는 것이 좋습니다. 로고 제작을 위한 모든
+            스크립트가 제공하는 대화상자는 거의 비슷한 형태를 취하고
+            있습니다.
+          </para>
+          <para lang="no">
+            Her finn du skript som lagar logoar og overskrifter. Mange er både
+            fine og finurlege, men ver litt varsam med å bruke dei direkte frå
+            grunninnstillingane. Blir litt einsformig om alle stiller opp med
+            overskrifter med dei same effektane, tydeleg henta frå desse
+            skripta. Bruk dei heller som eit utgangspunkt for eigen fantasi og
+            vidare arbeid. Dei aller fleste skripta nyttar same oppsettet med
+            omsyn til kva data du kan forandre på. Det aller meste er
+            sjølvforklarande:
+          </para>
+          <para lang="ru">
+            Здесь вы найдёте все типы генерирующие логотипы скриптов. Это
+            хорошо, но используйте их с предосторожностью, поскольку люди
+            могут узнать вашу эмблему, как сделанную известным скриптом GIMP.
+            Вы должны скорее расценивать это как основу, которую вы можете
+            изменить в соответствии вашим потребностями. Диалог создания
+            эмблем более или менее такой же как и для всех подобных скриптов:
+          </para>
+          <para lang="zh_CN">
+            这里是生成徽标的所有脚本。它们很不错，不过要注意，人 们可能会发
+            现您的徽标是由大家都知道的 GIMP 脚本创建的。最好把它们作为您修改
+            和满足需要的模板。对于所有的这些脚本其对话框都很相似：
+          </para>
+
+          <orderedlist>
+            <listitem>
+              <para lang="en">
+                In the Text String field, type your logo name, like
+                Frozenriver.
+              </para>
+              <para lang="de">
+                Im Textfeld geben Sie den Namen des Logos an.
+              </para>
+              <para lang="fr">
+                Dans le champ Chaîne de texte (Text String), tapez le nom de
+                votre logo.
+              </para>
+              <para lang="it">
+                Nel campo di testo insterire il nome del logotipo, come
+                Fiumeghiacciato.
+              </para>
+              <para lang="ko">
+                문자열 입력란에는 Frozenriver처럼 로고 이름을 입력한다.
+              </para>
+              <para lang="no">
+                Skriv ønskt logotekst i tekstfeltet.
+              </para>
+              <para lang="ru">
+                В поле ввода текста введите имя вашей эмблемы, например,
+                Frozenriver.
+              </para>
+              <para lang="zh_CN">在文字区域，输入徽标的名字，如 Frozenriver。</para>
+            </listitem>
+
+            <listitem>
+              <para lang="en">
+                In the Font Size text field, type the size of your logo in
+                pixels.
+              </para>
+              <para lang="de">
+                Im Feld <quote>Font size</quote> (Schriftgröße) geben Sie
+                die Größe Ihres Logos in Pixeln an.
+              </para>
+              <para lang="fr">
+                Dans le champ taille de police (Font Size), tapez la taille de
+                votre logo en pixels.
+              </para>
+              <para lang="it">
+                Nel campo della dimensione del carattere, inserire la
+                dimensione del logo in pixel.
+              </para>
+              <para lang="ko">
+                폰트 크기 입력란에는 로고의 크기를 픽셀단위로 입력한다.
+              </para>
+              <para lang="no">
+                Teiknstorleiken blir gitt i pikslar.
+              </para>
+              <para lang="ru">
+                В поле ввода размера шрифта введите размер вашей эмблемы в
+                пикселах.
+              </para>
+              <para lang="zh_CN">在字体大小区域，输入您徽标的像素大小。</para>
+            </listitem>
+
+            <listitem>
+              <para lang="en">
+                In the Font text field, type the name of the font that you
+                want to use for your logo.
+              </para>
+              <para lang="de">
+                Im Feld <quote>Font</quote> (Schriftart) wählen Sie
+                die gewünschte Schrift für Ihr Logo aus.
+              </para>
+              <para lang="fr">
+                Dans le champ Police (Font), tapez le nom de la police que vous
+                voulez utiliser.
+              </para>
+              <para lang="it">
+                Nel campo del carattere, inserire il nome del font che si
+                intende utilizzare per il logotipo.
+              </para>
+              <para lang="ko">
+                폰트 입력란에는 로고에 사용하려고 하는 폰트 이름을
+                입력한다.
+              </para>
+              <para lang="no">
+                Vel skrifttypen du vil bruke for logoteksten.
+              </para>
+              <para lang="ru">
+                В поле ввода текста введите имя шрифта, который вы хотите
+                использовать для вашей эмблемы.
+              </para>
+              <para lang="zh_CN">在字体区域，输入您徽标要使用的字体。</para>
+            </listitem>
+
+            <listitem>
+              <para lang="en">
+                To choose the color of your logo, just click on the color
+                button. This brings up a color dialog.
+              </para>
+              <para lang="de">
+                Um die Farbe Ihres Logos auszuwählen, klicken Sie auf den
+                Farben-Schalter, daraufhin öffnet sich ein Farbdialogfenster.
+              </para>
+              <para lang="fr">
+                Pour choisir la couleur de votre logo, cliquez simplement sur
+                le bouton couleur, ce qui ouvrira une fenêtre de choix de
+                couleurs.
+              </para>
+              <para lang="it">
+                Per scegliere il colore del logo, fare clic sul pulsante del
+                colore. L'operazione porterà in primo piano la finestra di
+                selezione del colore.
+              </para>
+              <para lang="ko">
+                로고의 색상은 색버튼을 클릭하면 나타나는 색상 대화상자에서
+                선택한다.
+              </para>
+              <para lang="no">
+                Når du klikkar på fargeknappen, dukkar det opp eit
+                dialogvindauge der du kan velje skriftfarge.
+              </para>
+              <para lang="ru">
+                Для выбор цвета вашей эмблемы просто щёлкните по кнопке выбора
+                цвета. Это вызовет диалог выбора цвета.
+              </para>
+              <para lang="zh_CN">要给您的徽标选择颜色，点击颜色按钮，会出现
+                一个颜色对话框。</para>
+            </listitem>
+
+            <listitem>
+              <para lang="en">
+                If you look at the current command field, you can watch the
+                script run.
+              </para>
+              <para lang="de">
+                Wenn Sie dann auf das Kommandofeld schauen, können Sie den
+                Ablauf des Skriptes verfolgen.
+              </para>
+              <para lang="fr">
+                Si vous regardez le champ de commande courant, vous pouvez
+                voir comment le script agit.
+              </para>
+              <para lang="it">
+                Se si guarda il campo del comando corrente è possibile
+                osservare l'andamento dello script durante l'esecuzione.
+              </para>
+              <para lang="ko">
+                현재 명령행을 통해 스크립트가 진행되는 과정을 볼 수 있다.
+              </para>
+              <para lang="no">
+                Etter at du har trykt <quote>OK</quote>, vil feltet nedst i
+                dialogvindauget vise framdrifta for skriptet.
+              </para>
+              <para lang="ru">
+                Если вы посмотрите на поле выполнения текущей
+                команды<!--FIXME: ru--> , вы увидите, что скрипт запущен.
+              </para>
+              <para lang="zh_CN">您可以在当前命令区域看到脚本在运行。</para>
+            </listitem>
+          </orderedlist>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term lang="en">Make Buttons</term>
+        <term lang="de">Schaltflächen erstellen</term>
+        <term lang="fr">Créer des boutons</term>
+        <term lang="it">Pulsanti</term>
+        <term lang="ko">Make Buttons</term>
+        <term lang="no">Knappar</term>
+        <term lang="ru">Создать кнопки</term>
+        <term lang="zh_CN">按钮</term>
+
+        <listitem>
+          <indexterm lang="en">
+            <primary>Script-Fu</primary>
+            <secondary>Button</secondary>
+          </indexterm>
+          <indexterm lang="en">
+            <primary>Button</primary>
+            <secondary>Script-Fu for button</secondary>
+          </indexterm>
+
+          <indexterm lang="fr">
+            <primary>Script-Fu</primary>
+            <secondary>Bouton</secondary>
+          </indexterm>
+          <indexterm lang="fr">
+            <primary>Bouton</primary>
+            <secondary>Script-Fu pour bouton</secondary>
+          </indexterm>
+
+          <indexterm lang="ko">
+            <primary>Script-Fu</primary>
+            <secondary>Button</secondary>
+          </indexterm>
+          <indexterm lang="ko">
+            <primary>Button</primary>
+            <secondary>버튼을 위한 Script-Fu</secondary>
+          </indexterm>
+
+          <indexterm lang="no">
+            <primary>Script-Fu</primary>
+            <secondary>Knappar</secondary>
+          </indexterm>
+          <indexterm lang="no">
+            <primary>Knappar</primary>
+            <secondary>Lage vha. Script-Fu</secondary>
+          </indexterm>
+          <indexterm lang="ru">
+            <primary>Скрипт-Фу</primary>
+            <secondary>Кнопка</secondary>
+          </indexterm>
+          <indexterm lang="ru">
+            <primary>Кнопка</primary>
+            <secondary>Скрипт-Фу для кнопки</secondary>
+          </indexterm>
+          <!--TODO it ko zh_CN: update-->
+          <para lang="en">
+            Under this headline you'll find two scripts that makes rectangular
+            beveled buttons, with or without round corners (Round Button or
+            Simple Beveled Button). They have a dozen parameters or so, and
+            most of them are similar to those in the logo scripts. You can
+            experiment with different settings to come up with a button you
+            like.
+          </para>
+          <para lang="de">
+            Unter dieser Überschrift finden Sie zwei Skripte, die abgeschrägte
+            Schaltflächen mit oder ohne abgerundete Ecken erstellen. Sie haben
+            jeweils etwa ein Dutzend Parameter, von denen die meisten ähnlich
+            wie bei den Logo-Skripten wirken. Sie können ruhig mit
+            verschiedenen Einstellungen experimentieren, um zu einer
+            Schaltfläche nach Ihren Wünschen zu kommen.
+          </para>
+          <para lang="fr">
+            Sous cette tête de chapitre, vous trouverez deux scripts qui créent
+            des boutons rectangulaires en relief avec biseau, avec ou sans
+            coins arrondis (Bouton arrondi ou Simple bouton biseauté). Ils
+            possèdent de nombreux paramètres dont la plupart ressemblent à ceux
+            des scripts de logo. Expérimentez par vous-même.
+          </para>
+          <para lang="it">
+            Sotto quest'intestazione si troveranno gli script che servono per
+            generare automaticamente immagini di pulsanti in rilievo. Gli
+            script hanno dozzine di parametri e molti sono simili o
+            equivalenti a quelli presenti negli script dei logotipi.
+            Sperimentate tranquillamente fino ad ottenere il pulsante
+            desiderato.
+          </para>
+          <para lang="ko">
+            이 항목 아래에 있는 스크립트들은 버튼을 만들기 위한 것들입니다.
+            많은 인수값들이 있지만, 그 대부분은 로고 스크립트와 비슷합니다.
+            이 값들을 잘 조정하면 원하는 버튼을 만들 수 있습니다.
+          </para>
+          <para lang="no">
+            Her finn du to skript for å lage rektangulære, fasetterte knappar.
+            Det eine skriptet lager firkanta knappar medan det andre lager
+            knappar som er avrunda i begge endane. Mange av innstillingane
+            er dei same som for innstillingane i logoskripta. Du må nok
+            eksperimentera ein del med ulike innstillingar før du blir tilfreds.
+          </para>
+          <para lang="ru">
+            Под этим заголовком вы найдёте скрипт, создающий прямоугольные
+            выпуклые кнопки.
+            Скрипт имеет приблизительно десяток параметров, и большинство из
+            них подобно тем, что описаны в скриптах создания эмблем. Вы можете
+            экспериментировать с различными параметрами настройки, чтобы
+            получить необходимую кнопку.
+          </para>
+          <para lang="zh_CN">
+            这里可以找到产生斜面按钮的脚本。该脚本有非常多参数， 其中大部分
+            都和徽标脚本中的相同。您可以体验不同参数产生的按钮。
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term lang="en">Misc.</term>
+        <term lang="de">Verschiedenes</term>
+        <term lang="fr">Divers</term>
+        <term lang="it">Varie.</term>
+        <term lang="ko">Misc.</term>
+        <term lang="no">Diverse</term>
+        <term lang="ru">Разное</term>
+        <term lang="zh_CN">杂项</term>
+
+        <listitem>
+          <para lang="en">
+            Under Misc. you'll find scripts that can be quite useful, but
+            aren't suitable for the other submenus. An example is the Sphere
+            script. You will have to set the radius in pixels to determine the
+            sphere size. The lighting angle is where at the sphere you point
+            the spotlight. This value also has an impact on the sphere shadow.
+            If you don't want a shadow, you just have remove the tick
+            on the "shadow" checkbox. The last thing you have to select is
+            background color, and the color of your sphere.
+          </para>
+          <para lang="de">
+            Unter <quote>Verschiedenes</quote> finden Sie nützliche Skripte,
+            die nicht in die anderen Untermenüs passen. Als Beispiel
+            betrachten wir das <quote>Kugel</quote>-Skript. Geben Sie den
+            Radius in Pixeln an, um die Größe der Kugel festzulegen. Der
+            Beleuchtungsgrad gibt an, von wo die Kugel angestrahlt wird,
+            und hat entsprechend Auswirkungen auf den Schatten. Wenn Sie gar
+            keinen Schatten wollen, entfernen Sie die Markierung aus dem
+            <quote>Schatten</quote>-Kontrollfeld. Als letztes müssen Sie
+            noch die Hintergrundfarbe und die Farbe der Kugel auswählen.
+          </para>
+          <para lang="fr">
+            Sous Divers (Misc.), vous trouverez des scripts qui peuvent être
+            utiles mais ne peuvent figurer dans les autres sous-menus. Par
+            exemple le script Sphère. Vous aurez à fixer le rayon de la sphère
+            en pixels. L'angle d'éclairage détermine la position de
+            la source de lumière éclairant la sphère, ce qui agit aussi sur
+            l'ombre de la sphère. Si vous ne voulez pas d'ombre, entrez la
+            valeur FALSE. Enfin, choisissez la couleur de la sphère et du
+            fond.
+          </para>
+          <para lang="it">
+            Sotto la voce Varie si trovano script molto utili che non
+            rientrano i nessuna delle categorie suindicate. Un esempio è lo
+            script Sfera. È necessario inserire il raggio in pixel per
+            impostare la dimensione della sfera. L'angolazione della luce è
+            dove si punta il faro sulla sfera. Questo valore ha conseguenze
+            anche sull'ombra della sfera. Se non si desidera un'ombra basta
+            togliere la spunta alla casella "ombra". Gli ultimi parametri da
+            impostare sono il colore di primo piano e quello dello sfondo
+            della sfera.
+          </para>
+          <para lang="ko">
+            Misc. 항목 아래에는 Sphere 스크립트와 같은 유용한 스크립트들이
+            있습니다. Sphere 스크립트에는 구체 크기를 위한 반지름(픽셀),
+            빛이 비추는 각도인 조명(각도)값을 넣어주어야 합니다.
+            조명(각도)값은 구체의 그림자에도 관여합니다. 그림자를 원치
+            않으면 "그림자" 체크상자를 해제합니다. 마지막으로 배경색과 구의
+            색상을 정해주면 멋진 구체가 만들어집니다.
+          </para>
+          <para lang="no">
+            Her finn du dei skripta som ikkje passar inn i dei andre
+            kategoriane. Akkurat nå ligg det bare eitt skript her,
+            <quote>Kule</quote>. Etter at du har sett data for radius, for-
+            og bakgrunnsfarge og lysvinkel, vil dette skriptet generere eit
+            bilete av ei kule. Du kan også markera for om kula skal vere med
+            eller utan skygge.
+          </para>
+          <para lang="ru">
+            В разном вы найдёте скрипты, которые могут быть вполне полезны, но
+            которые не подходят для других подменю. В качестве примера
+            представлен скрипт "Сфера". Вы должны установить радиус в
+            пискелах, определяющий размер сферы. Угол освещения задаёт центр
+            освещения сферы. Это значение также влияет на тень сферы. Если вам
+            не нужна тень, вы должны убрать соответствующую отметку. Последняя
+            вещь, которую вы должны выбрать это цвет фона и цвет вашей сферы.
+          </para>
+          <para lang="zh_CN">
+            在杂项下是一些很有用但不在其它子菜单中的脚本。比如球体脚本，您需要
+            设置半径的像素大小。光照角度是点光源指向球体的位置，该对球体阴影也有影
+            响。如果您不想要阴影，就不要勾选“阴影”。最后要选取背景颜色和球体颜色。
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </sect2>
+
+  <!--TODO es: translate-->
+  <sect2 lang="de;en;fr;it;ko;no;ru;zh_CN">
+    <title>
+      <phrase lang="en">Image-Dependent Scripts</phrase>
+      <phrase lang="de">Bildabhängige Skripte</phrase>
+      <phrase lang="fr">Scripts dépendant d'une image</phrase>
+      <phrase lang="it">Script immagine dipendenti</phrase>
+      <phrase lang="ko">이미지 의존형 스크립트</phrase>
+      <phrase lang="no">Biletavhengige skript</phrase>
+      <phrase lang="ru">Зависящие от изображения скрипты</phrase>
+      <phrase lang="zh_CN">依赖图像的脚本</phrase>
+    </title>
+
+   <!-- Modified for corresponding Gimp 2.4-->
+   <!--TODO it;ko;zh_CN: update-->
+
+    <para lang="en">
+      Now, scripts and filters that perform operations on an existing image are
+      accessible directly by the appropriate menu. For example, the script
+      <guimenu>New Brush</guimenu> (script-fu-paste-as-brush)
+      is integrated in the <guimenu>Edit</guimenu> image menu
+      (<menuchoice>
+              <guimenu>Edit</guimenu>
+              <guimenuitem>Paste as...</guimenuitem>
+              <guimenuitem>New Brush</guimenuitem>
+            </menuchoice>),
+      that is more logical.
+    </para>
+    <para lang="en">
+      Furthermore, a new <guimenu>Color</guimenu> menu has been created that
+      regroups together all that concern works on colors, the hue or level color
+      adjustment tools, etc...
+    </para>
+    <para lang="en">
+      <guimenu>Filters</guimenu> menu and <guimenu>Scripts-Fu</guimenu> menu are
+      regrouped in one <guimenu>Filters</guimenu> menu and organised according
+      to new categories. Now if a plugin and a filter works similarly, they are
+      nearby in the menu.
+    </para>
+    <para lang="en">
+      The <guimenu>Scripts-Fu</guimenu> menu only appears if you have loaded
+      additional scripts : for example the gimp-resynthesizer pack corresponding
+      to your Linux distribution (.deb, .rpm, .gz...).
+    </para>
+
+    <para lang="de">
+      Auf Skripte und Filter, die Operationen auf einem existierenden Bild
+      ausführen, können Sie über das entsprechende Menü im Bildfenster
+      zugreifen. So ist beispielsweise das Skript <quote>Neuer Pinsel</quote>
+      in das Menü <quote>Bearbeiten</quote> im Bildfenster integriert
+      (<menuchoice>
+        <guimenu>Bearbeiten</guimenu>
+        <guimenuitem>Einfügen als</guimenuitem>
+        <guimenuitem>Neuer Pinsel</guimenuitem>
+      </menuchoice>),
+      was sehr viel logischer ist als früher.
+    </para>
+    <para lang="de">
+      Ferner gibt es nun ein neues Bildmenü <guimenu>Farben</guimenu>, das
+      alle farbmanipulierenden Kommandos, wie etwa die Werkzeuge zur Änderung
+      des <link linkend="gimp-tool-hue-saturation">Farbtons</link> oder der
+      <link linkend="gimp-tool-levels">Werte</link>, zusammenfasst.
+    </para>
+    <para lang="de">
+      Die Menüs <quote>Filter</quote> und <quote>Skript-Fu</quote> sind nun im
+      Menü <guimenu>Filter</guimenu> zusammenfasst und nach neuen Kategorien
+      angeordnet worden. Wenn ein Filter und ein Plugin ähnliche Aufgaben
+      haben, liegen sie jetzt im selben Menü.
+    </para>
+    <para lang="de">
+      Das <guimenu>Skript-Fu</guimenu>-Menü erscheint nur noch dann, wenn Sie
+      zusätzliche Skripte installiert haben, beispielsweise das
+      <quote>gimp-resynthesizer</quote>-Paket Ihrer Linuxdistribution.
+    </para>
+
+    <para lang="fr">
+      Maintenant, les scripts et les filtres qui opèrent des transformations sur
+      une image existante sont accessibles directement dans le menu adéquat. Par
+      exemple, le script
+      <guimenu>Nouvelle brosse</guimenu> (New Brush --> script-fu-paste-as-brush)
+      a été intégré directement au menu <guimenu>Édition</guimenu> de l'image
+      (<menuchoice>
+              <guimenu>Édition</guimenu>
+              <guimenuitem>Coller comme...</guimenuitem>
+              <guimenuitem>Nouvelle brosse</guimenuitem>
+            </menuchoice>),
+      ce qui est plus logique.
+    </para>
+    <para lang="fr">
+      De plus, un nouveau menu <guimenu>Couleur</guimenu> est apparu. Il regroupe
+      tout ce qui concerne les travaux sur les couleurs, les outils d'ajustement
+      de teinte ou de niveaux par exemple, etc.
+    </para>
+    <para lang="fr">
+      Le menu <guimenu>Filtres</guimenu> et le menu <guimenu>Scripts-Fu</guimenu>
+      ont été fusionnés dans un menu <guimenu>Filtres</guimenu> unique et
+      l'ensemble organisé selon de nouvelles catégories. Maintenant si un
+      greffon et un script réalisent des opérations voisines, ils seront
+      également voisins dans le menu.
+    </para>
+    <para lang="fr">
+      Le menu <guimenu>Scripts-Fu</guimenu> n'apparaît que si vous avez chargé
+      des scripts supplémentaires: par exemple le paquet gimp-resynthesizer
+      correspondant à votre distribution (.deb, .rpm, .gz...).
+    </para>
+
+    <para lang="it">
+      Questi sono script che eseguono delle operazioni su un'immagine
+      esistente. In molti versi questi agiscono come fossero dei plug-in del
+      menu filtri. Il seguente gruppo di script viene installato insieme a
+      GIMP:
+    </para>
+    <para lang="ko">
+      이곳의 스크립트들은 기존 이미지에 작업을 실행하기 위한 것들입니다.
+      따라서 필터 메뉴에 있는 플러그인과 많은 부분이 닮아 있습니다. 다음은
+      기본적으로 설치되는 스크립트들입니다.
+    </para>
+    <para lang="no">
+      Frå og med versjon 2.4 av GIMP blei skript og filter som arbeider
+      direkte på eit eksisterande bilete lagt inn i andre menyar. For
+      eksempel er skriptet <guimenu>Ny pensel</guimenu>
+      (script-fu-paste-as-brush) lagt inn i biletmenyen som
+      <menuchoice>
+        <guimenu>Rediger</guimenu>
+        <guimenuitem>Lim inn som...</guimenuitem>
+        <guimenuitem>Ny pensel</guimenuitem>
+      </menuchoice> der det logisk høyrer heime.
+    </para>
+    <para lang="no">
+      Det er også sett inn ein ny meny, <guimenu>Fargar</guimenu>, der alle
+      operasjonane som har med fargar å gjere er samla.
+    </para>
+    <para lang="no">
+      Menyane <guimenu>Filter</guimenu> og <guimenu>Scripts-Fu</guimenu>
+      er ombygde og er nå samla i den nye menyen <guimenu>Filter</guimenu>
+      slik at programtillegg og filter som gjer nokolunde det same er samla på
+      ein stad.
+    </para>
+    <para lang="no">
+      Menyen <guimenu>Scripts-Fu</guimenu> dukkar bare opp dersom du
+      legg inn tilleggsskript som for eksempel pakka
+      <quote>gimp-resynthesizer</quote> som følgjer med ein del
+      Linuxdistribusjonar (.deb, .rpm, .gz...).
+    </para>
+    <para lang="ru">
+      Скрипты и фильтры, работающие над существующим изображением находятся в
+      соответствующем меню. На пример, скрипт <guimenu>Новая кисть</guimenu>
+      (script-fu-paste-as-brush) интегрирован в меню изображения
+      <guimenu>Правка</guimenu>
+      (<menuchoice>
+        <guimenu>Правка</guimenu>
+        <guimenuitem>Вставить как...</guimenuitem>
+        <guimenuitem>Новая кисть</guimenuitem>
+      </menuchoice>), это более логично.
+    </para>
+    <para lang="ru">
+      Меню <guimenu>Цвет</guimenu> было создано для перегруппировки всего
+      связаного с цветами: тона, нивелирование уровня цвета и т.д.
+    </para>
+    <para lang="ru">
+      Меню <guimenu>Скрипт-Фу</guimenu> появляется только если пользователем
+      загружены дополнительные скрипты.
+    </para>
+    <para lang="zh_CN">这些脚本对现有图像进行操作。它们在很多方面就像是滤镜菜单中的插件。默认 安装了下列组的脚本：</para>
+
+    <!-- warning: not present in gimp >= 2.4 -->
+    <!--TODO it;ko;zh_CN must eliminate all that is below-->
+
+    <itemizedlist lang="it;ko;zh_CN">
+      <listitem lang="it;ko;no;zh_CN">
+        <para lang="it">Alchimia</para>
+        <para lang="ko">Decor</para>
+        <para lang="zh_CN">装饰</para>
+      </listitem>
+
+      <listitem lang="it;ko;zh_CN">
+        <para lang="it">Alfa a logotipo</para>
+        <para lang="ko">Modify</para>
+        <para lang="zh_CN">动画</para>
+      </listitem>
+
+      <listitem lang="it;ko;zh_CN">
+        <para lang="it">Animatori</para>
+        <para lang="ko">Animators</para>
+        <para lang="zh_CN">Stencil Ops</para>
+      </listitem>
+
+      <listitem lang="it;ko;zh_CN">
+        <para lang="it">Decorazioni</para>
+        <para lang="ko">Stencil Ops</para>
+        <para lang="zh_CN">炼金术</para>
+      </listitem>
+
+      <listitem lang="it;ko;zh_CN">
+        <para lang="it">Ombre</para>
+        <para lang="ko">Alchemy</para>
+        <para lang="zh_CN">阴影</para>
+      </listitem>
+
+      <listitem lang="it;ko;zh_CN">
+        <para lang="it">Render</para>
+        <para lang="ko">Shadow</para>
+        <para lang="zh_CN">绘制</para>
+      </listitem>
+
+      <listitem lang="it;ko;zh_CN">
+        <para lang="it">Selezione</para>
+        <para lang="ko">Render</para>
+        <para lang="zh_CN">工具</para>
+      </listitem>
+
+      <listitem lang="it;ko;zh_CN">
+        <para lang="it">Stencil Ops</para>
+        <para lang="ko">Utils</para>
+        <para lang="zh_CN">选区</para>
+      </listitem>
+
+      <listitem lang="it;ko;zh_CN">
+        <para lang="it">Utilità</para>
+        <para lang="ko">Selection</para>
+        <para lang="zh_CN">选区</para>
+      </listitem>
+    </itemizedlist>
+
+    <variablelist lang="it;ko;zh_CN">
+      <varlistentry lang="it;ko;no;zh_CN">
+        <term lang="it">Stencil Ops</term>
+        <term lang="ko">Stencil Ops</term>
+        <term lang="zh_CN">Stencil Ops</term>
+
+        <listitem>
+          <para lang="it">
+            Qui si possono trovare due script: Scolpiscilo e Cromalo, che
+            effettuano degli effetti veramente interessanti su immagini in
+            scala di grigi.
+          </para>
+          <para lang="ko">
+            Carve-It 과 Chrome-It 스크립트는 회색톤 이미지에 근사한 예술
+            효과를 만들어줍니다.
+          </para>
+          <para lang="zh_CN">这里有两个滤镜： Carve-It 和 Chrome-It，它们能
+            在灰度图像上绘制非常艺术的效果。</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry lang="it;ko;zh_CN">
+        <term lang="it">Crea ombra</term>
+        <term lang="ko">Drop Shadow</term>
+        <term lang="zh_CN">投影</term>
+
+        <listitem>
+          <para lang="it">
+            Crea ombra creerà un'ombra dietro l'oggetto selezionato. Possiede
+            tre importanti parametri: gli spostamenti in X e in Y che
+            determinano dove verrà posta l'ombra relativamente all'oggetto
+            selezionato. Lo spostamento è misurato sempre in pixel. Valori
+            molto alti fanno sembrare l'ombra molto distante mentre valori
+            piccoli la fanno sembrare vicina all'oggetto. Il valore di
+            sfocatura è anche molto importante dato che un'ombra molto
+            distante da un oggetto in genere dovrebbe avere un'ombra molto
+            sfocata.
+          </para>
+          <para lang="ko">
+            드롭 쉐도우는 선택한 물체에 그림자를 만듭니다. 여기에는 세
+            가지 중요한 인수가 있습니다. X, Y 오프셋은 선택된 물체의
+            어느쪽에 그림자를 만들지 결정하게 되며, 오프셋 단위는
+            픽셀입니다. 높은 값은 그림자가 멀리 떨어진 듯 보이게 되며, 낮은
+            값은 물체에 가깝게 있는 것처럼 보이게 됩니다. 그리고 블루어 값도
+            중요한데, 이는 블루어 값이 높을수록 그림자가 멀리 떨어진 느낌을
+            주기 때문입니다.
+          </para>
+          <para lang="zh_CN">
+            投影将在您选取物体后面生成阴影。它有三个重要的参数。位移 X 和 Y
+            决定阴影相对于选取物体的位置，位移的单位是像素。高值使阴影看上去
+            非常远，低指则使它和物体更近。模糊半径值也比较重要，因为一个表现
+            为离物体较远的阴影有一个高的模糊等级。
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry lang="it;ko;zh_CN">
+        <term lang="it">Prospettiva</term>
+        <term lang="ko">Perspective Shadow</term>
+        <term lang="zh_CN">透视阴影</term>
+
+        <listitem>
+          <para lang="it">
+            Il comando ombre/prospettiva ha un parametro molto importante:
+            l'angolo di prospettiva. Se questo angolo è impostato tra 0 e 180
+            gradi, non ci sarà ombra, dato che lo script assume che l'oggetto
+            non abbia spessore. Ciò significa anche che questo script
+            funzionerà bene per certi angoli ma non troppo naturale per altri.
+            Gli altri parametri sono abbastanta auto-espliciti. L'ombra sarà
+            molto più sfocata se l'orizzonte è distante e la lunghezza
+            dell'ombra è relativa alla dimensione dell'oggetto selezionato.
+          </para>
+          <para lang="ko">
+            원근 그림자에서 가장 중요한 인수는 원근 각도입니다. 각도가 0
+            에서 180 의 값을 가질때에는, 물체에 두께가 없다고 가정되어
+            그림자가 생기지 않습니다. 이 말은 제대로 된 각도에서는 비록
+            자연스럽지는 않지만 좋은 그림자를 만들어 준다라는 것입니다.
+            다른 인수값들은 굳이 설명히 필요하지 않을 것입니다. 블루어 값을
+            증가시키면 수평선이 점차 멀어지게 되고, 그림자 길이는 선택된
+            물체에 대한 상대적인 길이입니다.
+          </para>
+          <para lang="zh_CN">
+            透视阴影有一个非常重要的参数：透视角度。该脚本假设物体没有厚度，
+            因此该值为 0 或180，则没有阴影。这也表明该脚本在某些角度看上去
+            不错，但在其它角度就不自然。其它的参数都容易看懂。水平太远就会更
+            加模糊，阴影长度就是相对于选取物体的长度。
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </sect2>
+</sect1>

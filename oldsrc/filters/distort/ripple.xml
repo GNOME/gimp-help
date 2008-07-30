@@ -1,0 +1,904 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+                "http://www.docbook.org/xml/4.3/docbookx.dtd">
+
+<!-- section history:
+  2007-08-14 Added Spanish translation by AntI
+  2007-04-24 KoSt: added 'no'
+  2005-12-07 replaced <simplesect> by <sect3> by lexa
+  050910 de added by axel.wernicke
+-->
+<sect2 id='plug-in-ripple' lang="en;cs;de;es;fr;it;no;ru">
+  <sect2info lang="de;es;fr;it" role="cvs">
+    <revhistory>
+      <revision lang="de">
+        <revnumber>$Revision$</revnumber>
+        <date>2006-11-04</date>
+        <authorinitials>lexa</authorinitials>
+      </revision>
+      <revision lang="es">
+        <revnumber>$Revision$</revnumber>
+        <date>2007-08-14</date>
+        <authorinitials>AntI</authorinitials>
+      </revision>
+      <revision lang="fr">
+        <revnumber>$Revision$</revnumber>
+        <date>2008-04-15</date>
+        <authorinitials>j.h</authorinitials>
+      </revision>
+      <revision lang="it">
+        <revnumber>$Revision$</revnumber>
+        <date>2008-03-25</date>
+        <authorinitials>alex falappa</authorinitials>
+      </revision>
+    </revhistory>
+  </sect2info>
+
+  <title>
+    <phrase lang="en">Ripple</phrase>
+    <phrase lang="cs">Rozvlnit</phrase>
+    <phrase lang="de">Zacken</phrase>
+    <phrase lang="es">Ondulación</phrase>
+    <phrase lang="fr">Onduler</phrase>
+    <phrase lang="it">Increspature</phrase>
+    <phrase lang="no">Krusning</phrase>
+    <phrase lang="ru">Рябь</phrase>
+  </title>
+
+  <indexterm lang="en">
+    <primary>Filters</primary>
+    <secondary>Distorts</secondary>
+    <tertiary>Ripple</tertiary>
+  </indexterm>
+  <indexterm lang="en"><primary>Ripple filter</primary></indexterm>
+
+  <indexterm lang="cs"><primary>Rozvlnit</primary></indexterm>
+
+  <indexterm lang="de">
+    <primary>Filter</primary><secondary>Verzerren</secondary>
+  </indexterm>
+  <indexterm lang="de"><primary>Zacken</primary></indexterm>
+
+  <indexterm lang="es">
+    <primary>Filtros</primary>
+    <secondary>Distorsiones</secondary>
+    <tertiary>Ondulación</tertiary>
+  </indexterm>
+  <indexterm lang="es"><primary>Ondulación</primary></indexterm>
+
+  <indexterm lang="fr">
+    <primary>Filtres</primary>
+    <secondary>Distorsions</secondary>
+    <tertiary>Onduler</tertiary>
+  </indexterm>
+  <indexterm lang="fr"><primary>Onduler (filtre)</primary></indexterm>
+
+  <indexterm lang="it">
+    <primary>Filtri</primary>
+    <secondary>Distorsioni</secondary>
+    <tertiary>Increspature</tertiary>
+  </indexterm>
+  <indexterm lang="it"><primary>Increspature</primary></indexterm>
+
+  <indexterm lang="no">
+    <primary>Filter</primary>
+    <secondary>Forvrengningar</secondary>
+    <tertiary>Krusning</tertiary>
+  </indexterm>
+  <indexterm lang="no"><primary>Krusning (filter)</primary></indexterm>
+
+  <indexterm lang="ru"><primary>Рябь</primary></indexterm>
+
+  <!--TODO cs ru: Move this to "Options"-->
+  <mediaobject lang="cs;ru">
+    <imageobject lang="cs;ru">
+      <imagedata fileref='../images/filters/options-distort-ripple.png'
+        format="PNG" />
+    </imageobject>
+  </mediaobject>
+
+  <sect3>
+    <title>
+      <phrase lang="en">Overview</phrase>
+      <phrase lang="cs">Přehled</phrase>
+      <phrase lang="de">Wirkungsweise</phrase>
+      <phrase lang="es">Generalidades</phrase>
+      <phrase lang="fr">Généralités</phrase>
+      <phrase lang="it">Panoramica</phrase>
+      <phrase lang="no">Oversyn</phrase>
+      <phrase lang="ru">Общая информация</phrase>
+    </title>
+
+    <!--TODO cs : add this figure?-->
+    <figure lang="en;de;es;fr;it;no;ru">
+      <title>
+        <phrase lang="en">
+          <quote>Ripple</quote> filter example
+        </phrase>
+        <phrase lang="de">
+          Anwendungsbeispiel für das Filter <quote>Zacken</quote>
+        </phrase>
+        <phrase lang="es">
+          Ejemplo de aplicación del filtro ondulación
+        </phrase>
+        <phrase lang="fr">
+          Exemple pour le filtre <quote>Onduler</quote> filter example
+        </phrase>
+        <phrase lang="it">
+          Esempio di applicazione del filtro <quote>Increspature</quote>
+        </phrase>
+        <phrase lang="no">Eksempel på bruk av filteret</phrase>
+        <phrase lang="ru">
+          То же изображение до применения фильтра <quote>Рябь</quote>
+        </phrase>
+      </title>
+
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/taj_orig.jpg"
+            format="JPG" />
+        </imageobject>
+        <caption lang="en;de;es;fr;it;no">
+          <para lang="en">Original image</para>
+          <para lang="de">Originalbild</para>
+          <para lang="es">Original</para>
+          <para lang="fr">Image d'origine</para>
+          <para lang="it">Immagine originale</para>
+          <para lang="no">Originalbiletet</para>
+        </caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject>
+          <imagedata
+            fileref="../images/filters/examples/distort-taj-ripple.jpg"
+            format="JPG" />
+        </imageobject>
+        <caption lang="en;de;es;it;no">
+          <para lang="en">Filter <quote>Ripple</quote> applied</para>
+          <para lang="de">Filter <quote>Zacken</quote> angewandt</para>
+          <para lang="es">Filtro <quote>Ondulación</quote> aplicado</para>
+          <para lang="fr">Après application du filtre</para>
+          <para lang="it">
+            Dopo l'applicazione del filtro <quote>Increspature</quote>
+          </para>
+          <para lang="no">
+            Etter bruk av filteret <quote>Krusning</quote>
+          </para>
+        </caption>
+      </mediaobject>
+    </figure>
+
+    <para lang="en">
+      You can find this filter through
+      <menuchoice>
+        <guimenu>Filters</guimenu>
+        <guisubmenu>Distotrts</guisubmenu>
+        <guimenuitem>Ripple</guimenuitem>
+      </menuchoice>.
+    </para>
+    <para lang="en">
+      It displaces the pixels of the active layer or selection to waves or
+      ripples reminding a reflection on disturbed water.
+    </para>
+
+    <para lang="cs">
+      Tento filtr lze spustit z nabídky okna obrázku volbou
+      <menuchoice>
+        <guimenu>Filtry</guimenu>
+        <guisubmenu>Zkreslení</guisubmenu>
+        <guimenuitem>Rozvlnit</guimenuitem>
+      </menuchoice>.
+    </para>
+    <para lang="cs">
+      Filtr zdeformuje obrázek vytvořením vln připomínajících odraz obrazu
+      na neklidné vodě.
+    </para>
+
+    <para lang="de">
+      Mit diesem Filter können Sie die aktive Ebene oder Auswahl wellenförmig
+      verzerren.
+    </para>
+
+    <para lang="es">
+      Puede encontrar este filtro en
+      <menuchoice>
+        <guimenu>Filtros</guimenu>
+        <guisubmenu>Distorsiones</guisubmenu>
+        <guimenuitem>Ondulación</guimenuitem>
+      </menuchoice>.
+    </para>
+    <para lang="es">
+      Desplaza los píxeles de la capa activa o selección a ondas u
+      ondulaciones que recuerdan un reflejo en agua agitada.
+    </para>
+
+    <para lang="fr">
+      Ce filtre se trouve dans
+      <menuchoice>
+        <guimenu>Filtres</guimenu>
+        <guisubmenu>Distorsions</guisubmenu>
+        <guimenuitem>Onduler</guimenuitem>
+      </menuchoice>.
+    </para>
+    <para lang="fr">
+      Il déplace les pixels du calque actif ou la sélection en ondulations
+      qui font penser à un reflet sur une eau agitée.
+    </para>
+
+    <para lang="it">
+      Questo filtro si trova nel menu immagine:
+      <menuchoice>
+        <guimenu>Filtri</guimenu>
+        <guisubmenu><accel>D</accel>istorsioni</guisubmenu>
+        <guisubmenu>Inc<accel>r</accel>espature</guisubmenu>
+      </menuchoice>.
+    </para>
+    <para lang="it">
+      Sposta i pixel del livello o della selezione corrente secondo delle onde
+      o delle increspature che richiamano i riflessi su uno specchio d'acqua
+      agitato.
+    </para>
+
+    <para lang="no">
+      Du har tilgang til filteret frå biletmenyen via
+      <menuchoice>
+        <guimenu>Filter</guimenu>
+        <guisubmenu>Forvrengningar</guisubmenu>
+        <guimenuitem>Krusning</guimenuitem>
+      </menuchoice>
+    </para>
+    <para lang="no">
+      Filteret omformar det aktive laget eller den aktive markeringa
+      til bølgjer. Effekten kan minne om refleksjonar i uroleg vatn.
+    </para>
+
+    <para lang="ru">
+      Этот фильтр находится в
+      <menuchoice>
+        <guimenu>Фильтры</guimenu>
+        <guisubmenu>Искажение</guisubmenu>
+        <guimenuitem><accel>Р</accel>ябь</guimenuitem>
+      </menuchoice>.
+    </para>
+    <para lang="ru">
+      Перемешивает точки в активном слое или выделении так, чтобы создать
+      текстуру, имитирующую рябь и напоминающую отражение в воде.
+    </para>
+  </sect3>
+
+  <sect3 lang="de">
+    <title>
+      <phrase lang="de">Filteraufruf</phrase>
+    </title>
+
+    <para lang="de">
+      Dieses Filter lässt sich über das Menü
+      <menuchoice>
+        <guimenu><accel>F</accel>ilter</guimenu>
+        <guisubmenu>Ver<accel>z</accel>erren</guisubmenu>
+        <guimenuitem><accel>Z</accel>acken</guimenuitem>
+      </menuchoice>
+      im Bildfenster aufrufen.
+    </para>
+  </sect3>
+
+  <sect3>
+    <title>
+      <phrase lang="en">Options</phrase>
+      <phrase lang="cs">Volby</phrase>
+      <phrase lang="de">Eigenschaften</phrase>
+      <phrase lang="es">Opciones</phrase>
+      <phrase lang="fr">Options</phrase>
+      <phrase lang="it">Opzioni</phrase>
+      <phrase lang="no">Innstillingar</phrase>
+      <phrase lang="ru">Параметры</phrase>
+    </title>
+
+    <figure lang="en;de;fr;it;no">
+      <title>
+        <phrase lang="en">
+          <quote>Ripple</quote> filter options
+        </phrase>
+        <phrase lang="de">
+          Eigenschaften für das Filter <quote>Zacken</quote>
+        </phrase>
+        <phrase lang="fr">
+          Options du filtre <quote>Onduler</quote>
+        </phrase>
+        <phrase lang="it">
+          Opzioni del filtro <quote>Increspature</quote>
+        </phrase>
+        <phrase lang="no">
+          Innstillingane for filteret <quote>Krusning</quote>
+        </phrase>
+      </title>
+      <mediaobject>
+        <imageobject lang="en">
+          <imagedata fileref='../images/filters/options-distort-ripple.png'
+            format="PNG" />
+        </imageobject>
+        <imageobject lang="de">
+          <imagedata fileref="../images/filters/de/options-distort-ripple.png"
+                     format="PNG" />
+        </imageobject>
+        <imageobject lang="fr">
+          <imagedata fileref='../images/filters/fr/options-distort-ripple.png'
+                     format="PNG" />
+        </imageobject>
+        <imageobject lang="it">
+          <imagedata fileref='../images/filters/it/filters-distort-ripple.png'
+            format="PNG" />
+        </imageobject>
+        <imageobject lang="no">
+          <imagedata fileref="../images/filters/no/options-distort-ripple.png"
+                     format="PNG" />
+        </imageobject>
+      </mediaobject>
+    </figure>
+
+    <variablelist>
+      <varlistentry>
+        <term lang="en">Preview</term>
+        <term lang="cs">Náhled</term>
+        <term lang="de">Vorschau</term>
+        <term lang="es">Vista previa</term>
+        <term lang="fr">Aperçu</term>
+        <term lang="it">Anteprima</term>
+        <term lang="no">Førehandsvising</term>
+        <term lang="ru">Просмотр</term>
+
+        <listitem>
+          <para lang="en">
+            The result of your settings will appear in the Preview without
+            affecting the image until you click on <guibutton>OK</guibutton>.
+          </para>
+          <para lang="cs">
+            Výsledky nastavení se okamžitě projeví v okně náhledu, dříve než
+            je filtr aplikován stisknutím tlačítka <guibutton>OK</guibutton>.
+          </para>
+          <para lang="de">
+            In der Vorschau wird ein Ausschnitt des Bildes so dargestellt,
+            als wäre das Filter mit den aktuellen Einstellungen auf das Bild
+            angewandt worden.
+          </para>
+          <para lang="es">
+            Todos sus cambios aparecerán en la vista previa sin afectar a la
+            imagen hasta que pulse <guilabel>Aceptar</guilabel>.
+          </para>
+          <para lang="fr">
+            L'Aperçu fournit une vignette de l'image reproduisant toutes les
+            réglages effectués sans agir sur l'image jusqu'à ce que vous
+            cliquiez sur <guibutton>Valider</guibutton>.
+          </para>
+          <para lang="it">
+            Tutte le regolazioni dei parametri appariranno nell'anteprima
+            senza essere riportate sull'immagine fino alla pressione del
+            pulsante <guilabel>OK</guilabel>.
+          </para>
+          <para lang="no">
+            Førehandsvisinga syner endringane i biletet etter kvart som du
+            endrar parametra. Endringane blir ikkje lagt inn i biletet før du
+            trykker på knappen <guilabel>OK</guilabel>.
+          </para>
+          <para lang="ru">
+            Результат изменения настроек появится в <quote>Просмотре</quote>,
+            не изменяя изображение пока вы не нажмёте кнопку
+            <guilabel>OK</guilabel>.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term lang="en">Options</term>
+        <term lang="cs">Volby</term>
+        <term lang="de">Einstellungen</term>
+        <term lang="es">Opciones</term>
+        <term lang="fr">Options</term>
+        <term lang="it">Opzioni</term>
+        <term lang="no">Innstillingar</term>
+        <term lang="ru">Параметры</term>
+
+        <listitem>
+          <variablelist>
+            <varlistentry>
+              <term lang="en">Antialiasing</term>
+              <term lang="cs">Vyhlazování</term>
+              <term lang="de">Kantenglättung</term>
+              <term lang="es">Antialias</term>
+              <term lang="fr">Lissage</term>
+              <term lang="it">Antialiasing</term>
+              <term lang="no">Kantutjamning</term>
+              <term lang="ru">Сглаживание</term>
+
+              <listitem>
+                <para lang="en">
+                  <guilabel>Antialiasing</guilabel>: This improves the scaled
+                  look the image borders may have.
+                </para>
+                <para lang="cs">
+                  <guilabel>Vyhlazování</guilabel>:
+                  Snižuje zubatost okrajů.
+                </para>
+                <para lang="de">
+                  Wenn Sie diese Eigenschaft aktivieren, werden die Kanten
+                  bei Anwendung des Filters geglättet. Damit können Sie das
+                  Erscheinungsbild des Effektes verbessern.
+                </para>
+                <para lang="es">
+                  <guilabel>Antialias</guilabel>: Esto mejora la aparencia
+                  dentada que pueden tener los bordes.
+                </para>
+                <para lang="fr">
+                  <guilabel>Lissage</guilabel>: Réduit l'aspect crénelé que
+                  peuvent avoir les limites.
+                </para>
+                <para lang="it">
+                  Migliora l'aspetto dei bordi scalettati dell'immagine.
+                </para>
+                <para lang="no">
+                  <guilabel>Kantutjamning</guilabel>: Dette forbetrar
+                  skråkantar i biletet ved å jamne ut overgangane.
+                </para>
+                <para lang="ru">
+                  <guilabel>Сглаживание</guilabel>: Убирает зазубренности
+                  по краям изображения.
+                </para>
+              </listitem>
+            </varlistentry>
+
+            <varlistentry>
+              <term lang="en">Retain Tileability</term>
+              <term lang="cs">Uchovat dlaždicovatelnost</term>
+              <term lang="de">Kachelbarkeit erhalten</term>
+              <term lang="es">Conservar enlosabilidad</term>
+              <term lang="fr">Garder la raccordabilité</term>
+              <term lang="it">Mantieni piastrellabilità</term>
+              <term lang="no">Behald flislegginga</term>
+              <term lang="ru">Сохранить бесшовность</term>
+
+              <listitem>
+                <para lang="en">
+                  <guilabel>Retain Tileability</guilabel>: This preserves the
+                  seamless properties if your image is a tile pattern.
+                </para>
+                <para lang="cs">
+                  <guilabel>Uchovat dlaždicovatelnost</guilabel>:
+                  Je-li aktivní tato volba, filtr uchová dlaždicovatelnost
+                  obrázku.
+                </para>
+                <para lang="de">
+                  Wenn diese Eigenschaft aktiviert ist, wird die Kachelbarkeit
+                  des Bildes durch das Filter nicht beeinflusst. Kachelbarkeit
+                  ist die Möglichkeit, ein Bild wiederholt aneinander zu fügen,
+                  ohne dass die Bildkanten sichtbar werden.
+                </para>
+                <para lang="es">
+                  <guilabel>Conservar enlosabilidad</guilabel>: Esto preserva
+                  la propiedad de enlosabilidad si la imagen es para un
+                  patrón repetible.
+                </para>
+                <para lang="fr">
+                  <guilabel>Garder la raccordabilité</guilabel>: Permet de
+                  garder à l'image obtenue son caractère raccordable, c.-à-d
+                  sans raccord visible, si vous l'utilisez comme motif répété
+                  dans un fond de page Web.
+                </para>
+                <para lang="it">
+                  Preserva la proprietà di piastrellabilità se l'immagine è
+                  un motivo ripetibile.
+                </para>
+                <para lang="no">
+                  <guilabel>Behald flislegginga</guilabel>: Dersom biletet er
+                  flislagt, blir dei saumlause overgangane uforandra.
+                </para>
+                <para lang="ru">
+                  <guilabel>Сохранить бесшовность</guilabel>: Сохраняет
+                  свойства бесшовности изображения, если оно имеет текстуру
+                  ячеек.
+                </para>
+              </listitem>
+            </varlistentry>
+          </variablelist>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term lang="en">Orientation</term>
+        <term lang="cs">Orientace</term>
+        <term lang="de">Orientierung</term>
+        <term lang="es">Orientación</term>
+        <term lang="fr">Orientation</term>
+        <term lang="it">Orientamento</term>
+        <term lang="no">Orientering</term>
+        <term lang="ru">Ориентация</term>
+
+        <listitem>
+          <para lang="en">
+            That's the <guilabel>Horizontal</guilabel> or
+            <guilabel>Vertical</guilabel> direction of waves.
+          </para>
+          <para lang="cs">
+            Zde lze nastavit orientaci vln (<guilabel>Vodorovně</guilabel>
+            či <guilabel>Svisle</guilabel>).
+          </para>
+          <para lang="de">
+            Mit dieser Eigenschaft können Sie einstellen, ob die Wellen im
+            Bild <guilabel>Horizontal</guilabel> oder
+            <guilabel>Vertikal</guilabel> verlaufen sollen.
+          </para>
+          <para lang="es">
+            Es la dirección <guilabel>Horizontal</guilabel> o
+            <guilabel>Vertical</guilabel> de las ondas.
+          </para>
+          <para  lang="fr">
+            Il s'agit de la direction, <guilabel>Horizontale</guilabel>
+            ou <guilabel>Verticale</guilabel> des ondulations.
+          </para>
+          <para lang="it">
+            La direzione <guilabel>Orizzontale</guilabel> o
+            <guilabel>Verticale</guilabel> delle onde.
+          </para>
+          <para lang="no">
+            Her kan du bestemma om bølgjene skal vere
+            <guilabel>Horisontale</guilabel> eller
+            <guilabel>Vertikale</guilabel>.
+          </para>
+          <para lang="ru">
+            Это <guilabel>Горизонтальное</guilabel> или
+            <guilabel>Вертикальное</guilabel> направление волн.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term lang="en">Edges</term>
+        <term lang="cs">Hrany</term>
+        <term lang="de">Kanten</term>
+        <term lang="es">Bordes</term>
+        <term lang="fr">Bords</term>
+        <term lang="it">Bordi</term>
+        <term lang="no">Kantar</term>
+        <term lang="ru">Края</term>
+
+        <listitem>
+          <para lang="en">
+            Because ripples cause pixel displacement, some pixels may
+	          be missing on the image sides:
+          </para>
+          <para lang="cs">
+            Rozvlnění způsobí, že na okrajích obrázku chybí některé
+            pixely. Zde lze nastavit, jakým způsobem budou nahrazeny:
+          </para>
+          <para lang="de">
+            Da durch das Filter Pixel im Bild verschoben werden, kann es
+            passieren, dass an den Bildkanten Pixel fehlen. Sie können mit
+            dieser Eigenschaft festlegen, was in einem solchen Fall geschehen
+            soll.
+          </para>
+          <para lang="es">
+            Debido a que la ondas provocan desplazamientos de píxeles,
+            algunos se podrían perde en los lados de la imagen:
+          </para>
+          <para lang="fr">
+            Du fait des ondulations, qui sont un déplacement de pixels,
+            des pixels peuvent manquer sur les côtés de l'image:
+          </para>
+          <para lang="it">
+            A causa delle increspature, che sono uno spostamento di pixel,
+            alcuni pixel potrebbero mancare sui bordi dell'immagine:
+          </para>
+          <para lang="no">
+            Sidan filteret forskyv pikslar i biletet, kan det hende at det
+            forsvinn pikslar frå kantane av biletet. Du kan her bestemme
+            korleis dei manglande pikslane skal erstattast.
+          </para>
+          <para lang="ru">
+            Из-за ряби, некоторые точки будут смещены с краёв изображения.
+            С ними можно сделать следующее:
+          </para>
+
+          <itemizedlist>
+            <listitem>
+              <para lang="en">
+                With <guilabel>Wrap</guilabel>, pixels going out one side
+                will come back on the other side, replacing so the missing
+                pixels.
+              </para>
+              <para lang="cs">
+                Volba <guilabel>Ohýbání</guilabel>, způsobí, že pixely
+                posunuté mimo obraz na jedné straně nahradí chybějící pixely
+                na straně druhé.
+              </para>
+              <para lang="de">
+                Mit der Einstellung <guilabel>Umfalten</guilabel> werden
+                Pixel, die an einer Seite des Bildes hinausgeschoben werden,
+                auf der gegenüberliegenden Seite wieder eingefügt.
+              </para>
+              <para lang="es">
+                Con <guilabel>Ajustar</guilabel>, los píxel que salen por un
+                lado vuelven por el otro, reemplazando los píxeles perdidos.
+              </para>
+              <para lang="fr">
+                Avec <guilabel>Enrouler</guilabel>, les pixels qui été
+                repoussés au-delà d'un côté ressortiront de l'autre côté,
+                venant remplacer les pixels manquants.
+              </para>
+              <para lang="it">
+                Con <guilabel>Wrap</guilabel>, i pixel che escono da un lato
+                rientrano dall'altro rimpiazzando i pixel mancanti.
+              </para>
+              <para lang="no">
+                Innstillinga<guilabel>Linjebryting</guilabel> fører til at
+                pikslar som forsvinn frå ei side, dukkar opp på motsett
+                side og såleis erstattar pikslane som forsvinn.
+              </para>
+              <para lang="ru">
+                <guilabel>Заворачивать</guilabel>: точки, выходящие аз один
+                край, придут на другой край, заменяя здвинувшиеся точки.
+              </para>
+            </listitem>
+            <listitem>
+              <para lang="en">
+                With <guilabel>Smear</guilabel>, the adjacent pixels will
+                spread out to replace the mixing pixels.
+              </para>
+              <para lang="cs">
+                Volba <guilabel>Šmouha</guilabel> způsobí, že jsou sousední
+                pixely rozmáznuty tak, aby chybějící část nahradily.
+              </para>
+              <para lang="de">
+                Mit der Einstellung <guilabel>Verwischen</guilabel> werden die
+                umliegenden Pixel verstreut, um die fehlenden Pixel zu
+                ersetzen.
+              </para>
+              <para lang="es">
+                Con <guilabel>Manchar</guilabel>, los píxeles adyacentes se
+                esparcen para reemplazar los píxeles perdidos.
+              </para>
+              <para lang="fr">
+                Avec <guilabel>Étaler</guilabel>, les pixels manquants
+                seront remplacés par un étalement des pixels adjacents.
+              </para>
+              <para lang="it">
+                Con <guilabel>Macchia</guilabel>, i pixel adiacenti saranno
+                estesi per rimpiazzare i pixel mancanti.
+              </para>
+              <para lang="no">
+                Med <guilabel>Smøre</guilabel> blir dei overskytande
+                pikslane spreidde utover for å erstatte dei manglande pikslane.
+              </para>
+              <para lang="ru">
+                <guilabel>Пятно</guilabel>: ближайшие точки будут растянуты,
+                заменяя здвинувшиеся точки.
+              </para>
+            </listitem>
+            <listitem>
+              <para lang="en">
+                With <guilabel>Black</guilabel>, the missing pixels will be
+                replaced by black pixels.
+              </para>
+              <para lang="cs">
+                Volba <guilabel>Černá</guilabel> způsobí nahrazení chybějících
+                pixelů černou barvou.
+              </para>
+              <para lang="de">
+                Mit der Einstellung <guilabel>Schwarz</guilabel> werden die
+                fehlenden Pixel durch schwarze Pixel ergänzt.
+              </para>
+              <para lang="es">
+                Con <guilabel>Negro</guilabel>, los píxeles perdidos se
+                reemplazan con píxeles negros.
+              </para>
+              <para lang="fr">
+                Avec <guilabel>Noir</guilabel>, les pixels manquants seront
+                remplacés par du noir.
+              </para>
+              <para lang="it">
+                Con <guilabel>Nero</guilabel>, i pixel mancanti saranno
+                rimpiazzati da pixel di colore nero.
+              </para>
+              <para lang="no">
+                Er valet <guilabel>Svart</guilabel> aktivert, vil dei manglande
+                pikslane bli erstatta med svarte pikslar.
+              </para>
+              <para lang="ru">
+                <guilabel>Чёрный</guilabel>: здвинувшиеся точки будут
+                покрашены в чёрное.
+              </para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term lang="en">Wave Type</term>
+        <term lang="cs">Typ vlny</term>
+        <term lang="de">Wellentyp</term>
+        <term lang="es">Tipo de onda</term>
+        <term lang="fr">Type d'onde</term>
+        <term lang="it">Tipo d'onda</term>
+        <term lang="no">Bølgetype</term>
+        <term lang="ru">Тип волны</term>
+
+        <listitem>
+          <para lang="en">
+            These options are self-explanatory
+          </para>
+          <para lang="cs">
+            Určuje tvar vlny
+          </para>
+          <para lang="de">
+            Mit dieser Eigenschaft können Sie die Form der Wellen einstellen.
+          </para>
+          <para lang="es">
+            Estas opciones se definen por si mismas.
+          </para>
+          <para lang="fr">
+            Ces options parlent d'elles-mêmes:
+          </para>
+          <para lang="it">
+            Queste opzioni sono autoesplicative:
+          </para>
+          <para lang="no">
+            Her kan du velje forma på bøljene.
+          </para>
+          <para lang="ru">
+            Определяет форму преобразования:
+          </para>
+
+          <itemizedlist>
+            <listitem>
+              <para lang="en">
+                <guilabel>Sawtooth</guilabel>
+              </para>
+              <para lang="cs">
+                <guilabel>Pilová</guilabel>
+              </para>
+              <para lang="de">
+                <guilabel>Sägezahn</guilabel>: die Wellen steigen gleichmäßig
+                an und fallen dann steil ab
+              </para>
+              <para lang="es">
+                <guilabel>Diente de sierra</guilabel>
+              </para>
+              <para lang="fr">
+                <guilabel>Dents de scie</guilabel>
+              </para>
+              <para lang="it">
+                <guilabel>Dente di sega</guilabel>
+              </para>
+              <para lang="no">
+                <guilabel>Sagtann</guilabel>: Bølgjene stig sakte og fell
+                deretter brått av.
+              </para>
+              <para lang="ru">
+                <guilabel>Пилообразная</guilabel>
+              </para>
+            </listitem>
+            <listitem>
+              <para lang="en">
+                <guilabel>Sine</guilabel>
+              </para>
+              <para lang="cs">
+                <guilabel>Sinus</guilabel>
+              </para>
+              <para lang="de">
+                <guilabel>Sinus</guilabel>: die Wellen steigen und fallen
+                gleichmäßig.
+              </para>
+              <para lang="es">
+                <guilabel>Seno</guilabel>
+              </para>
+              <para lang="fr">
+                <guilabel>Sinusoïdale</guilabel>
+              </para>
+              <para lang="it">
+                <guilabel>Seno</guilabel>
+              </para>
+              <para lang="no">
+                <guilabel>Sinus</guilabel>: Bølgjene stig og fell
+                regelmessig som dønningar.
+              </para>
+              <para lang="ru">
+                <guilabel>Синус</guilabel>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term lang="en">Period</term>
+        <term lang="cs">Perioda</term>
+        <term lang="de">Periode</term>
+        <term lang="es">Periodo</term>
+        <term lang="fr">Période</term>
+        <term lang="it">Periodo</term>
+        <term lang="no">Periode</term>
+        <term lang="ru">Период</term>
+
+        <listitem>
+          <para lang="en">
+            The <guilabel>Period</guilabel> is related to wavelength
+            (0-200 pixels)
+          </para>
+          <para lang="cs">
+            <guilabel>Perioda</guilabel> určuje vlnovou délku, tedy
+            vzdálenost mezi dvěma následujícími vrcholy vlny (0-200
+            pixelů).
+          </para>
+          <para lang="de">
+            Mit dieser Eigenschaft können Sie die Wellenlänge im Bereich von
+            0 bis 200 Pixel über einen Schieberegler oder das zugeordnete
+            Eingabefeld einstellen.
+          </para>
+          <para lang="es">
+            El <guilabel>Periodo</guilabel> es relativo a la longitud de onda
+            (0-200 píxeles)
+          </para>
+          <para lang="fr">
+            La <guilabel>Période</guilabel> est en rapport avec la
+            longueur d'onde (0-200 pixels)
+          </para>
+          <para lang="it">
+            È relativo alla lunghezza d'onda (0-200 pixels)
+          </para>
+          <para lang="no">
+            Ein <guilabel>Periode</guilabel> er de same som bølgelengda.
+            Skalaen har eit område frå 0 til 200 pikslar.
+          </para>
+          <para lang="ru">
+            <guilabel>Период</guilabel> волны, в точках (0-200).
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term lang="en">Amplitude</term>
+        <term lang="cs">Amplituda</term>
+        <term lang="de">Amplitude</term>
+        <term lang="es">Amplitud</term>
+        <term lang="fr">Amplitude</term>
+        <term lang="it">Ampiezza</term>
+        <term lang="no">Amplitude</term>
+        <term lang="ru">Амплитуда</term>
+
+        <listitem>
+          <para lang="en">
+            The <guilabel>Amplitude</guilabel> is related to wave height
+            (0-200 pixels).
+          </para>
+          <para lang="cs">
+            <guilabel>Amplituda</guilabel> určuje výšku vln (0-200
+            pixelů).
+          </para>
+          <para lang="de">
+            Mit dieser Eigenschaft können Sie die Wellenhöhe mittels eines
+            Schiebereglers oder des zugeordneten Eingabefeldes einstellen.
+            Die Werte müssen zwischen 0 und 200 Pixel liegen.
+          </para>
+          <para lang="es">
+            La <guilabel>Amplitud</guilabel> es relativa a la altura de la
+            onda (0-200 píxeles).
+          </para>
+          <para lang="fr">
+            L'<guilabel>amplitude</guilabel> est la hauteur de l'onde
+            (0-200 pixels).
+          </para>
+          <para lang="it">
+            È collegata alla lunghezza d'onda (0-200 pixel).
+          </para>
+          <para lang="no">
+            <guilabel>Amplitude</guilabel> er relatert til bølgehøgda, rekna
+            frå 0 til 200 pikslar.
+          </para>
+          <para lang="ru">
+            <guilabel>Амплитуда</guilabel> волны, в точках (0-200 pixels).
+            Определяет смещение относительно начального изображения.
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </sect3>
+</sect2>

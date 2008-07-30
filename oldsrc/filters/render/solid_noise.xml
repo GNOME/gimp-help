@@ -1,0 +1,836 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+                "http://www.docbook.org/xml/4.3/docbookx.dtd">
+
+<!-- section history:
+  2007-05-15 KoSt: added 'no'
+  2005-12-08 <simplesect> replaced by <sect3> by lexa
+  2005/09/21 de added by axel.wernicke
+-->
+<sect2 id="plug-in-solid-noise" lang="en;cs;de;es;fr;it;no;ru;zh_CN">
+  <sect2info lang="en;de;es;fr" role="cvs">
+    <revhistory>
+      <revision lang="en">
+        <revnumber>$Revision$</revnumber>
+        <date>2006-12-19</date>
+        <authorinitials>j.h</authorinitials>
+      </revision>
+      <revision lang="de">
+        <revnumber>$Revision$</revnumber>
+        <date>2006-11-04</date>
+        <authorinitials>lexa</authorinitials>
+      </revision>
+      <revision lang="es">
+        <revnumber>$Revision$</revnumber>
+        <date>2007-11-15</date>
+        <authorinitials>AntI</authorinitials>
+      </revision>
+      <revision lang="fr">
+        <revnumber>$Revision$</revnumber>
+        <date>2006-12-19</date>
+        <authorinitials>j.h</authorinitials>
+      </revision>
+    </revhistory>
+  </sect2info>
+
+  <title>
+    <phrase lang="en">Solid Noise</phrase>
+    <phrase lang="cs">Pevný šum</phrase>
+    <phrase lang="de">Plastisches Rauschen</phrase>
+    <phrase lang="es">Ruido śolido</phrase>
+    <phrase lang="fr">Brouillage uni</phrase>
+    <phrase lang="it">Disturbo solido</phrase>
+    <phrase lang="no">Massiv støy</phrase>
+    <phrase lang="ru">Сплошной шум</phrase>
+    <phrase lang="zh_CN">纯色噪音</phrase>
+  </title>
+
+  <indexterm lang="en">
+    <primary>Filters</primary>
+    <secondary>Render</secondary>
+    <tertiary>Solid Noise</tertiary>
+  </indexterm>
+  <indexterm lang="en"><primary>Solid noise</primary></indexterm>
+
+  <indexterm lang="cs">
+    <primary>Filtry</primary>
+    <secondary>Vykreslení</secondary>
+    <tertiary>Pevný šum</tertiary>
+  </indexterm>
+
+  <indexterm lang="de">
+    <primary>Filter</primary><secondary>Render</secondary>
+  </indexterm>
+  <indexterm lang="de"><primary>Plastisches Rauschen</primary></indexterm>
+
+  <indexterm lang="es">
+    <primary>Filtros</primary>
+    <secondary>Renderizado</secondary>
+    <tertiary>Ruido sólido</tertiary>
+  </indexterm>
+  <indexterm lang="es"><primary>Ruido sólido</primary></indexterm>
+
+  <indexterm lang="fr">
+    <primary>Filtres</primary>
+    <secondary>Rendu</secondary>
+    <tertiary>Brouillage Uni</tertiary>
+  </indexterm>
+  <indexterm lang="fr"><primary>Brouillage uni</primary></indexterm>
+
+  <indexterm lang="it">
+    <primary>Filtri</primary><secondary>Render</secondary>
+  </indexterm>
+  <indexterm lang="it"><primary>Disturbo solido</primary></indexterm>
+
+  <indexterm lang="no">
+    <primary>Filter</primary>
+    <secondary>Teiknefilter</secondary>
+    <tertiary>Massiv støy</tertiary>
+  </indexterm>
+  <indexterm lang="no"><primary>Massiv støy (filter)</primary></indexterm>
+
+  <indexterm lang="ru">
+    <primary>Фильтр</primary>
+    <secondary>Визуализация</secondary>
+    <tertiary>Сплошной шум</tertiary>
+  </indexterm>
+  <indexterm lang="ru"><primary>Сплошной шум</primary></indexterm>
+
+  <indexterm lang="zh_CN">
+    <primary>滤镜</primary>
+    <secondary>绘制</secondary>
+    <tertiary>纯色噪音</tertiary>
+  </indexterm>
+
+  <mediaobject lang="cs;it;ru;zh_CN">
+    <imageobject lang="ru">
+      <imagedata fileref="../images/filters/filters-render-solidnoise.png"
+        format="PNG" />
+    </imageobject>
+    <imageobject lang="cs">
+      <imagedata fileref="../images/filters/filters-render-solidnoise.png"
+        format="PNG" />
+    </imageobject>
+    <imageobject lang="it">
+      <imagedata fileref="../images/filters/it/filters-render-solidnoise.png"
+        format="PNG" />
+    </imageobject>
+    <imageobject lang="zh_CN">
+      <imagedata
+        fileref="../images/filters/zh_CN/filters-render-solidnoise.png"
+        format="PNG" />
+    </imageobject>
+  </mediaobject>
+
+  <sect3>
+    <title>
+      <phrase lang="en">Overview</phrase>
+      <phrase lang="cs">Přehled</phrase>
+      <phrase lang="de">Wirkungsweise</phrase>
+      <phrase lang="es">Generalidades</phrase>
+      <phrase lang="fr">Généralités</phrase>
+      <phrase lang="it">Panoramica</phrase>
+      <phrase lang="no">Oversyn</phrase>
+      <phrase lang="ru">Общая информация</phrase>
+      <phrase lang="zh_CN">概述</phrase>
+    </title>
+
+    <figure>
+      <title>
+        <phrase lang="en">Example of turbulent solid noise.</phrase>
+        <phrase lang="cs">Příklad turbulentního pevného šumu</phrase>
+        <phrase lang="de">
+          Anwendungsbeispiel für das Filter <quote>Plastisches Rauschen</quote>
+        </phrase>
+        <phrase lang="es">Ejemplo del filtro ruido sólido.</phrase>
+        <phrase lang="fr">
+          Exemple de rendu obtenu avec le filtre Brouillage uni.
+        </phrase>
+         <phrase lang="it">
+          Esempio di applicazione del filtro Disturbo solido
+        </phrase>
+        <phrase lang="no">Eksempel på bruk av filteret</phrase>
+        <phrase lang="ru">То же изображение до и после применения фильтра
+          <quote>Сплошной шум</quote>
+        </phrase>
+        <phrase lang="zh_CN">弥散纯色噪音范例。</phrase>
+      </title>
+
+<!--
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="../images/filters/examples/taj_orig.jpg"
+            format="JPG" />
+        </imageobject>
+        <caption lang="en;de">
+          <para lang="en">Original image</para>
+          <para lang="de">Originalbild</para>
+        </caption>
+      </mediaobject>
+-->
+      <mediaobject>
+        <imageobject>
+          <imagedata
+            fileref="../images/filters/examples/render-taj-solidnoise.jpg"
+            format="JPG" />
+        </imageobject>
+        <caption lang="en;de;no">
+          <para lang="en">Filter <quote>Solid noise</quote> applied</para>
+          <para lang="de">
+            Filter <quote>Plastisches Rauschen</quote> angewandt
+          </para>
+          <para lang="no">
+            Eksempel på bruk av filteret <quote>Massiv støy</quote>
+          </para>
+        </caption>
+      </mediaobject>
+    </figure>
+
+    <para lang="en">
+      You can find this filter from the image menu through
+      <menuchoice>
+        <guimenu>Filte<accel>r</accel>s</guimenu>
+        <guisubmenu><accel>R</accel>ender</guisubmenu>
+        <guisubmenu><accel>C</accel>louds</guisubmenu>
+        <guimenuitem><accel>S</accel>olid noise</guimenuitem>
+      </menuchoice>
+    </para>
+
+    <para lang="cs">
+      Tento filtr lze vyvolat z nabídky okna obrázku volbou
+      <menuchoice>
+        <guimenu>Filtry</guimenu>
+        <guisubmenu>Vykreslení</guisubmenu>
+        <guisubmenu>Mraky</guisubmenu>
+        <guimenuitem>Pevný šum</guimenuitem>
+      </menuchoice>.
+    </para>
+
+    <para lang="es">
+      Puede encontrar este filtro en
+      <menuchoice>
+        <guimenu><accel>F</accel>iltros</guimenu>
+        <guisubmenu><accel>R</accel>enderizado</guisubmenu>
+        <guisubmenu><accel>N</accel>ubes</guisubmenu>
+        <guimenuitem>Ruido <accel>s</accel>ólido</guimenuitem>
+      </menuchoice>
+    </para>
+
+    <para lang="fr">
+      On accède à ce filtre par le menu d'image en suivant
+      <menuchoice>
+        <guimenu>Filt<accel>r</accel>es</guimenu>
+        <guisubmenu><accel>R</accel>endu</guisubmenu>
+        <guisubmenu>N<accel>u</accel>ages</guisubmenu>
+        <guimenuitem><accel>B</accel>rouillage uni</guimenuitem>
+      </menuchoice>
+    </para>
+
+    <para lang="it">
+      Questo filtro si trova nel menu immagine:
+      <menuchoice>
+        <guimenu>Filt<accel>r</accel>i</guimenu>
+        <guisubmenu><accel>R</accel>ender</guisubmenu>
+        <guisubmenu>N<accel>u</accel>vole</guisubmenu>
+        <guimenuitem>Disturbo <accel>s</accel>olido</guimenuitem>
+      </menuchoice>
+    </para>
+
+    <para lang="no">
+      Du har tilgang til filteret frå biletmenyen via
+      <menuchoice>
+        <guimenu>Filter</guimenu>
+        <guisubmenu>Teiknefilter</guisubmenu>
+        <guisubmenu>Skyer</guisubmenu>
+        <guimenuitem>Massiv støy</guimenuitem>
+      </menuchoice>
+    </para>
+
+    <para lang="ru">
+      Этот фильтр находится в меню
+      <menuchoice>
+        <guimenu>Фильтры</guimenu>
+        <guisubmenu>Визуализация</guisubmenu>
+        <guisubmenu>Облака</guisubmenu>
+        <guimenuitem><accel>С</accel>плошной шум</guimenuitem>
+      </menuchoice>
+    </para>
+
+    <para lang="zh_CN">
+      该滤镜在<guimenuitem>图像&gt;滤镜/绘制/云彩/纯色噪音</guimenuitem>
+    </para>
+
+    <para lang="en">
+      Solid Noise is a great texture maker. Note that this noise is
+      always gray, even if you applied it to a very colorful image (it
+      doesn't matter what the original image looks like -- this filter
+      completely overwrites any existing background in the layer it is
+      applied to). This is also a good tool to create displacement maps for
+      the <link linkend="plug-in-warp">Warp</link> plug-in or for the
+      <link linkend="plug-in-bump-map">Bump Map</link> plug-in. With the
+      "turbulence" setting active, the results look quite a bit like real
+      clouds.
+    </para>
+
+    <para lang="cs">
+      Pevný šum je výborný prostředek pro tvorbu textur. Jím vytvořený šum je
+      vždy ve škále šedé, a to i tehdy, pokud je filtr aplikován na barevný
+      obrázek (filtr existující vrstvu či výběr zcela přepíše, vůbec nebere
+      obrazovou informaci z ní v potaz). Je to také dobrý nástroj pro tvorbu
+      map pro filtry Mapa vyvýšení a Warp <!-- FIXME cs -->. Je-li aktivní volba
+      "turbulentní", připomíná výsledek skutečné mraky. Příklad je ukázán
+      níže.
+    </para>
+
+    <para lang="de">
+      Dieses Filter ist hervorragend geeignet, um Texturen zu erstellen. Das
+      Ergebnis dieses Filters ist ein Graustufenbild, welches den Inhalt der
+      aktiven Ebene ersetzt. Muster, die Sie mit diesem Filter erstellen,
+      lassen sich auch in den Filtern <link linkend="plug-in-warp">Warp</link>
+      oder <link linkend="plug-in-bump-map">Bumpmap</link> verwenden.
+    </para>
+
+    <para lang="es">
+      Ruido sólido es un gran generador de texturas. Este ruido es,
+      siempre, gris. El filtro sobreescribe completamente el contenido de
+      la capa activa. También es una herramienta para crear mapas de
+      desplazamiento para los complementos
+      <link linkend="plug-in-warp">Deformar</link> o
+      <link linkend="plug-in-bump-map">Mapa de relieve</link>. Con
+      "turbulencia" activa, el resultado se parece un poco a las nubes
+      reales.
+    </para>
+
+    <para lang="fr">
+      Le filtre brouillage uni est un générateur de texture. Il remplacera
+      le contenu du calque actif. C'est aussi un bon outil pour créer des
+      cartes de déplacement pour le filtre
+      <link linkend='plug-in-warp'>Décaler</link>
+      ou de repoussage pour le filtre
+      <link linkend='plug-in-bump-map'>Carte de repoussage</link>
+      Le résultat sera plus proche d'un aspect nuageux si l'option
+      <guilabel>turbulence</guilabel> est cochée. Un exemple est montré
+      ci-dessus.
+    </para>
+
+    <para lang="it">
+      Disturbo solido è un buona fabbrica di motivi. Si noti che questo
+      disturbo è sempre grigio anche se applicato ad una immagine a colori
+      (non importa quale sia l'immagine originale -- questo filtro sovrascrive
+      il contenuto del livello corrente). E' anche un buono strumento per
+      la creazione di mappe a sbalzo per i filtri
+      <link linkend='plug-in-warp'>Warp</link> oppure
+      <link linkend='plug-in-bump-map'>Mappa a sbalzo</link>.
+      Con l'impostazione "turbolenza" impostata i risultati assomigliano un
+      poco a delle nuvole reali. Un esempio è mostrato sopra.
+    </para>
+
+    <para lang="no">
+      Dette filteret er ypparleg for å lage teksturar i gråfarge. Det er
+      også svært brukbart for å lage deplasementkart til bruk for
+      filteret <link linkend="plug-in-warp">dekaler</link> eller i
+      filteret <link linkend="plug-in-bump-map">biletpunktkopling</link>.
+      Med <guilabel>turbulens</guilabel> aktivisert, kan resultatet bli
+      svært likt naturlege skyer.
+    </para>
+
+    <para lang="ru">
+      Фильтр <quote>Сплошной шум</quote> - великолепный создатель текстур.
+      Шум всегда серый, и фильтр заменяет исходное изображение результатом
+      своей работы. Этот хороший инстумент для создания карт замещения для
+      фильтров <link linkend='plug-in-warp'>Деформация</link> и
+      <link linkend='plug-in-bump-map'>Карта рельефа</link>.
+      При выборе параметра <quote>Турбулентность</quote> результат очень
+      напоминает облако.
+    </para>
+
+    <para lang="zh_CN">
+      纯色噪音是非常好的材质生成工具。需要注意的是该噪音常常是灰色的，即使应用到一个非常艳丽的图像(它不在乎源图像看上如何--该滤镜完全覆盖图层上的任何已存在背景)。当勾选“弥散”时，其结果很像真正的云彩。下面有这样一个范例。
+    </para>
+  </sect3>
+
+  <sect3 lang="de">
+    <title>
+      <phrase lang="de">Filteraufruf</phrase>
+    </title>
+
+    <para lang="de">
+      Dieses Filter lässt sich über das Menü
+      <menuchoice>
+        <guimenu><accel>F</accel>ilter</guimenu>
+        <guisubmenu><accel>R</accel>ender</guisubmenu>
+        <guisubmenu><accel>W</accel>olken</guisubmenu>
+        <guimenuitem><accel>P</accel>lastisches Rauschen</guimenuitem>
+      </menuchoice>
+      im Bildfenster aufrufen.
+    </para>
+  </sect3>
+
+  <sect3>
+    <title>
+      <phrase lang="en">Options</phrase>
+      <phrase lang="cs">Volby</phrase>
+      <phrase lang="de">Eigenschaften</phrase>
+      <phrase lang="es">Opciones</phrase>
+      <phrase lang="fr">Options</phrase>
+      <phrase lang="it">Opzioni</phrase>
+      <phrase lang="no">Innstillingar</phrase>
+      <phrase lang="ru">Параметры</phrase>
+      <phrase lang="zh_CN">选项</phrase>
+    </title>
+
+    <figure lang="en;de;es;fr;no;ru">
+      <title>
+        <phrase lang="en">
+          <quote>Solid Noise</quote> filter options
+        </phrase>
+        <phrase lang="de">
+          Eigenschaften für das Filter <quote>Plastisches Rauschen</quote>
+        </phrase>
+        <phrase lang="es">
+          Opciones del filtro <quote>Ruido sólido</quote>
+        </phrase>
+        <phrase lang="fr">
+          Options du filtre <quote>Brouillage uni</quote>
+        </phrase>
+        <phrase lang="no">
+          Innstillingane for filteret <quote>Massiv støy</quote>
+        </phrase>
+        <phrase lang="ru">
+          Параметры фильтра <quote>Сплошной шум</quote>
+        </phrase>
+      </title>
+      <mediaobject>
+        <imageobject lang="en;ru">
+          <imagedata fileref="../images/filters/solid-noise-options.png"
+                     format="PNG" />
+        </imageobject>
+        <imageobject lang="de">
+          <imagedata fileref="../images/filters/de/options-render-solidnoise.png"
+                     format="PNG" />
+        </imageobject>
+        <imageobject lang="es">
+          <imagedata fileref="../images/filters/es/solid-noise-options.png"
+                     format="PNG" />
+        </imageobject>
+        <imageobject lang="fr">
+          <imagedata fileref="../images/filters/fr/solid-noise-options.png"
+                     format="PNG" />
+        </imageobject>
+        <imageobject lang="no">
+          <imagedata fileref="../images/filters/no/options-render-solidnoise.png"
+                     format="PNG" />
+        </imageobject>
+      </mediaobject>
+    </figure>
+
+    <variablelist>
+      <varlistentry lang="de">
+        <term lang="de">Vorschau</term>
+        <term lang="no">Førehandsvising</term>
+
+        <listitem>
+          <para lang="de">
+            Dieses Filter stellt Ihnen eine kleines Vorschaufenster zur
+            Verfügung, in dem Sie die Wirkung der aktuellen Einstellungen
+            der Filtereigenschaften ansehen können, ohne das Filter bereits
+            direkt auf das Bild angewendet zu haben.
+          </para>
+          <para lang="no">
+            Førehandsvisinga syner endringane i biletet etter kvart som du
+            endrar parametra. Endringane blir ikkje lagt inn i biletet før du
+            trykker på knappen <guilabel>OK</guilabel>.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term lang="en">Random Seed</term>
+        <term lang="cs">Hnízdo náhodných čísel</term>
+        <term lang="de">Zufallssaat</term>
+        <term lang="es">Semilla aleatoria</term>
+        <term lang="fr">Graine aléatoire</term>
+        <term lang="it">Seme casuale</term>
+        <term lang="no">Tilfeldig frø</term>
+        <term lang="ru">Случайное зерно</term>
+        <term lang="zh_CN">随机数种子</term>
+        <listitem>
+          <para lang="en">
+            <guilabel>Random Seed</guilabel> controls random behaviour of the
+            filter. If the same random seed in the same situation is used, the
+            filter produces exactly the same results. A different random seed
+            produces different results. Random seed can be entered manually or
+            generated randomly by pressing <guibutton>New Seed</guibutton>
+            button.
+          </para>
+          <para lang="en">
+            When the <guilabel>Randomize</guilabel> option is checked, random
+            seed cannot be entered manually, but is randomly generated each
+            time the filter is run. If it is not checked, the filter remembers
+            the last random seed used.
+          </para>
+
+          <para lang="cs">
+            <guilabel>Hnízdo náhodných čísel</guilabel> určuje náhodnost
+            chování filtru. Pokud je ve stejné situaci použito stejné
+            hnízdo, výsledky filtru jsou stejné. Použití jiného hnízda
+            způsobí odlišné výsledky. Hnízdo lze zadat ručně nebo náhodně
+            vygenerovat tlačítkem <guibutton>Nové hnízdo</guibutton>.
+          </para>
+          <para lang="cs">
+            Je-li zaškrtnuta volba <guilabel>Randomizovat</guilabel>, nelze
+            hnízdo náhodných čísel zadávat ručně, ale je náhodně generováno
+            při každém použití filtru. V opačném případě si filtr pamatuje
+            poslední použité hnízdo náhodných čísel.
+          </para>
+
+          <para lang="de">
+            Mit dieser Eigenschaft können Sie dem Zufall, welcher
+            maßgeblich das entstehende Muster bestimmt, auf die Sprünge
+            helfen. Durch einen Klick auf die Schaltfläche
+            <guibutton>Neu Würfeln</guibutton> können Sie einen neuen
+            Wert erzeugen. Das daraus resultierende Muster wird in der
+            Vorschau angezeigt. Sie können den Wert auch direkt in das
+            Eingabefeld eintragen und so ein Muster für Ihr Geburtsdatum
+            oder Ihre persönliche Lieblingszahl erhalten.
+          </para>
+          <para lang="de">
+            Wenn Sie diese Eigenschaft aktivieren, wird automatisch bei
+            jedem Aufruf des Filters eine neue Zufallszahl erzeugt.
+            Falls die Eigenschaft nicht aktiviert ist, wird der zuletzt
+            verwendete Wert beibehalten. Dies kann nützlich sein, wenn
+            Sie die Ergebnisse des Filters reproduzieren wollen.
+          </para>
+
+          <para lang="es">
+           <guilabel>Semilla aleatoria</guilabel> controla el
+           comportamiento aleatorio del filtro. Si se utiliza la misma
+           semilla aleatoria en la misma situación, el filtro producirá
+           el mismo resultado. Una semilla diferente produce diferentes
+           resultados. Se puede introducir una semilla aleatoria de
+           forma manual o de forma aleatoria pulsando sobre el botón
+           <guibutton>Nueva semilla</guibutton>,
+          </para>
+          <para lang="es">
+            Cuando se marca la opción <guilabel>Aleatorizar</guilabel>, se
+            genera una semilla aleatoriamente cuando se ejecuta el filtro.
+            Si la opción no está marcada, el filtro recuerda la última
+            semilla utilizada.
+          </para>
+
+          <para lang="fr">
+            <guibutton>Graine aléatoire</guibutton> contrôle le caractère
+            aléatoire du filtre. Si la même graine aléatoire est utilisée
+            dans la même situation, le filtre produira les mêmes résultats.
+            Un graine aléatoire différente produira des résultats différents.
+            Une graine aléatoire peut être fournie manuellement, ou générée
+            au hasard en pressant le bouton <guibutton>Nouvelle
+            Graine</guibutton>.
+          </para>
+          <para lang="fr">
+            Lorsque l'option <guilabel>Aléatoire</guilabel> est cochée, la
+            graine aléatoire ne peut plus être fournie manuellement, elle est
+            générée aléatoirement à chaque fois que le filtre est utilisé. Si
+            elle n'est pas cochée, le filtre se souvient de la dernière graine
+            aléatoire utilisée.
+          </para>
+
+          <para lang="it">
+            <guilabel>Seme casuale</guilabel> controlla il comportamento
+            casuale del filtro. Se viene utilizzato lo stesso seme nelle
+            medesime condizioni il filtro produce gli stessi risultati. Un
+            seme casuale differente produce risultati diversi. Il seme casuale
+            può essere immesso manualmente oppure generato casualmente premendo
+            il pulsante <guibutton>Nuovo seme</guibutton>.
+          </para>
+          <para lang="it">
+            Quando l'opzione <guilabel>Casualizza</guilabel> è selezionata il
+            seme casuale non può essere immesso manualmente ma viene generato
+            ogni volta che il filtro viene eseguito. Se non selezionata il
+            filtro ripropone l'ultimo seme utilizzato.
+          </para>
+
+          <para lang="no">
+            Eit <quote>frø</quote> er det talet filteret bruker som
+            utgangspunkt for å lage tilfeldige tal. Det same frøet vil, dersom
+            tilhøva er dei same, gi same mønsteret. Du kan skrive inn
+            frø direkte, eller du kan trykke <guilabel>Nytt frø</guilabel>
+            for å lage eit nytt, tilfeldig frø.
+          </para>
+          <para lang="no">
+            Dersom det er kryssa av for <guilabel>Slump</guilabel> er det
+            ikkje råd å skrive inn nye frø. I staden blir det generert eit
+            tilfeldig frø kvar gong filteret blir aktivert. Dersom denne ikkje
+            er avkryssa, vil programmet bruke same frøet som blei
+            brukt sist.
+          </para>
+
+          <para lang="ru">
+            <guilabel>Случайное зерно</guilabel> определяет случайное
+            поведение фильтра. Одно и то же зерно при тех же
+            обстоятельствах даст тот же результат. Разные зёрна дают
+            разные результаты. Зерно можно ввести вручную или
+            произвести автоматически, нажав на кнопку
+            <guibutton>Новое зерно</guibutton>.
+          </para>
+          <para lang="ru">
+            Когда выбран параметр <guilabel>Перемешать</guilabel>,
+            случайное зерно нельзя ввести вручную, оно производится
+            автоматически при каждом запуске фильтра. Если параметр не
+            выбран, зерно сохраняется от запуска к запуску.
+          </para>
+
+          <!-- zh_CN FIXME: please rewrite the Chinese parts and then place it above on proper location: -->
+          <para lang="zh_CN">
+            <guilabel>随机数种子</guilabel>控制随机元素。而<guibutton>随机</guibutton>勾选按钮则使种子使用电脑的硬件时间。除非您想在以后重复完全相同的随机图案，不然就没有必要使用其它的选项了。
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term lang="en">Turbulent</term>
+        <term lang="cs">Turbulentní</term>
+        <term lang="de">Turbulenz</term>
+        <term lang="es">Turbulento</term>
+        <term lang="fr">Turbulent</term>
+        <term lang="it">Turbolenza</term>
+        <term lang="no">Turbulens</term>
+        <term lang="ru">Турбулентность</term>
+        <term lang="zh_CN">弥散</term>
+
+        <listitem>
+          <para lang="en">
+            If you check this, you'll get very interesting effects,
+            often something that looks much like oil on water, or
+            clouds of smoke, or living tissue, or a Rorschach blot.
+          </para>
+          <para lang="cs">
+            Zaškrtnutím této volby se dosáhne velice zajímavých výsledků
+            připomínajících olej na vodě, mraky kouře, živou tkáň nebo
+            skvrny z Rorschachova testu.
+          </para>
+          <para lang="de">
+            Wenn Sie diese Eigenschaft aktivieren, werden Sie sehr
+            interessante Muster erhalten. Manchmal ähneln sie einem Ölfilm auf
+            einer Wasseroberfläche, manchmal einer Rauchwolke oder einem <ulink
+            url="http://de.wikipedia.org/wiki/Hermann_Rorschach">Rorschach</ulink>-Fleck.
+          </para>
+          <para lang="es">
+            Si marca esta opción, obtendrá varios efectos interesantes, a
+            menudo algo parecido al aceite en el agua, o nubes de humo, o
+            un tejido orgánico, o una mancha de Rorschach.
+          </para>
+          <para lang="fr">
+            Si vous activez cette option, vous aurez des effets intéressants,
+            souvent quelque chose qui ressemble à une surface liquide,
+            nuageuse, un tissu soyeux ou un test de Rorschach.
+          </para>
+          <para lang="it">
+            Se si seleziona questa opzione si otterranno effetti interessanti,
+            di solito qualcosa che somiglia ad uno strato di olio sull'acqua
+            oppure nuvole di fumo o un tessuto organico o una macchia di
+            Rorschach.
+          </para>
+          <para lang="no">
+            Denne innstillinga kan gi ganske interessante effektar, noe liknande
+            oljefilm på vatn, cellevev, røykskyer eller <quote>Rorschach
+            flekker</quote> (desse flekkane som blir brukte i psykiatrien for
+            å teste folk).
+          </para>
+          <para lang="ru">
+            Даёт интересные эффекты, на пример масло на воде, облако дыма,
+            живая ткань или пятно Роршака.
+          </para>
+          <para lang="zh_CN">
+            它可以产生非常有趣的效果，通常看上去像油融入水中，或烟尘。
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term lang="en">Detail</term>
+        <term lang="cs">Detail</term>
+        <term lang="de">Details</term>
+        <term lang="es">Detalle</term>
+        <term lang="fr">Détail</term>
+        <term lang="it">Dettagli</term>
+        <term lang="no">Detaljar</term>
+        <term lang="ru">Детали</term>
+        <term lang="zh_CN">细节</term>
+        <listitem>
+          <para lang="en">
+            This controls the amount of detail in the noise
+            texture. Higher values give a higher level of detail, and
+            the noise seems to be made of spray or small particles,
+            which makes it feel hard. A low value makes it more soft
+            and cloudy.
+          </para>
+          <para lang="cs">
+            Tato volba určuje množství detailů ve vytvořené textuře.
+            Čím vyšší hodnota, tím více detailů a tím více textura vypadá,
+            jako by byla složena z menších částí. Nižší hodnota činí
+            texturu měkčí a mlhovitější.
+          </para>
+          <para lang="de">
+            Mit dieser Eigenschaft kontrollieren Sie den Detailgehalt des
+            Musters. Den Wert können Sie über ein Eingabefeld im Bereich von
+            1 (wenige Details) bis 15 (viele Details) einstellen. Mit einem
+            niedrigen Wert wirken die Muster eher weich und wolkenhaft, mit
+            einem hohen eher härter und kräftiger.
+          </para>
+          <para lang="es">
+            Controla la cantidad de detalle de la textura del ruido. Los
+            valores más altos producen un mayor nivel de detalle, y el
+            ruido parece estar hecho con un pulverizador o partículas
+            pequeñas, más contrastada. Un valor bajo, produce una textura
+            más suave, como una nube.
+          </para>
+          <para lang="fr">
+            Contrôle la quantité de détail appliquée dans la texture
+            brouillée. Une valeur élevée donne des détails fins et
+            produira l'impression d'un nuage de particules ou de spray
+            tandis qu'une valeur faible donnera un aspect diffus, cotonneux.
+          </para>
+          <para lang="it">
+            Controlla la quantità di dettaglio del motivo di disturbo. Valori
+            più alti restituiscono un più alto livello di dettaglio e il
+            disturbo sembra essere costituito da spruzzi o da piccole
+            particelle che gli conferiscono un aspetto di durezza. Un valore
+            più basso lo rendono più soffice e simile a nuvole.
+          </para>
+          <para lang="no">
+            Låge verdiar vil gi få detaljar og eit resultat som kan minne om
+            mjuke skyer. Høge tal vil gi eit hardare bilete, meir som om det
+            skulle vere laga av små partiklar, eller spraymaling.
+          </para>
+          <para lang="ru">
+            Определяет степень деталей в текстуре шума. Большие значения дают
+            больше деталей, и шум напоминает распыл и маленькин частицы. При
+            малых значениях шум выглядит мягче и напоминает облако.
+          </para>
+          <para lang="zh_CN">
+            它控制噪音材质的细节数量。一个高值产生更多细节，其噪音好像由很多小的部分组成，看上去比较硬。而低值使其更柔软。
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term lang="en">Tileable</term>
+        <term lang="cs">Dlaždicovatelný</term>
+        <term lang="de">Kachelbar</term>
+        <term lang="es">Enlosable</term>
+        <term lang="fr">Raccordable</term>
+        <term lang="it">Affiancabile</term>
+        <term lang="no">Flisbar</term>
+        <term lang="ru">Бесшовный</term>
+        <term lang="zh_CN">可平铺</term>
+
+        <listitem>
+          <para lang="en">
+            If you check Tileable, you'll get a noise which can be
+            used as tiles. For example, you can use it as a background
+            in an HTML page, and the tile edges will be joined
+            seamlessly.
+          </para>
+          <para lang="cs">
+            Je-li tato volba aktivní, lze vytvořený šum použít jako dlaždice.
+            Například lze použít jako pozadí na webové stránce, hranice mezi
+            jednotlivými dlaždicemi nebudou patrné.
+          </para>
+          <para lang="de">
+            Wenn Sie diese Eigenschaft aktivieren, wird das vom Filter
+            erzeugte Muster so gestaltet sein, dass Sie es problemlos
+            kacheln, also endlos aneinander setzen können.
+          </para>
+          <para lang="es">
+            Si marca esta opción, obtendrá un ruido que se puede usar como
+            mosaicos. Por ejemplo, se puede usar como fondo en una página
+            HTML, y los bordes del mosaico se unirán sin costuras.
+          </para>
+          <para lang="fr">
+            Si vous cochez ceci vous allez produire un motif jointif
+            réutilisable par exemple comme texture de fond dans une page Web.
+          </para>
+          <para lang="it">
+            Se si seleziona Affiancabile si otterrà un motivo di disturbo che
+            può essere utilizzato come una piastrella. Impiegandolo ad esempio
+            come sfondo di una pagina HTML i bordi si fonderanno senza stacco.
+          </para>
+          <para lang="no">
+            Dette, litt merkelege ordet betyr bare at dersom funksjonen er
+            avmerka, vil du få ein støy som kan flisleggast. Dette er ofte brukt
+            som bakgrunn i nettsider, og betyr at fleire kopiar av biletet kan
+            leggast side om side utan synlege fuger.
+          </para>
+          <para lang="ru">
+            При выборе параметра <quote>Бесшовный</quote> получается шум,
+            который можно использовать с повторением. Этот хорошо
+            подходит для фона веб страниц.
+          </para>
+          <para lang="zh_CN">
+            它使噪音可以用作平铺。例如，可以在 HTML 页面中用作背景，平铺的边缘会无缝地连接在一起。
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term lang="en">X and Y Size</term>
+        <term lang="cs">Velikost X a Y</term>
+        <term lang="de">X-Größe; Y-Größe</term>
+        <term lang="es">Tamaño X e Y</term>
+        <term lang="fr">Taille X/Y</term>
+        <term lang="it">Dimensione X e Y</term>
+        <term lang="no">X- og Y-storleik</term>
+        <term lang="ru">Размер X и Y</term>
+        <term lang="zh_CN">X 和 Y 大小</term>
+        <listitem>
+          <para lang="en">
+            These control the size and proportion of the noise shapes
+            in X (horizontal) and Y (vertical) directions (range 0.1
+            to 16.0).
+          </para>
+          <para lang="cs">
+            Určuje měřítko šumu ve vodorovném (X) a svislém (Y) směru
+            (v rozsahu 0.1 až 16.0).
+          </para>
+          <para lang="de">
+            Mit diesen Eigenschaften können Sie einstellen, wie stark
+            das Filter das Muster in horizontaler und vertikaler
+            Richtung dehnt beziehungsweise staucht. Die Einstellung erfolgt
+            dabei mit den jeweils vorhandenen Schiebereglern oder den
+            zugeordneten Eingabefeldern im Bereich von 0,1 bis 16,0.
+            Kleine Werte dehnen das Muster in die entsprechende
+            Richtung, große stauchen es.
+          </para>
+          <para lang="es">
+            Controlan el tamaño y la proporción de las formas del ruido en
+            la direcciones X (horizontal) e Y (vertical). El rango entre
+            0.1 y 16.0.
+          </para>
+          <para lang="fr">
+            Contrôle la taille et la proportion de brouillage dans
+            les directions X (horizontal) et Y(vertical)
+            (valeurs comprises entre 0.1 et 16.0).
+          </para>
+          <para lang="it">
+            Controlla la dimensione e le proporzioni delle circonvoluzioni del
+            disturbo nelle direzioni X (orizzontale) e Y (verticale).
+            Varia tra 0.1 e 16.0.
+          </para>
+          <para lang="no">
+            Her bestemmer du storleik og proporsjonar for støyen i biletet.
+          </para>
+          <para lang="ru">
+            Определяют размер и пропорции шумовых фигур по горизонтали (X) и
+            вертикали (Y) (диапазон от 0,1 до 16,0).
+          </para>
+          <para lang="zh_CN">
+            它们控制噪音形状在 X (水平)和 Y (垂直)方向(范围是 0.1 到 16.0)上的大小和比例。
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </sect3>
+</sect2>
+
