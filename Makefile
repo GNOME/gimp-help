@@ -190,8 +190,8 @@ help:
 # xmldir/path/to/file.xml --> potdir/path/to/file.pot
 $(POT_FILES): $(potdir)/%.pot : $(xmldir)/%.xml
 	$(cmd) f=$@; d=$${f%/*}; test -d $$d || $(mkdir_p) $$d
-	$(msg) "$@"
-	$(cmd) $(call xml2pot,$<,$@)
+	$(msg) "[POT] $@"
+	$(cmd) if test -s $<; then $(call xml2pot,$<,$@); else touch $@; fi
 
 # Targets suitable for command line
 # ("make pot" will work even if pot exists)
@@ -207,8 +207,8 @@ define MAKE_PO_RULES
 $(1)_PO_FILES = $$(patsubst $$(potdir)/%.pot, $$(podir)/$(1)/%.po, $$(POT_FILES))
 $$($(1)_PO_FILES): $$(podir)/$(1)/%.po : $$(potdir)/%.pot
 	$$(cmd) f=$$@; d=$$$${f%/*}; test -d $$$$d || $$(mkdir_p) $$$$d
-	$$(msg) "$$@"
-	$$(cmd) $$(call pot2po,$$<,$(1),$$@)
+	$$(msg) "[PO]  $$@"
+	$$(cmd) if test -s $$<; then $$(call pot2po,$$<,$(1),$$@); else touch $$@; fi
 # Debugging
 list-pofiles-$(1) list-po-files-$(1) list-po-$(1):
 	@echo $$($(1)_PO_FILES)
@@ -234,8 +234,12 @@ define MAKE_XML_RULES
 $(1)_XML_FILES = $$(XML_FILES:$$(xmldir)/%=$$(xmlpodir)/$(1)/%)
 $$($(1)_XML_FILES): $$(xmlpodir)/$(1)/%.xml : $$(podir)/$(1)/%.po
 	$$(cmd) f=$$@; d=$$$${f%/*}; test -d $$$$d || $$(mkdir_p) $$$$d
-	$$(msg) "$$@"
-	$$(cmd) @$$(call po2xml,$$(@:$$(xmlpodir)/$(1)/%=$$(xmldir)/%),$$<,$(1),$$@)
+	$$(msg) "[XML] $$@"
+	$$(cmd) if test -s $$(@:$$(xmlpodir)/$(1)/%=$$(xmldir)/%); then \
+		$$(call po2xml,$$(@:$$(xmlpodir)/$(1)/%=$$(xmldir)/%),$$<,$(1),$$@); \
+	else \
+		touch $$@; \
+	fi
 # This is indirectly used as HTML prerequisite:
 $$(xmlpodir)/$(1): $$($(1)_XML_FILES)
 	$$(cmd) touch $$(xmlpodir)/$(1)
