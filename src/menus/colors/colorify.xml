@@ -14,8 +14,9 @@
   2005-08-25 de added by axel.wernicke
 -->
 <!--TODO es ru: update/review-->
+<!-- TODO all: Needs rewriting for v2.4? The options are different from those described. At last in my version of v2.4.6 (kost)-->
 <sect2 id="plug-in-colorify" lang="en;de;es;fr;it;lt;no;ru">
-  <sect2info role="cvs" lang="en;de;es;fr">
+  <sect2info role="cvs" lang="en;de;es;fr;no">
     <revhistory>
       <revision lang="en">
         <revnumber>$Revision$</revnumber>
@@ -37,6 +38,11 @@
         <date>2007-12-14</date>
         <authorinitials>j.h</authorinitials>
       </revision>
+      <revision lang="no">
+        <revnumber>$Revision$</revnumber>
+        <date>2008-08-07</date>
+        <authorinitials>KoSt</authorinitials>
+      </revision>
     </revhistory>
   </sect2info>
 
@@ -48,7 +54,7 @@
     <phrase lang="fr">Coloriser</phrase>
     <phrase lang="it">Colorazione</phrase>
     <phrase lang="lt">Nuspalvinti</phrase>
-    <phrase lang="no">Fargelegg</phrase>
+    <phrase lang="no">Innfarging</phrase>
     <phrase lang="ru">Окрашивание</phrase>
     <phrase lang="zh_CN">单色化</phrase>
   </title>
@@ -96,10 +102,10 @@
 
   <indexterm lang="no">
     <primary>Fargar</primary>
-    <secondary>Fargar</secondary>
-    <tertiary>Fargelegg</tertiary>
+    <secondary>Innfarging</secondary>
   </indexterm>
-  <indexterm lang="no"><primary>Fargelegg biletet</primary></indexterm>
+  <indexterm lang="no"><primary>Innfarging</primary></indexterm>
+  <indexterm lang="no"><primary>Fargelegge biletet</primary></indexterm>
 
   <indexterm lang="ru">
     <primary>Фильта</primary><secondary>Цвет</secondary>
@@ -186,7 +192,7 @@
           <para lang="fr">Après application du filtre</para>
           <para lang="lt">Pritaikytas filtras <quote>Nuspalvinti</quote></para>
           <para lang="no">
-            Verknad av filteret <quote>Fargelegg</quote>
+            Verknad av filteret <quote>innfarging</quote>
           </para>
           <para lang="it">Il filtro <quote>Colorazione</quote> applicato</para>
         </caption>
@@ -195,6 +201,7 @@
 
     <para lang="en">
       It renders a greyscaled image like it is seen through a colored glass.
+      <!-- The filter works only on images in RGB mode. -->
     </para>
     <para lang="de">
       Bilder, die mit diesem Filter bearbeitet werden, erscheinen dann wie
@@ -241,8 +248,9 @@
     </para>
 
     <para lang="no">
-      Filteret fargelegg eit bilete omlag slik det ville sjå ut sett gjennom
-      farga glas.
+      Filteret fargelegg biletet med ein vald farge i ulike sjatteringar. 
+      Effekten kan likna den du får når du ser biletet gjennom farga glas.
+      Filteret verkar bare på bilete i RGB-modus.
     </para>
 
     <para lang="ru">
@@ -316,7 +324,7 @@
       Du har tilgang til filteret frå biletmenyen via
       <menuchoice>
         <guimenu>Fargar</guimenu>
-        <guisubmenu>Fargelegg</guisubmenu>
+        <guisubmenu>Innfarging</guisubmenu>
       </menuchoice>
     </para>
   </sect3>
@@ -384,23 +392,34 @@
       </mediaobject>
     </figure>
 
+    <para lang="no">
+      Du kan her velje farge og bestemma metninga og lysverdien for denne.
+    </para>
+    
     <variablelist>
       <varlistentry>
-        <term lang="en;es">Color</term>
+        <term lang="en;es">Color</term><!--Hue -->
         <term lang="cs">Barvy</term>
         <term lang="de">Eigenschaften</term>
         <term lang="fr">Couleur</term>
         <term lang="it">Colore</term>
         <term lang="lt">Spalva</term>
-        <term lang="no">Farge</term>
+        <term lang="no">Kulør</term>
         <term lang="ru">Цвет</term>
         <term lang="zh_CN">颜色</term>
 
         <listitem>
+        <!-- CHECK all: In my v2.4 the options are quite different.
+            Please verify. (My 'en' suggestions are translated from Norwegian) -->
           <para lang="en">
             A color palette is available and you can select your own color
             by clicking on the <guilabel>Custom Color</guilabel> swatch.
           </para>
+          <!-- 
+          <para lang="en">
+            With this slide you can select a color from 0 to 360 degrees on the color circle.
+          </para>
+           -->
           <para lang="cs">
             V dialogu lze zvolit barvu, která má být použita ke kolorování. V
             dolní řadě je k dispozici sedm základních barev. Kliknutím na pole
@@ -433,10 +452,8 @@
             <guilabel>Kita spalva</guilabel>.
           </para>
           <para lang="no">
-            Du kan velje farge ved å trykka på ein av dei ferdigdefinerte
-            fargane, eller du kan trykke i ruta <guilabel>Vel farge</guilabel>
-            for å få fram <link
-            linkend="gimp-color-dialog">fargedialogen</link>.
+            Ved hjelp av glidebrytaren kan du hente ein bestemt farge
+            frå fargesirkelen. Skalaen går frå 0 til 360. 
           </para>
           <para lang="ru">
             Чтобы выбрать цвет, можно вызвать палитру цветов, нажав кнопку
@@ -448,6 +465,40 @@
           </para>
         </listitem>
       </varlistentry>
+
+      <varlistentry lang="no">
+        <!-- <term lang="en">Saturation</term> -->
+        <term lang="no">Metning</term>
+        <listitem>
+          <!--
+          <para lang="en">
+            With this slide you can vary the saturation of the choosen color on a 
+            relative scale from 0 to 100.
+          </para>
+           -->
+          <para lang="no">
+            Ved hjelp av glidebrytaren kan du bestemma metninga, 
+            altså fargestyrken på ein relativ skala frå 0 til 100.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry lang="no">
+        <!-- <term lang="no">Lightness</term> -->
+        <term lang="no">Lysverdi</term>
+        <listitem>
+        <!--
+          <para lang="no">
+            This slide sets the lightness of the choosen color on a relative scale
+            from  -100 (darkest) to 100 (lightest).
+          </para> -->
+          <para lang="no">
+            Ved hjelp av glidebrytaren kan du bestemma kor lys
+            eller mørk fargen skal vere på ein relativ skala frå 
+            -100 (mørk) til 100 (lys).
+          </para>  
+        </listitem>
+      </varlistentry> 
     </variablelist>
   </sect3>
 </sect2>
