@@ -44,8 +44,8 @@
       </revision>
       <revision lang="it">
         <revnumber>$Revision$</revnumber>
-        <date>2007-12-22</date>
-        <authorinitials>alex falappa</authorinitials>
+        <date>2008-08-19</date>
+        <authorinitials>ciampix</authorinitials>
       </revision>
       <revision lang="no">
         <revnumber>$Revision$</revnumber>
@@ -444,7 +444,7 @@
       </title>
 
       <mediaobject>
-        <imageobject lang="en;cs;it;ru">
+        <imageobject lang="en;cs;ru">
           <imagedata
             fileref="../images/filters/filters-color-borderaverage.png"
             format="PNG" />
@@ -587,14 +587,14 @@
             donne pas forcément un meilleur résultat (voir l'exemple qui
             suit).
           </para>
-          <para lang="it"><!--changed 2007-06-21-->
-            <guilabel>Dimensione del secchiello</guilabel> consente di impostare
-            il numero di colori considerati simili e appartenenti allo stesso
-            <quote>secchiello</quote>- Un basso valore per la dimensione (cioè
-            a dire un alto numero di secchielli) fornisce una migliore precisione
-            nel calcolo del colore medio. Si noti che una miglior precisione
-            non significa necessariamente risultati migliori (si veda l'esempio
-            più avanti.
+          <para lang="it"><!--changed 2007-06-21--> <guilabel>Dimensione
+          del secchiello</guilabel> consente di impostare il numero di
+          colori considerati simili e appartenenti allo stesso
+          <quote>secchiello</quote>- Un basso valore per la dimensione
+          (cioè a dire un alto numero di secchielli) fornisce una migliore
+          precisione nel calcolo del colore medio. Si noti che una miglior
+          precisione non significa necessariamente risultati migliori (si
+          veda l'esempio più avanti.
           </para>
           <para lang="lt">
             Parametras <guilabel>Kibirėlio dydis</guilabel> leidžia
@@ -673,7 +673,7 @@
         </imageobject>
 
         <caption>
-          <!--TODO es;it;lt;ru-->
+          <!--TODO es;lt;ru-->
           <para lang="en">
             Original image: colors are pure Red (255;0;0), pure Blue
             (0;0;255), and different but similar kinds of Green
@@ -698,7 +698,7 @@
           <para lang="it">
             Immagine originale: i colori sono rosso puro (255;0;0), blu puro
             (0;0;255), e differenti, ma simili, gradazioni di verde
-            (00******;11******;00******).
+            (00;255;0 , 63;240;63 , 48;224;47 , 0;192;38).
           </para>
           <para lang="lt">
             Originaliame paveikslėlyje yra gryna raudona (255;0;0),
@@ -815,12 +815,12 @@
       pur. La couleur résultante est devenue la couleur de premier-plan de la
       Boîte à Outils.
     </para>
-    <para lang="it"><!--changed 2007-05-12-->
-      Il colore più frequente sul bordo dell'immagine è il rosso puro (255,0,0).
-      Poiché la dimensione del secchiello è bassa, le differenti gradazioni di
-      verde non sono riconosciute come essere dello stesso colore. Il colore
-      risultante è un rosso quasi puro (254,2,2) che diventa il colore di
-      primo piano della casella strumenti.
+    <para lang="it">
+      Poiché la dimensione del secchiello è bassa, il numero del secchiello
+      è alto. Tutte le sfumature di colore possono essere memorizzate in
+      secchielli diversi. Il secchiello contenente il rosso è il più
+      riempito.  Il colore risultante è un rosso quasi puro (254,2,2) che
+      diventa il colore di primo piano della casella strumenti.
       </para>
     <para lang="lt">
       Dažniausia paveikslėlio rėmelio spalva yra gryna raudona (255,0,0).
@@ -905,9 +905,9 @@
       </mediaobject>
     </figure>
 
-    <!-- Where comes the green (0-63,192-255,0-63) from and how
-    can it be averaged to (32,224,32) if only the two most significant bits are counting?
-    Would it be more readable using hexcode?-->
+    <!-- Where comes the green (0-63,192-255,0-63) from and how can it be
+         averaged to (32,224,32) if only the two most significant bits are
+         counting?  Would it be more readable using hexcode?-->
       <!--08-05-23: I took this information from the gimp-plugin registry when
       border average was a plug-in. Now, it is no longer in the registry and
       this information disappeared :-( -->
@@ -976,10 +976,17 @@
     </para>
     <para lang="it">
       In questo caso la dimensione del secchiello è grande e il loro numero
-      basso. Il filtro guarda ora solo ai due bit più significativi di ogni
-      canale di colore. Ora il verde (0-63,192-255,0-63) è il colore più
-      frequente. Il colore risultante è un verde (32,224,32), che è la media di
-      tutti i colori inclusi nel <quote>secchiello</quote>.
+      basso. I colori simili (in questo caso il verde) vengono
+      immagazzinati nello stesso secchiello. Questo secchiello
+      <quote>verde</quote> ora è il più pieno. Tutti i colori in questo
+      secchiello hanno gli stessi valori per i due bit più significativi:
+      (00******;11******;00******). I rimanenti 6 bit possono avere
+      qualsiasi valore tra 0 e 63 per il rispettivo canale. Perciò in
+      questo secchiello, i canali del colore rosso variano tra 0 e 63, i
+      canali verdi da 192 a 255, i canali blu tra 0 e 63. Il colore
+      risultante è (32,224,32), che, per ogni canale, è la media tra i
+      limiti del campo di variazione dei canali (63 + 0)/2, (255+192)/2 ,
+      (63+0)/2.
     </para>
     <para lang="lt">
       Čia kibirėlio dydis yra didelis, o kibirėlių skaičius mažas.
