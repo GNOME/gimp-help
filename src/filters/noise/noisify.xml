@@ -29,6 +29,11 @@
         <date>2006-11-19</date>
         <authorinitials>j.h</authorinitials>
       </revision>
+      <revision lang="it">
+        <revnumber>$Revision$</revnumber>
+        <date>2008-08-20</date>
+        <authorinitials>ciampix</authorinitials>
+      </revision>
       <revision lang="no">
         <revnumber>$Revision$</revnumber>
         <date>2008-02-10</date>
@@ -79,7 +84,9 @@
   <indexterm lang="fr"><primary>Brouillage RVB</primary></indexterm>
 
   <indexterm lang="it">
-    <primary>Filtri</primary><secondary>Disturbo</secondary>
+    <primary>Filtri</primary>
+    <secondary>Disturbo</secondary>
+    <tertiary>Disturbo RGB</tertiary>
   </indexterm>
   <indexterm lang="it"><primary>Disturbo RGB</primary></indexterm>
 
@@ -118,7 +125,7 @@
           Exemple d'application du filtre Brouillage RVB
         </phrase>
         <phrase lang="it">
-          Esempio di applicazione del filtro Disturbo RGB
+          Esempio di applicazione del filtro <quote>disturbo RGB</quote>
         </phrase>
         <phrase lang="no">
           Eksempel på bruk av filteret <quote>RGB-støy</quote>
@@ -134,10 +141,11 @@
           <imagedata fileref="../images/filters/examples/taj_orig.jpg"
                     format="JPG" />
         </imageobject>
-        <caption lang="en;de;fr;no;ru">
+        <caption lang="en;de;fr;it;no;ru">
           <para lang="en">Original image</para>
           <para lang="de">Originalbild</para>
           <para lang="fr">Image d'origine</para>
+          <para lang="it">Immagine originale</para>
           <para lang="no">Originalbiletet</para>
           <para lang="ru">Оригинал</para>
         </caption>
@@ -148,12 +156,14 @@
             fileref="../images/filters/examples/noise-taj-scatter-rgb.jpg"
                     format="JPG" />
         </imageobject>
-        <caption lang="en;de;fr;no;ru">
+        <caption lang="en;de;fr;it;no;ru">
           <para lang="en">Filter <quote>RGB Noise</quote> applied</para>
           <para lang="de">Filter <quote>RGB-Rauschen</quote> angewandt</para>
           <para lang="fr">Après application du filtre</para>
+          <para lang="it">Filtro <quote>disturbo RGB</quote> applicato</para>
           <para lang="no">Etter bruk av filteret <quote>RGB-støy</quote></para>
-          <para lang="ru">Результат обработки фильтром <quote>Шум RGB</quote></para>
+          <para lang="ru">Результат обработки фильтром <quote>Шум
+          RGB</quote></para>
         </caption>
       </mediaobject>
     </figure>
@@ -310,14 +320,14 @@
       </menuchoice>.
     </para>
     <para lang="ru">
-      Фильтр <quote>Шум RGB</quote> добавляет нормально распределённый шум к 
-      слою или выделению. Он использует цветовую модель RGB для добавления шума 
-      к красному, зеленому и синему каналам каждой обрабатываемой точки.
-      Нормальное распределение означает, что лишь небольшие изменения
-      добавляются к большинству точек, и большие изменения — к меньшинству.
-      Если применить этот фильтр к изображению в режиме «Градации серого», то 
-      его гистограмма будет выглядеть как классическая колоколообразная кривая 
-      Гаусса.
+      Фильтр <quote>Шум RGB</quote> добавляет нормально распределённый шум
+      к слою или выделению. Он использует цветовую модель RGB для
+      добавления шума к красному, зеленому и синему каналам каждой
+      обрабатываемой точки.  Нормальное распределение означает, что лишь
+      небольшие изменения добавляются к большинству точек, и большие
+      изменения — к меньшинству.  Если применить этот фильтр к изображению
+      в режиме «Градации серого», то его гистограмма будет выглядеть как
+      классическая колоколообразная кривая Гаусса.
     </para>
     <para lang="ru">
       Результат фильтра - естественно выглядящий шум.
@@ -380,6 +390,9 @@
         <phrase lang="fr">
           Options du filtre <quote>Brouillage RVB</quote>
         </phrase>
+        <phrase lang="it">
+          Opzioni del filtro <quote>disturbo RGB</quote>
+        </phrase>
         <phrase lang="no">
           Innstillingane for filteret <quote>RGB-støy</quote>
         </phrase>
@@ -397,17 +410,15 @@
                     format="PNG" />
         </imageobject>
         <imageobject lang="es">
-          <imagedata
-            fileref="../images/filters/es/filters-noise-noisify.png"
+          <imagedata fileref="../images/filters/es/options-noise-noisify.png"
                     format="PNG" />
-        </imageobject>
+        </imageobject> <!-- why this image is jpg??? -->
         <imageobject lang="fr">
           <imagedata fileref="../images/filters/fr/options-noise-rgb.jpg"
                     format="JPG" />
         </imageobject>
         <imageobject lang="it">
-          <imagedata
-            fileref="../images/filters/it/filters-noise-noisify.png"
+          <imagedata fileref="../images/filters/it/options-noise-noisify.png"
                     format="PNG" />
         </imageobject>
         <imageobject lang="no">
@@ -500,7 +511,7 @@
             Wert führt zu einem höheren Rauschen. Insbesondere bleiben
             dunkle Bildbereiche tendenziell dunkel.
           </para>
-          <!-- FIXME: es it:  correlated, not independent -->
+          <!-- FIXME: es:  correlated, not independent -->
           <para lang="es">
             Cuando está activa esta casilla, hace que los deslizadores R, G y
             B se muevan a la vez. El mismo ruido relativo se añadirá a todos
@@ -509,16 +520,20 @@
           </para>
           <para lang="fr">
             Quand cette option est cochée, un algorithme de <quote>bruit
-            corrélé</quote> est appliqué au résultat : chaque valeur dans les
-            canaux est multiplié par une certaine valeur. Le bruit dépend donc
-            des valeurs dans les canaux : des valeurs élevées entraînent plus de
-            bruit, tandis que les valeurs faibles (sombres) sont peu modifiées.
+            corrélé</quote> est appliqué au résultat : chaque valeur dans
+            les canaux est multiplié par une certaine valeur. Le bruit
+            dépend donc des valeurs dans les canaux : des valeurs élevées
+            entraînent plus de bruit, tandis que les valeurs faibles
+            (sombres) sont peu modifiées.
           </para>
           <para lang="it">
-            Se selezionato, questo radio button fa muovere i cursori R, G e B
-            in sincrono. La stessa quantità di disturbo verrà applicata a
-            tutti i canali di ogni pixel cosicchè la tinta di ciascun pixel
-            non subirà eccessive variazioni.
+            Il disturbo può essere additivo (non-correlato) o
+            moltiplicativo (correlato - conosciuto anche come
+            <quote>speckle noise</quote>). Se selezionato, ogni valore di
+            canale viene moltiplicato con un valore normalmente
+            distribuito. In tal modo il disturbo dipenderà dai valori del
+            canale: un valore di canale maggiore determina molto rumore,
+            mentre colori scuri (valori bassi) tendono a rimanere scuri.
           </para>
           <para lang="no">
             Når det er kryssa av for denne, vil støymengda vere avhengig av
@@ -580,7 +595,10 @@
           </para>
           <para lang="it">
             Se questo radio button è selezionato si può muovere ciascun
-            cursore RGB separatamente.
+            cursore RGB separatamente. Altrimenti i cursori R, G e B si
+            sposteranno tutti assieme. Lo stesso disturbo relativo verrà
+            aggiuto a tutti i canali in ogni pixel, perciò la tonalità dei
+            pixel non dovrebbe cambiare di molto.
           </para>
           <para lang="no">
             Dersom denne ikkje er avkryssa, vil dei tre glidebrytarane for
@@ -591,10 +609,11 @@
             uavhengig av kvarandre.
           </para>
           <para lang="ru">
-            Если этот параметр используется, ползунки RGB можно менять отдельно. 
-            В противном случае ползунки RGB меняются одновременно при изменении 
-            одного из них, а шум применяется ко всем каналам одинаково, и тон 
-            точек меняется не слишком заметно.
+            Если этот параметр используется, ползунки RGB можно менять
+            отдельно.  В противном случае ползунки RGB меняются
+            одновременно при изменении одного из них, а шум применяется ко
+            всем каналам одинаково, и тон точек меняется не слишком
+            заметно.
           </para>
         </listitem>
       </varlistentry>
@@ -699,7 +718,7 @@
           <para lang="it">
             Questi cursori e le caselle di immissione adiacenti permettono di
             impostare il livello di disturbo (0.00 - 1.00) per ciascun canale.
-            il canale alfa è presente solo se il livello corrente contiene
+            Il canale alfa è presente solo se il livello corrente contiene
             tale canale. Nel caso di un'immagine in scala di grigi, viene
             mostrata una etichetta
             <guilabel>Grigio</guilabel>
@@ -739,10 +758,10 @@
 
           <para lang="ru">
             Эти ползунки и поля ввода позволяют определить уровень шума для
-            каждого канала (от 0 до 1). Значения для альфа-канала задается лишь 
-            в том случае, если текущий слой его содержит. Если изображение в 
-            режиме «Градации серого», вместо цветных каналов отображается 
-            параметр <guilabel>Серый</guilabel>.
+            каждого канала (от 0 до 1). Значения для альфа-канала задается
+            лишь в том случае, если текущий слой его содержит. Если
+            изображение в режиме «Градации серого», вместо цветных каналов
+            отображается параметр <guilabel>Серый</guilabel>.
           </para>
           <para lang="ru">
             Значение, устанавливаемое при помощи этих ползунков, определяет 
