@@ -1,6 +1,4 @@
 #!/bin/bash
-
-
 srcdir="src"
 dstdir="xml"
 infile=""
@@ -8,7 +6,7 @@ outfile="-"
 lang="en"
 verbose=''
 help=0
-stylesheet="stylesheets/profile-lang.xsl"
+stylesheet="stylesheets/profile.xsl"
 
 usage() {
     exit_code="$1"
@@ -35,7 +33,7 @@ usage() {
 
 options=`getopt -n profile-xml.sh --unquoted \
          --longoptions "srcdir:,dstdir:,input:,file:,output:,lang:,verbose,help" \
-	 --options "s:d:i:f:o:l:vh" -- "$@"` || usage 64
+         --options "s:d:i:f:o:l:vh" -- "$@"` || usage 64
 set -- $options
 while [ -n "$1" ]; do
     case "$1" in
@@ -95,11 +93,11 @@ fi
 if [ -n "$infile" ]; then
     if [ "$outfile" = "-" ]; then
         xsltproc --nonet --stringparam profile.lang "$lang" $stylesheet $infile \
-        | sed -e '/^[ 	]*$/d' -e 's/^ *<sect[1-4][ >]/\n&/' \
+        | sed -e '/^[   ]*$/d' -e 's/^ *<sect[1-4][ >]/\n&/' \
         | xmllint --nonet -
     else
         xsltproc --nonet --stringparam profile.lang "$lang" $stylesheet $infile \
-        | sed -e '/^[ 	]*$/d' -e 's/^ *<sect[1-4][ >]/\n&/' \
+        | sed -e '/^[   ]*$/d' -e 's/^ *<sect[1-4][ >]/\n&/' \
         | xmllint --nonet - > $outfile
     fi
 else
@@ -116,7 +114,7 @@ else
         test -n "$verbose" && echo $src_file
         dst_file=$dstdir/${src_file#*$srcdir/} 
         xsltproc --nonet --stringparam profile.lang "$lang" $stylesheet $src_file \
-        | sed -e '/^[ 	]*$/d' -e 's/^ *<sect[1-4][ >]/\n&/' \
+        | sed -e '/^[   ]*$/d' -e 's/^ *<sect[1-4][ >]/\n&/' \
         | xmllint --nonet - > $dst_file
     done
 fi
