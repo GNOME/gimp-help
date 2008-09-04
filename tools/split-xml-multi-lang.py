@@ -30,6 +30,7 @@ import optparse
 import re
 import xml.dom.minidom
 import logging
+import profile
 
 # Configure logging package
 logging.basicConfig(level=logging.INFO, format="%(levelname)-8s %(message)s")
@@ -40,17 +41,18 @@ sections   = ('sect1', 'sect2', 'sect3', 'sect4', 'section')
 sectinfos  = ('sect2info', 'sect1info', 'sect3info', 'sect4info')
 notes      = ('warning', 'caution', 'important', 'tip', 'note')
 containers = ('figure', 'caption', 'revhistory', 'formalpara')
-objects    = ('textobject', 'imageobject', 'mediaobject', 'screenshot')
+nobjects   = ('textobject', 'mediaobject', 'screenshot')
 lists      = ('itemizedlist', 'orderedlist', 'variablelist',
               'segmentedlist', 'simplelist', 'calloutlist')
 items      = ('varlistentry', 'listitem')
 # these tags are considered final
 paras      = ('para', 'simpara')
 leafs      = ('phrase', 'revision', 'indexterm')
+fobjects   = ('imageobject',) 
 
 non_final_nodes = sections + sectinfos + notes + containers + \
-                  objects + lists + items
-final_nodes     = paras + leafs
+                  nobjects + lists + items
+final_nodes     = paras + leafs + fobjects
 
 
 ################################################################
@@ -116,7 +118,7 @@ class MultiLangDoc(object):
         self.destdir  = destdir
 
         self.logger = logging.getLogger("splitxml.doc")
-        self.logger.info("parsing %s" % filename)
+        self.logger.info("Parsing %s" % filename)
 
         self.doc = xml.dom.minidom.parse(filename)
         self.dest = {}
@@ -142,7 +144,7 @@ class MultiLangDoc(object):
                 os.makedirs(destdir, 0755)
             destfile = os.path.join(destdir, filename)
             output = codecs.open(destfile, 'w', "UTF-8")
-            self.logger.info("writing %s" % destfile)
+            self.logger.info("Writing %s" % destfile)
             self.dest[lang].writexml(output, encoding="UTF-8")
             output.close()
             self.dest[lang].unlink()
@@ -177,7 +179,9 @@ class MultiLangDoc(object):
                     clone = child.cloneNode(False)
                     self.dest[lang].appendChild(clone)
             else:
-                # FIXME: what if root element has no 'lang' attribute # "en"?
+                if not 'en' in self.get_langs(child):
+                    self.logger.critical("No English document element")
+                    sys.exit(74)
                 source = self.vectorize(child)
                 clones = self.append_clones(source, self.dest, False)
                 return self.split(child, source, clones)
@@ -314,6 +318,7 @@ class MultiLangDoc(object):
         clones = dict([(key, element[key].cloneNode(recursive))
                        for key in element])
         for lang in clones:
+            clones[lang].removeAttribute("seqnum")
             parent[lang].appendChild(clones[lang])
         return clones
 
@@ -422,13 +427,16 @@ def main():
     # parse command line
 
     usage = "usage: %prog [options] [FILE [DIR]]"
-    version = "%prog 0.1"
+    version = "%prog 0.2"
     cmdline = optparse.OptionParser(usage=usage, version=version)
 
     cmdline.set_defaults(languages= ",".join(languages))
     cmdline.add_option("--debug", dest="debug",
         action="store_true", default=False,
         help="produce some more or less useful debugging messages")
+    cmdline.add_option("--profile", dest="profile",
+        action="store_true", default=False,
+        help="print a  profiling report from the script execution")
     cmdline.add_option("-l", "--lang", dest="languages", metavar="LANG",
         help="comma-separated list of languages, "
              "'en' will be added automatically; "
@@ -471,7 +479,10 @@ def main():
 
 # Main program start
 if __name__ == '__main__':
-    main()
+    if "--profile" in  sys.argv:
+        profile.run("main()")
+    else:
+        main()
 # pydoc doesn't like the following "raise" statement
 #else:
 #    raise NotImplementedError
