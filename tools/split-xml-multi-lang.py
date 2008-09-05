@@ -30,7 +30,11 @@ import optparse
 import re
 import xml.dom.minidom
 import logging
-import profile
+try:
+    import profile
+    WITH_PROFILING = True
+except ImportError:
+    WITH_PROFILING = False
 
 # Configure logging package
 logging.basicConfig(level=logging.INFO, format="%(levelname)-8s %(message)s")
@@ -479,8 +483,12 @@ def main():
 
 # Main program start
 if __name__ == '__main__':
-    if "--profile" in  sys.argv:
+    if "--profile" in  sys.argv and WITH_PROFILING == True:
         profile.run("main()")
+    elif "--profile" in  sys.argv and WITH_PROFILING == False:
+        print ("Can't find profiling support."
+               " Install profiling support for python.")
+        sys.exit(2)
     else:
         main()
 # pydoc doesn't like the following "raise" statement
