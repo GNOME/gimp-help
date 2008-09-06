@@ -40,23 +40,38 @@ except ImportError:
 logging.basicConfig(level=logging.INFO, format="%(levelname)-8s %(message)s")
 Logger = logging.getLogger("splitxml")
 
-# these tags are considered NOT final
-sections   = ('sect1', 'sect2', 'sect3', 'sect4', 'section')
-sectinfos  = ('sect2info', 'sect1info', 'sect3info', 'sect4info')
+# these tags are considered NOT FINAL
+sections   = ('sect1', 'sect2', 'sect3', 'sect4', 'section', 'bibliodiv',
+              'book', 'part', 'chapter', 'preface', 'legalnotice')
+sectinfos  = ('sect2info', 'sect1info', 'sect3info', 'sect4info',
+              'bookinfo', 'appendixinfo')
 notes      = ('warning', 'caution', 'important', 'tip', 'note')
-containers = ('figure', 'caption', 'revhistory', 'formalpara')
-nobjects   = ('textobject', 'mediaobject', 'screenshot')
+containers = ('figure', 'caption', 'revhistory', 'formalpara', 'equation',
+              'informalequation', 'informalfigure', 'example')
+# XXX: making 'inlinemediaobject' "final" should also work
+nobjects   = ('textobject', 'mediaobject', 'screenshot', 'inlinemediaobject')
 lists      = ('itemizedlist', 'orderedlist', 'variablelist',
-              'segmentedlist', 'simplelist', 'calloutlist')
-items      = ('varlistentry', 'listitem')
-# these tags are considered final
-paras      = ('para', 'simpara')
-leafs      = ('phrase', 'revision', 'indexterm')
+              'segmentedlist', 'simplelist', 'calloutlist', 'informaltable')
+tables     = ('table', 'tgroup', 'thead', 'tbody', 'row', 'entry')
+items      = ('varlistentry', 'listitem', 'seglistitem',
+              'glossentry', 'glossdef', 'biblioentry')
+
+# these tags are considered FINAL
+paras      = ('para', 'simpara', 'programlisting', 'blockquote')
+leafs      = ('phrase', 'revision', 'indexterm', 'graphic', 'alt', 'seg',
+              'anchor')
 fobjects   = ('imageobject',) 
+fgui       = ('guiicon', 'guimenuitem') 
+keys       = ('keycap', 'keycombo')
+misc       = ('member', 'releaseinfo', 'isbn', 'author', 'copyright',
+              'publisher', 'abbrev', 'toc', 'index')
+
+# these tags are considered FINAL if they contain text
+text_final_nodes = ('title', 'term', 'segtitle', 'subtitle', 'glossterm')
 
 non_final_nodes = sections + sectinfos + notes + containers + \
-                  nobjects + lists + items
-final_nodes     = paras + leafs + fobjects
+                  nobjects + lists + tables + items
+final_nodes     = paras + leafs + fobjects + fgui + keys + misc
 
 
 ################################################################
@@ -121,12 +136,17 @@ class MultiLangDoc(object):
         self.filename = filename
         self.destdir  = destdir
 
+        self.dest = {}
+        self.seqnum = 0
+
         self.logger = logging.getLogger("splitxml.doc")
         self.logger.info("Parsing %s" % filename)
 
-        self.doc = xml.dom.minidom.parse(filename)
-        self.dest = {}
-        self.seqnum = 0
+        try:
+            self.doc = xml.dom.minidom.parse(filename)
+        except IOError, err:
+            self.logger.error(err)
+            sys.exit(66)
 
     def printfiles(self, destdir):
         """Print resulting documents to the respective output files"""
@@ -184,7 +204,7 @@ class MultiLangDoc(object):
                     self.dest[lang].appendChild(clone)
             else:
                 if not 'en' in self.get_langs(child):
-                    self.logger.critical("No English document element")
+                    self.logger.error("No English document element")
                     sys.exit(74)
                 source = self.vectorize(child)
                 clones = self.append_clones(source, self.dest, False)
@@ -230,7 +250,7 @@ class MultiLangDoc(object):
                    and 'en' in self.get_langs(child)
 
                 # for every language, find the respective node
-                copies = self.vectorize(child)	# no clones
+                copies = self.vectorize(child, source)	# no clones
 
                 # (4a) append recursively (localized) clones of nodes we don't
                 # need/want to process any further (para, phrase, etc.)
@@ -246,7 +266,7 @@ class MultiLangDoc(object):
 
         return dest
 
-    def vectorize(self, elem):
+    def vectorize(self, elem, source=None):
         """Make a set of corresponding nodes from an element node
 
         This method gets an element with no 'lang' attribute or a 'lang'
@@ -348,8 +368,11 @@ class MultiLangDoc(object):
         # Special cases
         # XXX: Hmm, what would happen if we used this test
         #      for *every* node?
-        if name in ('title', 'term'):
+        elif name in text_final_nodes:
             return self.has_nonempty_text(node)
+        elif name in ('procedure', 'step'):
+            self.logger.debug("final(%s): %s" % (name, (self.get_langs(node) == 1)))
+            return self.get_langs(node) == 1
         else:
             self.logger.warn("don't know what to do with '%s', assuming final" % name)
             return True
@@ -396,19 +419,11 @@ class MultiLangDoc(object):
         Returnes all languages if element does not have a
         "lang" attribute.
         """
-        #if elem.hasAttributes():
-        #    lang_attr = elem.attributes.get("lang")
-        #else:
-        #    lang_attr = None
-        try:
-            lang_attr = elem.attributes.get("lang")
-        except:
-            lang_attr = None
+        # get value as string (e.g. "en;de;fr" or "")
+        lang_attr = elem.getAttribute("lang")
 
         if lang_attr:
-            # this is an Attr(Node) instance,
-            # its value is a string (e.g. "en;de;fr") or None
-            langs = lang_attr.value.strip(';').split(';')
+            langs = lang_attr.strip(';').split(';')
             if all:
                 return langs
             else:
@@ -431,7 +446,7 @@ def main():
     # parse command line
 
     usage = "usage: %prog [options] [FILE [DIR]]"
-    version = "%prog 0.2"
+    version = "%prog 0.3 2008-09-06"
     cmdline = optparse.OptionParser(usage=usage, version=version)
 
     cmdline.set_defaults(languages= ",".join(languages))
