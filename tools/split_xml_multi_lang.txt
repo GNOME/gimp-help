@@ -1,0 +1,63 @@
+==========================
+Split XML Multilang Script
+==========================
+
+
+This test, tests the functionaility of the multilang split script. The
+central class is MultiLangDoc, which will be tested in the following
+paragraphs.
+
+
+MultiLangDoc
+============
+
+Setup
+-----
+
+The class provides functionality for reading and parsing multi-lang
+DocBook source files. It has the ability to split the parsed document
+into a by-language sorted single language documents. To test the class,
+we need an XML testfile first, which we grab out of the GIMP Manual
+source tree:
+
+>>> import os
+>>> import os.path
+>>> roothelpdir = os.path.dirname(os.getcwd())
+>>> testxmlfile = os.path.join(roothelpdir,
+...     'src', 'toolbox', 'toolbox-color-area.xml')
+
+We also need a destination directory, which we create temporary:
+
+>>> import tempfile
+>>> destdir = tempfile.mkdtemp()
+
+Now we can create the multilangdoc object:
+
+>>> from split_xml_multi_lang import MultiLangDoc
+>>> mld = MultiLangDoc(testxmlfile, destdir)
+>>> mld
+<split_xml_multi_lang.MultiLangDoc object at 0x...>
+>>> mld.filename == testxmlfile
+True
+>>> mld.destdir == destdir
+True
+
+
+Processing
+----------
+
+Once the xmlfile is parsed, we can process it. That means, we provide in
+which languages the document should be splitted.
+
+The default language which is used by processing is English. The
+attribute is set after processing:
+
+>>> mld.languages
+Traceback (most recent call last):
+AttributeError: 'MultiLangDoc' object has no attribute 'languages'
+
+If the languages parameter is an empty list, the processing is only done
+for English:
+
+>>> mld.process([])
+{u'en': <DOM Element: sect1 at -0x...>}

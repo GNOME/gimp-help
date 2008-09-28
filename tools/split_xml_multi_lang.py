@@ -25,12 +25,15 @@ import sys
 import os
 import os.path
 import codecs
-#import getopt
 import optparse
 import re
 import xml.dom.minidom
 import logging
 import profile
+
+import unittest
+import doctest
+
 
 # Configure logging package
 logging.basicConfig(level=logging.INFO, format="%(levelname)-8s %(message)s")
@@ -82,6 +85,7 @@ final_nodes     = paras + leafs + fobjects + fgui + keys + misc
 
 class XmlNode(object):
     """FIXME"""
+
     def __init__(self, node):
         self.logger = logging.getLogger("splitxml.node")
         assert isinstance(node, xml.dom.minidom.Node)
@@ -492,12 +496,24 @@ def main():
     doc.printfiles(options.destdir)
 
 
+def runtests():
+    """Runs registered automated tests."""
+    testrunner = unittest.TextTestRunner()
+    suite = unittest.TestSuite()
+    suite.addTest(
+        doctest.DocFileSuite("split_xml_multi_lang.txt",
+                             optionflags = doctest.NORMALIZE_WHITESPACE |
+                                doctest.ELLIPSIS |
+                                doctest.REPORT_NDIFF)
+    )
+    testrunner.run(suite)
+
+
 # Main program start
 if __name__ == '__main__':
-    if "--profile" in  sys.argv:
+    if "--profile" in sys.argv:
         profile.run("main()")
+    if "--test" in sys.argv:
+        runtests()
     else:
         main()
-# pydoc doesn't like the following "raise" statement
-#else:
-#    raise NotImplementedError
