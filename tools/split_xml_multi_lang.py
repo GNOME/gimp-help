@@ -39,6 +39,10 @@ import doctest
 logging.basicConfig(level=logging.INFO, format="%(levelname)-8s %(message)s")
 Logger = logging.getLogger("splitxml")
 
+# Constants
+RECURSIVE = True
+NONRECURSIVE = False
+
 # these tags are considered NOT FINAL
 sections   = ('sect1', 'sect2', 'sect3', 'sect4', 'section', 'bibliodiv',
               'book', 'part', 'chapter', 'preface', 'legalnotice')
@@ -87,7 +91,7 @@ class XmlNode(object):
     """FIXME"""
 
     def __init__(self, node):
-        self.logger = logging.getLogger("splitxml.node")
+        self.logger = logging.getLogger("splitxml")
         assert isinstance(node, xml.dom.minidom.Node)
         self._node = node
 
@@ -139,7 +143,7 @@ class MultiLangDoc(object):
         self.dest = {}
         self.seqnum = 0
 
-        self.logger = logging.getLogger("splitxml.doc")
+        self.logger = logging.getLogger("splitxml")
         self.logger.info("Parsing %s" % filename)
 
         try:
@@ -200,14 +204,22 @@ class MultiLangDoc(object):
                 continue
             if child.nodeType != xml.dom.minidom.Node.ELEMENT_NODE:
                 for lang in self.languages:
-                    clone = child.cloneNode(False)
+                    clone = child.cloneNode(NONRECURSIVE)
                     self.dest[lang].appendChild(clone)
             else:
-                if not 'en' in self.get_langs(child):
+                try:
+                    self.doc_languages = self.get_langs(child)
+                    if not 'en' in self.doc_languages: 
+                        raise RuntimeError("No English document element")
+                except (AttributeError, RuntimeError):
+                    #sys.exit("No English document element")
                     self.logger.error("No English document element")
                     sys.exit(74)
+                # Now we know that the document element has a valid "lang"
+                # attribute, and so has every element (via parent nodes).
+                self.logger.debug("languages = %s" % languages)
                 source = self.vectorize(child)
-                clones = self.append_clones(source, self.dest, False)
+                clones = self.append_clones(source, self.dest, NONRECURSIVE)
                 return self.split(child, source, clones)
 
         # Never reached, since "parse(filename)" catched it...
@@ -221,23 +233,31 @@ class MultiLangDoc(object):
         TODO: describe the algorithm(?)
         """
         self.logger.debug("split(%s)" % (elem.nodeName))
-        assert source and dest
+        assert elem.isSameNode(source['en'])
+
+        # keep track of the visited nodes
         self.seqnum += 1
 
         for child in elem.childNodes:
 
             # (1) skip this node if we don't need it (e.g. comments)
             if self.ignore(child):
-                self.logger.debug("ignoring %s %s" % (child.nodeType, child.nodeName))
+                #self.logger.debug("ignoring %s %s" % (child.nodeType, child.nodeName))
+                pass
 
             # (2) append non-empty text nodes to the destination nodes
             elif self.text(child):
                 if child.nodeValue.strip():
                     # we should never be here, the (parent) node
                     # should be final then...
-                    self.logger.warn("TEXT in %s" % elem.nodeName)
+                    logger.warn("TEXT in %s: <%s>" % \
+                        (elem.nodeName, child.nodeValue.strip()))
+                    # XXX: better just skip this text?
                     for lang in self.languages:
-                        dest[lang].appendChild(child)
+                        dest[lang].appendChild(child.cloneNode(NONRECURSIVE))
+                elif self.logger.isEnabledFor(logging.DEBUG):
+                    for lang in self.languages:
+                        dest[lang].appendChild(child.cloneNode(NONRECURSIVE))
 
             # (3) skip every non-English element
             elif self.skip(child):
@@ -255,13 +275,15 @@ class MultiLangDoc(object):
                 # (4a) append recursively (localized) clones of nodes we don't
                 # need/want to process any further (para, phrase, etc.)
                 if self.final(child):
-                    self.logger.debug("adding cloned final %s" % child.nodeName)
-                    clones = self.append_clones(copies, dest, True)
+                    self.logger.debug("split(%s): adding cloned final %s" % \
+                            (elem.nodeName, child.nodeName))
+                    clones = self.append_clones(copies, dest, RECURSIVE)
                 # (4b) append non-recursively (localized) clones of nodes and
                 # process child recursively (sect[1-4], note, etc.)
                 else:
-                    self.logger.debug("adding cloned %s" % child.nodeName)
-                    clones = self.append_clones(copies, dest, False)
+                    self.logger.debug("split(%s): adding cloned %s" % \
+                            (elem.nodeName, child.nodeName))
+                    clones = self.append_clones(copies, dest, NONRECURSIVE)
                     self.split(child, copies, clones)
 
         return dest
@@ -320,17 +342,18 @@ class MultiLangDoc(object):
         Elements with a "seqnum" attribute will be removed from the list.
         """
         siblings = []
-        this = element
-        while this.previousSibling: this = this.previousSibling
-        while this:
+        sibl = element
+        # The English element is not necessarily the first one,
+        # so we start with the very first sibling:
+        while sibl.previousSibling: sibl = sibl.previousSibling
+        while sibl:
             # TODO: add test for 'lang' attribute here(!?)
-            if this.nodeType == element.nodeType \
-            and this.nodeName == element.nodeName \
-            and not this.isSameNode(element):
-                if not (this.hasAttributes() and
-                        this.attributes.get("seqnum")):
-                    siblings.append(this)
-            this = this.nextSibling
+            if sibl.nodeType == element.nodeType \
+            and sibl.nodeName == element.nodeName \
+            and not sibl.isSameNode(element):
+                if not sibl.getAttribute("seqnum"):
+                    siblings.append(sibl)
+            sibl = sibl.nextSibling
         return siblings
 
     def append_clones(self, element, parent, recursive):
@@ -342,7 +365,8 @@ class MultiLangDoc(object):
         clones = dict([(key, element[key].cloneNode(recursive))
                        for key in element])
         for lang in clones:
-            clones[lang].removeAttribute("seqnum")
+            if not self.logger.isEnabledFor(logging.DEBUG):
+                clones[lang].removeAttribute("seqnum")
             parent[lang].appendChild(clones[lang])
         return clones
 
@@ -371,7 +395,6 @@ class MultiLangDoc(object):
         elif name in text_final_nodes:
             return self.has_nonempty_text(node)
         elif name in ('procedure', 'step'):
-            self.logger.debug("final(%s): %s" % (name, (self.get_langs(node) == 1)))
             return self.get_langs(node) == 1
         else:
             self.logger.warn("don't know what to do with '%s', assuming final" % name)
@@ -416,20 +439,18 @@ class MultiLangDoc(object):
         """Get a list of languages specified by the "lang"
         attribute for a given element
 
-        Returnes all languages if element does not have a
-        "lang" attribute.
+        If that element does not have a "lang" attribute,
+        the parent nodes will be searched until an attribute
+        is found. (The document/root element is guaranteed to
+        have a "lang" attribute...).
         """
-        # get value as string (e.g. "en;de;fr" or "")
-        lang_attr = elem.getAttribute("lang")
-
-        if lang_attr:
-            langs = lang_attr.strip(';').split(';')
-            if all:
-                return langs
-            else:
-                return [k for k in langs if k in self.languages]
-        else:
-            return self.languages
+        # get value as string (e.g. "en;de;fr")
+        langs = elem.getAttribute("lang")
+        while not langs:
+            elem = elem.parentNode
+            langs = elem.getAttribute("lang")
+        langs = langs.strip(';').split(';')
+        return [lang for lang in langs if lang in self.languages]
 
 
 ################################################################
@@ -446,7 +467,7 @@ def main():
     # parse command line
 
     usage = "usage: %prog [options] [FILE [DIR]]"
-    version = "%prog 0.3 2008-09-06"
+    version = "%prog 0.4 2008-10-01"
     cmdline = optparse.OptionParser(usage=usage, version=version)
 
     cmdline.set_defaults(languages= ",".join(languages))
@@ -475,7 +496,7 @@ def main():
         options.filename = args[0]
         if len(args) == 2:
             options.destdir = args[1]
-        else:
+        elif len(args) > 2:
             cmdline.error("too many arguments")
 
     if not options.filename:
