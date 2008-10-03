@@ -53,6 +53,8 @@ OTHER_CSS_FILES = \
 	stylesheets/zh_CN/gimp-help-custom.css
 
 XSL_FILES = \
+	stylesheets/authors.xml \
+	stylesheets/authors.dtd \
 	stylesheets/authors_docbook.xsl \
 	stylesheets/authors_text.xsl \
 	stylesheets/makeindex.xsl \
@@ -69,7 +71,7 @@ EXTRA_DIST = \
 	$(XML_FILES)			\
 	$(XSL_FILES)
 
-AUTHORS_DOCBOOK_XML = src/preface/authors.xml
+AUTHORS_DOCBOOK_XML = $(top_srcdir)/src/preface/authors.xml
 
 DISTCHECK_CONFIGURE_FLAGS = --without-gimp
 
@@ -343,7 +345,7 @@ check-image-references:
 
 #### AUTHORS file creation
 
-AUTHORS: stylesheets/authors.xml stylesheets/authors_text.xsl $(AUTHORS_DOCBOOK_XML)
+AUTHORS: $(top_srcdir)/stylesheets/authors.xml stylesheets/authors_text.xsl $(AUTHORS_DOCBOOK_XML)
 	@echo "Creating $@"
 	@$(XSLTPROC) \
 	  $(XSLTFLAGS) \
@@ -351,7 +353,7 @@ AUTHORS: stylesheets/authors.xml stylesheets/authors_text.xsl $(AUTHORS_DOCBOOK_
 	  $< \
 	  > $@
 	
-$(AUTHORS_DOCBOOK_XML): stylesheets/authors.xml src/preface/titles.xml stylesheets/authors_*.xsl
+$(AUTHORS_DOCBOOK_XML): $(top_srcdir)/stylesheets/authors.xml src/preface/titles.xml $(top_srcdir)/stylesheets/authors_*.xsl
 	@echo "Creating $@"
 	@$(XSLTPROC) \
 	  $(XSLTFLAGS) \
@@ -401,7 +403,7 @@ uninstall-local:
 check-local: validate
 
 if GIMP_HELP_BUILD
-all-local: validate html-local index AUTHORS
+all-local: validate AUTHORS html-local index
 endif
 
 dist-hook: dist-copy-images
