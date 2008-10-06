@@ -43,6 +43,9 @@ Logger = logging.getLogger("splitxml")
 RECURSIVE = True
 NONRECURSIVE = False
 
+# Exceptions
+class BreakOutOfNestedLoops(Exception): pass
+
 # these tags are considered NOT FINAL
 sections   = ('sect1', 'sect2', 'sect3', 'sect4', 'section', 'bibliodiv',
               'book', 'part', 'chapter', 'preface', 'legalnotice')
@@ -77,6 +80,7 @@ non_final_nodes = sections + sectinfos + notes + containers + \
 final_nodes     = paras + leafs + fobjects + fgui + keys + misc
 
 
+# >>>>>>>>>>>>>>>> not used >>>>>>>>>>>>>>>>
 ################################################################
 #        XML node                                              #
 ################################################################
@@ -121,6 +125,7 @@ class XmlNode(object):
         """
         return self._node.nodeType in (xml.dom.minidom.Node.COMMENT_NODE,) \
             or self._node.nodeName in ('xi:include',)
+# <<<<<<<<<<<<<<<< not used <<<<<<<<<<<<<<<<
 
 
 ################################################################
@@ -134,14 +139,11 @@ class MultiLangDoc(object):
     file, to split the document into single-language documents, and to
     print these documents as single-language XML files.
     """
-    def __init__(self, filename, destdir = None):
+    def __init__(self, filename):
         """Multi-language XML document"""
 
         self.filename = filename
-        self.destdir  = destdir
-
-        self.dest = {}
-        self.seqnum = 0
+        self.dest = {}	# destination documents
 
         self.logger = logging.getLogger("splitxml")
         self.logger.info("Parsing %s" % filename)
@@ -163,11 +165,11 @@ class MultiLangDoc(object):
                 destdir = os.path.join(destdir, langdir_template)
             else:
                 destdir = langdir_template
-        self.destdir = destdir
+        destdir_template = destdir
         filename = os.path.basename(self.filename)
 
         for lang in self.languages:
-            destdir = self.destdir.replace(langdir_template, lang)
+            destdir = destdir_template.replace(langdir_template, lang)
             if not os.path.isdir(destdir):
                 os.makedirs(destdir, 0755)
             destfile = os.path.join(destdir, filename)
@@ -181,10 +183,10 @@ class MultiLangDoc(object):
         """Split a multi-language XML document
 
         This method creates XML document (root) nodes for every language,
-        and constructs single language documents while processing the
-        document recursively starting with the document element,
+        then constructs single-language documents while processing the
+        document recursively, starting with the document element,
         """
-        self.logger.debug("process(%s)" % str(self.doc.documentElement.nodeName))
+        self.logger.debug("process(%s)" % self.doc.documentElement.nodeName)
         self.languages = languages
         if 'en' not in languages:
             self.languages.insert(0, "en")
@@ -207,6 +209,7 @@ class MultiLangDoc(object):
                     clone = child.cloneNode(NONRECURSIVE)
                     self.dest[lang].appendChild(clone)
             else:
+                # This is the document element (aka root element)
                 try:
                     self.doc_languages = self.get_langs(child)
                     if not 'en' in self.doc_languages: 
@@ -217,32 +220,43 @@ class MultiLangDoc(object):
                     sys.exit(74)
                 # Now we know that the document element has a valid "lang"
                 # attribute, and so has every element (via parent nodes).
-                self.logger.debug("languages = %s" % languages)
-                source = self.vectorize(child)
-                clones = self.append_clones(source, self.dest, NONRECURSIVE)
-                return self.split(child, source, clones)
+                self.seqnum = 0
+                child.setAttribute("seqnum", str(self.seqnum))
+                clones = self.append_clones(child, self.dest, NONRECURSIVE)
+                return self.split(child, clones)
 
         # Never reached, since "parse(filename)" catched it...
         raise RuntimeError("Oops!? No document element found!?")
 
-    def split(self, elem, source, dest):
+    def split(self, elem, dest):
         """Split a multi-language XML element
 
-        This method does the real work when processing the
-        document tree.
-        TODO: describe the algorithm(?)
-        """
-        self.logger.debug("split(%s)" % (elem.nodeName))
-        assert elem.isSameNode(source['en'])
+        This is the main routine for traversing the document tree. For
+        every child element (with lang="en") of the specified "elem" node,
+        this function searches the corresponding nodes containing
+        translations of that child. Then it appends the nodes to the
+        respective nodes of the destination vector and, if necessary,
+        traverses the child element calling itself recursively.
 
-        # keep track of the visited nodes
-        self.seqnum += 1
+        The "elem" argument may also be a set of different element nodes
+        for every language, then searching will be applied to different
+        sets of child nodes for every language.
+        """
+        if isinstance(elem, dict):
+            parentnodes = elem
+            elem = parentnodes['en']
+        else:
+            parentnodes = None
+
+        # dest is a cloned vector of elem:
+        assert elem.nodeName == dest['en'].nodeName
+
+        self.logger.debug("split(%s)" % (elem.nodeName))
 
         for child in elem.childNodes:
 
             # (1) skip this node if we don't need it (e.g. comments)
             if self.ignore(child):
-                #self.logger.debug("ignoring %s %s" % (child.nodeType, child.nodeName))
                 pass
 
             # (2) append non-empty text nodes to the destination nodes
@@ -261,7 +275,6 @@ class MultiLangDoc(object):
 
             # (3) skip every non-English element
             elif self.skip(child):
-                #self.logger.debug("skipping %s %s" % (child.nodeType, child.nodeName))
                 pass
 
             # (4) at last, handle non-trivial cases...
@@ -269,26 +282,29 @@ class MultiLangDoc(object):
                 assert child.nodeType == child.ELEMENT_NODE \
                    and 'en' in self.get_langs(child)
 
-                # for every language, find the respective node
-                copies = self.vectorize(child, source)	# no clones
+                # Find the corresponding node for every language. Here
+                # it makes a difference if we use a set of (different)
+                # parent nodes for every language or just one single
+                # element.
+                copies = self.vectorize(child, parentnodes)
 
-                # (4a) append recursively (localized) clones of nodes we don't
+                # (4a) append recursively localized clones of nodes we don't
                 # need/want to process any further (para, phrase, etc.)
                 if self.final(child):
-                    self.logger.debug("split(%s): adding cloned final %s" % \
+                    self.logger.debug("split(%s) --> adding cloned final %s" % \
                             (elem.nodeName, child.nodeName))
                     clones = self.append_clones(copies, dest, RECURSIVE)
-                # (4b) append non-recursively (localized) clones of nodes and
-                # process child recursively (sect[1-4], note, etc.)
+                # (4b) append non-recursively localized clones of nodes and
+                # then traverse child nodes recursively (sect[1-4], note, etc.)
                 else:
-                    self.logger.debug("split(%s): adding cloned %s" % \
+                    self.logger.debug("split(%s) --> cloning %s" % \
                             (elem.nodeName, child.nodeName))
                     clones = self.append_clones(copies, dest, NONRECURSIVE)
-                    self.split(child, copies, clones)
+                    self.split(copies, clones)
 
         return dest
 
-    def vectorize(self, elem, source=None):
+    def vectorize(self, elem, parents=None):
         """Make a set of corresponding nodes from an element node
 
         This method gets an element with no 'lang' attribute or a 'lang'
@@ -296,44 +312,100 @@ class MultiLangDoc(object):
         corresponding nodes for all languages (translations). If there is
         no translation for some language, the original input node (i.e.
         'en') will be returned.
-        """
-        self.logger.debug("vectorize(%s)" % elem.nodeName)
 
-        # mark element as "seen"
+        If every element of the resulting vector is the same node (i.e.
+        the same as "elem"), the result will be reduced to this element.
+        """
+        if isinstance(parents, dict):
+            self.logger.debug("vectorize(%s in %s)" % \
+                (elem.nodeName, parents['en'].nodeName))
+        else:
+            self.logger.debug("vectorize(%s)" % elem.nodeName)
+
+        assert not isinstance(parents, dict) or elem.parentNode == parents['en']
+
+        # Mark element as "seen"
+        self.seqnum += 1
         elem.setAttribute("seqnum", str(self.seqnum))
 
-        # handle element's "lang" attribute
-        nodes = dict([(lang, elem) for lang in self.get_langs(elem)])
-        assert nodes.has_key('en')
+        # Trivial case: the element contains all languages
+        if len(self.get_langs(elem)) == len(self.languages):
+            return elem
 
-        if len(nodes) == len(self.languages):
+        # Typical (and simple) case: we are working on the original source
+        # tree, the nodes of the resulting vector will have the same
+        # parent node.
+        if not parents:
+
+            # copy element for every element language
+            nodes = dict([(lang, elem) for lang in self.get_langs(elem)])
+            assert nodes.has_key('en')
+            assert len(nodes) != len(self.languages)
+    
+            # TODO: describe algorithm
+    
+            siblings = self.get_siblings(elem)
+            found = 0
+    
+            for sibl in siblings:
+                langs = self.get_langs(sibl)
+                new_langs = [k for k in langs if k not in nodes]
+                if not self.final(elem):
+                    if len(langs) > len(new_langs):
+                        break
+                elif not new_langs:
+                    continue
+                sibl.setAttribute("seqnum", str(self.seqnum))
+                for lang in new_langs:
+                    nodes[lang] = sibl
+                    found += 1
+                if len(nodes) == len(self.languages):
+                    return nodes
+
+            for lang in (k for k in self.languages if not nodes.has_key(k)):
+                nodes[lang] = elem
+            assert len(nodes) == len(self.languages)
+    
+            if found:
+                # nodes[x] != elem for one ore more x in self.languages
+                return nodes
+            else:
+                # nodes[x] == elem for every x in self.languages
+                return elem
+
+        # Special case: for every language (assuming there is a tranlation
+        # for this language, of course) we are working in separate subtree
+        # of the original source tree, and the nodes of the resulting
+        # vector may have different parent nodes.
+        else:
+            assert elem.parentNode == parents['en']
+            nodes = dict([(lang, elem) for lang in parents
+                                       if parents[lang] == parents["en"]])
+            for lang in parents:
+                if lang in nodes: continue
+                try:
+                    for child in parents[lang].childNodes:
+                        if child.nodeType != child.ELEMENT_NODE or \
+                           child.nodeName != elem.nodeName or \
+                           child.getAttribute("seqnum"): continue
+                        languages = self.get_langs(child)
+                        for lang in languages:
+                            if lang in nodes:
+                                raise BreakOutOfNestedLoops
+                        for lang in languages:
+                            nodes[lang] = child
+                        child.setAttribute("seqnum", str(self.seqnum))
+                        break
+                except BreakOutOfNestedLoops:
+                    self.logger.warn("possibly incorrect %s in %s" % \
+                        (elem.nodeName, parents[lang].nodeName))
+
+            for lang in (k for k in self.languages if not k in nodes):
+                nodes[lang] = elem
+            assert len(nodes) == len(self.languages)
+
             return nodes
 
-        # Algorithm:
-        #   (1) create set of *all* sibling elements of the same type/name
-        #     (1a) filter out elements which has already been used (with
-        #          "seqnum" attribute) -- done in ".get_siblings()"
-        #   (2) select the first matching element for every language
-        #   (3) select input element for every missing language
-
-        siblings = self.get_siblings(elem)
-        try:
-            for sibling in siblings:
-                sibling_languages = self.get_langs(sibling)
-                for lang in sibling_languages:
-                    if not nodes.has_key(lang):
-                        nodes[lang] = sibling
-                        sibling.setAttribute("seqnum", str(self.seqnum))
-                        if len(nodes) == len(self.languages):
-                            raise StopIteration  # TODO: user-defined exception(s)
-        except StopIteration:
-            pass
-
-        for lang in (k for k in self.languages if not nodes.has_key(k)):
-            nodes[lang] = elem
-        assert len(nodes) == len(self.languages)
-
-        return nodes
 
     def get_siblings(self, element):
         """Get a list of all previous and following siblings
@@ -357,16 +429,34 @@ class MultiLangDoc(object):
         return siblings
 
     def append_clones(self, element, parent, recursive):
-        """Clone elements and append them to parent nodes
+        """Clone element(s) and append them to parent nodes
 
-        Returns a dict of (lang,clone) pairs for a specified
-        dict of (lang,element) pairs.
+        Element is either a single element (which means it's the
+        same element for every language) or a language-indexed
+        vector of elements.
+
+        The method returns a language-indexed node vector.
         """
-        clones = dict([(key, element[key].cloneNode(recursive))
-                       for key in element])
+        if isinstance(element, dict):
+            assert len(element) == len(self.languages)
+            clones = dict([(key, element[key].cloneNode(recursive))
+                          for key in element])
+        else:
+            clones = dict([(key, element.cloneNode(recursive))
+                          for key in self.languages])
+
+        if not self.logger.isEnabledFor(logging.DEBUG):
+            if clones['en'].hasAttribute("seqnum"):
+                for lang in clones:
+                    clones[lang].removeAttribute("seqnum")
+            else:
+                # Should never happen...
+                self.logger.warn("%s without seqnum" %  clones['en'].nodeName)
+            for lang in clones:
+                if clones[lang].hasAttribute("lang"):
+                    clones[lang].removeAttribute("lang")
+
         for lang in clones:
-            if not self.logger.isEnabledFor(logging.DEBUG):
-                clones[lang].removeAttribute("seqnum")
             parent[lang].appendChild(clones[lang])
         return clones
 
@@ -450,7 +540,8 @@ class MultiLangDoc(object):
             elem = elem.parentNode
             langs = elem.getAttribute("lang")
         langs = langs.strip(';').split(';')
-        return [lang for lang in langs if lang in self.languages]
+        # use "set(langs)" since "langs" may contain identical entries:
+        return [lang for lang in set(langs) if lang in self.languages]
 
 
 ################################################################
@@ -467,7 +558,7 @@ def main():
     # parse command line
 
     usage = "usage: %prog [options] [FILE [DIR]]"
-    version = "%prog 0.4 2008-10-01"
+    version = "%prog 0.5 2008-10-06"
     cmdline = optparse.OptionParser(usage=usage, version=version)
 
     cmdline.set_defaults(languages= ",".join(languages))
@@ -522,7 +613,7 @@ def runtests():
     testrunner = unittest.TextTestRunner()
     suite = unittest.TestSuite()
     suite.addTest(
-        doctest.DocFileSuite("split_xml_multi_lang.txt",
+        doctest.DocFileSuite("split_xml_multi_lang.test",
                              optionflags = doctest.NORMALIZE_WHITESPACE |
                                 doctest.ELLIPSIS |
                                 doctest.REPORT_NDIFF)
