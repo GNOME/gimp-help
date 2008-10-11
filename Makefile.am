@@ -39,8 +39,17 @@ src_find_predicates =       \
 	-o                  \
 	-name '*.xml' -print
 
+dir_predicates =        \
+	-name '.svn' -prune \
+	        -o          \
+	-type d -print
+
+XML_DIRS  = $(shell cd $(srcdir) && find $(xmldir) $(dir_predicates))
+
 XML_FILES = $(shell cd $(top_srcdir) && find src $(src_find_predicates)) \
 	    $(AUTHORS_DOCBOOK_XML)
+
+POT_FILES  = $(XML_FILES:$(xmldir)/%.xml=$(potdir)/%.pot)
 
 COMMON_CSS_FILES = \
 	stylesheets/gimp-help-plain.css	\
@@ -73,7 +82,33 @@ AUTHORS_DOCBOOK_XML = src/preface/authors.xml
 
 DISTCHECK_CONFIGURE_FLAGS = --without-gimp
 
-helpdir = $(gimpdatadir)/help
+helpdir  = $(gimpdatadir)/help
+
+xmldir   = src
+
+potdir   = pot
+
+podir    = po
+
+xml2pot = $(XML2PO) --output="$(2)" $(1) 2>&1 \
+          | sed -e '/Warning: image file .* not found./d'
+
+#### POT directories
+
+$(POT_FILES): $(potdir)/%.pot : $(xmldir)/%.xml
+	@f=$@; d=$${f%/*}; test -d $$d || $(mkdir_p) $$d
+	@echo "[POT] $@"
+	@if test -s $<; then \
+	  $(call xml2pot,$<,$@);\
+	else \
+	  touch $@; \
+	fi
+
+# Targets suitable for command line
+# ("make pot" will work even if pot exists)
+pot update-pot: potfiles
+potfiles: $(POT_FILES)
+
 
 #### XML profiling
 
