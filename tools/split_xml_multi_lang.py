@@ -45,7 +45,7 @@ NONRECURSIVE = False
 
 # these tags are considered NOT FINAL
 sections   = ('sect1', 'sect2', 'sect3', 'sect4', 'section', 'bibliodiv',
-              'book', 'part', 'chapter', 'preface', 'legalnotice')
+              'book', 'part', 'chapter', 'preface', 'legalnotice', 'glossdiv')
 sectinfos  = ('sect2info', 'sect1info', 'sect3info', 'sect4info',
               'bookinfo', 'appendixinfo')
 notes      = ('warning', 'caution', 'important', 'tip', 'note')
@@ -345,10 +345,10 @@ class MultiLangDoc(object):
             found = 0
 
             for sibl in siblings:
-                langs = self.get_langs(sibl)
-                new_langs = [k for k in langs if k not in nodes]
+                sibl_langs = self.get_langs(sibl)
+                new_langs = [k for k in sibl_langs if k not in nodes]
                 if not self.final(elem):
-                    if len(langs) > len(new_langs):
+                    if len(sibl_langs) > len(new_langs):
                         break
                 elif not new_langs:
                     continue
