@@ -90,10 +90,11 @@ potdir   = pot
 
 podir    = po
 
+
+#### POT directories
 xml2pot = $(XML2PO) --output="$(2)" $(1) 2>&1 \
           | sed -e '/Warning: image file .* not found./d'
 
-#### POT directories
 
 $(POT_FILES): $(potdir)/%.pot : $(xmldir)/%.xml
 	@f=$@; d=$${f%/*}; test -d $$d || $(mkdir_p) $$d
@@ -108,6 +109,39 @@ $(POT_FILES): $(potdir)/%.pot : $(xmldir)/%.xml
 # ("make pot" will work even if pot exists)
 pot update-pot: potfiles
 potfiles: $(POT_FILES)
+
+
+#### POT -> PO
+# XXX TODO -> configure.ac
+PO_LANGS      = $(filter-out $(XML_LANG), $(ALL_LINGUAS))
+
+pot2po  = if [ -f $@ ]; then \
+              $(MSGFMT)   $(MSGFMTFLAGS)   $(3); \
+              $(MSGMERGE) $(MSGMERGEFLAGS) $(3) $(1) && touch $(3); \
+          else \
+              $(MSGINIT)  $(MSGINITFLAGS) --input $(1) --locale=$(2) --output $(3); \
+          fi
+
+# HIDE FROM AUTOMAKE #define MAKE_PO_RULES
+# HIDE FROM AUTOMAKE #$(1)_PO_FILES = $$(patsubst $$(potdir)/%.pot, $$(podir)/$(1)/%.po, $$(POT_FILES))
+# HIDE FROM AUTOMAKE #$$($(1)_PO_FILES): $$(podir)/$(1)/%.po : $$(potdir)/%.pot
+# HIDE FROM AUTOMAKE #	@f=$$@; d=$$$${f%/*}; test -d $$$$d || $$(mkdir_p) $$$$d
+# HIDE FROM AUTOMAKE #	@echo "[PO]  $$@"
+# HIDE FROM AUTOMAKE #	@if test -s $$<; then $$(call pot2po,$$<,$(1),$$@); else touch $$@; fi
+# HIDE FROM AUTOMAKE ## Debugging
+# HIDE FROM AUTOMAKE #list-pofiles-$(1) list-po-files-$(1) list-po-$(1):
+# HIDE FROM AUTOMAKE #	@echo $$($(1)_PO_FILES)
+# HIDE FROM AUTOMAKE #po-$(1): $$($(1)_PO_FILES)
+# HIDE FROM AUTOMAKE #	$$(cmd) if test -e messages.mo; then rm -f messages.mo; fi
+# HIDE FROM AUTOMAKE #endef
+
+$(foreach LANG,$(PO_LANGS),$(eval $(call MAKE_PO_RULES,$(LANG))))
+
+# Targets suitable for command line
+update-po-%: po-%
+
+# Special case 'en': do nothing :-)
+po-en: ;
 
 
 #### XML profiling
@@ -375,6 +409,15 @@ check-image-references:
 	    echo >&2 "*** Cannot check image references (no Python installed?) ***"; \
 	fi
 
+if HAVE_DOT
+
+build-system.png: tools/build-system.dot
+	@$(DOT) -Tpng -o $@ $<; \
+	echo "build-system.png created."
+
+dot: build-system.png
+
+endif
 
 #### AUTHORS file creation
 
@@ -462,6 +505,9 @@ endif
 	rm -rf preview-*
 	rm -rf xml
 	rm -rf $(tarball_prefix)-*
+	rm -rf po
+	rm -rf pot
+
 
 maintainer-clean-local:
 	rm -rf html
