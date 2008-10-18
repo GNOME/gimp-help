@@ -413,7 +413,7 @@ if HAVE_DOT
 
 build-system.png: tools/build-system.dot
 	@$(DOT) -Tpng -o $@ $<; \
-	echo "build-system.png created."
+	echo "$@ created."
 
 dot: build-system.png
 

@@ -5,17 +5,20 @@
         - circle    main targets
         - ellipse   lang-dependent or auxiliary targets
         - box       file or directory targets
+        - polygon   file list
         - hexagon   TODO etc.
     Colors:
-        - blue      default, language-independent
-        - green     language-dependent
+        - blue      PO & POT
+        - green     XML
+        - yellow    HTML
+        - grey      minor targets etc.
         - red       TODO
-        - grey      TODO, ignore, etc.
 */
-digraph gimp {
+
+digraph gimp_build_system {
     node[shape=box];
 
-    all[label="all" color=blue shape="circle"]
+    all[label="all" color=blue shape="circle"];
 
     all -> validate[label="?"];
     all -> html;
@@ -23,83 +26,96 @@ digraph gimp {
     all -> authors;
 
     /* do_nothing[label="do nothing" color=grey shape=hexagon] */
-    todo[label="TODO" color=red shape=hexagon]
+    /* todo[label="TODO" color=red shape=hexagon] */
 
-    /* $(POT_FILES): $(potdir)/%.pot : $(xmldir)/%.xml */
+    node[shape=circle];
+    pot[label="pot"];
+    po[shape=circle];
 
-    src_files[label="src/*.xml" color=blue ]
-    pot_files[label="pot/*.pot" color=blue]
-    po_files[label="po/LANG/*.po" color=green]
-    node[shape=ellipse];
-    xml[label="xml" color=blue]
-    pot[label="pot" color=blue]
+    po -> po_lang[label="TODO" color=red];
+    pot -> pot_files;
 
-    pot -> pot_files -> src_files
+    subgraph cluster_po {
+        color="blue";
     
-    /* XX_PO_FILES = $(patsubst $(potdir)/%.pot, $(podir)/XX/%.po, $(POT_FILES)) */
-
-    po[color=green shape=ellipse]
-    po_lang[label="po-LANG" color=green]
-    po -> po_lang[label="TODO" color=red]
-    po_lang -> po_files -> pot_files
-    /* po_en[label="po-en" color=grey] */
-    /* po_en -> do_nothing */
-
-    /* XX_XML_FILES = $(XML_FILES:$(xmldir)/%=$(xmlpodir)/$(1)/%)
-       $(XX_XML_FILES): $(xmlpodir)/XX/%.xml : $(podir)/XX/%.po */
-
-    xml[label="xml" color=blue shape=circle]
-    xml_files[label="xml/LANG/*.xml" color=green shape=box]
-    xml_dir[label="xml/LANG" color=green shape=box]
-    xml_dir_en[label="xml/en" color=green shape=box]
-    xml_lang[label="xml-LANG" color=green]
-    xml_en[label="xml-en" color=green shape=ellipse]
-
-    xml_dir -> xml_files -> po_files
-    xml_lang -> xml_files
-    xml_en -> xml_dir_en
-    xml_dir_en -> xml_files[label="link" color="grey"]
-
-    /* html-%: po-% index-% html/%/index.html */
-    /* html/%/index.html: $(xmlpodir)/% $(HTML_STYLESHEETS) */
-
-    /* html/%/gimp-xrefs.xml: html/%/index.html */
-
-    html_lang[label="html-LANG" color=green shape=ellipse]
-    html_main[label="html/LANG/index.html" color=green shape=box]
-    index_lang[label="index-LANG" color=green shape=ellipse]
-    xrefs_lang[label="html/LANG/gimp-xrefs.html" shape="box" color="green"] 
+        src_files[label="SRC FILES\n----\nsrc/*.xml" color=cyan shape=polygon side=4 skew=.5];
+        pot_files[label="POT FILES\n----\npot/LANG/*.pot" color=cyan shape=polygon side=4 skew=.5];
+        po_files[label="PO FILES\n----\npo/LANG/*.po" color=cyan shape=polygon side=4 skew=.5];
     
-    html_lang -> po_lang
-    html_lang -> index_lang
-    html_lang -> html_main -> xml_dir
-    xrefs_lang -> html_main
+        pot_files -> src_files;
+        
+        node[shape=ellipse];
+        po_lang[label="po-LANG" color=grey shape=ellipse];
+        po_lang -> po_files -> pot_files;
+        /* po_en[label="po-en" color=grey] */
+        /* po_en -> do_nothing */
+    
+    } /* subgraph cluster_po */
 
-    /* index: $(foreach lang,$(LANGUAGES),index-$(lang)) */
-    /* index-%: html/%/gimp-help.xml */
+    subgraph cluster_authors {
+        color="grey";
 
-    /* html/%/gimp-help.xml: html/%/gimp-xrefs.xml stylesheets/makeindex.xsl */
+        authors[label="AUTHORS" color=grey shape=box]
+        authors_xml[label="stylesheets/\nauthors.xml" color=grey shape=box]
+        authors -> authors_xml[color=grey]
+    } /* subgraph cluster_authors */
 
+
+    xml[label="xml" shape=circle];
+
+    subgraph cluster_xml {
+        color="green";
+    
+        xml_files[label="xml/LANG/*.xml" shape=box];
+        xml_dir[label="xml/LANG" shape=box]
+        xml_lang[label="xml-LANG" color=grey shape=ellipse]
+        /* xml_en[label="xml-en" color=green shape=ellipse] */
+    
+        xml_dir -> xml_files -> po_files
+        xml_lang -> xml_files
+        /* xml_en -> src_files[label="link" color="grey"] */
+
+    } /* subgraph cluster_xml */
+
+    html[color=blue shape=circle]
     index[color=grey shape=ellipse]
-    index_lang[label="index-LANG" color=green shape=ellipse]
-    help_lang[label="html/LANG/gimp-help.xml" color=green shape=box]
-
     index -> index_lang[color=grey label="?"]
-    index_lang -> help_lang -> xrefs_lang
+
+    subgraph cluster_html {
+        color="yellow";
+    
+        html_lang[label="html-LANG" color=grey shape=ellipse]
+        html_main[label="html/LANG/index.html" shape=box]
+        index_lang[label="index-LANG" color=grey shape=ellipse]
+        xrefs_lang[label="html/LANG/gimp-xrefs.html" shape=box] 
+        help_lang[label="html/LANG/gimp-help.xml" shape=box]
+    
+        
+        /* html_lang -> po_lang */
+        html_lang -> index_lang
+        html_lang -> html_main[style=dashed color=grey label=" ?"]
+        html_main -> xml_dir[label=" stamp"]
+        xrefs_lang -> html_main
+    
+        index_lang -> help_lang -> xrefs_lang
+
+    } /* subgraph cluster_html */
+
 
     /* TODO */
 
-    html[shape=circle]
     xml[shape=circle]
-    check[color=blue shape=ellipse]
-    validate[color=blue shape=ellipse]
-    authors[label="AUTHORS" color=blue shape=box]
+    checks[color=blue shape=ellipse]
+    check1[label="check [...]" color=grey shape=ellipse]
+    validate[color=grey shape=ellipse]
+    xmllint[color=grey shape=ellipse]
 
     xml ->  xml_lang[label="TODO" color=red]
-    xml ->  xml_en[color=grey]
-    xml ->  po[color=grey label="TODO?"]
+    /* xml ->  xml_en[color=grey] */
+    xml ->  po[style=dashed color=grey label=" ?"]
     html -> html_lang[label="TODO" color=red]
-    authors -> todo
-    check -> validate -> todo
-}
+    checks -> validate[color=grey style=dashed label=" ?"]
+    checks -> check1[color=grey label=" TODO"]
+    validate -> xmllint[color=red style=dashed label=" TODO"]
 
+} /* digraph gimp_build_system */

@@ -50,7 +50,7 @@ sectinfos  = ('sect2info', 'sect1info', 'sect3info', 'sect4info',
               'bookinfo', 'appendixinfo')
 notes      = ('warning', 'caution', 'important', 'tip', 'note')
 containers = ('figure', 'caption', 'revhistory', 'formalpara', 'equation',
-              'informalequation', 'informalfigure', 'example')
+              'informalequation', 'informalfigure', 'example', 'indexterm')
 # XXX: making 'inlinemediaobject' "final" should also work
 nobjects   = ('textobject', 'mediaobject', 'screenshot', 'inlinemediaobject')
 lists      = ('itemizedlist', 'orderedlist', 'variablelist',
@@ -61,8 +61,8 @@ items      = ('varlistentry', 'listitem', 'seglistitem',
 
 # these tags are considered FINAL
 paras      = ('para', 'simpara', 'programlisting', 'blockquote')
-leafs      = ('phrase', 'revision', 'indexterm', 'graphic', 'alt', 'seg',
-              'anchor')
+leafs      = ('phrase', 'revision', 'graphic', 'alt', 'seg',
+              'anchor', 'primary', 'secondary', 'tertiary')
 fobjects   = ('imageobject',)
 fgui       = ('guiicon', 'guimenuitem')
 keys       = ('keycap', 'keycombo')
@@ -359,7 +359,7 @@ class MultiLangDoc(object):
                 if len(nodes) == len(self.languages):
                     return nodes
 
-            for lang in (k for k in self.languages if not nodes.has_key(k)):
+            for lang in (k for k in self.languages if not k in nodes):
                 nodes[lang] = elem
             assert len(nodes) == len(self.languages)
 
@@ -482,10 +482,14 @@ class MultiLangDoc(object):
         elif name in text_final_nodes:
             return self.has_nonempty_text(node)
         elif name in ('procedure', 'step'):
-            return self.get_langs(node) == 1
+            return len(self.get_langs(node)) == 1
         else:
-            self.logger.warn("don't know what to do with '%s', assuming final" % name)
-            return True
+            _final = self.has_nonempty_text(node)
+            if _final:
+                self.logger.warn("considered '%s' to be final" % name)
+            else:
+                self.logger.warn("considered '%s' to be not final" % name)
+            return _final
 
 
     def ignore(self, node):
@@ -555,7 +559,7 @@ def main():
     # parse command line
 
     usage = "usage: %prog [options] [FILE [DIR]]"
-    version = "%prog 0.6 2008-10-08"
+    version = "%prog 0.7 2008-10-18"
     cmdline = optparse.OptionParser(usage=usage, version=version)
 
     cmdline.set_defaults(languages= ",".join(languages))
@@ -622,7 +626,7 @@ def runtests():
 if __name__ == '__main__':
     if "--profile" in sys.argv:
         profile.run("main()")
-    if "--test" in sys.argv:
+    elif "--test" in sys.argv:
         runtests()
     else:
         main()

@@ -74,6 +74,10 @@ POT_DIRS   = $(XML_DIRS:$(xmldir)/%=$(potdir)/%)
 # XXX: requires that "plainhtml.xsl" has been renamed to "html.xsl"
 HTML_STYLESHEETS = stylesheets/html*.xsl
 
+# to be generated from stylesheets/authors.xml
+AUTHORS_DOCBOOK_XML = src/preface/authors.xml
+#
+AUTHORS_STYLESHEET_XML = stylesheets/authors.xml
 
 # To talk or not to talk, that is the question!
 VERBOSE ?= 1
@@ -163,7 +167,6 @@ first: all
 validate: ;
 html: ;
 #index: ;
-AUTHORS: ;
 
 all: validate html index AUTHORS
 
@@ -254,22 +257,21 @@ $(foreach LANG,$(PO_LANGS),$(eval $(call MAKE_XML_RULES,$(LANG))))
 
 # Special case: en
 en_XML_FILES = $(XML_FILES:$(xmldir)/%=$(xmlpodir)/en/%)
-$(en_XML_FILES): xmldir-en
+$(en_XML_FILES): $(xmlpodir)/en
 
-xmldir-en: $(xmlpodir)/en ;
 # TODO: make relative link rather than absolute link(?)
 $(xmlpodir)/en: $(XML_FILES)
-	$(cmd) target_dir=$$(cd $(srcdir)/$(xmldir) && pwd); \
-	link_dir=$(builddir)/$(xmlpodir); \
-	test -d $${link_dir} || $(fake) $(mkdir_p) $${link_dir}; \
-	test -d $${link_dir}/en || $(fake) $(ln_s) $${target_dir} $${link_dir}/en; \
+	$(cmd) src_dir=$$(cd $(srcdir)/$(xmldir) && pwd); \
+	poxml_dir=$(builddir)/$(xmlpodir); \
+	test -d $${poxml_dir} || $(fake) $(mkdir_p) $${poxml_dir}; \
+	test -d $${poxml_dir}/en || $(fake) $(ln_s) $${src_dir} $${poxml_dir}/en; \
 	touch $@
 
 
 # Targets suitable for command line
 
 # Special case: en
-xml-en: xmldir-en
+xml-en: $(xmlpodir)/en ;
 
 # Debugging
 list-xmlfiles-en list-xml-files-en list-xml-en:
@@ -280,7 +282,8 @@ list-xmlfiles-en list-xml-files-en list-xml-en:
 ####            Make HTML files:  XML --> HTML                      ####
 ########################################################################
 
-html-%: po-% index-% html/%/index.html ;
+#html-%: index-% html/%/index.html ;
+html-%: index-% ;
 
 html/%/index.html: $(xmlpodir)/% $(HTML_STYLESHEETS)
 	$(msg) "*** Making html for $* ... "
@@ -329,6 +332,27 @@ html/%/gimp-help.xml: html/%/gimp-xrefs.xml stylesheets/makeindex.xsl
 
 
 ########################################################################
+####            AUTHORS                                             ####
+########################################################################
+
+AUTHORS: $(AUTHORS_STYLESHEET_XML) stylesheets/authors_text.xsl $(AUTHORS_DOCBOOK_XML)
+	$(msg) "**** Making $@ ... "
+	$(cmd) $(XSLTPROC) \
+	  $(XSLTFLAGS) $(XSLTEXTRAFLAGS) \
+	  $(srcdir)/stylesheets/authors_text.xsl \
+	  $< \
+	  > $@
+	
+$(AUTHORS_DOCBOOK_XML): $(AUTHORS_STYLESHEET_XML) src/preface/titles.xml stylesheets/authors_*.xsl
+	$(msg) "**** Making $@ ... "
+	$(cmd) $(XSLTPROC) \
+	  $(XSLTFLAGS) $(XSLTEXTRAFLAGS) \
+	  $(srcdir)/stylesheets/authors_docbook.xsl \
+	  $< \
+	  > $@
+
+
+########################################################################
 ####            Debugging etc.                                      ####
 ########################################################################
 
@@ -338,7 +362,7 @@ list-xmlfiles list-xml-files list-xml:
 list-potfiles list-pot-files list-pot:
 	@echo $(POT_FILES)
 
-build-system.png: build-system.dot
+build-system.png: tools/build-system.dot
 	@if type dot >/dev/null; then \
 		dot -Tpng -o $@ $<; \
 	fi
@@ -352,61 +376,4 @@ dot: build-system.png
 		fi; \
 	fi
 
-
-########################################################################
-####     Miscellaneous stuff, to be removed...                      ####
-########################################################################
-
-# Clone a directory tree
-#     $1 - location of destination directory tree
-#     $2 - list of source directories [XXX: drop this in favour of $(XML_DIRS)?]
-#clone_dirtree = for sourcedir in $(2); do \
-#                    test "$${sourcedir}" != "." || sourcedir="" ; \
-#                    sourcedir=$${sourcedir\#./}; \
-#                    destdir=$(builddir)/$(1)/$${sourcedir}; \
-#                    test -d $${destdir} || $(fake) $(mkdir_p) $${destdir}; \
-#                done
-
-# Get the XML files (prerequisites) for the HTML target
-#     $1 - locale (en, de, es, fr, ...)
-# Returns
-#     $(XML_FILES)             if $1 is 'en', 
-#     translated $(XML_FILES)  otherwise
-#xml_po_files = $(if $(findstring en,$(1)),$(XML_FILES),$(subst $(xmldir),$(xmlpodir)/$(1),$(XML_FILES)))
-#xml_po_files = $(subst $(xmldir),$(xmlpodir)/$(1),$(XML_FILES))
-
-# XXX: do we need this?
-# Special case 'en'
-#htmldir-en: $(xmldir)
-#
-#htmldir-%: xmldir-%
-#	$(msg) "Making $@"
-#	$(cmd) $(call clone_dirtree,html/$*,$(DIR_TREE))
-
-# XXX: I'm not sure if the following rule (using a function) works -
-# it seems to depend on the function...
-#html/%/index.html: $(call xml_po_files,%) $(HTML_STYLESHEETS)
-
-#html/en/index.html: $(call xml_po_files,en) $(HTML_STYLESHEETS)
-#html/en/index.html: $(XML_FILES) $(HTML_STYLESHEETS)
-
-# XXX: do we need this?
-#xmldir-%: podir-%
-#	$(msg) "Making $(xmlpodir)/$* directories"
-#	$(cmd) $(call clone_dirtree,$(xmlpodir)/$*,$(DIR_TREE))
-
-
-# XXX: do we need this?
-#podir-%: $(POT_DIRS)
-#	$(msg) "Making po directories ($*)"
-#	$(cmd) $(call clone_dirtree,$(podir)/$*,$(DIR_TREE))
-
-# XXX: do we need this?
-#podir-en:
-#	@echo >&2 "Skipped making po directory for 'en'."
-
-# XXX: do we need this?
-#potdir: $(POT_DIRS)
-#	$(msg) "Making pot directories ($(potdir))... "
-#	$(cmd)$(call clone_dirtree,$(potdir),$(DIR_TREE))
 
