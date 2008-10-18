@@ -86,6 +86,8 @@ helpdir  = $(gimpdatadir)/help
 
 xmldir   = src
 
+xmlpodir = xml
+
 potdir   = pot
 
 podir    = po
@@ -112,7 +114,6 @@ potfiles: $(POT_FILES)
 
 
 #### POT -> PO
-# XXX TODO -> configure.ac
 PO_LANGS      = $(filter-out $(XML_LANG), $(ALL_LINGUAS))
 
 pot2po  = if [ -f $@ ]; then \
@@ -142,6 +143,52 @@ update-po-%: po-%
 
 # Special case 'en': do nothing :-)
 po-en: ;
+
+
+#### PO -> XML
+po2xml  = $(XML2PO) --po-file=$(2) --language=$(3) --output=$(4) $(1) 2>&1 \
+          | sed -e '/Warning: image file .* not found./d'
+
+# HIDE FROM AUTOMAKE #define MAKE_XML_RULES
+# HIDE FROM AUTOMAKE #$(1)_XML_FILES = $$(XML_FILES:$$(xmldir)/%=$$(xmlpodir)/$(1)/%)
+# HIDE FROM AUTOMAKE #$$($(1)_XML_FILES): $$(xmlpodir)/$(1)/%.xml : $$(podir)/$(1)/%.po
+# HIDE FROM AUTOMAKE #	@f=$$@; d=$$$${f%/*}; test -d $$$$d || $$(mkdir_p) $$$$d
+# HIDE FROM AUTOMAKE #	@echo "[XML] $$@"
+# HIDE FROM AUTOMAKE #	@if test -s $$(@:$$(xmlpodir)/$(1)/%=$$(xmldir)/%); then \
+# HIDE FROM AUTOMAKE #		$$(call po2xml,$$(@:$$(xmlpodir)/$(1)/%=$$(xmldir)/%),$$<,$(1),$$@); \
+# HIDE FROM AUTOMAKE #	else \
+# HIDE FROM AUTOMAKE #		touch $$@; \
+# HIDE FROM AUTOMAKE #	fi
+# HIDE FROM AUTOMAKE ## This is indirectly used as HTML prerequisite:
+# HIDE FROM AUTOMAKE #$$(xmlpodir)/$(1): $$($(1)_XML_FILES)
+# HIDE FROM AUTOMAKE #	touch $$(xmlpodir)/$(1)
+# HIDE FROM AUTOMAKE ## Debugging
+# HIDE FROM AUTOMAKE #list-xmlfiles-$(1) list-xml-files-$(1) list-xml-$(1):
+# HIDE FROM AUTOMAKE #	@echo $$($(1)_XML_FILES)
+# HIDE FROM AUTOMAKE ## Targets suitable for command line
+# HIDE FROM AUTOMAKE #xml-$(1): $$($(1)_XML_FILES)
+# HIDE FROM AUTOMAKE #endef
+
+$(foreach LANG,$(PO_LANGS),$(eval $(call MAKE_XML_RULES,$(LANG))))
+
+# Special case: en
+en_XML_FILES = $(XML_FILES:$(xmldir)/%=$(xmlpodir)/en/%)
+$(en_XML_FILES): xmldir-en
+
+xmldir-en: $(xmlpodir)/en ;
+
+# TODO: make relative link rather than absolute link(?)
+$(xmlpodir)/en: $(XML_FILES)
+	$(cmd) target_dir=$$(cd $(srcdir)/$(xmldir) && pwd); \
+	link_dir=$(builddir)/$(xmlpodir); \
+	test -d $${link_dir} || $(fake) $(mkdir_p) $${link_dir}; \
+	test -d $${link_dir}/en || $(fake) $(ln_s) $${target_dir} $${link_dir}/en; \
+	touch $@
+
+
+# Targets suitable for command line
+# Special case: en
+xml-en: xmldir-en
 
 
 #### XML profiling
