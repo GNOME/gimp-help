@@ -4,6 +4,7 @@ PO_FILES = \
 	po/gimp-keys.pot\
 	po/de.po	\
 	po/es.po	\
+	po/fi.po	\
 	po/fr.po	\
 	po/it.po	\
 	po/ko.po	\
