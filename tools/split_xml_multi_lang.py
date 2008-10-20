@@ -140,7 +140,8 @@ class MultiLangDoc(object):
         """Multi-language XML document"""
 
         self.filename = filename
-        self.dest = {}	# destination documents
+        self.dest = {}  # destination documents
+        self.languages = set(['en'])
 
         self.logger = logging.getLogger("splitxml")
         self.logger.info("Parsing %s" % filename)
@@ -184,9 +185,7 @@ class MultiLangDoc(object):
         document recursively, starting with the document element,
         """
         self.logger.debug("process(%s)" % self.doc.documentElement.nodeName)
-        self.languages = languages
-        if 'en' not in languages:
-            self.languages.insert(0, "en")
+        self.languages = self.languages.union(set(languages))
 
         impl = xml.dom.minidom.getDOMImplementation()
         for lang in self.languages:
@@ -541,8 +540,7 @@ class MultiLangDoc(object):
             elem = elem.parentNode
             langs = elem.getAttribute("lang")
         langs = langs.strip(';').split(';')
-        # use "set(langs)" since "langs" may contain identical entries:
-        return [lang for lang in set(langs) if lang in self.languages]
+        return self.languages.intersection(set(langs))
 
 
 ################################################################
@@ -600,9 +598,6 @@ def main():
         Logger.setLevel(logging.DEBUG)
 
     options.languages = re.split('[, ]+', options.languages)
-    try: options.languages.remove('en')
-    except ValueError: pass
-    options.languages.insert(0, 'en')
 
     doc = MultiLangDoc(options.filename)
     doc.process(options.languages)
