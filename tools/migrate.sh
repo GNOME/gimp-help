@@ -1,37 +1,37 @@
 #!/bin/bash
-# This file is part of the gimp-help-2 project and is
-# Copyright 2008, Ulf-D. Ehlert, Roman Joost
-#
-#   This program is free software; you can redistribute it and/or modify
-#   it under the terms of the GNU General Public License as published by
-#   the Free Software Foundation; either version 2 of the License, or
-#   (at your option) any later version.
-#
-#   This program is distributed in the hope that it will be useful,
-#   but WITHOUT ANY WARRANTY; without even the implied warranty of
-#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#   GNU General Public License for more details.
-#
-#   You should have received a copy of the GNU General Public License
-#   along with this program; if not, write to the Free Software
-#   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-#
+# this script migrates the content from DocBook XML files to PO/GETTEXT
+# supported XML files ??!?!
+
+#LINGUAS="de en es fr it ko nl no pl ru sv"
+LINGUAS="de fr"
 
 srcdir="src"
+oldsrcdir="oldsrc"
 xmldir="xml"
 potdir="pot"
 podir="po"
-LINGUAS="de"
-SPLIT="/opt/python2.4/bin/python tools/split_xml_multi_lang.py"
-XML2PO="python tools/xml2po"	# patched version!!
-XMLLANG2EN="tools/xmllang2en.sh -v"
 
-echo "Creating en_US ..."
-$XMLLANG2EN --srcdir=$srcdir --dstdir=en_US
+SPLIT="python tools/split_xml_multi_lang.py"
+XML2PO="python tools/xml2po"	# patched version!!
+
+exclude_patterns='.svn key-reference* glossary dictionary'
+exclude=$(echo "$exclude_patterns" | \
+          sed -e 's/[^ ]\+/"&"/g; s/ / -o -name /g; s/^/\\( -name /; s/$/ \\) -prune /')
+
+# clean-up
+if [ -d "$oldsrcdir" ]; then
+    echo >&2 Removing $srcdir, $potdir, $podir, $xmldir, ...
+    test -L $xmldir/en && rm $xmldir/en
+    test -d $srcdir && rm -rf $srcdir
+    test -d $potdir && rm -rf $potdir
+    test -d $podir  && rm -rf $podir
+    test -d $xmldir && rm -rf $xmldir
+    mv $oldsrcdir $srcdir
+fi
 
 echo "Splitting the source XML"
 time \
-find $srcdir -name .svn -prune -o -name '*.xml' -print |
+eval find $srcdir $exclude -o -name '*.xml' -print |
 while read srcfile
 do
     base=${srcfile%/*}
@@ -41,7 +41,7 @@ do
 done
 echo
 
-srcdir=$xmldir/en
+mv -vi "$srcdir" "$oldsrcdir" && mv -vi "$xmldir"/en "$srcdir"
 echo
 
 
@@ -55,7 +55,8 @@ do
     dest=${potfile%/*}
     test -d "$dest" || mkdir -p "$dest"
     echo >&2 $potfile
-    $XML2PO --output="$potfile" "$srcfile" 2>&1 | grep -vE 'image file .* not found'
+    #$XML2PO --output="$potfile" "$srcfile" 2>&1 | grep -vE 'image file .* not found'
+    ($XML2PO --output='-' "$srcfile" | msguniq | msgcat -w80 - > "$potfile") 2>&1 | grep -vE 'image file .* not found'
 done
 echo
 
@@ -72,8 +73,11 @@ do
         dest=${pofile%/*}
         test -d "$dest" || mkdir -p "$dest"
         echo >&2 $pofile
-        $XML2PO --language $lang --reuse=$xmlfile --output="$pofile" \
-                "$srcfile" 2>&1 | grep -vE 'image file .* not found'
+        #$XML2PO --language $lang --reuse=$xmlfile --output="$pofile" \
+        #        "$srcfile" 2>&1 | grep -vE 'image file .* not found'
+        ($XML2PO --language $lang --reuse=$xmlfile --output='-' \
+                 "$srcfile" | msguniq | msgcat -w80 - > "$pofile") 2>&1 \
+        | grep -vE 'image file .* not found'
     done
 done
 echo

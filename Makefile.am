@@ -94,8 +94,10 @@ podir    = po
 
 
 #### POT directories
-xml2pot = $(XML2PO) --output="$(2)" $(1) 2>&1 \
-          | sed -e '/Warning: image file .* not found./d'
+xml2pot = ($(XML2PO) --output='-' "$(1)" \
+          | $(MSGUNIQ) $(MSGUNIQFLAGS) \
+          | $(MSGCAT) $(MSGCATFLAGS) - > "$(2)") 2>&1 \
+          | sed -e '/image file .* not found/d'
 
 
 $(POT_FILES): $(potdir)/%.pot : $(xmldir)/%.xml
@@ -173,9 +175,7 @@ $(foreach LANG,$(PO_LANGS),$(eval $(call MAKE_XML_RULES,$(LANG))))
 
 # Special case: en
 en_XML_FILES = $(XML_FILES:$(xmldir)/%=$(xmlpodir)/en/%)
-$(en_XML_FILES): xmldir-en
-
-xmldir-en: $(xmlpodir)/en ;
+$(en_XML_FILES): $(xmlpodir)/en
 
 # TODO: make relative link rather than absolute link(?)
 $(xmlpodir)/en: $(XML_FILES)
@@ -187,8 +187,9 @@ $(xmlpodir)/en: $(XML_FILES)
 
 
 # Targets suitable for command line
+
 # Special case: en
-xml-en: xmldir-en
+xml-en: $(xmlpodir)/en ;
 
 
 #### XML profiling

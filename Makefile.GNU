@@ -16,19 +16,23 @@ XML_LANG   = en
 PO_LANGS   = $(filter-out $(XML_LANG), $(LANGUAGES))
 
 # Essential external programs and their default options
-XSLTPROC  = $(fake) xsltproc
+XSLTPROC  = xsltproc
 XSLTFLAGS = --nonet
 
-XMLLINT      = $(fake) xmllint
+XMLLINT      = xmllint
 XMLLINTFLAGS = --nonet -noout
 
-XML2PO   = $(fake) xml2po
+XML2PO = tools/xml2po
 
-MSGINIT  = $(fake) msginit
-MSGFMT   = $(fake) msgfmt
-MSGMERGE = $(fake) msgmerge
+MSGUNIQ       = msguniq 
+MSGUNIQFLAGS  = 
+MSGCAT        = msgcat 
+MSGCATFLAGS   = --width=80 
+MSGINIT       = msginit
 MSGINITFLAGS  = --no-translator
+MSGFMT        = msgfmt
 MSGFMTFLAGS   = --check --use-fuzzy --statistics
+MSGMERGE      = msgmerge
 MSGMERGEFLAGS = --quiet --backup=none --update
 
 # Simple commands
@@ -103,13 +107,6 @@ cmd =
 endif
 endif
 
-# Testing & debugging
-ifeq ($(DEBUG),)
-fake      =
-else
-fake      = echo
-endif
-
 
 #--------------------------------------------------------------#
 #       The main functions used to transform                   #
@@ -118,15 +115,20 @@ endif
 #               (c) XML and PO files to XML files              #
 #--------------------------------------------------------------#
 
-# Create a PO-template
+# Create a PO-template (POT)
 #
 # Usage:
 #     $(call xml2pot,xml-file,pot-file)
 # Parameters:
 #     $1 - original (untranslated) XML file
 #     $2 - POT template file containing translatable tags
-xml2pot = $(XML2PO) --output="$(2)" $(1) 2>&1 \
-          | sed -e '/Warning: image file .* not found./d'
+#
+# Hint: Better don't use 'grep' for filtering-out the warning
+# messages, since grep's exit status is 1 if there is no match.
+xml2pot = ($(XML2PO) --output='-' "$(1)" \
+          | $(MSGUNIQ) $(MSGUNIQFLAGS) \
+          | $(MSGCAT) $(MSGCATFLAGS) - > "$(2)") 2>&1 \
+          | sed -e '/image file .* not found/d'
 
 # Merge template (pot) and message catalog (po) or create a new catalog
 #
@@ -263,8 +265,8 @@ $(en_XML_FILES): $(xmlpodir)/en
 $(xmlpodir)/en: $(XML_FILES)
 	$(cmd) src_dir=$$(cd $(srcdir)/$(xmldir) && pwd); \
 	poxml_dir=$(builddir)/$(xmlpodir); \
-	test -d $${poxml_dir} || $(fake) $(mkdir_p) $${poxml_dir}; \
-	test -d $${poxml_dir}/en || $(fake) $(ln_s) $${src_dir} $${poxml_dir}/en; \
+	test -d $${poxml_dir} || $(mkdir_p) $${poxml_dir}; \
+	test -d $${poxml_dir}/en || $(ln_s) $${src_dir} $${poxml_dir}/en; \
 	touch $@
 
 

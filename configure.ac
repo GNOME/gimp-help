@@ -143,7 +143,7 @@ fi
 AM_CONDITIONAL(HAVE_XML2PO, test -n "$XML2PO")
 
 
-#  Search for msgfmt, msginit, msgmerge
+#  Search for gettext tools
 
 AC_PATH_PROG(MSGFMT, msgfmt)
 if test -z "$MSGFMT" && test "x$enable_build" = "xyes"; then
@@ -176,6 +176,23 @@ fi
 
 MSGMERGEFLAGS="--quiet --backup=none --update"
 AC_SUBST(MSGMERGEFLAGS)
+
+
+AC_PATH_PROG(MSGUNIQ, msguniq)
+if test -z "$MSGUNIQ" && test "x$enable_build" = "xyes"; then
+  AC_MSG_ERROR([
+** Couldn't find msguniq(1). You will need it to build the help files.
+** See the file 'INSTALL' for more help.])
+fi
+
+
+AC_PATH_PROG(MSGCAT, msgcat)
+if test -z "$MSGCAT" && test "x$enable_build" = "xyes"; then
+  AC_MSG_ERROR([
+** Couldn't find msgcat(1). You will need it to build the help files.
+** See the file 'INSTALL' for more help.])
+fi
+
 
 #  Optionally allow xsltproc to access DTDs over the network
 
