@@ -120,8 +120,7 @@ class XmlNode(object):
 
         This method is used to skip comments etc.
         """
-        return self._node.nodeType in (xml.dom.minidom.Node.COMMENT_NODE,) \
-            or self._node.nodeName in ('xi:include',)
+        return self._node.nodeType in (xml.dom.minidom.Node.COMMENT_NODE,)
 # <<<<<<<<<<<<<<<< not used <<<<<<<<<<<<<<<<
 
 
@@ -269,11 +268,16 @@ class MultiLangDoc(object):
                     for lang in self.languages:
                         dest[lang].appendChild(child.cloneNode(NONRECURSIVE))
 
-            # (3) skip every non-English element
+            # (3) add xi:include elements
+            elif child.nodeName == 'xi:include':
+                for lang in self.languages:
+                    dest[lang].appendChild(child.cloneNode(NONRECURSIVE))
+
+            # (4) skip every non-English element
             elif self.skip(child):
                 pass
 
-            # (4) at last, handle non-trivial cases...
+            # (5) at last, handle non-trivial cases...
             else:
                 assert child.nodeType == child.ELEMENT_NODE \
                    and 'en' in self.get_langs(child)
@@ -284,13 +288,13 @@ class MultiLangDoc(object):
                 # element.
                 copies = self.vectorize(child, parentnodes)
 
-                # (4a) append recursively localized clones of nodes we don't
+                # (5a) append recursively localized clones of nodes we don't
                 # need/want to process any further (para, phrase, etc.)
                 if self.final(child):
                     self.logger.debug("split(%s) --> adding %s (final)" % \
                             (elem.nodeName, child.nodeName))
                     clones = self.append_clones(copies, dest, RECURSIVE)
-                # (4b) append non-recursively localized clones of nodes and
+                # (5b) append non-recursively localized clones of nodes and
                 # then traverse child nodes recursively (sect[1-4], note, etc.)
                 else:
                     self.logger.debug("split(%s) --> adding %s" % \
@@ -333,24 +337,39 @@ class MultiLangDoc(object):
         # parent node.
         if not parents:
 
-            # copy element for every element language
+            # Algorithm:
+            #   (1) for every language defined by the element's "lang"
+            #       attribute select the element itself
+            #   (2) create set of all sibling elements of the same type/name
+            #       without a "seqnum" attribute (which indicates that this
+            #       sibling has already been used)
+            #   (3a) if element is final: select the first matching element
+            #        for every remaining language 
+            #   (3b) if element is not final: same as (3a), but stop on the
+            #        first sibling with a language that was already processed
+            #   (4) select the element itself for every missing language
+
             nodes = dict([(lang, elem) for lang in self.get_langs(elem)])
             assert nodes.has_key('en')
             assert len(nodes) != len(self.languages)
 
-            # TODO: describe algorithm
-
-            siblings = self.get_siblings(elem)
             found = 0
-
-            for sibl in siblings:
+            for sibl in self.get_siblings(elem):
                 sibl_langs = self.get_langs(sibl)
                 new_langs = [k for k in sibl_langs if k not in nodes]
+                # for non-final nodes (which will be processed recursively)
+                # it's important that we stop on any language already "seen",
+                # otherwise different sections will be mixed-up, .e.g.
+                #     <section lang="en"> ... <section lang="en;xx;yy">
                 if not self.final(elem):
                     if len(sibl_langs) > len(new_langs):
                         break
                 elif not new_langs:
+                    # here we just skip any non-matching sibling, e.g.
+                    #     <para lang="en"> ... <para lang="en"> ...
+                    #     <para lang="xx"> ... <para lang="xx"> ...
                     continue
+                # mark as "seen"
                 sibl.setAttribute("seqnum", str(self.seqnum))
                 for lang in new_langs:
                     nodes[lang] = sibl
@@ -496,8 +515,7 @@ class MultiLangDoc(object):
 
         This method is used to skip comments etc.
         """
-        return node.nodeType in (node.COMMENT_NODE,) \
-            or node.nodeName in ('xi:include',)
+        return node.nodeType in (node.COMMENT_NODE,)
 
     def text(self, node):
         """Whether or not a node is a text node."""
