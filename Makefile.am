@@ -411,11 +411,21 @@ dist-hook: dist-copy-images
 ##  Note that number of images is *huge*, and if we stick image files in
 ##  EXTRA_DIST we get an "Argument list too long" error. So we handle it here.
 
+
 dist-copy-images:
 	test -d "$(top_srcdir)/images" && test -d "$(distdir)"
 	@echo "Copying images into distdir $(distdir) ..."
 	@(cd $(top_srcdir) && tar -cf- --exclude=.svn images) \
 	| (cd $(distdir) && tar -xf-)
+if HAVE_PNGOPTIMIZERS
+	@echo "Optimizing images. This could take while."
+	@find "$(distdir)/images" $(image_find_predicates) | \
+	while read file; do \
+	 	$(PNGNQ) -e ".png.mod" -n 256 $$file; \
+		$(PNGCRUSH) -q $$file.mod $$file; \
+		rm $$file.mod; \
+	done
+endif
 	test -d "$(distdir)/images" && test ! -d "$(distdir)/images/.svn"
 
 
