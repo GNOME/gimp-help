@@ -98,7 +98,11 @@ fi
 
 $AUTOMAKE --add-missing || exit 1
 if [ -e Makefile.in ]; then
-    sed -e 's/^# HIDE FROM AUTOMAKE #//' Makefile.in > Makefile.in.tmp &&
+    sed -e 's/^# HIDE FROM AUTOMAKE #//' \
+        -e '/^all\(-local\)\?:/i\
+\
+\
+'       Makefile.in > Makefile.in.tmp &&
     mv Makefile.in.tmp Makefile.in
 else
     echo >&2 "Error: cannot find Makefile.in"

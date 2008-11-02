@@ -52,16 +52,6 @@ AC_SUBST(ALL_LINGUAS)
 AC_SUBST(QUICKREFERENCE_ALL_LINGUAS)
 
 
-#  The build of the HTML files is optional.
-
-AC_ARG_ENABLE(build,
-              AS_HELP_STRING([--disable-build],
-                             [don't build the HTML files (needs xsltproc)]),
-              , enable_build=yes)
-
-AM_CONDITIONAL(GIMP_HELP_BUILD, test "x$enable_build" = "xyes")
-
-
 #  Check for GNU make.
 
 AC_MSG_CHECKING([whether ${MAKE-make} is GNU make])
@@ -84,10 +74,9 @@ fi
 #  Search for the XSLT processor
 
 AC_PATH_PROG(XSLTPROC, xsltproc)
-if test -z "$XSLTPROC" && test "x$enable_build" = "xyes"; then
+if test -z "$XSLTPROC"; then
   AC_MSG_ERROR([
 ** Couldn't find xsltproc(1). You will need it to build the help files.
-** If you want to install the prebuilt help files only, use --disable-build.
 ** See the file 'INSTALL' for more help.])
 fi
 

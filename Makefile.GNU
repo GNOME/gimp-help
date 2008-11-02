@@ -3,15 +3,16 @@
 ########################################################################
 
 # The GIMP manual languages
-ifneq ($(ALL_LINGUAS),)
-LANGUAGES  = $(ALL_LINGUAS)
-else
 ifneq ($(LINGUAS),)
 LANGUAGES  = $(LINGUAS)
+else
+ifneq ($(ALL_LINGUAS),)
+LANGUAGES  = $(ALL_LINGUAS)
 else
 LANGUAGES ?= de en es fr it ko nl no pl ru sv
 endif
 endif
+
 XML_LANG   = en
 PO_LANGS   = $(filter-out $(XML_LANG), $(LANGUAGES))
 
@@ -35,7 +36,8 @@ MSGFMTFLAGS   = --check --use-fuzzy --statistics
 MSGMERGE      = msgmerge
 MSGMERGEFLAGS = --quiet --backup=none --update
 
-# Simple commands
+# Standard shell commands
+echo_n  = echo -n
 mkdir_p = mkdir -p
 ln_s    = ln -s
 
@@ -68,12 +70,12 @@ pot_dir_predicates = $(dir_predicates)
 XML_FILES := $(shell cd $(srcdir) && find $(xmldir) $(xml_file_predicates))
 XML_DIRS  := $(shell cd $(srcdir) && find $(xmldir) $(dir_predicates))
 #DIR_TREE   = $(patsubst $(xmldir)/%, %, $(XML_DIRS))
-DIR_TREE   = $(XML_DIRS:$(xmldir)/%=%)
+#DIR_TREE   = $(XML_DIRS:$(xmldir)/%=%)
 
 #POT_FILES  = $(patsubst $(xmldir)/%.xml, $(potdir)/%.pot, $(XML_FILES))
 POT_FILES  = $(XML_FILES:$(xmldir)/%.xml=$(potdir)/%.pot)
 #POT_DIRS   = $(patsubst $(xmldir)/%, $(potdir)/%, $(XML_DIRS))
-POT_DIRS   = $(XML_DIRS:$(xmldir)/%=$(potdir)/%)
+#POT_DIRS   = $(XML_DIRS:$(xmldir)/%=$(potdir)/%)
 
 # XXX: requires that "plainhtml.xsl" has been renamed to "html.xsl"
 HTML_STYLESHEETS = stylesheets/html*.xsl
@@ -231,10 +233,9 @@ po-en: ;
 
 
 ########################################################################
-####            Make XML files  [PO --> XML(non-en)]                ####
+####            Make XML files:  PO --> XML(non-en)                 ####
 ########################################################################
 
-#$(1)_XML_FILES = $$(patsubst $$(podir)/$(1)/%.po, $$(xmlpodir)/$(1)/%.xml, $$($(1)_PO_FILES))
 define MAKE_XML_RULES
 $(1)_XML_FILES = $$(XML_FILES:$$(xmldir)/%=$$(xmlpodir)/$(1)/%)
 $$($(1)_XML_FILES): $$(xmlpodir)/$(1)/%.xml : $$(podir)/$(1)/%.po
@@ -298,17 +299,15 @@ html/%/index.html: $(xmlpodir)/% $(HTML_STYLESHEETS)
 	  --xinclude \
 	  --stringparam l10n.gentext.default.language $* \
 	  -o html/$*/ \
-	  stylesheets/html.xsl \
+	  stylesheets/plainhtml.xsl \
 	  $(xmlpodir)/$*/gimp.xml
 
 	$(cmd) for file in $(srcdir)/stylesheets/*.css; do \
-		test -f $$file || continue; \
-		cp -fp $$file html/$*; \
+		if [ -f $$file ]; then cp -fp $$file html/$*; fi; \
 	done
 
 	$(cmd) for file in $(srcdir)/stylesheets/$*/*.css; do \
-		test -f $$file || continue; \
-		cp -fp $$file html/$*; \
+		if [ -f $$file ]; then cp -fp $$file html/$*; fi; \
 	done
 
 # The xrefs file is a side effect of the HTML build
@@ -316,7 +315,6 @@ html/%/gimp-xrefs.xml: html/%/index.html
 	$(cmd) touch $@
 
 ####  Context Help  ####
-# XXX: IMHO "index" is a bad name
 index: $(foreach lang,$(LANGUAGES),index-$(lang)) ;
 index-%: html/%/gimp-help.xml ;
 
@@ -365,12 +363,12 @@ list-potfiles list-pot-files list-pot:
 	@echo $(POT_FILES)
 
 build-system.png: tools/build-system.dot
-	@if type dot >/dev/null; then \
+	$(cmd) if type dot >/dev/null; then \
 		dot -Tpng -o $@ $<; \
 	fi
 
 dot: build-system.png
-	@if test -e $<; then \
+	$(cmd) if test -e $<; then \
 		if type display >/dev/null; then \
 			display $<; \
 		elif type xv >/dev/null; then \
