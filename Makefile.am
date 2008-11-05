@@ -17,26 +17,31 @@ XML_LANG = en
 PO_LANGS = $(filter-out $(XML_LANG), $(LANGUAGES))
 
 ## Essential external programs and their default options
-## (these variables are provided via "configure" -- see configure.ac)
+## (some of these variables are provided via "configure" -- see configure.ac)
 ##
 ## XSLTPROC  = xsltproc
 ## XSLTFLAGS = --nonet
 ##
 ## XMLLINT      = xmllint
-## XMLLINTFLAGS = --nonet -noout
+XMLLINTFLAGS = --nonet
 ##
 ## XML2PO = tools/xml2po
 ##
 ## MSGUNIQ       = msguniq 
-## MSGUNIQFLAGS  = 
+MSGUNIQFLAGS  = 
 ## MSGCAT        = msgcat 
-## MSGCATFLAGS   = --width=80 
+MSGCATFLAGS   = --width=80 
 ## MSGINIT       = msginit
 ## MSGINITFLAGS  = --no-translator
 ## MSGFMT        = msgfmt
 ## MSGFMTFLAGS   = --check --use-fuzzy --statistics
 ## MSGMERGE      = msgmerge
 ## MSGMERGEFLAGS = --quiet --backup=none --update
+##
+## DBLATEX       = dblatex
+DBLATEXFLAGS  =
+## DOCBOOK2ODF      = docbook2odf
+DOCBOOK2ODFFLAGS =
 
 # Standard shell commands
 echo_n = echo $(ECHO_N)
@@ -136,11 +141,15 @@ HTML_STYLESHEETS = stylesheets/plainhtml.xsl stylesheets/htmlalternate.xsl
 DISTCHECK_CONFIGURE_FLAGS = --without-gimp
 
 # gimp-help directories
+## remember that automake defines "srcdir"
 helpdir  = $(gimpdatadir)/help
 xmldir   = src
-xmlpodir = xml
 potdir   = pot
 podir    = po
+xmlpodir = xml
+htmldir  = html
+pdfdir   = pdf
+odfdir   = odf
 
 
 ########################################################################
@@ -239,8 +248,14 @@ pot2po  = if [ -f $@ ]; then \
 #     $2 - PO file containing translations
 #     $3 - translation language
 #     $4 - resulting (translated) XML file
-po2xml  = $(XML2PO) --po-file=$(2) --language=$(3) --output=$(4) $(1) 2>&1 \
-          | sed -e '/Warning: image file .* not found./d'
+if HAVE_XMLLINT
+po2xml = ($(XML2PO) --po-file=$(2) --language=$(3) --output='-' $(1) \
+         | $(XMLLINT) $(XMLLINTFLAGS) --format --output $(4) -) 2>&1 \
+         | sed -e '/Warning: image file .* not found./d'
+else
+po2xml = $(XML2PO) --po-file=$(2) --language=$(3) --output=$(4) $(1) 2>&1 \
+         | sed -e '/Warning: image file .* not found./d'
+endif
 
 
 ########################################################################
@@ -316,14 +331,15 @@ $(foreach LANG,$(PO_LANGS),$(eval $(call MAKE_XML_RULES,$(LANG))))
 
 # Special case: en
 # HIDE FROM AUTOMAKE #en_XML_FILES = $(XML_FILES:$(xmldir)/%=$(xmlpodir)/en/%)
-$(en_XML_FILES): $(xmlpodir)/en
+# TODO: check this
+$(en_XML_FILES): $(xmlpodir)/en ;
 
 # TODO: make relative link rather than absolute link(?)
 $(xmlpodir)/en: $(XML_FILES)
 	$(cmd) src_dir=$$(cd $(srcdir)/$(xmldir) && pwd); \
-	poxml_dir=$(builddir)/$(xmlpodir); \
+	poxml_dir=$(xmlpodir); \
 	test -d $${poxml_dir} || $(mkdir_p) $${poxml_dir}; \
-	test -d $${poxml_dir}/en || $(ln_s) $${src_dir} $${poxml_dir}/en; \
+	test -d $${poxml_dir}/en || $(ln_s) $(abs_builddir)/$${src_dir} $${poxml_dir}/en; \
 	touch $@
 
 # Special case: en
@@ -335,16 +351,16 @@ xml-en: $(xmlpodir)/en ;
 ########################################################################
 
 # Note that Automake already defines an "html" target
-html-local: $(foreach lang,$(ALL_LINGUAS),html-$(lang))
+html-local: $(foreach lang,$(ALL_LINGUAS),html-$(lang)) ;
 
-#html-%: index-% html/%/index.html ;
+# html-% -> index-% -> html/%/gimp-help.xml -> html/%/gimp-xrefs.xml -> html/%/index.html
 html-%: index-% ;
 
-html/%/index.html: $(xmlpodir)/% $(HTML_STYLESHEETS)
+$(htmldir)/%/index.html: $(xmlpodir)/% $(HTML_STYLESHEETS)
 	$(msg) "*** Making html for $* ... "
-	$(cmd) rm -rf html/$*
-	$(cmd) $(mkdir_p) html/$*
-	$(cmd) test -L html/images || $(ln_s) ../images html/
+	$(cmd) rm -rf $(htmldir)/$*
+	$(cmd) $(mkdir_p) $(htmldir)/$*
+	$(cmd) test -h $(htmldir)/images || $(ln_s) ../images $(htmldir)/
 
 	$(cmd) $(XSLTPROC) \
 	  $(XSLTFLAGS) $(XSLTEXTRAFLAGS) \
@@ -355,22 +371,22 @@ html/%/index.html: $(xmlpodir)/% $(HTML_STYLESHEETS)
 	  $(xmlpodir)/$*/gimp.xml
 
 	$(cmd) for file in $(srcdir)/stylesheets/*.css; do \
-		if [ -f $$file ]; then cp -fp $$file html/$*; fi; \
+		if [ -f $$file ]; then cp -fp $$file $(htmldir)/$*; fi; \
 	done
 
 	$(cmd) for file in $(srcdir)/stylesheets/$*/*.css; do \
-		if [ -f $$file ]; then cp -fp $$file html/$*; fi; \
+		if [ -f $$file ]; then cp -fp $$file $(htmldir)/$*; fi; \
 	done
 
 # The xrefs file is a side effect of the HTML build
-html/%/gimp-xrefs.xml: html/%/index.html
+$(htmldir)/%/gimp-xrefs.xml: $(htmldir)/%/index.html
 	$(cmd) touch $@
 
 ####  Context Help  ####
 index: $(foreach lang,$(LANGUAGES),index-$(lang)) ;
-index-%: html/%/gimp-help.xml ;
+index-%: $(htmldir)/%/gimp-help.xml ;
 
-html/%/gimp-help.xml: html/%/gimp-xrefs.xml stylesheets/makeindex.xsl
+$(htmldir)/%/gimp-help.xml: $(htmldir)/%/gimp-xrefs.xml stylesheets/makeindex.xsl
 	$(cmd) $(XSLTPROC) \
 	  $(XSLTFLAGS) $(XSLTEXTRAFLAGS) \
 	  $(srcdir)/stylesheets/makeindex.xsl \
@@ -378,73 +394,67 @@ html/%/gimp-help.xml: html/%/gimp-xrefs.xml stylesheets/makeindex.xsl
 	  > $@
 
 .PRECIOUS: \
-	html/%/index.html \
-	html/%/gimp-help.xml \
-	html/%/gimp-xrefs.xml
+	$(htmldir)/%/index.html \
+	$(htmldir)/%/gimp-help.xml \
+	$(htmldir)/%/gimp-xrefs.xml
 
 
-## TODO ## #### XML profiling
-## TODO ## 
-## TODO ## # Note that "src/gimp.xml" must be the first prerequisite
-## TODO ## # (it doesn't matter that it's listed twice)
-## TODO ## xml/%.xml: src/gimp.xml stylesheets/profile.xsl $(XML_FILES)
-## TODO ## 	@$(mkdir_p) xml
-## TODO ## 
-## TODO ## 	@echo "Profiling  XML for:" $*
-## TODO ## 	@$(XSLTPROC) \
-## TODO ## 	  $(XSLTFLAGS) \
-## TODO ## 	  --xinclude \
-## TODO ## 	  --stringparam profile.lang $* \
-## TODO ## 	  $(top_srcdir)/stylesheets/profile.xsl \
-## TODO ## 	  $< \
-## TODO ## 	  > $@.tmp
-## TODO ## 
-## TODO ## 	@sed -e 's/xmlns[:a-z]*="[^"]*" //' \
-## TODO ## 	    -e 's/lang="[A-Za-z_;]*"/lang="$*"/' \
-## TODO ## 	    -e '/^[ \t]*$$/d' \
-## TODO ## 	  < $@.tmp \
-## TODO ## 	  > $@
-## TODO ## 
-## TODO ## 	@rm -f $@.tmp
-## TODO ## 
-## TODO ## if HAVE_XMLLINT
-## TODO ## 	@$(XMLLINT) --noout $@
-## TODO ## endif
-
-## TODO ## #### PDF output
-
+########################################################################
+####            Make PDF files:  XML --> PDF                        ####
+########################################################################
 if HAVE_DBLATEX
 
-## TODO ## pdf/%.pdf: xml/%.xml stylesheets/plainprint.xsl
-## TODO ## 	$(mkdir_p) pdf
-## TODO ## 	dblatex -p $(top_srcdir)/stylesheets/plainprint.xsl $< -o $@
-## TODO ## 
-## TODO ## # Note that Automake already defines a "pdf" target
-## TODO ## pdf-local: $(foreach lang,$(ALL_LINGUAS),pdf/$(lang).pdf)
+## Note that Automake already defines a "pdf" target
+pdf-local: $(foreach lang,$(ALL_LINGUAS),pdf-$(lang)) ;
+pdf-%: $(pdfdir)/%.pdf ;
+
+$(pdfdir)/%.pdf: $(xmlpodir)/%/gimp.xml stylesheets/plainprint.xsl
+	test -d $(pdfdir) || $(mkdir_p) $(pdfdir)
+	$(DBLATEX) $(DBLATEXFLAGS) \
+	    --xsl-user=$(srcdir)/stylesheets/plainprint.xsl \
+	    --output=$@ $<
 
 else
 
-## TODO ## pdf-local:
-## TODO ## 	@echo "*** Cannot build PDFs because dblatex(1) was not found ***"
-## TODO ## 	@false
+pdf-local pdf-%:
+	@echo "*** Cannot build PDFs because dblatex(1) was not found ***"
+	@exit 69
 
 endif
 
-## TODO ## #### ODF output
 
+########################################################################
+####            Make ODF files:  XML --> ODF                        ####
+########################################################################
 if HAVE_DOCBOOK2ODF
 
-## TODO ## odf/%.odt: xml/%.xml
-## TODO ## 	$(mkdir_p) odf
-## TODO ## 	$(DOCBOOK2ODF) --debug -v $< --output-dir=`pwd` --output-file=$@
+odf: $(foreach lang,$(ALL_LINGUAS),odf-$(lang)) ;
+odf-%: $(odfdir)/%.odt ;
 
-## TODO ## odf: $(foreach lang,$(ALL_LINGUAS),odf/$(lang).odt)
+$(odfdir)/%.odt: $(xmlpodir)/%/gimp-alldocs.xml
+	$(cmd) test -d $(odfdir) || $(mkdir_p) $(odfdir)
+	$(cmd) $(mkdir_p) odf
+	$(cmd) $(DOCBOOK2ODF) $(DOCBOOK2ODFFLAGS) \
+	    --debug -v \
+	    --output-dir=`pwd` \
+	    --output-file=$@ \
+	    $< 
+
+if HAVE_XMLLINT
+$(xmlpodir)/%/gimp-alldocs.xml: $(xmlpodir)/%/gimp.xml
+	$(XMLLINT) $(XMLLINTFLAGS) --xinclude --output $@ $<
+else
+$(xmlpodir)/%/gimp-alldocs.xml: $(xmlpodir)/%/gimp.xml
+	@echo "*** WARNING: Cannot resolve xincludes ***"; \
+	echo  "*** because xmllint(1) was not found. ***"; \
+	cp -v $< $@
+endif
 
 else
 
-## TODO ## odf:
-## TODO ## 	@echo "*** Cannot build ODFs because docbook2odf(1) was not found ***"
-## TODO ## 	@false
+odf odf-%:
+	@echo "*** Cannot build ODFs because docbook2odf(1) was not found ***"
+	@exit 69
 
 endif
 
@@ -463,48 +473,42 @@ endif
 ## TODO OR NOT TODO ## 	cd preview-$* && $(LN_S) ../html/$* .
 ## TODO OR NOT TODO ## 	cd preview-$* && $(LN_S) $(abs_top_srcdir)/images .
 
-## TODO ## #### HTML draft (single page preview)
+########################################################################
+####            HTML draft (single page preview)                    ####
+########################################################################
 
-## TODO ## %.draft: %.xml
-## TODO ## 	@echo "Making draft page (ignore any XSLT complaints):"
-## TODO ## 	@for lang in $(ALL_LINGUAS); do \
-## TODO ## 		test -d $(builddir)/html/$$lang && continue || \
-## TODO ## 		$(mkdir_p) $(builddir)/html/$$lang; \
-## TODO ## 		cp -fp $(srcdir)/stylesheets/*.css $(builddir)/html/$$lang; \
-## TODO ## 		for file in $(srcdir)/stylesheets/$$lang/*.css; do \
-## TODO ## 			test -f $$file || continue; \
-## TODO ## 			cp -fp $$file $(builddir)/html/$$lang/; \
-## TODO ## 		done; \
-## TODO ## 	done
-## TODO ## 
-## TODO ## 	@id=`sed -e 's/.*id=.//; tmatch; d; :match; s/["'"'"'].*//; q' $<`; \
-## TODO ## 	test -n "$$id" || id=noname; \
-## TODO ## 	for lang in $(ALL_LINGUAS); do \
-## TODO ## 		echo "Making $(builddir)/html/$$lang/$${id}-draft.html ... "; \
-## TODO ## 		$(XSLTPROC) \
-## TODO ## 		    $(XSLTFLAGS) \
-## TODO ## 		    $(XSLTEXTRAFLAGS) \
-## TODO ## 		    --xinclude \
-## TODO ## 		    --stringparam profile.lang $$lang \
-## TODO ## 		    --novalid \
-## TODO ## 		    $(srcdir)/stylesheets/profile.xsl \
-## TODO ## 		    $< \
-## TODO ## 		| \
-## TODO ## 		sed -e 's/xmlns[:a-z]*="[^"]*" //' \
-## TODO ## 		    -e 's/lang="[A-Za-z_;]*"/lang="'$$lang'"/' \
-## TODO ## 		    -e '/^[ \t]*$$/d' \
-## TODO ## 		| \
-## TODO ## 		$(XSLTPROC) \
-## TODO ## 		    $(XSLTFLAGS) $(XSLTEXTRAFLAGS) \
-## TODO ## 		    --xinclude \
-## TODO ## 		    --stringparam l10n.gentext.default.language $* \
-## TODO ## 		    --novalid \
-## TODO ## 		    --output $(builddir)/html/$$lang/$${id}-draft.html \
-## TODO ## 		    $(srcdir)/stylesheets/drafthtml.xsl \
-## TODO ## 		    - \
-## TODO ## 		; \
-## TODO ## 	done && \
-## TODO ## 	echo "(Remember that links won't work in a draft file.)"
+%.draft: %.xml stylesheets/drafthtml.xsl
+	@echo "Making draft page(s), ignore any XSLT complaints:"
+	$(cmd) id=`sed -e 's/.*id=.//; tmatch; d; :match; s/["'"'"'].*//; q' $<`; \
+	test -n "$$id" || id=noname; \
+	langs="$(shell echo $@ | \
+	               sed -e 's,^$(xmldir)/.*,$(LANGUAGES),; t' \
+	                   -e 's,^$(xmlpodir)/\([^/]\+\)/.*,\1,')"; \
+	for lang in $${langs}; do \
+		destdir=$(htmldir)/$${lang}; \
+		test -d $${destdir} && continue || \
+		$(mkdir_p) $${destdir}; \
+		cp -fp $(srcdir)/stylesheets/*.css \
+		       $(srcdir)/stylesheets/$$lang/*.css \
+		    $${destdir} 2>/dev/null; \
+	done; \
+	\
+	for lang in $${langs}; do \
+		destdir=$(htmldir)/$${lang}; \
+		echo "Making $${destdir}/$${id}-draft.html ... "; \
+		xmlfile="$<"; xmlfile=$${xmlfile#*/}; \
+		xmlfile=$(xmlpodir)/$${lang}/$${xmlfile#$${lang}/}; \
+		$(XSLTPROC) \
+		    $(XSLTFLAGS) $(XSLTEXTRAFLAGS) \
+		    --xinclude \
+		    --stringparam l10n.gentext.default.language $$lang \
+		    --novalid \
+		    --output $${destdir}/$${id}-draft.html \
+		    $(srcdir)/stylesheets/drafthtml.xsl \
+		    $${xmlfile} \
+		; \
+	done && \
+	echo "(Remember that links won't work in a draft file.)"
 
 
 ########################################################################

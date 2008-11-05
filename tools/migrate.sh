@@ -2,9 +2,8 @@
 # this script migrates the content from DocBook XML files to PO/GETTEXT
 # supported XML files ??!?!
 
-# XXX: what about fi?
-#LINGUAS="de en es fr it ko nl no pl ru sv"
-: ${LINGUAS:="de fr"}
+# XXX: what about fi, hr?
+: ${LINGUAS:="de es fr it ko nl no pl ru sv"}
 
 : ${srcdir:=src}
 : ${oldsrcdir:=oldsrc}
@@ -21,17 +20,31 @@ exclude=$(echo "$exclude_patterns" | \
 
 # clean-up
 if [ -d "$oldsrcdir" ]; then
-    echo >&2 Removing $srcdir, $potdir, $podir, $xmldir ...
+    echo Removing $srcdir, $potdir, $podir, $xmldir ...
     test -L $xmldir/en && rm $xmldir/en
     test -d $srcdir && rm -rf $srcdir
     test -d $potdir && rm -rf $potdir
     test -d $podir  && rm -rf $podir
     test -d $xmldir && rm -rf $xmldir
+    test -e $oldsrcdir/preface/authors.xml && \
+        rm -f $oldsrcdir/preface/authors.xml
     mv $oldsrcdir $srcdir
 fi
 
-echo >&2 "Splitting the source XML"
-echo >&2 "Warning: the following files and directories will be skipped:"
+if [ -e $srcdir/preface/titles.xml ] &&
+   [ -e stylesheets/authors_docbook.xsl ] &&
+   [ -e stylesheets/authors.xml ]; then
+    echo "Creating src/preface/authors.xml:"
+    echo xsltproc --nonet \
+        --output $srcdir/preface/authors.xml \
+        stylesheets/authors_docbook.xsl \
+        stylesheets/authors.xml
+else
+    echo >&2 "ERROR: Cannot make $srcdir/preface/authors.xml"
+fi
+
+echo "Splitting the source XML:"
+echo "Warning: the following files and directories will be skipped:"
 echo "$exclude_patterns" | sed -e 's/ /, /g; s/^/    /' >&2
 time \
 eval find $srcdir $exclude -o -name '*.xml' -print |
@@ -42,16 +55,33 @@ do
     $SPLIT --lang="$LINGUAS" --file="$srcfile" \
            --dest="$xmldir"/'*'/"${base#/}"/
 done
+test -e $srcdir/preface/authors.xml && rm -f $srcdir/preface/authors.xml
 echo
 
-echo >&2 Moving $srcdir and $xmldir ...
+echo Saving source directory ...
 mv -vi "$srcdir" "$oldsrcdir" && \
 mv -vi "$xmldir"/en "$srcdir" && \
-echo >&2 Creating "$xmldir"/en link to "$srcdir" ...
+echo Creating link "$xmldir"/en ...
 ln -vs $PWD/"$srcdir" "$xmldir"/en
 echo
 
 test "$1" = "split" && exit 0
+
+echo "Reformatting English XML files:"
+find $srcdir/ -type f -name '*.xml' |
+while read xmlfile; do
+    xmllint --nonet --format --output ${xmlfile%.xml}.xmllint $xmlfile
+    if test -s ${xmlfile%.xml}.xmllint && \
+       mv -f ${xmlfile%.xml}.xmllint $xmlfile
+    then
+        echo $xmlfile
+    else
+        echo "ERROR $xmlfile"
+    fi
+done
+echo
+
+test "$1" = "xmllint" && exit 0
 
 echo "Creating POT files"
 time \
