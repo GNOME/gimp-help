@@ -31,9 +31,11 @@ if [ -d "$oldsrcdir" ]; then
     mv $oldsrcdir $srcdir
 fi
 
+# src/preface/authors.xml
 if [ -e $srcdir/preface/titles.xml ] &&
    [ -e stylesheets/authors_docbook.xsl ] &&
-   [ -e stylesheets/authors.xml ]; then
+   [ -e stylesheets/authors.xml ]
+then
     echo "Creating src/preface/authors.xml:"
     echo xsltproc --nonet \
         --output $srcdir/preface/authors.xml \
@@ -43,6 +45,7 @@ else
     echo >&2 "ERROR: Cannot make $srcdir/preface/authors.xml"
 fi
 
+# split
 echo "Splitting the source XML:"
 echo "Warning: the following files and directories will be skipped:"
 echo "$exclude_patterns" | sed -e 's/ /, /g; s/^/    /' >&2
@@ -58,6 +61,7 @@ done
 test -e $srcdir/preface/authors.xml && rm -f $srcdir/preface/authors.xml
 echo
 
+# oldsrc
 echo Saving source directory ...
 mv -vi "$srcdir" "$oldsrcdir" && \
 mv -vi "$xmldir"/en "$srcdir" && \
@@ -65,8 +69,29 @@ echo Creating link "$xmldir"/en ...
 ln -vs $PWD/"$srcdir" "$xmldir"/en
 echo
 
+# src/glossary/glossary.xml
+if [ -e $oldsrcdir/glossary/glossary.xml ] &&
+   [ -e stylesheets/migrate/convert-glossary.xsl ] &&
+   [ -e tools/migrate/convert-glossary.py ]
+then
+    echo "Creating $srcdir/glossary/glossary.xml:"
+    test -d $srcdir/glossary || mkdir $srcdir/glossary
+    xsltproc --nonet --xinclude \
+        stylesheets/migrate/convert-glossary.xsl \
+        $oldsrcdir/glossary/glossary.xml \
+    | tools/migrate/convert-glossary.py --lang "$LINGUAS" \
+    | xmllint --nonet --format - \
+    > $srcdir/glossary/glossary.xml
+    echo "Splitting $srcdir/glossary/glossary.xml:"
+    $SPLIT --lang="$LINGUAS" --file="$srcdir/glossary/glossary.xml" \
+           --dest="$xmldir"/'*'/glossary/
+else
+    echo >&2 "ERROR: Cannot make $srcdir/glossary/glossary.xml"
+fi
+
 test "$1" = "split" && exit 0
 
+# xmllint
 echo "Reformatting English XML files:"
 find $srcdir/ -type f -name '*.xml' |
 while read xmlfile; do
@@ -83,6 +108,7 @@ echo
 
 test "$1" = "xmllint" && exit 0
 
+# pot
 echo "Creating POT files"
 time \
 find $srcdir -name '*.xml' |
@@ -100,6 +126,7 @@ echo
 
 test "$1" = "pot" && exit 0
 
+# po
 echo "Creating PO files"
 time \
 find $srcdir -name '*.xml' |
@@ -115,12 +142,13 @@ do
         #$XML2PO --language $lang --reuse=$xmlfile --output="$pofile" \
         #        "$srcfile" 2>&1 | grep -vE 'image file .* not found'
         ($XML2PO --language $lang --reuse=$xmlfile --output='-' \
-                 "$srcfile" | msguniq | msgcat -w80 - > "$pofile") 2>&1 \
+                 "$srcfile" | msguniq --use-first | msgcat -w80 - > "$pofile") 2>&1 \
         | grep -vE 'image file .* not found'
     done
 done
 echo
 
+# check
 echo Simple check: searching for empty files...
 trap "rm -f 'empty files'" HUP INT QUIT PIPE TERM
 find ${podir} ${potdir} -type f -size 0 | sort | tee "empty files"
