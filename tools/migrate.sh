@@ -37,7 +37,7 @@ if [ -e $srcdir/preface/titles.xml ] &&
    [ -e stylesheets/authors.xml ]
 then
     echo "Creating src/preface/authors.xml:"
-    echo xsltproc --nonet \
+    xsltproc --nonet \
         --output $srcdir/preface/authors.xml \
         stylesheets/authors_docbook.xsl \
         stylesheets/authors.xml
