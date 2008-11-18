@@ -2,6 +2,8 @@
 # this script migrates the content from DocBook XML files to PO/GETTEXT
 # supported XML files ??!?!
 
+start_time=`date '+%T' 2>/dev/null`
+
 # XXX: what about fi, hr?
 : ${LINGUAS:="de es fr it ko nl no pl ru sv"}
 
@@ -82,12 +84,14 @@ then
     | tools/migrate/convert-glossary.py --lang "$LINGUAS" \
     | xmllint --nonet --format - \
     > $srcdir/glossary/glossary.xml
+    echo
     echo "Splitting $srcdir/glossary/glossary.xml:"
     $SPLIT --lang="$LINGUAS" --file="$srcdir/glossary/glossary.xml" \
            --dest="$xmldir"/'*'/glossary/
 else
     echo >&2 "ERROR: Cannot make $srcdir/glossary/glossary.xml"
 fi
+echo
 
 test "$1" = "split" && exit 0
 
@@ -95,6 +99,20 @@ test "$1" = "split" && exit 0
 echo "Reformatting English XML files:"
 find $srcdir/ -type f -name '*.xml' |
 while read xmlfile; do
+    xmllint --nonet --format --output ${xmlfile%.xml}.xmllint $xmlfile
+    if test -s ${xmlfile%.xml}.xmllint && \
+       mv -f ${xmlfile%.xml}.xmllint $xmlfile
+    then
+        echo $xmlfile
+    else
+        echo "ERROR $xmlfile"
+    fi
+done
+echo
+echo "Reformatting gimp.xml files:"
+for lang in $LINGUAS; do
+    test "$lang" != "en" || continue
+    xmlfile=$xmldir/$lang/gimp.xml
     xmllint --nonet --format --output ${xmlfile%.xml}.xmllint $xmlfile
     if test -s ${xmlfile%.xml}.xmllint && \
        mv -f ${xmlfile%.xml}.xmllint $xmlfile
@@ -155,4 +173,8 @@ find ${podir} ${potdir} -type f -size 0 | sort | tee "empty files"
 echo $(wc -l "empty files") found. && rm -f "empty files"
 echo
 
-
+if [ -n "$start_time" ]; then
+    echo "Started at  $start_time"
+    echo Finished at `date '+%T'`
+    echo
+fi

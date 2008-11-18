@@ -59,6 +59,7 @@ xmlpodir = xml
 htmldir  = html
 pdfdir   = pdf
 odfdir   = odf
+logdir   = log
 
 # Find files and directories
 xml_file_predicates =       \
@@ -174,11 +175,7 @@ endif
 ########################################################################
 
 first: all
-all: validate html index AUTHORS
-
-# ignore
-validate: ;
-
+all: html index AUTHORS
 
 
 ########################################################################
@@ -283,9 +280,34 @@ $(xmlpodir)/en: $(XML_FILES)
 # Special case: en
 xml-en: $(xmlpodir)/en ;
 
-# Debugging
-list-xmlfiles-en list-xml-files-en list-xml-en:
-	@echo $(en_XML_FILES)
+
+########################################################################
+####            XML validation                                      ####
+########################################################################
+
+validate: validate-en ;
+validate-%: xmllint-% ;
+xmllint: xmllint-en ;
+
+xmllint-%: $(logdir)/%-xmllint.log ;
+	@echo >&2 "Validating '$*' not implemented."
+
+xmllint-en: $(logdir)/en-xmllint.log ;
+	$(cmd) test -s $< && cat $< || echo "No errors."
+
+$(logdir)/en-xmllint.log: $(logdir) $(XML_FILES)
+	$(cmd) if type $(XMLLINT) >/dev/null 2>&1; then \
+		echo "*** Validating XML for 'en' ... "; \
+		$(XMLLINT) $(XMLLINTFLAGS) --xinclude $(xmlpodir)/en/gimp.xml \
+		| sed -e 's,xmlns:xi="http://www.w3.org/2001/XInclude",,' \
+		| $(XMLLINT) $(XMLLINTFLAGS) --nonet --valid --noout - 2>$@ \
+		|| true; \
+	else \
+		echo "*** Validating 'en' skipped: 'xmllint' not found."; \
+	fi
+
+$(logdir):
+	$(cmd) mkdir $@ && test -w $@
 
 
 ########################################################################
@@ -443,7 +465,7 @@ AUTHORS: $(AUTHORS_STYLESHEET_XML) stylesheets/authors_text.xsl $(AUTHORS_DOCBOO
 	  $< \
 	  > $@
 	
-$(AUTHORS_DOCBOOK_XML): $(AUTHORS_STYLESHEET_XML) src/preface/titles.xml stylesheets/authors_*.xsl
+$(AUTHORS_DOCBOOK_XML): $(AUTHORS_STYLESHEET_XML) stylesheets/authors_*.xsl
 	$(msg) "**** Making $@ ... "
 	$(cmd) $(XSLTPROC) \
 	  $(XSLTFLAGS) $(XSLTEXTRAFLAGS) \
