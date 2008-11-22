@@ -10,8 +10,8 @@ PO_FILES = \
 	po/ko.po	\
 	po/no.po	\
 	po/sv.po	\
-	po/ru.po
-
+	po/ru.po	\
+	po/zh_CN.po	\
 XSL_FILES = \
 	stylesheets/keys-svg.xsl	\
 	stylesheets/keys-docbook.xsl
