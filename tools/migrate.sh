@@ -38,7 +38,7 @@ if [ -e $srcdir/preface/titles.xml ] &&
    [ -e stylesheets/authors_docbook.xsl ] &&
    [ -e stylesheets/authors.xml ]
 then
-    echo "Creating src/preface/authors.xml:"
+    echo "Creating src/preface/authors.xml..."
     xsltproc --nonet \
         --output $srcdir/preface/authors.xml \
         stylesheets/authors_docbook.xsl \
@@ -46,6 +46,7 @@ then
 else
     echo >&2 "ERROR: Cannot make $srcdir/preface/authors.xml"
 fi
+echo
 
 # split
 echo "Splitting the source XML:"
@@ -60,7 +61,6 @@ do
     $SPLIT --lang="$LINGUAS" --file="$srcfile" \
            --dest="$xmldir"/'*'/"${base#/}"/
 done
-test -e $srcdir/preface/authors.xml && rm -f $srcdir/preface/authors.xml
 echo
 
 # oldsrc
@@ -69,6 +69,11 @@ mv -vi "$srcdir" "$oldsrcdir" && \
 mv -vi "$xmldir"/en "$srcdir" && \
 echo Creating link "$xmldir"/en ...
 ln -vs $PWD/"$srcdir" "$xmldir"/en
+echo Removing authors files ...
+test -e $srcdir/preface/titles.xml && \
+    rm -vf $srcdir/preface/titles.xml
+test -e $oldsrcdir/preface/authors.xml && \
+    rm -vf $oldsrcdir/preface/authors.xml
 echo
 
 # src/glossary/glossary.xml

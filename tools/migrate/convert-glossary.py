@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# _*_ coding: utf8 -*_
+# -*- coding: utf8 -*-
 """
 FIXME: Missing docstring
 """
@@ -43,8 +43,7 @@ def main():
     filename = sys.stdin
     doc = xml.dom.minidom.parse(filename)
 
-    # document element is last child of document root
-    old_glossary = doc.childNodes[-1]
+    old_glossary = doc.documentElement
     assert old_glossary.nodeName == "glossary"
     assert old_glossary.getAttribute("lang")
 

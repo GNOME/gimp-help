@@ -340,7 +340,7 @@ $(xmlpodir)/en: $(XML_FILES)
 	$(cmd) src_dir=$$(cd $(srcdir)/$(xmldir) && pwd); \
 	poxml_dir=$(xmlpodir); \
 	test -d $${poxml_dir} || $(mkdir_p) $${poxml_dir}; \
-	test -d $${poxml_dir}/en || $(ln_s) $(abs_builddir)/$${src_dir} $${poxml_dir}/en; \
+	test -d $${poxml_dir}/en || $(LN_S) $(abs_builddir)/$${src_dir} $${poxml_dir}/en; \
 	touch $@
 
 # Special case: en
@@ -390,12 +390,13 @@ $(htmldir)/%/index.html: $(xmlpodir)/% $(HTML_STYLESHEETS)
 	$(msg) "*** Making html for $* ... "
 	$(cmd) rm -rf $(htmldir)/$*
 	$(cmd) $(mkdir_p) $(htmldir)/$*
-	$(cmd) test -h $(htmldir)/images || $(ln_s) ../images $(htmldir)/
+	$(cmd) test -h $(htmldir)/images || $(LN_S) ../images $(htmldir)/
 
-	$(cmd) $(XSLTPROC) \
+	$(cmd) test "$*" = "no" && lang="nb" || lang="$*"; \
+	$(XSLTPROC) \
 	  $(XSLTFLAGS) $(XSLTEXTRAFLAGS) \
 	  --xinclude \
-	  --stringparam l10n.gentext.default.language $* \
+	  --stringparam l10n.gentext.default.language $${lang} \
 	  -o html/$*/ \
 	  stylesheets/plainhtml.xsl \
 	  $(xmlpodir)/$*/gimp.xml
@@ -528,10 +529,11 @@ endif
 		echo "Making $${destdir}/$${id}-draft.html ... "; \
 		xmlfile="$<"; xmlfile=$${xmlfile#*/}; \
 		xmlfile=$(xmlpodir)/$${lang}/$${xmlfile#$${lang}/}; \
+		if [ "$${lang}" = "no" ]; then lang="nb"; fi; \
 		$(XSLTPROC) \
 		    $(XSLTFLAGS) $(XSLTEXTRAFLAGS) \
 		    --xinclude \
-		    --stringparam l10n.gentext.default.language $$lang \
+		    --stringparam l10n.gentext.default.language $${lang} \
 		    --novalid \
 		    --output $${destdir}/$${id}-draft.html \
 		    $(srcdir)/stylesheets/drafthtml.xsl \

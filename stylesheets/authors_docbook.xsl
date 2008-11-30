@@ -28,7 +28,7 @@
     from "stylesheets/authors.xml".
 </xsl:comment>
 
-    <sect1 id="gimp-team">
+    <sect1 id="gimp-team" lang="en">
       <title>
         <xsl:choose>
           <xsl:when test="dc:title">
