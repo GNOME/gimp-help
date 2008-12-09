@@ -250,7 +250,7 @@ preview-%: html/%/index.html html/%/gimp-help.xml
 		$(XSLTPROC) \
 		    $(XSLTFLAGS) $(XSLTEXTRAFLAGS) \
 		    --xinclude \
-		    --stringparam l10n.gentext.default.language $* \
+		    --stringparam l10n.gentext.default.language $$lang \
 		    --novalid \
 		    --output $(builddir)/html/$$lang/$${id}-draft.html \
 		    $(srcdir)/stylesheets/drafthtml.xsl \
