@@ -16,12 +16,18 @@ start_time=`date '+%T' 2>/dev/null`
 SPLIT="python tools/split_xml_multi_lang.py"
 XML2PO="python tools/xml2po"	# patched version!!
 
-: ${exclude_patterns:='.svn key-reference* glossary dictionary'}
+: ${exclude_patterns:='.svn key-reference-* glossary dictionary'}
 exclude=$(echo "$exclude_patterns" | \
           sed -e 's/[^ ]\+/"&"/g; s/ / -o -name /g; s/^/\\( -name /; s/$/ \\) -prune /')
 
+# backup source
+test -d "$oldsrcdir" || {
+    echo "Making source backup '$oldsrcdir' ..."
+    mv -v $srcdir $oldsrcdir || exit 66
+}
+
 # clean-up
-if [ -d "$oldsrcdir" ]; then
+if [ -d "$srcdir" ]; then
     echo Removing $srcdir, $potdir, $podir, $xmldir ...
     test -L $xmldir/en && rm $xmldir/en
     test -d $srcdir && rm -rf $srcdir
@@ -30,8 +36,23 @@ if [ -d "$oldsrcdir" ]; then
     test -d $xmldir && rm -rf $xmldir
     test -e $oldsrcdir/preface/authors.xml && \
         rm -f $oldsrcdir/preface/authors.xml
-    mv $oldsrcdir $srcdir
 fi
+echo "Making (temp) source dir '$srcdir' ..."
+cp -a $oldsrcdir $srcdir
+echo
+
+# patches
+echo "Applying patches (if any) ..."
+for f in *.diff *.diff.gz *.diff.bz2; do
+    test -f "$f" || continue
+    echo "Patch: $f"
+    case $f in
+        *.diff.bz2) bzip2 -dc $f;;
+        *.diff.gz)  gzip  -dc $f;;
+        *.diff)     cat $f;;
+    esac | patch --verbose -p0
+done
+echo
 
 # src/preface/authors.xml
 if [ -e $srcdir/preface/titles.xml ] &&
@@ -64,8 +85,9 @@ done
 echo
 
 # oldsrc
-echo Saving source directory ...
-mv -vi "$srcdir" "$oldsrcdir" && \
+echo "Removing old (multi-lang) source directory ..."
+rm -rf "$srcdir" && \
+echo "Installing new (single-lang) source directory ..."
 mv -vi "$xmldir"/en "$srcdir" && \
 echo Creating link "$xmldir"/en ...
 ln -vs $PWD/"$srcdir" "$xmldir"/en
@@ -168,6 +190,17 @@ do
                  "$srcfile" | msguniq --use-first | msgcat -w80 - > "$pofile") 2>&1 \
         | grep -vE 'image file .* not found'
     done
+done
+echo
+
+for lang in $LINGUAS; do
+    if test -f $oldsrcdir/key-reference-$lang.xml; then
+        echo >&2 "$podir/$lang/key-reference.po"
+        cp -vf $podir/$lang/key-reference.po "$podir/$lang/key-reference.po~"
+        $XML2PO --language $lang --reuse=$oldsrcdir/key-reference-$lang.xml \
+            --output='-' "$srcdir/key-reference.xml" \
+        | msguniq --use-first | msgcat -w80 - > "$podir/$lang/key-reference.po"
+    fi
 done
 echo
 
