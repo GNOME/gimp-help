@@ -24,7 +24,7 @@
       </revision>
       <revision lang="de">
         <revnumber>$Revision$</revnumber>
-        <date>2008-03-13</date>
+        <date>2008-12-17</date>
         <authorinitials>ude</authorinitials>
       </revision>
       <revision lang="es">
@@ -329,7 +329,7 @@
       <phrase lang="zh_CN">开启对话框</phrase>
     </title>
 
-    <para lang="en">The Layer dialog can be called in three ways :</para>
+    <para lang="en">The Layer dialog can be called in various ways:</para>
     <para lang="cs">Dialog Vrstvy lze vyvolat několika způsoby:</para>
     <para lang="de">
       Der Dialog <quote>Ebenen</quote>
@@ -355,6 +355,7 @@
           from the image-menu:
           <menuchoice>
             <guimenu>Windows</guimenu>
+            <guisubmenu>Dockable Dialogs</guisubmenu>
             <guimenuitem>Layers</guimenuitem>
           </menuchoice>
         </para>
@@ -366,8 +367,9 @@
         <para lang="de">
           aus dem Bildmenü:
           <menuchoice>
-            <guimenu><accel>D</accel>ialog</guimenu>
-            <guimenuitem><accel>E</accel>benen</guimenuitem>
+            <guimenu>Fenster</guimenu>
+            <guisubmenu>Andockbare Dialoge</guisubmenu>
+            <guimenuitem>Ebenen</guimenuitem>
           </menuchoice>,
         </para>
         <para lang="es">
@@ -377,6 +379,7 @@
             <guimenuitem><accel>C</accel>apas</guimenuitem>
           </menuchoice>
         </para>
+        <!--TODO fr: add "Dockable Dialogs" submenu-->
         <para lang="fr">
           depuis le menu de la fenêtre d'image :
           <guimenuitem>Fenêtres</guimenuitem>
@@ -527,6 +530,38 @@
         </para>
       </listitem>
     </itemizedlist>
+
+    <!--TODO: es,fr,it,lt,no,ru: add (and review) new item--> 
+    <itemizedlist lang="en;de">
+      <para lang="en">
+        If there is an open <quote>Layers</quote> dialog window (for example,
+        if the <quote>Layers</quote> tab has been
+        <link linkend="gimp-dockable-menu">detached</link>), you can raise the
+        dialog from the image-menu:
+      </para>
+      <para lang="de">
+        Falls ein geöffnetes Dialogfenster <quote>Ebenen</quote> existiert
+        (z.B. durch
+        <link linkend="gimp-dockable-menu">Lösen</link> des entsprechenden
+        Reiters), können Sie das Dialogfenster aus dem Bildmenü heraus
+        anheben:
+      </para>
+      <listitem>
+        <para lang="en">
+          <menuchoice>
+            <guimenu>Windows</guimenu>
+            <guimenuitem>Layers</guimenuitem>
+          </menuchoice>.
+        </para>
+        <para lang="de">
+          <menuchoice>
+            <guimenu>Fenster</guimenu>
+            <guimenuitem>Ebenen</guimenuitem>
+          </menuchoice>.
+        </para>
+      </listitem>
+    </itemizedlist>
+
   </sect3> <!-- end Dialog call -->
 
   <sect3 id="gimp-layer-dialog-using">
@@ -568,7 +603,7 @@
             can find characteristics related individually to each layer. Under
             the list one can find management buttons for the layer list. A
             right-click in a layer thumbnail opens the Layer
-            <link linkend="gimp-layer-menu"> context menu</link>.
+            <link linkend="gimp-layer-menu">context menu</link>.
           </para>
           <para lang="cs">
             Každá vrstva je v dialogu zobrazena v podobě náhledu. Pokud je
@@ -680,35 +715,110 @@
         <listitem>
           <anchor id="gimp-layer-visible" xreflabel="Visible layer"/>
           <anchor id="gimp-layer-linked"  xreflabel="Linked layers"/>
+
+          <!--changed 2008-12-17 to make it look like path dialog (ude)-->
           <para lang="en">
-            Every layer is shown in the list along with its attributes. The
-            main attribute is the name of the layer. You can edit this by a
-            double-click on the name or the thumbnail of the layer. In front
-            of the thumbnail is an icon showing an eye
-            <guiicon>
-              <inlinemediaobject>
-                <imageobject>
-                  <imagedata format="PNG"
-                    fileref="../images/dialogs/stock-eye-20.png" />
-                </imageobject>
-              </inlinemediaobject>
-            </guiicon>.
-            By clicking on the eye, you toggle whether the layer is visible
-            or not. (Shift-clicking on the eye causes all
-            <emphasis>other</emphasis>
-            to be temporarily hidden.) Another icon, showing a chain
-            <guiicon>
-              <inlinemediaobject>
-                <imageobject>
-                  <imagedata format="PNG"
-                    fileref="../images/dialogs/stock-vchain-24.png" />
-                  </imageobject>
-                </inlinemediaobject>
-            </guiicon>,
-            allows you to group layers for operations on more than one layer
-            at a time (for example with the Move tool).
+            Every layer is shown in the list along with its attributes:
+          </para>
+          <para lang="de">
+            Jeder Ebene können Attribute zugeordnet werden, die mit einem
+            linken Mausklick erfolgen. So können folgende Attribute für eine
+            Ebene vergeben werden:
           </para>
 
+          <variablelist lang="en;de">
+
+            <mediaobject>
+              <imageobject>
+                <imagedata format="PNG"
+                  fileref="../images/dialogs/layer-list-entry.png" />
+              </imageobject>
+            </mediaobject>
+
+            <varlistentry>
+              <term>
+                <guiicon>
+                  <inlinemediaobject>
+                    <imageobject>
+                      <imagedata format="PNG"
+                        fileref="../images/dialogs/stock-eye-20.png" />
+                    </imageobject>
+                  </inlinemediaobject>
+                </guiicon>
+                <phrase lang="en">Layer visibility</phrase>
+                <phrase lang="de">Sichtbarkeit der Ebene</phrase>
+              </term>
+              <listitem>
+                <para lang="en">
+                  In front of the thumbnail is an icon showing an eye. By
+                  clicking on the eye, you toggle whether the layer is visible
+                  or not. (Shift-clicking on the eye causes all
+                  <emphasis>other</emphasis> to be temporarily hidden.)
+                </para>
+                <para lang="de">
+                  Standardmäßig ist jede Ebene sichtbar. Dies wird durch ein
+                  Augensymbol repräsentiert. Um die Ebene unsichtbar zu
+                  machen, klicken Sie auf das Auge mit der linken Maustaste.
+                  Um die Ebene wieder sichtbar werden zu lassen, klicken Sie
+                  erneut mit der linken Maustaste auf die linke Schaltfläche
+                  dieser Ebene. Das Augensymbol erscheint dann wieder.
+                </para>
+              </listitem>
+            </varlistentry>
+
+            <varlistentry>
+              <term>
+                <guiicon>
+                  <inlinemediaobject>
+                    <imageobject>
+                      <imagedata format="PNG"
+                        fileref="../images/dialogs/stock-vchain-24.png" />
+                    </imageobject>
+                  </inlinemediaobject>
+                </guiicon>
+                <phrase lang="en">Chain layers</phrase>
+                <phrase lang="de">Ebenen verketten</phrase>
+              </term>
+              <listitem>
+                <para lang="en">
+                  Another icon, showing a chain, allows you to group layers
+                  for operations on more than one layer at a time (for example
+                  with the Move tool).
+                </para>
+                <para lang="de">
+                  Um die Inhalte verschiedener Ebenen simultan zu verschieben,
+                  müssen diese miteinander verkettet werden. Klicken Sie
+                  hierzu auf das Kettensymbol rechts neben dem oben genannten
+                  Augensymbol. Wiederholen Sie diesen Schritt für jeder Ebene,
+                  die mit verkettet werden soll. Ein erneuter Klick auf diese
+                  Schaltfläche löst die Verkettung der jeweiligen Ebene
+                  wieder. Das Kettensymbol verschwindet.
+                </para>
+              </listitem>
+            </varlistentry>
+
+            <varlistentry>
+              <term>
+                <phrase lang="en">Layer name</phrase>
+                <phrase lang="de">Ebenenname</phrase>
+              </term>
+              <listitem>
+                <para lang="en">
+                  The main attribute is the name of the layer. You can edit
+                  this by a double-click on the name or the thumbnail of the
+                  layer.
+                </para>
+                <para lang="de">
+                  Um eine Ebene umzubenennen, genügt ein Doppelklick mit der
+                  linken Maustaste auf den angezeigten Ebenennamen (z.B.
+                  Hintergrund). In dem Eingabefeld können Sie jetzt einen
+                  anderen Namen eintragen.
+                </para>
+              </listitem>
+            </varlistentry>
+          </variablelist>
+
+          <!--TODO es,fr,it,lt,no,ru: move content to above variablelist-->
           <para lang="cs">
             Každá vrstva je v seznamu zobrazena spolu se svými atributy.
             Hlavním atributem je jméno vrstvy. To můžete změnit dvojitým
@@ -737,84 +847,6 @@
             umožňuje seskupovat vrstvy pro operace nad více než jednou
             vrstvou současně (například pomocí nástroje Přesun).
           </para>
-
-          <para lang="de">
-            Jeder Ebene können Attribute zugeordnet werden, die mit einem
-            linken Mausklick erfolgen. So können folgende Attribute für eine
-            Ebene vergeben werden:
-          </para>
-          <variablelist lang="de">
-            <varlistentry>
-              <term>
-                <guiicon>
-                  <inlinemediaobject>
-                    <imageobject>
-                      <imagedata format="PNG"
-                        fileref="../images/dialogs/stock-eye-20.png" />
-                    </imageobject>
-                  </inlinemediaobject>
-                </guiicon>
-                <phrase lang="de">Sichtbarkeit der Ebene</phrase>
-              </term>
-              <listitem>
-                <para lang="de">
-                  Standardmäßig ist jede Ebene sichtbar. Dies wird durch ein
-                  Augensymbol repräsentiert. Um die Ebene unsichtbar zu
-                  machen, klicken Sie auf das Auge mit der linken Maustaste.
-                  Um die Ebene wieder sichtbar werden zu lassen, klicken Sie
-                  erneut mit der linken Maustaste auf die linke Schaltfläche
-                  dieser Ebene. Das Augensymbol erscheint dann wieder.
-                </para>
-              </listitem>
-            </varlistentry>
-
-            <varlistentry>
-              <term>
-                <guiicon>
-                  <inlinemediaobject>
-                    <imageobject>
-                      <imagedata format="PNG"
-                        fileref="../images/dialogs/stock-vchain-24.png" />
-                    </imageobject>
-                  </inlinemediaobject>
-                </guiicon>
-                <phrase lang="de">Ebenen verketten</phrase>
-              </term>
-              <listitem>
-                <para lang="de">
-                  Um die Inhalte verschiedener Ebenen simultan zu verschieben,
-                  müssen diese miteinander verkettet werden. Klicken Sie
-                  hierzu auf das Kettensymbol rechts neben dem oben genannten
-                  Augensymbol. Wiederholen Sie diesen Schritt für jeder Ebene,
-                  die mit verkettet werden soll. Ein erneuter Klick auf diese
-                  Schaltfläche löst die Verkettung der jeweiligen Ebene
-                  wieder. Das Kettensymbol verschwindet.
-                </para>
-              </listitem>
-            </varlistentry>
-
-            <varlistentry>
-              <term>
-                <guiicon>
-                  <inlinemediaobject>
-                    <imageobject>
-                      <imagedata
-                        fileref='../images/dialogs/dialogs-layer-rename.png' />
-                    </imageobject>
-                  </inlinemediaobject>
-                </guiicon>
-                <phrase lang="de">Ebenenname</phrase>
-              </term>
-              <listitem>
-                <para lang="de">
-                  Um eine Ebene umzubenennen, genügt ein Doppelklick mit der
-                  linken Maustaste auf den angezeigten Ebenennamen (z.B.
-                  Hintergrund). In dem Eingabefeld können Sie jetzt einen
-                  anderen Namen eintragen.
-                </para>
-              </listitem>
-            </varlistentry>
-          </variablelist>
 
           <para lang="es">
             Todas las capas se muestran en la lista junto con sus atributos.
@@ -1051,7 +1083,7 @@
               die Erstellung von Animationen bietet <acronym>GIMP</acronym>
               die Möglichkeit, Zeitangaben hinter den Ebenennamen zu
               schreiben. Die Parameter werden stets in Klammern geschrieben
-              und erklären sich wie folgt: Die Verzögerung in gibt an, nach
+              und erklären sich wie folgt: Die Verzögerung gibt an, nach
               wieviel Millisekunden die nächste Ebene in der Animation
               angezeigt wird, z.B. <quote>Ebenenname (100 ms)</quote>. Die
               Angabe des Kombinationsmodus ist optional. Dieser Parameter gibt
@@ -1329,7 +1361,7 @@
 
             <!-- TODO es;it-->
             <varlistentry id="gimp-layer-dialog-lock-alpha-button">
-              <term lang="en">Lock Alpha channel</term>
+              <term lang="en">Lock</term>
               <term lang="cs">Zachovat průhlednost</term>
               <term lang="de">Sperre</term>
               <term lang="es">Mantener transparencia</term>
@@ -1458,14 +1490,14 @@
                   <guilabel>填充透明区域</guilabel>选项。
                 </para>
 
-                <figure lang="en;de;fr;lt;no;ru"> <!--TODO v2.6:e;es;it;lt;
+                <figure lang="en;de;fr;lt;no;ru"> <!--TODO v2.6:es;it;lt;
                   no;ru-->
                   <title>
                     <phrase lang="en">
-                      Example for <quote>Lock</quote>
+                      Example for Locking Alpha Channel
                     </phrase>
                     <phrase lang="de">
-                      Beispiel für Alphakanal <quote>sperren</quote>
+                      Beispiel für Alphakanal sperren
                     </phrase>
                     <phrase lang="fr">
                       Exemple pour <quote>Verrouiller</quote>
