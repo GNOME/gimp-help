@@ -4,10 +4,12 @@
                 "http://www.docbook.org/xml/4.3/docbookx.dtd">
 
 <!-- section history:
+  2008-07-15 KoSt: added 'no'
   2008-04-05 Mr.Dust : added 'ko' contents
   2007-12-26 lexa: initial version for en and de
 -->
-<sect1 id="gimp-concepts-color-management" lang="en;de;fr;it;ko;ru">
+<!--Remeber to ad your lang code in gimp.xml under  "II.6  Doing Color Management with GIMP" -->
+<sect1 id="gimp-concepts-color-management" lang="en;de;fr;it;ko;no;ru">
   <sect1info role="cvs">
     <revhistory>
       <revision lang="en">
@@ -35,6 +37,11 @@
         <date>2008-04-06</date>
         <authorinitials>Mr.Dust</authorinitials>
       </revision>
+      <revision lang="no">
+        <revnumber>$Revision$</revnumber>
+        <date>2008-07-15</date>
+        <authorinitials>KoSt</authorinitials>
+      </revision>
       <revision lang="ru">
         <revnumber>$Revision$</revnumber>
         <date>2008-02-12</date>
@@ -49,6 +56,7 @@
     <phrase lang="fr">Gestion de la couleur dans GIMP</phrase>
     <phrase lang="it">Gestione del colore in GIMP</phrase>
     <phrase lang="ko">김프에서의 색상 관리</phrase>
+    <phrase lang="no">Fargestyring i GIMP</phrase>
     <phrase lang="ru">Управление цветами в <acronym>GIMP</acronym></phrase>
   </title>
 
@@ -78,6 +86,16 @@
   <indexterm lang="ko"><primary>color management(색상관리)</primary></indexterm>
   <indexterm lang="ko"><primary>color profile(색상 프로필)</primary></indexterm>
   <indexterm lang="ko"><primary>ICC profile(ICC 프로필)</primary></indexterm>
+  
+  <indexterm lang="no">
+    <primary>Fargar</primary>
+    <secondary>Fargestyring</secondary>
+  </indexterm>
+  <indexterm lang="no"><primary>Fargestyring</primary></indexterm>
+  <indexterm lang="no"><primary>Fargeprofil</primary></indexterm>
+  <indexterm lang="no"><primary>Fargerom</primary></indexterm>
+  <indexterm lang="no"><primary>ICC-profil</primary></indexterm>
+  <indexterm lang="no"><primary>.icc</primary></indexterm>
 
   <indexterm lang="ru"><primary>Цвет</primary></indexterm>
   <indexterm lang="ru"><primary>Управление цветами</primary></indexterm>
@@ -127,6 +145,15 @@
     김프에서는 이러한 문제를 위해 웹과 인쇄에 적합한 색상 관리 시스템을 제공하고
     있습니다.
   </para>
+  <para lang="no">
+    Det meste av utstyret som blir brukt  i biletbehandling, så som 
+    digitalkamera, skanner, biletskjerm, skrivar osv, har sine eigne system 
+    for å behandla fargane. Dersom du ikkje tar omsyn til dette når du
+    overfører biletet frå det eine utstyret til det andre, kan dette føre til
+    synlege fargeforandringar i biletet. I GIMP kan du tilpassa fargane
+    for bilete som skal visast på Internett og som skal skrivast ut. Det er
+    dette som er fargestyring.
+  </para>
   <para lang="ru">
     У многих устройств в процессе дизайна или фотографии, как у цифровых
     фотоаппаратов, сканнеров, экранов, принтеров и т.д., есть свои особенности
@@ -147,6 +174,7 @@
       <phrase lang="ko">
         이미지 처리 작업 흐름도
       </phrase>
+      <phrase lang="no">Arbeidsgangen for fargestyringa</phrase>
       <phrase lang="ru">Процесс преобразования изображения</phrase>
     </title>
 
@@ -163,6 +191,10 @@
         <imagedata format="PNG"
           fileref="../images/using/ko/colormanagement-workflow1.png" />
       </imageobject>
+      <imageobject lang="no">
+        <imagedata format="PNG"
+          fileref="../images/using/no/colormanagement-workflow1.png" />
+      </imageobject>
 
       <caption>
         <para lang="en">Workflow without Color management</para>
@@ -170,6 +202,7 @@
         <para lang="fr">Production sans gestion de la couleur</para>
         <para lang="it">Flusso di produzione senza gestione del colore</para>
         <para lang="ko">색상 관리를 하지 않는 작업 흐름도</para>
+        <para lang="no">Arbeidsgangen utan fargestyring</para>
         <para lang="ru">Процесс без управления цветами</para>
       </caption>
     </mediaobject>
@@ -187,6 +220,10 @@
         <imagedata format="PNG"
           fileref="../images/using/ko/colormanagement-workflow2.png" />
       </imageobject>
+      <imageobject lang="no">
+        <imagedata format="PNG"
+          fileref="../images/using/no/colormanagement-workflow2.png" />
+      </imageobject>
 
       <caption>
         <para lang="en">Process with Color management</para>
@@ -194,6 +231,7 @@
         <para lang="fr">Production avec gestion de la couleur</para>
         <para lang="it">Elaborazione comprensiva di gestione del colore</para>
         <para lang="ko">색상 관리를 하는 작업 흐름도</para>
+        <para lang="no">Arbeidsgangen med fargestyring</para>
         <para lang="ru">Процесс с управлением цветами</para>
       </caption>
     </mediaobject>
@@ -214,6 +252,9 @@
       </phrase>
       <phrase lang="ko">
         색상 관리를 하지 않는 작업의 문제점
+      </phrase>
+      <phrase lang="no">
+        Problem med ein arbeidsgang utan fargestyring
       </phrase>
       <phrase lang="ru">Проблеммы процесса без управления цветами</phrase>
     </title>
@@ -240,6 +281,10 @@
     <para lang="ko">
       색상 관리를 하지 않는 이미지 편집의 가장 기본적인 문제는 작업한 대로
       보여지지 않는다라는 것입니다. 이러한 것은 두 가지 영역에 걸쳐 나타납니다.
+    </para>
+    <para lang="no">
+      Hovudproblemet med biletbearbeiding utan fargestyring er at du
+      rett og slett ikkje ser kva du gjer. Dette kan påverka to ulike område:
     </para>
     <para lang="ru">
       Основная проблема преобразования изображений без цветового управления -
@@ -273,6 +318,11 @@
           카메라, 스캐너, 모니터, 프린터 등 서로 다른 장치의 색상 관리의
           차이로 인해 표현되는 색상에 차이가 발생할 수 있습니다.
         </para>
+        <para lang="no">
+          Det kan vere fargeskilnader fordi utstyret, dvs. kamera, skanner
+          osv. bruker ulike måtar for å behandla fargane. Dei har ulik
+          fargekarakteristikk.
+        </para>
         <para lang="ru">
           Есть различия в цветах из-за разных характеристик разных устройств,
           таких как фотоаппаратов, сканнеров, экранов и принтеров.
@@ -300,6 +350,10 @@
         <para lang="ko">
           각 장치의 사용가능한 색상공간의 한계 차이에 인해 색상이 달라질 수도
           있습니다.
+        </para>
+        <para lang="no">
+          Det kan vere fargeskilnader på grunn av avgrensingar i
+          fargemodellen utstyret bruker.
         </para>
         <para lang="ru">
           Если различия в цветах когда устройство не способно отобразить всю
@@ -334,6 +388,11 @@
     <para lang="ko">
       색상 관리의 주 목적은 다음과 같은 문제를 피하기 위해서입니다. 이는
       이미지나 장치에 색상 표현 특성에 관한 설명을 첨부함으로써 이루어집니다.
+    </para>
+    <para lang="no">
+      Hovudføremålet med fargestyringa er å unngå slike problem. 
+      Dette blir gjort ved å legge til ei beskriving av fargekarakteristikken
+      for eit bilete eller eit utsyr.
     </para>
     <para lang="ru">
       Главная цель управления цветами избежать таких проблем. Принятый подход к
@@ -388,6 +447,17 @@
       프로필을 이용해 실제로 해당 장치에서 어떻게 보일지 확인해 볼 수도
       있습니다.
     </para>
+    <para lang="no">
+      Denne beskrivinga blir kalla <emphasis>fargeprofilen</emphasis>
+      for utstyret eller biletet. Ein fargeprofil er i utgangspunktet ein
+      tabell som blir brukt for å overføre den spesifikke 
+      fargekarakteristikken for eit bestemt utstyr til ein 
+      utstyrsuavhengig fargemodell, også kalla ein
+      <quote>arbeidsmodell</quote>. All biletbehandlinga blir gjort
+      på denne arbeidsmodellen. I tillegg kan fargeprofilen også bli
+      brukt til å simulere korleis fargane blir sjåande ut på det
+      bestemte utstyret.
+    </para>
     <para lang="ru">
       Эти описания называются <emphasis>цветовой профиль</emphasis>. Цветовой
       профиль по сути таблица ссылок для перевода особых цветовых характеристик
@@ -436,6 +506,14 @@
       만들었습니다. 이는 색상 프로필을 파일로 저장하고, 이미지에 내장하는
       방법에서 설명할 것입니다.
     </para>
+    <para lang="no">
+      Som oftast er fargeprofilen for eit bestemt utsyr lagt inn i utstyret
+      av produsenten. For å gjere fargeprofilane plattformuavhengige 
+      har ICC (<foreignphrase>International Color 
+      Consortium</foreignphrase>) utarbeidd ein standard (ISO-Norm 
+      15076) for lagring og bruk av fargeprofilar. Som oftast kalla
+      ICC-profilen.
+    </para>
     <para lang="ru">
       Создание цветового профиля лежит в компетенции производителя устройств.
       Чтобы сделать эти профили полезными и независимыми от платформ и
@@ -446,10 +524,9 @@
   </sect2>
 
 
-  <sect2>
+  <sect2 id="plug-in-icc-profile-set">
     <title>
       <!--PENDING all: this id should eventually go to the menu doc-->
-      <anchor id="plug-in-icc-profile-set"/>
       <phrase lang="en">Introduction to a Color Managed Workflow</phrase>
       <phrase lang="de">
         Einführung in den Bearbeitungsprozess mit Farbmanagement
@@ -457,6 +534,7 @@
       <phrase lang="fr">Production avec gestion de la couleur</phrase>
       <phrase lang="it">Flusso di produzione con gestione del colore</phrase>
       <phrase lang="ko">색상 관리 작업 소개</phrase>
+      <phrase lang="no">Innføring i fargestyring</phrase>
       <phrase lang="ru">Процесс управления цветами</phrase>
     </title>
 
@@ -489,6 +567,11 @@
         <xref linkend="gimp-prefs-color-management" />
         을 참고하십시오.
       </para>
+      <para lang="no">
+        Dei fleste parametra og profilane som blir omtalte her, kan setjast
+        i brukarinnstillingane for GIMP. Sjå 
+        <xref linkend="gimp-prefs-color-management" />.
+      </para>
       <para lang="ru">
         Большинство параметров и профилей здесь описаных можно установить в
         настройках <acronym>GIMP</acronym>. За дополнительной информацией
@@ -504,6 +587,7 @@
         <phrase lang="fr">En entrée</phrase>
         <phrase lang="it">Inserimento</phrase>
         <phrase lang="ko">입력</phrase>
+        <phrase lang="no">Inndata</phrase>
         <phrase lang="ru">Ввод</phrase>
       </title>
 
@@ -536,6 +620,12 @@
         그리고 디지털 스캐너는 이 색상 프로필을 가져와 스캔한 이미지에
         첨부합니다.
       </para>
+      <para lang="no">
+        Som oftast bruker digitalkameraet dei innebygde fargeprofilane
+        utan innverknad frå brukaren. Digital skanning fører som
+        oftast til at det ferdige biletet inneheld den fargeprofilen
+        skannaren er sett opp med.
+      </para>
       <para lang="ru">
         Большинство цифровых фотоаппаратов встраивают цветовой профиль в
         каждую фотографию без задействия пользователя. У цифровых сканнеров
@@ -550,7 +640,8 @@
           <phrase lang="fr">Appliquer un profil ICC</phrase>
           <phrase lang="it">Applicazione del profilo ICC</phrase>
           <phrase lang="ko">ICC-프로필 적용하기</phrase>
-      		<phrase lang="ru">Применение профиля ICC</phrase>
+          <phrase lang="no">Bruk av ICC-profilen</phrase>
+      	  <phrase lang="ru">Применение профиля ICC</phrase>
         </title>
 
         <mediaobject>
@@ -571,6 +662,10 @@
           <imageobject lang="ko">
             <imagedata format="PNG"
               fileref="../images/using/ko/icc-apply.png" />
+          </imageobject>
+          <imageobject lang="no">
+            <imagedata format="PNG"
+              fileref="../images/using/no/icc-apply.png" />
           </imageobject>
         </mediaobject>
       </figure>
@@ -613,6 +708,13 @@
         값입니다. 기존에 이미지에 내장된 색상 프로필을 유지할 수도 있습니다.
         하지만 이럴 경우 이미지가 정확하게 표시되지 않을 수도 있습니다.
       </para>
+      <para lang="no">
+        Når du opnar eit bilete med innebygd fargeprofil, vil GIMP tilby
+        å konvertere fila til RGB fargemodell. Normalt vil dette vere
+        fargemodellen sRGB, som det til vanleg er best å bruke som
+        arbeidsmodell. Skulle du likevel ønskje å behalde den innebygde
+        fargeprofilen, vil biletet likevel bli vist med korrekte fargar.
+      </para>
       <para lang="ru">
         При открытии изображения с цветовым профилем <acronym>GIMP</acronym>
         предлагает преобразовать изображение в цветовую модель RGB для
@@ -647,6 +749,11 @@
         이미지에 색상 프로필이 내장되지 않은 경우도 있는데, 이럴 경우 수동으로
         색상 프로필을 첨부시킬 수도 있습니다.
       </para>
+      <para lang="no">
+        Dersom den innebygde fargeprofilen manglar av ein eller annan grunn,
+        og du veit (eller har ei god aning om) kva denne burde vere, kan du
+        legge til den manglande fargeprofilen manuelt.
+      </para>
       <para lang="ru">
         Если по какой-либо причине цветовой профиль не встроен в изображение,
         но он известен, или его можно угадать, его можно встроить в изображение
@@ -655,13 +762,14 @@
     </sect3>
 
 
-    <sect3>
+    <sect3 id="gimp-concepts-cm-display">
       <title>
         <phrase lang="en">Display</phrase>
         <phrase lang="de">Anzeige</phrase>
         <phrase lang="fr">Affichage</phrase>
         <phrase lang="it">Schermo</phrase>
         <phrase lang="ko">화면</phrase>
+        <phrase lang="no">Skjermvising</phrase>
         <phrase lang="ru">Экран</phrase>
       </title>
 
@@ -698,6 +806,11 @@
         김프 기본 설정 대화상자의 색상 관리 섹션에 모니터 프로필이 설정되어
         있으면, 이미지의 색상은 훨씬 정확하게 표현될 것입니다.
       </para>
+      <para lang="no">
+        For å få det beste resultatet, treng du ein fargeprofil også for
+        skjermen. Dersom fargeprofilen for skjermen ikkje er sett opp,
+        kan du gjere dette frå brukarinnstillingane for GIMP.
+      </para>
       <para lang="ru">
         Для получения лучших результатов необходим цветовой профиль экрана.
         Если цветовой профиль экрана можно настроить, либо для всей системы,
@@ -730,6 +843,10 @@
         김프에서 색상 관리를 사용하는데 필요한 명령어들은
         <!--FIXME: ko <xref linkend="gimp-display-filter-dialog"/>-->
         화면 필터 섹션에 설명되어 있습니다.
+      </para>
+      <para lang="no">
+        Ein av dei viktigaste kommandoane for fargestyring i GIMP
+        er omtalt i <xref linkend="gimp-display-filter-dialog"/>.
       </para>
       <para lang="ru">
         Одна из важных комманд <acronym>GIMP</acronym> по работе с цветами
@@ -784,6 +901,15 @@
         <xref linkend="bibliography-online-lprof" />
         을 이용해 색상 프로필을 생성할 수 있습니다.
       </para>
+      <para lang="no">
+        Har du ingen fargeprofil for skjermen, er det råd å lage ein ved
+        hjelp av skjermkalibreringane og måleverktøy. I UNIX treng du
+        <productname>Argyll Color Management System</productname>
+        <xref linkend="bibliography-online-argyllcms" /> og/eller
+        <productname>LProf</productname>
+        <xref linkend="bibliography-online-lprof" />
+        for å lage profilane.
+      </para>
       <para lang="ru">
         Если нет цветового профиля экрана, его сожно создать с помощью
         калибровочных устройств и измерительных приборов. На системах
@@ -801,6 +927,7 @@
           <phrase lang="en">Display Calibration and Profiling</phrase>
           <phrase lang="de">Monitorkalibrierung und Profilerstellung</phrase>
           <phrase lang="ko">화면 측정과 프로필 만들기</phrase>
+          <phrase lang="no">Skjermkalibrering og profilinnstellingar</phrase>
           <phrase lang="ru">Профилирование и калибровка экрана</phrase>
         </title>
 
@@ -812,6 +939,11 @@
 
         <indexterm lang="ko"><primary>color management(색상 관리)</primary></indexterm>
         <indexterm lang="ko"><primary>color profile(색상 프로필)</primary></indexterm>
+        
+        <indexterm lang="no"><primary>Fargestyring</primary></indexterm>
+        <indexterm lang="no"><primary>Fargeprofil</primary></indexterm>
+        <indexterm lang="no"><primary>Skjermkalibrering</primary></indexterm>
+        
         <indexterm lang="ru"><primary>управление цветами</primary></indexterm>
         <indexterm lang="ru"><primary>цветовой профиль</primary></indexterm>
 
@@ -860,6 +992,21 @@
           합니다(하나는 노만 코렌(Norman Koren)과 같은 웹사이트를 통한
           간단한 측정이고, 다른 하나는 xgamma를 이용해 감마값을 불러옵니다).
         </para>
+        <para lang="no">
+          Innstillingane av skjermen blir gjort i to steg. Det eine er
+          kalibreringa og det andre er profileringa. Som oftast er
+          kalibreringa også utført i to steg. Det første er å justera eksterne
+          kontrollar så som kontrast, lysstyrke, fargetemperatur osv. 
+          Det andre er justeringar som blir lasta inn i minnet til videokortet
+          for å få skjermen så nær standardinnstillingane som råd er. Desse
+          innstillingane blir lagra i skjermprofilen i den såkalla vgct-taggen.
+          Det ser ut til at desse opplysningane (<quote>LUT</quote>) blir 
+          lasta inn i systemet ved oppstart i Windows og Mac OS. I Linux
+          må du førebels bruke eit eksternt program som t.d. xcalib eller 
+          dispwin. Dersom du bare ønskjer å gjere ei visuell
+          kalibrering ved hjelp av ei nettside som t.d. den til Norman Koren,
+          er det nok å bruke xgamma for å laste inn gammaverdiane.
+        </para>
         <para lang="ru">
           Настройка экрана требует двух шагов. Первый называется калибровка,
           второй - профилирование. Калибровка обычно включает в себя два шага.
@@ -897,6 +1044,14 @@
           변환하는 규칙을 찾아내는 단계로, 프로파일링이라고 부릅니다. 이 역시
           모니터 프로필에 저장됩니다. 이는 이미지의 RGB 값을 바꾸지는 않습니다.
           다만 비디오 카드로 보내지는 (vgct LUT 를 포함한) 값을 변경할 뿐입니다.
+        </para>
+        <para lang="no">
+          Det andre steget, profileringa, er å setje opp eit sett med reglar
+          som GIMP kan bruke for å overføre RGB-verdiane i biletet til
+          dei samsvarande fargane på skjermen. Desse reglane blir lagra
+          i skjermprofilen. RGB-verdiane i biletet blir ikkje forandra, bare
+          kva verdiar som blir sende til videokortet (som har vgct LUT
+          frå før).
         </para>
         <para lang="ru">
           После второго этапа, профилирования, получается список правил,
@@ -946,6 +1101,7 @@
         <phrase lang="fr">Simulation d'impression</phrase>
         <phrase lang="it">Simulazione di stampa</phrase>
         <phrase lang="ko">모의 인쇄</phrase>
+        <phrase lang="no">Utskriftsimulering</phrase>
         <phrase lang="ru">Симуляция отпечатки</phrase>
       </title>
 
@@ -992,6 +1148,13 @@
         인쇄될 이미지의 모습이 화면에 표시됩니다. 이렇게 모의 인쇄를 해보면
         인쇄할 수 없는 색상은 회색으로 표시됩니다. 따라서 이러한 부분은
         인쇄하기 전에 수정해야 합니다.
+      </para>
+      <para lang="no">
+        I GIMP er det enkelt å sjå korleis fargane vil sjå ut på papiret. Når
+        du kjenner fargeprofilen for skrivaren, kan du setje føreehandsvisinga
+        til denne profilen. Fargar som ikkje kan skrivast ut fordi dei manglar
+        i utskriftprofilen, kan bli sette til nøytral grå slik at du kan korrigera
+        desse før du skriv ut biletet.
       </para>
       <para lang="ru">
         С помощью <acronym>GIMP</acronym> можно получить просмотр того, как

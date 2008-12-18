@@ -346,7 +346,7 @@ usage: validate_references.py [options]
     options:
         -h | --help      this help
         -v | --verbose   verbose; doubling (-v -v) is possible
-        -r <dir>         specify the gimp-hel-2 root directory
+        -r <dir>         specify the gimp-help-2 root directory
         --root <dir>     same as '-r'
         -o | --orphaned  check for orphaned image files
         -i | --images    same as '-o'

@@ -4,11 +4,14 @@ PO_FILES = \
 	po/gimp-keys.pot\
 	po/de.po	\
 	po/es.po	\
+	po/fi.po	\
 	po/fr.po	\
 	po/it.po	\
+	po/ko.po	\
+	po/no.po	\
 	po/sv.po	\
-	po/ru.po
-
+	po/ru.po	\
+	po/zh_CN.po	\
 XSL_FILES = \
 	stylesheets/keys-svg.xsl	\
 	stylesheets/keys-docbook.xsl

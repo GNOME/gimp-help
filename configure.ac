@@ -6,7 +6,7 @@ AC_PREREQ(2.54)
 
 m4_define([help_major_version], [2])
 m4_define([help_minor_version], [4])
-m4_define([help_micro_version], [1])
+m4_define([help_micro_version], [2])
 
 m4_define([help_version], [help_major_version.help_minor_version.help_micro_version])
 
@@ -194,6 +194,25 @@ if test "x$enable_network" != "xyes"; then
 fi
 
 AC_SUBST(XSLTFLAGS)
+
+#  Optionally search for pngnq and pngcrush, which are helpful for
+#  creating distributions
+
+AC_PATH_PROG(PNGNQ, pngnq)
+if test -z "$PNGNQ"; then
+  AC_MSG_WARN([cannot find pngnq(1),
+Images are not optimized during distribution creation])
+fi
+
+
+
+AC_PATH_PROG(PNGCRUSH, pngcrush)
+if test -z "$PNGCRUSH"; then
+  AC_MSG_WARN([cannot find pngcrush(1),
+Images are not optimized during distribution creation])
+fi
+
+AM_CONDITIONAL(HAVE_PNGOPTIMIZERS, test -n "$PNGNQ" && test -n "$PNGCRUSH")
 
 
 #  Default to the correct way of identifying stylesheets.

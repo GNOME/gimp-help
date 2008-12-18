@@ -131,7 +131,7 @@ EXTRA_DIST = \
 # list of authors and contributors
 AUTHORS_STYLESHEET_XML = stylesheets/authors.xml
 # automatically generated authors section (DocBook)
-AUTHORS_DOCBOOK_XML = src/preface/authors.xml
+AUTHORS_DOCBOOK_XML = $(top_srcdir)/src/preface/authors.xml
 
 # TODO?: rename "plainhtml.xsl" to "html.xsl" and use ...
 # ... HTML_STYLESHEETS = stylesheets/html*.xsl
@@ -676,6 +676,7 @@ dist-hook: dist-copy-images
 
 ##  Note that number of images is *huge*, and if we stick image files in
 ##  EXTRA_DIST we get an "Argument list too long" error. So we handle it here.
+
 
 dist-copy-images:
 	$(cmd) test -d "$(top_srcdir)/images" && test -d "$(distdir)"

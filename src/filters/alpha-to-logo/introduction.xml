@@ -102,8 +102,7 @@
     <tertiary>简介</tertiary>
   </indexterm>
 
-  <!--TODO ru: add menu screenshot(!?)-->
-  <figure lang="en;de;fr;it;no">
+  <figure lang="en;de;fr;it;no;ru">
     <title>
       <phrase lang="en">The Alpha to Logo filters menu</phrase>
       <phrase lang="de">
@@ -114,13 +113,13 @@
       </phrase>
       <phrase lang="it">Il menu filtri <quote>Alfa a logotipo</quote></phrase>
       <phrase lang="no">
-        Menyen for filtra <quote>Alfa til logo</quote>
+        Menyen for filtra <quote>alfa til logo</quote>
       </phrase>
-      <phrase lang="ru">Меню фильтров TODO</phrase>
+      <phrase lang="ru">Меню фильтров Альфа в логотип</phrase>
     </title>
 
     <mediaobject>
-      <imageobject lang="en">
+      <imageobject lang="en;ru">
         <imagedata fileref="../images/menus/filters-alpha-to-logo.png"
           format="PNG" />
       </imageobject>
@@ -177,7 +176,8 @@
   <para lang="ru">
     Эти фильтры соответствуют скриптам <quote>Script-Fu</quote> по <link
     linkend="standalone-script-fu">производству логотипов</link>. Они
-    добавляют специальные эффекты к каналу альфа активного слоя.
+    добавляют специальные эффекты к каналу альфа активного слоя, то есть, к
+    точкам, у которых ненулевое значение альфа.
   </para>
 
   <note lang="en;de;fr;it;no;ru">
@@ -210,14 +210,13 @@
       finn at alle menyvala er gråa ut, og altså utilgjengelege, kan du
       <link linkend="gimp-layer-alpha-add">legge til ein alfakanal</link>.
     </para>
-    <para lang="ru"><!--TODO ru: enabled if *active layer* has alpha-->
-      Пункты меню и их функции доступны только когда у изображения есть канал
+    <para lang="ru">
+      Пункты меню и их функции доступны только когда у активного слоя есть канал
       альфа. Если меню не доступно, добавьте к изображению
       <!--link linkend="gimp-layer-alpha-add"-->канал альфа<!--/link-->.
     </para>
   </note>
 
-  <!--TODO ru: translate (and review/enhance!) new content-->
   <para lang="en">
     The filter effect will always be applied according to the alpha values.
     The <link linkend="glossary-alpha">alpha</link> of any pixel has a value
@@ -297,16 +296,24 @@
     utvalet.
   </para>
 
-  <!--TODO ru: replace with procedure title-->
   <para lang="ru">
-    Чтобы применить фильтр <quote>Альфа в логотип</quote> к выделению,
-    необходимо проделать следующие операции:
+    Фильтр всегда применяется  в соответствии со значением альфа. Значение
+    <!--link linkend="glossary-alpha"-->альфа<!--/link--> каждой точки находится
+    в диапазоне от 0 (прозрачный) до 255 (непрозрачный). Возможно также
+    применение фильтра к <emphasis>частично</emphasis> прозрачным точкам,
+    используя значения альфа от 1 до 254.
+  </para>
+  <para lang="ru">
+    Такое поведение сходно с частичным
+    <link linkend="gimp-concepts-selection">выделением</link>точек.
+    Действительно, эти фильтры создают
+    <!--link linkend="gimp-layer-alpha-selection-replace"-->выделение из альфа
+    <!--/link-->, копируя значения альфа в слой, представляющий выделение, и
+    затем работают с выделением.
   </para>
 
-  <!--TODO ru: translate changed content,
-      the procedure here was nonsense - sorry folks :-( -->
   <orderedlist lang="en;de;fr;it;no;ru">
-    <title lang="en;de;fr;it;no">
+    <title lang="en;de;fr;it;no;ru">
       <phrase lang="en">
         How to apply an <quote>Alpha to Logo</quote> filter to a selection?
       </phrase>
@@ -322,7 +329,10 @@
         Come applicare un filtro <quote>Alfa a logotipo</quote> ad una selezione?
       </phrase>
       <phrase lang="no">
-        Korleis legge eit <quote>Alfa til logo</quote>-filter til eit utval?
+        Korleis legge eit <quote>alfa til logo</quote>-filter til eit utval?
+      </phrase>
+      <phrase lang="ru">
+        Как применить фильтр <quote>Альфа в логотип</quote> к выделению?
       </phrase>
     </title>
     <listitem>
@@ -348,20 +358,17 @@
         <link linkend="gimp-layer-alpha-add">aggiungerlo</link>.
       </para>
       <para lang="no">
-        <link linkend="gimp-selection-to-channel">Lagra utvalet i ein
-        kanal</link>.
-      </para>
-      <para lang="no">
         Dersom det gjeldande laget er bakgrunnslaget, må du sjå etter at
         det har ein alfakanal. Dersom denne manglar, må du
         <link linkend="gimp-layer-alpha-add">legge til ein alfakanal</link>.
       </para>
       <para lang="ru">
-        <!--link linkend="gimp-selection-to-channel"-->Сохранить выделение в канал.
-        <!--/link-->
+        Если активный слой есть слой фона, убедитесь, что у слоя есть канал
+        альфа, иначе
+        <!--link linkend="gimp-layer-alpha-add"-->добавьте канал альфа
+        <!--/link-->.
       </para>
-      <!--TODO ru: add tip-->
-      <tip lang="en;de;fr;it;no">
+      <tip lang="en;de;fr;it;no;ru">
         <para lang="en">
           If a layer name in the Layer Dialog is in bold, then this layer has
           no Alpha channel.
@@ -382,6 +389,10 @@
         <para lang="no">
           Dersom lagnamnet er utheva i lagdialogen, betyr dette at laget
           manglar alfakanal.
+        </para>
+        <para lang="ru">
+          Если название слоя в диалоге слоёв показано жирным шрифтом, то у слоя
+          нет канала альфа.
         </para>
       </tip>
     </listitem>
@@ -416,12 +427,18 @@
         </menuchoice>
       </para>
       <para lang="no">
-        <link linkend="gimp-layer-mask-add">Legg til lagmaske</link> i
-        laget og set opp maska med denne kanalen.
+        <link linkend="gimp-selection-invert">Inverter</link> utvalet
+        (<menuchoice>
+          <guimenu>Utval</guimenu>
+          <guimenuitem>Inverter</guimenuitem>
+        </menuchoice>).
       </para>
       <para lang="ru">
-        <!--link linkend="gimp-layer-mask-add"-->Добавить маску слоя<!--/link--> к слою
-        и загрузить маску этим каналом.
+        Выберите
+        <menuchoice>
+          <guimenu>Выделение</guimenu>
+          <guimenuitem>Инвертировать</guimenuitem>
+        </menuchoice>
       </para>
     </listitem>
     <listitem>
@@ -457,12 +474,19 @@
        </menuchoice>.
       </para>
       <para lang="no">
-        Ikkje gløym å <link linkend="gimp-layer-mask-apply">legge til
-        lagmaske</link>.
+        Utfør
+        <menuchoice>
+          <guimenu>Rediger</guimenu>
+          <guimenuitem>Tøm utvalet</guimenuitem>
+       </menuchoice>
+        på (det inverterte) utvalet.
       </para>
       <para lang="ru">
-        <!--link linkend="gimp-layer-mask-apply"-->Применить маску
-             слоя<!--/link-->.
+        Выберите
+        <menuchoice>
+          <guimenu>Правка</guimenu>
+          <guimenuitem>Очистить</guimenuitem>
+       </menuchoice> для очистки выделения.
       </para>
     </listitem>
     <listitem>
@@ -489,7 +513,8 @@
         gjere noe meir med det).
       </para>
       <para lang="ru">
-        Применить фильтр <quote>Альфа в логотип</quote>.
+        Примените фильтр <quote>Альфа в логотип</quote>. Фильтры игнорируют
+        выделение, поэтому не обязательно ещё раз инвертировать выделение.
       </para>
     </listitem>
   </orderedlist>
