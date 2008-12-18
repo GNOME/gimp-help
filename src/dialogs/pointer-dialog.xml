@@ -4,17 +4,19 @@
                 "http://www.docbook.org/xml/4.3/docbookx.dtd">
 
 <!-- section history:
+  2008-12-16 j.h: updated en;fr to v2.6. Standardized xml structure, may be
+             with some errors in lt;no,ru languages.
   2008-03-01 ude: renamed id (old: gimp-pointer-dialog)
   2008-01-23 ude: de translation
   2007-11-22 j.h: created
 -->
-<!--TODO es ru: translate-->
+
 <sect2 id="gimp-pointer-info-dialog" lang="en;de;fr;it;lt;no;ru">
   <sect2info role="cvs">
     <revhistory>
       <revision lang="en">
         <revnumber>$Revision$</revnumber>
-        <date>2007-11-22</date>
+        <date>2008-12-16</date>
         <authorinitials>j.h</authorinitials>
       </revision>
       <revision lang="de">
@@ -24,7 +26,7 @@
       </revision>
       <revision lang="fr">
         <revnumber>$Revision$</revnumber>
-        <date>2007-11-22</date>
+        <date>2008-12-16</date>
         <authorinitials>j.h</authorinitials>
       </revision>
       <revision lang="it">
@@ -70,6 +72,10 @@
 
   <indexterm lang="fr">
     <primary>Dialogues</primary>
+    <secondary>Pointeur</secondary>
+  </indexterm>
+  <indexterm lang="fr">
+    <primary>Fenêtres</primary>
     <secondary>Pointeur</secondary>
   </indexterm>
   <indexterm lang="fr"><primary>Pointeur</primary></indexterm>
@@ -180,7 +186,7 @@
   </para>
 
 
-  <sect3 lang="en;de;fr;it;lt;no;ru">
+  <sect3>
     <title>
       <phrase lang="en">Activate Dialog</phrase>
       <phrase lang="de">Dialogaufruf</phrase>
@@ -202,7 +208,7 @@
       auf verschiedene Arten aufgerufen werden:
     </para>
     <para lang="fr">
-      Le dialogue des brosses est un dialogue ancrable : voyez la section
+      Le dialogue des brosses est une fenêtre ancrable : voyez la section
       <xref linkend="gimp-concepts-docks" />. Il peut être activé de
       différentes manières :
     </para>
@@ -231,70 +237,12 @@
     <itemizedlist>
       <listitem>
         <para lang="en">
-          From the toolbox-menu and the image Menu bar:
-          <menuchoice>
-            <guimenu>File</guimenu>
-            <guisubmenu>Dialogs</guisubmenu>
-            <guimenuitem>Pointer</guimenuitem>
-          </menuchoice>
-        </para>
-        <para lang="de">
-          Indem Sie das Kommando
-          <menuchoice>
-            <guimenu><accel>D</accel>atei</guimenu>
-            <guisubmenu><accel>D</accel>ialoge</guisubmenu>
-            <guimenuitem>Zeiger</guimenuitem>
-          </menuchoice> im Menü des Werkzeugfensters ausführen.
-        </para>
-        <para lang="fr">
-          À partir du menu Fichier de la Boîte à outils et de l'image
-          <menuchoice>
-            <guimenu>Fichier</guimenu>
-            <guisubmenu>Dialogues</guisubmenu>
-            <guimenuitem>Pointeur</guimenuitem>
-          </menuchoice>
-        </para>
-        <para lang="it">
-          dal menu della barra degli strumenti:
-          <menuchoice>
-            <guimenu>File</guimenu>
-            <guisubmenu>Finestre</guisubmenu>
-            <guimenuitem>Puntatore</guimenuitem>
-          </menuchoice>.
-        </para>
-        <para lang="lt">
-          Įrankinės meniu ir paveikslėlio meniu juostoje:
-          <menuchoice>
-            <guimenu>Failas</guimenu>
-            <guisubmenu>Dialogai</guisubmenu>
-            <guimenuitem>Žymiklis</guimenuitem>
-          </menuchoice>
-        </para>
-        <para lang="no">
-          frå menyen i verktøykassa:
-          <menuchoice>
-            <guimenu>Fil</guimenu>
-            <guisubmenu>Dialogar</guisubmenu>
-            <guimenuitem>Peikar</guimenuitem>
-          </menuchoice>
-        </para>
-        <para lang="ru">
-          из меню панели инструментов и из меню изображения:
-          <menuchoice>
-            <guimenu>Файл</guimenu>
-            <guisubmenu>Диалоги</guisubmenu>
-            <guimenuitem>Указатель</guimenuitem>
-          </menuchoice>
-        </para>
-      </listitem>
-
-      <listitem>
-        <para lang="en">
           From the image Menu-bar:
           <menuchoice>
-            <guimenu>Dialogs</guimenu>
+            <guimenu>Windows</guimenu>
+            <guisubmenu>Dockable Dialogs</guisubmenu>
             <guimenuitem>Pointer</guimenuitem>
-          </menuchoice>
+          </menuchoice>,
         </para>
         <para lang="de">
           Aus dem Bildmenü:
@@ -304,9 +252,10 @@
           </menuchoice>.
         </para>
         <para lang="fr">
-          À partir de la barre des menus de l'image
+          À partir de la barre des menus de l'image :
           <menuchoice>
-            <guimenu>Dialogues</guimenu>
+            <guimenu>Fenêtres</guimenu>
+            <guisubmenu>Fenêtres ancrables</guisubmenu>
             <guimenuitem>Pointeur</guimenuitem>
           </menuchoice>
         </para>
@@ -400,338 +349,67 @@
       <xref linkend="gimp-concepts-docks" />.
     </para>
 
-    <!--TODO es: check, copied f~rom obsolete "menus/view-infowindow.xml"-->
-    <itemizedlist lang="en;fr;it;lt;no;ru">
-      <!-- 'de' is below, using a <variablelist> -->
-      <listitem>
-        <para lang="en">
-          <guilabel>Pixels</guilabel>: shows the position of the pointed
-          pixel, in X (horizontal) and Y (vertical) coordinates, stated in
-          pixels from the origin (the upper left corner of canvas).
-        </para>
-        <para lang="es">
-          <guilabel>Píxeles</guilabel>: Coordenadas del píxel que está
-          apuntando. El origen (0,0) está en la esquina superior izquierda de
-          la imagen.
-        </para>
-        <para lang="fr">
-          <guilabel>Pixels</guilabel> : affiche la position X (horizontale)
-          et Y (verticale) du pixel pointé, exprimée en nombre de pixels
-          depuis l'origine définie par le coin en haut à gauche du canevas.
-        </para>
-        <para lang="it">
-          <guilabel>Pixel</guilabel>: mostra la posizione pixel puntato, in
-          coordinate X (orizzontale) e Y (verticale), in pixel dall'origine
-          (angolo in alto a sinistra dell'area disegnabile).
-        </para>
-        <para lang="lt">
-          <guilabel>Pikseliai</guilabel>: pelės žymiklio nurodyti pikselio
-          padėtis, kaip X (horizontaliai) ir Y (vertikaliai) koordinatės,
-          pateiktos pikseliais nuo pradžios taško (viršutinio kairiojo
-          matomosios srities kampo).
-        </para>
-        <para lang="no">
-          <guilabel>Pikslar</guilabel>: Viser posisjonen til pikselen det
-          blir peika på i x-koordinat (horisontalt) og y-koordinat
-          (vertikalt) med det øvre, venstre hjørnet som
-          utgangspunkt (0,0).
-        </para>
-        <para lang="ru">
-          <guilabel>Точки</guilabel>: показывает положение указаной точки в
-          координатах X (по горизонтали) и Y (по вертикали) от начала
-          координат (верхний левый угол холста).
-        </para>
-      </listitem>
-      <listitem>
-        <para lang="en">
-          <guilabel>Units</guilabel>: Shows the distance from the origin, in
-          inches.
-        </para>
-        <para lang="es">
-          <guilabel>Unidades</guilabel>:  Coordenadas del píxel al que
-          apuntas, en la unidad actual (como pulgadas o cm). El origen está en
-          la esquina superior izquierda de la imagen.
-        </para>
-        <para lang="fr">
-          <guilabel>Unités</guilabel> : affiche la distance depuis l'origine,
-          en pouces (inches).
-        </para>
-        <para lang="it">
-          <guilabel>Unità</guilabel>: mostra la distanza dall'origine, in
-          pollici.
-        </para>
-        <para lang="lt">
-          <guilabel>Vienetai</guilabel>: rodo atstumą coliais nuo pradžios
-          taško.
-        </para>
-        <para lang="no">
-          <guilabel>Einingar</guilabel>: Viser koordinata i tommar.
-        </para>
-        <para lang="ru">
-          <guilabel>Единицы измерения</guilabel>: показывает растояние от начала
-          координат, в дюймах.
-        </para>
-      </listitem>
-
-      <!-- saved from obsolete "src/menus/view-infowindow.xml":
-          <para lang="en">
-            There are two pulldown menus at the bottom of the Cursor tab. Both
-            of them contain the same choices, which makes it easier for you to
-            compare the color values of a particular pixel using different
-            color models. The choices on the pulldown menu are:
-          </para>
-          <para lang="de">
-            Weiter unten finden Sie zwei Klappmenüs. Beide enthalten die
-            gleiche Auswahl, was es einfacher macht, die Farbwerte eines
-            bestimmten Pixels in verschiedenen Farbmodellen zu vergleichen.
-            Sie können wählen:
-          </para>
-          <para lang="es">
-            Hay dos menús en la parte inferior de la solapa cursor. Ambos
-            contienen las mismas elecciones, que hacen más fácil comparar
-            valores de color de un píxel en particular usando diferentes
-            modos de color. Las elecciones son:
-          </para>
-          <para lang="lt">
-            Kortelės Žymiklis apačioje yra du išskleidžiami meniu. Abiejuose
-            yra tos pačios pasirinktys, kurios jums leidžia lengviau
-            palyginti konkretaus pikselio spalvų reikšmes naudojant
-            skirtingus spalvų modelius. Šiame meniu esančios pasirinktys yra:
-          </para>
-          <para lang="no">
-            Det er to nedtrekksmenyar i dette vindauget. Begge inneheld dei
-            same vala, noe som gjer det enklare å samanlikne fargeverdiane for
-            ein bestemt piksel i ulike fargemodellar. Vala i menyen er:
-          </para>
-          <itemizedlist lang="en;de;es;lt;no">
-            <listitem>
-              <para lang="es">
-                <emphasis>Valores de los píxeles</emphasis>:
-                Muestra los valores <emphasis>Rojo</emphasis>,
-                <emphasis>Verde</emphasis>, <emphasis>Azul</emphasis> y
-                <emphasis>Alfa</emphasis> del píxel, valores entre 0 y 255.
-              </para>
-              <para lang="lt">
-                <emphasis>Pikselių reikšmės</emphasis>:
-                Ši pasirinktis rodo pikselio <emphasis>Raudoną</emphasis>,
-                <emphasis>Žalią</emphasis>, <emphasis>Mėlyną</emphasis> ir
-                <emphasis>Alfa</emphasis> reikšmes, kaip skaičius tarp
-                0 ir 255.
-              </para>
-              <para lang="no">
-                <emphasis>Pikselverdiar</emphasis>:
-                Viser verdien av <emphasis>Raud</emphasis>,
-                <emphasis>Grøn</emphasis>, <emphasis>Blå</emphasis> og
-                <emphasis>Alfa</emphasis> for pikselen frå 0 til 255.
-              </para>
-            </listitem>
-            <listitem>
-              <para lang="es">
-                <emphasis>RGB</emphasis>:
-                Muestra los valores <emphasis>Rojo</emphasis>,
-                <emphasis>Verde</emphasis>, <emphasis>Azul</emphasis> y
-                <emphasis>Alfa</emphasis> del píxel, como porcentajes.
-                También muestra el valor hexadecimal del color del píxel.
-              </para>
-              <para lang="lt">
-                <emphasis>RGB</emphasis>:
-                Ši pasirinktis rodo pikselio <emphasis>Raudoną</emphasis>,
-                <emphasis>Žalią</emphasis>, <emphasis>Mėlyną</emphasis> ir
-                <emphasis>Alfa</emphasis> reikšmes, kaip procentus. Ji taip
-                pat rodo šešioliktainę pikselio spalvos reikšmę.
-              </para>
-              <para lang="no">
-                <emphasis>RGB</emphasis>:
-                Viser verdien av <emphasis>Raud</emphasis>,
-                <emphasis>Grøn</emphasis>, <emphasis>Blå</emphasis> og
-                <emphasis>Alfa</emphasis> for pikselen i prosent og på
-                hexadesimal form.
-              </para>
-            </listitem>
-            <listitem>
-              <para lang="es">
-                <emphasis>HSV</emphasis>:
-                Muestra el <emphasis>Tono</emphasis>,
-                en grados, así como la <emphasis>Saturación</emphasis>,
-                el <emphasis>Valor</emphasis> y el
-                <emphasis>Alfa</emphasis> del píxel, como porcentajes.
-              </para>
-              <para lang="lt">
-                <emphasis>HSV</emphasis>:
-                Ši pasirinktis rodo pikselio <emphasis>Atspalvį</emphasis>
-                laipsniais ir <emphasis>Sodrumą</emphasis>,
-                <emphasis>Reikšmę</emphasis> bei
-                <emphasis>Alfa</emphasis> procentais.
-              </para>
-              <para lang="no">
-                <emphasis>HSV</emphasis>:
-                Viser verdien av <emphasis>Kulør</emphasis> i grader.
-                <emphasis>Metning</emphasis>,
-                <emphasis>Lysverdi</emphasis> og
-                <emphasis>Alfa</emphasis> for pikselen i prosent.
-              </para>
-            </listitem>
-            <listitem>
-              <para lang="es">
-                <emphasis>CMYK</emphasis>:
-                Muestra los valores <emphasis>Cían</emphasis>,
-                <emphasis>Magenta</emphasis>, <emphasis>Amarillo</emphasis>,
-                <emphasis>Negro</emphasis> y <emphasis>Alfa</emphasis>
-                del píxel, como porcentajes.
-              </para>
-              <para lang="lt">
-                <emphasis>CMYK</emphasis>:
-                Ši pasirinktis rodo pikselio <emphasis>Žalsvai mėlyną
-                (Cyan)</emphasis>, <emphasis>Rausvai raudoną
-                (Magenta)</emphasis>, <emphasis>Geltoną</emphasis>,
-                <emphasis>Juodą</emphasis> ir <emphasis>Alfa</emphasis>
-                reikšmes kaip procentus.
-              </para>
-              <para lang="no">
-                <emphasis>CMYK</emphasis>:
-                Viser verdien av <emphasis>Cyanblå</emphasis>,
-                <emphasis>Magentaraud</emphasis>, <emphasis>Gul</emphasis>,
-                <emphasis>Svart</emphasis> og <emphasis>Alfa</emphasis>
-                for pikselen i prosent.
-              </para>
-            </listitem>
-          </itemizedlist>
-      -->
-
-      <listitem>
-        <para lang="en">
-          <guilabel>Left drop-down list</guilabel>: defaults to
-          <quote>Pixel</quote> and shows the RGB channel values. You can
-          choose another color model.
-        </para>
-        <para lang="fr">
-          <guilabel>Liste déroulante gauche</guilabel> : fixée sur
-          <quote>Pixel</quote> par défaut et affiche les valeurs des canaux
-          du modèle de couleur RVB. Vous pouvez choisir un autre modèle de
-          couleur.
-        </para>
-        <para lang="it">
-          <guilabel>Elenco a tendina sulla sinistra</guilabel>: il valore
-          predefinito è <quote>Punto</quote> e postra i valori dei canali
-          RGB. È possibile scegliere un'altro modello di colore.
-        </para>
-        <para lang="lt">
-          <guilabel>Kairysis išskleidžiamas sąrašas</guilabel>:
-          pagal numatytuosius parametrus pasirinkta <quote>Pikselis</quote>
-          ir rodomos RGB kanalų reikšmės. Galite pasirinkti kitą spalvų
-          modelį.
-        </para>
-        <para lang="no">
-          <guilabel>Venstre nedtrekksliste</guilabel>: Viser normalt
-          <quote>Pikslar</quote> og viser verdiane for RGB-kanal, men du kan
-          velje andre fargemoddellar.
-        </para>
-        <para lang="ru">
-          <guilabel>Левый список</guilabel>: установлен на <quote>Точку</quote>
-          по умолчанию и показывает значения каналов RGB. Можно выбрать
-          цветовую модель.
-        </para>
-      </listitem>
-      <listitem>
-        <para lang="en">
-          <guilabel>Right drop-down list</guilabel>: defaults to RGB and
-          shows percentage values. You can choose another color model.
-          <quote>Hex</quote> is the
-          <link linkend="glossary-html-notation">HTML Notation</link> of
-          the pixel color, in hexadecimal.
-        </para>
-        <para lang="fr">
-          <guilabel>Liste déroulante de droite</guilabel> : Est fixée sur RVB
-          par défaut et affiche les pourcentages. Vous pouvez choisir un
-          autre modèle de couleur. <quote>Hex</quote> est la
-          <link linkend="glossary-html-notation">Notation HTML</link> de la
-          couleur du pixel, en hexadécimal.
-        </para>
-        <para lang="it">
-          <guilabel>Elenco a tendina sulla destra</guilabel>: il valore
-          predefinito è RGB e mostra i valori in percentuale. È possibile
-          scegliere un'altro modello di colore.  <quote>Esa</quote> è la
-          <link linkend="glossary-html-notation">notazione HTML</link> del
-          colore del pixel, in esadecimale.
-        </para>
-        <para lang="lt">
-          <guilabel>Dešinysis išskleidžiamas sąrašas</guilabel>:
-          pagal numatytuosius parametrus pasirinkta RGB ir rodomos
-          procentų reikšmės. Galite pasirinkti kitą spalvų modelį.
-          <quote>Šešioliktainė</quote> yra pikselio spalvos
-          <link linkend="glossary-html-notation">HTML notacija</link>,
-          išreikšta šešioliktainiu skaičiumi.
-        </para>
-        <para lang="no">
-          <guilabel>VHøgre nedtrekksliste</guilabel>: Viser normalt RGB
-          som prosentverdiar. Du kan velje andre fargemodellar.
-          <quote>Hex</quote> er fargeverdien i
-          <link linkend="glossary-html-notation">HTML-notasjon</link>, dvs.
-          i  hexadesimal form.
-        </para>
-        <para lang="ru">
-          <guilabel>Правый список</guilabel>: установлен на RGB по умолчанию и
-          показывает значения в процентах. Можно выбрать цветовую модель.
-          <quote>Hex</quote> - <link linkend="glossary-html-notation">Нотация 
-          HTML</link> цвета точки, в шестнадцатеричном коде. 
-        </para>
-      </listitem>
-      <listitem>
-        <para lang="en"> <!-- changed 2007-01-11 to correct some errors -->
-          <guilabel>Sample Merged</guilabel>: this option, checked by default,
-          if enabled shows pixel values for all visible layers as they were
-          merged together. If it's not checked, only values of the active
-          layer will be shown.
-        </para>
-        <para lang="fr">
-          <guilabel>Échantillonner sur tous les calques</guilabel> : cette
-          option est cochée par défaut. Si elle n'est pas cochée, ce sont
-          les valeurs du calque actif qui seront affichées
-        </para>
-        <para lang="it">
-          <guilabel>Campionamento diffuso</guilabel>: quest'opzione,
-          normalmente impostata, mostra i valori dei pixel di tutti i livelli
-          visibili come se questi fossero tutti fusi assieme. Se non è
-          impostata, verranno mostrati solo i valori del livello correntemente
-          attivo.
-        </para>
-        <para lang="lt">
-          <guilabel>Sujungtas mėginys</guilabel>: pagal numatytuosius
-          parametrus ši parinktis yra pažymėta ir rodo visų pikselio
-          matomų sluoksnių reikšmių sudėtinę reikšmę. Jeigu ji nepažymėta,
-          rodomos aktyvaus sluoksnio reikšmės.
-        </para>
-        <para lang="no">
-          <guilabel>Flett synlege</guilabel>: Denne er normalt avmerka,
-          og viser totalverdiane for alle synlege pikslar i punktet. Dersom
-          denne ikkje er avmerka, vil bare pikselen i det aktive laget bli
-          registrert.
-        </para>
-        <para lang="ru">
-          <guilabel>Выборка образца</guilabel>: этот пункт выбран по умолчанию.
-          Показывает значения точки всех слоёв, как если бы они слились вместе.
-          Если не выбран, показывает значения точки активного слоя.
-        </para>
-      </listitem>
-    </itemizedlist>
-
-    <variablelist lang="de">
+    <variablelist>
       <title>
         <phrase lang="en">Pointer Information</phrase>
         <phrase lang="de">Zeigerinformationen</phrase>
+        <phrase lang="es">Pointer Information</phrase>
+        <phrase lang="fr">Informations fournies par le pointeur</phrase>
+        <phrase lang="it">Pointer Information</phrase>
+        <phrase lang="lt">Pointer Information</phrase>
+        <phrase lang="no">Pointer Information</phrase>
         <phrase lang="ru">Информация указателя</phrase>
       </title>
       <varlistentry>
         <term>
           <phrase lang="en">Pixels</phrase>
           <phrase lang="de">Pixel</phrase>
+          <phrase lang="es">Pixeles</phrase>
+          <phrase lang="fr">Pixels</phrase>
+          <phrase lang="it">Pixel</phrase>
+          <phrase lang="lt">Pikseliai</phrase>
+          <phrase lang="no">Pikslar</phrase>
           <phrase lang="ru">Точки</phrase>
         </term>
         <listitem>
+          <para lang="en">
+            Shows the position of the pointed pixel, in X (horizontal) and Y
+            (vertical) coordinates, stated in pixels from the origin (the
+            upper left corner of the canvas).
+          </para>
           <para lang="de">
             Zeigt die horizontale (X) und vertikale (Y) Koordinatenposition
             des betreffenden Pixels bezogen auf den Ursprungspunkt, die linke
             obere Ecke der Zeichenfläche.
+          </para>
+          <para lang="es">
+            Coordenadas del píxel que está apuntando. El origen (0,0) está en
+            la esquina superior izquierda de la imagen.
+          </para>
+          <para lang="fr">
+            Affiche la position X (horizontale) et Y (verticale) du pixel
+            pointé, exprimée en nombre de pixels depuis l'origine définie par
+            le coin en haut à gauche du canevas.
+          </para>
+          <para lang="it">
+            Mostra la posizione pixel puntato, in coordinate X (orizzontale)
+            e Y (verticale), in pixel dall'origine (angolo in alto a sinistra
+            dell'area disegnabile).
+          </para>
+          <para lang="lt">
+            Pelės žymiklio nurodyti pikselio padėtis, kaip X (horizontaliai)
+            ir Y (vertikaliai) koordinatės, pateiktos pikseliais nuo pradžios
+            taško (viršutinio kairiojo matomosios srities kampo).
+          </para>
+          <para lang="no">
+            Viser posisjonen til pikselen det blir peika på i x-koordinat
+            (horisontalt) og y-koordinat (vertikalt) med det øvre, venstre
+            hjørnet som utgangspunkt (0,0).
+          </para>
+          <para lang="ru">
+            показывает положение указаной точки в
+            координатах X (по горизонтали) и Y (по вертикали) от начала
+            координат (верхний левый угол холста).
           </para>
         </listitem>
       </varlistentry>
@@ -739,13 +417,41 @@
         <term>
           <phrase lang="en">Units</phrase>
           <phrase lang="de">Einheiten</phrase>
+          <phrase lang="es">Unidades</phrase>
+          <phrase lang="fr">Unités</phrase>
+          <phrase lang="it">Unità</phrase>
+          <phrase lang="lt">Vienetai</phrase>
+          <phrase lang="no">Einingar</phrase>
           <phrase lang="ru">Единицы измерения</phrase>
         </term>
         <listitem>
+          <para lang="en">
+            Shows the distance from the origin, in inches.
+          </para>
           <para lang="de">
             Zeigt den horizontalen (X) und vertikalen (Y) Abstand in Zoll
             (<foreignphrase>inches</foreignphrase>) des betreffenden Punktes
             vom Ursprungspunkt links oben.
+          </para>
+          <para lang="es">
+            Coordenadas del píxel al que apuntas, en la unidad actual (como
+            pulgadas o cm). El origen está en la esquina superior izquierda
+            de la imagen.
+          </para>
+          <para lang="fr">
+            Affiche la distance depuis l'origine, en pouces (inches).
+          </para>
+          <para lang="it">
+            Mostra la distanza dall'origine, in pollici.
+          </para>
+          <para lang="lt">
+            Rodo atstumą coliais nuo pradžios taško.
+          </para>
+          <para lang="no">
+            Viser koordinata i tommar.
+          </para>
+          <para lang="ru">
+            показывает растояние от начала координат, в дюймах.
           </para>
         </listitem>
       </varlistentry>
@@ -753,6 +459,12 @@
         <term>
           <phrase lang="en">Channel values</phrase>
           <phrase lang="de">Kanalwerte</phrase>
+          <phrase lang="es"></phrase>
+          <phrase lang="fr"></phrase>
+          <phrase lang="it"></phrase>
+          <phrase lang="lt"></phrase>
+          <phrase lang="no"></phrase>
+          <phrase lang="ru">Единицы измерения</phrase>
           <phrase lang="ru">Значения каналов</phrase>
         </term>
         <listitem>
@@ -779,11 +491,40 @@
               <link linkend="glossary-html-notation">HTML-Notation</link> der
               Pixelfarbe in hexadezimaler Darstellung.
             </para>
+            <para lang="es">
+              Hay dos menús en la parte inferior de la solapa cursor. Ambos
+              contienen las mismas elecciones, que hacen más fácil comparar
+              valores de color de un píxel en particular usando diferentes
+              modos de color. Las elecciones son:
+            </para>
+            <para lang="fr">
+              Les valeurs des canaux du modèle de couleur choisi sont
+              décrites plus bas. Les deux listes déroulantes contiennent les
+              mêmes choix, ce qui facilite la comparaison des valeurs d'un
+              pixel dans différents modèles de couleur. <quote>Hexa</quote>
+              est la <link linkend="glossary-html-notation">Notation
+              HTML</link> de la couleur du pixel.
+            </para>
+            <para lang="it">
+              FIXME
+            </para>
+            <para lang="lt">
+              Kortelės Žymiklis apačioje yra du išskleidžiami meniu. Abiejuose
+              yra tos pačios pasirinktys, kurios jums leidžia lengviau
+              palyginti konkretaus pikselio spalvų reikšmes naudojant
+              skirtingus spalvų modelius. Šiame meniu esančios pasirinktys
+              yra:
+            </para>
+            <para lang="no">
+              Det er to nedtrekksmenyar i dette vindauget. Begge inneheld dei
+              same vala, noe som gjer det enklare å samanlikne fargeverdiane
+              for ein bestemt piksel i ulike fargemodellar. Vala i menyen er:
+            </para>
             <para lang="ru">
-              Ниже показаны значения каналов для выделеной 
+              Ниже показаны значения каналов для выделеной
               <link linkend="glossary-colormodel">цветовой модели</link>. Оба
               меню содержат те же пункты, что позволяет сравнивать значения
-              точек в разных цветовых моделях. <quote>Hex</quote> - 
+              точек в разных цветовых моделях. <quote>Hex</quote> -
               <link linkend="glossary-html-notation">Нотация HTML</link> цвета
               точки, в шестнадцатеричном коде. Список содержит следующие пункты
               (<guilabel>Точка</guilabel> по умолчанию):
@@ -791,6 +532,11 @@
             <varlistentry>
               <term>
                 <phrase lang="en;de">Pixel</phrase>
+                <phrase lang="es">Valores de los píxeles</phrase>
+                <phrase lang="fr">Pixel</phrase>
+                <phrase lang="it"></phrase>
+                <phrase lang="lt">Pikselių reikšmės</phrase>
+                <phrase lang="no">Pikselverdiar</phrase>
                 <phrase lang="ru">Точка</phrase>
               </term>
               <listitem>
@@ -809,8 +555,34 @@
                   <emphasis>Blau</emphasis> und <emphasis>Alpha</emphasis> des
                   aktuellen Pixels als Zahlen von 0 bis 255 ausgegeben.
                 </para>
+                <para lang="es">
+                  Muestra los valores <emphasis>Rojo</emphasis>,
+                  <emphasis>Verde</emphasis>, <emphasis>Azul</emphasis> y
+                  <emphasis>Alfa</emphasis> del píxel, valores entre 0 y 255.
+                </para>
+                <para lang="fr">
+                  Ce sont les valeurs du canal
+                  <link linkend="glossary-rgb">RGB</link> : le
+                  <emphasis>Rouge</emphasis>, le <emphasis>Vert</emphasis>,
+                  le <emphasis>Bleu</emphasis> et l'<emphasis>Alpha
+                  </emphasis> de 0 à 255.
+                </para>
+                <para lang="it">
+                  FIXME
+                </para>
+                <para lang="lt">
+                  Ši pasirinktis rodo pikselio <emphasis>Raudoną</emphasis>,
+                  <emphasis>Žalią</emphasis>, <emphasis>Mėlyną</emphasis> ir
+                  <emphasis>Alfa</emphasis> reikšmes, kaip skaičius tarp
+                  0 ir 255.
+                </para>
+                <para lang="no">
+                  Viser verdien av <emphasis>Raud</emphasis>,
+                  <emphasis>Grøn</emphasis>, <emphasis>Blå</emphasis> og
+                  <emphasis>Alfa</emphasis> for pikselen frå 0 til 255
+                </para>
                 <para lang="ru">
-                  The <link linkend="glossary-rgb">RGB</link> channel values.
+                  The <!--<link linkend="glossary-rgb">-->RGB<!--</link>--> channel values.
                   This choice displays the <emphasis>Red</emphasis>,
                   <emphasis>Green</emphasis>, <emphasis>Blue</emphasis> and
                   <emphasis>Alpha</emphasis> values of the pixel, as numbers
@@ -821,6 +593,11 @@
             <varlistentry>
               <term>
                 <phrase lang="en;de;ru">RGB</phrase>
+                <phrase lang="es">RGB</phrase>
+                <phrase lang="fr">RVB</phrase>
+                <phrase lang="it">RGB</phrase>
+                <phrase lang="lt">RGB</phrase>
+                <phrase lang="no">RGB</phrase>
               </term>
               <listitem>
                 <para lang="en">
@@ -840,8 +617,37 @@
                   ausgegeben. Zusätzlich wird der Farbwert des Pixels in
                   hexadezimaler Schreibweise angegeben.
                 </para>
+                <para lang="es">
+                  Muestra los valores <emphasis>Rojo</emphasis>,
+                  <emphasis>Verde</emphasis>, <emphasis>Azul</emphasis> y
+                  <emphasis>Alfa</emphasis> del píxel, como porcentajes.
+                También muestra el valor hexadecimal del color del píxel.
+                </para>
+                <para lang="fr">
+                  Ce sont les valeurs du canal
+                  <link linkend="glossary-rgb">RGB</link> : le
+                  <emphasis>Rouge</emphasis>, le <emphasis>Vert</emphasis>,
+                  le <emphasis>Bleu</emphasis> et l'<emphasis>Alpha
+                  </emphasis>. Affiche aussi la valeur hexadécimale de la
+                  couleur du pixel.
+                </para>
+                <para lang="it">
+                  FIXME
+                </para>
+                <para lang="lt">
+                  Ši pasirinktis rodo pikselio <emphasis>Raudoną</emphasis>,
+                  <emphasis>Žalią</emphasis>, <emphasis>Mėlyną</emphasis> ir
+                  <emphasis>Alfa</emphasis> reikšmes, kaip procentus. Ji taip
+                  pat rodo šešioliktainę pikselio spalvos reikšmę.
+                </para>
+                <para lang="no">
+                  Viser verdien av <emphasis>Raud</emphasis>,
+                  <emphasis>Grøn</emphasis>, <emphasis>Blå</emphasis> og
+                  <emphasis>Alfa</emphasis> for pikselen i prosent og på
+                  hexadesimal form.
+                </para>
                 <para lang="ru">
-                  Значения каналов <link linkend="glossary-rgb">RGB</link>.
+                  Значения каналов <!--<link linkend="glossary-rgb">-->RGB<!--</link>-->.
                   Этот пункт показывает <emphasis>красное</emphasis>,
                   <emphasis>зелёное</emphasis>, <emphasis>синее</emphasis> и
                   <emphasis>альфа</emphasis> значения точки в процентах. Он также
@@ -852,6 +658,11 @@
             <varlistentry>
               <term>
                 <phrase lang="en;de;ru">HSV</phrase>
+                <phrase lang="es">HSV</phrase>
+                <phrase lang="fr">TSV</phrase>
+                <phrase lang="it">HSV</phrase>
+                <phrase lang="lt">HSV</phrase>
+                <phrase lang="no">HSV</phrase>
               </term>
               <listitem>
                 <para lang="en">
@@ -869,6 +680,33 @@
                   <emphasis>Wert</emphasis> (Helligkeit) und
                   <emphasis>Alpha</emphasis> in Prozent.
                 </para>
+                <para lang="es">
+                  Muestra el <emphasis>Tono</emphasis>,
+                  en grados, así como la <emphasis>Saturación</emphasis>,
+                  el <emphasis>Valor</emphasis> y el
+                  <emphasis>Alfa</emphasis> del píxel, como porcentajes.
+                </para>
+                <para lang="fr">
+                  Affiche la <emphasis>Teinte</emphasis>, en degrés, ainsi
+                  que la <emphasis>Saturation</emphasis>, la
+                  <emphasis>Valeur</emphasis> et l'<emphasis>Alpha</emphasis>
+                  du pixel, en poucentages.
+                </para>
+                <para lang="it">
+                  FIXME
+                </para>
+                <para lang="lt">
+                  Ši pasirinktis rodo pikselio <emphasis>Atspalvį</emphasis>
+                  laipsniais ir <emphasis>Sodrumą</emphasis>,
+                  <emphasis>Reikšmę</emphasis> bei
+                  <emphasis>Alfa</emphasis> procentais.
+                </para>
+                <para lang="no">
+                  Viser verdien av <emphasis>Kulør</emphasis> i grader.
+                  <emphasis>Metning</emphasis>,
+                  <emphasis>Lysverdi</emphasis> og
+                  <emphasis>Alfa</emphasis> for pikselen i prosent.
+                </para>
                 <para lang="ru">
                   Компоненты <link linkend="glossary-hsv">HSV</link>.
                   Этот пункт показывает <emphasis>тон</emphasis> в градусах, а
@@ -881,6 +719,11 @@
             <varlistentry>
               <term>
                 <phrase lang="en;de;ru">CMYK</phrase>
+                <phrase lang="es">CMYK</phrase>
+                <phrase lang="fr">CMJN</phrase>
+                <phrase lang="it">CMYK</phrase>
+                <phrase lang="lt">CMYK</phrase>
+                <phrase lang="no">CMYK</phrase>
               </term>
               <listitem>
                 <para lang="en">
@@ -896,10 +739,38 @@
                   <emphasis>Magenta</emphasis>, <emphasis>Gelb</emphasis> und
                   <emphasis>Alpha</emphasis> des Pixels in Prozent.
                 </para>
+                <para lang="es">
+                  Muestra los valores <emphasis>Cían</emphasis>,
+                  <emphasis>Magenta</emphasis>, <emphasis>Amarillo</emphasis>,
+                  <emphasis>Negro</emphasis> y <emphasis>Alfa</emphasis>
+                  del píxel, como porcentajes.
+                </para>
+                <para lang="fr">
+                  Affiche les valeurs du <emphasis>Cyan</emphasis>, du
+                  <emphasis>Magenta</emphasis>, du <emphasis>Jaune</emphasis>,
+                  du <emphasis>Noir</emphasis> et de l'
+                  <emphasis>Alpha</emphasis> du pixel, en pourcentages.
+                </para>
+                <para lang="it">
+                  FIXME
+                </para>
+                <para lang="lt">
+                  Ši pasirinktis rodo pikselio <emphasis>Žalsvai mėlyną
+                    (Cyan)</emphasis>, <emphasis>Rausvai raudoną
+                    (Magenta)</emphasis>, <emphasis>Geltoną</emphasis>,
+                  <emphasis>Juodą</emphasis> ir <emphasis>Alfa</emphasis>
+                  reikšmes kaip procentus.
+                </para>
+                <para lang="no">
+                  Viser verdien av <emphasis>Cyanblå</emphasis>,
+                  <emphasis>Magentaraud</emphasis>, <emphasis>Gul</emphasis>,
+                  <emphasis>Svart</emphasis> og <emphasis>Alfa</emphasis>
+                  for pikselen i prosent.
+                </para>
                 <para lang="ru">
-                  Значения каналов <link linkend="glossary-cmyk">CMYK</link>.
+                  Значения каналов <!--<link linkend="glossary-cmyk">-->CMYK<!--</link>-->.
                   Этот пункт показывает <emphasis>Циан</emphasis>,
-                  <emphasis>Magenta</emphasis>, <emphasis>жёлтый</emphasis>, 
+                  <emphasis>Magenta</emphasis>, <emphasis>жёлтый</emphasis>,
                   <emphasis>чёрный</emphasis>, и <emphasis>альфа</emphasis> точки
                   в процентах.
                 </para>
@@ -912,14 +783,53 @@
         <term>
           <phrase lang="en">Sample Merged</phrase>
           <phrase lang="de">Vereinigung prüfen</phrase>
+          <phrase lang="es">Sample Merged</phrase>
+          <phrase lang="fr">Échantillonner sur tous les calques</phrase>
+          <phrase lang="it">Campionamento diffuso</phrase>
+          <phrase lang="lt">Sujungtas mėginys</phrase>
+          <phrase lang="no">Flett synlege</phrase>
           <phrase lang="ru">Выборка образца</phrase>
         </term>
         <listitem>
+          <para lang="en">
+            If this option is checked (default), sampling is performed on all
+            layers. If it is unchecked, sampling is performed on the active
+            layer only.
+          </para>
           <para lang="de">
             Wenn diese Eigenschaft aktiviert ist (das ist die Voreinstellung),
             werden die Pixelwerte so angezeigt, als wären alle sichtbaren
             Ebenen vereinigt. Ist die Eigenschaft nicht aktiviert, werden die
             Werte der aktiven Ebene angezeigt.
+          </para>
+          <para lang="fr">
+            Par défaut, l'échantillonnage se fait sur l'ensemble des calques.
+            Vous pouvez n'échantillonner que sur le calque actif en
+            dé-cochant l'option <guilabel>Échantillonner sur tous les
+            calques</guilabel>.
+          </para>
+          <para lang="it">
+            Normalmente il campionamento viene eseguito su tutti i livelli.
+            Se si desidera campionare solo il livello attivo basta togliere
+            la spunta all'opzione <guilabel>campionamento diffuso</guilabel>.
+          </para>
+          <para lang="lt"><!--Please review-->
+            Pagal numatytuosius parametrus, mėginiai imami visuose
+            sluoksniuose. Jeigu norite tik aktyvaus sluoksnio mėginio,
+            atžymėkite dialogo kortelės meniu esančią parinktį
+            <guilabel>Sujungtas mėginys</guilabel>:
+          </para>
+          <para lang="no"><!--Please review-->
+            <guilabel>Flett synlege</guilabel>: Denne er normalt avmerka,
+            og viser totalverdiane for alle synlege pikslar i punktet. Dersom
+            denne ikkje er avmerka, vil bare pikselen i det aktive laget bli
+          registrert.
+          </para>
+          <para lang="ru"><!--Please review-->
+            этот пункт выбран по умолчанию.
+            Показывает значения точки всех слоёв, как если бы они слились
+            вместе.
+            Если не выбран, показывает значения точки активного слоя.
           </para>
         </listitem>
       </varlistentry>
