@@ -52,6 +52,16 @@ AC_SUBST(ALL_LINGUAS)
 AC_SUBST(QUICKREFERENCE_ALL_LINGUAS)
 
 
+#  The build of the HTML files is optional.
+
+AC_ARG_ENABLE(build,
+              AS_HELP_STRING([--disable-build],
+                             [don't build the HTML files (needs xsltproc)]),
+              , enable_build=yes)
+
+AM_CONDITIONAL(GIMP_HELP_BUILD, test "x$enable_build" = "xyes")
+
+
 #  Check for GNU make.
 
 AC_MSG_CHECKING([whether ${MAKE-make} is GNU make])
@@ -201,7 +211,7 @@ AC_SUBST(XSLTFLAGS)
 AC_PATH_PROG(PNGNQ, pngnq)
 if test -z "$PNGNQ"; then
   AC_MSG_WARN([cannot find pngnq(1),
-Images are not optimized during distribution creation])
+Images will not be optimized during distribution creation])
 fi
 
 
@@ -209,7 +219,7 @@ fi
 AC_PATH_PROG(PNGCRUSH, pngcrush)
 if test -z "$PNGCRUSH"; then
   AC_MSG_WARN([cannot find pngcrush(1),
-Images are not optimized during distribution creation])
+Images will not be optimized during distribution creation])
 fi
 
 AM_CONDITIONAL(HAVE_PNGOPTIMIZERS, test -n "$PNGNQ" && test -n "$PNGCRUSH")
