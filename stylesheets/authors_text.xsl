@@ -80,53 +80,33 @@
     </xsl:choose>
   </xsl:template>
 
-  <!-- yesss.. this can be way better implemented -->
   <xsl:template name="print.lang">
     <xsl:param name="langid" />
-    <xsl:if test="$langid = 'de'">
-      <xsl:text>German</xsl:text>
-    </xsl:if>
-    <xsl:if test="$langid = 'en'">
-      <xsl:text>English</xsl:text>
-    </xsl:if>
-    <xsl:if test="$langid = 'it'">
-      <xsl:text>Italian</xsl:text>
-    </xsl:if>
-    <xsl:if test="$langid = 'pl'">
-      <xsl:text>Polish</xsl:text>
-    </xsl:if>
-    <xsl:if test="$langid = 'fr'">
-      <xsl:text>French</xsl:text>
-    </xsl:if>
-    <xsl:if test="$langid = 'es'">
-      <xsl:text>Spanish</xsl:text>
-    </xsl:if>
-    <xsl:if test="$langid = 'ko'">
-      <xsl:text>Korean</xsl:text>
-    </xsl:if>
-    <xsl:if test="$langid = 'sv'">
-      <xsl:text>Swedish</xsl:text>
-    </xsl:if>
-    <xsl:if test="$langid = 'ru'">
-      <xsl:text>Russian</xsl:text>
-    </xsl:if>
-    <xsl:if test="$langid = 'cz'">
-      <xsl:text>Czech</xsl:text>
-    </xsl:if>
-    <xsl:if test="$langid = 'hr'">
-      <xsl:text>Croatian</xsl:text>
-    </xsl:if>
-    <xsl:if test="$langid = 'lt'">
-      <xsl:text>Lithuanian</xsl:text>
-    </xsl:if>
-    <xsl:if test="$langid = 'nl'">
-      <xsl:text>Dutch</xsl:text>
-    </xsl:if>
-    <xsl:if test="$langid = 'no'">
-      <xsl:text>Norwegian</xsl:text>
-    </xsl:if>
-    <xsl:if test="$langid = 'zh_CN'">
-      <xsl:text>Chinese</xsl:text>
+    <!-- use underscores for spaces within languages,
+         e.g. xx:Pidgin_English -->
+    <xsl:variable name="languages">
+      cz:Czech
+      de:German
+      en:English
+      es:Spanish
+      fr:French
+      hr:Croatian
+      it:Italian
+      ko:Korean
+      lt:Lithuanian
+      nl:Dutch
+      no:Norwegian
+      pl:Polish
+      ru:Russian
+      sv:Swedish
+      zh_CN:Chinese
+    </xsl:variable>
+    <xsl:variable name="tail"
+      select="substring-after($languages,concat($langid,':'))"/>
+    <xsl:if test="$tail != ''">
+      <xsl:value-of select="translate(
+                              normalize-space(substring-before($tail,' ')),
+                              '_', ' ')"/>
     </xsl:if>
   </xsl:template>
 </xsl:stylesheet>

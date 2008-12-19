@@ -28,7 +28,11 @@ AC_PROG_MAKE_SET
 #  GIMP 2.2 Linguas: Content for those language code exist, but they
 #  haven't been worked on for a while:
 #  ALL_LINGUAS="cs de en es fr hr it ko nl no ru sv zh_CN"
+#
+XML_LANG="en"
+
 QUICKREFERENCE_ALL_LINGUAS="de en fi fr it ko ru sv"
+
 if test "x$ALL_LINGUAS" = "x"; then
   ALL_LINGUAS="de en es fr it ko nl no pl ru sv"
 else
@@ -43,18 +47,9 @@ else
   QUICKREFERENCE_ALL_LINGUAS=$QUICKREFERENCE_LINGUAS
 fi
 
+AC_SUBST(XML_LANG)
 AC_SUBST(ALL_LINGUAS)
 AC_SUBST(QUICKREFERENCE_ALL_LINGUAS)
-
-
-#  The build of the HTML files is optional.
-
-AC_ARG_ENABLE(build,
-              AS_HELP_STRING([--disable-build],
-                             [don't build the HTML files (needs xsltproc)]),
-              , enable_build=yes)
-
-AM_CONDITIONAL(GIMP_HELP_BUILD, test "x$enable_build" = "xyes")
 
 
 #  Check for GNU make.
@@ -79,10 +74,9 @@ fi
 #  Search for the XSLT processor
 
 AC_PATH_PROG(XSLTPROC, xsltproc)
-if test -z "$XSLTPROC" && test "x$enable_build" = "xyes"; then
+if test -z "$XSLTPROC"; then
   AC_MSG_ERROR([
 ** Couldn't find xsltproc(1). You will need it to build the help files.
-** If you want to install the prebuilt help files only, use --disable-build.
 ** See the file 'INSTALL' for more help.])
 fi
 
@@ -107,6 +101,16 @@ fi
 AM_CONDITIONAL(HAVE_DBLATEX, test -n "$DBLATEX")
 
 
+#  Optional: dot to create build system map
+
+AC_PATH_PROG(DOT, dot)
+if test -z "$DOT"; then
+  AC_MSG_WARN([cannot find dot(1), creating build system PNG disabled])
+fi
+
+AM_CONDITIONAL(HAVE_DOT, test -n "$DOT")
+
+
 #  Search for docbook2odf
 
 AC_PATH_PROG(DOCBOOK2ODF, docbook2odf)
@@ -126,6 +130,57 @@ if test -z "$XML2PO"; then
 fi
 
 AM_CONDITIONAL(HAVE_XML2PO, test -n "$XML2PO")
+
+
+#  Search for gettext tools
+
+AC_PATH_PROG(MSGFMT, msgfmt)
+if test -z "$MSGFMT" && test "x$enable_build" = "xyes"; then
+  AC_MSG_ERROR([
+** Couldn't find msgfmt(1). You will need it to build the help files.
+** See the file 'INSTALL' for more help.])
+fi
+
+MSGFMTFLAGS="--check --use-fuzzy --statistics"
+AC_SUBST(MSGFMTFLAGS)
+
+
+AC_PATH_PROG(MSGINIT, msginit)
+if test -z "$MSGINIT" && test "x$enable_build" = "xyes"; then
+  AC_MSG_ERROR([
+** Couldn't find msginit(1). You will need it to build the help files.
+** See the file 'INSTALL' for more help.])
+fi
+
+MSGINITFLAGS="--no-translator"
+AC_SUBST(MSGINITFLAGS)
+
+
+AC_PATH_PROG(MSGMERGE, msgmerge)
+if test -z "$MSGMERGE" && test "x$enable_build" = "xyes"; then
+  AC_MSG_ERROR([
+** Couldn't find msgmerge(1). You will need it to build the help files.
+** See the file 'INSTALL' for more help.])
+fi
+
+MSGMERGEFLAGS="--quiet --backup=none --update"
+AC_SUBST(MSGMERGEFLAGS)
+
+
+AC_PATH_PROG(MSGUNIQ, msguniq)
+if test -z "$MSGUNIQ" && test "x$enable_build" = "xyes"; then
+  AC_MSG_ERROR([
+** Couldn't find msguniq(1). You will need it to build the help files.
+** See the file 'INSTALL' for more help.])
+fi
+
+
+AC_PATH_PROG(MSGCAT, msgcat)
+if test -z "$MSGCAT" && test "x$enable_build" = "xyes"; then
+  AC_MSG_ERROR([
+** Couldn't find msgcat(1). You will need it to build the help files.
+** See the file 'INSTALL' for more help.])
+fi
 
 
 #  Optionally allow xsltproc to access DTDs over the network

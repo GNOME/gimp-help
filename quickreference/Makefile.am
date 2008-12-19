@@ -59,10 +59,8 @@ docbook/gimp-keys-%.xml: xml/gimp-keys-%.xml stylesheets/keys-docbook.xsl
 
 docbook: $(foreach lang,$(QUICKREFERENCE_ALL_LINGUAS),docbook/gimp-keys-$(lang).xml)
 
-if GIMP_HELP_BUILD
 if HAVE_XML2PO
 all-local: svg docbook
-endif
 endif
 
 clean-local:

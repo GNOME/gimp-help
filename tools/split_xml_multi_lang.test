@@ -1,0 +1,111 @@
+==========================
+Split XML Multilang Script
+==========================
+
+
+This test, tests the functionaility of the multilang split script. The
+central class is MultiLangDoc, which will be tested in the following
+paragraphs.
+
+
+MultiLangDoc
+============
+
+Setup
+-----
+
+The class provides functionality for reading and parsing multi-lang
+DocBook source files. It has the ability to split the parsed document
+into a by-language sorted single language documents.
+
+To test the split file, we need our own XML file.  We need a destination
+directory, which we create temporary:
+
+>>> import tempfile
+>>> destdir = tempfile.mkdtemp()
+
+To test the
+class, we need an XML testfile first, which we grab out of the GIMP
+Manual source tree:
+
+>>> import os.path
+>>> testxml = ("<sect1 id='gimp-help-test' lang='en;cs;de'>"
+...   "<title><phrase lang='en'>Gaussian Blur</phrase>"
+...   "<phrase lang='de'>Gaußscher Weichzeichner</phrase>"
+...   "<phrase lang='cs'>Gaussovo rozostření</phrase></title>"
+...   "</sect1>")
+>>> testxmlfile = os.path.join(destdir, 'test.xml')
+>>> open(testxmlfile, 'w').write(testxml)
+
+
+Processing
+----------
+
+We can create the multilangdoc object:
+
+>>> from split_xml_multi_lang import MultiLangDoc
+>>> mld = MultiLangDoc(testxmlfile)
+>>> mld
+<split_xml_multi_lang.MultiLangDoc object at 0x...>
+>>> mld.filename == testxmlfile
+True
+
+Once the xmlfile is parsed, we can process it. That means, we provide in
+which languages the document should be splitted.
+
+The default language which is used by processing is English. The
+languages are internally handled as a set:
+
+>>> mld.languages
+set(['en'])
+
+If the languages parameter is an empty list, the processing is only done
+for English:
+
+>>> mld.languages
+set(['en'])
+>>> mld.process([])
+{'en': <DOM Element: sect1 at -0x...>}
+
+We can define more languages we want to split the document into:
+
+>>> result = mld.process(['de', 'cs'])
+>>> ['cs', 'de', 'en'] == sorted(result.keys())
+True
+>>> len(result.keys()) == 3
+True
+
+The destination directory (actually a template) will be specified when
+printing the resulting files for every language:
+
+>>> mld.printfiles(destdir)
+
+We can check what has been written to our directory:
+
+>>> import os
+>>> os.listdir(destdir)
+['test.xml', 'en', 'de', 'cs']
+>>> result = os.listdir(os.path.join(destdir, 'en'))
+>>> result
+['test.xml']
+>>> open(os.path.join(destdir, 'en', result[0])).read()
+'<?xml version...<sect1 id="gimp-help-test"><title><phrase>Gaussian Blur</phrase></title></sect1>'
+>>> open(os.path.join(destdir, 'de', result[0])).read()
+'<?xml version...<sect1 id="gimp-help-test"><title><phrase>Gau\xc3\x9fscher Weichzeichner</phrase></title></sect1>'
+
+
+Empty XML files
+---------------
+
+If we process empty xml files the split throws an error:
+
+>>> testxmlfile = os.path.join(destdir, 'test_empty.xml')
+>>> open(testxmlfile, 'w').write("<sect1></sect1>")
+>>> mld = MultiLangDoc(testxmlfile)
+
+It was not possible to process the document and the split script exits
+with error number 74 (No English document element):
+
+>>> mld.process([])
+Traceback (most recent call last):
+SystemExit: 74

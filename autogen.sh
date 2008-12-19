@@ -97,6 +97,17 @@ if test $RC -ne 0; then
 fi
 
 $AUTOMAKE --add-missing || exit 1
+if [ -e Makefile.in ]; then
+    sed -e 's/^# HIDE FROM AUTOMAKE #//' \
+        -e '/^all\(-local\)\?:/i\
+\
+\
+'       Makefile.in > Makefile.in.tmp &&
+    mv Makefile.in.tmp Makefile.in
+else
+    echo >&2 "Error: cannot find Makefile.in"
+    exit 1
+fi
 autoconf || exit 1
 
 rm -rf autom4te.cache
