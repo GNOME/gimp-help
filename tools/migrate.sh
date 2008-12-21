@@ -4,8 +4,7 @@
 
 start_time=`date '+%T' 2>/dev/null`
 
-# XXX: what about fi, hr?
-: ${LINGUAS:="de es fr it ko nl no pl ru sv"}
+: ${LINGUAS:="de es fr it ko nl no pl ru sv fi hr lt"}
 
 : ${srcdir:=src}
 : ${oldsrcdir:=oldsrc}
@@ -23,23 +22,22 @@ exclude=$(echo "$exclude_patterns" | \
 # backup source
 test -d "$oldsrcdir" || {
     echo "Making source backup '$oldsrcdir' ..."
-    mv -v $srcdir $oldsrcdir || exit 66
+    cp -r $srcdir $oldsrcdir || exit 66
 }
 
 # clean-up
-if [ -d "$srcdir" ]; then
-    echo Removing $srcdir, $potdir, $podir, $xmldir ...
+if [ -d "$potdir" ]; then
+    echo Removing $potdir, $podir, $xmldir ...
     test -L $xmldir/en && rm $xmldir/en
-    test -d $srcdir && rm -rf $srcdir
     test -d $potdir && rm -rf $potdir
     test -d $podir  && rm -rf $podir
     test -d $xmldir && rm -rf $xmldir
     test -e $oldsrcdir/preface/authors.xml && \
         rm -f $oldsrcdir/preface/authors.xml
 fi
-echo "Making (temp) source dir '$srcdir' ..."
-cp -a $oldsrcdir $srcdir
-echo
+# echo "Making (temp) source dir '$srcdir' ..."
+# cp -a $oldsrcdir $srcdir
+# echo
 
 # patches
 echo "Applying patches (if any) ..."
@@ -85,12 +83,12 @@ done
 echo
 
 # oldsrc
-echo "Removing old (multi-lang) source directory ..."
-rm -rf "$srcdir" && \
+# echo "Removing old (multi-lang) source directory ..."
+# rm -rf "$srcdir" && \
 echo "Installing new (single-lang) source directory ..."
-mv -vi "$xmldir"/en "$srcdir" && \
-echo Creating link "$xmldir"/en ...
-ln -vs $PWD/"$srcdir" "$xmldir"/en
+cp -rv "$xmldir"/en/* "$srcdir"
+# echo Creating link "$xmldir"/en ...
+# ln -vs $PWD/"$srcdir" "$xmldir"/en
 echo Removing authors files ...
 test -e $srcdir/preface/titles.xml && \
     rm -vf $srcdir/preface/titles.xml
@@ -103,6 +101,9 @@ if [ -e $oldsrcdir/glossary/glossary.xml ] &&
    [ -e stylesheets/migrate/convert-glossary.xsl ] &&
    [ -e tools/migrate/convert-glossary.py ]
 then
+    echo "Removing old glossary and dictionary files ..."
+    rm -vf $srcdir/glossary/*.xml
+    rm -rvf $srcdir/dictionary
     echo "Creating $srcdir/glossary/glossary.xml:"
     test -d $srcdir/glossary || mkdir $srcdir/glossary
     xsltproc --nonet --xinclude \

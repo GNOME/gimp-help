@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
-                "http://www.docbook.org/xml/4.3/docbookx.dtd">
-
+<!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN" "http://www.docbook.org/xml/4.3/docbookx.dtd">
 <!-- section history:
   2008-01-15 alex falappa: moved here and revised 'it'
   2007-10-23 ude: moved here from filters/color/map/mapcolor_range.xml ('en','de')
@@ -16,834 +13,141 @@
 -->
 <!--PENDING all: remove in GIMP 2.6 -->
 <!--TODO ru: update/review-->
-<sect2 id="plug-in-color-map" lang="en;de;es;fr;it;lt;no;ru">
-  <sect2info lang="en;de;es;fr;it;no" role="cvs">
+<sect2 id="plug-in-color-map">
+  <sect2info role="cvs">
     <revhistory>
-      <revision lang="en">
+      <revision>
         <revnumber>$Revision$</revnumber>
         <date>2008-01-21</date>
         <authorinitials>ude</authorinitials>
-      </revision>
-      <revision lang="de">
-        <revnumber>$Revision$</revnumber>
-        <date>2008-01-21</date>
-        <authorinitials>ude</authorinitials>
-      </revision>
-      <revision lang="es">
-        <revnumber>$Revision$</revnumber>
-        <date>2007-11-30</date>
-        <authorinitials>AntI</authorinitials>
-      </revision>
-      <revision lang="fr">
-        <revnumber>$Revision$</revnumber>
-        <date>2008-01-31</date>
-        <authorinitials>j.h</authorinitials>
-      </revision>
-      <revision lang="it">
-        <revnumber>$Revision$</revnumber>
-        <date>2008-01-17</date>
-        <authorinitials>alex falappa</authorinitials>
-      </revision>
-      <revision lang="no">
-        <revnumber>$Revision$</revnumber>
-        <date>2007-11-30</date>
-        <authorinitials>kost</authorinitials>
       </revision>
     </revhistory>
   </sect2info>
-
-  <!--TODO ru: check: 'en' has been renamed-->
   <title>
-    <phrase lang="en">Color Range Mapping</phrase>
-    <phrase lang="cs">Mapování rozsahu barev</phrase>
-    <phrase lang="de">Farbbereiche vertauschen</phrase>
-    <phrase lang="es">Mapa de rango de colores</phrase>
-    <phrase lang="fr">Échanger un intervalle de couleurs</phrase>
-    <phrase lang="it">Mappatura gamma colore</phrase>
-    <phrase lang="lt">Spalvų rėžio atvaizdis</phrase>
-    <phrase lang="no">Bytt fargeområde</phrase>
-    <phrase lang="ru">Отобразить цветовой диапазон</phrase>
+    <phrase>Color Range Mapping</phrase>
   </title>
-
-  <indexterm lang="en">
+  <indexterm>
     <primary>Colors</primary>
     <secondary>Range Mapping</secondary>
   </indexterm>
-  <indexterm lang="en"><primary>Map Color Range</primary></indexterm>
-
-  <!--TODO ru: check/change indexterms-->
-  <indexterm lang="cs">
-    <primary>Filtry</primary>
-    <secondary>Barvy</secondary>
-    <tertiary>Mapování barevného rozsahu</tertiary>
+  <indexterm>
+    <primary>Map Color Range</primary>
   </indexterm>
-
-  <indexterm lang="de"><primary>Farbe</primary></indexterm>
-  <indexterm lang="de"><primary>Farbbereiche vertauschen</primary></indexterm>
-
-  <indexterm lang="es">
-    <primary>Colores</primary>
-    <secondary>Mapa</secondary>
-    <tertiary>Mapa de rango de colores</tertiary>
-  </indexterm>
-  <indexterm lang="es"><primary>Mapa de rango de colores</primary></indexterm>
-
-  <indexterm lang="fr">
-    <primary>Couleurs</primary>
-    <secondary>Carte</secondary>
-    <tertiary>Échanger un intervalle de couleurs</tertiary>
-  </indexterm>
-  <indexterm lang="fr">
-    <primary>Échanger un intervalle de couleurs</primary>
-  </indexterm>
-
-  <indexterm lang="it">
-    <primary>Colori</primary>
-    <secondary>Mappatura gamma colore</secondary>
-  </indexterm>
-  <indexterm lang="it"><primary>Mappatura gamma colore</primary></indexterm>
-
-  <indexterm lang="lt">
-    <primary>Spalvos</primary>
-    <secondary>Rėžio atvaizdis</secondary>
-  </indexterm>
-  <indexterm lang="lt"><primary>Spalvų rėžio atvaizdis</primary></indexterm>
-
-  <indexterm lang="no">
-    <primary>Fargar</primary>
-    <secondary>Bytt fargeområde</secondary>
-  </indexterm>
-  <indexterm lang="no"><primary>Bytt fargeområde</primary></indexterm>
-
-  <indexterm lang="ru">
-    <primary>Фильтры</primary><secondary>Цвета</secondary>
-  </indexterm>
-  <indexterm lang="ru"><primary>Отобразить цветовой диапазон</primary></indexterm>
-
-  <mediaobject lang="it">
-    <imageobject>
-      <imagedata
-        fileref="../images/filters/it/filters-colormap-rangemapping.png"
-        format="PNG" />
-    </imageobject>
-  </mediaobject>
-
-  <!--TODO es;lt;ru: add warning-->
-  <!-- "gimp/trunk/plug-ins/common/mapcolor.c" removed 2007-12-15 -->
-  <warning lang="en;de;fr;it;no"><!-- added 2008-01-21 -->
-    <para lang="en">
+  <warning>
+    <para>
       This filter will be removed in future versions.
     </para>
-    <para lang="de">
-      Dieses Filter wird in zukünftigen Versionen nicht mehr enthalten sein.
-    </para>
-    <para lang="it">
-      Questo filtro sarà rimosso in versioni future.
-    </para>
-    <para lang="fr">
-      Ce filtre sera supprimé dans les prochaines versions.
-    </para>
-    <para lang="no">
-      Dette filteret vil bli fjerna i framtidige versjonar (frå versjon 2.6).
-    </para>
   </warning>
-
   <sect3>
     <title>
-      <phrase lang="en">Overview</phrase>
-      <phrase lang="cs">Přehled</phrase>
-      <phrase lang="de">Wirkungsweise</phrase>
-      <phrase lang="es">Generalidades</phrase>
-      <phrase lang="fr">Généralités</phrase>
-      <phrase lang="it">Panoramica</phrase>
-      <phrase lang="lt">Apžvalga</phrase>
-      <phrase lang="no">Oversyn</phrase>
-      <phrase lang="ru">Общая информация</phrase>
+      <phrase>Overview</phrase>
     </title>
-
-    <figure lang="en;de;es;fr;it;lt;no;ru">
+    <figure>
       <title>
-        <phrase lang="en">Example for the Color Range Mapping filter</phrase>
-        <phrase lang="de">
-          Anwendungsbeispiel für das Filter
-          <quote>Farbbereiche vertauschen</quote>
-        </phrase>
-        <phrase lang="es">Ejemplo de filtro Mapa de rango de colores</phrase>
-        <phrase lang="fr">
-          Exemple pour le filtre <quote>Échanger un intervalle de
-            couleurs</quote>
-        </phrase>
-        <phrase lang="it">
-          Esempio di applicazione del filtro <quote>Mappatura gamma
-          colore</quote>
-        </phrase>
-        <phrase lang="lt">Filtro Spalvų rėžio atvaizdis pavyzdys</phrase>
-        <phrase lang="no">Eksempel på bruk av filteret</phrase>
-        <phrase lang="ru">
-          Изображение до и после применения фильтра
-          <quote>Отобразить цветовой диапазон</quote>
-        </phrase>
+        <phrase>Example for the Color Range Mapping filter</phrase>
       </title>
-
       <mediaobject>
         <imageobject>
-          <imagedata fileref="../images/filters/examples/taj_orig.jpg"
-            format="JPG" />
+          <imagedata fileref="../images/filters/examples/taj_orig.jpg" format="JPG"/>
         </imageobject>
-        <caption lang="en;de;es;it;lt;no">
-          <para lang="en">Original image</para>
-          <para lang="de">Originalbild</para>
-          <para lang="es">Imagen original</para>
-          <para lang="fr">Image originale</para>
-          <para lang="it">Immagine originale</para>
-          <para lang="lt">Originalus paveikslėlis</para>
-          <para lang="no">Originalbiletet</para>
-          <para lang="ru">Искомое изображение</para>
+        <caption>
+          <para>Original image</para>
         </caption>
       </mediaobject>
       <mediaobject>
         <imageobject>
-          <imagedata
-            fileref="../images/filters/examples/color-taj-mapcolor-range.jpg"
-            format="JPG" />
+          <imagedata fileref="../images/filters/examples/color-taj-mapcolor-range.jpg" format="JPG"/>
         </imageobject>
-        <caption lang="en;de;es;fr;it;lt;no">
-          <para lang="en">Filter applied</para>
-          <para lang="de">
-            Filter <quote>Farbbereich abbilden</quote> angewandt
-          </para>
-          <para lang="es">
-            Filtro <quote>Mapa de rango de colores</quote> aplicado
-          </para>
-          <para lang="fr">Après application du filtre</para>
-          <para lang="it">
-            Dopo l'applicazione del filtro <quote>Mappatura gamma colore</quote>
-          </para>
-          <para lang="lt">Pritaikytas filtras</para>
-          <para lang="no">
-            Verknad av filteret <quote>Bytt fargeområde</quote>
-          </para>
-          <para lang="ru">
-            Применение фильтра <quote>Отобразить цветовой диапазон</quote>
-          </para>
+        <caption>
+          <para>Filter applied</para>
         </caption>
       </mediaobject>
     </figure>
-
-    <para lang="en">
+    <para>
       Unlike Exchange filter, Map Color Range maps a defined color range
       against another defined color range. More precisely, for every image
       pixel the values of the color channels (red, green, blue) are separately
       replaced according to a mapping table. This way, the color range may be
       moved, stretched, compressed, and/or inverted.
     </para>
-    <para lang="de">
-      Das Filter erlaubt es Ihnen, einen definierten Farbbereich im Bild auf
-      einen anderen Farbbereich abzubilden. Genauer gesagt, wird für jeden
-      Farbkanal (Rot, Grün, Blau) jedes Pixels der jeweilige Wert nach einer
-      bestimmten Abbildungsvorschrift durch einen anderen Wert ersetzt. Diese
-      Abbildung kann eine Verschiebung, eine Stauchung oder Dehnung sowie eine
-      Umkehrung des Farbbereichs beinhalten.
-    </para>
-    <para lang="es">
-      Al contrario que el filtro intercambio, mapa de rango de colores traza
-      un rango definido de color contra otro rango definido. Para cada píxel
-      de la imagen el valor de los canales de color (rojo, verde, azul) se
-      reemplazan, separadamente, según una tabla de mapeo. De esta manera, el
-      rango de color se podría mover, estirar, comprimir, y/o invertir.
-    </para>
-    <para lang="fr">
-      A la différence du filtre Échanger deux couleurs, ce filtre permet
-      d'appliquer un intervalle de couleurs, dont vous pouvez régler les
-      limites, à un autre intervalle de couleurs lui aussi défini. Plus
-      précisément, pour chaque pixel de l'image, les valeurs des trois canaux
-      (rouge, vert, bleu) sont remplacés séparément en fonction d'une carte
-      de mappage. Ainsi, l'intervalle de couleur peut être déplacé, étiré,
-      comprimé et/ou inversé.
-    </para>
-    <para lang="it">
-      Al contrario del filtro Scambia colore, Mappatura gamma colore rimappa
-      una gamma di colore definita dall'utente su un'altra gamma. Più
-      specificatamente per ogni pixel dell'immagine i valori dei canali di
-      colore (rosso, verde e blu) sono sostituiti separatamente secondo una
-      tavola di sostituzione. In questa maniera la gamma di colore si può
-      spostare, stirare, comprimere e/o invertire.
-    </para>
-    <para lang="lt">
-      Skirtingai nuo filtro Spalvų sukeitimas, filtras Spalvų rėžio atvaizdis
-      sukuria apibrėžto spalvų rėžio atvaizdį į kitą apibrėžtą spalvų rėžį.
-      Tiksliau: kiekvieno paveikslėlio pikselio spalvų kanalų (raudono,
-      žalio, mėlyno) reikšmės atskirai pakeičiamos atsižvelgiant į
-      atvaizdžių lentelę. Tokiu būdu spalvų rėžį galima perkelti, ištempti,
-      suglaudinti ir / arba invertuoti.
-    </para>
-    <para lang="no">
-      Til skilnad frå filteret <link
-      linkend="plug-in-exchange">Bytt fargar</link> bruker dette filteret
-      fargar frå eitt definert fargeområde for å bytte farge i eit anna,
-      definert fargeområde. Sagt på ein annan måte: for kvar biletpiksel blir
-      verdiane for kvar av fargekanalane bytt ut i høve til ein utskiftingsstabell.
-      Fargeområdet kan bli flytta, strekt ut, komprimert og/eller invertert.
-    </para>
-
-    <!--TODO ru: change menuentries (and move to next sect3)-->
-    <para lang="cs">
-      Tento filtr lze spustit z nabídky okna obrázku volbou
-      <menuchoice>
-        <guimenu>Filtry</guimenu>
-        <guisubmenu>Barvy</guisubmenu>
-        <guisubmenu>Mapa</guisubmenu>
-        <guimenuitem>Mapování barevného rozsahu</guimenuitem>
-      </menuchoice>.
-    </para>
-    <para lang="cs">
-      Na rozdíl od filtru Záměna převádí tento filtr určitý rozsah barev na
-      jiný rozsah barev.
-    </para>
-
-    <para lang="ru">
-      Этот фильтра находится в меню
-      <menuchoice>
-        <guimenu>Фильтры</guimenu>
-        <guisubmenu>Цвета</guisubmenu>
-        <guisubmenu>Карта</guisubmenu>
-        <guimenuitem>Цветовой диапазон...</guimenuitem>
-      </menuchoice>.
-    </para>
-    <para lang="ru">
-      В отличие от фильтра <quote>Замена цвета</quote>, фильтр
-      <quote>Цветовой диапазон</quote> отображает один цветовой диапазон против
-      другого диапазона. Значения цветов каждого цветового канала (красный,
-      зелёный, синий) заменяются согласно таблице отображения. Таким образом,
-      цветовой диапазон можно передвинуть, растянуть, сжать, или инвертировать.
-    </para>
-
-    <note lang="en;de;es;fr;it;lt;no;ru">
-      <para lang="en">
+    <note>
+      <para>
         This mapping does not apply to the specified source color range only.
         Colors outside this color range are mapped the same way by
         extrapolating their destination color.
       </para>
-      <para lang="de">
-        Es ist keineswegs so, dass nur der Quell-Farbbereichs durch den
-        Ziel-Farbbereich ersetzt wird. Tatsächlich werden auch die Bildfarben
-        außerhalb des Quell-Farbbereichs durch Extrapolation nach genau
-        derselben Abbildungsvorschrift verändert.
-      </para>
-      <para lang="es">
-        Este mapeo no se aplica, solo, al rango especificado del color
-        origen. Los colores, fuera de este rango, se mapean de la misma
-        manera extrapolando su color de destino.
-      </para>
-      <para lang="fr">
-        Ce mappage ne s"applique pas seulement à la couleur source spécifiée.
-        Les couleurs en dehors de l'intervalle de couleurs sont mappées de la
-        même façon en extrapolant leur couleur de destination.
-      </para>
-       <para lang="it">
-        La mappatura non si applica solamente alla gamma sorgente specificata.
-        I colori al di fuori della gamma sono ugualmente mappati estrapolando
-        il loro colore di destinazione.
-      </para>
-      <para lang="lt">
-        Šis atvaizdis netaikomas tik nurodytam šaltinio spalvų rėžiui.
-        Už šio spalvų rėžio esančioms spalvoms tokiu pat būdu sukuriamas
-        atvaizdis ekstrapoliuojant jų paskirties spalvą.
-      </para>
-      <para lang="no">
-        Det er ikkje slik at bare fargar definerte i fargeområdet i målet blir
-        påverka av kjeldefargane. Fargar som ikkje er definerte, blir
-        samanlikna på same måten og ekstrapolerte til målfargen.
-      </para>
-      <para lang="ru">
-        Это отображение применяет не только цветовой диапазон источника. Цвета
-        вне диапазона отображаются эктраполяцией итогового цвета.
-      </para>
     </note>
-
-    <para lang="ru">
-      Этот фильтр находится в меню
-      <menuchoice>
-        <guimenu>Фильтры</guimenu>
-        <guisubmenu>Цвета</guisubmenu>
-        <guisubmenu>Карта</guisubmenu>
-        <guimenuitem>Отобразить цветовой диапазон</guimenuitem>
-      </menuchoice>.
-    </para>
-    <para lang="ru">
-      В отличие от фильтра <quote>Замена цвета</quote>, фильтр
-      <quote>Отобразить цветовой диапазон</quote> заменяет один диапазон
-      цветов на другой.
-    </para>
   </sect3>
-
-
-  <sect3 lang="en;de;es;fr;it;lt;no">
-    <title>
-      <phrase lang="en">Activate the filter</phrase>
-      <phrase lang="cs">Aktivace filtru</phrase>
-      <phrase lang="de">Filteraufruf</phrase>
-      <phrase lang="es">Activar el filtro</phrase>
-      <phrase lang="fr">Ouverture du filtre</phrase>
-      <phrase lang="it">Attivazione del filtro</phrase>
-      <phrase lang="lt">Filtro aktyvavimas</phrase>
-      <phrase lang="no">Aktivering</phrase>
-      <phrase lang="ru">Активация фильтра</phrase>
-      <phrase lang="zh_CN">使用这个滤镜</phrase>
-    </title>
-    <para lang="en">
-      You can find this filter in the image window menu under
-      <menuchoice>
-        <guimenu>Colors</guimenu>
-        <guisubmenu>Map</guisubmenu>
-        <guimenuitem>Color Range <accel>M</accel>apping</guimenuitem>
-      </menuchoice>.
-    </para>
-    <para lang="de">
-      Dieses Filter lässt sich über das Menü
-      <menuchoice>
-        <guimenu><accel>F</accel>arben</guimenu>
-        <guisubmenu><accel>A</accel>bbilden</guisubmenu>
-        <guimenuitem>Farbbereiche <accel>v</accel>ertauschen</guimenuitem>
-      </menuchoice>
-      im Bildfenster aufrufen.
-    </para>
-    <para lang="es">
-      Este filtro se encuentra en
-      <menuchoice>
-        <guimenu>Colores</guimenu>
-        <guisubmenu>Mapa</guisubmenu>
-        <guimenuitem><accel>M</accel>apa de rango de colores</guimenuitem>
-      </menuchoice>.
-    </para>
-    <para lang="fr">
-      On accède à ce filtre à partir du menu d'image en suivant
-      <menuchoice>
-        <guimenu>Couleurs</guimenu>
-        <guisubmenu>Carte</guisubmenu>
-        <guimenuitem>
-          Échan<accel>g</accel>er un intervalle de couleur
-        </guimenuitem>
-      </menuchoice>.
-    </para>
-    <para lang="it">
-      Questo filtro si trova nel menu immagine:
-      <menuchoice>
-        <guimenu><accel>C</accel>olori</guimenu>
-        <guisubmenu>Ma<accel>p</accel>pa</guisubmenu>
-        <guimenuitem><accel>M</accel>appatura gamma colore</guimenuitem>
-      </menuchoice>.
-    </para>
-    <para lang="lt">
-      Šį filtrą galite rasti paveikslėlio lango meniu juostoje:
-      <menuchoice>
-        <guimenu>Spalvos</guimenu>
-        <guisubmenu>Atvaizdis</guisubmenu>
-        <guimenuitem>Spalvų rėžio atvai<accel>z</accel>dis</guimenuitem>
-      </menuchoice>.
-    </para>
-    <para lang="no">
-      Du har tilgang til filteret frå biletmenyen via
-      <menuchoice>
-        <guimenu>Fargar</guimenu>
-        <guisubmenu>Kart</guisubmenu>
-        <guisubmenu>Bytt fargeområde</guisubmenu>
-      </menuchoice>
-    </para>
-  </sect3>
-
-
   <sect3>
     <title>
-      <phrase lang="en">Options</phrase>
-      <phrase lang="cs">Volby</phrase>
-      <phrase lang="de">Eigenschaften</phrase>
-      <phrase lang="es">Opciones</phrase>
-      <phrase lang="fr">Options</phrase>
-      <phrase lang="it">Opzioni</phrase>
-      <phrase lang="lt">Parinktys</phrase>
-      <phrase lang="no">Innstillingar</phrase>
-      <phrase lang="ru">Параметры</phrase>
+      <phrase>Activate the filter</phrase>
     </title>
-
-    <figure lang="en;de;es;fr;it;lt;no;ru">
+    <para>
+      You can find this filter in the image window menu under
+      <menuchoice><guimenu>Colors</guimenu><guisubmenu>Map</guisubmenu><guimenuitem>Color Range <accel>M</accel>apping</guimenuitem></menuchoice>.
+    </para>
+  </sect3>
+  <sect3>
+    <title>
+      <phrase>Options</phrase>
+    </title>
+    <figure>
       <title>
-        <phrase lang="en">
+        <phrase>
           Options of the <quote>Map Color Range</quote> filter
-        </phrase>
-        <phrase lang="de">
-          Eigenschaften für das Filter <quote>Farbbereiche vertauschen</quote>
-        </phrase>
-        <phrase lang="es">
-          Opciones del filtro <quote>Mapa de rango de colores</quote>
-        </phrase>
-        <phrase lang="fr">
-          Options du filtre <quote>Échanger un intervalle de couleurs</quote>
-        </phrase>
-        <phrase lang="it">
-          Opzioni del filtro <quote>Mappatura gamma colore</quote>
-        </phrase>
-        <phrase lang="lt">
-          Filtro <quote>Spalvų rėžio atvaizdis</quote> parinktys
-        </phrase>
-        <phrase lang="no">
-          Innstillingane for filteret <quote>Bytt fargeområde</quote>
-        </phrase>
-        <phrase lang="ru">Параметры фильтра
-          <quote>Отобразить цветовой диапазон</quote>
         </phrase>
       </title>
       <mediaobject>
-        <imageobject lang="en;it;ru">
-          <imagedata format="PNG"
-            fileref="../images/filters/filters-colormap-rangemapping.png" />
-        </imageobject>
-        <imageobject lang="de">
-          <imagedata format="PNG"
-            fileref="../images/filters/de/options-color-mapcolor.png" />
-        </imageobject>
-        <imageobject lang="es">
-          <imagedata format="PNG"
-            fileref="../images/filters/es/filters-colormap-rangemapping.png" />
-        </imageobject>
-        <imageobject lang="fr">
-          <imagedata format="PNG"
-            fileref="../images/filters/fr/filters-colormap-rangemapping.png" />
-        </imageobject>
-        <imageobject lang="lt">
-          <imagedata format="PNG"
-            fileref="../images/filters/lt/filters-colormap-rangemapping.png" />
-        </imageobject>
-        <imageobject lang="no">
-          <imagedata format="PNG"
-            fileref="../images/filters/no/filters-colormap-rangemapping.png" />
+        <imageobject>
+          <imagedata fileref="../images/filters/filters-colormap-rangemapping.png" format="PNG"/>
         </imageobject>
       </mediaobject>
     </figure>
-
     <variablelist>
       <varlistentry>
-        <term lang="en">Preview</term>
-        <term lang="cs">Náhled</term>
-        <term lang="de">Vorschau</term>
-        <term lang="es">Vista previa</term>
-        <term lang="fr">Aperçu</term>
-        <term lang="it">Anteprima</term>
-        <term lang="lt">Peržiūra</term>
-        <term lang="no">Førehandsvising</term>
-        <term lang="ru">Просмотр</term>
+        <term>Preview</term>
         <listitem>
-          <para lang="en">
-            <guilabel>Preview</guilabel>: This Preview displays color
+          <para><guilabel>Preview</guilabel>: This Preview displays color
             changes interactively, before they are applied to Image.
-          </para>
-          <para lang="cs">
-            <guilabel>Náhled</guilabel> zobrazuje nastavení filtru
-            interaktivně, před skutečnou změnou obrázku.
-          </para>
-          <para lang="de">
-            Das Vorschaufenster zeigt, wie das Bild aussehen würden, wenn das
-            Filter mit den aktuellen Einstellungen ausgeführt würde.
-          </para>
-          <para lang="es">
-            <guilabel>Vista previa</guilabel>: Esta vista previa muestra los
-            cambios de color, interactivamente, antes de que se apliquen a la
-            imagen.
-          </para>
-          <para lang="fr">
-            <guilabel>Aperçu</guilabel>: Cet aperçu affiche en temps réel
-            les changements de couleur que vous effectuez, avant qu'ils ne
-            soient appliqués à l'image.
-          </para>
-          <para lang="it">
-            Questa anteprima mostra interattivamente i cambiamenti prima che
-            essi vengano applicati all'immagine.
-          </para>
-          <para lang="lt">
-            <guilabel>Peržiūra</guilabel>: ši peržiūra interaktyviai rodo
-            spalvų pakeitimus prieš juos pritaikant dabartiniam paveikslėliui.
-          </para>
-          <para lang="no">
-            <guilabel>Førehandsvising</guilabel>: Dersom denne er avkryssa,
-            vil alle endringane bli viste her etter kvart før dei blir lagt inn i
-            originalbiletet.
-          </para>
-          <para lang="ru">
-            Окно просмотра обновляется при изменении параметров.
           </para>
         </listitem>
       </varlistentry>
-
       <varlistentry>
-        <term lang="en">Color Source Range</term>
-        <term lang="cs">Zdrojový barevný rozsah</term>
-        <term lang="de">Quell-Farbbereich</term>
-        <term lang="es">Rango de color origen</term>
-        <term lang="fr">Intervalle de couleurs de la source </term>
-        <term lang="it">Gamma di colore sorgente</term>
-        <term lang="lt">Spalvų rėžio atvaizdis</term>
-        <term lang="no">Frå dette fargeområdet</term>
-        <term lang="ru">Исходный цветовой диапазон</term>
+        <term>Color Source Range</term>
         <listitem>
-          <para lang="en"> <!--changed 061027-->
+          <para><!--changed 061027-->
             The two <guilabel>Color Swatch Boxes</guilabel> allow you to
             define <guilabel>From</guilabel> and <guilabel>To</guilabel>
             limits of source color range. Default colors are the Foreground
             and the Background colors of the Toolbox, but, when you click on
             a box, you call GIMP
-            <link linkend='gimp-color-dialog'>Color selector</link> which
+            <link linkend="gimp-color-dialog">Color selector</link> which
             lets you select other colors.
           </para>
-          <para lang="en">
+          <para>
             Note that, when you select a color, you really select three
             separate color channels.
           </para>
-
-          <para lang="cs">
-            Dvě barevná pole umožňují nastavit hraniční barvy zdrojového
-            rozsahu. Kliknutím na pole se otevře standardní
-            <link linkend='gimp-color-dialog'>volič barev</link>.
-          </para>
-
-          <para lang="de">
-            Das ist der Bereich (<quote>Von</quote> - <quote>Bis</quote>), der
-            auf den entsprechenden Ziel-Farbbereich abgebildet wird, d.h.
-            diese Werte werden durch die entsprechenden Zielwerte ersetzt.
-            Alle Werte außerhalb dieses Bereichs werden nach der gleichen
-            Abbildungsvorschrift ersetzt, ihre Zielfarben also durch
-            Extrapolation berechnet. Es werden daher <emphasis>alle</emphasis>
-            Farbwerte abgebildet bzw. ersetzt.
-          </para>
-          <para lang="de">
-            Mit Hilfe der zwei farbigen Schaltflächen können Sie diesen
-            Farbbereich einstellen. Voreingestellt sind die aktuelle Vorder-
-            und und Hintergrundfarbe.  Durch Anklicken der Schaltflächen
-            öffnet sich der <acronym>GIMP</acronym>-Dialog zur <link
-            linkend="gimp-color-dialog">Farbwahl</link>, wo Sie dann andere
-            Farben bestimmen können.
-          </para>
-          <para lang="de">
-            Denken Sie daran, dass Sie mit der Wahl einer Farbe tatsächlich
-            drei voneinander unabhängige Farbkanäle gleichzeitig wählen.
-          </para>
-
-          <para lang="es"> <!--changed 061027-->
-            Las dos <guilabel>Cajas de color</guilabel> le permiten definir
-            los límites de <guilabel>Origen</guilabel> y
-            <guilabel>Destino</guilabel> del rango de color origen.
-            Por defecto los colores son los de frente y fondo de la caja de
-            herramientas, pero cuando pulsa sobre una caja, se abre el
-            <!--FIX es link linkend='gimp-color-dialog'-->Selector de color
-            <!--/link--> con el
-            que puede seleccionar otros colores.
-          </para>
-          <para lang="es">
-            Note que, cuando selecciona un color, realmente, selecciona tres
-            canales de color separados.
-          </para>
-
-          <para lang="fr">
-            Vous disposez de deux <guilabel>Boîtes d'échantillon</guilabel>
-            permettant de définir les limites, <guilabel>Depuis</guilabel>
-            et <guilabel>À</guilabel>, de l'intervalle source. Les couleurs
-            de premier-plan et d'arrière-plan de la Boîte à Outils sont
-            affichées par défaut, mais si vous cliquez sur une boîte, vous
-            faites apparaître le
-            <link linkend="gimp-color-dialog">Sélecteur de couleur</link>
-            de GIMP qui vous permet de choisir d'autres couleurs.
-          </para>
-
-          <para lang="it">
-            I due <guilabel>pulsanti secchiello di colore</guilabel> consentono
-            di definire le estremità <guilabel>Da</guilabel> e
-            <guilabel>A</guilabel> della gamma di colore sorgente. I colori
-            predefiniti sono i colori di primo piano e di sfondo della casella
-            strumenti ma, quando premendo il pulsante, si possono selezionare
-            nuovi colori dal <link linkend="gimp-color-dialog">selettore dei
-            colori</link>.
-          </para>
-          <para lang="it">
-            Si noti che quando si seleziona un colore si stanno in realtà
-            selezionando tre canali colore separati.
-          </para>
-
-          <para lang="lt">
-            Šie du <guilabel>Spalvų pavyzdžių laukeliai</guilabel> leidžia
-            nurodyti šaltinio spalvų rėžio ribas <guilabel>Nuo</guilabel>
-            ir <guilabel>Iki</guilabel>. Numatytosios spalvos yra
-            įrankinėje parodytos priekinio plano ir fono spalvos, tačiau
-            spustelėjus laukelį bus atvertas <acronym>GIMP</acronym>
-            <link linkend='gimp-color-dialog'>Spalvų parinkiklis</link>,
-            kuriuo galėsite pasirinkti kitas spalvas.
-          </para>
-          <para lang="lt">
-            Atminkite, kad pasirinkę spalvą, iš tikrųjų pasirenkate tris
-            skirtingus spalvų kanalus.
-          </para>
-
-          <para lang="no">
-            Dei to fargeboksane blir brukte for å definera kva for
-            fargeområde som skal bli brukt som kjelde. Området vil vere
-            frå fargen definert i fargeruta <guilabel>Frå</guilabel> til
-            fargen definert i ruta <guilabel>Til</guilabel>. Når du opnar
-            dialogen, er forgrunnsfargen og bakgrunnsfargen definert i
-            verktøykassa brukt i desse boksane. Klikkar du på ein av
-            fargeboksane vil du få opp <link
-            linkend='gimp-color-dialog'>fargeveljaren</link> slik at du kan
-            bestemme fargane.
-          </para>
-          <para lang="no">
-            Hugs bare på at når du vel ein farge, vel du eigentleg tre
-            ulike fargekanalar.
-          </para>
-
-          <para lang="ru">
-            Две <guilabel>Цветовых кнопки</guilabel> позволяют указать пределы
-            диапазона <guilabel>От</guilabel> и <guilabel>До</guilabel> для
-            источника. Цвета по умолчанию есть цвет переднего плана и фона из
-            панели инструментов. При нажатии кнопок появится
-            <link linkend='gimp-color-dialog'>Диалог выбора цвета</link>.
-          </para>
-          <para lang="ru">
-            Заметьте, что, выбирая цвет, вы выбираете три значения, по одному
-            для каждого канала.
-          </para>
-
-          <caution lang="en;de;es;fr;it;lt;no;ru"><!--added 2007-05-15-->
-            <para lang="en">
+          <caution>
+            <para>
               It's an error if for some channel both source color values are
               the same (you cannot map a single value to the destination
               range). Although the filter seems to work and will not display
               any warning or error message, this will lead to unexpected and
               probably unwanted results.
             </para>
-            <para lang="de">
-              Es ist ein Fehler, wenn für die beiden Farben ein Farbkanal
-              denselben Wert hat (ein leerer Bereich kann nicht sinnvoll
-              abgebildet werden). Auch wenn das Filter keine Warnung oder
-              Fehlermeldung ausgibt: dies wird zu unerwarteten und vermutlich
-              unerwünschten Effekten führen.
-            </para>
-            <para lang="es">
-              Es un error si para algún canal ambos valores del color origen
-              son iguales ( no puede mapear un valor al rango destino).
-              Aunque el filtro parece funcionar y no muestra ningún mensaje
-              de error, esto conducirá a resultados no esperados, ni
-              deseados.
-            </para>
-            <para lang="fr">
-              C'est une erreur si dans un canal les deux valeurs de la
-              couleur source sont les mêmes. Pourtant,le filtre n'affiche
-              aucun message d'erreur et cela peut conduire à des résultats
-              indésirables.
-            </para>
-            <para lang="it">
-              È un errore se per qualche canale entrambi i valori coincidono
-              (non si può mappare un valore singolo in una gamma di
-              composta da più colori). Anche se il filtro sembra funzionare
-              e non mostra alcun avvertimento o messaggio di errore ciò
-              può condurre a risultati imprevisti e molto probabilmente non
-              voluti.
-            </para>
-            <para lang="lt">
-              Jeigu kažkurio kanalo abi šaltinio reikšmės yra vienodos, tai
-              yra klaida (negalite sukurti vienos reikšmės atvaizdžio į
-              paskirties rėžį). Nors atrodo, kad filtras veikia ir nėra
-              jokio pranešimo apie klaidą, tačiau taip gausite netikėtus
-              ir tikriausiai nepageidaujamus rezultatus.
-            </para>
-            <para lang="no">
-              Dersom både kjeldefargen og målfargen er den same i noen
-              av kanalane, er dette ein feil. Du kan ikkje avbilde ein enkelt
-              verdi på målområdet. Sjølv om filteret ser ut til å godta dette,
-              vil det føre til uventa resultat.
-            </para>
-            <para lang="ru">
-              Это считается ошибкой, когда для какого-то канала оба цвета
-              источника одинаковы, потому что невозможно перенести одно значение
-              на итоговый диапазон значений. И хотя фильтр работает и не выдаёт
-              предупреждения, это приведёт к неожиданным результатам.
-            </para>
           </caution>
-
-          <para lang="ru">
-            Две цветных кнопки позволяют указать исходный цветовой диапазон.
-            При нажатии этих кнопок появляется диалог
-            <link linkend="gimp-color-dialog">Выбора цвета</link>.
-          </para>
         </listitem>
       </varlistentry>
-
       <varlistentry>
-        <term lang="en">Destination Color Range</term>
-        <term lang="cs">Cílový barevný rozsah</term>
-        <term lang="de">Ziel-Farbbereich</term>
-        <term lang="es">Rango de color destino</term>
-        <term lang="fr">Intervalle de couleurs de destination</term>
-        <term lang="it">Gamma di colore destinazione</term>
-        <term lang="lt">Paskirties spalvų rėžis</term>
-        <term lang="no">Til dette fargeområdet</term>
-        <term lang="ru">Итоговый цветовой диапазон</term>
-
+        <term>Destination Color Range</term>
         <listitem>
-          <para lang="en">
+          <para>
             The two <emphasis>Color Swatch Boxes</emphasis> allow you to
             define <guilabel>From</guilabel> and <guilabel>To</guilabel>
             limits of destination color range. When you click on a box, you
             call the GIMP's
             <link linkend="gimp-color-dialog">Color selector</link>.
-          </para>
-          <para lang="cs">
-            Dvě barevná pole umožňují nastavit hraniční barvy cílového
-            rozsahu. Kliknutím na pole se otevře standardní
-            <link linkend="gimp-color-dialog">volič barev</link>.
-          </para>
-          <para lang="de">
-            Entsprechend wie oben, nur für den zweiten Farbbereich, der den
-            Quellbereich ersetzt. Voreingestellte Farben sind hier Schwarz
-            und Weiß.
-          </para>
-          <para lang="es">
-            Las dos <guilabel>Cajas de color</guilabel> le permiten definir
-            los límites de <guilabel>Origen</guilabel> y
-            <guilabel>Destino</guilabel> del rango de color destino. Cuando
-            pulsa sobre una caja, se abre el
-            <!--FIX es link linkend="gimp-color-dialog"-->Selector de color
-            <!--/link--> con el
-            que puede seleccionar otros colores.
-          </para>
-          <para lang="fr">
-            Vous disposez de deux <emphasis>Boîtes à échantillon</emphasis>
-            montrant les couleurs limite <guilabel>Depuis</guilabel> et
-             <guilabel>A</guilabel> de l'intervalle destination. Quand vous
-            cliquez sur une boîte, vous faites apparaître le
-            <link linkend="gimp-color-dialog">Sélecteur de couleur</link>
-            de GIMP.
-          </para>
-          <para lang="it">
-            I due pulsanti secchiello di colore
-            <guilabel>Da</guilabel> e <guilabel>A</guilabel> consentono
-            di definire gli estremi della gamma di colore. Cliccando su un
-            ciascun pulsante secchiello si richiama il
-            <link linkend="gimp-color-dialog">Selettore dei colori</link> di
-            GIMP.
-          </para>
-          <para lang="lt">
-            Šie du <guilabel>Spalvų pavyzdžių laukeliai</guilabel> leidžia
-            nurodyti paskirties spalvų rėžio ribas <guilabel>Nuo</guilabel>
-            ir <guilabel>Iki</guilabel>. Spustelėjus laukelį bus atvertas
-            programos <acronym>GIMP</acronym>
-            <link linkend="gimp-color-dialog">Spalvų parinkiklis</link>,
-            kuriuo galėsite pasirinkti kitas spalvas.
-          </para>
-          <para lang="no">
-            Desse to fargeboksane verkar som omtalt ovanfor, men set
-            grensene for fargeområdet i målbiletet.
-          </para>
-          <para lang="ru">
-            Две цветных кнопки позволяют указать диапазон итоговых цветов.
-            При нажатии этих кнопок появляется диалог
-            <link linkend="gimp-color-dialog">Выбора цвета</link>.
           </para>
         </listitem>
       </varlistentry>
