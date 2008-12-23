@@ -93,7 +93,7 @@ dir_predicates =        \
 
 # lists of source (XML) files and source directories
 XML_DIRS  = $(shell cd $(srcdir) && find $(xmldir) $(dir_predicates))
-XML_FILES = $(shell cd $(top_srcdir) && find src $(src_find_predicates)) \
+XML_FILES = $(shell cd $(srcdir) && find $(xmldir) $(src_find_predicates)) \
 	    $(AUTHORS_DOCBOOK_XML)
 # list of source po template files
 POT_FILES = $(XML_FILES:$(xmldir)/%.xml=$(potdir)/%.pot)
@@ -131,7 +131,7 @@ EXTRA_DIST = \
 # list of authors and contributors
 AUTHORS_STYLESHEET_XML = stylesheets/authors.xml
 # automatically generated authors section (DocBook)
-AUTHORS_DOCBOOK_XML = $(top_srcdir)/src/preface/authors.xml
+AUTHORS_DOCBOOK_XML = $(xmldir)/preface/authors.xml
 
 # TODO?: rename "plainhtml.xsl" to "html.xsl" and use ...
 # ... HTML_STYLESHEETS = stylesheets/html*.xsl
@@ -676,7 +676,6 @@ dist-hook: dist-copy-images
 
 ##  Note that number of images is *huge*, and if we stick image files in
 ##  EXTRA_DIST we get an "Argument list too long" error. So we handle it here.
-
 
 dist-copy-images:
 	$(cmd) test -d "$(top_srcdir)/images" && test -d "$(distdir)"
