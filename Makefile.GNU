@@ -86,7 +86,7 @@ HTML_STYLESHEETS = stylesheets/html*.xsl
 # list of authors and contributors
 AUTHORS_STYLESHEET_XML = stylesheets/authors.xml
 # automatically generated authors section (DocBook)
-AUTHORS_DOCBOOK_XML = src/preface/authors.xml
+AUTHORS_DOCBOOK_XML = $(xmldir)/preface/authors.xml
 
 # To talk or not to talk, that is the question!
 VERBOSE ?= 1
@@ -170,6 +170,14 @@ po2xml = ($(XML2PO) --po-file=$(2) --language=$(3) --output='-' $(1) \
 endif
 
 
+#--------------------------------------------------------------#
+#       Helper functions                                       #
+#--------------------------------------------------------------#
+
+make_target_dir = \
+	f=$(1); d=$${f%/*}; test -d $$d || $(mkdir_p) $$d;
+
+
 ########################################################################
 ####            Main targets                                        ####
 ########################################################################
@@ -199,7 +207,7 @@ help:
 
 # xmldir/path/to/file.xml --> potdir/path/to/file.pot
 $(POT_FILES): $(potdir)/%.pot : $(xmldir)/%.xml
-	$(cmd) f=$@; d=$${f%/*}; test -d $$d || $(mkdir_p) $$d
+	$(cmd) $(call make_target_dir,$@)
 	$(msg) "[POT] $@"
 	$(cmd) if test -s $<; then $(call xml2pot,$<,$@); else touch $@; fi
 
@@ -216,7 +224,7 @@ potfiles: $(POT_FILES)
 define MAKE_PO_RULES
 $(1)_PO_FILES = $$(patsubst $$(potdir)/%.pot, $$(podir)/$(1)/%.po, $$(POT_FILES))
 $$($(1)_PO_FILES): $$(podir)/$(1)/%.po : $$(potdir)/%.pot
-	$$(cmd) f=$$@; d=$$$${f%/*}; test -d $$$$d || $$(mkdir_p) $$$$d
+	$$(cmd) $$(call make_target_dir,$$@)
 	$$(msg) "[PO]  $$@"
 	$$(cmd) if test -s $$<; then $$(call pot2po,$$<,$(1),$$@); else touch $$@; fi
 # Debugging
@@ -242,7 +250,7 @@ po-en: ;
 define MAKE_XML_RULES
 $(1)_XML_FILES = $$(XML_FILES:$$(xmldir)/%=$$(xmlpodir)/$(1)/%)
 $$($(1)_XML_FILES): $$(xmlpodir)/$(1)/%.xml : $$(podir)/$(1)/%.po
-	$$(cmd) f=$$@; d=$$$${f%/*}; test -d $$$$d || $$(mkdir_p) $$$$d
+	$$(cmd) $$(call make_target_dir,$$@)
 	$$(msg) "[XML] $$@"
 	$$(cmd) if test -s $$(@:$$(xmlpodir)/$(1)/%=$$(xmldir)/%); then \
 		$$(call po2xml,$$(@:$$(xmlpodir)/$(1)/%=$$(xmldir)/%),$$<,$(1),$$@); \
@@ -435,7 +443,6 @@ odf-%: $(odfdir)/%.odt ;
 
 odf/%.odt: $(xmlpodir)/%/gimp-alldocs.xml
 	$(cmd) test -d $(odfdir) || $(mkdir_p) $(odfdir)
-	$(cmd) $(mkdir_p) odf
 	$(cmd) $(DOCBOOK2ODF) $(DOCBOOK2ODFFLAGS) \
 	    --debug -v \
 	    --output-dir=`pwd` \
@@ -467,6 +474,7 @@ AUTHORS: $(AUTHORS_STYLESHEET_XML) stylesheets/authors_text.xsl $(AUTHORS_DOCBOO
 	
 $(AUTHORS_DOCBOOK_XML): $(AUTHORS_STYLESHEET_XML) stylesheets/authors_*.xsl
 	$(msg) "**** Making $@ ... "
+	$(cmd) $(call make_target_dir,$@)
 	$(cmd) $(XSLTPROC) \
 	  $(XSLTFLAGS) $(XSLTEXTRAFLAGS) \
 	  $(srcdir)/stylesheets/authors_docbook.xsl \

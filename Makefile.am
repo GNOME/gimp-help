@@ -194,6 +194,7 @@ AUTHORS: $(AUTHORS_STYLESHEET_XML) stylesheets/authors_text.xsl $(AUTHORS_DOCBOO
 	
 $(AUTHORS_DOCBOOK_XML): $(AUTHORS_STYLESHEET_XML) stylesheets/authors_*.xsl
 	@echo "Creating $@"
+	$(cmd) f=$@; d=$${f%/*}; test -d $$d || $(mkdir_p) $$d
 	$(cmd) $(XSLTPROC) \
 	  $(XSLTFLAGS) \
 	  $(srcdir)/stylesheets/authors_docbook.xsl \
@@ -464,7 +465,6 @@ odf-%: $(odfdir)/%.odt ;
 
 $(odfdir)/%.odt: $(xmlpodir)/%/gimp-alldocs.xml
 	$(cmd) test -d $(odfdir) || $(mkdir_p) $(odfdir)
-	$(cmd) $(mkdir_p) odf
 	$(cmd) $(DOCBOOK2ODF) $(DOCBOOK2ODFFLAGS) \
 	    --debug -v \
 	    --output-dir=`pwd` \
