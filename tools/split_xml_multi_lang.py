@@ -70,7 +70,8 @@ misc       = ('member', 'releaseinfo', 'isbn', 'author', 'copyright',
               'publisher', 'abbrev', 'toc', 'index')
 
 # these tags are considered FINAL if they contain text
-text_final_nodes = ('title', 'term', 'segtitle', 'subtitle', 'glossterm')
+text_final_nodes = ('title', 'term', 'segtitle', 'subtitle', 'glossterm') + \
+                   paras  # TODO: check this
 
 non_final_nodes = sections + sectinfos + notes + containers + \
                   nobjects + lists + tables + items
@@ -487,6 +488,10 @@ class MultiLangDoc(object):
         processed recursively until a final node is reached.
         """
         name = node.nodeName
+
+        # TODO: check this
+        if name in ('para',):
+            return self.has_nonempty_text(node)
 
         # Simple(?) cases
         if name in non_final_nodes:

@@ -48,7 +48,7 @@ for f in *.diff *.diff.gz *.diff.bz2; do
         *.diff.bz2) bzip2 -dc $f;;
         *.diff.gz)  gzip  -dc $f;;
         *.diff)     cat $f;;
-    esac | patch --verbose -p0
+    esac | patch --verbose -p0 --force
 done
 echo
 
@@ -70,7 +70,7 @@ echo
 # split
 echo "Splitting the source XML:"
 echo "Warning: the following files and directories will be skipped:"
-echo "$exclude_patterns" | sed -e 's/ /, /g; s/^/    /' >&2
+echo "$exclude_patterns" | sed -e 's/ /, /g; s/^/    /'
 time \
 eval find $srcdir $exclude -o -name '*.xml' -print |
 while read srcfile
@@ -141,6 +141,10 @@ echo "Reformatting gimp.xml files:"
 for lang in $LINGUAS; do
     test "$lang" != "en" || continue
     xmlfile=$xmldir/$lang/gimp.xml
+    test -e $xmlfile || { 
+        echo >&2 "ERROR: $xmlfile missing."
+        continue
+    }
     xmllint --nonet --format --output ${xmlfile%.xml}.xmllint $xmlfile
     if test -s ${xmlfile%.xml}.xmllint && \
        mv -f ${xmlfile%.xml}.xmllint $xmlfile
@@ -155,7 +159,7 @@ echo
 test "$1" = "xmllint" && exit 0
 
 # pot
-echo "Creating POT files"
+echo "Creating POT files:"
 time \
 find $srcdir -name '*.xml' |
 while read srcfile
@@ -164,7 +168,7 @@ do
     potfile=${potfile%.xml}.pot
     dest=${potfile%/*}
     test -d "$dest" || mkdir -p "$dest"
-    echo >&2 $potfile
+    echo $potfile
     #$XML2PO --output="$potfile" "$srcfile" 2>&1 | grep -vE 'image file .* not found'
     ($XML2PO --output='-' "$srcfile" | msguniq | msgcat -w80 - > "$potfile") 2>&1 | grep -vE 'image file .* not found'
 done
@@ -173,8 +177,9 @@ echo
 test "$1" = "pot" && exit 0
 
 # po
-echo "Creating PO files"
+echo "Creating PO files:"
 time \
+(
 find $srcdir -name '*.xml' |
 while read srcfile
 do
@@ -184,7 +189,7 @@ do
         pofile=${podir}/$lang/${base%.xml}.po
         dest=${pofile%/*}
         test -d "$dest" || mkdir -p "$dest"
-        echo >&2 $pofile
+        echo $pofile
         #$XML2PO --language $lang --reuse=$xmlfile --output="$pofile" \
         #        "$srcfile" 2>&1 | grep -vE 'image file .* not found'
         ($XML2PO --language $lang --reuse=$xmlfile --output='-' \
@@ -192,17 +197,18 @@ do
         | grep -vE 'image file .* not found'
     done
 done
-echo
 
 for lang in $LINGUAS; do
     if test -f $oldsrcdir/key-reference-$lang.xml; then
-        echo >&2 "$podir/$lang/key-reference.po"
+        test -e $podir/$lang/key-reference.po &&
         cp -vf $podir/$lang/key-reference.po "$podir/$lang/key-reference.po~"
+        echo "$podir/$lang/key-reference.po"
         $XML2PO --language $lang --reuse=$oldsrcdir/key-reference-$lang.xml \
             --output='-' "$srcdir/key-reference.xml" \
         | msguniq --use-first | msgcat -w80 - > "$podir/$lang/key-reference.po"
     fi
 done
+)
 echo
 
 # check
