@@ -47,7 +47,7 @@ NONRECURSIVE = False
 sections   = ('sect1', 'sect2', 'sect3', 'sect4', 'section', 'bibliodiv',
               'book', 'part', 'chapter', 'preface', 'legalnotice', 'glossdiv')
 sectinfos  = ('sect2info', 'sect1info', 'sect3info', 'sect4info',
-              'bookinfo', 'appendixinfo')
+              'bookinfo', 'appendixinfo', 'releaseinfo')
 notes      = ('warning', 'caution', 'important', 'tip', 'note')
 containers = ('figure', 'caption', 'revhistory', 'formalpara', 'equation',
               'informalequation', 'informalfigure', 'example', 'indexterm')
@@ -63,10 +63,11 @@ items      = ('varlistentry', 'listitem', 'seglistitem',
 paras      = ('para', 'simpara', 'programlisting', 'blockquote')
 leafs      = ('phrase', 'revision', 'graphic', 'alt', 'seg',
               'anchor', 'primary', 'secondary', 'tertiary')
+links      = ('ulink',)
 fobjects   = ('imageobject',)
 fgui       = ('guiicon', 'guimenuitem')
 keys       = ('keycap', 'keycombo')
-misc       = ('member', 'releaseinfo', 'isbn', 'author', 'copyright',
+misc       = ('member', 'isbn', 'author', 'copyright',
               'publisher', 'abbrev', 'toc', 'index')
 
 # these tags are considered FINAL if they contain text
@@ -75,7 +76,7 @@ text_final_nodes = ('title', 'term', 'segtitle', 'subtitle', 'glossterm') + \
 
 non_final_nodes = sections + sectinfos + notes + containers + \
                   nobjects + lists + tables + items
-final_nodes     = paras + leafs + fobjects + fgui + keys + misc
+final_nodes     = paras + leafs + links + fobjects + fgui + keys + misc
 
 
 # >>>>>>>>>>>>>>>> not used >>>>>>>>>>>>>>>>
@@ -260,7 +261,7 @@ class MultiLangDoc(object):
                 if child.nodeValue.strip():
                     # we should never be here, the (parent) node
                     # should be final then...
-                    logger.warn("TEXT in %s: <%s>" % \
+                    self.logger.warn("TEXT in %s: <%s>" % \
                         (elem.nodeName, child.nodeValue.strip()))
                     # XXX: better just skip this text?
                     for lang in self.languages:
