@@ -242,6 +242,11 @@ update-po-%: po-%
 # Special case 'en': do nothing :-)
 po-en: ;
 
+# Print translation statistics
+status-%: po-status-% ;
+po-status-%:
+	perl tools/get_po_status.pl $(podir)/$*
+
 
 ########################################################################
 ####            Make XML files:  PO --> XML(non-en)                 ####
