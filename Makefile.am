@@ -185,7 +185,7 @@ logdir   = log
 ########################################################################
 
 AUTHORS: $(AUTHORS_STYLESHEET_XML) stylesheets/authors_text.xsl $(AUTHORS_DOCBOOK_XML)
-	@echo "Creating $@"
+	$(msg) "[DOC] $@"
 	$(cmd) $(XSLTPROC) \
 	  $(XSLTFLAGS) \
 	  $(srcdir)/stylesheets/authors_text.xsl \
@@ -193,7 +193,7 @@ AUTHORS: $(AUTHORS_STYLESHEET_XML) stylesheets/authors_text.xsl $(AUTHORS_DOCBOO
 	  > $@
 	
 $(AUTHORS_DOCBOOK_XML): $(AUTHORS_STYLESHEET_XML) stylesheets/authors_*.xsl
-	@echo "Creating $@"
+	$(msg) "[SRC] $@"
 	$(cmd) f=$@; d=$${f%/*}; test -d $$d || $(mkdir_p) $$d
 	$(cmd) $(XSLTPROC) \
 	  $(XSLTFLAGS) \
@@ -341,7 +341,7 @@ $(xmlpodir)/en: $(XML_FILES)
 	$(cmd) src_dir=$$(cd $(srcdir)/$(xmldir) && pwd); \
 	poxml_dir=$(xmlpodir); \
 	test -d $${poxml_dir} || $(mkdir_p) $${poxml_dir}; \
-	test -d $${poxml_dir}/en || $(LN_S) $(abs_builddir)/$${src_dir} $${poxml_dir}/en; \
+	test -d $${poxml_dir}/en || $(LN_S) $${src_dir} $${poxml_dir}/en; \
 	touch $@
 
 # Special case: en
@@ -356,15 +356,15 @@ validate: validate-en ;
 validate-%: xmllint-% ;
 xmllint: xmllint-en ;
 
-xmllint-%: $(logdir)/%-xmllint.log ;
+xmllint-%: $(logdir)/%-xmllint.log
 	@echo >&2 "Validating '$*' not implemented."
 
-xmllint-en: $(logdir)/en-xmllint.log ;
+xmllint-en: $(logdir)/en-xmllint.log $(xmlpodir)/en
 	$(cmd) test -s $< && cat $< || echo "No errors."
 
 $(logdir)/en-xmllint.log: $(logdir) $(XML_FILES)
 	$(cmd) if type $(XMLLINT) >/dev/null 2>&1; then \
-		echo "*** Validating XML for 'en' ... "; \
+		echo "*** Validating XML (en) ... "; \
 		$(XMLLINT) $(XMLLINTFLAGS) --xinclude $(xmlpodir)/en/gimp.xml \
 		| sed -e 's,xmlns:xi="http://www.w3.org/2001/XInclude",,' \
 		| $(XMLLINT) $(XMLLINTFLAGS) --nonet --valid --noout - 2>$@ \
@@ -391,7 +391,6 @@ $(htmldir)/%/index.html: $(xmlpodir)/% $(HTML_STYLESHEETS)
 	$(msg) "*** Making html for $* ... "
 	$(cmd) rm -rf $(htmldir)/$*
 	$(cmd) $(mkdir_p) $(htmldir)/$*
-	$(cmd) test -h $(htmldir)/images || $(LN_S) ../images $(htmldir)/
 
 	$(cmd) test "$*" = "no" && lang="nb" || lang="$*"; \
 	$(XSLTPROC) \
@@ -409,6 +408,11 @@ $(htmldir)/%/index.html: $(xmlpodir)/% $(HTML_STYLESHEETS)
 	$(cmd) for file in $(srcdir)/stylesheets/$*/*.css; do \
 		if [ -f $$file ]; then cp -fp $$file $(htmldir)/$*; fi; \
 	done
+
+# TODO: new image files structure
+$(htmldir)/images:
+	$(msg) "Making $@ ..."
+	$(cmd) test -d $(htmldir)/../images && $(LN_S) ../images $@
 
 # The xrefs file is a side effect of the HTML build
 $(htmldir)/%/gimp-xrefs.xml: $(htmldir)/%/index.html
@@ -490,25 +494,11 @@ odf odf-%:
 endif
 
 
-## TODO OR NOT TODO ## #### HTML preview
-
-## TODO OR NOT TODO ## preview: html index
-## TODO OR NOT TODO ## 	rm -rf preview
-## TODO OR NOT TODO ## 	$(mkdir_p) preview
-## TODO OR NOT TODO ## 	cd preview && $(LN_S) ../html/* .
-## TODO OR NOT TODO ## 	cd preview && $(LN_S) $(abs_top_srcdir)/images .
-
-## TODO OR NOT TODO ## preview-%: html/%/index.html html/%/gimp-help.xml
-## TODO OR NOT TODO ## 	rm -rf preview-$*
-## TODO OR NOT TODO ## 	$(mkdir_p) preview-$*
-## TODO OR NOT TODO ## 	cd preview-$* && $(LN_S) ../html/$* .
-## TODO OR NOT TODO ## 	cd preview-$* && $(LN_S) $(abs_top_srcdir)/images .
-
 ########################################################################
 ####            HTML draft (single page preview)                    ####
 ########################################################################
 
-%.draft: %.xml stylesheets/drafthtml.xsl
+%.draft: %.xml stylesheets/drafthtml.xsl $(htmldir)/images
 	@echo "Making draft page(s), ignore any XSLT complaints:"
 	$(cmd) id=`sed -e 's/.*id=.//; tmatch; d; :match; s/["'"'"'].*//; q' $<`; \
 	test -n "$$id" || id=noname; \

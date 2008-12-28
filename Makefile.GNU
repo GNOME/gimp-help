@@ -274,12 +274,11 @@ $(foreach LANG,$(PO_LANGS),$(eval $(call MAKE_XML_RULES,$(LANG))))
 en_XML_FILES = $(XML_FILES:$(xmldir)/%=$(xmlpodir)/en/%)
 $(en_XML_FILES): $(xmlpodir)/en ;
 
-# TODO: make relative link rather than absolute link(?)
-$(xmlpodir)/en: $(XML_FILES)
+# TODO: check: prerequisite, abs/rel link, touch
+$(xmlpodir)/en: $(xmldir)
 	$(cmd) src_dir=$$(cd $(srcdir)/$(xmldir) && pwd); \
-	poxml_dir=$(builddir)/$(xmlpodir); \
-	test -d $${poxml_dir} || $(mkdir_p) $${poxml_dir}; \
-	test -d $${poxml_dir}/en || $(ln_s) $${src_dir} $${poxml_dir}/en; \
+	test -d $(xmlpodir) || $(mkdir_p) $(xmlpodir); \
+	test -d $@ || $(ln_s) $${src_dir} $@; \
 	touch $@
 
 
@@ -297,15 +296,15 @@ validate: validate-en ;
 validate-%: xmllint-% ;
 xmllint: xmllint-en ;
 
-xmllint-%: $(logdir)/%-xmllint.log ;
+xmllint-%: $(logdir)/%-xmllint.log
 	@echo >&2 "Validating '$*' not implemented."
 
-xmllint-en: $(logdir)/en-xmllint.log ;
+xmllint-en: $(logdir)/en-xmllint.log $(xmlpodir)/en
 	$(cmd) test -s $< && cat $< || echo "No errors."
 
 $(logdir)/en-xmllint.log: $(logdir) $(XML_FILES)
 	$(cmd) if type $(XMLLINT) >/dev/null 2>&1; then \
-		echo "*** Validating XML for 'en' ... "; \
+		echo "*** Validating XML (en) ... "; \
 		$(XMLLINT) $(XMLLINTFLAGS) --xinclude $(xmlpodir)/en/gimp.xml \
 		| sed -e 's,xmlns:xi="http://www.w3.org/2001/XInclude",,' \
 		| $(XMLLINT) $(XMLLINTFLAGS) --nonet --valid --noout - 2>$@ \
@@ -327,11 +326,10 @@ html: $(foreach lang,$(LANGUAGES),html-$(lang)) ;
 # html-% -> index-% -> html/%/gimp-help.xml -> html/%/gimp-xrefs.xml -> html/%/index.html
 html-%: index-% ;
 
-$(htmldir)/%/index.html: $(xmlpodir)/% $(HTML_STYLESHEETS)
+$(htmldir)/%/index.html: $(xmlpodir)/% $(HTML_STYLESHEETS) $(htmldir)/images
 	$(msg) "*** Making html for $* ... "
 	$(cmd) rm -rf $(htmldir)/$*
 	$(cmd) $(mkdir_p) $(htmldir)/$*
-	$(cmd) test -h $(htmldir)/images || $(ln_s) ../images $(htmldir)/
 
 	$(cmd) $(XSLTPROC) \
 	  $(XSLTFLAGS) $(XSLTEXTRAFLAGS) \
@@ -348,6 +346,11 @@ $(htmldir)/%/index.html: $(xmlpodir)/% $(HTML_STYLESHEETS)
 	$(cmd) for file in $(srcdir)/stylesheets/$*/*.css; do \
 		if [ -f $$file ]; then cp -fp $$file $(htmldir)/$*; fi; \
 	done
+
+# TODO: new image files structure
+$(htmldir)/images:
+	$(msg) "Making $@ ..."
+	$(cmd) test -d $(htmldir)/../images && $(ln_s) ../images $@
 
 # The xrefs file is a side effect of the HTML build
 $(htmldir)/%/gimp-xrefs.xml: $(htmldir)/%/index.html
@@ -374,7 +377,7 @@ $(htmldir)/%/gimp-help.xml: $(htmldir)/%/gimp-xrefs.xml stylesheets/makeindex.xs
 ####            HTML draft (single page preview)                    ####
 ########################################################################
 
-%.draft: %.xml stylesheets/drafthtml.xsl
+%.draft: %.xml stylesheets/drafthtml.xsl $(htmldir)/images
 	@echo "Making draft page(s), ignore any XSLT complaints:"
 	$(cmd) id=`sed -e 's/.*id=.//; tmatch; d; :match; s/["'"'"'].*//; q' $<`; \
 	test -n "$$id" || id=noname; \
@@ -465,7 +468,7 @@ endif
 ########################################################################
 
 AUTHORS: $(AUTHORS_STYLESHEET_XML) stylesheets/authors_text.xsl $(AUTHORS_DOCBOOK_XML)
-	$(msg) "**** Making $@ ... "
+	$(msg) "[DOC] $@"
 	$(cmd) $(XSLTPROC) \
 	  $(XSLTFLAGS) $(XSLTEXTRAFLAGS) \
 	  $(srcdir)/stylesheets/authors_text.xsl \
@@ -473,7 +476,7 @@ AUTHORS: $(AUTHORS_STYLESHEET_XML) stylesheets/authors_text.xsl $(AUTHORS_DOCBOO
 	  > $@
 	
 $(AUTHORS_DOCBOOK_XML): $(AUTHORS_STYLESHEET_XML) stylesheets/authors_*.xsl
-	$(msg) "**** Making $@ ... "
+	$(msg) "[SRC] $@"
 	$(cmd) $(call make_target_dir,$@)
 	$(cmd) $(XSLTPROC) \
 	  $(XSLTFLAGS) $(XSLTEXTRAFLAGS) \
