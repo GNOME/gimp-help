@@ -244,8 +244,14 @@ po-en: ;
 
 # Print translation statistics
 status-%: po-status-% ;
-po-status-%:
-	perl tools/get_po_status.pl $(podir)/$*
+po-status-%: po-%
+	$(cmd) perl tools/get_po_status.pl $(podir)/$*
+
+status-all: po-status-all ;
+po-status-all:
+	$(cmd) for podir in $(podir)/*; do \
+		perl tools/get_po_status.pl --nofiles --nosummary $${podir} || break; \
+	done
 
 
 ########################################################################

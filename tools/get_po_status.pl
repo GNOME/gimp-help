@@ -48,16 +48,50 @@ use strict;
 use Getopt::Long;
 use File::Find;
 
-
 my $PROG = $0;
+my $VERSION = 0.01;
+
+my %Languages = (
+	de => "German",
+	es => "Spanish",
+	fi => "Finnish",
+	fr => "French",
+	hr => "Croatian",
+	it => "Italian",
+	ko => "Korean",
+	lt => "Lithuanian",
+	nb => "Norwegian",
+	no => "Norwegian",
+	nl => "Dutch",
+	pl => "Polish",
+	ru => "Russian",
+	sv => "Swedish",
+);
 
 =head1 OPTIONS
 
 =over 4
 
+=item B<--lang> I<language>
+
+Language code ("de", "es", etc.) or language name.
+
+=item B<--files> | B<--nofiles>
+
+Whether or not to print file statistics; defaults to "yes".
+
 =item B<--todo>
 
 Skip files without untranslated or fuzzy messages.
+
+=item B<--summary> | B<--nosummary>
+
+Whether or not to print a short summary; defaults to "yes".
+
+=item B<--progress> | B<--noprogress>
+
+Whether or not to print a kind of progress bar, visualizing
+the translation process; defaults to "yes".
 
 =back
 
@@ -66,18 +100,30 @@ Skip files without untranslated or fuzzy messages.
 my $Usage =<<EOF;
 Usage: $PROG [OPTIONS] PODIR
 Options:
-	--todo    Skip files without untranslated or fuzzy messages.
+	--lang=LANG     Language code (e.g. "de" for German)
+	--[no]files     Whether or not to print file statistics [default: yes]
+	--todo          Skip files without untranslated or fuzzy messages
+	--[no]summary   Whether or not to print a summary [default: yes]
+	--[no]progress  Whether or not to print a progress bar [default: yes]
 EOF
 
 # Command-line options (default values)
+my $Language        = undef;
+my $Print_file_list = 1;
 my $Skip_translated = 0;
+my $Print_summary   = 1;
+my $Print_progress  = 1;
 
-# Read ccommand-line options
+# Read command-line options
 GetOptions(
-	"todo" => \$Skip_translated
+	"lang=s"    => \$Language,
+	"files!"    => \$Print_file_list,
+	"todo"      => \$Skip_translated,
+	"summary!"  => \$Print_summary,
+	"progress!" => \$Print_progress,
 ) or die "$Usage\n";
 
-# Read ccommand-line argument
+# Read command-line argument
 my $Podir;
 if (scalar(@ARGV) == 1) {
 	$Podir  = $ARGV[0];
@@ -86,6 +132,9 @@ if (scalar(@ARGV) == 1) {
 } else {
 	 die "ERROR: Missing argument\n\n" . "$Usage\n";
 }
+
+($Language = $Podir) =~ s|.*/([a-z]{2}(_[A-Z]{2})?)/?|$1| unless $Language;
+$Language = $Languages{$Language} if defined($Languages{$Language});
 
 # Search po files
 my @Pofiles = ();
@@ -140,40 +189,44 @@ sub print_file_statistics
 	$untranslated += $u;
 	$fuzzy += $f;
 	printf "%+4d  ~%-2d -%d\t%s\n", $t, $f, $u, $n
-		unless $Skip_translated && ($u + $f) == 0;
+		unless !$Print_file_list ||
+		       $Skip_translated && ($u + $f) == 0;
 }
 
 # ------------------------------------------------------
 sub print_summary
 # ------------------------------------------------------
 {
-my $total = $translated + $fuzzy + $untranslated;
+	my ($translated, $fuzzy, $untranslated) = @_;
+	my $total = $translated + $fuzzy + $untranslated;
 
-	print STDERR
-	      "\n",
-	      "total: ", $total, " strings in ",
-	      scalar @Pofiles, " files:\n    ",
-	      "translated=", $translated, " ",
-	      "fuzzy=", $fuzzy, " ",
-	      "untranslated=", $untranslated, " ",
-	      "\n";
+        if ($Print_summary) {
+		print "\n" if $Print_file_list;
+		print
+		    "total: ", $total, " strings in ",
+		    scalar @Pofiles, " files:\n    ",
+		    "translated=", $translated, " ",
+		    "fuzzy=", $fuzzy, " ",
+		    "untranslated=", $untranslated, " ",
+		    "\n";
+	}
 
-	my $progress = int(($translated * 100 / $total) + 0.5);
-	if ($progress == 100 && $translated < $total) { $progress = 99 }
-	my $width = 50;
-	$translated   = int(  $translated * $width / $total);
-	$untranslated = int($untranslated * $width / $total);
-	$fuzzy        = int(       $fuzzy * $width / $total);
-	($translated + $untranslated + $fuzzy == $width) or ++$untranslated;
+	if ($Print_progress) {
+		my $progress = int(($translated * 100 / $total) + 0.5);
+		if ($progress == 100 && $translated < $total) { $progress = 99 }
+		my $width = 50;
+		$translated   = int($translated * $width / $total);
+		$fuzzy        = int(     $fuzzy * $width / $total);
+		$untranslated = $width - ($translated + $fuzzy);
 
-	print STDERR
-	      "\n", "[",
-	      ">" x $translated,
-	      "~" x $fuzzy,
-	      "_" x $untranslated,
-	      "]", "  ",
-	      $progress, "%",
-	      "\n\n";
+		print "\n" if $Print_file_list || $Print_summary;
+		printf "[%s%s%s]  %2d%%  %s\n",
+		    ">" x $translated,
+		    "~" x $fuzzy,
+		    "_" x $untranslated,
+		    $progress,
+		    $Language;
+	}
 }
 
 
