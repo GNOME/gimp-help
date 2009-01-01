@@ -91,6 +91,11 @@ dir_predicates =        \
 	        -o          \
 	-type d -print
 
+# list of authors and contributors
+AUTHORS_STYLESHEET_XML = stylesheets/authors.xml
+# automatically generated authors section (DocBook)
+AUTHORS_DOCBOOK_XML = $(xmldir)/preface/authors.xml
+
 # lists of source (XML) files and source directories
 XML_DIRS  = $(shell cd $(srcdir) && find $(xmldir) $(dir_predicates))
 XML_FILES = $(shell cd $(srcdir) && find $(xmldir) $(src_find_predicates)) \
@@ -127,11 +132,6 @@ EXTRA_DIST = \
 	$(OTHER_CSS_FILES)		\
 	$(XML_FILES)			\
 	$(XSL_FILES)
-
-# list of authors and contributors
-AUTHORS_STYLESHEET_XML = stylesheets/authors.xml
-# automatically generated authors section (DocBook)
-AUTHORS_DOCBOOK_XML = $(xmldir)/preface/authors.xml
 
 # TODO?: rename "plainhtml.xsl" to "html.xsl" and use ...
 # ... HTML_STYLESHEETS = stylesheets/html*.xsl
@@ -187,7 +187,7 @@ logdir   = log
 AUTHORS: $(AUTHORS_STYLESHEET_XML) stylesheets/authors_text.xsl $(AUTHORS_DOCBOOK_XML)
 	$(msg) "[DOC] $@"
 	$(cmd) $(XSLTPROC) \
-	  $(XSLTFLAGS) \
+	  $(XSLTFLAGS) $(XSLTEXTRAFLAGS) \
 	  $(srcdir)/stylesheets/authors_text.xsl \
 	  $< \
 	  > $@
@@ -196,7 +196,7 @@ $(AUTHORS_DOCBOOK_XML): $(AUTHORS_STYLESHEET_XML) stylesheets/authors_*.xsl
 	$(msg) "[SRC] $@"
 	$(cmd) f=$@; d=$${f%/*}; test -d $$d || $(mkdir_p) $$d
 	$(cmd) $(XSLTPROC) \
-	  $(XSLTFLAGS) \
+	  $(XSLTFLAGS) $(XSLTEXTRAFLAGS) \
 	  $(srcdir)/stylesheets/authors_docbook.xsl \
 	  $< \
 	  > $@
@@ -322,29 +322,25 @@ po-en: ;
 # HIDE FROM AUTOMAKE ## This is indirectly used as HTML prerequisite:
 # HIDE FROM AUTOMAKE #$$(xmlpodir)/$(1): $$($(1)_XML_FILES)
 # HIDE FROM AUTOMAKE #	$$(cmd) touch $$(xmlpodir)/$(1)
-# HIDE FROM AUTOMAKE ## Debugging
-# HIDE FROM AUTOMAKE #list-xmlfiles-$(1) list-xml-files-$(1) list-xml-$(1):
-# HIDE FROM AUTOMAKE #	@echo $$($(1)_XML_FILES)
 # HIDE FROM AUTOMAKE ## Targets suitable for command line
 # HIDE FROM AUTOMAKE #xml-$(1): $$($(1)_XML_FILES)
 # HIDE FROM AUTOMAKE #endef
-
 $(foreach LANG,$(PO_LANGS),$(eval $(call MAKE_XML_RULES,$(LANG))))
 
 # Special case: en
+
 # HIDE FROM AUTOMAKE #en_XML_FILES = $(XML_FILES:$(xmldir)/%=$(xmlpodir)/en/%)
-# TODO: check this
+# TODO: check: prerequisite, preface/authors.xml
 $(en_XML_FILES): $(xmlpodir)/en ;
 
-# TODO: make relative link rather than absolute link(?)
+# TODO: check: prerequisite, abs/rel link, touch
 $(xmlpodir)/en: $(XML_FILES)
 	$(cmd) src_dir=$$(cd $(srcdir)/$(xmldir) && pwd); \
-	poxml_dir=$(xmlpodir); \
-	test -d $${poxml_dir} || $(mkdir_p) $${poxml_dir}; \
-	test -d $${poxml_dir}/en || $(LN_S) $${src_dir} $${poxml_dir}/en; \
+	test -d $(xmlpodir) || $(mkdir_p) $(xmlpodir); \
+	test -d $@ || $(LN_S) $${src_dir} $@; \
 	touch $@
 
-# Special case: en
+# Target suitable for command line
 xml-en: $(xmlpodir)/en ;
 
 
@@ -354,24 +350,30 @@ xml-en: $(xmlpodir)/en ;
 
 validate: validate-en ;
 validate-%: xmllint-% ;
+
 xmllint: xmllint-en ;
-
 xmllint-%: $(logdir)/%-xmllint.log
-	@echo >&2 "Validating '$*' not implemented."
+	$(cmd) test -s $< && cat $<
 
-xmllint-en: $(logdir)/en-xmllint.log $(xmlpodir)/en
-	$(cmd) test -s $< && cat $< || echo "No errors."
-
-$(logdir)/en-xmllint.log: $(logdir) $(XML_FILES)
-	$(cmd) if type $(XMLLINT) >/dev/null 2>&1; then \
-		echo "*** Validating XML (en) ... "; \
-		$(XMLLINT) $(XMLLINTFLAGS) --xinclude $(xmlpodir)/en/gimp.xml \
-		| sed -e 's,xmlns:xi="http://www.w3.org/2001/XInclude",,' \
-		| $(XMLLINT) $(XMLLINTFLAGS) --nonet --valid --noout - 2>$@ \
-		|| true; \
-	else \
-		echo "*** Validating 'en' skipped: 'xmllint' not found."; \
-	fi
+# HIDE FROM AUTOMAKE #define MAKE_XMLLINT_RULES
+# HIDE FROM AUTOMAKE #$$(logdir)/$(1)-xmllint.log: $$(logdir) $$($(1)_XML_FILES)
+# HIDE FROM AUTOMAKE #	$$(cmd) if type $$(XMLLINT) >/dev/null 2>&1; then \
+# HIDE FROM AUTOMAKE #		echo "*** Validating XML ($(1)) ... "; \
+# HIDE FROM AUTOMAKE #		$$(XMLLINT) $$(XMLLINTFLAGS) --xinclude $$(xmlpodir)/$(1)/gimp.xml \
+# HIDE FROM AUTOMAKE #		| sed -e 's,xmlns:xi="http://www.w3.org/2001/XInclude",,' \
+# HIDE FROM AUTOMAKE #		| $$(XMLLINT) $$(XMLLINTFLAGS) --nonet --valid \
+# HIDE FROM AUTOMAKE #			--output $$(logdir)/$(1).xml - 2>$$(@); \
+# HIDE FROM AUTOMAKE #		if test -s $$(@); then \
+# HIDE FROM AUTOMAKE #			echo "(You will find log and xml files in $$(logdir)/.)"; \
+# HIDE FROM AUTOMAKE #		else \
+# HIDE FROM AUTOMAKE #			echo "No errors."; \
+# HIDE FROM AUTOMAKE #			rm -f  $$(logdir)/$(1).xml; \
+# HIDE FROM AUTOMAKE #		fi >> $$(@); \
+# HIDE FROM AUTOMAKE #	else \
+# HIDE FROM AUTOMAKE #		echo >&2 "*** Validating '$(1)' skipped: 'xmllint' not found."; \
+# HIDE FROM AUTOMAKE #	fi
+# HIDE FROM AUTOMAKE #endef
+$(foreach LANG,$(LANGUAGES),$(eval $(call MAKE_XMLLINT_RULES,$(LANG))))
 
 $(logdir):
 	$(cmd) mkdir $@ && test -w $@

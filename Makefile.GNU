@@ -65,6 +65,8 @@ logdir   = log
 xml_file_predicates =       \
 	-name '.svn' -prune \
 	          -o        \
+	-name '$(notdir $(AUTHORS_DOCBOOK_XML))' -prune \
+	          -o        \
 	-name '*.xml' -print
 
 dir_predicates =        \
@@ -74,19 +76,20 @@ dir_predicates =        \
 xml_dir_predicates = $(dir_predicates)
 pot_dir_predicates = $(dir_predicates)
 
+# List of authors and contributors
+AUTHORS_STYLESHEET_XML = stylesheets/authors.xml
+# Automatically generated authors section (DocBook)
+AUTHORS_DOCBOOK_XML = $(xmldir)/preface/authors.xml
+
 # Files & directories
-XML_FILES := $(shell cd $(srcdir) && find $(xmldir) $(xml_file_predicates))
 XML_DIRS  := $(shell cd $(srcdir) && find $(xmldir) $(dir_predicates))
+XML_FILES := $(shell cd $(srcdir) && find $(xmldir) $(xml_file_predicates)) \
+	    $(AUTHORS_DOCBOOK_XML)
 
 POT_FILES  = $(XML_FILES:$(xmldir)/%.xml=$(potdir)/%.pot)
 
 # XXX: requires that "plainhtml.xsl" has been renamed to "html.xsl"
 HTML_STYLESHEETS = stylesheets/html*.xsl
-
-# list of authors and contributors
-AUTHORS_STYLESHEET_XML = stylesheets/authors.xml
-# automatically generated authors section (DocBook)
-AUTHORS_DOCBOOK_XML = $(xmldir)/preface/authors.xml
 
 # To talk or not to talk, that is the question!
 VERBOSE ?= 1
@@ -266,7 +269,7 @@ $$($(1)_XML_FILES): $$(xmlpodir)/$(1)/%.xml : $$(podir)/$(1)/%.po
 	$$(cmd) if test -s $$(@:$$(xmlpodir)/$(1)/%=$$(xmldir)/%); then \
 		$$(call po2xml,$$(@:$$(xmlpodir)/$(1)/%=$$(xmldir)/%),$$<,$(1),$$@); \
 	else \
-		touch $$@; \
+		touch $$(@); \
 	fi
 # This is indirectly used as HTML prerequisite:
 $$(xmlpodir)/$(1): $$($(1)_XML_FILES)
@@ -277,25 +280,22 @@ list-xmlfiles-$(1) list-xml-files-$(1) list-xml-$(1):
 # Targets suitable for command line
 xml-$(1): $$($(1)_XML_FILES)
 endef
-
 $(foreach LANG,$(PO_LANGS),$(eval $(call MAKE_XML_RULES,$(LANG))))
 
 # Special case: en
-# TODO: check this
+
 en_XML_FILES = $(XML_FILES:$(xmldir)/%=$(xmlpodir)/en/%)
+# TODO: check: prerequisite, preface/authors.xml
 $(en_XML_FILES): $(xmlpodir)/en ;
 
 # TODO: check: prerequisite, abs/rel link, touch
-$(xmlpodir)/en: $(xmldir)
+$(xmlpodir)/en: $(XML_FILES)
 	$(cmd) src_dir=$$(cd $(srcdir)/$(xmldir) && pwd); \
 	test -d $(xmlpodir) || $(mkdir_p) $(xmlpodir); \
 	test -d $@ || $(ln_s) $${src_dir} $@; \
 	touch $@
 
-
-# Targets suitable for command line
-
-# Special case: en
+# Target suitable for command line
 xml-en: $(xmlpodir)/en ;
 
 
@@ -305,24 +305,30 @@ xml-en: $(xmlpodir)/en ;
 
 validate: validate-en ;
 validate-%: xmllint-% ;
+
 xmllint: xmllint-en ;
-
 xmllint-%: $(logdir)/%-xmllint.log
-	@echo >&2 "Validating '$*' not implemented."
+	$(cmd) test -s $< && cat $<
 
-xmllint-en: $(logdir)/en-xmllint.log $(xmlpodir)/en
-	$(cmd) test -s $< && cat $< || echo "No errors."
-
-$(logdir)/en-xmllint.log: $(logdir) $(XML_FILES)
-	$(cmd) if type $(XMLLINT) >/dev/null 2>&1; then \
-		echo "*** Validating XML (en) ... "; \
-		$(XMLLINT) $(XMLLINTFLAGS) --xinclude $(xmlpodir)/en/gimp.xml \
+define MAKE_XMLLINT_RULES
+$$(logdir)/$(1)-xmllint.log: $$(logdir) $$($(1)_XML_FILES)
+	$$(cmd) if type $$(XMLLINT) >/dev/null 2>&1; then \
+		echo "*** Validating XML ($(1)) ... "; \
+		$$(XMLLINT) $$(XMLLINTFLAGS) --xinclude $$(xmlpodir)/$(1)/gimp.xml \
 		| sed -e 's,xmlns:xi="http://www.w3.org/2001/XInclude",,' \
-		| $(XMLLINT) $(XMLLINTFLAGS) --nonet --valid --noout - 2>$@ \
-		|| true; \
+		| $$(XMLLINT) $$(XMLLINTFLAGS) --nonet --valid \
+			--output $$(logdir)/$(1).xml - 2>$$(@); \
+		if test -s $$(@); then \
+			echo "(You will find log and xml files in $$(logdir)/.)"; \
+		else \
+			echo "No errors."; \
+			rm -f  $$(logdir)/$(1).xml; \
+		fi >> $$(@); \
 	else \
-		echo "*** Validating 'en' skipped: 'xmllint' not found."; \
+		echo >&2 "*** Validating '$(1)' skipped: 'xmllint' not found."; \
 	fi
+endef
+$(foreach LANG,$(LANGUAGES),$(eval $(call MAKE_XMLLINT_RULES,$(LANG))))
 
 $(logdir):
 	$(cmd) mkdir $@ && test -w $@
@@ -464,7 +470,7 @@ odf/%.odt: $(xmlpodir)/%/gimp-alldocs.xml
 	    $< 
 
 $(xmlpodir)/%/gimp-alldocs.xml: $(xmlpodir)/%/gimp.xml
-	$(XMLLINT) $(XMLLINTFLAGS) --xinclude --output $@ $<
+	$(cmd) $(XMLLINT) $(XMLLINTFLAGS) --xinclude --output $@ $<
 
 else
 
