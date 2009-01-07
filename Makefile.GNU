@@ -28,13 +28,13 @@ XML2PO = tools/xml2po
 MSGUNIQ       = msguniq 
 MSGUNIQFLAGS  = 
 MSGCAT        = msgcat 
-MSGCATFLAGS   = --width=80 
+MSGCATFLAGS   = --width=79 
 MSGINIT       = msginit
 MSGINITFLAGS  = --no-translator
 MSGFMT        = msgfmt
 MSGFMTFLAGS   = --check --use-fuzzy --statistics
 MSGMERGE      = msgmerge
-MSGMERGEFLAGS = --quiet --backup=none --update
+MSGMERGEFLAGS = --quiet
 
 DBLATEX          = dblatex
 DBLATEXFLAGS     =
@@ -147,9 +147,11 @@ xml2pot = ($(XML2PO) --output='-' "$(1)" \
 #     $2 - translation language
 #     $3 - output PO file
 # TODO: include compendium (cf. "info msgmerge")
-pot2po = if [ -f $@ ]; then \
+pot2po = if [ -f $(3) ]; then \
              $(MSGFMT)   $(MSGFMTFLAGS)   $(3); \
-             $(MSGMERGE) $(MSGMERGEFLAGS) $(3) $(1) && touch $(3); \
+             $(MSGMERGE) $(MSGMERGEFLAGS) $(3) $(1) | \
+             $(MSGCAT) $(MSGCATFLAGS) - > .tmp.po && \
+	     mv -f .tmp.po $(3) || rm -v .tmp.po; \
          else \
              $(MSGINIT)  $(MSGINITFLAGS) --input $(1) --locale=$(2) --output $(3); \
          fi
@@ -273,7 +275,7 @@ $$($(1)_XML_FILES): $$(xmlpodir)/$(1)/%.xml : $$(podir)/$(1)/%.po
 	fi
 # This is indirectly used as HTML prerequisite:
 $$(xmlpodir)/$(1): $$($(1)_XML_FILES)
-	$$(cmd) touch $$(xmlpodir)/$(1)
+	$$(cmd) test -d $$@ && touch $$@ || $(mkdir_p) $$@
 # Debugging
 list-xmlfiles-$(1) list-xml-files-$(1) list-xml-$(1):
 	@echo $$($(1)_XML_FILES)
@@ -348,10 +350,11 @@ $(htmldir)/%/index.html: $(xmlpodir)/% $(HTML_STYLESHEETS) $(htmldir)/images
 	$(cmd) rm -rf $(htmldir)/$*
 	$(cmd) $(mkdir_p) $(htmldir)/$*
 
-	$(cmd) $(XSLTPROC) \
+	$(cmd) test "$*" = "no" && lang="nn" || lang="$*"; \
+	$(XSLTPROC) \
 	  $(XSLTFLAGS) $(XSLTEXTRAFLAGS) \
 	  --xinclude \
-	  --stringparam l10n.gentext.default.language $* \
+	  --stringparam l10n.gentext.default.language $${lang} \
 	  -o $(htmldir)/$*/ \
 	  stylesheets/plainhtml.xsl \
 	  $(xmlpodir)/$*/gimp.xml
@@ -367,6 +370,7 @@ $(htmldir)/%/index.html: $(xmlpodir)/% $(HTML_STYLESHEETS) $(htmldir)/images
 # TODO: new image files structure
 $(htmldir)/images:
 	$(msg) "Making $@ ..."
+	$(cmd) test -d $(htmldir) || $(mkdir_p) $(htmldir)
 	$(cmd) test -d $(htmldir)/../images && $(ln_s) ../images $@
 
 # The xrefs file is a side effect of the HTML build
@@ -415,10 +419,11 @@ $(htmldir)/%/gimp-help.xml: $(htmldir)/%/gimp-xrefs.xml stylesheets/makeindex.xs
 		echo "Making $${destdir}/$${id}-draft.html ... "; \
 		xmlfile="$<"; xmlfile=$${xmlfile#*/}; \
 		xmlfile=$(xmlpodir)/$${lang}/$${xmlfile#$${lang}/}; \
+		if [ "$${lang}" = "no" ]; then lang="nn"; fi; \
 		$(XSLTPROC) \
 		    $(XSLTFLAGS) $(XSLTEXTRAFLAGS) \
 		    --xinclude \
-		    --stringparam l10n.gentext.default.language $$lang \
+		    --stringparam l10n.gentext.default.language $${lang} \
 		    --novalid \
 		    --output $${destdir}/$${id}-draft.html \
 		    $(srcdir)/stylesheets/drafthtml.xsl \
@@ -503,14 +508,48 @@ $(AUTHORS_DOCBOOK_XML): $(AUTHORS_STYLESHEET_XML) stylesheets/authors_*.xsl
 
 
 ########################################################################
-####            Debugging etc.                                      ####
+####            Clean up                                            ####
 ########################################################################
 
-list-xmlfiles list-xml-files list-xml:
-	@echo $(XML_FILES)
+clean:
+	$(cmd) for dir in pot xml log html pdf odf; do \
+		test -d $${dir} || continue; \
+		echo "Removing  $${dir} ..."; \
+		rm -rf $${dir}; \
+	done
+	$(cmd) for f in AUTHORS $(AUTHORS_DOCBOOK_XML) \
+	                build-system.png .tmp.po; do \
+		test -f $${f} || continue; \
+		echo "Removing  $${f} ..."; \
+		rm -f $${f}; \
+	done
 
-list-potfiles list-pot-files list-pot:
-	@echo $(POT_FILES)
+dist-clean: clean ;
+
+.PHONY: clean dist-clean
+
+
+########################################################################
+####            Source file checks                                  ####
+########################################################################
+
+check-svn: check-svn-property ;
+
+check-svn-property:
+	$(cmd) if cd $(srcdir) && test -e tools/check_keywords_property.pl && \
+	type perl >/dev/null 2>&1; then \
+	    echo "*** Checking svn property ... "; \
+	    perl tools/check_keywords_property.pl -v || true; \
+	else \
+	    echo >&2 "*** Cannot check svn property (no Perl installed?) ***"; \
+	fi
+
+.PHONY: check-svn check-svn-property
+
+
+########################################################################
+####            Build system development & debugging                ####
+########################################################################
 
 build-system.png: tools/build-system.dot
 	$(cmd) if type dot >/dev/null; then \
