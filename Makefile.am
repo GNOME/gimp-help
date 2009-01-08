@@ -237,8 +237,8 @@ xml2pot = ($(XML2PO) --output='-' "$(1)" \
 pot2po = if [ -f $(3) ]; then \
              $(MSGFMT)   $(MSGFMTFLAGS)   $(3); \
              $(MSGMERGE) $(MSGMERGEFLAGS) $(3) $(1) | \
-             $(MSGCAT) $(MSGCATFLAGS) - > $(potdir)/.tmp.po && \
-	     mv -f $(potdir)/.tmp.po $(3) || rm -v $(potdir)/.tmp.po; \
+             $(MSGCAT) $(MSGCATFLAGS) - > .tmp.po && \
+             mv -f .tmp.po $(3) || rm -v .tmp.po; \
           else \
               $(MSGINIT)  $(MSGINITFLAGS) --input $(1) --locale=$(2) --output $(3); \
           fi
@@ -670,19 +670,18 @@ dist-copy-images:
 
 
 clean-local:
-	rm -rf html
-	rm -rf odf
-	rm -rf pdf
-	rm -rf preview
-	rm -rf preview-*
-	rm -rf xml
-	rm -rf $(tarball_prefix)-*
-	rm -rf po
-	rm -rf pot
+	$(cmd) rm -rf html
+	$(cmd) rm -rf odf
+	$(cmd) rm -rf pdf
+	$(cmd) rm -rf xml
+	$(cmd) rm -rf log
+	$(cmd) rm -rf pot
+	$(cmd) rm -f $(tarball_prefix)-*
+	$(cmd) rm -f .tmp.po AUTHORS $(AUTHORS_DOCBOOK_XML) build-system.png
 
 
 maintainer-clean-local:
-	rm -rf html
+	$(cmd) rm -rf html
 
 # GNU Make, please don't delete these targets when a target that depends
 # on them fails, 'kay?

@@ -91,6 +91,10 @@ POT_FILES  = $(XML_FILES:$(xmldir)/%.xml=$(potdir)/%.pot)
 # XXX: requires that "plainhtml.xsl" has been renamed to "html.xsl"
 HTML_STYLESHEETS = stylesheets/html*.xsl
 
+# This variable is used by "msgmerge";
+# use empty variable to disable the compendium option
+COMPENDIUM = Compendium.po
+
 # To talk or not to talk, that is the question!
 VERBOSE ?= 1
 
@@ -146,12 +150,12 @@ xml2pot = ($(XML2PO) --output='-' "$(1)" \
 #     $1 - input POT file
 #     $2 - translation language
 #     $3 - output PO file
-# TODO: include compendium (cf. "info msgmerge")
 pot2po = if [ -f $(3) ]; then \
+             with_compendium=$(shell $(call get_compendium,$3)); \
              $(MSGFMT)   $(MSGFMTFLAGS)   $(3); \
-             $(MSGMERGE) $(MSGMERGEFLAGS) $(3) $(1) | \
+             $(MSGMERGE) $(MSGMERGEFLAGS) $${with_compendium} $(3) $(1) | \
              $(MSGCAT) $(MSGCATFLAGS) - > .tmp.po && \
-	     mv -f .tmp.po $(3) || rm -v .tmp.po; \
+             mv -f .tmp.po $(3) || rm -v .tmp.po; \
          else \
              $(MSGINIT)  $(MSGINITFLAGS) --input $(1) --locale=$(2) --output $(3); \
          fi
@@ -180,7 +184,21 @@ endif
 #--------------------------------------------------------------#
 
 make_target_dir = \
-	f=$(1); d=$${f%/*}; test -d $$d || $(mkdir_p) $$d;
+	f=$(1); d=$${f%/*}; test -d $$d || $(mkdir_p) $$d
+
+ifneq ($(COMPENDIUM),"")
+get_compendium = \
+	dir="$(1)"; dir=$${dir%/*}; \
+	while test "$${dir}" != "po"; do \
+		if test -f $${dir}/$(COMPENDIUM); then \
+			opt="$${opt} --compendium=$${dir}/$(COMPENDIUM)"; \
+		fi; \
+		dir="$${dir%/*}"; \
+	done; \
+	if test -n "$${opt}"; then echo $${opt}; fi
+else
+get_compendium =
+endif
 
 
 ########################################################################
