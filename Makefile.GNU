@@ -25,16 +25,17 @@ XMLLINTFLAGS = --nonet
 
 XML2PO = tools/xml2po
 
+MSGWIDTH      = 79
 MSGUNIQ       = msguniq 
 MSGUNIQFLAGS  = 
 MSGCAT        = msgcat 
-MSGCATFLAGS   = --width=79 
+MSGCATFLAGS   = --width=$(MSGWIDTH)
 MSGINIT       = msginit
 MSGINITFLAGS  = --no-translator
 MSGFMT        = msgfmt
 MSGFMTFLAGS   = --check --use-fuzzy --statistics
 MSGMERGE      = msgmerge
-MSGMERGEFLAGS = --quiet
+MSGMERGEFLAGS = --quiet --width=$(MSGWIDTH)
 
 DBLATEX          = dblatex
 DBLATEXFLAGS     =
@@ -47,19 +48,18 @@ mkdir_p = mkdir -p
 ln_s    = ln -s
 
 # FIXME/TODO:
-#     (1) make it work with srcdir != builddir
-#     (2) rename(?) srcdir, xmldir, xmlpodir
+#     make it work with srcdir != builddir
 # Directories
 srcdir   = .
 builddir = .
-xmldir   = src
-potdir   = pot
-podir    = po
-xmlpodir = xml
-htmldir  = html
-pdfdir   = pdf
-odfdir   = odf
-logdir   = log
+#xmldir   = src
+#potdir   = pot
+#podir    = po
+#xmlpodir = xml
+#htmldir  = html
+#pdfdir   = pdf
+#odfdir   = odf
+#logdir   = log
 
 # Find files and directories
 xml_file_predicates =       \
@@ -79,14 +79,14 @@ pot_dir_predicates = $(dir_predicates)
 # List of authors and contributors
 AUTHORS_STYLESHEET_XML = stylesheets/authors.xml
 # Automatically generated authors section (DocBook)
-AUTHORS_DOCBOOK_XML = $(xmldir)/preface/authors.xml
+AUTHORS_DOCBOOK_XML = src/preface/authors.xml
 
 # Files & directories
-XML_DIRS  := $(shell cd $(srcdir) && find $(xmldir) $(dir_predicates))
-XML_FILES := $(shell cd $(srcdir) && find $(xmldir) $(xml_file_predicates)) \
+XML_DIRS  := $(shell cd $(srcdir) && find src $(dir_predicates))
+XML_FILES := $(shell cd $(srcdir) && find src $(xml_file_predicates)) \
 	    $(AUTHORS_DOCBOOK_XML)
 
-POT_FILES  = $(XML_FILES:$(xmldir)/%.xml=$(potdir)/%.pot)
+POT_FILES  = $(XML_FILES:src/%.xml=pot/%.pot)
 
 # XXX: requires that "plainhtml.xsl" has been renamed to "html.xsl"
 HTML_STYLESHEETS = stylesheets/html*.xsl
@@ -150,12 +150,13 @@ xml2pot = ($(XML2PO) --output='-' "$(1)" \
 #     $1 - input POT file
 #     $2 - translation language
 #     $3 - output PO file
-pot2po = if [ -f $(3) ]; then \
+pot2po = if [ -s $(3) ]; then \
              with_compendium=$(shell $(call get_compendium,$3)); \
+             tmpfile=$(3).tmp; \
              $(MSGFMT)   $(MSGFMTFLAGS)   $(3); \
-             $(MSGMERGE) $(MSGMERGEFLAGS) $${with_compendium} $(3) $(1) | \
-             $(MSGCAT) $(MSGCATFLAGS) - > .tmp.po && \
-             mv -f .tmp.po $(3) || rm -v .tmp.po; \
+             $(MSGMERGE) $(MSGMERGEFLAGS) $${with_compendium} $(3) $(1) \
+             > $${tmpfile}; \
+             test -s  $${tmpfile} && mv -f $${tmpfile} $(3) || rm -f $${tmpfile}; \
          else \
              $(MSGINIT)  $(MSGINITFLAGS) --input $(1) --locale=$(2) --output $(3); \
          fi
@@ -229,7 +230,7 @@ help:
 ########################################################################
 
 # xmldir/path/to/file.xml --> potdir/path/to/file.pot
-$(POT_FILES): $(potdir)/%.pot : $(xmldir)/%.xml
+$(POT_FILES): pot/%.pot : src/%.xml
 	$(cmd) $(call make_target_dir,$@)
 	$(msg) "[POT] $@"
 	$(cmd) if test -s $<; then $(call xml2pot,$<,$@); else touch $@; fi
@@ -245,8 +246,8 @@ potfiles: $(POT_FILES)
 ########################################################################
 
 define MAKE_PO_RULES
-$(1)_PO_FILES = $$(patsubst $$(potdir)/%.pot, $$(podir)/$(1)/%.po, $$(POT_FILES))
-$$($(1)_PO_FILES): $$(podir)/$(1)/%.po : $$(potdir)/%.pot
+$(1)_PO_FILES = $$(patsubst pot/%.pot, po/$(1)/%.po, $$(POT_FILES))
+$$($(1)_PO_FILES): po/$(1)/%.po : pot/%.pot
 	$$(cmd) $$(call make_target_dir,$$@)
 	$$(msg) "[PO]  $$@"
 	$$(cmd) if test -s $$<; then $$(call pot2po,$$<,$(1),$$@); else touch $$@; fi
@@ -268,11 +269,11 @@ po-en: ;
 # Print translation statistics
 status-%: po-status-% ;
 po-status-%: po-%
-	$(cmd) perl tools/get_po_status.pl $(podir)/$*
+	$(cmd) perl tools/get_po_status.pl po/$*
 
 status-all: po-status-all ;
 po-status-all:
-	$(cmd) for podir in $(podir)/*; do \
+	$(cmd) for podir in po/*; do \
 		perl tools/get_po_status.pl --nofiles --nosummary $${podir} || break; \
 	done
 
@@ -282,17 +283,17 @@ po-status-all:
 ########################################################################
 
 define MAKE_XML_RULES
-$(1)_XML_FILES = $$(XML_FILES:$$(xmldir)/%=$$(xmlpodir)/$(1)/%)
-$$($(1)_XML_FILES): $$(xmlpodir)/$(1)/%.xml : $$(podir)/$(1)/%.po
+$(1)_XML_FILES = $$(XML_FILES:src/%=xml/$(1)/%)
+$$($(1)_XML_FILES): xml/$(1)/%.xml : po/$(1)/%.po
 	$$(cmd) $$(call make_target_dir,$$@)
 	$$(msg) "[XML] $$@"
-	$$(cmd) if test -s $$(@:$$(xmlpodir)/$(1)/%=$$(xmldir)/%); then \
-		$$(call po2xml,$$(@:$$(xmlpodir)/$(1)/%=$$(xmldir)/%),$$<,$(1),$$@); \
+	$$(cmd) if test -s $$(@:xml/$(1)/%=src/%); then \
+		$$(call po2xml,$$(@:xml/$(1)/%=src/%),$$<,$(1),$$@); \
 	else \
 		touch $$(@); \
 	fi
 # This is indirectly used as HTML prerequisite:
-$$(xmlpodir)/$(1): $$($(1)_XML_FILES)
+xml/$(1): $$($(1)_XML_FILES)
 	$$(cmd) test -d $$@ && touch $$@ || $(mkdir_p) $$@
 # Debugging
 list-xmlfiles-$(1) list-xml-files-$(1) list-xml-$(1):
@@ -304,19 +305,19 @@ $(foreach LANG,$(PO_LANGS),$(eval $(call MAKE_XML_RULES,$(LANG))))
 
 # Special case: en
 
-en_XML_FILES = $(XML_FILES:$(xmldir)/%=$(xmlpodir)/en/%)
+en_XML_FILES = $(XML_FILES:src/%=xml/en/%)
 # TODO: check: prerequisite, preface/authors.xml
-$(en_XML_FILES): $(xmlpodir)/en ;
+$(en_XML_FILES): xml/en ;
 
 # TODO: check: prerequisite, abs/rel link, touch
-$(xmlpodir)/en: $(XML_FILES)
-	$(cmd) src_dir=$$(cd $(srcdir)/$(xmldir) && pwd); \
-	test -d $(xmlpodir) || $(mkdir_p) $(xmlpodir); \
+xml/en: $(XML_FILES)
+	$(cmd) src_dir=$$(cd $(srcdir)/src && pwd); \
+	test -d xml || $(mkdir_p) xml; \
 	test -d $@ || $(ln_s) $${src_dir} $@; \
 	touch $@
 
 # Target suitable for command line
-xml-en: $(xmlpodir)/en ;
+xml-en: xml/en ;
 
 
 ########################################################################
@@ -327,22 +328,22 @@ validate: validate-en ;
 validate-%: xmllint-% ;
 
 xmllint: xmllint-en ;
-xmllint-%: $(logdir)/%-xmllint.log
+xmllint-%: log/%-xmllint.log
 	$(cmd) test -s $< && cat $<
 
 define MAKE_XMLLINT_RULES
-$$(logdir)/$(1)-xmllint.log: $$(logdir) $$($(1)_XML_FILES)
+log/$(1)-xmllint.log: log $$($(1)_XML_FILES)
 	$$(cmd) if type $$(XMLLINT) >/dev/null 2>&1; then \
 		echo "*** Validating XML ($(1)) ... "; \
-		$$(XMLLINT) $$(XMLLINTFLAGS) --xinclude $$(xmlpodir)/$(1)/gimp.xml \
+		$$(XMLLINT) $$(XMLLINTFLAGS) --xinclude xml/$(1)/gimp.xml \
 		| sed -e 's,xmlns:xi="http://www.w3.org/2001/XInclude",,' \
 		| $$(XMLLINT) $$(XMLLINTFLAGS) --nonet --valid \
-			--output $$(logdir)/$(1).xml - 2>$$(@); \
+			--output log/$(1).xml - 2>$$(@); \
 		if test -s $$(@); then \
-			echo "(You will find log and xml files in $$(logdir)/.)"; \
+			echo "(You will find log and xml files in log/.)"; \
 		else \
 			echo "No errors."; \
-			rm -f  $$(logdir)/$(1).xml; \
+			rm -f  log/$(1).xml; \
 		fi >> $$(@); \
 	else \
 		echo >&2 "*** Validating '$(1)' skipped: 'xmllint' not found."; \
@@ -350,7 +351,7 @@ $$(logdir)/$(1)-xmllint.log: $$(logdir) $$($(1)_XML_FILES)
 endef
 $(foreach LANG,$(LANGUAGES),$(eval $(call MAKE_XMLLINT_RULES,$(LANG))))
 
-$(logdir):
+log:
 	$(cmd) mkdir $@ && test -w $@
 
 
@@ -363,43 +364,43 @@ html: $(foreach lang,$(LANGUAGES),html-$(lang)) ;
 # html-% -> index-% -> html/%/gimp-help.xml -> html/%/gimp-xrefs.xml -> html/%/index.html
 html-%: index-% ;
 
-$(htmldir)/%/index.html: $(xmlpodir)/% $(HTML_STYLESHEETS) $(htmldir)/images
+html/%/index.html: xml/% $(HTML_STYLESHEETS) html/images
 	$(msg) "*** Making html for $* ... "
-	$(cmd) rm -rf $(htmldir)/$*
-	$(cmd) $(mkdir_p) $(htmldir)/$*
+	$(cmd) rm -rf html/$*
+	$(cmd) $(mkdir_p) html/$*
 
 	$(cmd) test "$*" = "no" && lang="nn" || lang="$*"; \
 	$(XSLTPROC) \
 	  $(XSLTFLAGS) $(XSLTEXTRAFLAGS) \
 	  --xinclude \
 	  --stringparam l10n.gentext.default.language $${lang} \
-	  -o $(htmldir)/$*/ \
+	  -o html/$*/ \
 	  stylesheets/plainhtml.xsl \
-	  $(xmlpodir)/$*/gimp.xml
+	  xml/$*/gimp.xml
 
 	$(cmd) for file in $(srcdir)/stylesheets/*.css; do \
-		if [ -f $$file ]; then cp -fp $$file $(htmldir)/$*; fi; \
+		if [ -f $$file ]; then cp -fp $$file html/$*; fi; \
 	done
 
 	$(cmd) for file in $(srcdir)/stylesheets/$*/*.css; do \
-		if [ -f $$file ]; then cp -fp $$file $(htmldir)/$*; fi; \
+		if [ -f $$file ]; then cp -fp $$file html/$*; fi; \
 	done
 
 # TODO: new image files structure
-$(htmldir)/images:
+html/images:
 	$(msg) "Making $@ ..."
-	$(cmd) test -d $(htmldir) || $(mkdir_p) $(htmldir)
-	$(cmd) test -d $(htmldir)/../images && $(ln_s) ../images $@
+	$(cmd) test -d html || $(mkdir_p) html
+	$(cmd) test -d html/../images && $(ln_s) ../images $@
 
 # The xrefs file is a side effect of the HTML build
-$(htmldir)/%/gimp-xrefs.xml: $(htmldir)/%/index.html
+html/%/gimp-xrefs.xml: html/%/index.html
 	$(cmd) touch $@
 
 ####  Context Help  ####
 index: $(foreach lang,$(LANGUAGES),index-$(lang)) ;
-index-%: $(htmldir)/%/gimp-help.xml ;
+index-%: html/%/gimp-help.xml ;
 
-$(htmldir)/%/gimp-help.xml: $(htmldir)/%/gimp-xrefs.xml stylesheets/makeindex.xsl
+html/%/gimp-help.xml: html/%/gimp-xrefs.xml stylesheets/makeindex.xsl
 	$(cmd) $(XSLTPROC) \
 	  $(XSLTFLAGS) $(XSLTEXTRAFLAGS) \
 	  $(srcdir)/stylesheets/makeindex.xsl \
@@ -407,24 +408,24 @@ $(htmldir)/%/gimp-help.xml: $(htmldir)/%/gimp-xrefs.xml stylesheets/makeindex.xs
 	  > $@
 
 .PRECIOUS: \
-	$(htmldir)/%/index.html \
-	$(htmldir)/%/gimp-help.xml \
-	$(htmldir)/%/gimp-xrefs.xml
+	html/%/index.html \
+	html/%/gimp-help.xml \
+	html/%/gimp-xrefs.xml
 
 
 ########################################################################
 ####            HTML draft (single page preview)                    ####
 ########################################################################
 
-%.draft: %.xml stylesheets/drafthtml.xsl $(htmldir)/images
+%.draft: %.xml stylesheets/drafthtml.xsl html/images
 	@echo "Making draft page(s), ignore any XSLT complaints:"
 	$(cmd) id=`sed -e 's/.*id=.//; tmatch; d; :match; s/["'"'"'].*//; q' $<`; \
 	test -n "$$id" || id=noname; \
 	langs="$(shell echo $@ | \
-	               sed -e 's,^$(xmldir)/.*,$(LANGUAGES),; t' \
-	                   -e 's,^$(xmlpodir)/\([^/]\+\)/.*,\1,')"; \
+	               sed -e 's,^src/.*,$(LANGUAGES),; t' \
+	                   -e 's,^xml/\([^/]\+\)/.*,\1,')"; \
 	for lang in $${langs}; do \
-		destdir=$(htmldir)/$${lang}; \
+		destdir=html/$${lang}; \
 		test -d $${destdir} && continue || \
 		$(mkdir_p) $${destdir}; \
 		cp -fp $(srcdir)/stylesheets/*.css \
@@ -433,10 +434,10 @@ $(htmldir)/%/gimp-help.xml: $(htmldir)/%/gimp-xrefs.xml stylesheets/makeindex.xs
 	done; \
 	\
 	for lang in $${langs}; do \
-		destdir=$(htmldir)/$${lang}; \
+		destdir=html/$${lang}; \
 		echo "Making $${destdir}/$${id}-draft.html ... "; \
 		xmlfile="$<"; xmlfile=$${xmlfile#*/}; \
-		xmlfile=$(xmlpodir)/$${lang}/$${xmlfile#$${lang}/}; \
+		xmlfile=xml/$${lang}/$${xmlfile#$${lang}/}; \
 		if [ "$${lang}" = "no" ]; then lang="nn"; fi; \
 		$(XSLTPROC) \
 		    $(XSLTFLAGS) $(XSLTEXTRAFLAGS) \
@@ -457,19 +458,25 @@ $(htmldir)/%/gimp-help.xml: $(htmldir)/%/gimp-xrefs.xml stylesheets/makeindex.xs
 
 ifneq ("$(DBLATEX)", "")
 
-pdf: $(foreach lang,$(LANGUAGES),pdf-$(lang))
-pdf-%: $(pdfdir)/%.pdf
+pdf: $(foreach lang,$(LANGUAGES),pdf-$(lang)) ;
+pdf-%: pdf/%/gimp.pdf ;
 
-$(pdfdir)/%.pdf: $(xmlpodir)/%/gimp.xml stylesheets/plainprint.xsl
-	test -d $(pdfdir) || $(mkdir_p) $(pdfdir)
-	$(DBLATEX) $(DBLATEXFLAGS) \
+# TODO: images (--fig-path option?); prerequisites
+#pdf/%/gimp.pdf: xml/%/gimp.xml stylesheets/plainprint.xsl xml/%/images
+pdf/%/gimp.pdf: xml/%/gimp.xml stylesheets/plainprint.xsl
+	$(cmd) if test -f pdf/%.pdf; then rm -f pdf/%.pdf; fi
+	$(cmd) test -d pdf/$* || $(mkdir_p) pdf/$*
+	$(msg) "*** Making PDF ($*) ..."
+	$(cmd) $(DBLATEX) $(DBLATEXFLAGS) $(DBLATEXEXTRAFLAGS) \
 	    --xsl-user=$(srcdir)/stylesheets/plainprint.xsl \
 	    --output=$@ $<
+
+.PRECIOUS: pdf/%/gimp.pdf
 
 else
 
 pdf pdf-%:
-	@echo "*** Cannot build PDFs because dblatex(1) was not found ***"
+	@echo "*** Cannot build PDFs because DBLATEX was not defined ***"
 	@exit 69
 
 endif
@@ -482,26 +489,34 @@ endif
 ifneq ("$(DOCBOOK2ODF)","")
 
 odf: $(foreach lang,$(LANGUAGES),odf-$(lang)) ;
-odf-%: $(odfdir)/%.odt ;
+odf-%: odf/%/gimp.odt ;
 
-odf/%.odt: $(xmlpodir)/%/gimp-alldocs.xml
-	$(cmd) test -d $(odfdir) || $(mkdir_p) $(odfdir)
+# TODO: images; prerequisites
+odf/%/gimp.odt: xml/%/gimp-alldocs.xml
+	$(cmd) if test -f odf/%.odt; then rm -f odf/%.odt; fi
+	$(cmd) test -d odf/$* || $(mkdir_p) odf/$*
+	$(msg) "*** Making ODF ($*) ..."
 	$(cmd) $(DOCBOOK2ODF) $(DOCBOOK2ODFFLAGS) \
 	    --debug -v \
 	    --output-dir=`pwd` \
 	    --output-file=$@ \
 	    $< 
 
-$(xmlpodir)/%/gimp-alldocs.xml: $(xmlpodir)/%/gimp.xml
+# make temporary XML source file with all Xincludes resolved
+xml/%/gimp-alldocs.xml: xml/%/gimp.xml
+	$(msg) "*** Merging XML ..."
 	$(cmd) $(XMLLINT) $(XMLLINTFLAGS) --xinclude --output $@ $<
+
+.PRECIOUS: odf/%/gimp.odt
 
 else
 
 odf odf-%:
-	@echo "*** Cannot build ODFs because docbook2odf(1) was not found ***"
+	@echo "*** Cannot build ODFs because DOCBOOK2ODF was not defined ***"
 	@exit 69
 
 endif
+
 
 ########################################################################
 ####            AUTHORS                                             ####
@@ -535,8 +550,7 @@ clean:
 		echo "Removing  $${dir} ..."; \
 		rm -rf $${dir}; \
 	done
-	$(cmd) for f in AUTHORS $(AUTHORS_DOCBOOK_XML) \
-	                build-system.png .tmp.po; do \
+	$(cmd) for f in AUTHORS $(AUTHORS_DOCBOOK_XML) build-system.png; do \
 		test -f $${f} || continue; \
 		echo "Removing  $${f} ..."; \
 		rm -f $${f}; \

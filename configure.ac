@@ -173,9 +173,6 @@ if test -z "$MSGMERGE" && test "x$enable_build" = "xyes"; then
 ** See the file 'INSTALL' for more help.])
 fi
 
-MSGMERGEFLAGS="--quiet --backup=none --update"
-AC_SUBST(MSGMERGEFLAGS)
-
 
 AC_PATH_PROG(MSGUNIQ, msguniq)
 if test -z "$MSGUNIQ" && test "x$enable_build" = "xyes"; then
