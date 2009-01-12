@@ -40,7 +40,7 @@ MSGCATFLAGS   = --width=$(MSGWIDTH)
 MSGMERGEFLAGS = --quiet --width=$(MSGWIDTH)
 ##
 ## DBLATEX       = dblatex
-DBLATEXFLAGS  =
+DBLATEXFLAGS     = --verbose
 ## DOCBOOK2ODF      = docbook2odf
 DOCBOOK2ODFFLAGS =
 
@@ -86,8 +86,14 @@ src_find_predicates =       \
 	-o                  \
 	-name '*.xml' -print
 
+#  for generating a list of files (of any type)
+file_predicates =           \
+	-name '.svn' -prune \
+	        -o          \
+	-type f -print
+
 # for generating a list of directories
-dir_predicates =        \
+dir_predicates =            \
 	-name '.svn' -prune \
 	        -o          \
 	-type d -print
@@ -257,11 +263,12 @@ endif
 
 
 #--------------------------------------------------------------#
-#       Helper function(s)                                     #
+#       Helper functions                                       #
 #--------------------------------------------------------------#
 
-make_target_dir = \
-	f=$(1); d=$${f%/*}; test -d $$d || $(mkdir_p) $$d
+make_target_dir = f=$(1); d=$${f%/*}; test -d $$d || $(mkdir_p) $$d
+
+copy = $(LN_S) $(abs_srcdir)/$(1) $(2)
 
 
 ########################################################################
@@ -279,8 +286,8 @@ $(POT_FILES): pot/%.pot : src/%.xml
 
 # Targets suitable for command line
 # ("make pot" will work even if pot exists)
-pot update-pot: potfiles
-potfiles: $(POT_FILES)
+pot update-pot: potfiles ;
+potfiles: $(POT_FILES) ;
 
 
 ########################################################################
@@ -324,25 +331,50 @@ po-en: ;
 # HIDE FROM AUTOMAKE #xml/$(1): $$($(1)_XML_FILES)
 # HIDE FROM AUTOMAKE #	$$(cmd) test -d $$@ && touch $$@ || $(mkdir_p) $$@
 # HIDE FROM AUTOMAKE ## Targets suitable for command line
-# HIDE FROM AUTOMAKE #xml-$(1): $$($(1)_XML_FILES)
+# HIDE FROM AUTOMAKE #xml-$(1): xml/$(1) $$($(1)_XML_FILES) xml/$(1)/images ;
 # HIDE FROM AUTOMAKE #endef
 $(foreach LANG,$(PO_LANGS),$(eval $(call MAKE_XML_RULES,$(LANG))))
 
+# TODO: test new image files structure;
+#       use (~1500) image files as prerequisites?
+xml/%/images: FORCE
+	$(cmd) if test -L $@; then rm -v $@; fi
+	$(cmd) if test -L xml/$*; then rm -v xml/$*; fi
+	$(cmd) if test -d $@; then rm -rf $@/*; fi
+	$(cmd) test -d $@ || $(mkdir_p) $@
+	$(msg) "*** Copying images ($*) ..."
+	$(cmd) (cd images && find common C $(dir_predicates)) | \
+	while read dir; do \
+		dest=$${dir#*/}; \
+		test -d $@/$${dest} || $(mkdir_p) $@/$${dest}; \
+	done
+	$(cmd) (cd images && find common C $(file_predicates)) | \
+	while read image; do \
+		if [ "$*" != "en" ]; then \
+			localized=$*/$${image#C/}; \
+			test -e images/$${localized} && image=$${localized}; \
+		fi; \
+		dest=$${image#*/}; \
+		$(call copy,images/$${image},$@/$${dest}); \
+	done
 # Special case: en
 
-# HIDE FROM AUTOMAKE #en_XML_FILES = $(XML_FILES:src/%=xml/en/%)
-# TODO: check: prerequisite, preface/authors.xml
-$(en_XML_FILES): xml/en ;
+en_XML_FILES = $(XML_FILES:src/%=xml/en/%)
+$(en_XML_FILES): xml/en/%.xml : src/%.xml
+	$(cmd) if test -L xml/en; then rm -v xml/en; fi
+	$(cmd) $(call make_target_dir,$@)
+	$(msg) "[XML] $@"
+	$(cmd) $(call copy,$<,$@)
 
-# TODO: check: prerequisite, abs/rel link, touch
-xml/en: $(XML_FILES)
-	$(cmd) src_dir=$$(cd $(srcdir)/src && pwd); \
-	test -d xml || $(mkdir_p) xml; \
-	test -d $@ || $(LN_S) $${src_dir} $@; \
-	touch $@
+xml/en: $(en_XML_FILES)
+	$(cmd) if test -L $@; then rm -v $@; fi
+	$(cmd) test -d $@ && touch $@ || $(mkdir_p) $@
 
 # Target suitable for command line
 xml-en: xml/en ;
+
+.PHONY: FORCE
+FORCE: ;
 
 
 ########################################################################
@@ -387,13 +419,14 @@ log:
 # Note that Automake already defines an "html" target
 html-local: $(foreach lang,$(LANGUAGES),html-$(lang)) ;
 
-# html-% -> index-% -> html/%/gimp-help.xml -> html/%/gimp-xrefs.xml -> html/%/index.html
+# Chain of rules for making html-LANG:
+#     html-%  -->  index-%  -->  html/%/gimp-help.xml  -->
+#         html/%/gimp-xrefs.xml  -->  html/%/index.html
 html-%: index-% ;
 
-html/%/index.html: xml/% $(HTML_STYLESHEETS)
+html/%/index.html: xml/% $(HTML_STYLESHEETS) html/images html/%/images
 	$(msg) "*** Making html for $* ... "
-	$(cmd) rm -rf html/$*
-	$(cmd) $(mkdir_p) html/$*
+	$(cmd) rm -f html/$*/*.*
 
 	$(cmd) test "$*" = "no" && lang="nn" || lang="$*"; \
 	$(XSLTPROC) \
@@ -412,11 +445,13 @@ html/%/index.html: xml/% $(HTML_STYLESHEETS)
 		if [ -f $$file ]; then cp -fp $$file html/$*; fi; \
 	done
 
-# TODO: new image files structure
-html/images:
-	$(msg) "Making $@ ..."
-	$(cmd) test -d html || $(mkdir_p) html
-	$(cmd) test -d html/../images && $(LN_S) ../images $@
+# TODO: check/enhance new image files structure
+html/images: FORCE
+	$(cmd) if test -L $@; then rm -v $@; fi
+
+html/%/images: xml/%/images
+	$(cmd) test -d html/$* || $(mkdir_p) html/$*
+	$(cmd) $(LN_S) ../../xml/$*/images $@
 
 # The xrefs file is a side effect of the HTML build
 html/%/gimp-xrefs.xml: html/%/index.html
@@ -436,7 +471,8 @@ html/%/gimp-help.xml: html/%/gimp-xrefs.xml stylesheets/makeindex.xsl
 .PRECIOUS: \
 	html/%/index.html \
 	html/%/gimp-help.xml \
-	html/%/gimp-xrefs.xml
+	html/%/gimp-xrefs.xml \
+	html/%/images
 
 
 ########################################################################
@@ -449,8 +485,7 @@ pdf-local: $(foreach lang,$(LANGUAGES),pdf-$(lang)) ;
 pdf-%: pdf/%/gimp.pdf ;
 
 # TODO: images (--fig-path option?); prerequisites
-#pdf/%/gimp.pdf: xml/%/gimp.xml stylesheets/plainprint.xsl xml/%/images
-pdf/%/gimp.pdf: xml/%/gimp.xml stylesheets/plainprint.xsl
+pdf/%/gimp.pdf: xml/%/gimp.xml stylesheets/plainprint.xsl xml/%/images
 	$(cmd) if test -f pdf/%.pdf; then rm -f pdf/%.pdf; fi
 	$(cmd) test -d pdf/$* || $(mkdir_p) pdf/$*
 	$(msg) "*** Making PDF ($*) ..."
@@ -476,7 +511,7 @@ odf: $(foreach lang,$(LANGUAGES),odf-$(lang)) ;
 odf-%: odf/%/gimp.odt ;
 
 # TODO: images; prerequisites
-odf/%/gimp.odt: xml/%/gimp-alldocs.xml
+odf/%/gimp.odt: xml/%/gimp-alldocs.xml xml/%/images
 	$(cmd) if test -f odf/%.odt; then rm -f odf/%.odt; fi
 	$(cmd) test -d odf/$* || $(mkdir_p) odf/$*
 	$(msg) "*** Making ODF ($*) ..."
@@ -511,7 +546,7 @@ endif
 ####            HTML draft (single page preview)                    ####
 ########################################################################
 
-%.draft: %.xml stylesheets/drafthtml.xsl html/images
+%.draft: %.xml stylesheets/drafthtml.xsl
 	@echo "Making draft page(s), ignore any XSLT complaints:"
 	$(cmd) id=`sed -e 's/.*id=.//; tmatch; d; :match; s/["'"'"'].*//; q' $<`; \
 	test -n "$$id" || id=noname; \

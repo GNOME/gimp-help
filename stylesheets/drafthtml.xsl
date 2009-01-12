@@ -10,8 +10,8 @@
   <xsl:output method="html" indent="yes"/>
 
   <xsl:param name="admon.graphics" select="1" />
-  <xsl:param name="admon.graphics.path">../images/</xsl:param>
-  <xsl:param name="callout.graphics.path">../images/callouts/</xsl:param>
+  <xsl:param name="admon.graphics.path">images/</xsl:param>
+  <xsl:param name="callout.graphics.path">images/callouts/</xsl:param>
   <xsl:param name="generate.index">0</xsl:param>
   <xsl:param name="html.stylesheet">
     gimp-help-plain.css gimp-help-screen.css gimp-help-draft.css

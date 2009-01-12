@@ -32,8 +32,8 @@
   <xsl:param name="table.title.top">1</xsl:param>
 
   <!-- use the following adminition images -->
-  <xsl:param name="figure.tip">../images/tip.png</xsl:param>
-  <xsl:param name="figure.note">../images/note.png</xsl:param>
-  <xsl:param name="figure.caution">../images/caution.png</xsl:param>
+  <xsl:param name="figure.tip">images/tip.png</xsl:param>
+  <xsl:param name="figure.note">images/note.png</xsl:param>
+  <xsl:param name="figure.caution">images/caution.png</xsl:param>
 
 </xsl:stylesheet>
