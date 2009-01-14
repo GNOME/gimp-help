@@ -324,6 +324,7 @@ xml/%/images: FORCE
 	$(cmd) (cd images && find common C $(dir_predicates)) | \
 	while read dir; do \
 		dest=$${dir#*/}; \
+		test "$${dir}" != "$${dest}" || continue; \
 		test -d $@/$${dest} || $(mkdir_p) $@/$${dest}; \
 	done
 	$(cmd) (cd images && find common C $(file_predicates)) | \
@@ -604,7 +605,10 @@ dist-clean: clean ;
 ####            Source file checks                                  ####
 ########################################################################
 
+check: checks ;
+checks: check-svn-property check-image-references ;
 check-svn: check-svn-property ;
+check-images: check-image-references ;
 
 check-svn-property:
 	$(cmd) if cd $(srcdir) && test -e tools/check_keywords_property.pl && \
@@ -615,7 +619,25 @@ check-svn-property:
 	    echo >&2 "*** Cannot check svn property (no Perl installed?) ***"; \
 	fi
 
-.PHONY: check-svn check-svn-property
+check-image-references:
+	$(cmd) if cd $(srcdir) && test -e tools/validate_references.py && \
+	type python >/dev/null 2>&1; then \
+	    echo "*** Checking image references ... "; \
+	    python tools/validate_references.py \
+	        --verbose --broken --orphaned \
+		$(VALIDATEREFERENCESFLAGS); \
+	else \
+	    echo >&2 "*** Cannot check image references (no Python installed?) ***"; \
+	fi
+
+check-images-%: FORCE
+	$(cmd) $(MAKE) --no-print-directory check-image-references \
+		VALIDATEREFERENCESFLAGS="--imgdir=images/C,images/$*"
+
+# special case 'en':
+check-images-en check-images-C: check-image-references ;
+
+.PHONY: checks check-svn-property check-image-references
 
 
 ########################################################################

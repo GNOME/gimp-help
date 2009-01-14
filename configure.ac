@@ -19,7 +19,9 @@ AM_INIT_AUTOMAKE([1.6 dist-bzip2 -Wall -Wno-portability])
 
 AC_PROG_INSTALL
 AC_PROG_LN_S
+AC_PROG_MKDIR_P
 AC_PROG_MAKE_SET
+AC_PROG_SED
 
 
 #  You can set the ALL_LINGUAS environment variable to

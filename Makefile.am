@@ -67,10 +67,10 @@ image_find_predicates =     \
 # languages we want to exclude from installing images
 image_lang_exclude = \
 	$(shell echo $(strip $(LANGUAGES)) | \
-	        sed -e '/^$$/d; \
-		        s/ / -o -name /g; \
-			s/^/! \\( -name /; \
-			s/$$/ \\)/ ' \
+	        $(SED) -e '/^$$/d; \
+	                   s/ / -o -name /g; \
+	                   s/^/! \\( -name /; \
+	                   s/$$/ \\)/ ' \
 	)
 
 # find HTML files (used when installing html)
@@ -221,7 +221,7 @@ $(AUTHORS_DOCBOOK_XML): $(AUTHORS_STYLESHEET_XML) stylesheets/authors_*.xsl
 xml2pot = ($(XML2PO) --output='-' "$(1)" \
           | $(MSGUNIQ) $(MSGUNIQFLAGS) \
           | $(MSGCAT) $(MSGCATFLAGS) - > "$(2)") 2>&1 \
-          | sed -e '/image file .* not found/d'
+          | $(SED) -e '/image file .* not found/d'
 
 # Merge template (pot) and message catalog (po)
 # or create a new catalog
@@ -255,10 +255,10 @@ pot2po = if [ -s $(3) ]; then \
 if HAVE_XMLLINT
 po2xml = ($(XML2PO) --po-file=$(2) --language=$(3) --output='-' $(1) \
          | $(XMLLINT) $(XMLLINTFLAGS) --format --output $(4) -) 2>&1 \
-         | sed -e '/Warning: image file .* not found./d'
+         | $(SED) -e '/Warning: image file .* not found./d'
 else
 po2xml = $(XML2PO) --po-file=$(2) --language=$(3) --output=$(4) $(1) 2>&1 \
-         | sed -e '/Warning: image file .* not found./d'
+         | $(SED) -e '/Warning: image file .* not found./d'
 endif
 
 
@@ -266,7 +266,7 @@ endif
 #       Helper functions                                       #
 #--------------------------------------------------------------#
 
-make_target_dir = f=$(1); d=$${f%/*}; test -d $$d || $(mkdir_p) $$d
+make_target_dir = f=$(1); d=$${f%/*}; test -d $$d || $(MKDIR_P) $$d
 
 copy = $(LN_S) $(abs_srcdir)/$(1) $(2)
 
@@ -329,7 +329,7 @@ po-en: ;
 # HIDE FROM AUTOMAKE #	fi
 # HIDE FROM AUTOMAKE ## This is indirectly used as HTML prerequisite:
 # HIDE FROM AUTOMAKE #xml/$(1): $$($(1)_XML_FILES)
-# HIDE FROM AUTOMAKE #	$$(cmd) test -d $$@ && touch $$@ || $(mkdir_p) $$@
+# HIDE FROM AUTOMAKE #	$$(cmd) test -d $$@ && touch $$@ || $(MKDIR_P) $$@
 # HIDE FROM AUTOMAKE ## Targets suitable for command line
 # HIDE FROM AUTOMAKE #xml-$(1): xml/$(1) $$($(1)_XML_FILES) xml/$(1)/images ;
 # HIDE FROM AUTOMAKE #endef
@@ -341,12 +341,13 @@ xml/%/images: FORCE
 	$(cmd) if test -L $@; then rm -v $@; fi
 	$(cmd) if test -L xml/$*; then rm -v xml/$*; fi
 	$(cmd) if test -d $@; then rm -rf $@/*; fi
-	$(cmd) test -d $@ || $(mkdir_p) $@
+	$(cmd) test -d $@ || $(MKDIR_P) $@
 	$(msg) "*** Copying images ($*) ..."
 	$(cmd) (cd images && find common C $(dir_predicates)) | \
 	while read dir; do \
 		dest=$${dir#*/}; \
-		test -d $@/$${dest} || $(mkdir_p) $@/$${dest}; \
+		test "$${dir}" != "$${dest}" || continue; \
+		test -d $@/$${dest} || $(MKDIR_P) $@/$${dest}; \
 	done
 	$(cmd) (cd images && find common C $(file_predicates)) | \
 	while read image; do \
@@ -368,7 +369,7 @@ $(en_XML_FILES): xml/en/%.xml : src/%.xml
 
 xml/en: $(en_XML_FILES)
 	$(cmd) if test -L $@; then rm -v $@; fi
-	$(cmd) test -d $@ && touch $@ || $(mkdir_p) $@
+	$(cmd) test -d $@ && touch $@ || $(MKDIR_P) $@
 
 # Target suitable for command line
 xml-en: xml/en ;
@@ -393,7 +394,7 @@ xmllint-%: log/%-xmllint.log
 # HIDE FROM AUTOMAKE #	$$(cmd) if type $$(XMLLINT) >/dev/null 2>&1; then \
 # HIDE FROM AUTOMAKE #		echo "*** Validating XML ($(1)) ... "; \
 # HIDE FROM AUTOMAKE #		$$(XMLLINT) $$(XMLLINTFLAGS) --xinclude xml/$(1)/gimp.xml \
-# HIDE FROM AUTOMAKE #		| sed -e 's,xmlns:xi="http://www.w3.org/2001/XInclude",,' \
+# HIDE FROM AUTOMAKE #		| $(SED) -e 's,xmlns:xi="http://www.w3.org/2001/XInclude",,' \
 # HIDE FROM AUTOMAKE #		| $$(XMLLINT) $$(XMLLINTFLAGS) --nonet --valid \
 # HIDE FROM AUTOMAKE #			--output log/$(1).xml - 2>$$(@); \
 # HIDE FROM AUTOMAKE #		if test -s $$(@); then \
@@ -450,7 +451,7 @@ html/images: FORCE
 	$(cmd) if test -L $@; then rm -v $@; fi
 
 html/%/images: xml/%/images
-	$(cmd) test -d html/$* || $(mkdir_p) html/$*
+	$(cmd) test -d html/$* || $(MKDIR_P) html/$*
 	$(cmd) $(LN_S) ../../xml/$*/images $@
 
 # The xrefs file is a side effect of the HTML build
@@ -487,7 +488,7 @@ pdf-%: pdf/%/gimp.pdf ;
 # TODO: images (--fig-path option?); prerequisites
 pdf/%/gimp.pdf: xml/%/gimp.xml stylesheets/plainprint.xsl xml/%/images
 	$(cmd) if test -f pdf/%.pdf; then rm -f pdf/%.pdf; fi
-	$(cmd) test -d pdf/$* || $(mkdir_p) pdf/$*
+	$(cmd) test -d pdf/$* || $(MKDIR_P) pdf/$*
 	$(msg) "*** Making PDF ($*) ..."
 	$(cmd) $(DBLATEX) $(DBLATEXFLAGS) $(DBLATEXEXTRAFLAGS) \
 	    --xsl-user=$(srcdir)/stylesheets/plainprint.xsl \
@@ -513,7 +514,7 @@ odf-%: odf/%/gimp.odt ;
 # TODO: images; prerequisites
 odf/%/gimp.odt: xml/%/gimp-alldocs.xml xml/%/images
 	$(cmd) if test -f odf/%.odt; then rm -f odf/%.odt; fi
-	$(cmd) test -d odf/$* || $(mkdir_p) odf/$*
+	$(cmd) test -d odf/$* || $(MKDIR_P) odf/$*
 	$(msg) "*** Making ODF ($*) ..."
 	$(cmd) $(DOCBOOK2ODF) $(DOCBOOK2ODFFLAGS) \
 	    --debug -v \
@@ -548,15 +549,15 @@ endif
 
 %.draft: %.xml stylesheets/drafthtml.xsl
 	@echo "Making draft page(s), ignore any XSLT complaints:"
-	$(cmd) id=`sed -e 's/.*id=.//; tmatch; d; :match; s/["'"'"'].*//; q' $<`; \
+	$(cmd) id=`$(SED) -e 's/.*id=.//; tmatch; d; :match; s/["'"'"'].*//; q' $<`; \
 	test -n "$$id" || id=noname; \
 	langs="$(shell echo $@ | \
-	               sed -e 's,^src/.*,$(LANGUAGES),; t' \
-	                   -e 's,^xml/\([^/]\+\)/.*,\1,')"; \
+	               $(SED) -e 's,^src/.*,$(LANGUAGES),; t' \
+	                      -e 's,^xml/\([^/]\+\)/.*,\1,')"; \
 	for lang in $${langs}; do \
 		destdir=html/$${lang}; \
 		test -d $${destdir} && continue || \
-		$(mkdir_p) $${destdir}; \
+		$(MKDIR_P) $${destdir}; \
 		cp -fp $(srcdir)/stylesheets/*.css \
 		       $(srcdir)/stylesheets/$$lang/*.css \
 		    $${destdir} 2>/dev/null; \
@@ -590,7 +591,7 @@ endif
 .SECONDARY: $(tarball_prefix)-%.tar
 $(tarball_prefix)-%.tar: html/%/index.html html/%/gimp-help.xml
 	$(cmd) rm -rf $(tarball_prefix)-$*
-	$(cmd) $(mkdir_p) $(tarball_prefix)-$*
+	$(cmd) $(MKDIR_P) $(tarball_prefix)-$*
 	$(cmd) cd $(tarball_prefix)-$* && $(LN_S) ../html/$* .
 	$(cmd) cd $(tarball_prefix)-$* && $(LN_S) ../html/images .
 	$(cmd) tar -chf $@ --exclude .svn $(tarball_prefix)-$*
@@ -614,40 +615,57 @@ html-dist: \
 		$(tarball_prefix)-$(lang).zip \
 	)
 
-## TODO ## #### Miscellaneous checks
 
-## TODO ## .PHONY: checks check-lang-attributes check-svn-property check-image-references
+########################################################################
+####            Source file checks                                  ####
+########################################################################
 
-## TODO ## # Note that the default (autoconf) target name is "check".
-## TODO ## checks: check-svn-property check-image-references
+# Note that the default (autoconf) target name is "check".
+checks: check-svn-property check-image-references ;
+check-svn: check-svn-property ;
+check-images: check-image-references ;
 
-## TODO ## check-svn-property:
-## TODO ## 	@if cd $(srcdir) && test -e tools/check_keywords_property.pl && \
-## TODO ## 	type perl >/dev/null 2>&1; then \
-## TODO ## 	    echo "*** Checking svn property ... "; \
-## TODO ## 	    perl tools/check_keywords_property.pl -v || true; \
-## TODO ## 	else \
-## TODO ## 	    echo >&2 "*** Cannot check svn property (no Perl installed?) ***"; \
-## TODO ## 	fi
+check-svn-property:
+	$(cmd) if cd $(srcdir) && test -e tools/check_keywords_property.pl && \
+	type perl >/dev/null 2>&1; then \
+	    echo "*** Checking svn property ... "; \
+	    perl tools/check_keywords_property.pl -v || true; \
+	else \
+	    echo >&2 "*** Cannot check svn property (no Perl installed?) ***"; \
+	fi
 
-## TODO ## check-image-references:
-## TODO ## 	@if cd $(srcdir) && test -e tools/validate_references.py && \
-## TODO ## 	type python >/dev/null 2>&1; then \
-## TODO ## 	    echo "*** Checking image references ... "; \
-## TODO ## 	    python tools/validate_references.py --verbose --broken --orphaned || true; \
-## TODO ## 	else \
-## TODO ## 	    echo >&2 "*** Cannot check image references (no Python installed?) ***"; \
-## TODO ## 	fi
+check-image-references:
+	$(cmd) if cd $(srcdir) && test -e tools/validate_references.py && \
+	type python >/dev/null 2>&1; then \
+	    echo "*** Checking image references ... "; \
+	    python tools/validate_references.py \
+	        --verbose --broken --orphaned \
+		$(VALIDATEREFERENCESFLAGS); \
+	else \
+	    echo >&2 "*** Cannot check image references (no Python installed?) ***"; \
+	fi
+
+check-images-%: FORCE
+	$(cmd) $(MAKE) --no-print-directory check-image-references \
+		VALIDATEREFERENCESFLAGS="--imgdir=images/C,images/$*"
+
+# special case 'en':
+check-images-en check-images-C: check-image-references ;
+
+.PHONY: checks check-svn-property check-image-references
+
+
+
 
 ## TODO ## #### Installation
 ## TODO ## 
 ## TODO ## install-data-local:
-## TODO ## 	$(mkdir_p) $(DESTDIR)$(helpdir)
+## TODO ## 	$(MKDIR_P) $(DESTDIR)$(helpdir)
 ## TODO ## 
 ## TODO ## 	@$(echo_n) "** Installing HTML:"
 ## TODO ## 	@cd html && \
 ## TODO ## 	for lang in $(ALL_LINGUAS); do \
-## TODO ## 		$(mkdir_p) $(DESTDIR)$(helpdir)/$$lang && $(echo_n) " $$lang"; \
+## TODO ## 		$(MKDIR_P) $(DESTDIR)$(helpdir)/$$lang && $(echo_n) " $$lang"; \
 ## TODO ## 		find $$lang $(html_files_find_predicates) | \
 ## TODO ## 		while read file; do \
 ## TODO ## 		  $(INSTALL_DATA) $$file $(DESTDIR)$(helpdir)/$$file || exit 66; \
@@ -667,7 +685,7 @@ html-dist: \
 ## TODO ## 		  *.gif) $(echo_n) G ;; \
 ## TODO ## 		esac; \
 ## TODO ## 		test -d $(DESTDIR)$(helpdir)/$${file%/*} || \
-## TODO ## 		$(mkdir_p) $(DESTDIR)$(helpdir)/$${file%/*}; \
+## TODO ## 		$(MKDIR_P) $(DESTDIR)$(helpdir)/$${file%/*}; \
 ## TODO ## 		$(INSTALL) $(top_srcdir)/$$file $(DESTDIR)$(helpdir)/$$file || exit 66; \
 ## TODO ## 	done
 ## TODO ## 	@echo .
