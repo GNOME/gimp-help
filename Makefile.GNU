@@ -42,10 +42,15 @@ DBLATEXFLAGS     = --verbose
 DOCBOOK2ODF      = docbook2odf
 DOCBOOK2ODFFLAGS =
 
+XDGOPEN = xdg-open
+
 # Standard shell commands
 echo_n  = echo -n
 mkdir_p = mkdir -p
 ln_s    = ln -s
+
+# Calling make recursively
+RMAKE = $(MAKE) -f Makefile.GNU $(MAKEFLAGS) --no-print-directory
 
 # FIXME/TODO:
 #     make it work with srcdir != builddir
@@ -248,7 +253,7 @@ $(POT_FILES): pot/%.pot : src/%.xml
 
 # Targets suitable for command line
 # ("make pot" will work even if pot exists)
-pot update-pot: potfiles ;
+pot: potfiles ;
 potfiles: $(POT_FILES) ;
 
 
@@ -262,22 +267,16 @@ $$($(1)_PO_FILES): po/$(1)/%.po : pot/%.pot
 	$$(cmd) $$(call make_target_dir,$$@)
 	$$(msg) "[PO]  $$@"
 	$$(cmd) if test -s $$<; then $$(call pot2po,$$<,$(1),$$@); else touch $$@; fi
-# Debugging
-list-pofiles-$(1) list-po-files-$(1) list-po-$(1):
-	@echo $$($(1)_PO_FILES)
 po-$(1): $$($(1)_PO_FILES)
 	$$(cmd) if test -e messages.mo; then rm -f messages.mo; fi
 endef
-
 $(foreach LANG,$(PO_LANGS),$(eval $(call MAKE_PO_RULES,$(LANG))))
-
-# Targets suitable for command line
-update-po-%: po-%
 
 # Special case 'en': do nothing :-)
 po-en: ;
 
 # Print translation statistics
+
 status-%: po-status-% ;
 po-status-%: po-%
 	$(cmd) perl tools/get_po_status.pl po/$*
@@ -286,6 +285,16 @@ status-all: po-status-all ;
 po-status-all:
 	$(cmd) for podir in po/*; do \
 		perl tools/get_po_status.pl --nofiles --nosummary $${podir} || break; \
+	done
+
+# Force updating po file(s)
+update-po/%.po:
+	$(cmd) pot=`echo $* | sed -e 's|[^/]*|pot|; s/$$/.pot/'`; \
+	$(RMAKE) -W $${pot} po/$*.po
+
+force-po/%:
+	$(cmd) for po in po/$*/*.po; do \
+		$(RMAKE) update-$${po}; \
 	done
 
 
@@ -455,42 +464,59 @@ html/%/gimp-help.xml: html/%/gimp-xrefs.xml stylesheets/makeindex.xsl
 
 
 ########################################################################
-####            HTML draft (single page preview)                    ####
+####            Make HTML draft (single page preview)               ####
 ########################################################################
 
-%.draft: %.xml stylesheets/drafthtml.xsl
-	@echo "Making draft page(s), ignore any XSLT complaints:"
+preview-xml/%.xml: xml/%.xml stylesheets/drafthtml.xsl
 	$(cmd) id=`sed -e 's/.*id=.//; tmatch; d; :match; s/["'"'"'].*//; q' $<`; \
-	test -n "$$id" || id=noname; \
-	langs="$(shell echo $@ | \
-	               sed -e 's,^src/.*,$(LANGUAGES),; t' \
-	                   -e 's,^xml/\([^/]\+\)/.*,\1,')"; \
-	for lang in $${langs}; do \
-		destdir=html/$${lang}; \
-		test -d $${destdir} && continue || \
-		$(mkdir_p) $${destdir}; \
-		cp -fp $(srcdir)/stylesheets/*.css \
-		       $(srcdir)/stylesheets/$$lang/*.css \
-		    $${destdir} 2>/dev/null; \
-	done; \
-	\
-	for lang in $${langs}; do \
-		destdir=html/$${lang}; \
-		echo "Making $${destdir}/$${id}-draft.html ... "; \
-		xmlfile="$<"; xmlfile=$${xmlfile#*/}; \
-		xmlfile=xml/$${lang}/$${xmlfile#$${lang}/}; \
-		if [ "$${lang}" = "no" ]; then lang="nn"; fi; \
-		$(XSLTPROC) \
-		    $(XSLTFLAGS) $(XSLTEXTRAFLAGS) \
-		    --xinclude \
-		    --stringparam l10n.gentext.default.language $${lang} \
-		    --novalid \
-		    --output $${destdir}/$${id}-draft.html \
-		    $(srcdir)/stylesheets/drafthtml.xsl \
-		    $${xmlfile} \
-		; \
-	done && \
-	echo "(Remember that links won't work in a draft file.)"
+	test -n "$${id}" || id=noname; \
+	lang=$(shell echo $< | sed -e 's,^xml/,,; s,/.*,,'); \
+	destdir=html/$${lang}; \
+	$(mkdir_p) $${destdir}; \
+	cp -f $(srcdir)/stylesheets/*.css $(srcdir)/stylesheets/$${lang}/*.css\
+	    $${destdir} 2>/dev/null; \
+	if [ "$${lang}" = "no" ]; then lang="nn"; fi; \
+	destfile="$${destdir}/$${id}-draft.html"; \
+	echo "Making $${destfile} (ignore any XSLT complaints) ..."; \
+	$(XSLTPROC) \
+	    $(XSLTFLAGS) $(XSLTEXTRAFLAGS) \
+	    --xinclude \
+	    --stringparam l10n.gentext.default.language $${lang} \
+	    --novalid \
+	    --output $${destfile} \
+	    $(srcdir)/stylesheets/drafthtml.xsl \
+	    $<
+
+preview-src/%.xml: $(foreach lang,$(LANGUAGES),preview-xml/$(lang)/%.xml)
+	$(msg) "(Remember that links won't work in a draft file.)"
+
+ifeq ("$(XDGOPEN)", "")
+preview-po/%.po: preview-xml/%.xml ;
+else
+preview-po/%.po: preview-xml/%.xml
+	$(cmd) if type xdg-open >/dev/null 2>&1; then \
+		xml=$(shell echo $< | sed -e 's|preview-||'); \
+		lang=`echo $${xml} | sed -e 's,^xml/,,; s,/.*,,'`; \
+		id=`sed -e 's/.*id=.//; tmatch; d; \
+		            :match; s/["'"'"'].*//; q' $${xml}`; \
+		test -n "$${id}" || id=noname; \
+		destfile="html/$${lang}/$${id}-draft.html"; \
+		test -e $${destfile} && xdg-open $${destfile}; \
+	fi
+endif
+
+
+# For backward compatibility:
+
+xml/%.draft: preview-xml/%.xml
+	$(msg) "(Remember that links won't work in a draft file.)"
+
+src/%.draft: preview-src/%.xml ;
+
+# Synonyms
+draft-xml/%.xml: preview-xml/%.xml ;
+draft-src/%.xml: preview-src/%.xml ;
+draft-po/%.po:   preview-po/%.po   ;
 
 
 ########################################################################
@@ -631,13 +657,13 @@ check-image-references:
 	fi
 
 check-images-%: FORCE
-	$(cmd) $(MAKE) --no-print-directory check-image-references \
+	$(cmd) $(RMAKE) check-image-references \
 		VALIDATEREFERENCESFLAGS="--imgdir=images/C,images/$*"
 
 # special case 'en':
 check-images-en check-images-C: check-image-references ;
 
-.PHONY: checks check-svn-property check-image-references
+.PHONY: check-svn-property check-image-references
 
 
 ########################################################################

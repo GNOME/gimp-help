@@ -31,10 +31,11 @@ import os
 import getopt
 import re
 import xml.sax
+import logging
 
-# TODO: use the Python logging system(!?)
-#import logging
-
+# Configure logging
+logging.basicConfig(format="%(message)s", level=logging.WARNING)
+Logger = logging.getLogger()
 
 # Nodes containing filereferences in a DocBook XML file
 IMAGE_NODES = ["imagedata", "graphic", "inlinegraphic"]
@@ -52,9 +53,8 @@ class FileNameContainer(object):
     access methods common to both derived List classes.
 
     """
-    def __init__(self, verbose=0):
-        self.verbose = verbose
-        self.data    = {}
+    def __init__(self):
+        self.data = {}
 
     def __contains__(self, key):
         """Is there an entry 'key'?."""
@@ -78,12 +78,15 @@ class FileNameContainer(object):
         Set the info to False rather than deleting it,
         so that "removing" while iterating is possible.
         """
-        if self.data.has_key(key):
-            self.data[key] = False
+        #if key in self.data: self.data[key] = False
+        self.data[key] = False
+
+    def files(self):
+        return [x for x in self.data if self.data[x]]
 
     def size(self):
         """Return the number of non-empty data entries."""
-        return len([x for x in self.data if self.data[x]])
+        return len(self.files())
 
     def __len__(self):
         """Return the number of data entries."""
@@ -98,10 +101,9 @@ class FileNameContainer(object):
 
     def difference(self, other):
         """Remove entries common to 'self' and 'other'."""
-        for key in self.data.iterkeys():
-            if key in other:
-                self.erase(key)
-                other.erase(key)
+        for key in (k for k in self.data if k in other):
+            self.erase(key)
+            #other.erase(key)
 
 
 class ImageFilesList(FileNameContainer):
@@ -111,8 +113,8 @@ class ImageFilesList(FileNameContainer):
     in the specified 'images/' directory.
 
     """
-    def __init__(self, verbose=0):
-        super(ImageFilesList, self).__init__(verbose)
+    def __init__(self):
+        super(ImageFilesList, self).__init__()
 
     def find(self, imageroot):
         """Search for PNG and JPG files in the image directory."""
@@ -121,48 +123,39 @@ class ImageFilesList(FileNameContainer):
         self.imageroot = os.path.normpath(imageroot)
         imageroot = self.imageroot + "/"
 
-        if self.verbose == 1:
-            sys.stderr.write("searching images in %s ... " % imageroot)
-        elif self.verbose > 1:
-            sys.stderr.write("searching images in %s ... \n" % imageroot)
+        Logger.info("searching images in %s ..." % imageroot)
 
         for root, dirs, files in os.walk(self.imageroot):
-            if self.verbose > 2:
-                sys.stderr.write("    entering " + root + "\n")
             for prune in [ 'callouts', '.svn' ]:
                 if prune in dirs:
                     dirs.remove(prune)
 
-            # ignore images in the first level of the images dir
-            if root.endswith('images'):
-                if self.verbose > 2:
-                    sys.stderr.write("    skipping " + root + "\n")
+            # ignore images in the first level of the images dirs
+            if root == self.imageroot:
+                Logger.debug("skipping root dir %s" % root)
                 continue
 
             # don't care about other files than images files
             for filename in (name for name in files
                                   if IMAGEFILE_REGEX.match(name)):
                 filepath = os.path.join(root, filename)
-                if self.verbose > 1:
-                    sys.stderr.write(filepath + '\n')
+                Logger.debug(filepath)
                 self.add(filepath.replace(imageroot, ""))
 
-        if self.verbose:
-            sys.stderr.write("%d files\n" % len(self.data))
+        Logger.info("found %d images files" % len(self.data))
 
     def report(self):
         """Print the list of orphaned image files, i.e. image files
            which are not referred to in any XML source file.
         """
-        files = [fname for fname in self.data.keys() if self.data[fname]]
-        if self.verbose:
-            colon, plural_s = ":", "s"
-            if len(files) == 0: colon = ""
-            if len(files) == 1: plural_s = ""
-            sys.stderr.write("%d orphaned image file%s%s\n" % \
-                             (len(files), plural_s, colon))
+        files = self.files()
+        Logger.info("%d orphaned image file%s%s" % \
+                    (len(files), char_if("s", len(files) != 1), 
+                                 char_if(":", len(files) != 0)))
+        #sys.stderr.flush()
         for imagefile in sorted(files):
             print "ORPHANED:", os.path.join(self.imageroot, imagefile)
+        sys.stdout.flush()
 
 
 class ImageReferencesList(FileNameContainer):
@@ -173,8 +166,8 @@ class ImageReferencesList(FileNameContainer):
     ('image-file', 'source-file') pairs.
 
     """
-    def __init__(self, verbose=0):
-        super(ImageReferencesList, self).__init__(verbose)
+    def __init__(self):
+        super(ImageReferencesList, self).__init__()
         self.cur_files = []	# stack for files in progress
         self.all_files = 0	# visited files
         self.handler   = XMLHandler(self)
@@ -187,48 +180,46 @@ class ImageReferencesList(FileNameContainer):
         """
         parser = xml.sax.make_parser()
         parser.setContentHandler(self.handler)
+        # "Optionally do not perform Namespace processing
+        # (implies namespace-prefixes)."
         parser.setFeature(xml.sax.handler.feature_namespaces, 0)
+        # "Do not include external general (text) entities."
         parser.setFeature(xml.sax.handler.feature_external_ges, 0)
+        # "Do not include any external parameter entities,
+        # even the external DTD subset."
         parser.setFeature(xml.sax.handler.feature_external_pes, 0)
         return parser
         
     def find(self, source_file):
         """Parse XML files and extract image references."""
 
-        if self.verbose > 1:
-            sys.stderr.write("parsing XML files ... \n")
-        elif self.verbose:
-            sys.stderr.write("parsing XML files ... ")
-
+        Logger.info("parsing XML files ... ")
         self.push_file(source_file)
+        Logger.debug("parsing %s" % source_file)
+
         try:
             self.parser.parse(source_file)
         except xml.sax.SAXException, err:
-            sys.stderr.write("ERROR parsing %s\n" % err)
+            Logger.error("ERROR parsing %s" % err)
         except:
-            sys.stderr.write("ERROR reading %s\n" % source_file)
-        assert(len(self.cur_files) == 1)
+            Logger.error("ERROR reading %s" % source_file)
 
-        if self.verbose > 1:
-            sys.stderr.write("parsed %d files, %d references\n" % \
-                             (self.all_files, self.size()))
-        elif self.verbose:
-            sys.stderr.write("%d files, %d references\n" % \
-                             (self.all_files, self.size()))
+        assert(len(self.cur_files) == 1)
+        Logger.info("parsed %d files, %d references" % \
+                    (self.all_files, len(self.data)))
 
     def report(self):
         """Print the list of broken image referencess
            in the XML source file(s).
         """
-        files = [fname for fname in self.data.keys() if self.data[fname]]
-        if self.verbose:
-            colon, plural_s = ":", "s"
-            if len(files) == 0: colon = ""
-            if len(files) == 1: plural_s = ""
-            sys.stderr.write("%d broken image reference%s%s\n" % \
-                                  (len(files), plural_s, colon))
+        files = self.files()
+        Logger.info("%d broken image reference%s%s" % \
+                    (len(files), char_if("s", len(files) != 1), 
+                                 char_if(":", len(files) != 0)))
+        #sys.stderr.flush()
         for imagefile in sorted(files):
             print "BROKEN: images/%s IN %s" % (imagefile, self.data[imagefile])
+        sys.stdout.flush()
 
     # Internal stack methods to keep track of the opened files
 
@@ -251,6 +242,7 @@ class XMLHandler(xml.sax.handler.ContentHandler):
     def __init__(self, owner):
         #super(XMLHandler, self).__init__()
         self.owner = owner
+
     def startElement(self, name, attrs):
         """Handle image nodes."""
         if name in IMAGE_NODES:
@@ -261,20 +253,18 @@ class XMLHandler(xml.sax.handler.ContentHandler):
             filename = os.path.join(os.path.dirname(self.owner.current_file()),
                                     attrs.getValue('href'))
             if os.path.isfile(filename):
-                if self.owner.verbose > 1:
-                    sys.stderr.write("parsing " + str(filename) + "\n")
-                self.owner.push_file(filename)
                 parser = self.owner.make_parser()
+                self.owner.push_file(filename)
+                Logger.debug("parsing %s" % filename)
                 try:
                     parser.parse(filename)
                 except xml.sax.SAXException, err:
-                    sys.stderr.write("ERROR parsing %s\n" % err)
+                    Logger.error("ERROR parsiong %s" % err)
                 except:
-                    sys.stderr.write("ERROR reading %s\n" % filename)
+                    Logger.error("ERROR reading %s" % filename)
                 self.owner.pop_file()
             else:
-                if self.owner.verbose > 1:
-                    sys.stderr.write("skipping " + str(filename) + "\n")
+                Logger.warn("not parsing %s" % filename)
 
 
 def main():
@@ -294,7 +284,6 @@ def main():
        is the set containing files in I but not in R, that is the set
        of images not referenced in the XML files (orphaned images).
     """
-    verbose                = 0
     gimp_help_root_dir     = "."
     xml_dir                = "src"
     img_dirs               = "images/C"
@@ -314,7 +303,7 @@ def main():
         if opt == "-h" or opt == "--help":
             usage()
         elif opt == "-v" or opt == "--verbose":
-            verbose += 1
+            Logger.setLevel(Logger.getEffectiveLevel() - logging.DEBUG)
         elif opt in ["-r", "--root"]:
             gimp_help_root_dir = arg
         elif opt in ["-x", "--xmldir", "-s", "--srcdir"]:
@@ -338,8 +327,7 @@ def main():
         try:
             os.chdir(gimp_help_root_dir)
         except OSError, (errno, strerror):
-            sys.stderr.write("Error: " + strerror + ": " + \
-                             gimp_help_root_dir +"\n")
+            Logger.error("ERROR: %s: %s" % (strerror, gimp_help_root_dir))
             sys.exit(errno)
 
     # Check for the correct directory.
@@ -363,11 +351,11 @@ def main():
         find_broken_references = True
 
     # Step 1: find all image references.
-    image_refs = ImageReferencesList(verbose)
+    image_refs = ImageReferencesList()
     image_refs.find(xml_root_file)
 
     # Step 2: find all image files. 
-    image_files = ImageFilesList(verbose) 
+    image_files = ImageFilesList() 
     if isinstance(img_dirs, str): img_dirs = [img_dirs]
     for imgdir in img_dirs:
         image_files.find(imgdir)
@@ -389,13 +377,13 @@ def main():
 def usage(exitcode=0, msg=""):
     """Help the user."""
     if exitcode > 0 or msg:
-        sys.stderr.write("Error: " + msg + "\n")
+        sys.stderr.write("Error: %s\n" % msg)
         sys.stderr.write("(try \"%s --help\")\n" % sys.argv[0])
     else:
         sys.stdout.write ( """\
 validate_references - validates image file references in DocBook xml files
 
-Copyright (C) 2006-2008 Róman Joost,
+Copyright (C) 2006-2007 Róman Joost,
           (C) 2008-2009 Róman Joost, Ulf-D. Ehlert
 
 Usage: validate_references.py [options]
@@ -410,6 +398,14 @@ Usage: validate_references.py [options]
         -b | --broken        check for broken links (default action)
 \n""")    
     sys.exit(exitcode)
+
+
+def char_if(char, cond):
+    if cond:
+        return char
+    else:
+        return ""
+
 
 if __name__ == "__main__":
     main()

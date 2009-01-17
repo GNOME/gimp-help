@@ -44,6 +44,9 @@ DBLATEXFLAGS     = --verbose
 ## DOCBOOK2ODF      = docbook2odf
 DOCBOOK2ODFFLAGS =
 
+# Calling make recursively
+RMAKE = $(MAKE) $(MAKEFLAGS) --no-print-directory
+
 # Standard shell commands
 echo_n = echo $(ECHO_N)
 
@@ -312,6 +315,18 @@ update-po-%: po-%
 # Special case 'en': do nothing :-)
 po-en: ;
 
+# Print translation statistics
+
+status-%: po-status-% ;
+po-status-%: po-%
+	$(cmd) perl tools/get_po_status.pl po/$*
+
+status-all: po-status-all ;
+po-status-all:
+	$(cmd) for podir in po/*; do \
+		perl tools/get_po_status.pl --nofiles --nosummary $${podir} || break; \
+	done
+
 
 ########################################################################
 ####            Make XML files:  PO --> XML(non-en)                 ####
@@ -544,42 +559,45 @@ endif
 
 
 ########################################################################
-####            HTML draft (single page preview)                    ####
+####            Make HTML draft (single page preview)               ####
 ########################################################################
 
-%.draft: %.xml stylesheets/drafthtml.xsl
-	@echo "Making draft page(s), ignore any XSLT complaints:"
-	$(cmd) id=`$(SED) -e 's/.*id=.//; tmatch; d; :match; s/["'"'"'].*//; q' $<`; \
-	test -n "$$id" || id=noname; \
-	langs="$(shell echo $@ | \
-	               $(SED) -e 's,^src/.*,$(LANGUAGES),; t' \
-	                      -e 's,^xml/\([^/]\+\)/.*,\1,')"; \
-	for lang in $${langs}; do \
-		destdir=html/$${lang}; \
-		test -d $${destdir} && continue || \
-		$(MKDIR_P) $${destdir}; \
-		cp -fp $(srcdir)/stylesheets/*.css \
-		       $(srcdir)/stylesheets/$$lang/*.css \
-		    $${destdir} 2>/dev/null; \
-	done; \
-	\
-	for lang in $${langs}; do \
-		destdir=html/$${lang}; \
-		echo "Making $${destdir}/$${id}-draft.html ... "; \
-		xmlfile="$<"; xmlfile=$${xmlfile#*/}; \
-		xmlfile=xml/$${lang}/$${xmlfile#$${lang}/}; \
-		if [ "$${lang}" = "no" ]; then lang="nn"; fi; \
-		$(XSLTPROC) \
-		    $(XSLTFLAGS) $(XSLTEXTRAFLAGS) \
-		    --xinclude \
-		    --stringparam l10n.gentext.default.language $${lang} \
-		    --novalid \
-		    --output $${destdir}/$${id}-draft.html \
-		    $(srcdir)/stylesheets/drafthtml.xsl \
-		    $${xmlfile} \
-		; \
-	done && \
-	echo "(Remember that links won't work in a draft file.)"
+preview-xml/%.xml: xml/%.xml stylesheets/drafthtml.xsl
+	$(cmd) id=`sed -e 's/.*id=.//; tmatch; d; :match; s/["'"'"'].*//; q' $<`; \
+	test -n "$${id}" || id=noname; \
+	lang=$(shell echo $< | sed -e 's,^xml/,,; s,/.*,,'); \
+	destdir=html/$${lang}; \
+	$(mkdir_p) $${destdir}; \
+	cp -f $(srcdir)/stylesheets/*.css $(srcdir)/stylesheets/$${lang}/*.css\
+	    $${destdir} 2>/dev/null; \
+	if [ "$${lang}" = "no" ]; then lang="nn"; fi; \
+	destfile="$${destdir}/$${id}-draft.html"; \
+	echo "Making $${destfile} (ignore any XSLT complaints) ..."; \
+	$(XSLTPROC) \
+	    $(XSLTFLAGS) $(XSLTEXTRAFLAGS) \
+	    --xinclude \
+	    --stringparam l10n.gentext.default.language $${lang} \
+	    --novalid \
+	    --output $${destfile} \
+	    $(srcdir)/stylesheets/drafthtml.xsl \
+	    $<
+
+preview-po/%.po: preview-xml/%.xml ;
+
+preview-src/%.xml: $(foreach lang,$(LANGUAGES),preview-xml/$(lang)/%.xml)
+	$(msg) "(Remember that links won't work in a draft file.)"
+
+# For backward compatibility:
+
+xml/%.draft: preview-xml/%.xml
+	$(msg) "(Remember that links won't work in a draft file.)"
+
+src/%.draft: preview-src/%.xml ;
+
+# Synonyms
+draft-xml/%.xml: preview-xml/%.xml ;
+draft-src/%.xml: preview-src/%.xml ;
+draft-po/%.po:   preview-po/%.po   ;
 
 
 ########################################################################
@@ -646,7 +664,7 @@ check-image-references:
 	fi
 
 check-images-%: FORCE
-	$(cmd) $(MAKE) --no-print-directory check-image-references \
+	$(cmd) $(RMAKE) check-image-references \
 		VALIDATEREFERENCESFLAGS="--imgdir=images/C,images/$*"
 
 # special case 'en':
