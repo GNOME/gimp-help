@@ -226,8 +226,7 @@ xml2pot = ($(XML2PO) --output='-' "$(1)" \
           | $(MSGCAT) $(MSGCATFLAGS) - > "$(2)") 2>&1 \
           | $(SED) -e '/image file .* not found/d'
 
-# Merge template (pot) and message catalog (po)
-# or create a new catalog
+# Merge template (pot) and message catalog (po) or create a new catalog
 #
 # Usage:
 #     $(call pot2po,pot-file,language,po-file)
@@ -235,11 +234,11 @@ xml2pot = ($(XML2PO) --output='-' "$(1)" \
 #     $1 - input POT file
 #     $2 - translation language
 #     $3 - output PO file
-# TODO: include compendium (cf. "info msgmerge")
 pot2po = if [ -s $(3) ]; then \
+             with_compendium="$(shell $(call get_compendium,$3))"; \
              tmpfile=$(3).tmp; \
              $(MSGFMT)   $(MSGFMTFLAGS)   $(3); \
-             $(MSGMERGE) $(MSGMERGEFLAGS) $(3) $(1) \
+             $(MSGMERGE) $(MSGMERGEFLAGS) $${with_compendium} $(3) $(1) \
              > $${tmpfile}; \
              test -s  $${tmpfile} && mv -f $${tmpfile} $(3) || rm -f $${tmpfile}; \
          else \
@@ -267,11 +266,28 @@ endif
 
 #--------------------------------------------------------------#
 #       Helper functions                                       #
+#                                                              #
+#       (special thanks to automake for resorting - of         #
+#       course you know it better than any human author!)      #
 #--------------------------------------------------------------#
 
 make_target_dir = f=$(1); d=$${f%/*}; test -d $$d || $(MKDIR_P) $$d
 
 copy = $(LN_S) $(abs_srcdir)/$(1) $(2)
+
+# HIDE FROM AUTOMAKE #ifneq ($(COMPENDIUM),"")
+# HIDE FROM AUTOMAKE #get_compendium = \
+# HIDE FROM AUTOMAKE #	dir="$(1)"; dir=$${dir%/*}; \
+# HIDE FROM AUTOMAKE #	while test "$${dir}" != "po"; do \
+# HIDE FROM AUTOMAKE #		if test -f $${dir}/$(COMPENDIUM); then \
+# HIDE FROM AUTOMAKE #			opt="$${opt} --compendium=$${dir}/$(COMPENDIUM)"; \
+# HIDE FROM AUTOMAKE #		fi; \
+# HIDE FROM AUTOMAKE #		dir="$${dir%/*}"; \
+# HIDE FROM AUTOMAKE #	done; \
+# HIDE FROM AUTOMAKE #	if test -n "$${opt}"; then echo $${opt}; fi
+# HIDE FROM AUTOMAKE #else
+# HIDE FROM AUTOMAKE #get_compendium =
+# HIDE FROM AUTOMAKE #endif
 
 
 ########################################################################
@@ -567,7 +583,7 @@ preview-xml/%.xml: xml/%.xml stylesheets/drafthtml.xsl
 	test -n "$${id}" || id=noname; \
 	lang=$(shell echo $< | sed -e 's,^xml/,,; s,/.*,,'); \
 	destdir=html/$${lang}; \
-	$(mkdir_p) $${destdir}; \
+	test -d $${destdir}/images || $(RMAKE) $${destdir}/images; \
 	cp -f $(srcdir)/stylesheets/*.css $(srcdir)/stylesheets/$${lang}/*.css\
 	    $${destdir} 2>/dev/null; \
 	if [ "$${lang}" = "no" ]; then lang="nn"; fi; \

@@ -166,7 +166,7 @@ xml2pot = ($(XML2PO) --output='-' "$(1)" \
 #     $2 - translation language
 #     $3 - output PO file
 pot2po = if [ -s $(3) ]; then \
-             with_compendium=$(shell $(call get_compendium,$3)); \
+             with_compendium="$(shell $(call get_compendium,$3))"; \
              tmpfile=$(3).tmp; \
              $(MSGFMT)   $(MSGFMTFLAGS)   $(3); \
              $(MSGMERGE) $(MSGMERGEFLAGS) $${with_compendium} $(3) $(1) \
@@ -472,7 +472,7 @@ preview-xml/%.xml: xml/%.xml stylesheets/drafthtml.xsl
 	test -n "$${id}" || id=noname; \
 	lang=$(shell echo $< | sed -e 's,^xml/,,; s,/.*,,'); \
 	destdir=html/$${lang}; \
-	$(mkdir_p) $${destdir}; \
+	test -d $${destdir}/images || $(RMAKE) $${destdir}/images; \
 	cp -f $(srcdir)/stylesheets/*.css $(srcdir)/stylesheets/$${lang}/*.css\
 	    $${destdir} 2>/dev/null; \
 	if [ "$${lang}" = "no" ]; then lang="nn"; fi; \
@@ -494,14 +494,14 @@ ifeq ("$(XDGOPEN)", "")
 preview-po/%.po: preview-xml/%.xml ;
 else
 preview-po/%.po: preview-xml/%.xml
-	$(cmd) if type xdg-open >/dev/null 2>&1; then \
+	$(cmd) if type "$(XDGOPEN)" >/dev/null 2>&1; then \
 		xml=$(shell echo $< | sed -e 's|preview-||'); \
 		lang=`echo $${xml} | sed -e 's,^xml/,,; s,/.*,,'`; \
 		id=`sed -e 's/.*id=.//; tmatch; d; \
 		            :match; s/["'"'"'].*//; q' $${xml}`; \
 		test -n "$${id}" || id=noname; \
 		destfile="html/$${lang}/$${id}-draft.html"; \
-		test -e $${destfile} && xdg-open $${destfile}; \
+		test -e $${destfile} && $(XDGOPEN) $${destfile}; \
 	fi
 endif
 
