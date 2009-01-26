@@ -5,12 +5,10 @@ SUBDIRS = quickreference
 # The GIMP manual languages
 # HIDE FROM AUTOMAKE #ifneq ($(LINGUAS),)
 # HIDE FROM AUTOMAKE #LANGUAGES  = $(LINGUAS)
-# HIDE FROM AUTOMAKE #else
-# HIDE FROM AUTOMAKE #ifneq ($(ALL_LINGUAS),)
+# HIDE FROM AUTOMAKE #else ifneq ($(ALL_LINGUAS),)
 # HIDE FROM AUTOMAKE #LANGUAGES  = $(ALL_LINGUAS)
 # HIDE FROM AUTOMAKE #else
 # HIDE FROM AUTOMAKE #LANGUAGES ?= de en es fr it ko nl no pl ru sv
-# HIDE FROM AUTOMAKE #endif
 # HIDE FROM AUTOMAKE #endif
 
 XML_LANG = en
@@ -101,17 +99,18 @@ dir_predicates =            \
 	        -o          \
 	-type d -print
 
-# list of authors and contributors
+# for generating xml source directories
+src_dir_predicates = -name images -prune -o $(dir_predicates)
+
+# list of authors and contributors (no DocBook)
 AUTHORS_STYLESHEET_XML = stylesheets/authors.xml
 # automatically generated authors section (DocBook)
 AUTHORS_DOCBOOK_XML = src/preface/authors.xml
 
 # lists of source (XML) files and source directories
-XML_DIRS  = $(shell cd $(srcdir) && find src $(dir_predicates))
-XML_FILES = $(shell cd $(srcdir) && find src $(src_find_predicates)) \
+SRC_DIRS  = $(shell cd $(srcdir) && find src $(src_dir_predicates))
+SRC_FILES = $(shell cd $(srcdir) && find src $(src_find_predicates)) \
 	    $(AUTHORS_DOCBOOK_XML)
-# list of source po template files
-POT_FILES = $(XML_FILES:src/%.xml=pot/%.pot)
 
 # stylesheets for HTML
 COMMON_CSS_FILES = \
@@ -140,7 +139,7 @@ EXTRA_DIST = \
 	TERMINOLOGY			\
 	$(COMMON_CSS_FILES)		\
 	$(OTHER_CSS_FILES)		\
-	$(XML_FILES)			\
+	$(SRC_FILES)			\
 	$(XSL_FILES)
 
 # TODO?: rename "plainhtml.xsl" to "html.xsl" and use ...
@@ -214,17 +213,17 @@ $(AUTHORS_DOCBOOK_XML): $(AUTHORS_STYLESHEET_XML) stylesheets/authors_*.xsl
 # Create a PO-template (POT)
 #
 # Usage:
-#     $(call xml2pot,xml-file,pot-file)
+#     $(call xml2pot,xml-files,pot-file)
 # Parameters:
-#     $1 - original (untranslated) XML file
-#     $2 - POT template file containing translatable tags
+#     $1 - input:  original (untranslated) XML files
+#     $2 - output: POT template file containing translatable tags
 #
-# Hint: Do not use 'grep' for filtering-out the warning
+# Hint: Better don't use 'grep' for filtering-out the warning
 # messages, since grep's exit status is 1 if there is no match.
-xml2pot = ($(XML2PO) --output='-' "$(1)" \
+xml2pot = ($(XML2PO) --output='-' $(1) \
           | $(MSGUNIQ) $(MSGUNIQFLAGS) \
           | $(MSGCAT) $(MSGCATFLAGS) - > "$(2)") 2>&1 \
-          | $(SED) -e '/image file .* not found/d'
+          | sed -e '/image file .* not found/d'
 
 # Merge template (pot) and message catalog (po) or create a new catalog
 #
@@ -293,26 +292,40 @@ copy = $(LN_S) $(abs_srcdir)/$(1) $(2)
 ########################################################################
 ####            Make pot files:  XML(en) --> POT                    ####
 ########################################################################
-
-$(POT_FILES): pot/%.pot : src/%.xml
+#
+# xmldir/path/to/file/*.xml --> potdir/path/to/file.pot
+POT_FILES  = $(patsubst src/%,pot/%.pot,$(filter-out src src/,$(SRC_DIRS)))
+# Special case
+POT_FILES += pot/gimp.pot
+#
+# Special case
+pot/gimp.pot: src/*.xml
 	$(cmd) $(call make_target_dir,$@)
 	$(msg) "[POT] $@"
-	$(cmd) if test -s $<; then \
-	  $(call xml2pot,$<,$@);\
-	else \
-	  touch $@; \
-	fi
-
+	$(cmd) $(call xml2pot,$^,$@)
+# Special case: pot file for the authors DocBook file
+# (src/preface/authors.xml, but this may change...)
+# TODO: is there a better way?
+AUTHORS_POT = $(AUTHORS_DOCBOOK_XML:src/%/$(notdir $(AUTHORS_DOCBOOK_XML))=pot/%.pot)
+$(AUTHORS_POT): $(AUTHORS_DOCBOOK_XML) $(wildcard $(dir $(AUTHORS_DOCBOOK_XML))*.xml)
+	$(cmd) $(call make_target_dir,$@)
+	$(msg) "[POT] $@"
+	$(cmd) $(call xml2pot,$^,$@)
+pot/%.pot: src/%/*.xml
+	$(cmd) $(call make_target_dir,$@)
+	$(msg) "[POT] $@"
+	$(cmd) $(call xml2pot,$^,$@)
+#
 # Targets suitable for command line
 # ("make pot" will work even if pot exists)
-pot update-pot: potfiles ;
+pot: potfiles ;
 potfiles: $(POT_FILES) ;
 
 
 ########################################################################
 ####            Make po files:  POT --> PO                          ####
 ########################################################################
-
+#
 # HIDE FROM AUTOMAKE #define MAKE_PO_RULES
 # HIDE FROM AUTOMAKE #$(1)_PO_FILES = $$(patsubst pot/%.pot, po/$(1)/%.po, $$(POT_FILES))
 # HIDE FROM AUTOMAKE #$$($(1)_PO_FILES): po/$(1)/%.po : pot/%.pot
@@ -324,9 +337,6 @@ potfiles: $(POT_FILES) ;
 # HIDE FROM AUTOMAKE #endef
 
 $(foreach LANG,$(PO_LANGS),$(eval $(call MAKE_PO_RULES,$(LANG))))
-
-# Targets suitable for command line
-update-po-%: po-%
 
 # Special case 'en': do nothing :-)
 po-en: ;
@@ -345,26 +355,62 @@ po-status-all:
 
 
 ########################################################################
-####            Make XML files:  PO --> XML(non-en)                 ####
+####            Generate XML prerequisites                          ####
 ########################################################################
 
-# HIDE FROM AUTOMAKE #define MAKE_XML_RULES
-# HIDE FROM AUTOMAKE #$(1)_XML_FILES = $$(XML_FILES:src/%=xml/$(1)/%)
-# HIDE FROM AUTOMAKE #$$($(1)_XML_FILES): xml/$(1)/%.xml : po/$(1)/%.po
+include $(foreach LANG,$(PO_LANGS),xml/$(LANG)/.deps.mk)
+
+# The dynamically generated and updated ".deps.mk" files contain
+# rules to register the po prereqisite for every xml file, e.g.
+#	xml/LANG/*.xml: po/LANG/gimp.po
+#	xml/LANG/filters/*.xml: po/LANG/filters.po
+#	xml/LANG/filters/generic/*.xml: po/LANG/filters/generic.po
+#	etc.
+
+#xml/$(1)/.deps.mk: $(AUTHORS_DOCBOOK_XML) $$($(1)_PO_FILES)
+# TODO: simplify
+# HIDE FROM AUTOMAKE #define MAKE_DEP_RULES
+# HIDE FROM AUTOMAKE #xml/$(1)/.deps.mk: $(AUTHORS_DOCBOOK_XML) $$(SRC_FILES)
 # HIDE FROM AUTOMAKE #	$$(cmd) $$(call make_target_dir,$$@)
+# HIDE FROM AUTOMAKE #	$$(msg) "[DEP] $$@"
+# HIDE FROM AUTOMAKE #	$$(cmd) touch $$@
+# HIDE FROM AUTOMAKE #	$$(cmd) for srcdir in $(SRC_DIRS); do \
+# HIDE FROM AUTOMAKE #		ls $$$${srcdir}/*.xml >/dev/null 2>&1 || continue; \
+# HIDE FROM AUTOMAKE #		srcdir=$$$${srcdir%/}; \
+# HIDE FROM AUTOMAKE #		xmldir=xml/$(1)$$$${srcdir#src}; \
+# HIDE FROM AUTOMAKE #		test "$$$${srcdir}" != "src" || srcdir="src/gimp"; \
+# HIDE FROM AUTOMAKE #		pofile=po/$(1)$$$${srcdir#src}.po; \
+# HIDE FROM AUTOMAKE #		echo "$$$${xmldir}/*.xml: $$$${pofile}"; \
+# HIDE FROM AUTOMAKE #	done > $$@
+# HIDE FROM AUTOMAKE #endef
+# HIDE FROM AUTOMAKE #$(foreach LANG,$(PO_LANGS),$(eval $(call MAKE_DEP_RULES,$(LANG))))
+
+
+########################################################################
+####            Make XML files:  PO --> XML(non-en)                 ####
+########################################################################
+#
+# TODO: check xml/$(1) vs. xml-$(1) prerequisites (XML_FILES)
+# HIDE FROM AUTOMAKE #define MAKE_XML_RULES
+# HIDE FROM AUTOMAKE #$(1)_XML_FILES = $$(SRC_FILES:src/%=xml/$(1)/%)
+# HIDE FROM AUTOMAKE #xml/$(1)/%.xml:
 # HIDE FROM AUTOMAKE #	$$(msg) "[XML] $$@"
-# HIDE FROM AUTOMAKE #	$$(cmd) if test -s $$(@:xml/$(1)/%=src/%); then \
-# HIDE FROM AUTOMAKE #		$$(call po2xml,$$(@:xml/$(1)/%=src/%),$$<,$(1),$$@); \
-# HIDE FROM AUTOMAKE #	else \
-# HIDE FROM AUTOMAKE #		touch $$@; \
-# HIDE FROM AUTOMAKE #	fi
+# HIDE FROM AUTOMAKE #	$$(cmd) $$(call make_target_dir,$$@)
+# HIDE FROM AUTOMAKE #	$$(cmd) xmlfile=$$@; \
+# HIDE FROM AUTOMAKE #	stem=$$*; \
+# HIDE FROM AUTOMAKE #	srcfile=src/$$$${stem}.xml; \
+# HIDE FROM AUTOMAKE #	test "$$$${stem}" != "$$$${stem%/*}" && stem=$$$${stem%/*} || stem=gimp; \
+# HIDE FROM AUTOMAKE #	pofile=po/$(1)/$$$${stem}.po; \
+# HIDE FROM AUTOMAKE #	$(call po2xml,$$$${srcfile},$$$${pofile},$(1),$$@)
+# HIDE FROM AUTOMAKE #
 # HIDE FROM AUTOMAKE ## This is indirectly used as HTML prerequisite:
 # HIDE FROM AUTOMAKE #xml/$(1): $$($(1)_XML_FILES)
-# HIDE FROM AUTOMAKE #	$$(cmd) test -d $$@ && touch $$@ || $(MKDIR_P) $$@
+# HIDE FROM AUTOMAKE #	$$(cmd) test -d $$@ && touch $$@ || $(mkdir_p) $$@
+# HIDE FROM AUTOMAKE #
 # HIDE FROM AUTOMAKE ## Targets suitable for command line
 # HIDE FROM AUTOMAKE #xml-$(1): xml/$(1) $$($(1)_XML_FILES) xml/$(1)/images ;
 # HIDE FROM AUTOMAKE #endef
-$(foreach LANG,$(PO_LANGS),$(eval $(call MAKE_XML_RULES,$(LANG))))
+# HIDE FROM AUTOMAKE #$(foreach LANG,$(PO_LANGS),$(eval $(call MAKE_XML_RULES,$(LANG))))
 
 # TODO: test new image files structure;
 #       use (~1500) image files as prerequisites?
@@ -389,9 +435,10 @@ xml/%/images: FORCE
 		dest=$${image#*/}; \
 		$(call copy,images/$${image},$@/$${dest}); \
 	done
+
 # Special case: en
 
-en_XML_FILES = $(XML_FILES:src/%=xml/en/%)
+en_XML_FILES = $(SRC_FILES:src/%=xml/en/%)
 $(en_XML_FILES): xml/en/%.xml : src/%.xml
 	$(cmd) if test -L xml/en; then rm -v xml/en; fi
 	$(cmd) $(call make_target_dir,$@)

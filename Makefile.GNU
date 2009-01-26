@@ -5,16 +5,14 @@
 # The GIMP manual languages
 ifneq ($(LINGUAS),)
 LANGUAGES  = $(LINGUAS)
-else
-ifneq ($(ALL_LINGUAS),)
+else ifneq ($(ALL_LINGUAS),)
 LANGUAGES  = $(ALL_LINGUAS)
 else
 LANGUAGES ?= de en es fr it ko nl no pl ru sv
 endif
-endif
 
-XML_LANG   = en
-PO_LANGS   = $(filter-out $(XML_LANG), $(LANGUAGES))
+XML_LANG = en
+PO_LANGS = $(filter-out $(XML_LANG), $(LANGUAGES))
 
 # Essential external programs and their default options
 XSLTPROC  = xsltproc
@@ -48,6 +46,7 @@ XDGOPEN = xdg-open
 echo_n  = echo -n
 mkdir_p = mkdir -p
 ln_s    = ln -s
+find_l  = find -L
 
 # Calling make recursively
 RMAKE = $(MAKE) -f Makefile.GNU $(MAKEFLAGS) --no-print-directory
@@ -88,20 +87,19 @@ dir_predicates =            \
 	-name '.svn' -prune \
 	        -o          \
 	-type d -print
+src_dir_predicates = -name images -prune -o $(dir_predicates)
 xml_dir_predicates = $(dir_predicates)
 pot_dir_predicates = $(dir_predicates)
 
-# List of authors and contributors
+# List of authors and contributors (no DocBook)
 AUTHORS_STYLESHEET_XML = stylesheets/authors.xml
 # Automatically generated authors section (DocBook)
 AUTHORS_DOCBOOK_XML = src/preface/authors.xml
 
 # Files & directories
-XML_DIRS  := $(shell cd $(srcdir) && find src $(dir_predicates))
-XML_FILES := $(shell cd $(srcdir) && find src $(xml_file_predicates)) \
+SRC_DIRS  := $(shell cd $(srcdir) && find src $(src_dir_predicates))
+SRC_FILES := $(shell cd $(srcdir) && find src $(xml_file_predicates)) \
 	    $(AUTHORS_DOCBOOK_XML)
-
-POT_FILES  = $(XML_FILES:src/%.xml=pot/%.pot)
 
 # XXX: requires that "plainhtml.xsl" has been renamed to "html.xsl"
 HTML_STYLESHEETS = stylesheets/html*.xsl
@@ -145,14 +143,14 @@ endif
 # Create a PO-template (POT)
 #
 # Usage:
-#     $(call xml2pot,xml-file,pot-file)
+#     $(call xml2pot,xml-files,pot-file)
 # Parameters:
-#     $1 - original (untranslated) XML file
-#     $2 - POT template file containing translatable tags
+#     $1 - input:  original (untranslated) XML files
+#     $2 - output: POT template file containing translatable tags
 #
 # Hint: Better don't use 'grep' for filtering-out the warning
 # messages, since grep's exit status is 1 if there is no match.
-xml2pot = ($(XML2PO) --output='-' "$(1)" \
+xml2pot = ($(XML2PO) --output='-' $(1) \
           | $(MSGUNIQ) $(MSGUNIQFLAGS) \
           | $(MSGCAT) $(MSGCATFLAGS) - > "$(2)") 2>&1 \
           | sed -e '/image file .* not found/d'
@@ -245,11 +243,28 @@ help:
 ####            Make pot files:  XML(en) --> POT                    ####
 ########################################################################
 
-# xmldir/path/to/file.xml --> potdir/path/to/file.pot
-$(POT_FILES): pot/%.pot : src/%.xml
+# xmldir/path/to/file/*.xml --> potdir/path/to/file.pot
+POT_FILES  = $(patsubst src/%,pot/%.pot,$(filter-out src src/,$(SRC_DIRS)))
+# Special case
+POT_FILES += pot/gimp.pot
+
+# Special case
+pot/gimp.pot: src/*.xml
 	$(cmd) $(call make_target_dir,$@)
 	$(msg) "[POT] $@"
-	$(cmd) if test -s $<; then $(call xml2pot,$<,$@); else touch $@; fi
+	$(cmd) $(call xml2pot,$^,$@)
+# Special case: pot file for the authors DocBook file
+# (src/preface/authors.xml, but this may change...)
+# TODO: is there a better way?
+AUTHORS_POT = $(AUTHORS_DOCBOOK_XML:src/%/$(notdir $(AUTHORS_DOCBOOK_XML))=pot/%.pot)
+$(AUTHORS_POT): $(AUTHORS_DOCBOOK_XML) $(wildcard $(dir $(AUTHORS_DOCBOOK_XML))*.xml)
+	$(cmd) $(call make_target_dir,$@)
+	$(msg) "[POT] $@"
+	$(cmd) $(call xml2pot,$^,$@)
+pot/%.pot: src/%/*.xml
+	$(cmd) $(call make_target_dir,$@)
+	$(msg) "[POT] $@"
+	$(cmd) $(call xml2pot,$^,$@)
 
 # Targets suitable for command line
 # ("make pot" will work even if pot exists)
@@ -269,6 +284,11 @@ $$($(1)_PO_FILES): po/$(1)/%.po : pot/%.pot
 	$$(cmd) if test -s $$<; then $$(call pot2po,$$<,$(1),$$@); else touch $$@; fi
 po-$(1): $$($(1)_PO_FILES)
 	$$(cmd) if test -e messages.mo; then rm -f messages.mo; fi
+	$$(cmd) find po/$(1) -name $(COMPENDIUM) -prune -o $$(file_predicates) | \
+	while read pofile; do \
+		potfile=pot/$$$${pofile#po/$(1)/}t; \
+		test -e $$$${potfile} || rm -vf $$$${pofile}; \
+	done
 endef
 $(foreach LANG,$(PO_LANGS),$(eval $(call MAKE_PO_RULES,$(LANG))))
 
@@ -299,19 +319,55 @@ force-po/%:
 
 
 ########################################################################
+####            Generate XML prerequisites                          ####
+########################################################################
+
+ifneq "$(UPDATE)" "nodeps"
+include $(foreach LANG,$(PO_LANGS),xml/$(LANG)/.deps.mk)
+endif
+
+# The dynamically generated and updated ".deps.mk" files contain
+# rules to register the po prereqisite for every xml file, e.g.
+#	xml/LANG/*.xml: po/LANG/gimp.po
+#	xml/LANG/filters/*.xml: po/LANG/filters.po
+#	xml/LANG/filters/generic/*.xml: po/LANG/filters/generic.po
+#	etc.
+
+#xml/$(1)/.deps.mk: $(AUTHORS_DOCBOOK_XML) $$($(1)_PO_FILES)
+# TODO: simplify
+define MAKE_DEP_RULES
+xml/$(1)/.deps.mk: $(AUTHORS_DOCBOOK_XML) $$(SRC_FILES)
+	$$(cmd) $$(call make_target_dir,$$@)
+	$$(msg) "[DEP] $$@"
+	$$(cmd) touch $$@
+	$$(cmd) for srcdir in $(SRC_DIRS); do \
+		ls $$$${srcdir}/*.xml >/dev/null 2>&1 || continue; \
+		srcdir=$$$${srcdir%/}; \
+		xmldir=xml/$(1)$$$${srcdir#src}; \
+		test "$$$${srcdir}" != "src" || srcdir="src/gimp"; \
+		pofile=po/$(1)$$$${srcdir#src}.po; \
+		echo "$$$${xmldir}/*.xml: $$$${pofile}"; \
+	done > $$@
+endef
+$(foreach LANG,$(PO_LANGS),$(eval $(call MAKE_DEP_RULES,$(LANG))))
+
+
+########################################################################
 ####            Make XML files:  PO --> XML(non-en)                 ####
 ########################################################################
 
+# TODO: check xml/$(1) vs. xml-$(1) prerequisites (XML_FILES)
 define MAKE_XML_RULES
-$(1)_XML_FILES = $$(XML_FILES:src/%=xml/$(1)/%)
-$$($(1)_XML_FILES): xml/$(1)/%.xml : po/$(1)/%.po
-	$$(cmd) $$(call make_target_dir,$$@)
+$(1)_XML_FILES = $$(SRC_FILES:src/%=xml/$(1)/%)
+xml/$(1)/%.xml:
 	$$(msg) "[XML] $$@"
-	$$(cmd) if test -s $$(@:xml/$(1)/%=src/%); then \
-		$$(call po2xml,$$(@:xml/$(1)/%=src/%),$$<,$(1),$$@); \
-	else \
-		touch $$@; \
-	fi
+	$$(cmd) $$(call make_target_dir,$$@)
+	$$(cmd) xmlfile=$$@; \
+	stem=$$*; \
+	srcfile=src/$$$${stem}.xml; \
+	test "$$$${stem}" != "$$$${stem%/*}" && stem=$$$${stem%/*} || stem=gimp; \
+	pofile=po/$(1)/$$$${stem}.po; \
+	$(call po2xml,$$$${srcfile},$$$${pofile},$(1),$$@)
 
 # This is indirectly used as HTML prerequisite:
 xml/$(1): $$($(1)_XML_FILES)
@@ -330,13 +386,13 @@ xml/%/images: FORCE
 	$(cmd) if test -d $@; then rm -rf $@/*; fi
 	$(cmd) test -d $@ || $(mkdir_p) $@
 	$(msg) "*** Copying images ($*) ..."
-	$(cmd) (cd images && find common C $(dir_predicates)) | \
+	$(cmd) (cd images && $(find_l) common C $(dir_predicates)) | \
 	while read dir; do \
 		dest=$${dir#*/}; \
 		test "$${dir}" != "$${dest}" || continue; \
 		test -d $@/$${dest} || $(mkdir_p) $@/$${dest}; \
 	done
-	$(cmd) (cd images && find common C $(file_predicates)) | \
+	$(cmd) (cd images && $(find_l) common C $(file_predicates)) | \
 	while read image; do \
 		if [ "$*" != "en" ]; then \
 			localized=$*/$${image#C/}; \
@@ -348,7 +404,7 @@ xml/%/images: FORCE
 
 # Special case: en
 
-en_XML_FILES = $(XML_FILES:src/%=xml/en/%)
+en_XML_FILES = $(SRC_FILES:src/%=xml/en/%)
 $(en_XML_FILES): xml/en/%.xml : src/%.xml
 	$(cmd) if test -L xml/en; then rm -v xml/en; fi
 	$(cmd) $(call make_target_dir,$@)
