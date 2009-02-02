@@ -29,7 +29,7 @@ MSGUNIQFLAGS  =
 MSGCAT        = msgcat 
 MSGCATFLAGS   = --width=$(MSGWIDTH)
 MSGINIT       = msginit
-MSGINITFLAGS  = --no-translator
+MSGINITFLAGS  = --no-translator --width=$(MSGWIDTH)
 MSGFMT        = msgfmt
 MSGFMTFLAGS   = --check --use-fuzzy --statistics
 MSGMERGE      = msgmerge
@@ -40,7 +40,7 @@ DBLATEXFLAGS     = --verbose
 DOCBOOK2ODF      = docbook2odf
 DOCBOOK2ODFFLAGS =
 
-XDGOPEN = xdg-open
+SED = sed
 
 # Standard shell commands
 echo_n  = echo -n
@@ -153,7 +153,7 @@ endif
 xml2pot = ($(XML2PO) --output='-' $(1) \
           | $(MSGUNIQ) $(MSGUNIQFLAGS) \
           | $(MSGCAT) $(MSGCATFLAGS) - > "$(2)") 2>&1 \
-          | sed -e '/image file .* not found/d'
+          | $(SED) -e '/image file .* not found/d'
 
 # Merge template (pot) and message catalog (po) or create a new catalog
 #
@@ -166,12 +166,15 @@ xml2pot = ($(XML2PO) --output='-' $(1) \
 pot2po = if [ -s $(3) ]; then \
              with_compendium="$(shell $(call get_compendium,$3))"; \
              tmpfile=$(3).tmp; \
-             $(MSGFMT)   $(MSGFMTFLAGS)   $(3); \
+             $(MSGFMT) $(MSGFMTFLAGS) $(3); \
+             rm -f messages.po messages.gmo; \
              $(MSGMERGE) $(MSGMERGEFLAGS) $${with_compendium} $(3) $(1) \
              > $${tmpfile}; \
              test -s  $${tmpfile} && mv -f $${tmpfile} $(3) || rm -f $${tmpfile}; \
          else \
-             $(MSGINIT)  $(MSGINITFLAGS) --input $(1) --locale=$(2) --output $(3); \
+             $(MSGINIT) $(MSGINITFLAGS) --input $(1) --locale=$(2) --output=- \
+             | $(SED) -e '/Plural-Forms:/d' \
+             > $(3); \
          fi
 
 # Merge PO file into (translated) XML file
@@ -185,11 +188,11 @@ pot2po = if [ -s $(3) ]; then \
 #     $4 - resulting (translated) XML file
 ifeq ("$(XMLLINT)", "")
 po2xml = $(XML2PO) --po-file=$(2) --language=$(3) --output=$(4) $(1) 2>&1 \
-         | sed -e '/Warning: image file .* not found./d'
+         | $(SED) -e '/Warning: image file .* not found./d'
 else
 po2xml = ($(XML2PO) --po-file=$(2) --language=$(3) --output='-' $(1) \
          | $(XMLLINT) $(XMLLINTFLAGS) --format --output $(4) -) 2>&1 \
-         | sed -e '/Warning: image file .* not found./d'
+         | $(SED) -e '/Warning: image file .* not found./d'
 endif
 
 
@@ -236,7 +239,7 @@ help:
 	'xml-<LANG> ' 'Create/update XML files for language <LANG> (implies po-<LANG>)' \
 	'po-<LANG>  ' 'Create/update PO files for language <LANG> (implies pot)' \
 	'pot        ' 'Create/update POT files'
-	@echo '(where <LANG> is one of' $(shell echo $(LANGUAGES) | sed -e 's/ /,&/g')')'
+	@echo '(where <LANG> is one of' $(shell echo $(LANGUAGES) | $(SED) -e 's/ /,&/g')')'
 
 
 ########################################################################
@@ -269,7 +272,13 @@ pot/%.pot: src/%/*.xml
 # Targets suitable for command line
 # ("make pot" will work even if pot exists)
 pot: potfiles ;
-potfiles: $(POT_FILES) ;
+potfiles: $(POT_FILES)
+	$(msg) "--- Cleaning up pot files ..."
+	$(cmd) find pot $(file_predicates) | \
+	while read potfile; do \
+		potfile=$${potfile#pot/}; srcfile=src/$${potfile%.pot}.xml \
+		test -e $${srcfile} || rm -f $${potfile}; \
+	done
 
 
 ########################################################################
@@ -309,7 +318,7 @@ po-status-all:
 
 # Force updating po file(s)
 update-po/%.po:
-	$(cmd) pot=`echo $* | sed -e 's|[^/]*|pot|; s/$$/.pot/'`; \
+	$(cmd) pot=`echo $* | $(SED) -e 's|[^/]*|pot|; s/$$/.pot/'`; \
 	$(RMAKE) -W $${pot} po/$*.po
 
 force-po/%:
@@ -434,11 +443,12 @@ xmllint-%: log/%-xmllint.log
 	$(cmd) test -s $< && cat $<
 
 define MAKE_XMLLINT_RULES
-log/$(1)-xmllint.log: log $$($(1)_XML_FILES)
+log/$(1)-xmllint.log: $$($(1)_XML_FILES)
+	$$(cmd) $$(call make_target_dir,$$(@))
 	$$(cmd) if type $$(XMLLINT) >/dev/null 2>&1; then \
 		echo "*** Validating XML ($(1)) ... "; \
 		$$(XMLLINT) $$(XMLLINTFLAGS) --xinclude xml/$(1)/gimp.xml \
-		| sed -e 's,xmlns:xi="http://www.w3.org/2001/XInclude",,' \
+		| $$(SED) -e 's,xmlns:xi="http://www.w3.org/2001/XInclude",,' \
 		| $$(XMLLINT) $$(XMLLINTFLAGS) --nonet --valid \
 			--output log/$(1).xml - 2>$$(@); \
 		if test -s $$(@); then \
@@ -524,9 +534,12 @@ html/%/gimp-help.xml: html/%/gimp-xrefs.xml stylesheets/makeindex.xsl
 ########################################################################
 
 preview-xml/%.xml: xml/%.xml stylesheets/drafthtml.xsl
-	$(cmd) id=`sed -e 's/.*id=.//; tmatch; d; :match; s/["'"'"'].*//; q' $<`; \
+	$(cmd) id=`$(SED) -e 's/.*id=.//' -e tmatch \
+	                  -e d -e :match \
+			  -e 's/["'"'"'].*//' \
+			  -e q $<`; \
 	test -n "$${id}" || id=noname; \
-	lang=$(shell echo $< | sed -e 's,^xml/,,; s,/.*,,'); \
+	lang=$(shell echo $< | $(SED) -e 's,^xml/,,; s,/.*,,'); \
 	destdir=html/$${lang}; \
 	test -d $${destdir}/images || $(RMAKE) $${destdir}/images; \
 	cp -f $(srcdir)/stylesheets/*.css $(srcdir)/stylesheets/$${lang}/*.css\
@@ -546,21 +559,9 @@ preview-xml/%.xml: xml/%.xml stylesheets/drafthtml.xsl
 preview-src/%.xml: $(foreach lang,$(LANGUAGES),preview-xml/$(lang)/%.xml)
 	$(msg) "(Remember that links won't work in a draft file.)"
 
-ifeq ("$(XDGOPEN)", "")
-preview-po/%.po: preview-xml/%.xml ;
-else
-preview-po/%.po: preview-xml/%.xml
-	$(cmd) if type "$(XDGOPEN)" >/dev/null 2>&1; then \
-		xml=$(shell echo $< | sed -e 's|preview-||'); \
-		lang=`echo $${xml} | sed -e 's,^xml/,,; s,/.*,,'`; \
-		id=`sed -e 's/.*id=.//; tmatch; d; \
-		            :match; s/["'"'"'].*//; q' $${xml}`; \
-		test -n "$${id}" || id=noname; \
-		destfile="html/$${lang}/$${id}-draft.html"; \
-		test -e $${destfile} && $(XDGOPEN) $${destfile}; \
-	fi
-endif
-
+preview-po/%.po:
+	@echo >&2 "After merging pofiles this feature does not work any more."
+	@echo >&2 "Use 'make ... preview-xml/$*.xml'."
 
 # For backward compatibility:
 

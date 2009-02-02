@@ -164,9 +164,6 @@ if test -z "$MSGINIT" && test "x$enable_build" = "xyes"; then
 ** See the file 'INSTALL' for more help.])
 fi
 
-MSGINITFLAGS="--no-translator"
-AC_SUBST(MSGINITFLAGS)
-
 
 AC_PATH_PROG(MSGMERGE, msgmerge)
 if test -z "$MSGMERGE" && test "x$enable_build" = "xyes"; then

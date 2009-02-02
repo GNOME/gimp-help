@@ -31,7 +31,7 @@ MSGUNIQFLAGS  =
 ## MSGCAT        = msgcat 
 MSGCATFLAGS   = --width=$(MSGWIDTH)
 ## MSGINIT       = msginit
-## MSGINITFLAGS  = --no-translator
+MSGINITFLAGS  = --no-translator --width=$(MSGWIDTH)
 ## MSGFMT        = msgfmt
 ## MSGFMTFLAGS   = --check --use-fuzzy --statistics
 ## MSGMERGE      = msgmerge
@@ -236,12 +236,15 @@ xml2pot = ($(XML2PO) --output='-' $(1) \
 pot2po = if [ -s $(3) ]; then \
              with_compendium="$(shell $(call get_compendium,$3))"; \
              tmpfile=$(3).tmp; \
-             $(MSGFMT)   $(MSGFMTFLAGS)   $(3); \
+             $(MSGFMT) $(MSGFMTFLAGS) $(3); \
+             rm -f messages.po messages.gmo; \
              $(MSGMERGE) $(MSGMERGEFLAGS) $${with_compendium} $(3) $(1) \
              > $${tmpfile}; \
              test -s  $${tmpfile} && mv -f $${tmpfile} $(3) || rm -f $${tmpfile}; \
          else \
-             $(MSGINIT)  $(MSGINITFLAGS) --input $(1) --locale=$(2) --output $(3); \
+             $(MSGINIT) $(MSGINITFLAGS) --input $(1) --locale=$(2) --output=- \
+             | $(SED) -e '/Plural-Forms:/d' \
+             > $(3); \
          fi
 
 # Merge PO file into (translated) XML file
@@ -319,7 +322,13 @@ pot/%.pot: src/%/*.xml
 # Targets suitable for command line
 # ("make pot" will work even if pot exists)
 pot: potfiles ;
-potfiles: $(POT_FILES) ;
+potfiles: $(POT_FILES)
+	$(msg) "--- Cleaning up pot files ..."
+	$(cmd) find pot $(file_predicates) | \
+	while read potfile; do \
+		potfile=$${potfile#pot/}; srcfile=src/$${potfile%.pot}.xml \
+		test -e $${srcfile} || rm -f $${potfile}; \
+	done
 
 
 ########################################################################
@@ -468,7 +477,8 @@ xmllint-%: log/%-xmllint.log
 	$(cmd) test -s $< && cat $<
 
 # HIDE FROM AUTOMAKE #define MAKE_XMLLINT_RULES
-# HIDE FROM AUTOMAKE #log/$(1)-xmllint.log: log $$($(1)_XML_FILES)
+# HIDE FROM AUTOMAKE #log/$(1)-xmllint.log: $$($(1)_XML_FILES)
+# HIDE FROM AUTOMAKE #	$$(cmd) $$(call make_target_dir,$$(@))
 # HIDE FROM AUTOMAKE #	$$(cmd) if type $$(XMLLINT) >/dev/null 2>&1; then \
 # HIDE FROM AUTOMAKE #		echo "*** Validating XML ($(1)) ... "; \
 # HIDE FROM AUTOMAKE #		$$(XMLLINT) $$(XMLLINTFLAGS) --xinclude xml/$(1)/gimp.xml \
@@ -626,7 +636,10 @@ endif
 ########################################################################
 
 preview-xml/%.xml: xml/%.xml stylesheets/drafthtml.xsl
-	$(cmd) id=`sed -e 's/.*id=.//; tmatch; d; :match; s/["'"'"'].*//; q' $<`; \
+	$(cmd) id=`$(SED) -e 's/.*id=.//' -e tmatch \
+	                  -e d -e :match \
+			  -e 's/["'"'"'].*//' \
+			  -e q $<`; \
 	test -n "$${id}" || id=noname; \
 	lang=$(shell echo $< | sed -e 's,^xml/,,; s,/.*,,'); \
 	destdir=html/$${lang}; \
@@ -645,10 +658,12 @@ preview-xml/%.xml: xml/%.xml stylesheets/drafthtml.xsl
 	    $(srcdir)/stylesheets/drafthtml.xsl \
 	    $<
 
-preview-po/%.po: preview-xml/%.xml ;
-
 preview-src/%.xml: $(foreach lang,$(LANGUAGES),preview-xml/$(lang)/%.xml)
 	$(msg) "(Remember that links won't work in a draft file.)"
+
+preview-po/%.po:
+	@echo >&2 "After merging pofiles this feature does not work any more."
+	@echo >&2 "Use 'make ... preview-xml/$*.xml'."
 
 # For backward compatibility:
 

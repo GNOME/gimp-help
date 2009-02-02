@@ -49,7 +49,7 @@ use Getopt::Long;
 use File::Find;
 
 my $PROG = $0;
-my $VERSION = 0.01;
+my $VERSION = 0.02;
 
 my %Languages = (
 	de => "German",
@@ -158,33 +158,36 @@ if ($pid == 0) {
 		my $statistics = `msgfmt --statistics $_ 2>&1`;
 		# TODO: better do regex matching here?
 		chomp $statistics;
-		print "$_ $statistics\n";
+		my $filesize = (lstat())[7] || 0;
+		print "$_ $filesize $statistics\n";
 	}
 	close STDOUT or die "ERROR: Cannot close pipe (w): $!\n";
 	exit;
 }
 
 # Parent process
-my ($translated, $fuzzy, $untranslated) = (0, 0, 0);
+my ($translated, $size, $fuzzy, $untranslated) = (0) x 4;
 my $msg_re = qr/^   (\S+) \s                     # $1 = filename
-                    (\S+) \s translated   \D+    # $2 = translated msgs.
-                (?: (\S+) \s fuzzy        \D+ )? # $3 = fuzzy msgs.
-                (?: (\S+) \s untranslated \D+ )? # $4 = untranslated msgs.
+                    (\d+) \s                     # $2 = filesize
+                    (\S+) \s translated   \D+    # $3 = translated msgs.
+                (?: (\S+) \s fuzzy        \D+ )? # $4 = fuzzy msgs.
+                (?: (\S+) \s untranslated \D+ )? # $5 = untranslated msgs.
                 $/ix;
 while (<MSGFMT>) {
 	m/$msg_re/ or die("ERROR matching msgfmt output '$_'\n");
-	my ($n, $t, $f, $u) = ($1, $2, $3 || 0, $4 || 0);
-	print_file_statistics($n, $t, $f, $u);
+	my ($n, $s, $t, $f, $u) = ($1, $2, $3, $4 || 0, $5 || 0);
+	print_file_statistics($n, $s, $t, $f, $u);
 }
 close MSGFMT or die "ERROR: Cannot close pipe (r): $!\n";
-print_summary($translated, $fuzzy, $untranslated);
+print_summary($translated, $fuzzy, $untranslated, $size);
 
 
 # ------------------------------------------------------
 sub print_file_statistics
 # ------------------------------------------------------
 {
-	my ($n, $t, $f, $u) = @_;
+	my ($n, $s, $t, $f, $u) = @_;
+        $size += $s;
 	$translated += $t;
 	$untranslated += $u;
 	$fuzzy += $f;
@@ -197,18 +200,15 @@ sub print_file_statistics
 sub print_summary
 # ------------------------------------------------------
 {
-	my ($translated, $fuzzy, $untranslated) = @_;
+	my ($translated, $fuzzy, $untranslated, $size) = @_;
 	my $total = $translated + $fuzzy + $untranslated;
 
         if ($Print_summary) {
 		print "\n" if $Print_file_list;
-		print
-		    "total: ", $total, " strings in ",
-		    scalar @Pofiles, " files:\n    ",
-		    "translated=", $translated, " ",
-		    "fuzzy=", $fuzzy, " ",
-		    "untranslated=", $untranslated, " ",
-		    "\n";
+                printf "total: %d strings in %d files (%d Bytes):\n" .
+                       "    translated=%d fuzzy=%d untranslated=%d\n",
+                       $total, scalar @Pofiles, $size,
+                       $translated, $fuzzy, $untranslated;
 	}
 
 	if ($Print_progress) {
