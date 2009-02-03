@@ -223,7 +223,7 @@ $(AUTHORS_DOCBOOK_XML): $(AUTHORS_STYLESHEET_XML) stylesheets/authors_*.xsl
 xml2pot = ($(XML2PO) --output='-' $(1) \
           | $(MSGUNIQ) $(MSGUNIQFLAGS) \
           | $(MSGCAT) $(MSGCATFLAGS) - > "$(2)") 2>&1 \
-          | sed -e '/image file .* not found/d'
+          | $(SED) -e '/image file .* not found/d'
 
 # Merge template (pot) and message catalog (po) or create a new catalog
 #
@@ -641,7 +641,7 @@ preview-xml/%.xml: xml/%.xml stylesheets/drafthtml.xsl
 			  -e 's/["'"'"'].*//' \
 			  -e q $<`; \
 	test -n "$${id}" || id=noname; \
-	lang=$(shell echo $< | sed -e 's,^xml/,,; s,/.*,,'); \
+	lang=$(shell echo $< | $(SED) -e 's,^xml/,,; s,/.*,,'); \
 	destdir=html/$${lang}; \
 	test -d $${destdir}/images || $(RMAKE) $${destdir}/images; \
 	cp -f $(srcdir)/stylesheets/*.css $(srcdir)/stylesheets/$${lang}/*.css\
