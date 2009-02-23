@@ -25,6 +25,7 @@
     <primary>Toolbox</primary>
     <secondary>Brush Tools</secondary>
   </indexterm>
+
   <figure>
     <title>
       <phrase>The Paint Tools (Tools menu)</phrase>
@@ -35,6 +36,7 @@
       </imageobject>
     </mediaobject>
   </figure>
+
   <para>
     The GIMP Toolbox includes thirteen <quote>brush tools</quote>,
     all grouped together at the bottom (in the default arrangement).
@@ -53,6 +55,7 @@
     The feature they all have in common is that all of them are used by moving
     the pointer across the image display, creating brush-strokes. Four of them
   </para>
+
   <itemizedlist>
     <listitem>
       <para>
@@ -75,6 +78,7 @@
       </para>
     </listitem>
   </itemizedlist>
+
   <para>
     behave like the intuitive notion of "painting" with a brush. The others
     use a brush to modify an image in some way rather than paint on it:
@@ -133,6 +137,7 @@
       </para>
     </listitem>
   </itemizedlist>
+
   <para>
     The advantages of using GIMP with a tablet instead of a mouse
     probably show up more clearly for brush tools than anywhere else:
@@ -148,6 +153,7 @@
     such as the Eraser, Smudge tool, etc., and any options you set for
     the tool will be applied.  See the section on <link linkend="gimp-selection-stroke">Stroking</link> for more information.
   </para>
+
   <sect3 id="gimp-tools-brush-modifiers">
     <title>
       <phrase>Key modifiers</phrase>
@@ -161,7 +167,7 @@
           <para>
             Holding down the <keycap>Ctrl</keycap> key has a special effect
             on every brush tool <!--except the ink tool-->. For the Pencil,
-            Paintbrush, Airbrush, Ink Tool, Eraser, and Smudge tools, it
+            Paintbrush, Airbrush, Ink Tool, and Eraser tools, it
             switches them into <quote>color picker</quote> mode, so that
             clicking on an image pixel causes GIMP's foreground to be set
             to the active layer's color at that point (or, for the Eraser,
@@ -169,11 +175,12 @@
             <keycap>Ctrl</keycap> key switches it into a mode where
             clicking sets the reference point for copying. For the Convolve
             tool, the <keycap>Ctrl</keycap> key switches between blur and
-            sharpen modes; the the Dodge/Burn tool, it switches between
+            sharpen modes; for the Dodge/Burn tool, it switches between
             dodging and burning.
           </para>
         </listitem>
       </varlistentry>
+
       <varlistentry>
         <term>
           <keycap>Shift</keycap>
@@ -196,6 +203,7 @@
           </para>
         </listitem>
       </varlistentry>
+
       <varlistentry>
         <term>
           <keycombo>
@@ -216,6 +224,7 @@
       </varlistentry>
     </variablelist>
   </sect3>
+
   <sect3 id="gimp-tool-brush-options">
     <title>
       <phrase>Tool Options</phrase>
@@ -230,9 +239,10 @@
         </imageobject>
       </mediaobject>
     </figure>
+
     <para>
       Many tool options are shared by several brush tools: these are described
-      here. Options that apply only to one specific tool, or to a small number
+      here. Options that apply onltool-options-brushcommony to one specific tool, or to a small number
       of tools, are described in the sections devoted to those tools.
     </para>
     <variablelist id="gimp-tool-painting-modes">
@@ -457,6 +467,7 @@
           </itemizedlist>
         </listitem>
       </varlistentry>
+
       <varlistentry>
         <term>Opacity</term>
         <listitem>
@@ -501,6 +512,7 @@
           </para>
         </listitem>
       </varlistentry>
+
       <varlistentry>
         <term>Scale</term>
         <listitem>
@@ -514,9 +526,40 @@
           </para>
         </listitem>
       </varlistentry>
+
       <varlistentry>
-        <term>Pressure Sensitivity</term>
+        <term>Brush Dynamics</term>
         <listitem>
+          <figure>
+            <title>
+              <phrase>
+                The Brush Dynamics check box.
+              </phrase>
+            </title>
+            <mediaobject>
+              <imageobject>
+                <imagedata format="PNG"
+                           fileref="images/toolbox/brush-dynamics.png"/>
+              </imageobject>
+            </mediaobject>
+          </figure>
+          <para>
+            Brush dynamics let you map different brush parameters, commonly at
+            least size and opacity, to one or more of three input dynamics:
+            pressure, velocity and random. They are mostly used with tablets,
+            but Velocity and Random are also usable with a mouse. The
+            Ink tool, that supported velocity before, has been overhauled and
+            now handles velocity-dependent painting much better.
+          </para>
+          <para>
+            A new option has been added in stroking paths. Stoke Path and
+            Stroke Selection have now a check box for emulating brush
+            dynamics when you stroke using a paint tool. That means that when
+            you stoke, brush pressure and velocity are varying along the length
+            of the stroke. Pressure starts with zero, ramps up to full pressure
+            and then ramps down again to no pressure. Velocity starts from
+            zero and ramps up to full speed by the end of the stroke.
+          </para>
           <para>
             The Pressure Sensitivity section is only meaningful if you are
             using a tablet:  it allows you to decide which aspects of the
@@ -583,6 +626,7 @@
           </variablelist>
         </listitem>
       </varlistentry>
+
       <varlistentry>
         <term>Fade Out</term>
         <listitem>
@@ -626,6 +670,7 @@
           </figure>
         </listitem>
       </varlistentry>
+
       <varlistentry>
         <term>Incremental</term>
         <listitem>
@@ -643,6 +688,7 @@
           </para>
         </listitem>
       </varlistentry>
+
       <varlistentry id="gimp-tool-painting-gradient">
         <term>Color from Gradient</term>
         <listitem>
@@ -747,14 +793,31 @@
                 <para>
                   This option determines what happens if a brushstroke extends
                   farther than the Length specified above. There are three
-                  possibilities: "None" means that the color from the end of
-                  the gradient will be used throughout the remainder of the
-                  stroke; "Sawtooth wave" means that the gradient will be
-                  restarted from the beginning, which will often produce a
-                  color discontinuity; "Triangular wave" means that the
-                  gradient will be traversed in reverse, afterwards bouncing
-                  back and forth until the end of the brushstroke.
+                  possibilities:
                 </para>
+                <itemizedlist>
+                  <listitem>
+                    <para>
+                      <guilabel>None</guilabel> means that the color from the end of
+                      the gradient will be used throughout the remainder of the
+                      stroke;
+                    </para>
+                  </listitem>
+                  <listitem>
+                    <para>
+                      <guilabel>Sawtooth wave</guilabel> means that the gradient will be
+                      restarted from the beginning, which will often produce a
+                      color discontinuity;
+                    </para>
+                  </listitem>
+                  <listitem>
+                    <para>
+                      <guilabel>Triangular wave</guilabel> means that the
+                      gradient will be traversed in reverse, afterwards bouncing
+                      back and forth until the end of the brushstroke.
+                    </para>
+                  </listitem>
+                </itemizedlist>
               </listitem>
             </varlistentry>
           </variablelist>
@@ -763,6 +826,7 @@
     </variablelist>
   </sect3>
   <sect3>
+
     <title>
       <phrase>Further Information</phrase>
     </title>
