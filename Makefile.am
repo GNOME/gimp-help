@@ -223,7 +223,9 @@ $(AUTHORS_DOCBOOK_XML): $(AUTHORS_STYLESHEET_XML) stylesheets/authors_*.xsl
 xml2pot = ($(XML2PO) --output='-' $(1) \
           | $(MSGUNIQ) $(MSGUNIQFLAGS) \
           | $(MSGCAT) $(MSGCATFLAGS) - > "$(2)") 2>&1 \
-          | $(SED) -e '/image file .* not found/d'
+          | $(SED) -e '/image file .* not found/d'; \
+          test -s "$(2)" || rm -f "$(2)"; \
+          test -s "$(2)"
 
 # Merge template (pot) and message catalog (po) or create a new catalog
 #
@@ -233,19 +235,28 @@ xml2pot = ($(XML2PO) --output='-' $(1) \
 #     $1 - input POT file
 #     $2 - translation language
 #     $3 - output PO file
-pot2po = if [ -s $(3) ]; then \
-             with_compendium="$(shell $(call get_compendium,$3))"; \
-             tmpfile=$(3).tmp; \
+pot2po = with_compendium="$(shell $(call get_compendium,$3))"; \
+         tmpfile=$(3).tmp; \
+         if [ -s $(3) ]; then \
              $(MSGFMT) $(MSGFMTFLAGS) $(3); \
              rm -f messages.po messages.gmo; \
-             $(MSGMERGE) $(MSGMERGEFLAGS) $${with_compendium} $(3) $(1) \
-             > $${tmpfile}; \
-             test -s  $${tmpfile} && mv -f $${tmpfile} $(3) || rm -f $${tmpfile}; \
+             $(MSGMERGE) $(MSGMERGEFLAGS) $${with_compendium} \
+                 --output-file $${tmpfile} $(3) $(1); \
          else \
-             $(MSGINIT) $(MSGINITFLAGS) --input $(1) --locale=$(2) --output=- \
-             | $(SED) -e '/Plural-Forms:/d' \
-             > $(3); \
-         fi
+             $(MSGINIT) $(MSGINITFLAGS) --input $(1) --locale=$(2) --output=$(3); \
+             pofile=$(3); \
+             if [ -s $${pofile%/*}.po ]; then \
+                 $(MSGMERGE) $(MSGMERGEFLAGS) $${with_compendium} \
+                     --output-file $${tmpfile} $${pofile%/*}.po $(3); \
+             elif [ -n "$${with_compendium}" ]; then \
+                 $(MSGMERGE) $(MSGMERGEFLAGS) $${with_compendium} \
+	             --output-file $${tmpfile} $(3) $(1); \
+             else \
+                 $(SED) -e '/Plural-Forms:/d' $(3) > $${tmpfile}; \
+             fi; \
+         fi; \
+         test -s $${tmpfile} && mv -f $${tmpfile} $(3) || rm -f $${tmpfile}; \
+         test -s $(3)
 
 # Merge PO file into (translated) XML file
 #
@@ -256,14 +267,8 @@ pot2po = if [ -s $(3) ]; then \
 #     $2 - PO file containing translations
 #     $3 - translation language
 #     $4 - resulting (translated) XML file
-if HAVE_XMLLINT
-po2xml = ($(XML2PO) --po-file=$(2) --language=$(3) --output='-' $(1) \
-         | $(XMLLINT) $(XMLLINTFLAGS) --format --output $(4) -) 2>&1 \
-         | $(SED) -e '/Warning: image file .* not found./d'
-else
 po2xml = $(XML2PO) --po-file=$(2) --language=$(3) --output=$(4) $(1) 2>&1 \
          | $(SED) -e '/Warning: image file .* not found./d'
-endif
 
 
 #--------------------------------------------------------------#
@@ -362,6 +367,12 @@ po-status-all:
 		perl tools/get_po_status.pl --nofiles --nosummary $${podir} || break; \
 	done
 
+# Force updating po file
+update-po/%.po:
+	$(cmd) po=$@; pot=pot/$${po#update-po/*/}t; \
+	$(RMAKE) $${pot} && touch $${pot} && \
+	$(RMAKE) po/$*.po
+
 
 ########################################################################
 ####            Generate XML prerequisites                          ####
@@ -422,7 +433,9 @@ include $(foreach LANG,$(PO_LANGS),xml/$(LANG)/.deps.mk)
 # HIDE FROM AUTOMAKE #$(foreach LANG,$(PO_LANGS),$(eval $(call MAKE_XML_RULES,$(LANG))))
 
 # TODO: test new image files structure;
-#       use (~1500) image files as prerequisites?
+#   how to ensure that $@ is up-to-date without forcing
+#   rebuild (which will also force e.g. html-% to be rebuilt 
+#   -- use (~1500) image files as prerequisites?
 xml/%/images: FORCE
 	$(cmd) if test -L $@; then rm -v $@; fi
 	$(cmd) if test -L xml/$*; then rm -v xml/$*; fi
@@ -483,12 +496,12 @@ xmllint-%: log/%-xmllint.log
 # HIDE FROM AUTOMAKE #		echo "*** Validating XML ($(1)) ... "; \
 # HIDE FROM AUTOMAKE #		$$(XMLLINT) $$(XMLLINTFLAGS) --xinclude xml/$(1)/gimp.xml \
 # HIDE FROM AUTOMAKE #		| $(SED) -e 's,xmlns:xi="http://www.w3.org/2001/XInclude",,' \
-# HIDE FROM AUTOMAKE #		| $$(XMLLINT) $$(XMLLINTFLAGS) --nonet --valid \
+# HIDE FROM AUTOMAKE #		| $$(XMLLINT) $$(XMLLINTFLAGS) --valid \
 # HIDE FROM AUTOMAKE #			--output log/$(1).xml - 2>$$(@); \
 # HIDE FROM AUTOMAKE #		if test -s $$(@); then \
 # HIDE FROM AUTOMAKE #			echo "(You will find log and xml files in log/.)"; \
 # HIDE FROM AUTOMAKE #		else \
-# HIDE FROM AUTOMAKE #			echo "No errors."; \
+# HIDE FROM AUTOMAKE #			echo "$(1): no errors."; \
 # HIDE FROM AUTOMAKE #			rm -f  log/$(1).xml; \
 # HIDE FROM AUTOMAKE #		fi >> $$(@); \
 # HIDE FROM AUTOMAKE #	else \
@@ -513,7 +526,7 @@ html-local: $(foreach lang,$(LANGUAGES),html-$(lang)) ;
 #         html/%/gimp-xrefs.xml  -->  html/%/index.html
 html-%: index-% ;
 
-html/%/index.html: xml/% $(HTML_STYLESHEETS) html/images html/%/images
+html/%/index.html: xml/% $(HTML_STYLESHEETS) html/%/images
 	$(msg) "*** Making html for $* ... "
 	$(cmd) rm -f html/$*/*.*
 
@@ -535,12 +548,9 @@ html/%/index.html: xml/% $(HTML_STYLESHEETS) html/images html/%/images
 	done
 
 # TODO: check/enhance new image files structure
-html/images: FORCE
-	$(cmd) if test -L $@; then rm -v $@; fi
-
 html/%/images: xml/%/images
 	$(cmd) test -d html/$* || $(MKDIR_P) html/$*
-	$(cmd) $(LN_S) ../../xml/$*/images $@
+	$(cmd) test -e $@ || $(LN_S) ../../$< $@
 
 # The xrefs file is a side effect of the HTML build
 html/%/gimp-xrefs.xml: html/%/index.html
@@ -653,7 +663,6 @@ preview-xml/%.xml: xml/%.xml stylesheets/drafthtml.xsl
 	    $(XSLTFLAGS) $(XSLTEXTRAFLAGS) \
 	    --xinclude \
 	    --stringparam l10n.gentext.default.language $${lang} \
-	    --novalid \
 	    --output $${destfile} \
 	    $(srcdir)/stylesheets/drafthtml.xsl \
 	    $<
@@ -682,7 +691,7 @@ draft-po/%.po:   preview-po/%.po   ;
 ####        Language-specific HTML tarballs for distribution        ####
 ########################################################################
 
-# HIDE FROM AUTOMAKE #tarball_prefix := gimp-help-2-html
+tarball_prefix := gimp-help-2-html
 
 .SECONDARY: $(tarball_prefix)-%.tar
 $(tarball_prefix)-%.tar: html/%/index.html html/%/gimp-help.xml

@@ -1,4 +1,4 @@
-#########################################################################
+########################################################################
 ####            Preliminaries: Variables and Functions              ####
 ########################################################################
 
@@ -97,9 +97,15 @@ AUTHORS_STYLESHEET_XML = stylesheets/authors.xml
 AUTHORS_DOCBOOK_XML = src/preface/authors.xml
 
 # Files & directories
+ifneq "$(MAKECMDGOALS)" "help"
 SRC_DIRS  := $(shell cd $(srcdir) && find src $(src_dir_predicates))
 SRC_FILES := $(shell cd $(srcdir) && find src $(xml_file_predicates)) \
-	    $(AUTHORS_DOCBOOK_XML)
+             $(AUTHORS_DOCBOOK_XML)
+else
+SRC_DIRS   = $(shell cd $(srcdir) && find src $(src_dir_predicates))
+SRC_FILES  = $(shell cd $(srcdir) && find src $(xml_file_predicates)) \
+             $(AUTHORS_DOCBOOK_XML)
+endif
 
 # XXX: requires that "plainhtml.xsl" has been renamed to "html.xsl"
 HTML_STYLESHEETS = stylesheets/html*.xsl
@@ -153,7 +159,9 @@ endif
 xml2pot = ($(XML2PO) --output='-' $(1) \
           | $(MSGUNIQ) $(MSGUNIQFLAGS) \
           | $(MSGCAT) $(MSGCATFLAGS) - > "$(2)") 2>&1 \
-          | $(SED) -e '/image file .* not found/d'
+          | $(SED) -e '/image file .* not found/d'; \
+          test -s "$(2)" || rm -f "$(2)"; \
+          test -s "$(2)"
 
 # Merge template (pot) and message catalog (po) or create a new catalog
 #
@@ -163,19 +171,28 @@ xml2pot = ($(XML2PO) --output='-' $(1) \
 #     $1 - input POT file
 #     $2 - translation language
 #     $3 - output PO file
-pot2po = if [ -s $(3) ]; then \
-             with_compendium="$(shell $(call get_compendium,$3))"; \
-             tmpfile=$(3).tmp; \
+pot2po = with_compendium="$(shell $(call get_compendium,$3))"; \
+         tmpfile=$(3).tmp; \
+         if [ -s $(3) ]; then \
              $(MSGFMT) $(MSGFMTFLAGS) $(3); \
              rm -f messages.po messages.gmo; \
-             $(MSGMERGE) $(MSGMERGEFLAGS) $${with_compendium} $(3) $(1) \
-             > $${tmpfile}; \
-             test -s  $${tmpfile} && mv -f $${tmpfile} $(3) || rm -f $${tmpfile}; \
+             $(MSGMERGE) $(MSGMERGEFLAGS) $${with_compendium} \
+                 --output-file $${tmpfile} $(3) $(1); \
          else \
-             $(MSGINIT) $(MSGINITFLAGS) --input $(1) --locale=$(2) --output=- \
-             | $(SED) -e '/Plural-Forms:/d' \
-             > $(3); \
-         fi
+             $(MSGINIT) $(MSGINITFLAGS) --input $(1) --locale=$(2) --output=$(3); \
+             pofile=$(3); \
+             if [ -s $${pofile%/*}.po ]; then \
+                 $(MSGMERGE) $(MSGMERGEFLAGS) $${with_compendium} \
+                     --output-file $${tmpfile} $${pofile%/*}.po $(3); \
+             elif [ -n "$${with_compendium}" ]; then \
+                 $(MSGMERGE) $(MSGMERGEFLAGS) $${with_compendium} \
+	             --output-file $${tmpfile} $(3) $(1); \
+             else \
+                 $(SED) -e '/Plural-Forms:/d' $(3) > $${tmpfile}; \
+             fi; \
+         fi; \
+         test -s $${tmpfile} && mv -f $${tmpfile} $(3) || rm -f $${tmpfile}; \
+         test -s $(3)
 
 # Merge PO file into (translated) XML file
 #
@@ -186,7 +203,7 @@ pot2po = if [ -s $(3) ]; then \
 #     $2 - PO file containing translations
 #     $3 - translation language
 #     $4 - resulting (translated) XML file
-ifeq ("$(XMLLINT)", "")
+ifneq ("$(FORMAT_XML_WITH_XMLLINT)", "1")
 po2xml = $(XML2PO) --po-file=$(2) --language=$(3) --output=$(4) $(1) 2>&1 \
          | $(SED) -e '/Warning: image file .* not found./d'
 else
@@ -223,7 +240,7 @@ endif
 ####            Main targets                                        ####
 ########################################################################
 
-first: all
+.PHONY: all
 all: html index AUTHORS
 
 
@@ -232,14 +249,33 @@ all: html index AUTHORS
 ########################################################################
 
 .PHONY: help
-help:
-	@echo 'Common targets:'
-	@printf '  %s\t- %s.\n' \
-	'html-<LANG>' 'Build HTML for language <LANG> (implies xml-<LANG>)' \
-	'xml-<LANG> ' 'Create/update XML files for language <LANG> (implies po-<LANG>)' \
-	'po-<LANG>  ' 'Create/update PO files for language <LANG> (implies pot)' \
-	'pot        ' 'Create/update POT files'
-	@echo '(where <LANG> is one of' $(shell echo $(LANGUAGES) | $(SED) -e 's/ /,&/g')')'
+make.help:
+	@echo >&2 'ERROR: cannot find the help file "$@"!'
+	@exit 66
+# TODO: replace with a "real" script tools/what-ever(?)
+#   (probably "yes" if more features are needed...)
+help: make.help
+	$(cmd) $(SED) \
+	    -e '### skip comments ###' \
+	    -e '/^#/d' \
+	    -e '### print if no "make" variable found ###' \
+	    -e '/@/!b' \
+	    -e '### replace "make" variables ###' \
+	    -e 's/@LANGUAGES@/@$(LANGUAGES)@/' \
+	    -e 's/@LINGUAS@/@$(LINGUAS)@/' \
+	    -e 's/@ALL_LINGUAS@/@$(ALL_LINGUAS)@/' \
+	    -e '### add commas ###' \
+	    -e 'tloop' \
+	    -e ':loop' \
+	    -e '    ### mark value of variable (@@...@@) ###' \
+	    -e '    s/@\([^@]*\)@/@@\1@@/' \
+	    -e '    twhile' \
+	    -e '    :while' \
+	    -e '        s/\(@@[^,@]*\) \([^@]*@@\)/\1, \2/' \
+	    -e '    twhile' \
+	    -e '    s/@@\([^@]*\)@@/\1/' \
+	    -e 'tloop' \
+	$<
 
 
 ########################################################################
@@ -318,8 +354,9 @@ po-status-all:
 
 # Force updating po file(s)
 update-po/%.po:
-	$(cmd) pot=`echo $* | $(SED) -e 's|[^/]*|pot|; s/$$/.pot/'`; \
-	$(RMAKE) -W $${pot} po/$*.po
+	$(cmd) po=$@; pot=pot/$${po#update-po/*/}t; \
+	$(RMAKE) $${pot} && touch $${pot} && \
+	$(RMAKE) po/$*.po
 
 force-po/%:
 	$(cmd) for po in po/$*/*.po; do \
@@ -331,9 +368,11 @@ force-po/%:
 ####            Generate XML prerequisites                          ####
 ########################################################################
 
-ifneq "$(UPDATE)" "nodeps"
+#ifneq "$(MAKECMDGOALS)" "help"
+#ifneq "$(UPDATE)" "nodeps"
 include $(foreach LANG,$(PO_LANGS),xml/$(LANG)/.deps.mk)
-endif
+#endif
+#endif
 
 # The dynamically generated and updated ".deps.mk" files contain
 # rules to register the po prereqisite for every xml file, e.g.
@@ -388,7 +427,9 @@ endef
 $(foreach LANG,$(PO_LANGS),$(eval $(call MAKE_XML_RULES,$(LANG))))
 
 # TODO: test new image files structure;
-#       use (~1500) image files as prerequisites?
+#   how to ensure that $@ is up-to-date without forcing
+#   rebuild (which will also force e.g. html-% to be rebuilt)
+#   -- use (~1500) image files as prerequisites?
 xml/%/images: FORCE
 	$(cmd) if test -L $@; then rm -v $@; fi
 	$(cmd) if test -L xml/$*; then rm -v xml/$*; fi
@@ -449,12 +490,12 @@ log/$(1)-xmllint.log: $$($(1)_XML_FILES)
 		echo "*** Validating XML ($(1)) ... "; \
 		$$(XMLLINT) $$(XMLLINTFLAGS) --xinclude xml/$(1)/gimp.xml \
 		| $$(SED) -e 's,xmlns:xi="http://www.w3.org/2001/XInclude",,' \
-		| $$(XMLLINT) $$(XMLLINTFLAGS) --nonet --valid \
+		| $$(XMLLINT) $$(XMLLINTFLAGS) --valid \
 			--output log/$(1).xml - 2>$$(@); \
 		if test -s $$(@); then \
 			echo "(You will find log and xml files in log/.)"; \
 		else \
-			echo "No errors."; \
+			echo "$(1): no errors."; \
 			rm -f  log/$(1).xml; \
 		fi >> $$(@); \
 	else \
@@ -478,7 +519,7 @@ html: $(foreach lang,$(LANGUAGES),html-$(lang)) ;
 #         html/%/gimp-xrefs.xml  -->  html/%/index.html
 html-%: index-% ;
 
-html/%/index.html: xml/% $(HTML_STYLESHEETS) html/images html/%/images
+html/%/index.html: xml/% $(HTML_STYLESHEETS) html/%/images
 	$(msg) "*** Making html for $* ... "
 	$(cmd) rm -f html/$*/*.*
 
@@ -500,12 +541,9 @@ html/%/index.html: xml/% $(HTML_STYLESHEETS) html/images html/%/images
 	done
 
 # TODO: check/enhance new image files structure
-html/images: FORCE
-	$(cmd) if test -L $@; then rm -v $@; fi
-
 html/%/images: xml/%/images
 	$(cmd) test -d html/$* || $(mkdir_p) html/$*
-	$(cmd) $(ln_s) ../../xml/$*/images $@
+	$(cmd) test -e $@ || $(ln_s) ../../$< $@
 
 # The xrefs file is a side effect of the HTML build
 html/%/gimp-xrefs.xml: html/%/index.html
@@ -551,7 +589,6 @@ preview-xml/%.xml: xml/%.xml stylesheets/drafthtml.xsl
 	    $(XSLTFLAGS) $(XSLTEXTRAFLAGS) \
 	    --xinclude \
 	    --stringparam l10n.gentext.default.language $${lang} \
-	    --novalid \
 	    --output $${destfile} \
 	    $(srcdir)/stylesheets/drafthtml.xsl \
 	    $<
@@ -742,3 +779,4 @@ dot: build-system.png
 	fi
 
 
+.NOEXPORT:

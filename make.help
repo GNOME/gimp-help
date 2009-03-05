@@ -1,0 +1,62 @@
+# Help text for the GIMP-manual build system.
+# 
+# This text will be printed when you type
+#	make [...] help
+# where @LANGUAGES@ (and @ALL_LINGUAS@ & @LINGUAS@) are
+# replaced with the value of the respective 'make' variable
+# and lines starting with '#' (comments) are skipped.
+# 
+# Feel free to enhance this text... :-)
+#
+
+Default (main) targets:
+  all              Create/update AUTHORS file and HTML
+                     (same as "make [..] html AUTHORS" or just "make [..]")
+  html             Create/update HTML for all languages
+                     (@LANGUAGES@)
+  AUTHORS          Create/update AUTHORS file
+
+GIMP-manual targets:
+  html-LANG        Build HTML for language LANG (implies xml-LANG)
+  pdf-LANG         Build  PDF for language LANG (implies xml-LANG)
+  odf-LANG         Build  ODF for language LANG (implies xml-LANG)
+#    (LANG is one of @LANGUAGES@)
+
+  Omitting LANG (e.g."make [..] html") is equivalent to making target
+  for all languages: @LANGUAGES@
+
+  WARNING: Making HTML (or PDF, ODF, XML) will automatically update
+  -------  po files if necessary. This may lead to unintended commits
+           when working directly on an SVN sandbox.
+
+Internal targets (intermediate stages):
+  pot              Create/update POT files
+  po-LANG          Create/update  PO files for language LANG (implies pot)
+  xml-LANG         Create/update XML files for language LANG (implies po-LANG)
+#    (LANG is one of @LANGUAGES@)
+
+Special (helper) targets for documenters and translators:
+  status-LANG      Show translation progress for language LANG
+  update-po/LANG/path/to/pofile.po
+                   Force re-making of pofile (useful if you updated
+                   the Compendium.po)
+  preview-xml/LANG/path/to/xmlfile.xml
+                   Make a single draft HTML file
+
+Checks:
+  validate-LANG    Validate XML for language LANG via 'xmllint'
+  validate         Same as "validate-en"
+  check-images-LANG
+                   Find broken image references and orphaned image files
+                   for language LANG
+  check-images     Same as "check-images-en"
+
+Special (helper) targets for build-system development:
+  dot              Create a visualized version of the Makefile dependencies
+                   (this is not up-to-date!)
+
+Make variables (can be overriden at command-line):
+  LANGUAGES="..."  Space-separated list of manual languages (e.g. "en de fr")
+  VERBOSE=0|1|2    Controls the amount of output messages:
+                     1 = "beauty" (default), 2 = all, 0 = silent (more or less)
+
