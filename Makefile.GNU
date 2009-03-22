@@ -352,6 +352,10 @@ po-status-all:
 		perl tools/get_po_status.pl --nofiles --nosummary $${podir} || break; \
 	done
 
+todo-%: po-todo-% ;
+po-todo-%: po-%
+	$(cmd) perl tools/get_po_status.pl --todo po/$*
+
 # Force updating po file(s)
 update-po/%.po:
 	$(cmd) po=$@; pot=pot/$${po#update-po/*/}t; \
@@ -456,17 +460,32 @@ xml/%/images: FORCE
 
 en_XML_FILES = $(SRC_FILES:src/%=xml/en/%)
 $(en_XML_FILES): xml/en/%.xml : src/%.xml
-	$(cmd) if test -L xml/en; then rm -v xml/en; fi
+	$(msg) "[XML] $@ (copy)"
 	$(cmd) $(call make_target_dir,$@)
-	$(msg) "[XML] $@"
-	$(cmd) $(call copy,$<,$@)
+	$(cmd) cp -f $< $@
 
 xml/en: $(en_XML_FILES)
-	$(cmd) if test -L $@; then rm -v $@; fi
 	$(cmd) test -d $@ && touch $@ || $(mkdir_p) $@
 
+# remove stale xml files
+cleanup-xml-%:
+	$(cmd) find xml/$* $(file_predicates) | \
+	while read xmlfile; do \
+		test -e src/$${xmlfile#xml/$*/} || rm -vf $${xmlfile}; \
+	done
+
+# Workaround until everybody's links in xml/en
+# have been replaced with real files.
+# TODO: remove this target after a few weeks (e.g. on 2009-05-01)
+cleanup-xml-en:
+	$(cmd) find xml/en $(file_predicates) | \
+	while read xmlfile; do \
+		test -e src/$${xmlfile#xml/en/} || rm -vf $${xmlfile}; \
+	done
+	$(cmd) find xml/$* -type l -name '*.xml' | xargs rm -vf
+
 # Target suitable for command line
-xml-en: xml/en ;
+xml-en: cleanup-xml-en xml/en $(en_XML_FILES) ;
 
 .PHONY: FORCE
 FORCE: ;
@@ -533,11 +552,11 @@ html/%/index.html: xml/% $(HTML_STYLESHEETS) html/%/images
 	  xml/$*/gimp.xml
 
 	$(cmd) for file in $(srcdir)/stylesheets/*.css; do \
-		if [ -f $$file ]; then cp -fp $$file html/$*; fi; \
+		if [ -f $$file ]; then cp -f $$file html/$*; fi; \
 	done
 
 	$(cmd) for file in $(srcdir)/stylesheets/$*/*.css; do \
-		if [ -f $$file ]; then cp -fp $$file html/$*; fi; \
+		if [ -f $$file ]; then cp -f $$file html/$*; fi; \
 	done
 
 # TODO: check/enhance new image files structure
