@@ -445,22 +445,10 @@ xml/%/images: FORCE
 	$(cmd) if test -L xml/$*; then rm -v xml/$*; fi
 	$(cmd) if test -d $@; then rm -rf $@/*; fi
 	$(cmd) test -d $@ || $(MKDIR_P) $@
-	$(msg) "*** Copying images ($*) ..."
-	$(cmd) (cd images && find common C $(dir_predicates)) | \
-	while read dir; do \
-		dest=$${dir#*/}; \
-		test "$${dir}" != "$${dest}" || continue; \
-		test -d $@/$${dest} || $(MKDIR_P) $@/$${dest}; \
-	done
-	$(cmd) (cd images && find common C $(file_predicates)) | \
-	while read image; do \
-		if [ "$*" != "en" ]; then \
-			localized=$*/$${image#C/}; \
-			test -e images/$${localized} && image=$${localized}; \
-		fi; \
-		dest=$${image#*/}; \
-		$(call copy,images/$${image},$@/$${dest}); \
-	done
+	$(cmd) $(echo_n) "*** Copying images ($*) ..."
+	$(cmd) perl tools/make_image_links.pl -v \
+	           images/common images/C \
+		   xml/$*
 
 # Special case: en
 
