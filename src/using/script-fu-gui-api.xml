@@ -7,22 +7,22 @@
 -->
 <sect3 id="gimp-using-script-fu-api">
   <title>
-    <phrase>
-      The Script-Fu parameter API<footnote><para>
-        This section is not part of the original tutorial.
-      </para></footnote>
-    </phrase>
+    The Script-Fu parameter API<footnote><para>
+      This section is not part of the original tutorial.
+    </para></footnote>
   </title>
+
   <note>
     <para>
       Beside the above parameter types there are more types for the
       interactive mode, each of them will create a widget in the control
-      dialog. You will find the description of these parameters and examples
-      in the test script
+      dialog. You will find a list of these parameters with descriptions and
+      examples in the test script
       <filename>plug-ins/script-fu/scripts/test-sphere.scm</filename>
       shipped with the <acronym>GIMP</acronym> source code.
     </para>
   </note>
+
   <informaltable>
     <tgroup cols="2">
       <thead>
@@ -42,28 +42,45 @@
           </entry>
           <entry>
             <para>
-              In interactive mode it creates an adjustment widget in the
-              dialog.
+              Creates an adjustment widget in the dialog.
             </para>
             <para>
               SF-ADJUSTMENT "label" '(value lower upper step_inc page_inc
               digits type)
             </para>
-            <para>"label" : Text printed before the widget.</para>
-            <para>value : Value print at the start.</para>
-            <para>
-              lower / upper : the lower / upper values (range of choice).
-            </para>
-            <para>step_inc : increment/decrement value.</para>
-            <para>
-              page_inc : increment/decrement value using page key.
-            </para>
-            <para>
-              digits : digits after the point (decimal part).
-            </para>
-            <para>
-              type : is one of: SF-SLIDER or 0, SF-SPINNER or 1
-            </para>
+            <segmentedlist>
+              <title>Widget arguments list</title>
+              <segtitle>Element</segtitle>
+              <segtitle>Description</segtitle>
+              <seglistitem>
+                <seg>"label"</seg>
+                <seg>Text printed before the widget.</seg>
+              </seglistitem>
+              <seglistitem>
+                <seg>value</seg>
+                <seg>Value print at the start.</seg>
+              </seglistitem>
+              <seglistitem>
+                <seg>lower / upper</seg>
+                <seg>The lower / upper values (range of choice).</seg>
+              </seglistitem>
+              <seglistitem>
+                <seg>step_inc</seg>
+                <seg>Increment/decrement value.</seg>
+              </seglistitem>
+              <seglistitem>
+                <seg>page_inc</seg>
+                <seg>Increment/decrement value using page key.</seg>
+              </seglistitem>
+              <seglistitem>
+                <seg>digits</seg>
+                <seg>Digits after the point (decimal part).</seg>
+              </seglistitem>
+              <seglistitem>
+                <seg>type</seg>
+                <seg>One of: SF-SLIDER or 0, SF-SPINNER or 1</seg>
+              </seglistitem>
+            </segmentedlist>
           </entry>
         </row>
         <row>
@@ -75,12 +92,25 @@
             <para>SF-COLOR "label" '(red green blue)</para>
             <para>or</para>
             <para>SF-COLOR "label" "color"</para>
-            <para>"label" : Text printed before the widget.</para>
-            <para>
-              '(red green blue) : list of three values for the red, green and
-              blue components.
-            </para>
-            <para>"color" : a color name in CSS notatation.</para>
+            <segmentedlist>
+              <title>Widget arguments list</title>
+              <segtitle>Element</segtitle>
+              <segtitle>Description</segtitle>
+              <seglistitem>
+                <seg>"label"</seg>
+                <seg>Text printed before the widget.</seg>
+              </seglistitem>
+              <seglistitem>
+                <seg>'(red green blue)</seg>
+                <seg>
+                  List of three values for the red, green and blue components.
+                </seg>
+              </seglistitem>
+              <seglistitem>
+                <seg>"color"</seg>
+                <seg>Color name in CSS notatation.</seg>
+              </seglistitem>
+            </segmentedlist>
           </entry>
         </row>
         <row>
@@ -107,8 +137,19 @@
               pixels is a good choice).
             </para>
             <para>SF-FONT "label" "fontname"</para>
-            <para>"label" : Text printed before the widget.</para>
-            <para>"fontname" : name of the défault font.</para>
+            <segmentedlist>
+              <title>Widget arguments list</title>
+              <segtitle>Element</segtitle>
+              <segtitle>Description</segtitle>
+              <seglistitem>
+                <seg>"label"</seg>
+                <seg>Text printed before the widget.</seg>
+              </seglistitem>
+              <seglistitem>
+                <seg>"fontname"</seg>
+                <seg>Name of the default font.</seg>
+              </seglistitem>
+            </segmentedlist>
           </entry>
         </row>
         <row>
@@ -209,7 +250,7 @@
               If the button is pressed a file selection dialog will popup.
             </para>
             <para>
-              SF-FILENAME "Environment Map" (string-append ""
+              SF-FILENAME "label" (string-append ""
               gimp-data-directory "/scripts/beavis.jpg")
             </para>
             <para>
@@ -229,7 +270,7 @@
               file.
             </para>
             <para>
-              SF-DIRNAME "Image Directory" "/var/tmp/images"
+              SF-DIRNAME "label" "/var/tmp/images"
             </para>
             <para>
               The value returned when the script is invoked is a string
@@ -248,7 +289,7 @@
             </para>
             <para>The first option is the default choice.</para>
             <para>
-              SF-OPTION "Orientation" '("Horizontal" "Vertical")
+              SF-OPTION "label" '("option1" "option2")
             </para>
             <para>
               The value returned when the script is invoked is the number of
