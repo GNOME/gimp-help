@@ -63,7 +63,7 @@ foreach my $srcdir (sort @Image_dirs) {
     # Construct corresponding destination directory:
     # XXX: assuming source = images/{C,common}
     #      and destination = xml/LANG
-    (my $dstdir = $srcdir) =~ s|images/[^/]+|$Destdir/images|o;
+    (my $dstdir = $srcdir) =~ s|(.*/)?images/[^/]+|$Destdir/images|o;
     mkpath $dstdir unless -d $dstdir;
     # Get relative symlink pointing to image source directory
     my $save_path = my $dst_to_src_path = abs2rel($srcdir, $dstdir);

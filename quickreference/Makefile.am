@@ -11,7 +11,8 @@ PO_FILES = \
 	po/no.po	\
 	po/sv.po	\
 	po/ru.po	\
-	po/zh_CN.po	\
+	po/zh_CN.po
+
 XSL_FILES = \
 	stylesheets/keys-svg.xsl	\
 	stylesheets/keys-docbook.xsl

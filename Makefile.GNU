@@ -174,8 +174,6 @@ xml2pot = ($(XML2PO) --output='-' $(1) \
 pot2po = with_compendium="$(shell $(call get_compendium,$3))"; \
          tmpfile=$(3).tmp; \
          if [ -s $(3) ]; then \
-             $(MSGFMT) $(MSGFMTFLAGS) $(3); \
-             rm -f messages.po messages.gmo; \
              $(MSGMERGE) $(MSGMERGEFLAGS) $${with_compendium} \
                  --output-file $${tmpfile} $(3) $(1); \
          else \
@@ -192,7 +190,8 @@ pot2po = with_compendium="$(shell $(call get_compendium,$3))"; \
              fi; \
          fi; \
          test -s $${tmpfile} && mv -f $${tmpfile} $(3) || rm -f $${tmpfile}; \
-         test -s $(3)
+         test -s $(3) && $(MSGFMT) $(MSGFMTFLAGS) $(3) || exit 70; \
+         rm -f messages.po messages.gmo
 
 # Merge PO file into (translated) XML file
 #

@@ -23,7 +23,7 @@ PO_LANGS = $(filter-out $(XML_LANG), $(LANGUAGES))
 ## XMLLINT      = xmllint
 XMLLINTFLAGS = --nonet
 ##
-## XML2PO = tools/xml2po
+## XML2PO = $(srcdir)/tools/xml2po
 ##
 MSGWIDTH      = 79
 ## MSGUNIQ       = msguniq 
@@ -106,6 +106,8 @@ src_dir_predicates = -name images -prune -o $(dir_predicates)
 AUTHORS_STYLESHEET_XML = stylesheets/authors.xml
 # automatically generated authors section (DocBook)
 AUTHORS_DOCBOOK_XML = src/preface/authors.xml
+# list of stylesheets neede to create authors src (DocBook) file
+AUTHORS_XSL_STYLESHEETS = $(wildcard stylesheets/authors_*.xsl)
 
 # lists of source (XML) files and source directories
 SRC_DIRS  = $(shell cd $(srcdir) && find src $(src_dir_predicates))
@@ -128,8 +130,11 @@ XSL_FILES = \
 	stylesheets/makeindex.xsl	\
 	stylesheets/plainprint.xsl	\
 	stylesheets/plainhtml.xsl.in	\
-	stylesheets/htmlalternate.xsl	\
-	stylesheets/profile.xsl
+	stylesheets/htmlalternate.xsl
+
+# tools needed for building
+DIST_TOOLS = \
+	tools/make_image_links.pl
 
 # additional files to be distributed (automake)
 EXTRA_DIST = \
@@ -140,7 +145,9 @@ EXTRA_DIST = \
 	$(COMMON_CSS_FILES)		\
 	$(OTHER_CSS_FILES)		\
 	$(SRC_FILES)			\
-	$(XSL_FILES)
+	$(AUTHORS_STYLESHEET_XML)	\
+	$(XSL_FILES)			\
+	$(DIST_TOOLS)
 
 # TODO?: rename "plainhtml.xsl" to "html.xsl" and use ...
 # ... HTML_STYLESHEETS = stylesheets/html*.xsl
@@ -193,7 +200,7 @@ AUTHORS: $(AUTHORS_STYLESHEET_XML) stylesheets/authors_text.xsl $(AUTHORS_DOCBOO
 	  $< \
 	  > $@
 	
-$(AUTHORS_DOCBOOK_XML): $(AUTHORS_STYLESHEET_XML) stylesheets/authors_*.xsl
+$(AUTHORS_DOCBOOK_XML): $(AUTHORS_STYLESHEET_XML) $(AUTHORS_XSL_STYLESHEETS)
 	$(msg) "[SRC] $@"
 	$(cmd) $(call make_target_dir,$@)
 	$(cmd) $(XSLTPROC) \
@@ -238,8 +245,6 @@ xml2pot = ($(XML2PO) --output='-' $(1) \
 pot2po = with_compendium="$(shell $(call get_compendium,$3))"; \
          tmpfile=$(3).tmp; \
          if [ -s $(3) ]; then \
-             $(MSGFMT) $(MSGFMTFLAGS) $(3); \
-             rm -f messages.po messages.gmo; \
              $(MSGMERGE) $(MSGMERGEFLAGS) $${with_compendium} \
                  --output-file $${tmpfile} $(3) $(1); \
          else \
@@ -256,6 +261,8 @@ pot2po = with_compendium="$(shell $(call get_compendium,$3))"; \
              fi; \
          fi; \
          test -s $${tmpfile} && mv -f $${tmpfile} $(3) || rm -f $${tmpfile}; \
+         test -s $(3) && $(MSGFMT) $(MSGFMTFLAGS) $(3); \
+         rm -f messages.po messages.gmo; \
          test -s $(3)
 
 # Merge PO file into (translated) XML file
@@ -359,17 +366,19 @@ po-en: ;
 
 status-%: po-status-% ;
 po-status-%: po-%
-	$(cmd) perl tools/get_po_status.pl po/$*
+	$(cmd) perl $(srcdir)/tools/get_po_status.pl po/$*
 
 status-all: po-status-all ;
 po-status-all:
 	$(cmd) for podir in po/*; do \
-		perl tools/get_po_status.pl --nofiles --nosummary $${podir} || break; \
+		perl $(srcdir)/tools/get_po_status.pl \
+			--nofiles --nosummary $${podir} \
+		|| break; \
 	done
 
 todo-%: po-todo-% ;
 po-todo-%: po-%
-	$(cmd) perl tools/get_po_status.pl --todo po/$*
+	$(cmd) perl $(srcdir)/tools/get_po_status.pl --todo po/$*
 
 # Force updating po file
 update-po/%.po:
@@ -446,8 +455,8 @@ xml/%/images: FORCE
 	$(cmd) if test -d $@; then rm -rf $@/*; fi
 	$(cmd) test -d $@ || $(MKDIR_P) $@
 	$(cmd) $(echo_n) "*** Copying images ($*) ..."
-	$(cmd) perl tools/make_image_links.pl -v \
-	           images/common images/C \
+	$(cmd) perl $(srcdir)/tools/make_image_links.pl -v \
+	           $(srcdir)/images/common $(srcdir)/images/C \
 		   xml/$*
 
 # Special case: en
@@ -848,6 +857,21 @@ clean-local:
 
 maintainer-clean-local:
 	$(cmd) rm -rf html
+
+# Override automake-generated targets
+Makefile: $(srcdir)/Makefile.in $(srcdir)/Makefile.am $(srcdir)/configure.ac $(srcdir)/autogen.sh
+	$(msg) "!!! Updating '$@' running 'autogen.sh' ($? changed) !!!"
+	$(cmd) opt=`test -e $(srcdir)/config.status && \
+	     $(srcdir)/config.status --version | \
+	     sed -e 's/.*with options "//' \
+	         -e tmatch -e d -e :match -e 's/".*//' \
+		 -e "s/'\([^'=]*\)=\([^']*\)'/\1='\2'/"`; \
+	test -n "$${opt}" && eval $(srcdir)/autogen.sh $${opt}
+$(srcdir)/Makefile.in: $(srcdir)/Makefile.am $(srcdir)/autogen.sh ;
+
+$(top_builddir)/config.status: $(top_srcdir)/configure ;
+
+$(top_srcdir)/configure: $(top_srcdir)/configure.ac ;
 
 # GNU Make, please don't delete these targets when a target that depends
 # on them fails, 'kay?
