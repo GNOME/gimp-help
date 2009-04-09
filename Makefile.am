@@ -112,7 +112,10 @@ AUTHORS_XSL_STYLESHEETS = $(wildcard stylesheets/authors_*.xsl)
 # lists of source (XML) files and source directories
 SRC_DIRS  = $(shell cd $(srcdir) && find src $(src_dir_predicates))
 SRC_FILES = $(shell cd $(srcdir) && find src $(src_find_predicates)) \
-	    $(AUTHORS_DOCBOOK_XML)
+            $(AUTHORS_DOCBOOK_XML)
+
+# lists of PO files (translations)
+PO_FILES = $(shell cd $(srcdir) && find po $(file_predicates))
 
 # stylesheets for HTML
 COMMON_CSS_FILES = \
@@ -146,6 +149,7 @@ EXTRA_DIST = \
 	$(OTHER_CSS_FILES)		\
 	$(SRC_FILES)			\
 	$(AUTHORS_STYLESHEET_XML)	\
+	$(PO_FILES)			\
 	$(XSL_FILES)			\
 	$(DIST_TOOLS)
 
@@ -262,7 +266,7 @@ pot2po = with_compendium="$(shell $(call get_compendium,$3))"; \
          fi; \
          test -s $${tmpfile} && mv -f $${tmpfile} $(3) || rm -f $${tmpfile}; \
          test -s $(3) && $(MSGFMT) $(MSGFMTFLAGS) $(3); \
-         rm -f messages.po messages.gmo; \
+         rm -f messages.mo messages.gmo; \
          test -s $(3)
 
 # Merge PO file into (translated) XML file
@@ -291,12 +295,16 @@ copy = $(LN_S) $(abs_srcdir)/$(1) $(2)
 
 # HIDE FROM AUTOMAKE #ifneq ($(COMPENDIUM),"")
 # HIDE FROM AUTOMAKE #get_compendium = \
-# HIDE FROM AUTOMAKE #	dir="$(1)"; dir=$${dir%/*}; \
-# HIDE FROM AUTOMAKE #	while test "$${dir}" != "po"; do \
+# HIDE FROM AUTOMAKE #	file="$(1)"; dir=$${file%/*}; \
+# HIDE FROM AUTOMAKE #	while true; do \
 # HIDE FROM AUTOMAKE #		if test -f $${dir}/$(COMPENDIUM); then \
 # HIDE FROM AUTOMAKE #			opt="$${opt} --compendium=$${dir}/$(COMPENDIUM)"; \
 # HIDE FROM AUTOMAKE #		fi; \
-# HIDE FROM AUTOMAKE #		dir="$${dir%/*}"; \
+# HIDE FROM AUTOMAKE #		case "$${dir}" in \
+# HIDE FROM AUTOMAKE #			po|*/po) break;; \
+# HIDE FROM AUTOMAKE #			    */*) dir="$${dir%/*}";; \
+# HIDE FROM AUTOMAKE #			      *) break;; \
+# HIDE FROM AUTOMAKE #		esac; \
 # HIDE FROM AUTOMAKE #	done; \
 # HIDE FROM AUTOMAKE #	if test -n "$${opt}"; then echo $${opt}; fi
 # HIDE FROM AUTOMAKE #else
@@ -314,7 +322,7 @@ POT_FILES  = $(patsubst src/%,pot/%.pot,$(filter-out src src/,$(SRC_DIRS)))
 POT_FILES += pot/gimp.pot
 #
 # Special case
-pot/gimp.pot: src/*.xml
+pot/gimp.pot: $(srcdir)/src/*.xml
 	$(cmd) $(call make_target_dir,$@)
 	$(msg) "[POT] $@"
 	$(cmd) $(call xml2pot,$^,$@)
@@ -326,11 +334,11 @@ $(AUTHORS_POT): $(AUTHORS_DOCBOOK_XML) $(wildcard $(dir $(AUTHORS_DOCBOOK_XML))*
 	$(cmd) $(call make_target_dir,$@)
 	$(msg) "[POT] $@"
 	$(cmd) $(call xml2pot,$^,$@)
-pot/%.pot: src/%/*.xml
+pot/%.pot: $(srcdir)/src/%/*.xml
 	$(cmd) $(call make_target_dir,$@)
 	$(msg) "[POT] $@"
 	$(cmd) $(call xml2pot,$^,$@)
-#
+
 # Targets suitable for command line
 # ("make pot" will work even if pot exists)
 pot: potfiles ;
@@ -348,8 +356,8 @@ potfiles: $(POT_FILES)
 ########################################################################
 #
 # HIDE FROM AUTOMAKE #define MAKE_PO_RULES
-# HIDE FROM AUTOMAKE #$(1)_PO_FILES = $$(patsubst pot/%.pot, po/$(1)/%.po, $$(POT_FILES))
-# HIDE FROM AUTOMAKE #$$($(1)_PO_FILES): po/$(1)/%.po : pot/%.pot
+# HIDE FROM AUTOMAKE #$(1)_PO_FILES = $$(patsubst pot/%.pot, $$(srcdir)/po/$(1)/%.po, $$(POT_FILES))
+# HIDE FROM AUTOMAKE #$$($(1)_PO_FILES): $$(srcdir)/po/$(1)/%.po : pot/%.pot
 # HIDE FROM AUTOMAKE #	$$(cmd) $$(call make_target_dir,$$@)
 # HIDE FROM AUTOMAKE #	$$(msg) "[PO]  $$@"
 # HIDE FROM AUTOMAKE #	$$(cmd) if test -s $$<; then $$(call pot2po,$$<,$(1),$$@); else touch $$@; fi
@@ -431,9 +439,9 @@ include $(foreach LANG,$(PO_LANGS),xml/$(LANG)/.deps.mk)
 # HIDE FROM AUTOMAKE #	$$(cmd) $$(call make_target_dir,$$@)
 # HIDE FROM AUTOMAKE #	$$(cmd) xmlfile=$$@; \
 # HIDE FROM AUTOMAKE #	stem=$$*; \
-# HIDE FROM AUTOMAKE #	srcfile=src/$$$${stem}.xml; \
+# HIDE FROM AUTOMAKE #	srcfile=$$(srcdir)/src/$$$${stem}.xml; \
 # HIDE FROM AUTOMAKE #	test "$$$${stem}" != "$$$${stem%/*}" && stem=$$$${stem%/*} || stem=gimp; \
-# HIDE FROM AUTOMAKE #	pofile=po/$(1)/$$$${stem}.po; \
+# HIDE FROM AUTOMAKE #	pofile=$$(srcdir)/po/$(1)/$$$${stem}.po; \
 # HIDE FROM AUTOMAKE #	$(call po2xml,$$$${srcfile},$$$${pofile},$(1),$$@)
 # HIDE FROM AUTOMAKE #
 # HIDE FROM AUTOMAKE ## This is indirectly used as HTML prerequisite:
@@ -853,6 +861,7 @@ clean-local:
 	$(cmd) rm -rf pot
 	$(cmd) rm -f $(tarball_prefix)-*
 	$(cmd) rm -f AUTHORS $(AUTHORS_DOCBOOK_XML) build-system.png
+	$(cmd) rm -f .xml2po.mo messages.mo
 
 
 maintainer-clean-local:

@@ -191,7 +191,7 @@ pot2po = with_compendium="$(shell $(call get_compendium,$3))"; \
          fi; \
          test -s $${tmpfile} && mv -f $${tmpfile} $(3) || rm -f $${tmpfile}; \
          test -s $(3) && $(MSGFMT) $(MSGFMTFLAGS) $(3) || exit 70; \
-         rm -f messages.po messages.gmo
+         rm -f messages.mo messages.gmo
 
 # Merge PO file into (translated) XML file
 #
@@ -222,12 +222,16 @@ copy = $(ln_s) $(abs_srcdir)/$(1) $(2)
 
 ifneq ($(COMPENDIUM),"")
 get_compendium = \
-	dir="$(1)"; dir=$${dir%/*}; \
-	while test "$${dir}" != "po"; do \
+	file="$(1)"; dir=$${file%/*}; \
+	while true; do \
 		if test -f $${dir}/$(COMPENDIUM); then \
 			opt="$${opt} --compendium=$${dir}/$(COMPENDIUM)"; \
 		fi; \
-		dir="$${dir%/*}"; \
+		case "$${dir}" in \
+			po|*/po) break;; \
+			    */*) dir="$${dir%/*}";; \
+			      *) break;; \
+		esac; \
 	done; \
 	if test -n "$${opt}"; then echo $${opt}; fi
 else
