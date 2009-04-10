@@ -92,9 +92,17 @@ xml_dir_predicates = $(dir_predicates)
 pot_dir_predicates = $(dir_predicates)
 
 # List of authors and contributors (no DocBook)
-AUTHORS_STYLESHEET_XML = stylesheets/authors.xml
+AUTHORS_SOURCE_XML = stylesheets/authors.xml
 # Automatically generated authors section (DocBook)
 AUTHORS_DOCBOOK_XML = src/preface/authors.xml
+# Stylesheets generating AUTHORS 
+AUTHORS_TEXT_STYLESHEETS = \
+	stylesheets/authors_text.xsl \
+	stylesheets/authors_common.xsl
+# Stylesheets generating src/preface/authors.xml
+AUTHORS_DOCBOOK_STYLESHEETS = \
+	stylesheets/authors_docbook.xsl \
+	stylesheets/authors_common.xsl
 
 # Files & directories
 ifneq "$(MAKECMDGOALS)" "help"
@@ -689,10 +697,10 @@ endif
 
 
 ########################################################################
-####            AUTHORS                                             ####
+####            Make AUTHORS file                                   ####
 ########################################################################
 
-AUTHORS: $(AUTHORS_STYLESHEET_XML) stylesheets/authors_text.xsl $(AUTHORS_DOCBOOK_XML)
+AUTHORS: $(AUTHORS_SOURCE_XML) $(AUTHORS_TEXT_STYLESHEETS)
 	$(msg) "[DOC] $@"
 	$(cmd) $(XSLTPROC) \
 	  $(XSLTFLAGS) $(XSLTEXTRAFLAGS) \
@@ -700,7 +708,7 @@ AUTHORS: $(AUTHORS_STYLESHEET_XML) stylesheets/authors_text.xsl $(AUTHORS_DOCBOO
 	  $< \
 	  > $@
 	
-$(AUTHORS_DOCBOOK_XML): $(AUTHORS_STYLESHEET_XML) stylesheets/authors_*.xsl
+$(AUTHORS_DOCBOOK_XML): $(AUTHORS_SOURCE_XML) $(AUTHORS_DOCBOOK_STYLESHEETS)
 	$(msg) "[SRC] $@"
 	$(cmd) $(call make_target_dir,$@)
 	$(cmd) $(XSLTPROC) \

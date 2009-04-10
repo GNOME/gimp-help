@@ -103,11 +103,17 @@ dir_predicates =            \
 src_dir_predicates = -name images -prune -o $(dir_predicates)
 
 # list of authors and contributors (no DocBook)
-AUTHORS_STYLESHEET_XML = stylesheets/authors.xml
+AUTHORS_SOURCE_XML = stylesheets/authors.xml
 # automatically generated authors section (DocBook)
 AUTHORS_DOCBOOK_XML = src/preface/authors.xml
-# list of stylesheets neede to create authors src (DocBook) file
-AUTHORS_XSL_STYLESHEETS = $(wildcard stylesheets/authors_*.xsl)
+# Stylesheets generating AUTHORS 
+AUTHORS_TEXT_STYLESHEETS = \
+	stylesheets/authors_text.xsl \
+	stylesheets/authors_common.xsl
+# Stylesheets generating src/preface/authors.xml
+AUTHORS_DOCBOOK_STYLESHEETS = \
+	stylesheets/authors_docbook.xsl \
+	stylesheets/authors_common.xsl
 
 # lists of source (XML) files and source directories
 SRC_DIRS  = $(shell cd $(srcdir) && find src $(src_dir_predicates))
@@ -141,16 +147,16 @@ DIST_TOOLS = \
 
 # additional files to be distributed (automake)
 EXTRA_DIST = \
-	AUTHORS				\
-	HACKING				\
-	INSTALL				\
-	TERMINOLOGY			\
-	$(COMMON_CSS_FILES)		\
-	$(OTHER_CSS_FILES)		\
-	$(SRC_FILES)			\
-	$(AUTHORS_STYLESHEET_XML)	\
-	$(PO_FILES)			\
-	$(XSL_FILES)			\
+	AUTHORS			\
+	HACKING			\
+	INSTALL			\
+	TERMINOLOGY		\
+	$(COMMON_CSS_FILES)	\
+	$(OTHER_CSS_FILES)	\
+	$(SRC_FILES)		\
+	$(AUTHORS_SOURCE_XML)	\
+	$(PO_FILES)		\
+	$(XSL_FILES)		\
 	$(DIST_TOOLS)
 
 # TODO?: rename "plainhtml.xsl" to "html.xsl" and use ...
@@ -196,7 +202,7 @@ helpdir  = $(gimpdatadir)/help
 ####            Make AUTHORS file                                   ####
 ########################################################################
 
-AUTHORS: $(AUTHORS_STYLESHEET_XML) stylesheets/authors_text.xsl $(AUTHORS_DOCBOOK_XML)
+AUTHORS: $(AUTHORS_SOURCE_XML) $(AUTHORS_TEXT_STYLESHEETS)
 	$(msg) "[DOC] $@"
 	$(cmd) $(XSLTPROC) \
 	  $(XSLTFLAGS) $(XSLTEXTRAFLAGS) \
@@ -204,7 +210,7 @@ AUTHORS: $(AUTHORS_STYLESHEET_XML) stylesheets/authors_text.xsl $(AUTHORS_DOCBOO
 	  $< \
 	  > $@
 	
-$(AUTHORS_DOCBOOK_XML): $(AUTHORS_STYLESHEET_XML) $(AUTHORS_XSL_STYLESHEETS)
+$(AUTHORS_DOCBOOK_XML): $(AUTHORS_SOURCE_XML) $(AUTHORS_DOCBOOK_STYLESHEETS)
 	$(msg) "[SRC] $@"
 	$(cmd) $(call make_target_dir,$@)
 	$(cmd) $(XSLTPROC) \

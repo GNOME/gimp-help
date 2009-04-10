@@ -7,10 +7,8 @@
                 xmlns:dc="http://purl.org/dc/elements/1.1/"
                 exclude-result-prefixes="dc">
 
-  <!-- import template "lang.split"
-       (importing instead of including should avoid 
-       any problems with duplicate definitions) -->
-  <xsl:import href="authors_text.xsl" />
+  <!-- template "lang.split" -->
+  <xsl:import href="authors_common.xsl" />
 
   <xsl:output method="xml" encoding="UTF-8" indent="yes"
               doctype-public="-//OASIS//DTD DocBook XML V4.3//EN"

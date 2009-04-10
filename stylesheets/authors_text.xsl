@@ -6,6 +6,9 @@
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:dc="http://purl.org/dc/elements/1.1/">
 
+  <!-- template "lang.split" -->
+  <xsl:import href="authors_common.xsl" />
+
   <xsl:output method="text" />
 
   <xsl:template match="/dc:gimp-authors">
@@ -59,54 +62,4 @@
     </xsl:text>
   </xsl:template>
 
-  <xsl:template name="lang.split">
-    <xsl:param name="lang" />
-    <xsl:choose>
-      <xsl:when test="contains($lang, ' ')">
-        <xsl:variable name="langid" select="substring-after($lang, ' ')" />
-        <xsl:call-template name="print.lang">
-          <xsl:with-param name="langid" select="$langid" />
-        </xsl:call-template>
-        <xsl:text>, </xsl:text>
-        <xsl:call-template name="lang.split">
-          <xsl:with-param name="lang" select="substring-before($lang, ' ')" />
-        </xsl:call-template>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:call-template name="print.lang">
-          <xsl:with-param name="langid" select="$lang" />
-        </xsl:call-template>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-
-  <xsl:template name="print.lang">
-    <xsl:param name="langid" />
-    <!-- use underscores for spaces within languages,
-         e.g. xx:Pidgin_English -->
-    <xsl:variable name="languages">
-      cz:Czech
-      de:German
-      en:English
-      es:Spanish
-      fr:French
-      hr:Croatian
-      it:Italian
-      ko:Korean
-      lt:Lithuanian
-      nl:Dutch
-      no:Norwegian
-      pl:Polish
-      ru:Russian
-      sv:Swedish
-      zh_CN:Chinese
-    </xsl:variable>
-    <xsl:variable name="tail"
-      select="substring-after($languages,concat($langid,':'))"/>
-    <xsl:if test="$tail != ''">
-      <xsl:value-of select="translate(
-                              normalize-space(substring-before($tail,' ')),
-                              '_', ' ')"/>
-    </xsl:if>
-  </xsl:template>
 </xsl:stylesheet>
