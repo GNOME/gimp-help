@@ -136,6 +136,7 @@ OTHER_CSS_FILES = \
 XSL_FILES = \
 	stylesheets/authors_docbook.xsl	\
 	stylesheets/authors_text.xsl	\
+	stylesheets/authors_common.xsl	\
 	stylesheets/makeindex.xsl	\
 	stylesheets/plainprint.xsl	\
 	stylesheets/plainhtml.xsl.in	\

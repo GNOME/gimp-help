@@ -72,6 +72,7 @@ clean-local:
 	rm -rf docbook
 	rm -rf svg
 	rm -rf xml
+	rm -f .xml2po.mo
 
 .DELETE_ON_ERROR:
 
