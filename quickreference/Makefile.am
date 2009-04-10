@@ -1,5 +1,9 @@
 ## Process this file with automake to produce Makefile.in
 
+ALL_LINGUAS ?= de en es fr it ko nl no pl ru sv
+QUICKREFERENCE_ALL_LINGUAS ?= de en fi fr it ko ru sv
+QUICKREFERENCE_LINGUAS = $(filter $(ALL_LINGUAS), $(QUICKREFERENCE_ALL_LINGUAS))
+
 PO_FILES = \
 	po/gimp-keys.pot\
 	po/de.po	\
@@ -49,7 +53,7 @@ svg/gimp-keys-%.svg: xml/gimp-keys-%.xml stylesheets/keys-svg.xsl
 	  $< \
 	  > $@
 
-svg: $(foreach lang,$(QUICKREFERENCE_ALL_LINGUAS),svg/gimp-keys-$(lang).svg)
+svg: $(foreach lang,$(QUICKREFERENCE_LINGUAS),svg/gimp-keys-$(lang).svg)
 
 docbook/gimp-keys-%.xml: xml/gimp-keys-%.xml stylesheets/keys-docbook.xsl
 	$(mkdir_p) docbook
@@ -58,7 +62,7 @@ docbook/gimp-keys-%.xml: xml/gimp-keys-%.xml stylesheets/keys-docbook.xsl
 	  $< \
 	  > $@
 
-docbook: $(foreach lang,$(QUICKREFERENCE_ALL_LINGUAS),docbook/gimp-keys-$(lang).xml)
+docbook: $(foreach lang,$(QUICKREFERENCE_LINGUAS),docbook/gimp-keys-$(lang).xml)
 
 if HAVE_XML2PO
 all-local: svg docbook

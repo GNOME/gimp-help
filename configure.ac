@@ -26,27 +26,17 @@ AC_PROG_SED
 
 #  You can set the ALL_LINGUAS environment variable to
 #  control what languages are build.
-#  
-#  GIMP 2.2 Linguas: Content for those language code exist, but they
-#  haven't been worked on for a while:
-#  ALL_LINGUAS="cs de en es fr hr it ko nl no ru sv zh_CN"
 #
-XML_LANG="en"
+#  Quickreference files are built for languages in
+#  QUICKREFERENCE_ALL_LINGUAS *and* (intersecton) ALL_LINGUAS
 
-QUICKREFERENCE_ALL_LINGUAS="de en fi fr it ko ru sv"
+XML_LANG="en"
 
 if test "x$ALL_LINGUAS" = "x"; then
   ALL_LINGUAS="de en es fr it ko nl no pl ru sv"
-else
-  QUICKREFERENCE_LINGUAS=""
-  for asked_lang in $ALL_LINGUAS ; do
-    for lang in $QUICKREFERENCE_ALL_LINGUAS ; do
-      if test "$lang" = "$asked_lang"; then
-        QUICKREFERENCE_LINGUAS="$QUICKREFERENCE_LINGUAS $asked_lang"
-      fi
-    done
-  done
-  QUICKREFERENCE_ALL_LINGUAS=$QUICKREFERENCE_LINGUAS
+fi
+if test "x$QUICKREFERENCE_ALL_LINGUAS" = "x"; then
+  QUICKREFERENCE_ALL_LINGUAS="de en fi fr it ko ru sv"
 fi
 
 AC_SUBST(XML_LANG)
