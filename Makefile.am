@@ -286,7 +286,8 @@ pot2po = with_compendium="$(shell $(call get_compendium,$3))"; \
 #     $3 - translation language
 #     $4 - resulting (translated) XML file
 po2xml = $(XML2PO) --po-file=$(2) --language=$(3) --output=$(4) $(1) 2>&1 \
-         | $(SED) -e '/Warning: image file .* not found./d'
+         | $(SED) -e '/Warning: image file .* not found./d'; \
+         rm -f .xml2po.mo
 
 
 #--------------------------------------------------------------#

@@ -212,11 +212,13 @@ pot2po = with_compendium="$(shell $(call get_compendium,$3))"; \
 #     $4 - resulting (translated) XML file
 ifneq ("$(FORMAT_XML_WITH_XMLLINT)", "1")
 po2xml = $(XML2PO) --po-file=$(2) --language=$(3) --output=$(4) $(1) 2>&1 \
-         | $(SED) -e '/Warning: image file .* not found./d'
+         | $(SED) -e '/Warning: image file .* not found./d'; \
+         rm -f .xml2po.mo
 else
 po2xml = ($(XML2PO) --po-file=$(2) --language=$(3) --output='-' $(1) \
          | $(XMLLINT) $(XMLLINTFLAGS) --format --output $(4) -) 2>&1 \
-         | $(SED) -e '/Warning: image file .* not found./d'
+         | $(SED) -e '/Warning: image file .* not found./d'; \
+         rm -f .xml2po.mo
 endif
 
 
