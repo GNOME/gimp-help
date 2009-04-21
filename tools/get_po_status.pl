@@ -1,7 +1,7 @@
 #!/usr/bin/env perl
 #
 # gimp-help-2 -- get translation status
-# Copyright (C) 2008 The GIMP Documentation Team.
+# Copyright (C) 2008-2009 The GIMP Documentation Team.
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -138,7 +138,7 @@ $Language = $Languages{$Language} if defined($Languages{$Language});
 
 # Search po files
 my @Pofiles = ();
-find( sub { /^\.svn/ and ($File::Find::prune = 1)
+find( sub { /^\.git/ and ($File::Find::prune = 1)
                                or
             /\.po$/ and push @Pofiles, $File::Find::name
       },

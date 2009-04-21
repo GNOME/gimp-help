@@ -50,7 +50,7 @@ echo_n = echo $(ECHO_N)
 
 # options for the "find images" command:
 image_find_predicates =     \
-	-name '.svn' -prune \
+	-name '.git' -prune \
 	-o \
 	  -type d \
 	  \( -name '[a-z][a-z]' -o -name '[a-z][a-z]_[A-Z][A-Z]' \) \
@@ -81,7 +81,7 @@ html_files_find_predicates = \
 
 # XML files excluding automatically generated files
 src_find_predicates =       \
-	-name '.svn' -prune \
+	-name '.git' -prune \
 	-o                  \
 	-name '$(notdir $(AUTHORS_DOCBOOK_XML))' -prune \
 	-o                  \
@@ -89,13 +89,13 @@ src_find_predicates =       \
 
 #  for generating a list of files (of any type)
 file_predicates =           \
-	-name '.svn' -prune \
+	-name '.git' -prune \
 	        -o          \
 	-type f -print
 
 # for generating a list of directories
 dir_predicates =            \
-	-name '.svn' -prune \
+	-name '.git' -prune \
 	        -o          \
 	-type d -print
 
@@ -732,7 +732,7 @@ $(tarball_prefix)-%.tar: html/%/index.html html/%/gimp-help.xml
 	$(cmd) $(MKDIR_P) $(tarball_prefix)-$*
 	$(cmd) cd $(tarball_prefix)-$* && $(LN_S) ../html/$* .
 	$(cmd) cd $(tarball_prefix)-$* && $(LN_S) ../html/images .
-	$(cmd) tar -chf $@ --exclude .svn $(tarball_prefix)-$*
+	$(cmd) tar -chf $@ --exclude .git $(tarball_prefix)-$*
 	$(cmd) rm -rf $(tarball_prefix)-$*
 
 $(tarball_prefix)-%.tar.gz: $(tarball_prefix)-%.tar
@@ -759,18 +759,8 @@ html-dist: \
 ########################################################################
 
 # Note that the default (autoconf) target name is "check".
-checks: check-svn-property check-image-references ;
-check-svn: check-svn-property ;
+checks: check-image-references ;
 check-images: check-image-references ;
-
-check-svn-property:
-	$(cmd) if cd $(srcdir) && test -e tools/check_keywords_property.pl && \
-	type perl >/dev/null 2>&1; then \
-	    echo "*** Checking svn property ... "; \
-	    perl tools/check_keywords_property.pl -v || true; \
-	else \
-	    echo >&2 "*** Cannot check svn property (no Perl installed?) ***"; \
-	fi
 
 check-image-references:
 	$(cmd) if cd $(srcdir) && test -e tools/validate_references.py && \
@@ -790,7 +780,7 @@ check-images-%: FORCE
 # special case 'en':
 check-images-en check-images-C: check-image-references ;
 
-.PHONY: checks check-svn-property check-image-references
+.PHONY: checks check-image-references
 
 
 
@@ -856,9 +846,9 @@ dist-hook: dist-copy-images
 dist-copy-images:
 	$(cmd) test -d "$(top_srcdir)/images" && test -d "$(distdir)"
 	@echo "Copying images into distdir $(distdir) ..."
-	$(cmd)(cd $(top_srcdir) && tar -cf- --exclude=.svn images) \
+	$(cmd)(cd $(top_srcdir) && tar -cf- --exclude=.git images) \
 	| (cd $(distdir) && tar -xf-)
-	$(cmd) test -d "$(distdir)/images" && test ! -d "$(distdir)/images/.svn"
+	$(cmd) test -d "$(distdir)/images" && test ! -d "$(distdir)/images/.git"
 
 
 clean-local:

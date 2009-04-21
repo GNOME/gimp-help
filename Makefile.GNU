@@ -72,19 +72,19 @@ abs_builddir := $(shell pwd)
 
 # Find files and directories
 xml_file_predicates =       \
-	-name '.svn' -prune \
+	-name '.git' -prune \
 	          -o        \
 	-name '$(notdir $(AUTHORS_DOCBOOK_XML))' -prune \
 	          -o        \
 	-name '*.xml' -print
 
 file_predicates =           \
-	-name '.svn' -prune \
+	-name '.git' -prune \
 	        -o          \
 	-type f -print
 
 dir_predicates =            \
-	-name '.svn' -prune \
+	-name '.git' -prune \
 	        -o          \
 	-type d -print
 src_dir_predicates = -name images -prune -o $(dir_predicates)
@@ -749,18 +749,8 @@ dist-clean: clean ;
 ########################################################################
 
 check: checks ;
-checks: check-svn-property check-image-references ;
-check-svn: check-svn-property ;
+checks: check-image-references ;
 check-images: check-image-references ;
-
-check-svn-property:
-	$(cmd) if cd $(srcdir) && test -e tools/check_keywords_property.pl && \
-	type perl >/dev/null 2>&1; then \
-	    echo "*** Checking svn property ... "; \
-	    perl tools/check_keywords_property.pl -v || true; \
-	else \
-	    echo >&2 "*** Cannot check svn property (no Perl installed?) ***"; \
-	fi
 
 check-image-references:
 	$(cmd) if cd $(srcdir) && test -e tools/validate_references.py && \
@@ -780,7 +770,7 @@ check-images-%: FORCE
 # special case 'en':
 check-images-en check-images-C: check-image-references ;
 
-.PHONY: check-svn-property check-image-references
+.PHONY: check-image-references
 
 
 ########################################################################

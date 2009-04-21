@@ -126,7 +126,7 @@ class ImageFilesList(FileNameContainer):
         Logger.info("searching images in %s ..." % imageroot)
 
         for root, dirs, files in os.walk(self.imageroot):
-            for prune in [ 'callouts', '.svn' ]:
+            for prune in [ 'callouts', '.git' ]:
                 if prune in dirs:
                     dirs.remove(prune)
 

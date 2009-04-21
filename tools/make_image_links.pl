@@ -46,7 +46,7 @@ my $Translatable = (($Language =~ /^[a-z]{2}(_[A-Z]{2})?$/) &&
 
 # Create list of source directories:
 my @Image_dirs;
-find( sub { /^\.svn/ and ($File::Find::prune = 1)
+find( sub { /^\.git/ and ($File::Find::prune = 1)
                              or
             -d and push(@Image_dirs, $File::Find::name) 
       },
