@@ -169,6 +169,7 @@ xml2pot = ($(XML2PO) --output='-' $(1) \
           | $(MSGCAT) $(MSGCATFLAGS) - > "$(2)") 2>&1 \
           | $(SED) -e '/image file .* not found/d'; \
           test -s "$(2)" || rm -f "$(2)"; \
+          touch -c -r $(call get_recent_file,$(1)) "$(2)" || true; \
           test -s "$(2)"
 
 # Merge template (pot) and message catalog (po) or create a new catalog
@@ -227,6 +228,8 @@ endif
 #--------------------------------------------------------------#
 
 make_target_dir = f=$(1); d=$${f%/*}; test -d $$d || $(mkdir_p) $$d
+
+get_recent_file = $(shell ls -t $(1) | head -n 1)
 
 copy = $(ln_s) $(abs_srcdir)/$(1) $(2)
 

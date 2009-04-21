@@ -243,6 +243,7 @@ xml2pot = ($(XML2PO) --output='-' $(1) \
           | $(MSGCAT) $(MSGCATFLAGS) - > "$(2)") 2>&1 \
           | $(SED) -e '/image file .* not found/d'; \
           test -s "$(2)" || rm -f "$(2)"; \
+          touch -c -r `ls -t $(1) | head -n 1` "$(2)" || true; \
           test -s "$(2)"
 
 # Merge template (pot) and message catalog (po) or create a new catalog
