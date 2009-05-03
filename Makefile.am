@@ -43,7 +43,7 @@ DBLATEXFLAGS     = --verbose
 DOCBOOK2ODFFLAGS =
 
 # Calling make recursively
-RMAKE = $(MAKE) $(MAKEFLAGS) --no-print-directory
+RMAKE = $(MAKE) --no-print-directory
 
 # Standard shell commands
 echo_n = echo $(ECHO_N)

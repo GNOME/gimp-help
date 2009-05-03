@@ -49,7 +49,7 @@ ln_s    = ln -s
 find_l  = find -L
 
 # Calling make recursively
-RMAKE = $(MAKE) -f Makefile.GNU $(MAKEFLAGS) --no-print-directory
+RMAKE = $(MAKE) -f Makefile.GNU --no-print-directory
 
 # FIXME/TODO:
 #     make it work with srcdir != builddir
