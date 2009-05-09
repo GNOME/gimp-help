@@ -249,6 +249,7 @@ if test "x$with_gimp" != "xno"; then
 
   gimpdatadir=`$PKG_CONFIG --variable=gimpdatadir gimp-2.0`
 else
+  gimpdatadir=`pkg-config --variable=gimpdatadir gimp-2.0` ||
   gimpdatadir='$(datadir)/gimp/2.0'
 fi
 
