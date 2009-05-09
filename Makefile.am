@@ -724,16 +724,16 @@ draft-po/%.po:   preview-po/%.po   ;
 ####        Language-specific HTML tarballs for distribution        ####
 ########################################################################
 
-tarball_prefix := gimp-help-2-html
+tarball_prefix = gimp-help-2-html
+tarball_dir    = gimp-help-2
 
 .SECONDARY: $(tarball_prefix)-%.tar
 $(tarball_prefix)-%.tar: html/%/index.html html/%/gimp-help.xml
-	$(cmd) rm -rf $(tarball_prefix)-$*
-	$(cmd) $(MKDIR_P) $(tarball_prefix)-$*
-	$(cmd) cd $(tarball_prefix)-$* && $(LN_S) ../html/$* .
-	$(cmd) cd $(tarball_prefix)-$* && $(LN_S) ../html/images .
-	$(cmd) tar -chf $@ --exclude .git $(tarball_prefix)-$*
-	$(cmd) rm -rf $(tarball_prefix)-$*
+	$(cmd) rm -rf $(tarball_dir)/html
+	$(cmd) $(MKDIR_P) $(tarball_dir)/html
+	$(cmd) cd $(tarball_dir)/html && $(LN_S) ../../html/$* .
+	$(cmd) tar -chf $@ $(tarball_dir)/html/$*
+	$(cmd) rm -rf $(tarball_dir)
 
 $(tarball_prefix)-%.tar.gz: $(tarball_prefix)-%.tar
 	gzip -c9 $< > $@
@@ -752,6 +752,32 @@ html-dist: \
 		$(tarball_prefix)-$(lang).tar.bz2 \
 		$(tarball_prefix)-$(lang).zip \
 	)
+
+
+########################################################################
+####            Installation                                        ####
+########################################################################
+
+install-data-local:
+	$(cmd) $(MKDIR_P) $(DESTDIR)$(helpdir) || exit 77
+	$(cmd) $(echo_n) "*** Installing HTML:"
+	$(cmd) cd html && \
+	for lang in $(ALL_LINGUAS); do \
+		$(echo_n) " $${lang}"; \
+		tar -chf- $${lang} | \
+		(cd $(DESTDIR)$(helpdir)/ && tar -xf-) || exit 70; \
+	done; \
+	echo .
+
+uninstall-local:
+	$(cmd) rm -rf $(DESTDIR)$(helpdir)/*
+	$(cmd) dir=$(DESTDIR)$(helpdir); \
+	while [ -d "$${dir}" ]; do \
+		rmdir $${dir} 2>/dev/null \
+		&& echo removed $${dir} \
+		&& dir=$${dir%/*} \
+		|| break; \
+	done
 
 
 ########################################################################
@@ -782,44 +808,6 @@ check-images-en check-images-C: check-image-references ;
 
 .PHONY: checks check-image-references
 
-
-
-
-## TODO ## #### Installation
-## TODO ## 
-## TODO ## install-data-local:
-## TODO ## 	$(MKDIR_P) $(DESTDIR)$(helpdir)
-## TODO ## 
-## TODO ## 	@$(echo_n) "** Installing HTML:"
-## TODO ## 	@cd html && \
-## TODO ## 	for lang in $(ALL_LINGUAS); do \
-## TODO ## 		$(MKDIR_P) $(DESTDIR)$(helpdir)/$$lang && $(echo_n) " $$lang"; \
-## TODO ## 		find $$lang $(html_files_find_predicates) | \
-## TODO ## 		while read file; do \
-## TODO ## 		  $(INSTALL_DATA) $$file $(DESTDIR)$(helpdir)/$$file || exit 66; \
-## TODO ## 		done \
-## TODO ## 	done
-## TODO ## 	@echo .
-## TODO ## 
-## TODO ## 	@echo "** Installing images: (G=gif, J=jpg, M=mng, P=png, X=xcf)"
-## TODO ## 
-## TODO ## 	@(cd $(top_srcdir) && find images $(image_find_predicates)) | \
-## TODO ## 	while read file; do \
-## TODO ## 		case "$$file" in \
-## TODO ## 		  *.png) $(echo_n) P ;; \
-## TODO ## 		  *.jpg) $(echo_n) J ;; \
-## TODO ## 		  *.xcf) $(echo_n) X ;; \
-## TODO ## 		  *.mng) $(echo_n) M ;; \
-## TODO ## 		  *.gif) $(echo_n) G ;; \
-## TODO ## 		esac; \
-## TODO ## 		test -d $(DESTDIR)$(helpdir)/$${file%/*} || \
-## TODO ## 		$(MKDIR_P) $(DESTDIR)$(helpdir)/$${file%/*}; \
-## TODO ## 		$(INSTALL) $(top_srcdir)/$$file $(DESTDIR)$(helpdir)/$$file || exit 66; \
-## TODO ## 	done
-## TODO ## 	@echo .
-## TODO ## 
-## TODO ## uninstall-local:
-## TODO ## 	rm -rf $(DESTDIR)$(helpdir)
 
 if HAVE_DOT
 ########################################################################
