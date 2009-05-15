@@ -142,7 +142,7 @@ class ImageFilesList(FileNameContainer):
                 Logger.debug(filepath)
                 self.add(filepath.replace(imageroot, ""))
 
-        Logger.info("found %d images files" % len(self.data))
+        Logger.info("found %d image files" % len(self.data))
 
     def report(self):
         """Print the list of orphaned image files, i.e. image files
