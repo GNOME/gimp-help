@@ -106,12 +106,12 @@ AUTHORS_DOCBOOK_STYLESHEETS = \
 
 # Files & directories
 ifneq "$(MAKECMDGOALS)" "help"
-SRC_DIRS  := $(shell cd $(srcdir) && find src $(src_dir_predicates))
-SRC_FILES := $(shell cd $(srcdir) && find src $(xml_file_predicates)) \
+SRC_DIRS  := $(shell cd $(srcdir) && $(find_l) src/ $(src_dir_predicates))
+SRC_FILES := $(shell cd $(srcdir) && $(find_l) src/ $(xml_file_predicates)) \
              $(AUTHORS_DOCBOOK_XML)
 else
-SRC_DIRS   = $(shell cd $(srcdir) && find src $(src_dir_predicates))
-SRC_FILES  = $(shell cd $(srcdir) && find src $(xml_file_predicates)) \
+SRC_DIRS   = $(shell cd $(srcdir) && $(find_l) src/ $(src_dir_predicates))
+SRC_FILES  = $(shell cd $(srcdir) && $(find_l) src/ $(xml_file_predicates)) \
              $(AUTHORS_DOCBOOK_XML)
 endif
 
@@ -326,7 +326,7 @@ pot/%.pot: src/%/*.xml
 pot: potfiles ;
 potfiles: $(POT_FILES)
 	$(msg) "--- Cleaning up pot files ..."
-	$(cmd) find pot $(file_predicates) | \
+	$(cmd) $(find_l) pot/ $(file_predicates) | \
 	while read potfile; do \
 		potfile=$${potfile#pot/}; srcfile=src/$${potfile%.pot}.xml \
 		test -e $${srcfile} || rm -f $${potfile}; \
@@ -345,7 +345,7 @@ $$($(1)_PO_FILES): po/$(1)/%.po : pot/%.pot
 	$$(cmd) if test -s $$<; then $$(call pot2po,$$<,$(1),$$@); else touch $$@; fi
 po-$(1): $$($(1)_PO_FILES)
 	$$(cmd) if test -e messages.mo; then rm -f messages.mo; fi
-	$$(cmd) find po/$(1) -name $(COMPENDIUM) -prune -o $$(file_predicates) | \
+	$$(cmd) $(find_l) po/$(1)/ -name $(COMPENDIUM) -prune -o $$(file_predicates) | \
 	while read pofile; do \
 		potfile=pot/$$$${pofile#po/$(1)/}t; \
 		test -e $$$${potfile} || rm -vf $$$${pofile}; \
@@ -473,20 +473,10 @@ xml/en: $(en_XML_FILES)
 
 # remove stale xml files
 cleanup-xml-%:
-	$(cmd) find xml/$* $(file_predicates) | \
+	$(cmd) $(find_l) xml/$*/ $(file_predicates) | \
 	while read xmlfile; do \
 		test -e src/$${xmlfile#xml/$*/} || rm -vf $${xmlfile}; \
 	done
-
-# Workaround until everybody's links in xml/en
-# have been replaced with real files.
-# TODO: remove this target after a few weeks (e.g. on 2009-05-01)
-cleanup-xml-en:
-	$(cmd) find xml/en $(file_predicates) | \
-	while read xmlfile; do \
-		test -e src/$${xmlfile#xml/en/} || rm -vf $${xmlfile}; \
-	done
-	$(cmd) find xml/$* -type l -name '*.xml' | xargs rm -vf
 
 # Target suitable for command line
 xml-en: cleanup-xml-en xml/en $(en_XML_FILES) ;
