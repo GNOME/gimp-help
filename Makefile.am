@@ -42,6 +42,9 @@ DBLATEXFLAGS     = --verbose
 ## DOCBOOK2ODF      = docbook2odf
 DOCBOOK2ODFFLAGS =
 
+# Standard shell commands
+find_l = find -L
+
 # Calling make recursively
 RMAKE = $(MAKE) --no-print-directory
 
@@ -116,12 +119,12 @@ AUTHORS_DOCBOOK_STYLESHEETS = \
 	stylesheets/authors_common.xsl
 
 # lists of source (XML) files and source directories
-SRC_DIRS  = $(shell cd $(srcdir) && find src $(src_dir_predicates))
-SRC_FILES = $(shell cd $(srcdir) && find src $(src_find_predicates)) \
+SRC_DIRS  = $(shell cd $(srcdir) && $(find_l) src/ $(src_dir_predicates))
+SRC_FILES = $(shell cd $(srcdir) && $(find_l) src/ $(src_find_predicates)) \
             $(AUTHORS_DOCBOOK_XML)
 
 # lists of PO files (translations)
-PO_FILES = $(shell cd $(srcdir) && find po $(file_predicates))
+PO_FILES = $(shell cd $(srcdir) && $(find_l) po/ $(file_predicates))
 
 # stylesheets for HTML
 COMMON_CSS_FILES = \
@@ -353,7 +356,7 @@ pot/%.pot: $(srcdir)/src/%/*.xml
 pot: potfiles ;
 potfiles: $(POT_FILES)
 	$(msg) "--- Cleaning up pot files ..."
-	$(cmd) find pot $(file_predicates) | \
+	$(cmd) $(find_l) pot/ $(file_predicates) | \
 	while read potfile; do \
 		potfile=$${potfile#pot/}; srcfile=src/$${potfile%.pot}.xml \
 		test -e $${srcfile} || rm -f $${potfile}; \
@@ -489,20 +492,10 @@ xml/en: $(en_XML_FILES)
 
 # remove stale xml files
 cleanup-xml-%:
-	$(cmd) find xml/$* $(file_predicates) | \
+	$(cmd) $(find_l) xml/$*/ $(file_predicates) | \
 	while read xmlfile; do \
 		test -e src/$${xmlfile#xml/$*/} || rm -vf $${xmlfile}; \
 	done
-
-# Workaround until everybody's links in xml/en
-# have been replaced with real files.
-# TODO: remove this target after a few weeks (e.g. on 2009-05-01)
-cleanup-xml-en:
-	$(cmd) find xml/en $(file_predicates) | \
-	while read xmlfile; do \
-		test -e src/$${xmlfile#xml/en/} || rm -vf $${xmlfile}; \
-	done
-	$(cmd) find xml/$* -type l -name '*.xml' | xargs rm -vf
 
 # Target suitable for command line
 xml-en: cleanup-xml-en xml/en $(en_XML_FILES) ;
