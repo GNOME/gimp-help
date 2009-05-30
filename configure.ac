@@ -16,6 +16,7 @@ AC_CONFIG_SRCDIR([src/gimp.xml])
 
 AM_INIT_AUTOMAKE([1.6 dist-bzip2 -Wall -Wno-portability])
 
+AM_MAINTAINER_MODE
 
 AC_PROG_INSTALL
 AC_PROG_LN_S
