@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-ALL_LINGUAS ?= de en es fr it ko nl no pl ru sv
+ALL_LINGUAS ?= de en es fr it ko nl nn pl ru sv
 QUICKREFERENCE_ALL_LINGUAS ?= de en fi fr it ko ru sv
 QUICKREFERENCE_LINGUAS = $(filter $(ALL_LINGUAS), $(QUICKREFERENCE_ALL_LINGUAS))
 
@@ -12,7 +12,7 @@ PO_FILES = \
 	po/fr.po	\
 	po/it.po	\
 	po/ko.po	\
-	po/no.po	\
+	po/nn.po	\
 	po/sv.po	\
 	po/ru.po	\
 	po/zh_CN.po

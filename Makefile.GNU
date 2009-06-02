@@ -8,7 +8,7 @@ LANGUAGES  = $(LINGUAS)
 else ifneq ($(ALL_LINGUAS),)
 LANGUAGES  = $(ALL_LINGUAS)
 else
-LANGUAGES ?= de en es fr it ko nl no pl ru sv
+LANGUAGES ?= de en es fr it ko nl nn pl ru sv
 endif
 
 XML_LANG = en
@@ -536,11 +536,10 @@ html/%/index.html: xml/% $(HTML_STYLESHEETS) html/%/images
 	$(msg) "*** Making html for $* ... "
 	$(cmd) rm -f html/$*/*.*
 
-	$(cmd) test "$*" = "no" && lang="nn" || lang="$*"; \
 	$(XSLTPROC) \
 	  $(XSLTFLAGS) $(XSLTEXTRAFLAGS) \
 	  --xinclude \
-	  --stringparam l10n.gentext.default.language $${lang} \
+	  --stringparam l10n.gentext.default.language $* \
 	  -o html/$*/ \
 	  stylesheets/plainhtml.xsl \
 	  xml/$*/gimp.xml
@@ -595,7 +594,6 @@ preview-xml/%.xml: xml/%.xml stylesheets/drafthtml.xsl
 	test -d $${destdir}/images || $(RMAKE) $${destdir}/images; \
 	cp -f $(srcdir)/stylesheets/*.css $(srcdir)/stylesheets/$${lang}/*.css\
 	    $${destdir} 2>/dev/null; \
-	if [ "$${lang}" = "no" ]; then lang="nn"; fi; \
 	destfile="$${destdir}/$${id}-draft.html"; \
 	echo "Making $${destfile} (ignore any XSLT complaints) ..."; \
 	$(XSLTPROC) \

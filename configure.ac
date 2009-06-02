@@ -34,7 +34,7 @@ AC_PROG_SED
 XML_LANG="en"
 
 if test "x$ALL_LINGUAS" = "x"; then
-  ALL_LINGUAS="de en es fr it ko nl no pl ru sv"
+  ALL_LINGUAS="de en es fr it ko nl nn pl ru sv"
 fi
 if test "x$QUICKREFERENCE_ALL_LINGUAS" = "x"; then
   QUICKREFERENCE_ALL_LINGUAS="de en fi fr it ko ru sv"
