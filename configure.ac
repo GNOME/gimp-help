@@ -14,7 +14,7 @@ AC_INIT([GIMP-Help], [help_version])
 
 AC_CONFIG_SRCDIR([src/gimp.xml])
 
-AM_INIT_AUTOMAKE([1.6 dist-bzip2 -Wall -Wno-portability])
+AM_INIT_AUTOMAKE([1.10 dist-bzip2 -Wall -Wno-portability -Wno-override])
 
 AM_MAINTAINER_MODE
 
@@ -264,6 +264,22 @@ omf/gimp-C.omf
 stylesheets/plainhtml.xsl
 stylesheets/htmlalternate.xsl
 ])
+
+# XXX: is there a way to use the relevant (advanced) 'make' features
+#      in 'Makefile.am' without this dirty trick?
+if test -e Makefile.in; then
+    AC_MSG_WARN([GIMP Doc Team is tricking 'automake'])
+    sed -e '# re-enable special Makefile lines which were commented out' \
+        -e '# in "Makefile.am" since "automake" cannot handle them' \
+        -e 's/^# HIDE FROM AUTOMAKE #//' \
+        -e '# the following command is just adding a few newlines' \
+        -e '/^all\(-local\)\?:/i\
+\
+\
+'       Makefile.in > Makefile.in.tmp && mv -f Makefile.in.tmp Makefile.in
+else
+    AC_MSG_ERROR([cannot find 'Makefile.in'])
+fi
 
 AC_OUTPUT
 

@@ -17,8 +17,8 @@ test -z "$srcdir" && srcdir=.
 ORIGDIR=`pwd`
 cd $srcdir
 
-DIE=0
-
+# XXX: The AM_INIT_AUTOMAKE macro in 'configure.ac' provides (and checks)
+# the version number - so do we need the following code?
 echo -n "Looking for latest automake version ... "
 required_automake_minor=10
 minor=15
@@ -34,15 +34,12 @@ while [ $minor -ge $required_automake_minor ]; do
 done
 
 if [ -z "$AUTOMAKE" ]; then
+    exec 1>&2
     echo
     echo "  You must have automake 1.$required_automake_minor or newer" \
             "installed to compile $PROJECT."
     echo "  Download the appropriate package for your distribution,"
     echo "  or get the source tarball at ftp://ftp.gnu.org/pub/gnu/automake/"
-    DIE=1
-fi
-
-if test "$DIE" -eq 1; then
     echo
     echo "Please install/upgrade the missing tools and call me again."
     echo
@@ -51,6 +48,7 @@ fi
 
 
 test $TEST_TYPE $FILE || {
+    exec 1>&2
     echo
     echo "You must run this script in the top-level $PROJECT directory."
     echo
@@ -92,22 +90,11 @@ fi
 $ACLOCAL $ACLOCAL_FLAGS
 RC=$?
 if test $RC -ne 0; then
-   echo "$ACLOCAL gave errors. Please fix the error conditions and try again."
+   echo >&2 "$ACLOCAL gave errors. Please fix the error conditions and try again."
    exit 1
 fi
 
 $AUTOMAKE --add-missing || exit 1
-if [ -e Makefile.in ]; then
-    sed -e 's/^# HIDE FROM AUTOMAKE #//' \
-        -e '/^all\(-local\)\?:/i\
-\
-\
-'       Makefile.in > Makefile.in.tmp &&
-    mv Makefile.in.tmp Makefile.in
-else
-    echo >&2 "Error: cannot find Makefile.in"
-    exit 1
-fi
 autoconf || exit 1
 
 rm -rf autom4te.cache
@@ -118,7 +105,7 @@ if $srcdir/configure --enable-maintainer-mode "$@"; then
   echo
   echo "Now type 'make' to compile $PROJECT."
 else
-  echo
-  echo "Configure failed or did not finish!"
+  echo >&2
+  echo >&2 "Configure failed or did not finish!"
   exit 1
 fi

@@ -864,19 +864,20 @@ maintainer-clean-local:
 	$(cmd) rm -rf html
 
 # Override automake-generated targets
-Makefile: $(srcdir)/Makefile.in $(srcdir)/Makefile.am $(srcdir)/configure.ac $(srcdir)/autogen.sh
-	$(msg) "!!! Updating '$@' running 'autogen.sh' ($? changed) !!!"
+Makefile: $(srcdir)/Makefile.in
+	$(msg) "!!! Updating '$@' ($? changed) running"
 	$(cmd) opt=`test -e $(srcdir)/config.status && \
 	     $(srcdir)/config.status --version | \
 	     sed -e 's/.*with options "//' \
 	         -e tmatch -e d -e :match -e 's/".*//' \
 		 -e "s/'\([^'=]*\)=\([^']*\)'/\1='\2'/"`; \
-	test -n "$${opt}" && eval $(srcdir)/autogen.sh $${opt}
-$(srcdir)/Makefile.in: $(srcdir)/Makefile.am $(srcdir)/autogen.sh ;
+	echo "!!!   configure $${opt}"; \
+	eval $(srcdir)/configure $${opt}
 
-$(top_builddir)/config.status: $(top_srcdir)/configure ;
-
-$(top_srcdir)/configure: $(top_srcdir)/configure.ac ;
+$(srcdir)/Makefile.in: $(srcdir)/Makefile.am $(builddir)/configure
+	$(cmd) cd $(srcdir) && $(AUTOMAKE) --gnu  Makefile
+$(top_srcdir)/configure: $(srcdir)/configure.ac
+	$(cmd) cd $(srcdir) && $(AUTOCONF)
 
 # GNU Make, please don't delete these targets when a target that depends
 # on them fails, 'kay?
