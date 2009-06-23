@@ -469,7 +469,7 @@ include $(foreach LANG,$(PO_LANGS),xml/$(LANG)/.deps.mk)
 # HIDE FROM AUTOMAKE #$(foreach LANG,$(PO_LANGS),$(eval $(call MAKE_XML_RULES,$(LANG))))
 
 # TODO: test new image files structure;
-#   how to ensure that $@ is up-to-date without forcing
+#   problem: how to ensure that $@ is up-to-date without forcing
 #   rebuild (which will also force e.g. html-% to be rebuilt 
 #   -- use (~1500) image files as prerequisites?
 xml/%/images: FORCE
@@ -478,9 +478,16 @@ xml/%/images: FORCE
 	$(cmd) if test -d $@; then rm -rf $@/*; fi
 	$(cmd) test -d $@ || $(MKDIR_P) $@
 	$(cmd) $(echo_n) "*** Copying images ($*) ..."
+if CYGWIN
+# Cygwin
 	$(cmd) perl $(srcdir)/tools/make_image_links.pl -v \
-	           $(srcdir)/images/common $(srcdir)/images/C \
-		   xml/$*
+	           --mode=hardlink,copy \
+	           $(srcdir)/images/{common,C} $@
+else
+# Default (non-Cygwin)
+	$(cmd) perl $(srcdir)/tools/make_image_links.pl -v \
+	           $(srcdir)/images/{common,C} $@
+endif
 
 # Special case: en
 
@@ -576,9 +583,20 @@ html/%/index.html: xml/% $(HTML_STYLESHEETS) html/%/images
 	done
 
 # TODO: check/enhance new image files structure
+if CYGWIN
+# Cygwin
+html/%/images: FORCE
+	$(cmd) test -h $@ && rm -f $@
+	$(cmd) test -d $@ && rm -rf $@/* || $(MKDIR_P) $@
+	$(cmd) perl $(srcdir)/tools/make_image_links.pl -v \
+	           --mode=hardlink,copy \
+	           $(srcdir)/images/{common,C} $@
+else
+# Default (non-Cygwin)
 html/%/images: xml/%/images
 	$(cmd) test -d html/$* || $(MKDIR_P) html/$*
 	$(cmd) test -e $@ || $(LN_S) ../../$< $@
+endif
 
 # The xrefs file is a side effect of the HTML build
 html/%/gimp-xrefs.xml: html/%/index.html

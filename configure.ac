@@ -12,6 +12,17 @@ m4_define([help_version], [help_major_version.help_minor_version.help_micro_vers
 
 AC_INIT([GIMP-Help], [help_version])
 
+# Apparently this macro must be called before "AM_INIT_AUTOMAKE"
+AC_CANONICAL_BUILD
+case $build_os in
+  *cygwin*) IS_CYGWIN=yes;;
+         *) IS_CYGWIN=no;;
+esac
+# for use in Makefile.am
+AM_CONDITIONAL(CYGWIN, test $IS_CYGWIN = yes)
+# for use in Makefile
+#AC_SUBST(IS_CYGWIN)
+
 AC_CONFIG_SRCDIR([src/gimp.xml])
 
 AM_INIT_AUTOMAKE([1.6 dist-bzip2 -Wall -Wno-portability])
