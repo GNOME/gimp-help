@@ -8,7 +8,7 @@ LANGUAGES  = $(LINGUAS)
 else ifneq ($(ALL_LINGUAS),)
 LANGUAGES  = $(ALL_LINGUAS)
 else
-LANGUAGES ?= de en es fr it ko nl nn pl ru sv
+LANGUAGES ?= de en es fr it ko nl nn pl ru sv zh_CN
 endif
 
 XML_LANG = en

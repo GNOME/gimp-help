@@ -8,7 +8,7 @@ SUBDIRS = quickreference
 # HIDE FROM AUTOMAKE #else ifneq ($(ALL_LINGUAS),)
 # HIDE FROM AUTOMAKE #LANGUAGES  = $(ALL_LINGUAS)
 # HIDE FROM AUTOMAKE #else
-# HIDE FROM AUTOMAKE #LANGUAGES ?= de en es fr it ko nl nn pl ru sv
+# HIDE FROM AUTOMAKE #LANGUAGES ?= de en es fr it ko nl nn pl ru sv zh_CN
 # HIDE FROM AUTOMAKE #endif
 
 # used for creating the ChangeLog
