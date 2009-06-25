@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN" "http://www.docbook.org/xml/4.3/docbookx.dtd">
 <!-- section history:
+  2009-06-23 j.h: Some changes for better understanding
   2007-12-16 MikaS: added 'fr'
   2007-10-01 KoSt: added 'no'
   2007-09-29 alex falappa: added 'it'
@@ -8,18 +9,7 @@
   2007-09-17 ude: created en,de
 -->
 <sect2 id="script-fu-carve-it">
-<!--  <sect2info>
-    <revhistory>
-      <revision>
-        <revnumber>$Revision$</revnumber>
-        <date>2007-09-17</date>
-        <authorinitials>ude</authorinitials>
-      </revision>
-    </revhistory>
-  </sect2info>-->
-  <title>
-    <phrase>Stencil Carve</phrase>
-  </title>
+  <title>Stencil Carve</title>
   <indexterm>
     <primary>Filters</primary>
     <secondary>Decor</secondary>
@@ -28,6 +18,7 @@
   <indexterm>
     <primary>Stencil Carve</primary>
   </indexterm>
+
   <sect3>
     <title>
       <phrase>Overview</phrase>
@@ -56,30 +47,38 @@
       </mediaobject>
     </figure>
     <para>
-      This filter works on grayscale images containing a single layer. The
-      layer is used as selection mask and will work as stencil for the
-      carving effect. The image to be carved (the target image) must be an RGB
-      color or grayscale image, also with a single layer. This image should
-      have the same size as the source image.
+      This filter works with two images, source and target. The source image
+      must be a grayscale image containing a single layer and no Alpha
+      channel.  This layer is used as selection mask and will work as stencil
+      for the carving effect. The image to be carved (the target image) can
+      be an RGB color or grayscale image, also with a single layer. This
+      target image must have the same size as the source image.
     </para>
   </sect3>
   <sect3>
     <title>
-      <phrase>Activate the filter</phrase>
+      <phrase>Activating the filter</phrase>
     </title>
     <para>
       This filter is found in the image window menu under
-      <menuchoice><guimenu>Filters</guimenu><guisubmenu>Decor</guisubmenu><guimenuitem>Stencil Carve</guimenuitem></menuchoice>.
+      <menuchoice>
+        <guimenu>Filters</guimenu>
+        <guisubmenu>Decor</guisubmenu>
+        <guimenuitem>Stencil Carve</guimenuitem>
+      </menuchoice>.
     </para>
+    <tip>
+      <para>
+        If this command remains grayed out although the image is grayscale,
+        check for an Alpha channel and delete it.
+      </para>
+    </tip>
   </sect3>
+
   <sect3>
-    <title>
-      <phrase>Options</phrase>
-    </title>
+    <title>Options</title>
     <figure>
-      <title>
-        <phrase><quote>Stencil Carve</quote> options</phrase>
-      </title>
+      <title><quote>Stencil Carve</quote> options</title>
       <mediaobject>
         <imageobject>
           <imagedata fileref="images/filters/options-decor-carve-it.png" format="PNG"/>
@@ -127,13 +126,20 @@
             </mediaobject>
           </figure>
           <para>
-            In the example below, the target is a plain light yellow image.
-            Note that, when <guilabel>Carve white areas</guilabel> is enabled
-            (left image), the rectangular area is not carved, since it
-            corresponds to a black area of the stencil. If this option is
-            disabled (right image), the elliptical area, corresponding to the
-            black area of the <emphasis>inverted</emphasis> stencil, is
-            unchanged.
+            In the example below, the source is a grayscale image. The target
+            is an image with a wood pattern.
+          </para>
+          <para>
+            On the left, <guilabel>Carve white areas</guilabel> is enabled.
+            The pixels of the target image corresponding to white pixels in
+            the stencil (around the text) have been carved. The result is an
+            embossed text.
+          </para>
+          <para>
+            On the right, <guilabel>Carve white areas</guilabel> is disabled.
+            The pixels of the target image corresponding to the black pixels
+            in the stencil (the text) have been carved. The result is a hollow
+            text.
           </para>
           <figure>
             <title>
@@ -166,6 +172,11 @@
               </caption>
             </mediaobject>
           </figure>
+          <para>
+            Information about the many layers created by this filter can be
+            found in
+            <ulink url="http://gimp-savvy.com/BOOK/index.html">Grokking the GIMP (node77)</ulink>.
+          </para>
         </listitem>
       </varlistentry>
     </variablelist>
