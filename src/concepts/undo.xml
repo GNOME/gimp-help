@@ -45,8 +45,9 @@
       If you undo one or more actions and then operate on the image in any way
       except by using Undo or Redo, it will no longer be possible to redo
       those actions: they are lost forever. The solution to this, if it
-      creates a problem for you, is to duplicate the image and then operate on
-      the copy. ( <emphasis>Not</emphasis> the original, because the undo/redo
+      creates a problem for you, is to duplicate the image and then test on
+      the copy. ( Do <emphasis>Not</emphasis> test the original, because the
+      undo/redo
       history is not copied when you duplicate an image.)
     </para>
   </caution>
@@ -83,18 +84,17 @@
     </para>
   </note>
   <para>
-    The implementation of Undo by <acronym>GIMP</acronym> is rather
-    sophisticated. Many
+    <acronym>GIMP</acronym>'s implementation of Undo is rather sophisticated.
+    Many
     operations require very little Undo memory (e.g., changing visibility of a
     layer), so you can perform long sequences of them before they drop out of
-    the Undo History. Some operations (changing layer visibility is again an
-    example) are <emphasis>compressed</emphasis>,
+    the Undo History. Some operations, such as changing layer visibility,
+    are <emphasis>compressed</emphasis>,
     so that doing them several times in a row produces only a single point
     in the Undo History. However, there are other operations that may consume
-    a lot of undo memory. Most filters are examples of this: because they are
-    implemented by plug-ins, the <acronym>GIMP</acronym> core has no really
-    efficient way of
-    knowing what they have changed, so it has no way to implement Undo except
+    a lot of undo memory. Most filters are implemented by plug-ins, so the
+    <acronym>GIMP</acronym> core has no efficient way of
+    knowing what changed. As such, there is no way to implement Undo except
     by memorizing the entire contents of the affected layer before and after
     the operation. You might only be able to perform a few such operations
     before they drop out of the Undo History.
@@ -105,7 +105,7 @@
     </title>
     <para>
       Most actions that alter an image can be undone. Actions that do not
-      alter the image generally cannot be. This includes operations such as
+      alter the image generally cannot be undone. Examples include
       saving the image to a file, duplicating the image, copying part of the
       image to the clipboard, etc. It also includes most actions that affect
       the image display without altering the underlying image data. The most
@@ -123,11 +123,11 @@
         <listitem>
           <para>
             The Undo History is a component of the image, so when the image is
-            closed and all of its resources are freed, the Undo History goes
-            along. Because of this, unless the image has not been modified
+            closed and all of its resources are freed, the Undo History is
+            gone. Because of this, unless the image has not been modified
             since the last time it was saved, <acronym>GIMP</acronym> always
-            asks you to confirm
-            that you really want to close it. (You can disable this in the
+            asks you to confirm that you really want to close the image.
+            (You can disable this in the
             <link linkend="gimp-prefs-environment">Environment</link>
             page of the Preferences dialog; if you do, you are assuming
             responsibility for thinking about what you are doing.)
@@ -138,11 +138,11 @@
         <term>Reverting the image</term>
         <listitem>
           <para><quote>Reverting</quote>
-            means reloading the image from file. <acronym>GIMP</acronym>
-            actually implements this
+            means reloading the image from the file.
+            <acronym>GIMP</acronym> actually implements this
             by closing the image and creating a new image, so the Undo History
             is lost as a consequence. Because of this, if the image is
-            unclean, <acronym>GIMP</acronym> always asks you to confirm that
+            unclean, <acronym>GIMP</acronym> asks you to confirm that
             you really want to revert the image.
           </para>
         </listitem>
@@ -178,8 +178,8 @@
       are all believed
       to be set up correctly, but obviously no guarantees can be given for
       plugins you obtain from other sources. Also, even if the code is
-      correct, canceling a plugin while it is running can sometimes leave the
-      Undo History corrupted, so it is best to avoid this unless you have
+      correct, canceling a plugin while it is running may corrupt the
+      Undo History, so it is best to avoid this unless you have
       accidentally done something whose consequences are going to be very
       harmful.
     </para>
