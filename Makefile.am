@@ -559,7 +559,7 @@ html/%/index.html: xml/% $(HTML_STYLESHEETS) html/%/images
 	$(msg) "*** Making html for $* ... "
 	$(cmd) rm -f html/$*/*.*
 
-	$(XSLTPROC) \
+	$(cmd) $(XSLTPROC) \
 	  $(XSLTFLAGS) $(XSLTEXTRAFLAGS) \
 	  --xinclude \
 	  --stringparam l10n.gentext.default.language $* \
@@ -880,9 +880,10 @@ $(top_srcdir)/configure: $(top_srcdir)/configure.ac ;
 
 # GNU Make, please don't delete these targets when a target that depends
 # on them fails, 'kay?
-#
+#			TODO: check: seems that xml/%/gimp.xml can be removed
 .PRECIOUS: \
 	xml/%/gimp.xml \
+	xml/%/images \
 	pdf/%/gimp.pdf \
 	odf/%/gimp.odt \
 	html/%/gimp-xrefs.xml \

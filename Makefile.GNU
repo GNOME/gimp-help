@@ -481,6 +481,8 @@ cleanup-xml-%:
 # Target suitable for command line
 xml-en: cleanup-xml-en xml/en $(en_XML_FILES) ;
 
+.PRECIOUS: xml/%/images
+
 .PHONY: FORCE
 FORCE: ;
 
@@ -536,7 +538,7 @@ html/%/index.html: xml/% $(HTML_STYLESHEETS) html/%/images
 	$(msg) "*** Making html for $* ... "
 	$(cmd) rm -f html/$*/*.*
 
-	$(XSLTPROC) \
+	$(cmd) $(XSLTPROC) \
 	  $(XSLTFLAGS) $(XSLTEXTRAFLAGS) \
 	  --xinclude \
 	  --stringparam l10n.gentext.default.language $* \
