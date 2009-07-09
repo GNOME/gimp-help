@@ -260,7 +260,8 @@ xml2pot = ($(XML2PO) --output='-' $(1) \
 #     $1 - input POT file
 #     $2 - translation language
 #     $3 - output PO file
-pot2po = with_compendium="$(shell $(call get_compendium,$3))"; \
+pot2po = with_compendium="$(shell $(call get_compendium,$3)) \
+                          $(shell $(call use_gimp_po_files,$2))"; \
          tmpfile=$(3).tmp; \
          if [ -s $(3) ]; then \
              $(MSGMERGE) $(MSGMERGEFLAGS) $${with_compendium} \
@@ -324,6 +325,15 @@ copy = $(LN_S) $(abs_srcdir)/$(1) $(2)
 # HIDE FROM AUTOMAKE #	if test -n "$${opt}"; then echo $${opt}; fi
 # HIDE FROM AUTOMAKE #else
 # HIDE FROM AUTOMAKE #get_compendium =
+# HIDE FROM AUTOMAKE #endif
+
+# HIDE FROM AUTOMAKE #ifneq ($(GIMP_PO_ROOT),"")
+# HIDE FROM AUTOMAKE #use_gimp_po_files = \
+# HIDE FROM AUTOMAKE #	for po in $(GIMP_PO_ROOT)/po*/$(1).po; do \
+# HIDE FROM AUTOMAKE #		test -f "$${po}" && echo '--compendium'="$${po}"; \
+# HIDE FROM AUTOMAKE #	done
+# HIDE FROM AUTOMAKE #else
+# HIDE FROM AUTOMAKE #use_gimp_po_files =
 # HIDE FROM AUTOMAKE #endif
 
 
