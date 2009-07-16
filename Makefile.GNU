@@ -3,14 +3,21 @@
 ########################################################################
 
 # The GIMP manual languages
-ifneq ($(LINGUAS),)
-LANGUAGES  = $(LINGUAS)
-else ifneq ($(ALL_LINGUAS),)
-LANGUAGES  = $(ALL_LINGUAS)
-else
-LANGUAGES ?= de en es fr it ko nl nn pl ru sv zh_CN
+ALL_LINGUAS = de en es fr it ko nl nn pl ru sv zh_CN
+LANGUAGES = $(if $(LINGUAS), \
+              $(filter $(ALL_LINGUAS),$(LINGUAS)), \
+	      $(ALL_LINGUAS))
+ifneq ($(DOC_LINGUAS),)
+$(warning Do not set the internal variable DOC_LINGUAS)
 endif
+DOC_LINGUAS = $(LINGUAS)
 
+ifneq ($(XML_LANG),)
+$(error You must not set the internal variable XML_LANG)
+endif
+ifneq ($(PO_LANGS),)
+$(error You must not set the internal variable PO_LANGS)
+endif
 XML_LANG = en
 PO_LANGS = $(filter-out $(XML_LANG), $(LANGUAGES))
 

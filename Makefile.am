@@ -2,20 +2,26 @@
 
 SUBDIRS = quickreference
 
-# The GIMP manual languages
-# HIDE FROM AUTOMAKE #ifneq ($(LINGUAS),)
-# HIDE FROM AUTOMAKE #LANGUAGES  = $(LINGUAS)
-# HIDE FROM AUTOMAKE #else ifneq ($(ALL_LINGUAS),)
-# HIDE FROM AUTOMAKE #LANGUAGES  = $(ALL_LINGUAS)
-# HIDE FROM AUTOMAKE #else
-# HIDE FROM AUTOMAKE #LANGUAGES ?= de en es fr it ko nl nn pl ru sv zh_CN
-# HIDE FROM AUTOMAKE #endif
-
 # used for creating the ChangeLog
 LAST_RELEASE_TAG = GIMP_HELP_2_4_2
 
-XML_LANG = en
-PO_LANGS = $(filter-out $(XML_LANG), $(LANGUAGES))
+# The GIMP manual languages
+LANGUAGES = $(if $(LINGUAS), \
+              $(filter $(ALL_LINGUAS),$(LINGUAS)), \
+	      $(ALL_LINGUAS))
+# HIDE FROM AUTOMAKE #ifneq ($(DOC_LINGUAS),)
+# HIDE FROM AUTOMAKE #$(warning Do not set the internal variable DOC_LINGUAS)
+# HIDE FROM AUTOMAKE #endif
+DOC_LINGUAS = $(LINGUAS)
+
+# HIDE FROM AUTOMAKE #ifneq ($(XML_LANG),)
+# HIDE FROM AUTOMAKE #$(error You must not set the internal variable XML_LANG)
+# HIDE FROM AUTOMAKE #endif
+# HIDE FROM AUTOMAKE #ifneq ($(PO_LANGS),)
+# HIDE FROM AUTOMAKE #$(error You must not set the internal variable PO_LANGS)
+# HIDE FROM AUTOMAKE #endif
+# HIDE FROM AUTOMAKE #XML_LANG = en
+# HIDE FROM AUTOMAKE #PO_LANGS = $(filter-out $(XML_LANG), $(LANGUAGES))
 
 ## Essential external programs and their default options
 ## (some of these variables are provided via "configure" -- see configure.ac)
@@ -766,7 +772,7 @@ install-data-local:
 	$(cmd) $(MKDIR_P) $(DESTDIR)$(helpdir) || exit 77
 	$(cmd) $(echo_n) "*** Installing HTML:"
 	$(cmd) cd html && \
-	for lang in $(ALL_LINGUAS); do \
+	for lang in $(LANGUAGES); do \
 		$(echo_n) " $${lang}"; \
 		tar -chf- $${lang} | \
 		(cd $(DESTDIR)$(helpdir)/ && tar -xf-) || exit 70; \

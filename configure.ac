@@ -25,13 +25,13 @@ AC_PROG_MAKE_SET
 AC_PROG_SED
 
 
-#  You can set the ALL_LINGUAS environment variable to
-#  control what languages are build.
+#  You can set the LINGUAS or LANGUAGES environment variable to
+#  control what languages are build:
+#      LINGUAS   will be re restricted to languges in ALL_LINGUAS
+#      LANGUAGES will override ALL_LINGUAS
 #
 #  Quickreference files are built for languages in
 #  QUICKREFERENCE_ALL_LINGUAS *and* (intersecton) ALL_LINGUAS
-
-XML_LANG="en"
 
 if test "x$ALL_LINGUAS" = "x"; then
   ALL_LINGUAS="de en es fr it ko nl nn pl ru sv zh_CN"
@@ -40,7 +40,6 @@ if test "x$QUICKREFERENCE_ALL_LINGUAS" = "x"; then
   QUICKREFERENCE_ALL_LINGUAS="de en fi fr it ko ru sv zh_CN"
 fi
 
-AC_SUBST(XML_LANG)
 AC_SUBST(ALL_LINGUAS)
 AC_SUBST(QUICKREFERENCE_ALL_LINGUAS)
 
