@@ -191,7 +191,7 @@ sub print_file_statistics
 	$translated += $t;
 	$untranslated += $u;
 	$fuzzy += $f;
-	printf "%+4d  ~%-2d -%d\t%s\n", $t, $f, $u, $n
+	printf "%+5d  ~%-2d -%d\t%s\n", $t, $f, $u, $n
 		unless !$Print_file_list ||
 		       $Skip_translated && ($u + $f) == 0;
 }
