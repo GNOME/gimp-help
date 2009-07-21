@@ -2,7 +2,8 @@
 <!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
                        "http://www.docbook.org/xml/4.3/docbookx.dtd">
 <!-- section history
-  2009 04-08 j.h: made some explanations clearer, I hope
+  2009-07-20 ude: moved interpolation options here (from glossary)
+  2009-04-08 j.h: made some explanations clearer, I hope
   2009-03-17 j.h: updated to v2.6. Added Opacity
   2008-02-26 kost: updated 'no' v2.4
   2007-06-10 kost: added 'no'
@@ -123,15 +124,63 @@
           </para>
         </listitem>
       </varlistentry>
-      <varlistentry>
+      <varlistentry id="gimp-tool-interpolation-methods">
         <term>Interpolation</term>
         <listitem>
           <para>
-            The <guilabel>Interpolation</guilabel> drop-down list lets
-            you choose the quality of the transformation. For more
-            information about the different methods that can be employed,
-            see the glossary entry
-            <link linkend="glossary-interpolation">Interpolation</link>.
+            This drop-down list lets you choose the method and thus the
+            quality of the transformation:
+          </para>
+          <variablelist>
+            <varlistentry>
+              <term>None</term>
+              <listitem>
+                <para>
+                  The color of each pixel is copied from its closest
+                  neighboring pixel in the original image. This often results
+                  in aliasing (the <quote>stair-step</quote> effect) and a
+                  coarse image, but it is the fastest method. Sometimes this
+                  method is called <quote>Nearest Neighbor</quote>.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Linear</term>
+              <listitem>
+                <para>
+                  The color of each pixel is computed as the average color of
+                  the four closest pixels in the original image. This gives a
+                  satisfactory result for most images and is a good compromise
+                  between speed and quality. Sometimes this method is called
+                  <quote>Bilinear</quote>.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Cubic</term>
+              <listitem>
+                <para>
+                  The color of each pixel is computed as the average color of
+                  the eight closest pixels in the original image. This usually
+                  gives the best result, but it naturally takes more time.
+                  Sometimes this method is called <quote>Bicubic</quote>.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Sinc (Lanczos3)</term>
+              <listitem>
+                <para>
+                  The Lanczos3 method uses the Sinc mathematical function and
+                  performs a high quality interpolation.
+                </para>
+              </listitem>
+            </varlistentry>
+          </variablelist>
+          <para>
+            You can set the default interpolation method in the
+            <link linkend="gimp-prefs-tool-options">Tools Options
+            Preferences</link> dialog.
           </para>
         </listitem>
       </varlistentry>
