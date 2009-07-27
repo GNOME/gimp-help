@@ -453,13 +453,12 @@ def worthOutputting(node):
     return worth
 
 def processAttribute(node, attr):
-    if not node or not attr or not worthOutputting(node):
-        return
-
+    assert node and attr
     outtxt = attr.content
     if mode=='merge':
-        translation = getTranslation(outtxt, 0)
-        replaceAttributeContentsWithText(attr, translation.encode('utf-8'))
+        translation = getTranslation(outtxt, 0)  # may be None
+        if translation:
+            replaceAttributeContentsWithText(attr, translation.encode('utf-8'))
     else:
         msg.outputMessage(outtxt, node.lineNo(),  "", 0,
                           node.name + ":" + attr.name)
@@ -601,9 +600,11 @@ def read_ignoredtags(filelist):
 
 def read_treatedattributes(filelist):
     if CurrentXmlMode:
-        return CurrentXmlMode.getTreatedAttributes()
+        # FIXME: this is a workaround for gimp-help-2, the correct
+        # way is to use a specialized module.
+        return ["xreflabel"] + CurrentXmlMode.getTreatedAttributes()
     else:
-        return []
+        return ["xreflabel"]
 
 
 def tryToUpdate(allargs, lang):
