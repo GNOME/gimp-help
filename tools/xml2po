@@ -456,7 +456,7 @@ def processAttribute(node, attr):
     assert node and attr
     outtxt = attr.content
     if mode=='merge':
-        translation = getTranslation(outtxt, 0)  # may be None
+        translation = getTranslation(outtxt, 0)  # unicode or None
         if translation:
             replaceAttributeContentsWithText(attr, translation.encode('utf-8'))
     else:
@@ -510,7 +510,11 @@ def processElementTag(node, replacements, restart = 0):
         if restart or worth:
             i = 0
             while i < len(myrepl):
-                replacement = '<%s>%s</%s>' % (myrepl[i][0], myrepl[i][3], myrepl[i][2])
+                # myrepl[i][0] may contain translated attributes with
+                # non-ASCII chars, so implicit conversion to <str> may fail
+                replacement = '<%s>%s</%s>' % (myrepl[i][0].decode('utf-8'),
+                                               myrepl[i][3],
+                                               myrepl[i][2])
                 i += 1
                 translation = translation.replace('<placeholder-%d/>' % (i), replacement)
 
