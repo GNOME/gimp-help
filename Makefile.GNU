@@ -563,12 +563,10 @@ html/%/index.html: xml/% $(HTML_STYLESHEETS) html/%/images
 	  stylesheets/plainhtml.xsl \
 	  xml/$*/gimp.xml
 
-	$(cmd) for file in $(srcdir)/stylesheets/*.css; do \
-		if [ -f $$file ]; then cp -f $$file html/$*; fi; \
-	done
-
-	$(cmd) for file in $(srcdir)/stylesheets/$*/*.css; do \
-		if [ -f $$file ]; then cp -f $$file html/$*; fi; \
+	$(msg) "Copying stylesheets ... "
+	$(cmd) for file in $(srcdir)/stylesheets/*.css \
+	                   $(srcdir)/stylesheets/$*/*.css; do \
+		if [ -f $${file} ]; then cp -f $${file} html/$*; fi; \
 	done
 
 # TODO: check/enhance new image files structure
