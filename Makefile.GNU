@@ -356,7 +356,11 @@ potfiles: $(POT_FILES)
 
 define MAKE_PO_RULES
 $(1)_PO_FILES = $$(patsubst pot/%.pot, po/$(1)/%.po, $$(POT_FILES))
+ifeq ($$(filter $$(MAKECMDGOALS),$$($(1)_PO_FILES)),)
 $$($(1)_PO_FILES): po/$(1)/%.po : pot/%.pot
+else
+$$($(1)_PO_FILES): po/$(1)/%.po : pot/%.pot FORCE
+endif
 	$$(cmd) $$(call make_target_dir,$$@)
 	$$(msg) "[PO]  $$@"
 	$$(cmd) if test -s $$<; then $$(call pot2po,$$<,$(1),$$@); else touch $$@; fi
@@ -391,14 +395,11 @@ po-todo-%: po-%
 
 # Force updating po file(s)
 update-po/%.po:
-	$(cmd) po=$@; pot=pot/$${po#update-po/*/}t; \
-	$(RMAKE) $${pot} && touch $${pot} && \
-	$(RMAKE) po/$*.po
+	$(msg) "Deprecated, use 'make po/$*.po instead'"
+	$(cmd) false
 
 force-po/%:
-	$(cmd) for po in po/$*/*.po; do \
-		$(RMAKE) update-$${po}; \
-	done
+	$(cmd) $(RMAKE) po/$*/*.po
 
 
 ########################################################################
