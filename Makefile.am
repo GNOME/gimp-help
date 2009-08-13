@@ -484,6 +484,19 @@ include $(foreach LANG,$(PO_LANGS),xml/$(LANG)/.deps.mk)
 # HIDE FROM AUTOMAKE #endef
 # HIDE FROM AUTOMAKE #$(foreach LANG,$(PO_LANGS),$(eval $(call MAKE_XML_RULES,$(LANG))))
 
+# Special case: en
+
+en_XML_FILES = $(SRC_FILES:src/%=xml/en/%)
+$(en_XML_FILES): xml/en/%.xml : src/%.xml
+	$(msg) "[XML] $@ (copy)"
+	$(cmd) $(call make_target_dir,$@)
+	$(cmd) cp -f $< $@
+
+xml/en: $(en_XML_FILES)
+	$(cmd) test -d $@ && touch $@ || $(MKDIR_P) $@
+
+# Images
+
 # TODO: test new image files structure;
 #   how to ensure that $@ is up-to-date without forcing
 #   rebuild (which will also force e.g. html-% to be rebuilt 
@@ -498,17 +511,6 @@ xml/%/images: FORCE
 	           $(srcdir)/images/common $(srcdir)/images/C \
 		   xml/$*
 
-# Special case: en
-
-en_XML_FILES = $(SRC_FILES:src/%=xml/en/%)
-$(en_XML_FILES): xml/en/%.xml : src/%.xml
-	$(msg) "[XML] $@ (copy)"
-	$(cmd) $(call make_target_dir,$@)
-	$(cmd) cp -f $< $@
-
-xml/en: $(en_XML_FILES)
-	$(cmd) test -d $@ && touch $@ || $(MKDIR_P) $@
-
 # remove stale xml files
 cleanup-xml-%:
 	$(cmd) $(find_l) xml/$*/ $(file_predicates) | \
@@ -518,6 +520,8 @@ cleanup-xml-%:
 
 # Target suitable for command line
 xml-en: cleanup-xml-en xml/en $(en_XML_FILES) ;
+xml-images-%: xml/%/images ;
+images-%: xml-images-% html-images-% ;
 
 .PHONY: FORCE
 FORCE: ;
@@ -589,7 +593,9 @@ html/%/index.html: xml/% $(HTML_STYLESHEETS) html/%/images
 		if [ -f $${file} ]; then cp -f $${file} html/$*; fi; \
 	done
 
+####  HTML images  ####
 # TODO: check/enhance new image files structure
+html-images-%: html/%/images ;
 html/%/images: xml/%/images
 	$(cmd) test -d html/$* || $(MKDIR_P) html/$*
 	$(cmd) test -e $@ || $(LN_S) ../../$< $@
