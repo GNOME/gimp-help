@@ -773,10 +773,14 @@ check-images-%: FORCE
 	$(cmd) $(RMAKE) check-image-references \
 		VALIDATEREFERENCESFLAGS="--imgdir=images/C,images/$*"
 
+check-image-resolutions-%:
+	$(cmd) /bin/sh tools/check_image_resolutions.sh images/$*
+
 # special case 'en':
 check-images-en check-images-C: check-image-references ;
+check-image-resolutions-en: check-image-resolutions-C ;
 
-.PHONY: check-image-references
+.PHONY: checks check-image-references check-image-resolutions-%
 
 
 ########################################################################
