@@ -454,7 +454,7 @@ xml/$(1)/%.xml:
 	pofile=po/$(1)/$$$${stem}.po; \
 	$(call po2xml,$$$${srcfile},$$$${pofile},$(1),$$@)
 
-# This is indirectly used as HTML prerequisite:
+# This is indirectly used as HTML and PDF prerequisite:
 xml/$(1): $$($(1)_XML_FILES)
 	$$(cmd) test -d $$@ && touch $$@ || $(mkdir_p) $$@
 
@@ -651,13 +651,14 @@ pdf: $(foreach lang,$(LANGUAGES),pdf-$(lang)) ;
 pdf-%: pdf/%/gimp.pdf ;
 
 # TODO: images (--fig-path option?); prerequisites
-pdf/%/gimp.pdf: xml/%/gimp.xml stylesheets/plainprint.xsl xml/%/images
+pdf/%/gimp.pdf: xml/% stylesheets/plainprint.xsl xml/%/images
 	$(cmd) if test -f pdf/%.pdf; then rm -f pdf/%.pdf; fi
 	$(cmd) test -d pdf/$* || $(mkdir_p) pdf/$*
 	$(msg) "*** Making PDF ($*) ..."
 	$(cmd) $(DBLATEX) $(DBLATEXFLAGS) $(DBLATEXEXTRAFLAGS) \
 	    --xsl-user=$(srcdir)/stylesheets/plainprint.xsl \
-	    --output=$@ $<
+	    --output=$@ \
+	    xml/$*/gimp.xml
 
 .PRECIOUS: pdf/%/gimp.pdf
 

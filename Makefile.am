@@ -475,7 +475,7 @@ include $(foreach LANG,$(PO_LANGS),xml/$(LANG)/.deps.mk)
 # HIDE FROM AUTOMAKE #	pofile=$$(srcdir)/po/$(1)/$$$${stem}.po; \
 # HIDE FROM AUTOMAKE #	$(call po2xml,$$$${srcfile},$$$${pofile},$(1),$$@)
 # HIDE FROM AUTOMAKE #
-# HIDE FROM AUTOMAKE ## This is indirectly used as HTML prerequisite:
+# HIDE FROM AUTOMAKE ## This is indirectly used as HTML and PDF prerequisite:
 # HIDE FROM AUTOMAKE #xml/$(1): $$($(1)_XML_FILES)
 # HIDE FROM AUTOMAKE #	$$(cmd) test -d $$@ && touch $$@ || $(mkdir_p) $$@
 # HIDE FROM AUTOMAKE #
@@ -626,13 +626,14 @@ pdf-local: $(foreach lang,$(LANGUAGES),pdf-$(lang)) ;
 pdf-%: pdf/%/gimp.pdf ;
 
 # TODO: images (--fig-path option?); prerequisites
-pdf/%/gimp.pdf: xml/%/gimp.xml stylesheets/plainprint.xsl xml/%/images
+pdf/%/gimp.pdf: xml/% stylesheets/plainprint.xsl xml/%/images
 	$(cmd) if test -f pdf/%.pdf; then rm -f pdf/%.pdf; fi
 	$(cmd) test -d pdf/$* || $(MKDIR_P) pdf/$*
 	$(msg) "*** Making PDF ($*) ..."
 	$(cmd) $(DBLATEX) $(DBLATEXFLAGS) $(DBLATEXEXTRAFLAGS) \
 	    --xsl-user=$(srcdir)/stylesheets/plainprint.xsl \
-	    --output=$@ $<
+	    --output=$@ \
+	    xml/$*/gimp.xml
 
 else
 
