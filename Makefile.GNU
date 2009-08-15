@@ -356,7 +356,11 @@ potfiles: $(POT_FILES)
 
 define MAKE_PO_RULES
 $(1)_PO_FILES = $$(patsubst pot/%.pot, po/$(1)/%.po, $$(POT_FILES))
+ifeq ($$(filter $$(MAKECMDGOALS),$$($(1)_PO_FILES)),)
 $$($(1)_PO_FILES): po/$(1)/%.po : pot/%.pot
+else
+$$($(1)_PO_FILES): po/$(1)/%.po : pot/%.pot FORCE
+endif
 	$$(cmd) $$(call make_target_dir,$$@)
 	$$(msg) "[PO]  $$@"
 	$$(cmd) if test -s $$<; then $$(call pot2po,$$<,$(1),$$@); else touch $$@; fi
@@ -391,14 +395,11 @@ po-todo-%: po-%
 
 # Force updating po file(s)
 update-po/%.po:
-	$(cmd) po=$@; pot=pot/$${po#update-po/*/}t; \
-	$(RMAKE) $${pot} && touch $${pot} && \
-	$(RMAKE) po/$*.po
+	$(msg) "Deprecated, use 'make po/$*.po instead'"
+	$(cmd) false
 
 force-po/%:
-	$(cmd) for po in po/$*/*.po; do \
-		$(RMAKE) update-$${po}; \
-	done
+	$(cmd) $(RMAKE) po/$*/*.po
 
 
 ########################################################################
@@ -454,7 +455,7 @@ xml/$(1)/%.xml:
 	pofile=po/$(1)/$$$${stem}.po; \
 	$(call po2xml,$$$${srcfile},$$$${pofile},$(1),$$@)
 
-# This is indirectly used as HTML prerequisite:
+# This is indirectly used as HTML and PDF prerequisite:
 xml/$(1): $$($(1)_XML_FILES)
 	$$(cmd) test -d $$@ && touch $$@ || $(mkdir_p) $$@
 
@@ -462,20 +463,6 @@ xml/$(1): $$($(1)_XML_FILES)
 xml-$(1): xml/$(1) $$($(1)_XML_FILES) xml/$(1)/images ;
 endef
 $(foreach LANG,$(PO_LANGS),$(eval $(call MAKE_XML_RULES,$(LANG))))
-
-# TODO: test new image files structure;
-#   how to ensure that $@ is up-to-date without forcing
-#   rebuild (which will also force e.g. html-% to be rebuilt)
-#   -- use (~1500) image files as prerequisites?
-xml/%/images: FORCE
-	$(cmd) if test -L $@; then rm -v $@; fi
-	$(cmd) if test -L xml/$*; then rm -v xml/$*; fi
-	$(cmd) if test -d $@; then rm -rf $@/*; fi
-	$(cmd) test -d $@ || $(mkdir_p) $@
-	$(cmd) $(echo_n) "*** Copying images ($*) ..."
-	$(cmd) perl tools/make_image_links.pl -v \
-	           images/common images/C \
-		   xml/$*
 
 # Special case: en
 
@@ -488,6 +475,22 @@ $(en_XML_FILES): xml/en/%.xml : src/%.xml
 xml/en: $(en_XML_FILES)
 	$(cmd) test -d $@ && touch $@ || $(mkdir_p) $@
 
+# Images
+
+# TODO: test new image files structure;
+#   how to ensure that $@ is up-to-date without forcing
+#   rebuild (which will also force e.g. html-% to be rebuilt)
+#   -- use (~1500) image files as prerequisites?
+xml/%/images: FORCE
+	$(cmd) if test -L $@; then rm -v $@; fi
+	$(cmd) if test -L xml/$*; then rm -v xml/$*; fi
+	$(cmd) if test -d $@; then rm -rf $@/*; fi
+	$(cmd) test -d $@ || $(mkdir_p) $@
+	$(cmd) $(echo_n) "Copying images ($*) ..."
+	$(cmd) perl tools/make_image_links.pl -v \
+	           images/common images/C \
+		   xml/$*
+
 # remove stale xml files
 cleanup-xml-%:
 	$(cmd) $(find_l) xml/$*/ $(file_predicates) | \
@@ -497,6 +500,8 @@ cleanup-xml-%:
 
 # Target suitable for command line
 xml-en: cleanup-xml-en xml/en $(en_XML_FILES) ;
+xml-images-%: xml/%/images ;
+images-%: xml-images-% html-images-% ;
 
 .PRECIOUS: xml/%/images
 
@@ -551,7 +556,7 @@ html: $(foreach lang,$(LANGUAGES),html-$(lang)) ;
 #         html/%/gimp-xrefs.xml  -->  html/%/index.html
 html-%: index-% ;
 
-html/%/index.html: xml/% $(HTML_STYLESHEETS) html/%/images
+html/%/index.html: xml/% $(HTML_STYLESHEETS) | html/%/images
 	$(msg) "*** Making html for $* ... "
 	$(cmd) rm -f html/$*/*.*
 
@@ -563,15 +568,15 @@ html/%/index.html: xml/% $(HTML_STYLESHEETS) html/%/images
 	  stylesheets/plainhtml.xsl \
 	  xml/$*/gimp.xml
 
-	$(cmd) for file in $(srcdir)/stylesheets/*.css; do \
-		if [ -f $$file ]; then cp -f $$file html/$*; fi; \
+	$(msg) "Copying stylesheets ... "
+	$(cmd) for file in $(srcdir)/stylesheets/*.css \
+	                   $(srcdir)/stylesheets/$*/*.css; do \
+		if [ -f $${file} ]; then cp -f $${file} html/$*; fi; \
 	done
 
-	$(cmd) for file in $(srcdir)/stylesheets/$*/*.css; do \
-		if [ -f $$file ]; then cp -f $$file html/$*; fi; \
-	done
-
+####  HTML images  ####
 # TODO: check/enhance new image files structure
+html-images-%: html/%/images ;
 html/%/images: xml/%/images
 	$(cmd) test -d html/$* || $(mkdir_p) html/$*
 	$(cmd) test -e $@ || $(ln_s) ../../$< $@
@@ -653,13 +658,14 @@ pdf: $(foreach lang,$(LANGUAGES),pdf-$(lang)) ;
 pdf-%: pdf/%/gimp.pdf ;
 
 # TODO: images (--fig-path option?); prerequisites
-pdf/%/gimp.pdf: xml/%/gimp.xml stylesheets/plainprint.xsl xml/%/images
+pdf/%/gimp.pdf: xml/% stylesheets/plainprint.xsl | xml/%/images
 	$(cmd) if test -f pdf/%.pdf; then rm -f pdf/%.pdf; fi
 	$(cmd) test -d pdf/$* || $(mkdir_p) pdf/$*
 	$(msg) "*** Making PDF ($*) ..."
 	$(cmd) $(DBLATEX) $(DBLATEXFLAGS) $(DBLATEXEXTRAFLAGS) \
 	    --xsl-user=$(srcdir)/stylesheets/plainprint.xsl \
-	    --output=$@ $<
+	    --output=$@ \
+	    xml/$*/gimp.xml
 
 .PRECIOUS: pdf/%/gimp.pdf
 
@@ -774,10 +780,14 @@ check-images-%: FORCE
 	$(cmd) $(RMAKE) check-image-references \
 		VALIDATEREFERENCESFLAGS="--imgdir=images/C,images/$*"
 
+check-image-resolutions-%:
+	$(cmd) /bin/sh tools/check_image_resolutions.sh images/$*
+
 # special case 'en':
 check-images-en check-images-C: check-image-references ;
+check-image-resolutions-en: check-image-resolutions-C ;
 
-.PHONY: check-image-references
+.PHONY: checks check-image-references check-image-resolutions-%
 
 
 ########################################################################

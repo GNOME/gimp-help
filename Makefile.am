@@ -475,7 +475,7 @@ include $(foreach LANG,$(PO_LANGS),xml/$(LANG)/.deps.mk)
 # HIDE FROM AUTOMAKE #	pofile=$$(srcdir)/po/$(1)/$$$${stem}.po; \
 # HIDE FROM AUTOMAKE #	$(call po2xml,$$$${srcfile},$$$${pofile},$(1),$$@)
 # HIDE FROM AUTOMAKE #
-# HIDE FROM AUTOMAKE ## This is indirectly used as HTML prerequisite:
+# HIDE FROM AUTOMAKE ## This is indirectly used as HTML and PDF prerequisite:
 # HIDE FROM AUTOMAKE #xml/$(1): $$($(1)_XML_FILES)
 # HIDE FROM AUTOMAKE #	$$(cmd) test -d $$@ && touch $$@ || $(mkdir_p) $$@
 # HIDE FROM AUTOMAKE #
@@ -483,6 +483,19 @@ include $(foreach LANG,$(PO_LANGS),xml/$(LANG)/.deps.mk)
 # HIDE FROM AUTOMAKE #xml-$(1): xml/$(1) $$($(1)_XML_FILES) xml/$(1)/images ;
 # HIDE FROM AUTOMAKE #endef
 # HIDE FROM AUTOMAKE #$(foreach LANG,$(PO_LANGS),$(eval $(call MAKE_XML_RULES,$(LANG))))
+
+# Special case: en
+
+en_XML_FILES = $(SRC_FILES:src/%=xml/en/%)
+$(en_XML_FILES): xml/en/%.xml : src/%.xml
+	$(msg) "[XML] $@ (copy)"
+	$(cmd) $(call make_target_dir,$@)
+	$(cmd) cp -f $< $@
+
+xml/en: $(en_XML_FILES)
+	$(cmd) test -d $@ && touch $@ || $(MKDIR_P) $@
+
+# Images
 
 # TODO: test new image files structure;
 #   how to ensure that $@ is up-to-date without forcing
@@ -498,17 +511,6 @@ xml/%/images: FORCE
 	           $(srcdir)/images/common $(srcdir)/images/C \
 		   xml/$*
 
-# Special case: en
-
-en_XML_FILES = $(SRC_FILES:src/%=xml/en/%)
-$(en_XML_FILES): xml/en/%.xml : src/%.xml
-	$(msg) "[XML] $@ (copy)"
-	$(cmd) $(call make_target_dir,$@)
-	$(cmd) cp -f $< $@
-
-xml/en: $(en_XML_FILES)
-	$(cmd) test -d $@ && touch $@ || $(MKDIR_P) $@
-
 # remove stale xml files
 cleanup-xml-%:
 	$(cmd) $(find_l) xml/$*/ $(file_predicates) | \
@@ -518,6 +520,8 @@ cleanup-xml-%:
 
 # Target suitable for command line
 xml-en: cleanup-xml-en xml/en $(en_XML_FILES) ;
+xml-images-%: xml/%/images ;
+images-%: xml-images-% html-images-% ;
 
 .PHONY: FORCE
 FORCE: ;
@@ -583,15 +587,15 @@ html/%/index.html: xml/% $(HTML_STYLESHEETS) html/%/images
 	  stylesheets/plainhtml.xsl \
 	  xml/$*/gimp.xml
 
-	$(cmd) for file in $(srcdir)/stylesheets/*.css; do \
-		if [ -f $$file ]; then cp -f $$file html/$*; fi; \
+	$(msg) "Copying stylesheets ... "
+	$(cmd) for file in $(srcdir)/stylesheets/*.css \
+	                   $(srcdir)/stylesheets/$*/*.css; do \
+		if [ -f $${file} ]; then cp -f $${file} html/$*; fi; \
 	done
 
-	$(cmd) for file in $(srcdir)/stylesheets/$*/*.css; do \
-		if [ -f $$file ]; then cp -f $$file html/$*; fi; \
-	done
-
+####  HTML images  ####
 # TODO: check/enhance new image files structure
+html-images-%: html/%/images ;
 html/%/images: xml/%/images
 	$(cmd) test -d html/$* || $(MKDIR_P) html/$*
 	$(cmd) test -e $@ || $(LN_S) ../../$< $@
@@ -628,13 +632,14 @@ pdf-local: $(foreach lang,$(LANGUAGES),pdf-$(lang)) ;
 pdf-%: pdf/%/gimp.pdf ;
 
 # TODO: images (--fig-path option?); prerequisites
-pdf/%/gimp.pdf: xml/%/gimp.xml stylesheets/plainprint.xsl xml/%/images
+pdf/%/gimp.pdf: xml/% stylesheets/plainprint.xsl xml/%/images
 	$(cmd) if test -f pdf/%.pdf; then rm -f pdf/%.pdf; fi
 	$(cmd) test -d pdf/$* || $(MKDIR_P) pdf/$*
 	$(msg) "*** Making PDF ($*) ..."
 	$(cmd) $(DBLATEX) $(DBLATEXFLAGS) $(DBLATEXEXTRAFLAGS) \
 	    --xsl-user=$(srcdir)/stylesheets/plainprint.xsl \
-	    --output=$@ $<
+	    --output=$@ \
+	    xml/$*/gimp.xml
 
 else
 
@@ -813,10 +818,14 @@ check-images-%: FORCE
 	$(cmd) $(RMAKE) check-image-references \
 		VALIDATEREFERENCESFLAGS="--imgdir=images/C,images/$*"
 
+check-image-resolutions-%:
+	$(cmd) /bin/sh tools/check_image_resolutions.sh images/$*
+
 # special case 'en':
 check-images-en check-images-C: check-image-references ;
+check-image-resolutions-en: check-image-resolutions-C ;
 
-.PHONY: checks check-image-references
+.PHONY: checks check-image-references check-image-resolutions-%
 
 
 if HAVE_DOT
