@@ -24,7 +24,7 @@
     variety of graphics file formats.  With the exception of
     <acronym>GIMP</acronym>'s native XCF file type, file handling is done by
     Plugins.  Thus, it is relatively easy to extend <acronym>GIMP</acronym>
-    to new file types when the need arises.
+    to support new file types when the need arises.
   </para>
   <para>
     Not all file types are equally good for all purposes. This part of the
@@ -66,8 +66,8 @@
       format capable of saving <emphasis>all</emphasis> of the information in
       an image, including layers, transparency, etc., is GIMP's native XCF
       format.   Every other format preserves some image properties and loses
-      others.  When you save an image, <acronym>GIMP</acronym> tries to let
-      you know about this, but basically it is up to you to understand the
+      others.  When you save an image, <acronym>GIMP</acronym> tries to warn
+      you, but it is up to you to understand the
       capabilities of the format you choose.
     </para>
     <figure>
@@ -81,13 +81,13 @@
     <para>
       As stated above, there is no file format, with the exception of GIMP's
       native <link linkend="glossary-xcf">XCF</link> format, that is capable
-      of storing all the data in a <acronym>GIMP</acronym>
-      image. When you ask to save an image in a format that will not
-      completely represent it, <acronym>GIMP</acronym>
-      notifies you of this, tells you what kind of information will be lost,
+      of storing all the information in a <acronym>GIMP</acronym>
+      image. When you ask to save an image in a format that will lose
+      information, <acronym>GIMP</acronym>
+      notifies you, tells you what information will be lost,
       and asks you whether you would like to <quote>export</quote> the image
       in a form that the file type can handle. Exporting an image does not
-      modify the image itself, so you do not lose anything by doing this. See
+      modify the image itself, so you do not lose anything by exporting. See
       <link linkend="gimp-export-dialog">Export file</link>.
     </para>
     <note>
@@ -131,10 +131,10 @@
       </figure>
       <warning>
         <para>
-          Please note, that the GIF file format is incapable of storing some
-          rather basic image informations like
+          The GIF file format does not support some basic image
+          properties such as
           <emphasis>print resolution</emphasis>.
-          If you care for these properties, you should consider a different
+          If you care for these properties, use a different
           file format like PNG.
         </para>
       </warning>
@@ -147,10 +147,12 @@
                 <term>Interlace</term>
                 <listitem>
                   <para>
-                    When this option is checked, the image will be displayed
-                    progressively on the Web page. It was interesting when
-                    computers and modems were slow, as it allowed to stop
-                    loading an image of no interest.
+                    Checking interlace allows an image on a web page to be
+                    progressively displayed as it is downloaded.
+                    Progressive image display is useful with slow connection
+                    speeds, because you can stop an image that is of no
+                    interest; interlace is of less use today with our faster
+                    connection speeds.
                   </para>
                 </listitem>
               </varlistentry>
@@ -158,11 +160,11 @@
                 <term>GIF comment</term>
                 <listitem>
                   <para>
-                    Beware of do not insert characters outside the ASCII
-                    range, because of the GIF format supports 7-bits ASCII
-                    texts only, that GIMP can't provide. If you insert
-                    inadvertently a non-ASCII char, the option will be
-                    automatically disabled.
+                    GIF comments support only 7-bit ASCII characters.
+                    If you use a character outside the 7-bit ASCII set,
+                    <acronym>GIMP</acronym> will save the image without
+                    a comment, and then inform you that the comment was not
+                    saved.
                   </para>
                 </listitem>
               </varlistentry>
@@ -181,8 +183,8 @@
                 <term>Loop forever</term>
                 <listitem>
                   <para>
-                    When this option is checked the animation will start
-                    playing again repeatedly until you stop it.
+                    When this option is checked, the animation will
+                    play repeatedly until you stop it.
                   </para>
                 </listitem>
               </varlistentry>
@@ -190,7 +192,7 @@
                 <term>Delay between frames if unspecified</term>
                 <listitem>
                   <para>
-                    You can set the delay, in millisecondes, between frames
+                    You can set the delay, in milliseconds, between frames
                     if it has not been set before. In this case, you can
                     modify every delay in the Layer Dialog.
                   </para>
@@ -311,9 +313,10 @@
             <note>
               <para>
                 Please note, that the numbers for the JPEG quality level have
-                a different meaning. Saving with a level of 80 in GIMP is not
-                necessarily comparable with saving with a level of 80 in an
-                different application.
+                a different meaning in different applications.
+                Saving with a quality level of 80 in GIMP is not
+                necessarily comparable with saving with a quality level of
+                80 in a different application.
               </para>
             </note>
           </listitem>
@@ -324,7 +327,7 @@
             <para>
               Checking this option causes each change in quality (or any other
               JPEG parameter) to be shown in the image display. (This does not
-              alter the image, though: it reverts back to its original state
+              alter the image: the image reverts back to its original state
               when the JPEG dialog is closed.)
             </para>
           </listitem>
@@ -341,7 +344,8 @@
                 <listitem>
                   <para>
                     If you enable this option, the optimization of entropy
-                    encoding parameters will be used.
+                    encoding parameters will be used. The result is typically
+                    a smaller file, but it takes more time to generate.
                   </para>
                 </listitem>
               </varlistentry>
@@ -349,13 +353,15 @@
                 <term>Progressive</term>
                 <listitem>
                   <para>
-                    With this option enabled the chunks of the image will be
-                    inserted in a certain order in the file. This is done with
-                    the intent to give a progressive refinement of the image
-                    appearance during a slow connection web download, similar
-                    and with the same purpose of the corresponding option
-                    present in the GIF format too. The downside of enabling
-                    this option is, that you get slightly larger files.
+                    With this option enabled, the image chunks are
+                    stored in the file in an order that allows
+                    progressive image refinement
+                    during a slow connection web download.
+                    The progressive option for JPG has the same
+                    purpose as the interlace option for GIF.
+                    Unfortunately, the progressive option produces
+                    slightly larger JPG files (than without the
+                    progressive option).
                   </para>
                 </listitem>
               </varlistentry>
@@ -367,29 +373,32 @@
                   </indexterm>
                   <para>
                     JPEG files from many digital cameras contain extra
-                    information, called EXIF data, which specifies camera
-                    settings and other information concerning the
-                    circumstances under which the image was created. GIMP's
-                    ability to handle EXIF data depends on whether the
-                    <quote>libexif</quote>
-                    library is available on your system; it is not
+                    information, called EXIF data.
+                    EXIF data provides information about the image such as
+                    camera make and model, image size, image date, etc.
+                    Although GIMP uses the <quote>libexif</quote> library to
+                    read and write EXIF data, the library is not
                     automatically packaged with GIMP. If GIMP was built with
                     libexif support, then EXIF data is preserved if you open a
                     JPEG file, work with the resulting image, and then save it
                     as JPEG. The EXIF data is not altered in any way when you
-                    do this (which means that some of its fields are no longer
-                    valid). If GIMP was not built with EXIF support, this does
-                    not prevent files with EXIF data from being opened, but it
-                    does mean that the EXIF data will not be present when the
-                    resulting image is later saved.
+                    do this. The EXIF data may indicate things such as image
+                    creation time and file name, which may no longer be
+                    correct.
+                    If GIMP was not built with EXIF support, you can still
+                    open JPG files containing EXIF data, but the EXIF data
+                    is ignored, and will not be saved when the resulting image
+                    is later saved.
                   </para>
                 </listitem>
               </varlistentry>
               <varlistentry>
-                <term>Save Preview</term>
+                <term>Save Thumbnail</term>
                 <listitem>
                   <para>
                     This option lets you save a thumbnail with the image.
+                    Many applications use the small thumbnail image as
+                    a quickly available small preview image.
                   </para>
                 </listitem>
               </varlistentry>
@@ -397,8 +406,10 @@
                 <term>Save XMP data</term>
                 <listitem>
                   <para>
-                    If you enable this option, the meta data of the image will
-                    be saved as <acronym>XMP</acronym>-structure within the
+                    XMP data is <quote>meta</quote> data about the image;
+                    it is a competing format with EXIF.
+                    If you enable this option, the meta data of the image is
+                    saved in an <acronym>XMP</acronym>-structure within the
                     file.
                   </para>
                 </listitem>
@@ -438,7 +449,7 @@
                 <term>Smoothing</term>
                 <listitem>
                   <para>
-                    Compression can create artefacts. By using this option,
+                    JPG compression creates artifacts. By using this option,
                     you can smooth the image when saving, reducing them. But
                     your image becomes somewhat blurred.
                   </para>
@@ -448,9 +459,10 @@
                 <term>Restart markers</term>
                 <listitem>
                   <para>
-                    The image file can include some markers which allow to
-                    segment it. If loading this image in a Web page is broken
-                    off, loading can resume from the following marker.
+                    The image file can include markers which allow the image
+                    to be loaded as segments. If a connection is broken while
+                    loading the image in a web page,
+                    loading can resume from the next marker.
                   </para>
                 </listitem>
               </varlistentry>
@@ -458,33 +470,48 @@
                 <term>Subsampling</term>
                 <listitem>
                   <para>
-                    Human eye is not sensitive in the same way all over color
-                    spectrum. Compression can use this to consider as
-                    identical slightly different colors. Three methods are
-                    available :
+                    The human eye is not sensitive in the same way over
+                    the entire color spectrum. The compression
+                    can use this to treat slightly different colors
+                    that the eye perceives as very close, as identical
+                    colors. Three methods are available :
                   </para>
                   <itemizedlist>
                     <listitem>
                       <para>
                         <guilabel>1x1,1x1,1x1 (best quality)</guilabel>:
-                        preserves borders and contrasting colors, but
+                        Commonly referred to as (4:4:4), this produces
+                        the best quality,
+                        preserving borders and contrasting colors, but
                         compression is less.
                       </para>
                     </listitem>
                     <listitem>
                       <para>
-                        <guilabel>2x1,1x1,1x1 (4:2:2)</guilabel>
+                        <guilabel>2x1,1x1,1x1 (4:2:2)</guilabel>:
+                        This is the standard subsampling, which usually 
+                        provides a good ratio between image quality and file
+                        size. There are situations, however, in which using no
+                        subsampling (4:4:4) provides a noticeable increase in
+                        the image quality; for example, when the image
+                        contains fine details such as text over a uniform
+                        background, or images with almost-flat colors.
                       </para>
                     </listitem>
                     <listitem>
                       <para>
                         <guilabel>1x2,1x1,1x1</guilabel>
+                        This is similar to
+                        (2x1,1x1,1x1), but the chroma sampling is in the
+                        horizontal direction rather than the vertical
+                        direction; as if someone rotated an image.
                       </para>
                     </listitem>
                     <listitem>
                       <para>
                         <guilabel>2x2,1x1,1x1 (smallest file)</guilabel>:
-                        important compression; suits images with weak
+                        Commonly referred to as (4:1:1), this produces
+                        the smallest files. This suits images with weak
                         borders but tends to denature colors.
                       </para>
                     </listitem>
@@ -534,7 +561,7 @@
                 <term>Image comments</term>
                 <listitem>
                   <para>
-                    In this text box, you can enter a comment which will be
+                    In this text box, you can enter a comment which is
                     saved with the image.
                   </para>
                 </listitem>
@@ -574,9 +601,12 @@
           <term>Interlacing</term>
           <listitem>
             <para>
-              When this option is checked, the image is progressively
-              displayed on a Web page. So, slow computer users can stop
-              downloading if they are not interested.
+              Checking interlace allows an image on a web page to be
+              progressively displayed as it is downloaded.
+              Progressive image display is useful with slow connection
+              speeds, because you can stop an image that is of no
+              interest; interlace is of less use today with our faster
+              connection speeds.
             </para>
           </listitem>
         </varlistentry>
@@ -585,9 +615,9 @@
           <listitem>
             <para>
               If your image has many transparency levels, the Internet
-              browsers which recognize only two levels, will use the
-              background color of your Toolbox instead. But Internet Explorer
-              up to version 6 did not use these informations.
+              browsers that recognize only two levels, will use the
+              background color of your Toolbox instead. Internet Explorer
+              up to version 6 did not use this information.
             </para>
           </listitem>
         </varlistentry>
@@ -595,19 +625,30 @@
           <term>Save gamma</term>
           <listitem>
             <para>
-              Informations about your monitor will be saved, so that the
-              image will be displayed in the same way on other computers,
-              provided that the display program supports these
-              informations, what is rarely the case.
+              Gamma correction is the ability to correct for
+              differences in how computers interpret color values.
+              This saves gamma information in the PNG that reflects
+              the current Gamma factor for your display. Viewers on
+              other computers can then compensate to ensure that the image
+              is not too dark or too bright.
             </para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term>Save layer offset</term>
           <listitem>
+            <!-- Andrew Pitonyak (andrew@pitonyak.org)
+            verified this with Alexia Death (alexiadeath@gmail.com)
+            on August 17, 2009. -->
             <para>
-               No interest. Images with layers are flattened before saving
-               to PNG and layer offset is taken in account.
+              PNG supports an offset value called the
+              <quote>oFFs chunk</quote>, which provides position data.
+              Unfortunately, PNG offset support in <acronym>GIMP</acronym>
+              is broken, or at least is not compatible with other
+              applications,
+              and has been for a long time. Do not enable offsets,
+              let <acronym>GIMP</acronym> flatten the layers before
+              saving, and you will have no problems.
             </para>
           </listitem>
         </varlistentry>
@@ -615,7 +656,7 @@
           <term>Save Resolution</term>
           <listitem>
             <para>
-              Save the image resolution, in dpi (dot per inch).
+              Save the image resolution, in DPI (dot per inch).
             </para>
           </listitem>
         </varlistentry>
@@ -623,7 +664,7 @@
           <term>Save creation time</term>
           <listitem>
             <para>
-              That will be the date of last saving.
+              Date the file was saved.
             </para>
           </listitem>
         </varlistentry>
@@ -650,28 +691,30 @@
           <listitem>
             <para>
               Since compression is not lossy, the only reason to use a
-              compression level less than 9 would be a too long time to
-              compress file on a slow computer. Nothing to fear from
+              compression level less than 9, is if it takes too long to
+              compress a file on a slow computer.
+              Nothing to fear from
               decompression: it is as quick whatever the compression level.
             </para>
           </listitem>
         </varlistentry>
         <varlistentry>
-          <term>Save defaults</term>
+          <term>Save Defaults</term>
           <listitem>
             <para>
-              If you click on this button, your settings will be saved and
-              can be used by other savings by clicking on the
-              <guibutton>Load defaults</guibutton>.
+              Click to save the current settings. Latter, you can use
+              <guibutton>Load Defaults</guibutton> to load the saved
+              settings.
             </para>
           </listitem>
         </varlistentry>
       </variablelist>
       <note>
         <para>
-          Since PNG format supports indexed images, you have better reduce the
-          number of colors before saving if you want to have the lightest file
-          for the Web. See <xref linkend="gimp-image-convert-indexed"/>.
+          The PNG format supports indexed images. Using fewer colors,
+          therefore, results in a smaller file; this is especially useful
+          for creating web images;
+          see <xref linkend="gimp-image-convert-indexed"/>.
         </para>
         <para>
           Computers work on 8 bits blocks named <quote>Byte</quote>.
@@ -686,7 +729,7 @@
           Explorer, you can use the AlphaImageLoader DirectX filter in the
           code of your Web page. See Microsoft Knowledge Base
           <xref linkend="bibliography-online-microsoft-kb294714"/>.
-          Please note, that this should not be necessary for
+          Please note, that this is not necessary for
           InternetExplorer 7 and above.
         </para>
       </note>
@@ -719,22 +762,22 @@
           <term>Compression</term>
           <listitem>
             <para>
-              This option give you the opportunity to choose the compression
-              method that is appropriate for your image:
+              This option allows you to specify the algorithm used to
+              compress the image.
             </para>
             <itemizedlist>
               <listitem>
                 <para>
-                  <guilabel>None</guilabel>: fast method, but resulting in
-                  a big file.
+                  <guilabel>None</guilabel>: is fast, and lossless, but the
+                  resulting file is very large.
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <guilabel>LZW</guilabel>: The image will be compressed
+                  <guilabel>LZW</guilabel>: The image is compressed
                   using the <quote>Lempel-Ziv-Welch</quote> algorithm, a
-                  lossless compression technique. This is an old method,
-                  still efficient and fast. More informations at
+                  lossless compression technique. This is old, but
+                  efficient and fast. More information at
                   <xref linkend="bibliography-online-wkpd-lzw"/>.
                 </para>
               </listitem>
@@ -751,7 +794,7 @@
               </listitem>
               <listitem>
                 <para>
-                  <guilabel>Deflate</guilabel>: It is a lossless data
+                  <guilabel>Deflate</guilabel>: is a lossless data
                   compression algorithm that uses a combination of the LZ77
                   algorithm and Huffman coding. It is also used in Zip,
                   Gzip and PNG file formats. Source:
@@ -760,19 +803,26 @@
               </listitem>
               <listitem>
                 <para>
-                  <guilabel>JPEG</guilabel>: this is a very good
+                  <guilabel>JPEG</guilabel>: is a very good
                   compression algorithm but lossy.
                 </para>
               </listitem>
               <listitem>
                 <para>
                   <guilabel>CCITT Group 3 fax</guilabel>;
-                  <guilabel>CCITT Group 4 fax</guilabel>
+                  <guilabel>CCITT Group 4 fax</guilabel> is a
+                  black and white format developed to transfer images by FAX.
                 </para>
                 <note>
                   <para>
                     These options can only be selected, if the image is in
                     indexed mode and reduced to two colors.
+                    Use
+                    <menuchoice><guimenu>Image</guimenu>
+                    <guisubmenu>Mode</guisubmenu>
+                    <guimenuitem>Indexed</guimenuitem></menuchoice>
+                    To convert the image to indexed. Be certain to check
+                    <quote>Use black and white (1-bit) palette</quote>.
                   </para>
                 </note>
               </listitem>
@@ -792,7 +842,7 @@
           <term>Comment</term>
           <listitem>
             <para>
-              In this text box, you can enter a comment which will be
+              In this text box, you can enter a comment that is
               associated with the image.
             </para>
           </listitem>
