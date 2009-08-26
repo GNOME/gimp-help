@@ -488,7 +488,7 @@ xml/%/images: FORCE
 	$(cmd) if test -L xml/$*; then rm -v xml/$*; fi
 	$(cmd) if test -d $@; then rm -rf $@/*; fi
 	$(cmd) test -d $@ || $(MKDIR_P) $@
-	$(cmd) $(echo_n) "*** Copying images ($*) ..."
+	$(cmd) $(echo_n) "Copying images ($*) ..."
 	$(cmd) perl $(srcdir)/tools/make_image_links.pl -v \
 	           $(srcdir)/images/common $(srcdir)/images/C \
 		   xml/$*
@@ -557,7 +557,7 @@ html-local: $(foreach lang,$(LANGUAGES),html-$(lang)) ;
 #         html/%/gimp-xrefs.xml  -->  html/%/index.html
 html-%: index-% ;
 
-html/%/index.html: xml/% $(HTML_STYLESHEETS) html/%/images
+html/%/index.html: xml/% $(HTML_STYLESHEETS) | html/%/images
 	$(msg) "*** Making html for $* ... "
 	$(cmd) rm -f html/$*/*.*
 
@@ -614,7 +614,7 @@ pdf-local: $(foreach lang,$(LANGUAGES),pdf-$(lang)) ;
 pdf-%: pdf/%/gimp.pdf ;
 
 # TODO: images (--fig-path option?); prerequisites
-pdf/%/gimp.pdf: xml/% stylesheets/plainprint.xsl xml/%/images
+pdf/%/gimp.pdf: xml/% stylesheets/plainprint.xsl | xml/%/images
 	$(cmd) if test -f pdf/%.pdf; then rm -f pdf/%.pdf; fi
 	$(cmd) test -d pdf/$* || $(MKDIR_P) pdf/$*
 	$(msg) "*** Making PDF ($*) ..."
