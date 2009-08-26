@@ -77,7 +77,9 @@ abs_builddir := $(shell pwd)
 #odfdir   = odf
 #logdir   = log
 
-# Find files and directories
+### Find files and directories
+
+# XML files excluding automatically generated files
 xml_file_predicates =       \
 	-name '.git' -prune \
 	          -o        \
@@ -112,7 +114,7 @@ AUTHORS_DOCBOOK_STYLESHEETS = \
 	stylesheets/authors_common.xsl
 
 # Files & directories
-ifneq "$(MAKECMDGOALS)" "help"
+ifeq ($(filter help clean,$(MAKECMDGOALS)),)
 SRC_DIRS  := $(shell cd $(srcdir) && $(find_l) src/ $(src_dir_predicates))
 SRC_FILES := $(shell cd $(srcdir) && $(find_l) src/ $(xml_file_predicates)) \
              $(AUTHORS_DOCBOOK_XML)
@@ -356,7 +358,7 @@ potfiles: $(POT_FILES)
 
 define MAKE_PO_RULES
 $(1)_PO_FILES = $$(patsubst pot/%.pot, po/$(1)/%.po, $$(POT_FILES))
-ifeq ($$(filter $$(MAKECMDGOALS),$$($(1)_PO_FILES)),)
+ifeq ($$(filter po/$(1)/%.po,$$(MAKECMDGOALS)),)
 $$($(1)_PO_FILES): po/$(1)/%.po : pot/%.pot
 else
 $$($(1)_PO_FILES): po/$(1)/%.po : pot/%.pot FORCE
@@ -406,11 +408,9 @@ force-po/%:
 ####            Generate XML prerequisites                          ####
 ########################################################################
 
-#ifneq "$(MAKECMDGOALS)" "help"
-#ifneq "$(UPDATE)" "nodeps"
+ifeq ($(filter help clean,$(MAKECMDGOALS)),)
 include $(foreach LANG,$(PO_LANGS),xml/$(LANG)/.deps.mk)
-#endif
-#endif
+endif
 
 # The dynamically generated and updated ".deps.mk" files contain
 # rules to register the po prereqisite for every xml file, e.g.

@@ -60,39 +60,10 @@ RMAKE = $(MAKE) --no-print-directory
 # Standard shell commands
 echo_n = echo $(ECHO_N)
 
-# options for the "find images" command:
-image_find_predicates =     \
-	-name '.git' -prune \
-	-o \
-	  -type d \
-	  \( -name '[a-z][a-z]' -o -name '[a-z][a-z]_[A-Z][A-Z]' \) \
-	  $(image_lang_exclude) \
-	  -prune \
-	-o \
-	\( \
-	-name '*.png' -o \
-	-name '*.jpg' -o \
-	-name '*.mng' -o \
-	-name '*.xcf' -o \
-	-name '*.gif'    \
-	\) -print
-
-# languages we want to exclude from installing images
-image_lang_exclude = \
-	$(shell echo $(strip $(LANGUAGES)) | \
-	        $(SED) -e '/^$$/d; \
-	                   s/ / -o -name /g; \
-	                   s/^/! \\( -name /; \
-	                   s/$$/ \\)/ ' \
-	)
-
-# find HTML files (used when installing html)
-html_files_find_predicates = \
-	-type f -name '*.*' \
-	-print
+### Find files and directories
 
 # XML files excluding automatically generated files
-src_find_predicates =       \
+xml_file_predicates =       \
 	-name '.git' -prune \
 	-o                  \
 	-name '$(notdir $(AUTHORS_DOCBOOK_XML))' -prune \
@@ -128,9 +99,15 @@ AUTHORS_DOCBOOK_STYLESHEETS = \
 	stylesheets/authors_common.xsl
 
 # lists of source (XML) files and source directories
-SRC_DIRS  = $(shell cd $(srcdir) && $(find_l) src/ $(src_dir_predicates))
-SRC_FILES = $(shell cd $(srcdir) && $(find_l) src/ $(src_find_predicates)) \
-            $(AUTHORS_DOCBOOK_XML)
+# HIDE FROM AUTOMAKE #ifeq ($(filter help clean,$(MAKECMDGOALS)),)
+# HIDE FROM AUTOMAKE #SRC_DIRS  := $(shell cd $(srcdir) && $(find_l) src/ $(src_dir_predicates))
+# HIDE FROM AUTOMAKE #SRC_FILES := $(shell cd $(srcdir) && $(find_l) src/ $(xml_file_predicates)) \
+# HIDE FROM AUTOMAKE #             $(AUTHORS_DOCBOOK_XML)
+# HIDE FROM AUTOMAKE #else
+# HIDE FROM AUTOMAKE #SRC_DIRS  = $(shell cd $(srcdir) && $(find_l) src/ $(src_dir_predicates))
+# HIDE FROM AUTOMAKE #SRC_FILES = $(shell cd $(srcdir) && $(find_l) src/ $(xml_file_predicates)) \
+# HIDE FROM AUTOMAKE #            $(AUTHORS_DOCBOOK_XML)
+# HIDE FROM AUTOMAKE #endif
 
 # lists of PO files (translations)
 PO_FILES = $(shell cd $(srcdir) && $(find_l) po/ $(file_predicates))
@@ -388,7 +365,11 @@ potfiles: $(POT_FILES)
 #
 # HIDE FROM AUTOMAKE #define MAKE_PO_RULES
 # HIDE FROM AUTOMAKE #$(1)_PO_FILES = $$(patsubst pot/%.pot, $$(srcdir)/po/$(1)/%.po, $$(POT_FILES))
+# HIDE FROM AUTOMAKE #ifeq ($$(filter po/$(1)/%.po,$$(MAKECMDGOALS)),)
 # HIDE FROM AUTOMAKE #$$($(1)_PO_FILES): $$(srcdir)/po/$(1)/%.po : pot/%.pot
+# HIDE FROM AUTOMAKE #else
+# HIDE FROM AUTOMAKE #$$($(1)_PO_FILES): $$(srcdir)/po/$(1)/%.po : pot/%.pot FORCE
+# HIDE FROM AUTOMAKE #endif
 # HIDE FROM AUTOMAKE #	$$(cmd) $$(call make_target_dir,$$@)
 # HIDE FROM AUTOMAKE #	$$(msg) "[PO]  $$@"
 # HIDE FROM AUTOMAKE #	$$(cmd) if test -s $$<; then $$(call pot2po,$$<,$(1),$$@); else touch $$@; fi
@@ -421,16 +402,17 @@ po-todo-%: po-%
 
 # Force updating po file
 update-po/%.po:
-	$(cmd) po=$@; pot=pot/$${po#update-po/*/}t; \
-	$(RMAKE) $${pot} && touch $${pot} && \
-	$(RMAKE) po/$*.po
+	$(msg) "Deprecated, use 'make po/$*.po instead'"
+	$(cmd) false
 
 
 ########################################################################
 ####            Generate XML prerequisites                          ####
 ########################################################################
 
-include $(foreach LANG,$(PO_LANGS),xml/$(LANG)/.deps.mk)
+# HIDE FROM AUTOMAKE #ifeq ($(filter help clean,$(MAKECMDGOALS)),)
+# HIDE FROM AUTOMAKE #include $(foreach LANG,$(PO_LANGS),xml/$(LANG)/.deps.mk)
+# HIDE FROM AUTOMAKE #endif
 
 # The dynamically generated and updated ".deps.mk" files contain
 # rules to register the po prereqisite for every xml file, e.g.
