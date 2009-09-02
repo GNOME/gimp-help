@@ -77,15 +77,18 @@ abs_builddir := $(shell pwd)
 #odfdir   = odf
 #logdir   = log
 
-### Find files and directories
-
-# XML files excluding automatically generated files
+# Find files and directories
 xml_file_predicates =       \
 	-name '.git' -prune \
 	          -o        \
 	-name '$(notdir $(AUTHORS_DOCBOOK_XML))' -prune \
 	          -o        \
 	-name '*.xml' -print
+
+find_predicates =           \
+	-name '.git' -prune \
+	        -o          \
+	-print
 
 file_predicates =           \
 	-name '.git' -prune \
@@ -477,19 +480,26 @@ xml/en: $(en_XML_FILES)
 
 # Images
 
-# TODO: test new image files structure;
-#   how to ensure that $@ is up-to-date without forcing
-#   rebuild (which will also force e.g. html-% to be rebuilt)
-#   -- use (~1500) image files as prerequisites?
-xml/%/images: FORCE
-	$(cmd) if test -L $@; then rm -v $@; fi
-	$(cmd) if test -L xml/$*; then rm -v xml/$*; fi
-	$(cmd) if test -d $@; then rm -rf $@/*; fi
-	$(cmd) test -d $@ || $(mkdir_p) $@
+ifeq ($(MAKE_IMAGES), lazy)
+# fast and lazy: detect added or removed images, but may miss changed images
+IMAGE_PREREQ = $(shell cd $(srcdir) && \
+                       echo >&2 "Checking source image directories ..." && \
+                       $(find_l) images/{common,C} $(dir_predicates))
+else ifeq ($(MAKE_IMAGES), force)
+# just in case: always update images
+IMAGE_PREREQ = FORCE
+else
+# strict (default): detects added, removed, or changed images
+IMAGE_PREREQ = $(shell cd $(srcdir) && \
+                       echo >&2 "Checking source images ..." && \
+                       $(find_l) images/{common,C} $(find_predicates))
+endif
+
+xml/%/images: $(IMAGE_PREREQ)
+	$(cmd) test -d $@ && rm -rf $@/* || $(mkdir_p) $@
 	$(cmd) $(echo_n) "Copying images ($*) ..."
-	$(cmd) perl tools/make_image_links.pl -v \
-	           images/common images/C \
-		   xml/$*
+	$(cmd) perl tools/make_image_links.pl -v images/{common,C} xml/$*
+	$(cmd) touch $@
 
 # remove stale xml files
 cleanup-xml-%:
@@ -581,6 +591,7 @@ html/%/images: xml/%/images
 	$(cmd) test -d html/$* || $(mkdir_p) html/$*
 	$(cmd) test -e $@ || $(ln_s) ../../$< $@
 
+####  Cross references  ####
 # The xrefs file is a side effect of the HTML build
 html/%/gimp-xrefs.xml: html/%/index.html
 	$(cmd) touch $@
