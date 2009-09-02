@@ -726,6 +726,7 @@ tarball_dir    = gimp-help-2
 
 .SECONDARY: $(tarball_prefix)-%.tar
 $(tarball_prefix)-%.tar: html/%/index.html html/%/gimp-help.xml
+	$(msg) "Making $@ ..."
 	$(cmd) rm -rf $(tarball_dir)/html
 	$(cmd) $(MKDIR_P) $(tarball_dir)/html
 	$(cmd) cd $(tarball_dir)/html && $(LN_S) ../../html/$* .
@@ -733,15 +734,20 @@ $(tarball_prefix)-%.tar: html/%/index.html html/%/gimp-help.xml
 	$(cmd) rm -rf $(tarball_dir)
 
 $(tarball_prefix)-%.tar.gz: $(tarball_prefix)-%.tar
-	gzip -c9 $< > $@
+	$(msg) "Making $@ ..."
+	$(cmd) gzip -c9 $< > $@
 
 $(tarball_prefix)-%.tar.bz2: $(tarball_prefix)-%.tar
-	bzip2 -c9 $< > $@
+	$(msg) "Making $@ ..."
+	$(cmd) bzip2 -c9 $< > $@
 
 $(tarball_prefix)-%.zip: $(tarball_prefix)-%.tar
-	tar xf $<
-	zip -9r $@ $(tarball_prefix)-$*
-	rm -rf $(tarball_prefix)-$*
+	$(msg) "Making $@ ..."
+	$(cmd) rm -rf $(tarball_dir)/html
+	$(cmd) $(MKDIR_P) $(tarball_dir)/html
+	$(cmd) cd $(tarball_dir)/html && $(LN_S) ../../html/$* .
+	$(cmd) zip -9rq $@ $(tarball_dir)/html
+	$(cmd) rm -rf $(tarball_dir)
 
 html-dist: \
 	$(foreach lang,$(LANGUAGES), \

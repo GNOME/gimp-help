@@ -737,6 +737,44 @@ $(AUTHORS_DOCBOOK_XML): $(AUTHORS_SOURCE_XML) $(AUTHORS_DOCBOOK_STYLESHEETS)
 
 
 ########################################################################
+####            Make language-specific HTML tarballs                ####
+########################################################################
+
+tarball_prefix = gimp-help-2-html
+tarball_dir    = gimp-help-2
+
+$(tarball_prefix)-%.tar: html/%/index.html html/%/gimp-help.xml
+	$(msg) "Making $@ ..."
+	$(cmd) rm -rf $(tarball_dir)/html
+	$(cmd) $(mkdir_p) $(tarball_dir)/html
+	$(cmd) cd $(tarball_dir)/html && $(ln_s) ../../html/$* .
+	$(cmd) tar -chf $@ $(tarball_dir)/html/$*
+	$(cmd) rm -rf $(tarball_dir)
+
+$(tarball_prefix)-%.tar.gz: $(tarball_prefix)-%.tar
+	$(msg) "Making $@ ..."
+	$(cmd) gzip -c9 $< > $@
+
+$(tarball_prefix)-%.tar.bz2: $(tarball_prefix)-%.tar
+	$(msg) "Making $@ ..."
+	$(cmd) bzip2 -c9 $< > $@
+
+$(tarball_prefix)-%.tar.xz: $(tarball_prefix)-%.tar
+	$(msg) "Making $@ ..."
+	$(cmd) xz -c9 $< > $@
+
+$(tarball_prefix)-%.zip: $(tarball_prefix)-%.tar
+	$(msg) "Making $@ ..."
+	$(cmd) rm -rf $(tarball_dir)/html
+	$(cmd) $(mkdir_p) $(tarball_dir)/html
+	$(cmd) cd $(tarball_dir)/html && $(ln_s) ../../html/$* .
+	$(cmd) zip -9rq $@ $(tarball_dir)/html
+	$(cmd) rm -rf $(tarball_dir)
+
+.SECONDARY: $(tarball_prefix)-%.tar
+
+
+########################################################################
 ####            Clean up                                            ####
 ########################################################################
 
