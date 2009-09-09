@@ -723,14 +723,19 @@ draft-po/%.po:   preview-po/%.po   ;
 
 tarball_prefix = gimp-help-2-html
 tarball_dir    = gimp-help-2
+HTMLMETAFILES  = README AUTHORS COPYING MAINTAINERS
 
 .SECONDARY: $(tarball_prefix)-%.tar
-$(tarball_prefix)-%.tar: html/%/index.html html/%/gimp-help.xml
+$(tarball_prefix)-%.tar: html/%/index.html html/%/gimp-help.xml \
+		$(HTMLMETAFILES) tools/Makefile.html-package
 	$(msg) "Making $@ ..."
-	$(cmd) rm -rf $(tarball_dir)/html
+	$(cmd) test ! -d $(tarball_dir)
 	$(cmd) $(MKDIR_P) $(tarball_dir)/html
 	$(cmd) cd $(tarball_dir)/html && $(LN_S) ../../html/$* .
-	$(cmd) tar -chf $@ $(tarball_dir)/html/$*
+	$(cmd) cp $(HTMLMETAFILES) $(tarball_dir)/
+	$(cmd) $(SED) -e '/LANGUAGE *=/s/en/$*/' \
+		tools/Makefile.html-package > $(tarball_dir)/Makefile
+	$(cmd) tar -chf $@ $(tarball_dir)/
 	$(cmd) rm -rf $(tarball_dir)
 
 $(tarball_prefix)-%.tar.gz: $(tarball_prefix)-%.tar
