@@ -1,0 +1,29 @@
+LANGUAGE    = en
+PREFIX      = /usr
+DATADIR     = $(PREFIX)/share
+GIMPDATADIR = $(shell pkg-config --variable=gimpdatadir gimp-2.0 2>/dev/null || \
+                      echo $(DATDIR)/gimp/2.0)
+DESTDIR     = 
+install_dir = install -d -m 755
+copy_r      = cp -R
+remove      = rm -rf
+
+.PHONY: help
+help:
+	@echo "Type 'make install' to install the HTML files for "
+	@echo "language '$(LANGUAGE)' to \$$DESTDIR$(GIMPDATADIR)/help/$(LANGUAGE))."
+	@echo
+	@echo "Controlling (environment) variables:"
+	@echo "    GIMPDATADIR:  $(GIMPDATADIR)"
+	@echo "    DESTDIR:      $(DESTDIR)"
+	@test -d $(GIMPDATADIR) || \
+	{ echo; echo "WARNING: $(GIMPDATADIR) does not exist!"; }
+	@echo
+
+install: html/$(LANGUAGE)
+	$(install_dir) $(DESTDIR)$(GIMPDATADIR)/help
+	$(copy_r) $< $(DESTDIR)$(GIMPDATADIR)/help
+
+uninstall:
+	test -n "$(LANGUAGE)" && \
+	$(remove) $(DESTDIR)$(GIMPDATADIR)/help/$(LANGUAGE)
