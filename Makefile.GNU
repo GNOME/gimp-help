@@ -75,7 +75,7 @@ src_file_predicates = \
 	-not -name '$(notdir $(AUTHORS_DOCBOOK_XML))'
 src_dir_predicates  = -name images -prune -o -type d -print
 pot_file_predicates = -type f
-po_file_predicates  = -type f -not -name $(COMPENDIUM)
+po_file_predicates  = -type f -not -name "$(COMPENDIUM)"
 xml_file_predicates = -name '*.xml'
 
 # List of authors and contributors (no DocBook)

@@ -68,7 +68,7 @@ src_file_predicates =       \
 	-not -name '$(notdir $(AUTHORS_DOCBOOK_XML))'
 src_dir_predicates  = -name images -prune -o -type d -print
 pot_file_predicates = -type f
-po_file_predicates  = -type f -not -name $(COMPENDIUM)
+po_file_predicates  = -type f -not -name "$(COMPENDIUM)"
 xml_file_predicates = -name '*.xml'
 
 # list of authors and contributors (no DocBook)
@@ -145,6 +145,10 @@ DISTCHECK_CONFIGURE_FLAGS = --without-gimp
 # gimp-help directories
 ## remember that automake defines "srcdir"
 helpdir  = $(gimpdatadir)/help
+
+# This variable is used by "msgmerge";
+# use empty variable to disable the compendium option
+COMPENDIUM = Compendium.po
 
 
 ########################################################################
@@ -361,6 +365,11 @@ potfiles: $(POT_FILES)
 # HIDE FROM AUTOMAKE #	$$(cmd) if test -s $$<; then $$(call pot2po,$$<,$(1),$$@); else touch $$@; fi
 # HIDE FROM AUTOMAKE #po-$(1): $$($(1)_PO_FILES)
 # HIDE FROM AUTOMAKE #	$$(cmd) if test -e messages.mo; then rm -f messages.mo; fi
+# HIDE FROM AUTOMAKE #	$$(cmd) $(find_l) po/$(1)/ $$(po_file_predicates) | \
+# HIDE FROM AUTOMAKE #	while read pofile; do \
+# HIDE FROM AUTOMAKE #		potfile=pot/$$$${pofile#po/$(1)/}t; \
+# HIDE FROM AUTOMAKE #		test -e $$$${potfile} || rm -vf $$$${pofile}; \
+# HIDE FROM AUTOMAKE #	done
 # HIDE FROM AUTOMAKE #endef
 
 $(foreach LANG,$(PO_LANGS),$(eval $(call MAKE_PO_RULES,$(LANG))))
