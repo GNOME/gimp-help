@@ -320,9 +320,10 @@ pot/%.pot: src/%/*.xml
 
 # Targets suitable for command line
 # ("make pot" will work even if pot exists)
-pot: potfiles ;
-potfiles: $(POT_FILES)
-	$(msg) "--- Cleaning up pot files ..."
+pot: potfiles cleanup-pot ;
+potfiles: $(POT_FILES) ;
+cleanup-pot:
+	$(msg) "Cleaning up pot files ..."
 	$(cmd) $(find_l) pot/ $(pot_file_predicates) | \
 	while read potfile; do \
 		potfile=$${potfile#pot/}; srcfile=src/$${potfile%.pot}.xml \
@@ -344,8 +345,10 @@ endif
 	$$(cmd) $$(call make_target_dir,$$@)
 	$$(msg) "[PO]  $$@"
 	$$(cmd) if test -s $$<; then $$(call pot2po,$$<,$(1),$$@); else touch $$@; fi
-po-$(1): $$($(1)_PO_FILES)
+po-$(1): $$($(1)_PO_FILES) cleanup-po-$(1)
 	$$(cmd) if test -e messages.mo; then rm -f messages.mo; fi
+cleanup-po-$(1):
+	$$(msg) "Cleaning up po files ..."
 	$$(cmd) $(find_l) po/$(1)/ $$(po_file_predicates) | \
 	while read pofile; do \
 		potfile=pot/$$$${pofile#po/$(1)/}t; \
@@ -434,11 +437,11 @@ xml/$(1)/%.xml:
 	$(call po2xml,$$$${srcfile},$$$${pofile},$(1),$$@)
 
 # This is indirectly used as HTML and PDF prerequisite:
-xml/$(1): $$($(1)_XML_FILES)
+xml/$(1): $$($(1)_XML_FILES) | xml/$(1)/images
 	$$(cmd) test -d $$@ && touch $$@ || $(mkdir_p) $$@
 
 # Targets suitable for command line
-xml-$(1): xml/$(1) $$($(1)_XML_FILES) xml/$(1)/images ;
+xml-$(1): xml/$(1) cleanup-xml-$(1) ;
 endef
 $(foreach LANG,$(PO_LANGS),$(eval $(call MAKE_XML_RULES,$(LANG))))
 
@@ -450,8 +453,10 @@ $(en_XML_FILES): xml/en/%.xml : src/%.xml
 	$(cmd) $(call make_target_dir,$@)
 	$(cmd) cp -f $< $@
 
-xml/en: $(en_XML_FILES)
+xml/en: $(en_XML_FILES) | xml/en/images
 	$(cmd) test -d $@ && touch $@ || $(mkdir_p) $@
+
+xml-en: xml/en cleanup-xml-en ;
 
 # Images
 
@@ -474,18 +479,17 @@ xml/%/images: $(IMAGE_PREREQ)
 
 # remove stale xml files
 cleanup-xml-%:
+	$(msg) "Cleaning up xml files ..."
 	$(cmd) $(find_l) xml/$*/ $(xml_file_predicates) | \
 	while read xmlfile; do \
 		test -e src/$${xmlfile#xml/$*/} || rm -vf $${xmlfile}; \
 	done
 
 # Target suitable for command line
-xml-en: cleanup-xml-en xml/en $(en_XML_FILES) ;
 xml-images-%: xml/%/images ;
 images-%: xml-images-% html-images-% ;
 
 .PRECIOUS: xml/%/images
-
 .PHONY: FORCE
 FORCE: ;
 
