@@ -479,11 +479,18 @@ xml-en: xml/en cleanup-xml-en ;
 
 # Images
 
-# TODO: test new image files structure;
-#   how to ensure that $@ is up-to-date without forcing
-#   rebuild (which will also force e.g. html-% to be rebuilt 
-#   -- use (~1500) image files as prerequisites?
-xml/%/images: FORCE
+# HIDE FROM AUTOMAKE #ifeq ($(MAKE_IMAGES), lazy)
+# HIDE FROM AUTOMAKE ## fast and lazy: detect added or removed images, but may miss changed images
+# HIDE FROM AUTOMAKE #IMAGE_PREREQ = $(shell cd $(srcdir) && $(find_l) images/{common,C} -type d)
+# HIDE FROM AUTOMAKE #else ifeq ($(MAKE_IMAGES), force)
+# HIDE FROM AUTOMAKE ## just in case: always update images
+# HIDE FROM AUTOMAKE #IMAGE_PREREQ = FORCE
+# HIDE FROM AUTOMAKE #else
+# HIDE FROM AUTOMAKE ## strict (default): detects added, removed, or changed images
+# HIDE FROM AUTOMAKE #IMAGE_PREREQ = $(shell cd $(srcdir) && $(find_l) images/{common,C})
+# HIDE FROM AUTOMAKE #endif
+
+xml/%/images: $(IMAGE_PREREQ)
 	$(cmd) if test -L $@; then rm -v $@; fi
 	$(cmd) if test -L xml/$*; then rm -v xml/$*; fi
 	$(cmd) if test -d $@; then rm -rf $@/*; fi
