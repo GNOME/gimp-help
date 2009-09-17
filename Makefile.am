@@ -63,27 +63,13 @@ echo_n = echo $(ECHO_N)
 ### Find files and directories
 
 # XML files excluding automatically generated files
-xml_file_predicates =       \
-	-name '.git' -prune \
-	-o                  \
-	-name '$(notdir $(AUTHORS_DOCBOOK_XML))' -prune \
-	-o                  \
-	-name '*.xml' -print
-
-#  for generating a list of files (of any type)
-file_predicates =           \
-	-name '.git' -prune \
-	        -o          \
-	-type f -print
-
-# for generating a list of directories
-dir_predicates =            \
-	-name '.git' -prune \
-	        -o          \
-	-type d -print
-
-# for generating xml source directories
-src_dir_predicates = -name images -prune -o $(dir_predicates)
+src_file_predicates =       \
+	-name '*.xml' \
+	-not -name '$(notdir $(AUTHORS_DOCBOOK_XML))'
+src_dir_predicates  = -name images -prune -o -type d -print
+pot_file_predicates = -type f
+po_file_predicates  = -type f -not -name $(COMPENDIUM)
+xml_file_predicates = -name '*.xml'
 
 # list of authors and contributors (no DocBook)
 AUTHORS_SOURCE_XML = stylesheets/authors.xml
@@ -101,16 +87,16 @@ AUTHORS_DOCBOOK_STYLESHEETS = \
 # lists of source (XML) files and source directories
 # HIDE FROM AUTOMAKE #ifeq ($(filter help clean,$(MAKECMDGOALS)),)
 # HIDE FROM AUTOMAKE #SRC_DIRS  := $(shell cd $(srcdir) && $(find_l) src/ $(src_dir_predicates))
-# HIDE FROM AUTOMAKE #SRC_FILES := $(shell cd $(srcdir) && $(find_l) src/ $(xml_file_predicates)) \
+# HIDE FROM AUTOMAKE #SRC_FILES := $(shell cd $(srcdir) && $(find_l) src/ $(src_file_predicates)) \
 # HIDE FROM AUTOMAKE #             $(AUTHORS_DOCBOOK_XML)
 # HIDE FROM AUTOMAKE #else
 # HIDE FROM AUTOMAKE #SRC_DIRS  = $(shell cd $(srcdir) && $(find_l) src/ $(src_dir_predicates))
-# HIDE FROM AUTOMAKE #SRC_FILES = $(shell cd $(srcdir) && $(find_l) src/ $(xml_file_predicates)) \
+# HIDE FROM AUTOMAKE #SRC_FILES = $(shell cd $(srcdir) && $(find_l) src/ $(src_file_predicates)) \
 # HIDE FROM AUTOMAKE #            $(AUTHORS_DOCBOOK_XML)
 # HIDE FROM AUTOMAKE #endif
 
 # lists of PO files (translations)
-PO_FILES = $(shell cd $(srcdir) && $(find_l) po/ $(file_predicates))
+PO_FILES = $(shell cd $(srcdir) && $(find_l) po/ -type f)
 
 # stylesheets for HTML
 COMMON_CSS_FILES = \
@@ -352,7 +338,7 @@ pot/%.pot: $(srcdir)/src/%/*.xml
 pot: potfiles ;
 potfiles: $(POT_FILES)
 	$(msg) "--- Cleaning up pot files ..."
-	$(cmd) $(find_l) pot/ $(file_predicates) | \
+	$(cmd) $(find_l) pot/ $(pot_file_predicates) | \
 	while read potfile; do \
 		potfile=$${potfile#pot/}; srcfile=src/$${potfile%.pot}.xml \
 		test -e $${srcfile} || rm -f $${potfile}; \
@@ -495,7 +481,7 @@ xml/%/images: FORCE
 
 # remove stale xml files
 cleanup-xml-%:
-	$(cmd) $(find_l) xml/$*/ $(file_predicates) | \
+	$(cmd) $(find_l) xml/$*/ $(xml_file_predicates) | \
 	while read xmlfile; do \
 		test -e src/$${xmlfile#xml/$*/} || rm -vf $${xmlfile}; \
 	done

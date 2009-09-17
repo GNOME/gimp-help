@@ -66,42 +66,17 @@ builddir = .
 abs_srcdir   := $(shell cd $(srcdir) && pwd)
 abs_builddir := $(shell pwd)
 
-# The following dir names have been removed, IMHO we
-# don't need them and they made the file less readable:
-#xmldir   = src
-#potdir   = pot
-#podir    = po
-#xmlpodir = xml
-#htmldir  = html
-#pdfdir   = pdf
-#odfdir   = odf
-#logdir   = log
+# Directory names like 'xmldir', 'potdir' ,etc. have been removed;
+# IMHO we don't need them and they make the Makefile less readable.
 
 # Find files and directories
-xml_file_predicates =       \
-	-name '.git' -prune \
-	          -o        \
-	-name '$(notdir $(AUTHORS_DOCBOOK_XML))' -prune \
-	          -o        \
-	-name '*.xml' -print
-
-find_predicates =           \
-	-name '.git' -prune \
-	        -o          \
-	-print
-
-file_predicates =           \
-	-name '.git' -prune \
-	        -o          \
-	-type f -print
-
-dir_predicates =            \
-	-name '.git' -prune \
-	        -o          \
-	-type d -print
-src_dir_predicates = -name images -prune -o $(dir_predicates)
-xml_dir_predicates = $(dir_predicates)
-pot_dir_predicates = $(dir_predicates)
+src_file_predicates = \
+	-name '*.xml' \
+	-not -name '$(notdir $(AUTHORS_DOCBOOK_XML))'
+src_dir_predicates  = -name images -prune -o -type d -print
+pot_file_predicates = -type f
+po_file_predicates  = -type f -not -name $(COMPENDIUM)
+xml_file_predicates = -name '*.xml'
 
 # List of authors and contributors (no DocBook)
 AUTHORS_SOURCE_XML = stylesheets/authors.xml
@@ -119,11 +94,11 @@ AUTHORS_DOCBOOK_STYLESHEETS = \
 # Files & directories
 ifeq ($(filter help clean,$(MAKECMDGOALS)),)
 SRC_DIRS  := $(shell cd $(srcdir) && $(find_l) src/ $(src_dir_predicates))
-SRC_FILES := $(shell cd $(srcdir) && $(find_l) src/ $(xml_file_predicates)) \
+SRC_FILES := $(shell cd $(srcdir) && $(find_l) src/ $(src_file_predicates)) \
              $(AUTHORS_DOCBOOK_XML)
 else
 SRC_DIRS   = $(shell cd $(srcdir) && $(find_l) src/ $(src_dir_predicates))
-SRC_FILES  = $(shell cd $(srcdir) && $(find_l) src/ $(xml_file_predicates)) \
+SRC_FILES  = $(shell cd $(srcdir) && $(find_l) src/ $(src_file_predicates)) \
              $(AUTHORS_DOCBOOK_XML)
 endif
 
@@ -348,7 +323,7 @@ pot/%.pot: src/%/*.xml
 pot: potfiles ;
 potfiles: $(POT_FILES)
 	$(msg) "--- Cleaning up pot files ..."
-	$(cmd) $(find_l) pot/ $(file_predicates) | \
+	$(cmd) $(find_l) pot/ $(pot_file_predicates) | \
 	while read potfile; do \
 		potfile=$${potfile#pot/}; srcfile=src/$${potfile%.pot}.xml \
 		test -e $${srcfile} || rm -f $${potfile}; \
@@ -371,7 +346,7 @@ endif
 	$$(cmd) if test -s $$<; then $$(call pot2po,$$<,$(1),$$@); else touch $$@; fi
 po-$(1): $$($(1)_PO_FILES)
 	$$(cmd) if test -e messages.mo; then rm -f messages.mo; fi
-	$$(cmd) $(find_l) po/$(1)/ -name $(COMPENDIUM) -prune -o $$(file_predicates) | \
+	$$(cmd) $(find_l) po/$(1)/ $$(po_file_predicates) | \
 	while read pofile; do \
 		potfile=pot/$$$${pofile#po/$(1)/}t; \
 		test -e $$$${potfile} || rm -vf $$$${pofile}; \
@@ -482,17 +457,13 @@ xml/en: $(en_XML_FILES)
 
 ifeq ($(MAKE_IMAGES), lazy)
 # fast and lazy: detect added or removed images, but may miss changed images
-IMAGE_PREREQ = $(shell cd $(srcdir) && \
-                       echo >&2 "Checking source image directories ..." && \
-                       $(find_l) images/{common,C} $(dir_predicates))
+IMAGE_PREREQ = $(shell cd $(srcdir) && $(find_l) images/{common,C} -type d)
 else ifeq ($(MAKE_IMAGES), force)
 # just in case: always update images
 IMAGE_PREREQ = FORCE
 else
 # strict (default): detects added, removed, or changed images
-IMAGE_PREREQ = $(shell cd $(srcdir) && \
-                       echo >&2 "Checking source images ..." && \
-                       $(find_l) images/{common,C} $(find_predicates))
+IMAGE_PREREQ = $(shell cd $(srcdir) && $(find_l) images/{common,C})
 endif
 
 xml/%/images: $(IMAGE_PREREQ)
@@ -503,7 +474,7 @@ xml/%/images: $(IMAGE_PREREQ)
 
 # remove stale xml files
 cleanup-xml-%:
-	$(cmd) $(find_l) xml/$*/ $(file_predicates) | \
+	$(cmd) $(find_l) xml/$*/ $(xml_file_predicates) | \
 	while read xmlfile; do \
 		test -e src/$${xmlfile#xml/$*/} || rm -vf $${xmlfile}; \
 	done
