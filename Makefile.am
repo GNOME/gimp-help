@@ -730,7 +730,7 @@ draft-po/%.po:   preview-po/%.po   ;
 
 tarball_prefix = gimp-help-2-html
 tarball_dir    = gimp-help-2
-HTMLMETAFILES  = README AUTHORS COPYING MAINTAINERS
+HTMLMETAFILES  = README AUTHORS COPYING MAINTAINERS HACKING INSTALL
 
 .SECONDARY: $(tarball_prefix)-%.tar
 $(tarball_prefix)-%.tar: html/%/index.html html/%/gimp-help.xml \
