@@ -3,7 +3,7 @@
 ########################################################################
 
 # The GIMP manual languages
-ALL_LINGUAS = de en es fr it ko nl nn pl ru sv zh_CN
+ALL_LINGUAS = de en es fr it ja ko nl nn pl ru sv zh_CN
 LANGUAGES = $(if $(LINGUAS), \
               $(filter $(ALL_LINGUAS),$(LINGUAS)), \
 	      $(ALL_LINGUAS))
