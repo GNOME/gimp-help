@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+                       "http://www.docbook.org/xml/4.3/docbookx.dtd">
+<!-- section history:
+  2009-10-26 ude: created
+-->
+<sect2 id="gimp-filters-python-fu" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>The <quote>Python-Fu</quote> Submenu</title>
+
+  <indexterm>
+    <primary>Python-Fu</primary>
+    <secondary>Sub-menu</secondary>
+  </indexterm>
+
+  <figure>
+    <title>The <quote>Python-Fu</quote> submenu</title>
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref="images/menus/filters/python-fu.png" format="PNG"/>
+      </imageobject>
+    </mediaobject>
+  </figure>
+  <para>
+    By default this submenu just contains the Python-Fu console.
+  </para>
+  <!-- cf. plug-ins/pygimp/doc/pygimp.html -->
+  <para>
+    <!--TODO link linkend="gimp-concepts-python-fu"-->Python-Fu<!--/link-->
+    is a set of <link linkend="bibliography-online-python">Python</link>
+    modules that act as a wrapper to <emphasis>libgimp</emphasis> allowing
+    the writing of plug-ins for <acronym>GIMP</acronym>.
+  </para>
+
+  <sect3>
+    <title>Activating the submenu</title>
+    <itemizedlist>
+      <listitem>
+        <para>
+          You can access this command from the image menu through
+          <menuchoice>
+            <guimenu>Filters</guimenu>
+            <guimenuitem>Python-Fu</guimenuitem>
+          </menuchoice>
+        </para>
+      </listitem>
+    </itemizedlist>
+  </sect3>
+
+  <sect3 id="python-fu-console">
+    <title>The Python-Fu Console</title>
+    <para>
+      The Python-Fu console is a dialog window running a <quote>Python
+      shell</quote> (a Python interpreter in interactive mode). This console
+      is set up to make use of the internal <acronym>GIMP</acronym> library
+      routines of <emphasis>libgimp</emphasis>.
+    </para>
+    <para>
+      You can use the Python-Fu console to interactively test Python commands.
+    </para>
+    <para>
+      The console consists of a large scrollable main window for input and
+      output, where you can type Python commands. When you type in a Python
+      command and then press the <keycap>Enter</keycap> key, the command is
+      executed by the Python interpreter. The command's output as well as its
+      return value (and its error message, if any) will be displayed in the
+      main window.
+    </para>
+    <figure>
+      <title>The Python-Fu Console</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata format="PNG"
+            fileref="images/menus/filters/python-fu-console.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+    <variablelist>
+      <title>The Python-Fu Console Buttons</title>
+      <varlistentry>
+        <term>Save</term>
+        <listitem>
+          <para>
+            This command lets you save the content of the main window, that is
+            the Python-Fu console input and output (including the
+            <quote><code>&gt;&gt;&gt;</code></quote> prompt).
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Clear</term>
+        <listitem>
+          <para>
+            Wenn you click on this button, the content of the main window will
+            be removed. Note that you can't get back the removed content using
+            the <guilabel>Save</guilabel> command.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Browse</term>
+        <listitem>
+        <!--
+          <para>
+            When clicked, the
+            <link linkend="plug-in-dbbrowser">procedure browser</link> pops
+            up, with an additional button at the bottom of the window:
+          </para>
+          <mediaobject>
+            <imageobject>
+              <imagedata format="PNG"
+                fileref="images/menus/script-fu-console-browse.png"/>
+            </imageobject>
+            <caption>
+              <para>
+                The additional button of the Procedure Browser
+              </para>
+            </caption>
+          </mediaobject>
+        -->
+        <!-- TODO check: With or without image? -->
+          <para>
+            When clicked, the
+            <link linkend="plug-in-dbbrowser">procedure browser</link> pops
+            up, with an additional button <guibutton>Apply</guibutton> at the
+            bottom of the window.
+          </para>
+          <para>
+            When you press this <guibutton>Apply</guibutton> button in the
+            procedure browser, a call to the selected procedure will be pasted
+            into the console window as a Python command:
+          </para>
+          <mediaobject>
+            <imageobject>
+              <imagedata format="PNG"
+                fileref="images/menus/filters/python-fu-console-browse-applied.png"/>
+            </imageobject>
+            <caption>
+              <para>Applied <acronym>PDB</acronym> procedure</para>
+            </caption>
+          </mediaobject>
+          <para>
+            Now you just have to replace the parameter names (here:
+            <quote>width</quote>, <quote>height</quote>, and
+            <quote>type</quote>) with actual values, e.g.
+          </para>
+          <!-- Don't wrap the following line (without testing)! -->
+          <programlisting>image = pdb.gimp_image_new(400, 300, RGB)</programlisting>
+          <para>
+            Then press <keycap>Enter</keycap> to execute the command.
+          </para>
+          <para>
+            You can (and should!) use the constants you find in the decription
+            of the procedure's parameters, for example
+            <quote>RGB-IMAGE</quote> or <quote>OVERLAY-MODE</quote>. But note
+            that you have to replace hyphens (<quote>-</quote>) with
+            underscores (<quote>_</quote>): <code>RGB_IMAGE</code>,
+            <code>OVERLAY_MODE</code>.
+          </para>
+          <tip>
+            <!-- cf. plug-ins/pygimp/doc/pygimp.html -->
+            <para>
+              Python-Fu is not limited to just calling procedures from the
+              <link linkend="glossary-pdb"><acronym>PDB</acronym></link>
+              (<acronym>GIMP</acronym> procedural database). To create a new
+              image object like in the example above, you can also type
+            </para>
+            <programlisting>
+              image = gimp.Image(width, height, type)
+            </programlisting>
+            <para>
+              (with actual values for <quote>width</quote>,
+              <quote>height</quote>, and <quote>type</quote>).
+            </para>
+          </tip>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Close</term>
+        <listitem>
+          <para>
+            Pressing this button closes the console.
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </sect3>
+</sect2>

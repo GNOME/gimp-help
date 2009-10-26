@@ -14,7 +14,7 @@
   <xsl:param name="callout.graphics.path">images/callouts/</xsl:param>
   <xsl:param name="generate.index">0</xsl:param>
   <xsl:param name="html.stylesheet">
-    gimp-help-plain.css gimp-help-screen.css gimp-help-draft.css
+    gimp-help-plain.css gimp-help-screen.css gimp-help-custom.css gimp-help-draft.css
   </xsl:param>
   <xsl:param name="make.valid.html" select="1" />
   <xsl:param name="id.warnings" select="0" />
