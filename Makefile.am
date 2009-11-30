@@ -5,7 +5,10 @@ SUBDIRS = quickreference
 # used for creating the ChangeLog
 LAST_RELEASE_TAG = GIMP_HELP_2_4_2
 
-# The GIMP manual languages
+########################################################################
+####            The GIMP manual languages                           ####
+########################################################################
+
 LANGUAGES = $(if $(LINGUAS), \
               $(filter $(ALL_LINGUAS),$(LINGUAS)), \
 	      $(ALL_LINGUAS))
@@ -23,11 +26,19 @@ DOC_LINGUAS = $(LINGUAS)
 # HIDE FROM AUTOMAKE #XML_LANG = en
 # HIDE FROM AUTOMAKE #PO_LANGS = $(filter-out $(XML_LANG), $(LANGUAGES))
 
+
+########################################################################
+####            External programs                                   ####
+########################################################################
+
 ## Essential external programs and their default options
 ## (some of these variables are provided via "configure" -- see configure.ac)
 ##
 ## XSLTPROC  = xsltproc
 ## XSLTFLAGS = --nonet
+# HIDE FROM AUTOMAKE #ifneq ($(srcdir),$(builddir))
+# HIDE FROM AUTOMAKE #XSLTFLAGS += --path $(builddir)
+# HIDE FROM AUTOMAKE #endif
 ##
 ## XMLLINT      = xmllint
 XMLLINTFLAGS = --nonet
@@ -54,11 +65,16 @@ DOCBOOK2ODFFLAGS =
 # Standard shell commands
 find_l = find -L
 
+# Standard shell commands
+echo_n = echo $(ECHO_N)
+
 # Calling make recursively
 RMAKE = $(MAKE) --no-print-directory
 
-# Standard shell commands
-echo_n = echo $(ECHO_N)
+
+########################################################################
+####            Files and directories                               ####
+########################################################################
 
 ### Find files and directories
 
@@ -94,6 +110,17 @@ AUTHORS_DOCBOOK_STYLESHEETS = \
 # HIDE FROM AUTOMAKE #SRC_FILES = $(shell cd $(srcdir) && $(find_l) src/ $(src_file_predicates)) \
 # HIDE FROM AUTOMAKE #            $(AUTHORS_DOCBOOK_XML)
 # HIDE FROM AUTOMAKE #endif
+
+# TODO?: rename "plainhtml.xsl" to "html.xsl" and use ...
+# ... HTML_STYLESHEETS = stylesheets/html*.xsl
+HTML_STYLESHEETS = stylesheets/plainhtml.xsl stylesheets/htmlalternate.xsl
+
+# This variable is used by "msgmerge";
+# use empty variable to disable the compendium option
+COMPENDIUM = Compendium.po
+
+
+### List of files for the autotools' "dist" rules
 
 # lists of PO files (translations)
 PO_FILES = $(shell cd $(srcdir) && $(find_l) po/ -type f)
@@ -135,10 +162,6 @@ EXTRA_DIST = \
 	$(XSL_FILES)		\
 	$(DIST_TOOLS)
 
-# TODO?: rename "plainhtml.xsl" to "html.xsl" and use ...
-# ... HTML_STYLESHEETS = stylesheets/html*.xsl
-HTML_STYLESHEETS = stylesheets/plainhtml.xsl stylesheets/htmlalternate.xsl
-
 #
 DISTCHECK_CONFIGURE_FLAGS = --without-gimp
 
@@ -146,15 +169,11 @@ DISTCHECK_CONFIGURE_FLAGS = --without-gimp
 ## remember that automake defines "srcdir"
 helpdir  = $(gimpdatadir)/help
 
-# This variable is used by "msgmerge";
-# use empty variable to disable the compendium option
-COMPENDIUM = Compendium.po
-
 
 ########################################################################
 ####            Control the amount of output messages               ####
 ########################################################################
-
+#
 # Usage of the "msg" and "cmd" variables:
 # In the command lines of the make rules, use
 #     $(msg) bla bla bla   instead of   @echo bla bla bla
@@ -314,9 +333,9 @@ copy = $(LN_S) $(abs_srcdir)/$(1) $(2)
 ####            Make pot files:  XML(en) --> POT                    ####
 ########################################################################
 #
-# xmldir/path/to/file/*.xml --> potdir/path/to/file.pot
+# src/path/to/file/*.xml --> pot/path/to/file.pot
 POT_FILES  = $(patsubst src/%,pot/%.pot,$(filter-out src src/,$(SRC_DIRS)))
-# Special case
+# Special case: src/*.xml --> pot/gimp.pot
 POT_FILES += pot/gimp.pot
 #
 # Special case
@@ -355,11 +374,11 @@ cleanup-pot:
 ########################################################################
 #
 # HIDE FROM AUTOMAKE #define MAKE_PO_RULES
-# HIDE FROM AUTOMAKE #$(1)_PO_FILES = $$(patsubst pot/%.pot, $$(srcdir)/po/$(1)/%.po, $$(POT_FILES))
+# HIDE FROM AUTOMAKE #$(1)_PO_FILES = $$(patsubst pot/%.pot, po/$(1)/%.po, $$(POT_FILES))
 # HIDE FROM AUTOMAKE #ifeq ($$(filter po/$(1)/%.po,$$(MAKECMDGOALS)),)
-# HIDE FROM AUTOMAKE #$$($(1)_PO_FILES): $$(srcdir)/po/$(1)/%.po : pot/%.pot
+# HIDE FROM AUTOMAKE #$$($(1)_PO_FILES): po/$(1)/%.po : pot/%.pot
 # HIDE FROM AUTOMAKE #else
-# HIDE FROM AUTOMAKE #$$($(1)_PO_FILES): $$(srcdir)/po/$(1)/%.po : pot/%.pot FORCE
+# HIDE FROM AUTOMAKE #$$($(1)_PO_FILES): po/$(1)/%.po : pot/%.pot FORCE
 # HIDE FROM AUTOMAKE #endif
 # HIDE FROM AUTOMAKE #	$$(cmd) $$(call make_target_dir,$$@)
 # HIDE FROM AUTOMAKE #	$$(msg) "[PO]  $$@"
@@ -398,11 +417,6 @@ todo-%: po-todo-% ;
 po-todo-%: po-%
 	$(cmd) perl $(srcdir)/tools/get_po_status.pl --todo po/$*
 
-# Force updating po file
-update-po/%.po:
-	$(msg) "Deprecated, use 'make po/$*.po instead'"
-	$(cmd) false
-
 
 ########################################################################
 ####            Generate XML prerequisites                          ####
@@ -425,15 +439,16 @@ update-po/%.po:
 # HIDE FROM AUTOMAKE #xml/$(1)/.deps.mk: $(AUTHORS_DOCBOOK_XML) $$(SRC_FILES)
 # HIDE FROM AUTOMAKE #	$$(cmd) $$(call make_target_dir,$$@)
 # HIDE FROM AUTOMAKE #	$$(msg) "[DEP] $$@"
-# HIDE FROM AUTOMAKE #	$$(cmd) touch $$@
-# HIDE FROM AUTOMAKE #	$$(cmd) for srcdir in $(SRC_DIRS); do \
-# HIDE FROM AUTOMAKE #		ls $$$${srcdir}/*.xml >/dev/null 2>&1 || continue; \
-# HIDE FROM AUTOMAKE #		srcdir=$$$${srcdir%/}; \
-# HIDE FROM AUTOMAKE #		xmldir=xml/$(1)$$$${srcdir#src}; \
-# HIDE FROM AUTOMAKE #		test "$$$${srcdir}" != "src" || srcdir="src/gimp"; \
-# HIDE FROM AUTOMAKE #		pofile=po/$(1)$$$${srcdir#src}.po; \
+# HIDE FROM AUTOMAKE #	$$(cmd) echo "first: all" > $$@
+# HIDE FROM AUTOMAKE #	$$(cmd) for path in $(SRC_DIRS); do \
+# HIDE FROM AUTOMAKE #		ls $$(srcdir)/$$$${path}/*.xml >/dev/null 2>&1 || \
+# HIDE FROM AUTOMAKE #		ls $$$${path}/*.xml >/dev/null 2>&1 || continue; \
+# HIDE FROM AUTOMAKE #		path=$$$${path%/}; \
+# HIDE FROM AUTOMAKE #		xmldir=xml/$(1)$$$${path#src}; \
+# HIDE FROM AUTOMAKE #		test "$$$${path}" != "src" || path="src/gimp"; \
+# HIDE FROM AUTOMAKE #		pofile=po/$(1)$$$${path#src}.po; \
 # HIDE FROM AUTOMAKE #		echo "$$$${xmldir}/*.xml: $$$${pofile}"; \
-# HIDE FROM AUTOMAKE #	done > $$@
+# HIDE FROM AUTOMAKE #	done >> $$@
 # HIDE FROM AUTOMAKE #endef
 # HIDE FROM AUTOMAKE #$(foreach LANG,$(PO_LANGS),$(eval $(call MAKE_DEP_RULES,$(LANG))))
 
@@ -454,6 +469,15 @@ update-po/%.po:
 # HIDE FROM AUTOMAKE #	test "$$$${stem}" != "$$$${stem%/*}" && stem=$$$${stem%/*} || stem=gimp; \
 # HIDE FROM AUTOMAKE #	pofile=$$(srcdir)/po/$(1)/$$$${stem}.po; \
 # HIDE FROM AUTOMAKE #	$(call po2xml,$$$${srcfile},$$$${pofile},$(1),$$@)
+# Special case: authors.xml
+# HIDE FROM AUTOMAKE #xml/$(1)/$(AUTHORS_DOCBOOK_XML:src/%=%): $(AUTHORS_DOCBOOK_XML)
+# HIDE FROM AUTOMAKE #	$$(msg) "[XML] $$@"
+# HIDE FROM AUTOMAKE #	$$(cmd) $$(call make_target_dir,$$@)
+# HIDE FROM AUTOMAKE #	$$(cmd) xmlfile=$$@; \
+# HIDE FROM AUTOMAKE #	srcfile=$(AUTHORS_DOCBOOK_XML); \
+# HIDE FROM AUTOMAKE #	stem=$$(dir $$(@:xml/$(1)/%=%)); \
+# HIDE FROM AUTOMAKE #	pofile=$$(srcdir)/po/$(1)/$$$${stem%/}.po; \
+# HIDE FROM AUTOMAKE #	$(call po2xml,$$$${srcfile},$$$${pofile},$(1),$$@)
 # HIDE FROM AUTOMAKE #
 # HIDE FROM AUTOMAKE ## This is indirectly used as HTML and PDF prerequisite:
 # HIDE FROM AUTOMAKE #xml/$(1): $$($(1)_XML_FILES) | xml/$(1)/images
@@ -463,27 +487,6 @@ update-po/%.po:
 # HIDE FROM AUTOMAKE #xml-$(1): xml/$(1) cleanup-xml-$(1) ;
 # HIDE FROM AUTOMAKE #endef
 # HIDE FROM AUTOMAKE #$(foreach LANG,$(PO_LANGS),$(eval $(call MAKE_XML_RULES,$(LANG))))
-
-# TODO: test new image files structure;
-#   problem: how to ensure that $@ is up-to-date without forcing
-#   rebuild (which will also force e.g. html-% to be rebuilt 
-#   -- use (~1500) image files as prerequisites?
-xml/%/images: FORCE
-	$(cmd) if test -L $@; then rm -v $@; fi
-	$(cmd) if test -L xml/$*; then rm -v xml/$*; fi
-	$(cmd) if test -d $@; then rm -rf $@/*; fi
-	$(cmd) test -d $@ || $(MKDIR_P) $@
-	$(cmd) $(echo_n) "*** Copying images ($*) ..."
-if CYGWIN
-# Cygwin
-	$(cmd) perl $(srcdir)/tools/make_image_links.pl -v \
-	           --mode=hardlink,copy \
-	           $(srcdir)/images/{common,C} $@
-else
-# Default (non-Cygwin)
-	$(cmd) perl $(srcdir)/tools/make_image_links.pl -v \
-	           $(srcdir)/images/{common,C} $@
-endif
 
 # Special case: en
 
@@ -517,9 +520,15 @@ xml/%/images: $(IMAGE_PREREQ)
 	$(cmd) if test -d $@; then rm -rf $@/*; fi
 	$(cmd) test -d $@ || $(MKDIR_P) $@
 	$(cmd) $(echo_n) "Copying images ($*) ..."
+if CYGWIN
+# Cygwin
 	$(cmd) perl $(srcdir)/tools/make_image_links.pl -v \
-	           $(srcdir)/images/common $(srcdir)/images/C \
-		   xml/$*
+	           --mode=hardlink,copy \
+	           $(srcdir)/images/{common,C} $@
+else
+	$(cmd) perl $(srcdir)/tools/make_image_links.pl -v \
+	           $(srcdir)/images/{common,C} $@
+endif
 
 # remove stale xml files
 cleanup-xml-%:
@@ -605,6 +614,8 @@ html/%/index.html: xml/% $(HTML_STYLESHEETS) | html/%/images
 
 ####  HTML images  ####
 # TODO: check/enhance new image files structure
+html-images-%: html/%/images ;
+
 if CYGWIN
 # Cygwin
 html/%/images: FORCE
@@ -816,7 +827,9 @@ install-data-local:
 	echo .
 
 uninstall-local:
-	$(cmd) rm -rf $(DESTDIR)$(helpdir)/*
+	$(cmd) for lang in $(LANGUAGES); do \
+		rm -rf $(DESTDIR)$(helpdir)/$${lang}; \
+	done
 	$(cmd) dir=$(DESTDIR)$(helpdir); \
 	while [ -d "$${dir}" ]; do \
 		rmdir $${dir} 2>/dev/null \
@@ -904,17 +917,25 @@ dist-copy-images:
 	$(cmd) test -d "$(distdir)/images" && test ! -d "$(distdir)/images/.git"
 
 
-clean-local:
+mostlyclean-local:
 	$(cmd) rm -rf html
 	$(cmd) rm -rf odf
 	$(cmd) rm -rf pdf
 	$(cmd) rm -rf xml
-	$(cmd) rm -rf log
 	$(cmd) rm -rf pot
+# HIDE FROM AUTOMAKE #ifneq ($(srcdir),$(builddir))
+	$(cmd) rm -rf src
+	$(cmd) rm -rf po
+# HIDE FROM AUTOMAKE #else
+	$(cmd) rm -f $(AUTHORS_DOCBOOK_XML)
+# HIDE FROM AUTOMAKE #endif
 	$(cmd) rm -f $(tarball_prefix)-*
-	$(cmd) rm -f AUTHORS $(AUTHORS_DOCBOOK_XML) build-system.png
+	$(cmd) rm -f build-system.png
 	$(cmd) rm -f .xml2po.mo messages.mo
 
+clean-local: mostlyclean-local
+	$(cmd) rm -rf log
+	$(cmd) rm -f AUTHORS
 
 maintainer-clean-local:
 	$(cmd) rm -rf html
@@ -922,8 +943,8 @@ maintainer-clean-local:
 # Override automake-generated targets
 Makefile: $(srcdir)/Makefile.in $(srcdir)/Makefile.am $(srcdir)/configure.ac $(srcdir)/autogen.sh
 	$(msg) "!!! Updating '$@' running 'autogen.sh' ($? changed) !!!"
-	$(cmd) opt=`test -e $(srcdir)/config.status && \
-	     $(srcdir)/config.status --version | \
+	$(cmd) opt=`test -e $(builddir)/config.status && \
+	     $(builddir)/config.status --version | \
 	     sed -e 's/.*with options "//' \
 	         -e tmatch -e d -e :match -e 's/".*//' \
 		 -e "s/'\([^'=]*\)=\([^']*\)'/\1='\2'/"`; \

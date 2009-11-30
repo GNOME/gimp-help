@@ -17,7 +17,7 @@ use strict;
 use Getopt::Long;
 use File::Find;
 use File::Path qw/mkpath/;
-use File::Spec::Functions qw/abs2rel splitpath catfile/;
+use File::Spec::Functions qw/abs2rel rel2abs splitpath catfile/;
 use File::Copy;
 
 
@@ -76,11 +76,10 @@ die "$Usage\n" if scalar @ARGV < 2;
 my $Destdir = pop;
 my @Srcdirs = @ARGV;
 
-# XXX: assuming destination = '(x|ht)ml/LANG[/images]
-if ($Destdir =~ s:((x|ht)ml)/([^/]+)(/images)?/?$:$1/$3:) {
-    $Language = $3;
-    $Language =~ /^[a-z]{2}(_[A-Z]{2})?$/
-        or die "Error: invalid language: $Language\n";
+# assuming destination = (x|ht)ml/LANG[/images]
+my $locale_re = qr/[a-z]{2}(?:_[A-Z]{2})?/;
+if ($Destdir =~ s!((?:x|ht)ml)/($locale_re)(?:/images/?)?$!$1/$2!) {
+    $Language = $2;
 } else {
     die "Error: invalid destination directory: $Destdir\n" .
         "  (should be '(x|ht)ml/LANG[/images]')\n";
@@ -112,13 +111,6 @@ my ($Count_all, $Count_i18n, $inc_i18n) = (0, 0, 0);
 # Should we look for localized images?
 my $Localize_images = ($Language ne "en") ? 1 : 0;
 
-# Simple check if we should try a fallback
-# if copying/linking image failed
-my $mode_is_known_to_work = 0;
-
-# Did last copy/link operation succeed?
-my $ok  = undef;
-
 # The appropriate method for linking/copying is
 # called via this reference to an (anonymous) subroutine
 my $exec_copy_command = undef;
@@ -133,9 +125,19 @@ my %method = ("symlink"  => sub { my ($s, $d) = @_; symlink($s, $d); },
 # to the specified parameter ("symlink", "hardlink", or "copy")
 sub get_copy_command {
     my $cur_mode = shift or die "Oops!?";
-    return sub { $method{$cur_mode}->(@_) and ++$mode_is_known_to_work
-                     or warn("Error: failed to make $cur_mode for $_[0]\n");
-               }
+    # Simple check if we should try a fallback or abort
+    # if copying/linking image failed
+    my $mode_is_known_to_work = 0;
+    return sub {
+        my $ok = $method{$cur_mode}->(@_);
+        if ($ok) {
+            ++$mode_is_known_to_work;
+        } else {
+            warn("Error: failed to make $cur_mode for $_[0]\n");
+            die("Abort.\n") if ($mode_is_known_to_work); # XXX: what else?
+        }
+        return $ok;
+    }
 }
 
 # Subroutine for (re)setting coyp/link mode
@@ -154,16 +156,18 @@ sub set_copy_mode {
 # Main routine:
 set_copy_mode();
 foreach my $srcdir (sort @Image_dirs) {
-    # Construct corresponding destination directory:
-    # XXX: assuming source = images/{C,common}
-    #      and destination = (x|ht)ml/LANG
+    # Construct corresponding destination directory,
+    # assuming source = [.../]images/{C,common}
+    #     destination = (x|ht)ml/LANG
     (my $dstdir = $srcdir) =~ s|(.*/)?images/[^/]+|$Destdir/images|o;
     -d $dstdir or mkpath $dstdir
         or die "Error: cannot mkpath $dstdir: $!\n";
     # Get relative path from $dstdir to (image source directory) $srcdir;
     # this path is needed if/when making relative symlinks.
-    my $save_path = my $dst_to_src_path = abs2rel($srcdir, $dstdir)
-        if $Mode[0] eq "symlink";
+    # FIXME: change this code, File::Spec::Unix is buggy(?!) --
+    # abs2rel($srcdir, $dstdir) doesn't work if $srcdir starts with "../"
+    my $dst_to_src_symlink_path =
+        abs2rel(rel2abs($srcdir), $dstdir) if $Mode[0] eq "symlink";
     foreach my $imgfile (glob "$srcdir/*.*") {
         next unless -f $imgfile;
         my $basename = (splitpath($imgfile))[2];  # (vol, dir, file)
@@ -177,16 +181,15 @@ foreach my $srcdir (sort @Image_dirs) {
         print STDERR "$destfile\n" if $Verbose > 2;
         # Special case symlinks:
         if ($Mode[0] eq "symlink") {
-            $dst_to_src_path = $save_path;
+            my $dst_to_src_path = $dst_to_src_symlink_path;
             # If necessary, change relative path too:
             $dst_to_src_path =~ s|/C/|/$Language/|o
                 if ($Localize_images && $imgfile =~ m|/$Language/|o);
             # Use a relative symlink to image file:
             $imgfile = catfile($dst_to_src_path, $basename);
         }
-        $ok = $exec_copy_command->($imgfile, $destfile);
+        my $ok = $exec_copy_command->($imgfile, $destfile);
         if (!$ok) {
-            die "Abort.\n" if ($mode_is_known_to_work); # XXX: what else?
             set_copy_mode();
             redo;
         }
