@@ -46,9 +46,9 @@ XMLLINTFLAGS = --nonet
 ## XML2PO = $(srcdir)/tools/xml2po
 ##
 MSGWIDTH      = 79
-## MSGUNIQ       = msguniq 
-MSGUNIQFLAGS  = 
-## MSGCAT        = msgcat 
+## MSGUNIQ       = msguniq
+MSGUNIQFLAGS  =
+## MSGCAT        = msgcat
 MSGCATFLAGS   = --width=$(MSGWIDTH)
 ## MSGINIT       = msginit
 MSGINITFLAGS  = --no-translator --width=$(MSGWIDTH)
@@ -88,10 +88,12 @@ po_file_predicates  = -type f -not -name "$(COMPENDIUM)"
 xml_file_predicates = -name '*.xml'
 
 # list of authors and contributors (no DocBook)
-AUTHORS_SOURCE_XML = stylesheets/authors.xml
+AUTHORS_DATA_XML = stylesheets/authors.xml
 # automatically generated authors section (DocBook)
-AUTHORS_DOCBOOK_XML = src/preface/authors.xml
-# Stylesheets generating AUTHORS 
+AUTHORS_DOCBOOK_XML      = src/preface/authors.xml
+AUTHORS_DOCBOOK_DIRNAME  = $(dir $(AUTHORS_DOCBOOK_XML))
+AUTHORS_DOCBOOK_FILENAME = $(notdir $(AUTHORS_DOCBOOK_XML))
+# Stylesheets generating AUTHORS
 AUTHORS_TEXT_STYLESHEETS = \
 	stylesheets/authors_text.xsl \
 	stylesheets/authors_common.xsl
@@ -103,13 +105,12 @@ AUTHORS_DOCBOOK_STYLESHEETS = \
 # lists of source (XML) files and source directories
 # HIDE FROM AUTOMAKE #ifeq ($(filter help clean,$(MAKECMDGOALS)),)
 # HIDE FROM AUTOMAKE #SRC_DIRS  := $(shell cd $(srcdir) && $(find_l) src/ $(src_dir_predicates))
-# HIDE FROM AUTOMAKE #SRC_FILES := $(shell cd $(srcdir) && $(find_l) src/ $(src_file_predicates)) \
-# HIDE FROM AUTOMAKE #             $(AUTHORS_DOCBOOK_XML)
+# HIDE FROM AUTOMAKE #SRC_FILES := $(shell cd $(srcdir) && $(find_l) src/ $(src_file_predicates))
 # HIDE FROM AUTOMAKE #else
 # HIDE FROM AUTOMAKE #SRC_DIRS  = $(shell cd $(srcdir) && $(find_l) src/ $(src_dir_predicates))
-# HIDE FROM AUTOMAKE #SRC_FILES = $(shell cd $(srcdir) && $(find_l) src/ $(src_file_predicates)) \
-# HIDE FROM AUTOMAKE #            $(AUTHORS_DOCBOOK_XML)
+# HIDE FROM AUTOMAKE #SRC_FILES = $(shell cd $(srcdir) && $(find_l) src/ $(src_file_predicates))
 # HIDE FROM AUTOMAKE #endif
+# HIDE FROM AUTOMAKE #SRC_FILES += $(AUTHORS_DOCBOOK_XML)
 
 # TODO?: rename "plainhtml.xsl" to "html.xsl" and use ...
 # ... HTML_STYLESHEETS = stylesheets/html*.xsl
@@ -157,7 +158,7 @@ EXTRA_DIST = \
 	$(COMMON_CSS_FILES)	\
 	$(OTHER_CSS_FILES)	\
 	$(SRC_FILES)		\
-	$(AUTHORS_SOURCE_XML)	\
+	$(AUTHORS_DATA_XML)	\
 	$(PO_FILES)		\
 	$(XSL_FILES)		\
 	$(DIST_TOOLS)
@@ -198,26 +199,8 @@ helpdir  = $(gimpdatadir)/help
 
 
 ########################################################################
-####            Make AUTHORS file                                   ####
+####            Functions                                           ####
 ########################################################################
-
-AUTHORS: $(AUTHORS_SOURCE_XML) $(AUTHORS_TEXT_STYLESHEETS)
-	$(msg) "[DOC] $@"
-	$(cmd) $(XSLTPROC) \
-	  $(XSLTFLAGS) $(XSLTEXTRAFLAGS) \
-	  $(srcdir)/stylesheets/authors_text.xsl \
-	  $< \
-	  > $@
-	
-$(AUTHORS_DOCBOOK_XML): $(AUTHORS_SOURCE_XML) $(AUTHORS_DOCBOOK_STYLESHEETS)
-	$(msg) "[SRC] $@"
-	$(cmd) $(call make_target_dir,$@)
-	$(cmd) $(XSLTPROC) \
-	  $(XSLTFLAGS) $(XSLTEXTRAFLAGS) \
-	  $(srcdir)/stylesheets/authors_docbook.xsl \
-	  $< \
-	  > $@
-
 
 #--------------------------------------------------------------#
 #       The main functions used to transform                   #
@@ -226,6 +209,7 @@ $(AUTHORS_DOCBOOK_XML): $(AUTHORS_SOURCE_XML) $(AUTHORS_DOCBOOK_STYLESHEETS)
 #               (c) XML and PO files to XML files              #
 #--------------------------------------------------------------#
 
+if HAVE_I18N_TOOLS
 # Create a PO-template (POT)
 #
 # Usage:
@@ -241,7 +225,7 @@ xml2pot = ($(XML2PO) --output='-' $(1) \
           | $(MSGCAT) $(MSGCATFLAGS) - > "$(2)") 2>&1 \
           | $(SED) -e '/image file .* not found/d'; \
           test -s "$(2)" || rm -f "$(2)"; \
-          touch -c -r `ls -t $(1) | head -n 1` "$(2)" || true; \
+          touch -c -r `ls -t $(1) | $(SED) 1q` "$(2)" || true; \
           test -s "$(2)"
 
 # Merge template (pot) and message catalog (po) or create a new catalog
@@ -289,6 +273,14 @@ po2xml = $(XML2PO) --po-file=$(2) --language=$(3) --output=$(4) $(1) 2>&1 \
          | $(SED) -e '/Warning: image file .* not found./d'; \
          rm -f .xml2po.mo
 
+else
+
+xml2pot = echo "Error: couldn't find xml2po or gettext tools"; exit 69
+pot2po  = echo "Error: couldn't find xml2po or gettext tools"; exit 69
+po2xml  = echo "Error: couldn't find xml2po or gettext tools"; exit 69
+
+endif
+
 
 #--------------------------------------------------------------#
 #       Helper functions                                       #
@@ -330,6 +322,29 @@ copy = $(LN_S) $(abs_srcdir)/$(1) $(2)
 
 
 ########################################################################
+####            Make AUTHORS file                                   ####
+########################################################################
+
+AUTHORS: $(AUTHORS_DATA_XML) $(AUTHORS_TEXT_STYLESHEETS)
+	$(msg) "[DOC] $@"
+	$(cmd) $(XSLTPROC) \
+	  $(XSLTFLAGS) $(XSLTEXTRAFLAGS) \
+	  $(srcdir)/stylesheets/authors_text.xsl \
+	  $< \
+	  > $@
+
+$(AUTHORS_DOCBOOK_XML): $(AUTHORS_DATA_XML) $(AUTHORS_DOCBOOK_STYLESHEETS)
+	$(msg) "[SRC] $@"
+	$(cmd) $(call make_target_dir,$@)
+	$(cmd) $(XSLTPROC) \
+	  $(XSLTFLAGS) $(XSLTEXTRAFLAGS) \
+	  $(srcdir)/stylesheets/authors_docbook.xsl \
+	  $< \
+	  > $@
+	$(cmd) touch -c -r $< $@ || true
+
+
+########################################################################
 ####            Make pot files:  XML(en) --> POT                    ####
 ########################################################################
 #
@@ -337,29 +352,31 @@ copy = $(LN_S) $(abs_srcdir)/$(1) $(2)
 POT_FILES  = $(patsubst src/%,pot/%.pot,$(filter-out src src/,$(SRC_DIRS)))
 # Special case: src/*.xml --> pot/gimp.pot
 POT_FILES += pot/gimp.pot
-#
-# Special case
+
+# General case
+pot/%.pot: $(srcdir)/src/%/*.xml
+	$(cmd) $(call make_target_dir,$@)
+	$(msg) "[POT] $@"
+	$(cmd) $(call xml2pot,$^,$@)
+# Special case: rename pot file for toplevel xml files
 pot/gimp.pot: $(srcdir)/src/*.xml
 	$(cmd) $(call make_target_dir,$@)
 	$(msg) "[POT] $@"
 	$(cmd) $(call xml2pot,$^,$@)
 # Special case: pot file for the authors DocBook file
-# (src/preface/authors.xml, but this may change...)
-# TODO: is there a better way?
-AUTHORS_POT = $(AUTHORS_DOCBOOK_XML:src/%/$(notdir $(AUTHORS_DOCBOOK_XML))=pot/%.pot)
-$(AUTHORS_POT): $(AUTHORS_DOCBOOK_XML) $(wildcard $(dir $(AUTHORS_DOCBOOK_XML))*.xml)
+# requires an additional prerequisite
+AUTHORS_POT = $(AUTHORS_DOCBOOK_XML:src/%/$(AUTHORS_DOCBOOK_FILENAME)=pot/%.pot)
+$(AUTHORS_POT): $(AUTHORS_DOCBOOK_XML) $(wildcard $(AUTHORS_DOCBOOK_DIRNAME)/*.xml)
 	$(cmd) $(call make_target_dir,$@)
 	$(msg) "[POT] $@"
 	$(cmd) $(call xml2pot,$^,$@)
-pot/%.pot: $(srcdir)/src/%/*.xml
-	$(cmd) $(call make_target_dir,$@)
-	$(msg) "[POT] $@"
-	$(cmd) $(call xml2pot,$^,$@)
+	$(cmd) touch -c -r `ls -t $^ | $(SED) 1q` $@ || true
 
 # Targets suitable for command line
 # ("make pot" will work even if pot exists)
 pot: potfiles cleanup-pot ;
 potfiles: $(POT_FILES) ;
+
 cleanup-pot:
 	$(msg) "Cleaning up pot files ..."
 	$(cmd) $(find_l) pot/ $(pot_file_predicates) | \
@@ -619,7 +636,7 @@ html-images-%: html/%/images ;
 if CYGWIN
 # Cygwin
 html/%/images: FORCE
-	$(cmd) test -h $@ && rm -f $@
+	$(cmd) if test -h $@; then rm -f $@; fi
 	$(cmd) test -d $@ && rm -rf $@/* || $(MKDIR_P) $@
 	$(cmd) perl $(srcdir)/tools/make_image_links.pl -v \
 	           --mode=hardlink,copy \
@@ -698,7 +715,7 @@ odf/%/gimp.odt: xml/%/gimp-alldocs.xml xml/%/images
 	    --debug -v \
 	    --output-dir=`pwd` \
 	    --output-file=$@ \
-	    $< 
+	    $<
 
 if HAVE_XMLLINT
 # make temporary XML source file with all Xincludes resolved

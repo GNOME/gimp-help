@@ -55,14 +55,18 @@ AC_SUBST(ALL_LINGUAS)
 AC_SUBST(QUICKREFERENCE_ALL_LINGUAS)
 
 
-#  The build of the HTML files is optional.
+#  It doesn't make sense to disable HTML build.
 
-AC_ARG_ENABLE(build,
-              AS_HELP_STRING([--disable-build],
-                             [don't build the HTML files (needs xsltproc)]),
-              , enable_build=yes)
+AC_ARG_ENABLE(build, AS_HELP_STRING([--disable-build], [obsolete]), , )
+#AM_CONDITIONAL(GIMP_HELP_BUILD, true)
 
-AM_CONDITIONAL(GIMP_HELP_BUILD, test "x$enable_build" = "xyes")
+#AC_ARG_ENABLE(i18n,
+#              AS_HELP_STRING([--disable-i18n],
+#                             [don't build translated HTML files (with xml2po & gettext)]),
+#              , enable_i18n=yes)
+#AM_CONDITIONAL(GIMP_HELP_I18N, test "$enable_i18n" = "yes")
+
+test "$ALL_LINGUAS" != "en" && enable_i18n=yes || enable_i18n=no
 
 
 #  Check for GNU make.
@@ -114,21 +118,11 @@ fi
 AM_CONDITIONAL(HAVE_DBLATEX, test -n "$DBLATEX")
 
 
-#  Optional: dot to create build system map
-
-AC_PATH_PROG(DOT, dot)
-if test -z "$DOT"; then
-  AC_MSG_WARN([cannot find dot(1), creating build system PNG disabled])
-fi
-
-AM_CONDITIONAL(HAVE_DOT, test -n "$DOT")
-
-
 #  Search for docbook2odf
 
 AC_PATH_PROG(DOCBOOK2ODF, docbook2odf)
 if test -z "$DOCBOOK2ODF"; then
-  AC_MSG_WARN([cannot find docbook2odf(1), ODF generation disabled])
+  AC_MSG_NOTICE([cannot find docbook2odf(1), ODF generation disabled])
 fi
 
 AM_CONDITIONAL(HAVE_DOCBOOK2ODF, test -n "$DOCBOOK2ODF")
@@ -138,8 +132,8 @@ AM_CONDITIONAL(HAVE_DOCBOOK2ODF, test -n "$DOCBOOK2ODF")
 
 AC_PATH_PROG(XML2PO, xml2po)
 if test -z "$XML2PO"; then
-  AC_MSG_WARN([cannot find xml2po(1), SVG generation disabled
-(this tool is part of the gnome-doc-utils package)])
+  AC_MSG_WARN([cannot find xml2po])
+  missing_i18n_tools="xml2po"
 fi
 
 AM_CONDITIONAL(HAVE_XML2PO, test -n "$XML2PO")
@@ -148,10 +142,10 @@ AM_CONDITIONAL(HAVE_XML2PO, test -n "$XML2PO")
 #  Search for gettext tools
 
 AC_PATH_PROG(MSGFMT, msgfmt)
-if test -z "$MSGFMT" && test "x$enable_build" = "xyes"; then
-  AC_MSG_ERROR([
-** Couldn't find msgfmt(1). You will need it to build the help files.
-** See the file 'INSTALL' for more help.])
+if test -z "$MSGFMT" && test "x$enable_i18n" = "xyes"; then
+  # print warning only for the main i18n toos xml2po & msgfmt
+  AC_MSG_WARN([cannot find msgfmt])
+  missing_i18n_tools=${missing_i18n_tools:+"${missing_i18n_tools} "}msgfmt
 fi
 
 MSGFMTFLAGS="--check --use-fuzzy --statistics"
@@ -159,35 +153,46 @@ AC_SUBST(MSGFMTFLAGS)
 
 
 AC_PATH_PROG(MSGINIT, msginit)
-if test -z "$MSGINIT" && test "x$enable_build" = "xyes"; then
-  AC_MSG_ERROR([
-** Couldn't find msginit(1). You will need it to build the help files.
-** See the file 'INSTALL' for more help.])
+if test -z "$MSGINIT" && test "x$enable_i18n" = "xyes"; then
+  missing_i18n_tools=${missing_i18n_tools:+"${missing_i18n_tools} "}msginit
 fi
 
 
 AC_PATH_PROG(MSGMERGE, msgmerge)
-if test -z "$MSGMERGE" && test "x$enable_build" = "xyes"; then
-  AC_MSG_ERROR([
-** Couldn't find msgmerge(1). You will need it to build the help files.
-** See the file 'INSTALL' for more help.])
+if test -z "$MSGMERGE" && test "x$enable_i18n" = "xyes"; then
+  missing_i18n_tools=${missing_i18n_tools:+"${missing_i18n_tools} "}msgmerge
 fi
 
 
 AC_PATH_PROG(MSGUNIQ, msguniq)
-if test -z "$MSGUNIQ" && test "x$enable_build" = "xyes"; then
-  AC_MSG_ERROR([
-** Couldn't find msguniq(1). You will need it to build the help files.
-** See the file 'INSTALL' for more help.])
+if test -z "$MSGUNIQ" && test "x$enable_i18n" = "xyes"; then
+  missing_i18n_tools=${missing_i18n_tools:+"${missing_i18n_tools} "}msguniq
 fi
 
 
 AC_PATH_PROG(MSGCAT, msgcat)
-if test -z "$MSGCAT" && test "x$enable_build" = "xyes"; then
-  AC_MSG_ERROR([
-** Couldn't find msgcat(1). You will need it to build the help files.
-** See the file 'INSTALL' for more help.])
+if test -z "$MSGCAT" && test "x$enable_i18n" = "xyes"; then
+  missing_i18n_tools=${missing_i18n_tools:+"${missing_i18n_tools} "}msgcat
 fi
+
+#  Optional: dot to create build system map
+
+AC_PATH_PROG(DOT, dot)
+#if test -z "$DOT"; then
+#  AC_MSG_NOTICE([cannot find dot(1), creating build system PNG disabled])
+#fi
+
+AM_CONDITIONAL(HAVE_DOT, test -n "$DOT")
+
+
+#test -z "$missing_i18n_tools" && HAVE_I18N_TOOLS=yes || HAVE_I18N_TOOLS=no
+#AC_SUBST(HAVE_I18N_TOOLS)
+AM_CONDITIONAL(HAVE_I18N_TOOLS, test -z "$missing_i18n_tools")
+
+test -z "$missing_i18n_tools" || test "$missing_i18n_tools" = "xml2po" &&
+HAVE_GETTEXT_TOOLS=yes || HAVE_GETTEXT_TOOLS=no
+AM_CONDITIONAL(HAVE_GETTEXT_TOOLS, test "$HAVE_GETTEXT_TOOLS" = "yes")
+#AC_SUBST(HAVE_GETTEXT_TOOLS)
 
 
 #  Optionally allow xsltproc to access DTDs over the network
@@ -207,16 +212,16 @@ AC_SUBST(XSLTFLAGS)
 
 AC_PATH_PROG(PNGNQ, pngnq)
 if test -z "$PNGNQ"; then
-  AC_MSG_WARN([cannot find pngnq(1),
-Images will not be optimized during distribution creation])
+  AC_MSG_WARN([cannot find pngnq,
+images will not be optimized during distribution creation])
 fi
 
 
 
 AC_PATH_PROG(PNGCRUSH, pngcrush)
 if test -z "$PNGCRUSH"; then
-  AC_MSG_WARN([cannot find pngcrush(1),
-Images will not be optimized during distribution creation])
+  AC_MSG_WARN([cannot find pngcrush,
+images will not be optimized during distribution creation])
 fi
 
 AM_CONDITIONAL(HAVE_PNGOPTIMIZERS, test -n "$PNGNQ" && test -n "$PNGCRUSH")
@@ -233,7 +238,9 @@ STYLEBASE='http://docbook.sourceforge.net/release/xsl/current'
 
 AC_ARG_WITH(xsl,
             AS_HELP_STRING([--with-xsl=<basedir>],
-                           [path to the base of the DocBook Modular Stylesheets]))
+                           [path to the base of the DocBook Modular Stylesheets
+                            (deprecated - fix your DocBook Stylesheets package!)
+                           ]))
 
 if test "x$with_xsl" != "x"; then
   STYLEBASE="$with_xsl"
@@ -267,6 +274,14 @@ fi
 AC_SUBST(gimpdatadir)
 
 
+if test -n "$missing_i18n_tools" && test "$enable_i18n" = "yes"; then
+  AC_MSG_WARN([
+** Couldn't find some tools needed to build translated help files.
+** You will be able to build the English manual, but no translations.])
+  ALL_LINGUAS=en
+fi
+
+
 AC_CONFIG_FILES([
 Makefile
 quickreference/Makefile
@@ -278,7 +293,8 @@ stylesheets/htmlalternate.xsl
 AC_OUTPUT
 
 AC_MSG_RESULT([
- Rebuild the help files:    $enable_build
  Languages:                 $ALL_LINGUAS
- Installation prefix:       $gimpdatadir
-])
+ Installation prefix:       $gimpdatadir ])
+if test -n "$missing_i18n_tools" && test "$enable_i18n" = "yes"; then
+ AC_MSG_RESULT([ Missing translation tools: $missing_i18n_tools ])
+fi
