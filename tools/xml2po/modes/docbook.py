@@ -43,7 +43,7 @@ try:
 except ImportError:
     from md5 import new as md5_new
 
-from basic import basicXmlMode
+from xml2po.modes import basicXmlMode
 
 class docbookXmlMode(basicXmlMode):
     """Class for special handling of DocBook document types.
