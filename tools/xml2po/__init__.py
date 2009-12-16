@@ -420,7 +420,7 @@ class XMLDocument(object):
 
         outtxt = self.normalizeString(attr.content)
         if self.app.operation == 'merge':
-            translation = self.app.getTranslation(outtxt)  # may be None
+            translation = self.app.getTranslation(outtxt)  # unicode or None
             if translation is not None:
                 self.replaceAttributeContentsWithText(attr,
                                                       translation.encode('utf-8'))
@@ -477,7 +477,10 @@ class XMLDocument(object):
 
         if restart or worth:
             for i, repl in enumerate(myrepl):
-                replacement = '<%s>%s</%s>' % (repl[0], repl[3], repl[2])
+                # repl[0] may contain translated attributes with
+                # non-ASCII chars, so implicit conversion to <str> may fail
+                replacement = '<%s>%s</%s>' % \
+                              (repl[0].decode('utf-8'), repl[3], repl[2])
                 translation = translation.replace('<placeholder-%d/>' % (i+1), replacement)
 
             if worth:
