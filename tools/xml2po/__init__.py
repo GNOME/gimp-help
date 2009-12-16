@@ -362,58 +362,41 @@ class XMLDocument(object):
         else:
             node.setContent(text)
 
-    def autoNodeIsFinal(self, node):
-        """Returns True if node is text node, contains non-whitespace text nodes or entities."""
-        if hasattr(node, '__autofinal__'):
-            return node.__autofinal__
+    def hasText(self, node):
+        """Whether or not a node contains text
+
+        A node "contains text" if the node itself or one of its children
+        is a text node containing non-empty text.
+        """
         if node.name in self.ignored_tags:
-            node.__autofinal__ = False
             return False
-        if node.isText() and node.content.strip()!='':
-            node.__autofinal__ = True
+        if node.isText() and node.content.strip() != '':
             return True
-        final = False
         child = node.children
         while child:
-            if child.type in ['text'] and  child.content.strip()!='':
-                final = True
-                break
-            child = child.next
-
-        node.__autofinal__ = final
-        return final
+            if child.isText() and child.content.strip() != '':
+                return True
+            else:
+                child = child.next
+        return False
 
 
-    def worthOutputting(self, node, noauto = False):
-        """Returns True if node is "worth outputting", otherwise False.
+    def worthOutputting(self,node):
+        """Whether or not a node is worth outputting
 
-        Node is "worth outputting", if none of the parents
-        isFinalNode, and it contains non-blank text and entities.
+        A node is "worth outputting", if the node itself or one of its
+        children is a text node -- unless the node is not final and there
+        is a parent node which is already worth outputting.
         """
-        if noauto and hasattr(node, '__worth__'):
-            return node.__worth__
-        elif not noauto and hasattr(node, '__autoworth__'):
-            return node.__autoworth__
-        worth = True
-        parent = node.parent
-        final = self.isFinalNode(node) and node.name not in self.ignored_tags
-        while not final and parent:
-            if self.isFinalNode(parent):
-                final = True # reset if we've got to one final tag
-            if final and (parent.name not in self.ignored_tags) and self.worthOutputting(parent):
-                worth = False
-                break
-            parent = parent.parent
-        if not worth:
-            node.__worth__ = False
-            return False
-
-        if noauto:
-            node.__worth__ = worth
-            return worth
-        else:
-            node.__autoworth__ = self.autoNodeIsFinal(node)
-            return node.__autoworth__
+        worth = self.hasText(node)	# is or has non-empty text node
+        if not (self.isFinalNode(node) or node.get_name() in self.ignored_tags):
+            parent = node.get_parent()
+            while worth and parent:
+                if self.worthOutputting(parent):
+                    worth = False
+                else:
+                    parent = parent.get_parent()
+        return worth
 
     def processAttribute(self, node, attr):
         assert node and attr
