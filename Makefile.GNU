@@ -28,7 +28,7 @@ XSLTFLAGS = --nonet
 XMLLINT      = xmllint
 XMLLINTFLAGS = --nonet
 
-XML2PO = tools/xml2po
+XML2PO = tools/xml2po.py
 
 MSGWIDTH      = 79
 MSGUNIQ       = msguniq 
