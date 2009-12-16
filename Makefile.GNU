@@ -28,12 +28,13 @@ XSLTFLAGS = --nonet
 XMLLINT      = xmllint
 XMLLINTFLAGS = --nonet
 
-XML2PO = tools/xml2po.py
+XML2PO        = tools/xml2po.py
+XML2POFLAGS   = --mode=gimphelp
 
 MSGWIDTH      = 79
-MSGUNIQ       = msguniq 
-MSGUNIQFLAGS  = 
-MSGCAT        = msgcat 
+MSGUNIQ       = msguniq
+MSGUNIQFLAGS  =
+MSGCAT        = msgcat
 MSGCATFLAGS   = --width=$(MSGWIDTH)
 MSGINIT       = msginit
 MSGINITFLAGS  = --no-translator --width=$(MSGWIDTH)
@@ -151,7 +152,7 @@ endif
 #
 # Hint: Better don't use 'grep' for filtering-out the warning
 # messages, since grep's exit status is 1 if there is no match.
-xml2pot = ($(XML2PO) --output='-' $(1) \
+xml2pot = ($(XML2PO) $(XML2POFLAGS) --output='-' $(1) \
           | $(MSGUNIQ) $(MSGUNIQFLAGS) \
           | $(MSGCAT) $(MSGCATFLAGS) - > "$(2)") 2>&1 \
           | $(SED) -e '/image file .* not found/d'; \
@@ -200,11 +201,11 @@ pot2po = with_compendium="$(shell $(call get_compendium,$3)) \
 #     $3 - translation language
 #     $4 - resulting (translated) XML file
 ifneq ("$(FORMAT_XML_WITH_XMLLINT)", "1")
-po2xml = $(XML2PO) --po-file=$(2) --language=$(3) --output=$(4) $(1) 2>&1 \
+po2xml = $(XML2PO) $(XML2POFLAGS) --po-file=$(2) --language=$(3) --output=$(4) $(1) 2>&1 \
          | $(SED) -e '/Warning: image file .* not found./d'; \
          rm -f .xml2po.mo
 else
-po2xml = ($(XML2PO) --po-file=$(2) --language=$(3) --output='-' $(1) \
+po2xml = ($(XML2PO) $(XML2POFLAGS) --po-file=$(2) --language=$(3) --output='-' $(1) \
          | $(XMLLINT) $(XMLLINTFLAGS) --format --output $(4) -) 2>&1 \
          | $(SED) -e '/Warning: image file .* not found./d'; \
          rm -f .xml2po.mo
