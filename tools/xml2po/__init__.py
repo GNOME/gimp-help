@@ -416,13 +416,14 @@ class XMLDocument(object):
             return node.__autoworth__
 
     def processAttribute(self, node, attr):
-        if not node or not attr or not self.worthOutputting(node=node, noauto=True):
-            return
+        assert node and attr
 
         outtxt = self.normalizeString(attr.content)
         if self.app.operation == 'merge':
-            translation = self.app.getTranslation(outtxt)
-            self.replaceAttributeContentsWithText(attr, translation.encode('utf-8'))
+            translation = self.app.getTranslation(outtxt)  # may be None
+            if translation is not None:
+                self.replaceAttributeContentsWithText(attr,
+                                                      translation.encode('utf-8'))
         else:
             self.app.msg.outputMessage(outtxt, node.lineNo(),  "", spacepreserve=False,
                               tag = node.name + ":" + attr.name)

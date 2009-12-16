@@ -47,6 +47,10 @@ class gimphelpXmlMode(docbookXmlMode):
             self.objects = [ 'figure', 'textobject', 'imageobject', 'mediaobject',
                              'screenshot' ]
 
+    def getTreatedAttributes(self):
+        "Returns array of tag attributes which content is to be translated"
+        return ['xreflabel']
+
 # Perform some tests when ran standalone
 if __name__ == '__main__':
     test = gimphelpXmlMode()
