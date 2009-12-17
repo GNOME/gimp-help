@@ -21,7 +21,7 @@
 #
 
 # xml2po -- translate XML documents
-VERSION = "0.18.0"
+VERSION = "0.18.0 (patched by GIMP Documentation Team)"
 
 # Versioning system (I use this for a long time, so lets explain it to
 # those Linux-versioning-scheme addicts):
