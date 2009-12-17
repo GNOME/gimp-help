@@ -48,8 +48,42 @@ class gimphelpXmlMode(docbookXmlMode):
                              'screenshot' ]
 
     def getTreatedAttributes(self):
-        "Returns array of tag attributes which content is to be translated"
+        "Return array of tag attributes which content is to be translated"
         return ['xreflabel']
+
+    def _output_images(self, node, msg):
+        assert node
+        if node.type == 'element' and node.name == 'imagedata':
+            # Use .fileref to construct new message
+            attr = node.prop("fileref")
+            if attr:
+                assert attr.startswith("images/")
+                origimagepath = attr
+                for subdir in ("C", "commmon"):
+                    imagepath = origimagepath.replace("/", "/%s/" % subdir, 1)
+                    if os.path.exists(imagepath):
+                        hash = self._md5_for_file(imagepath)
+                        break
+                else:
+                    hash = "THIS FILE DOESN'T EXIST"
+                    sys.stderr.write("Warning: image file '%s' not found.\n" %
+                                     origimagepath)
+                msg.outputMessage(
+                    "@@image: '%s'; md5=%s" % (origimagepath, hash),
+                    node.lineNo(),
+                    "When image changes, this message will be marked fuzzy "
+                    "or untranslated for you.\nIt doesn't matter what you "
+                    "translate it to: it's not used at all.")
+        elif node and node.children:
+            child = node.children
+            while child:
+                self._output_images(child,msg)
+                child = child.next
+
+    def preProcessXml(self, doc, msg):
+        """Add additional messages of interest here."""
+        root = doc.getRootElement()
+        self._output_images(root,msg)
 
 # Perform some tests when ran standalone
 if __name__ == '__main__':
