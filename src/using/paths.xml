@@ -204,24 +204,24 @@
       anchor point to the first anchor point with a straight line.
     </para>
     <para>
-      Path segments can be either straight or curved. A path all of whose
-      segments are straight is called <quote>polygonal</quote>.
-      When you create a path segment, it starts out straight, because the
-      handles for the anchor points are initially placed directly on top of
-      the anchor points, yielding handles of zero length, which produce
-      straight-line segments. You can make a segment curved by dragging a
-      handle away from one of the anchor points.
+      Path segments can be either straight or curved. A path is called
+      <quote>polygonal</quote> if all of its segments are straight.
+      A new path segment is always created straight; the handles for the
+      anchor points are directly on top of the anchor points, yielding
+      handles of zero length, which produces straight-line segments.
+      Drag a handle handle away from an anchor point to cause a segment
+      to curve.
     </para>
     <para>
-      One nice thing about paths is that they are very light in terms of
-      resource consumption, especially in comparison with images. Representing
-      a path in RAM only requires storing the coordinates of its anchors and
-      handles: 1K of memory is enough to hold quite a complex path, but not
-      enough to hold even a 20x20 pixel RGB layer. Therefore, it is quite
-      possible to have literally hundreds of paths in an image without putting
-      any significant stress of your system. (How much stress managing them
-      would put on <emphasis>you</emphasis>
-      is, of course, another question.) Even a path with thousands of segments
+      One nice thing about paths is that they use very few resources,
+      especially in comparison with images. Representing
+      a path in RAM requires storing only the coordinates of its anchors and
+      handles: 1K of memory is enough to hold a complex path, but not
+      enough to hold a small 20x20 pixel RGB layer. Therefore, it is
+      possible to have literally hundreds of paths in an image without causing
+      any significant stress to your system; the amount of stress that
+      hundreds of paths might cause <emphasis>you</emphasis>, however, 
+      is another question. Even a path with thousands of segments
       consumes minimal resources in comparison to a typical layer or channel.
     </para>
     <para>
@@ -244,10 +244,10 @@
       Now, the selection is a two-dimensional entity, but a path is a
       one-dimensional entity, so there is no way to transform the selection
       into a path without losing information. In fact, any information about
-      partially selected areas (i.e., feathering) will be lost when the
+      partially selected areas (i.e., feathering) are lost when a
       selection is turned into a path. If the path is transformed back into a
-      selection, the result is an all-or-none selection, similar to what would
-      be obtained by executing "Sharpen" from the Select menu.
+      selection, the result is an all-or-none selection, similar to what is
+      obtained by executing "Sharpen" from the Select menu.
     </para>
   </sect2>
 
@@ -255,14 +255,16 @@
     <title>Transforming Paths</title>
     <para>
       Each of the Transform tools (Rotate, Scale, Perspective, etc) can be set
-      to act specifically on paths, using the <quote>Affect:</quote> option
-      in the tool's Tool Options dialog. This gives you a powerful set of
+      to act on a layer, selection, or path. Select the transform tool in the
+      toolbox, then select layer, selection, or path for the
+      <quote>Transform:</quote> option in the tool's Tool Options
+      dialog. This gives you a powerful set of
       methods for altering the shapes of paths without affecting other
       elements of the image.
     </para>
     <para>
-      By default a Transform tool, when it is set to affect paths, only acts
-      on a single path: the <emphasis>active path</emphasis>
+      By default a Transform tool, when it is set to affect paths, acts on
+      only one path: the <emphasis>active path</emphasis>
       for the image, which is shown highlighted in the Paths dialog. You can
       make a transformation affect more than one path, and possibly other
       things as well, using the <quote>transform lock</quote> buttons in the
