@@ -82,7 +82,9 @@ xml_file_predicates = -name '*.xml'
 # List of authors and contributors (no DocBook)
 AUTHORS_SOURCE_XML = stylesheets/authors.xml
 # Automatically generated authors section (DocBook)
-AUTHORS_DOCBOOK_XML = src/preface/authors.xml
+AUTHORS_DOCBOOK_XML      = src/preface/authors.xml
+AUTHORS_DOCBOOK_DIRNAME  = $(dir $(AUTHORS_DOCBOOK_XML))
+AUTHORS_DOCBOOK_FILENAME = $(notdir $(AUTHORS_DOCBOOK_XML))
 # Stylesheets generating AUTHORS 
 AUTHORS_TEXT_STYLESHEETS = \
 	stylesheets/authors_text.xsl \
@@ -316,33 +318,42 @@ help: make.help
 ####            Make pot files:  XML(en) --> POT                    ####
 ########################################################################
 
-# xmldir/path/to/file/*.xml --> potdir/path/to/file.pot
+# src/path/to/file/*.xml --> pot/path/to/file.pot
 POT_FILES  = $(patsubst src/%,pot/%.pot,$(filter-out src src/,$(SRC_DIRS)))
-# Special case
+# Special case: src/*.xml --> pot/gimp.pot
 POT_FILES += pot/gimp.pot
 
-# Special case
-pot/gimp.pot: src/*.xml
-	$(cmd) $(call make_target_dir,$@)
-	$(msg) "[POT] $@"
-	$(cmd) $(call xml2pot,$^,$@)
-# Special case: pot file for the authors DocBook file
-# (src/preface/authors.xml, but this may change...)
-# TODO: is there a better way?
-AUTHORS_POT = $(AUTHORS_DOCBOOK_XML:src/%/$(notdir $(AUTHORS_DOCBOOK_XML))=pot/%.pot)
-$(AUTHORS_POT): $(AUTHORS_DOCBOOK_XML) $(wildcard $(dir $(AUTHORS_DOCBOOK_XML))*.xml)
-	$(cmd) $(call make_target_dir,$@)
-	$(msg) "[POT] $@"
-	$(cmd) $(call xml2pot,$^,$@)
+# General case
+ifeq ($(filter pot/%.pot,$(MAKECMDGOALS)),)
 pot/%.pot: src/%/*.xml
+else
+pot/%.pot: src/%/*.xml FORCE
+endif
 	$(cmd) $(call make_target_dir,$@)
 	$(msg) "[POT] $@"
-	$(cmd) $(call xml2pot,$^,$@)
+	$(cmd) $(call xml2pot,$(filter-out FORCE,$^),$@)
+# Special case: rename pot file for toplevel xml files
+ifeq ($(filter pot/%.pot,$(MAKECMDGOALS)),)
+pot/gimp.pot: src/*.xml
+else
+pot/gimp.pot: src/*.xml FORCE
+endif
+	$(cmd) $(call make_target_dir,$@)
+	$(msg) "[POT] $@"
+	$(cmd) $(call xml2pot,$(filter-out FORCE,$^),$@)
+# Special case: pot file for the authors DocBook file
+# requires an additional prerequisite
+AUTHORS_POT = $(AUTHORS_DOCBOOK_XML:src/%/$(AUTHORS_DOCBOOK_FILENAME)=pot/%.pot)
+ifeq ($(filter pot/%.pot,$(MAKECMDGOALS)),)
+$(AUTHORS_POT): $(AUTHORS_DOCBOOK_XML) $(wildcard $(AUTHORS_DOCBOOK_DIRNAME)*.xml)
+else
+$(AUTHORS_POT): $(AUTHORS_DOCBOOK_XML) $(wildcard $(AUTHORS_DOCBOOK_DIRNAME)*.xml) FORCE
+endif
+	$(cmd) $(call make_target_dir,$@)
+	$(msg) "[POT] $@"
+	$(cmd) $(call xml2pot,$(filter-out FORCE,$^),$@)
 
-# Targets suitable for command line
-# ("make pot" will work even if pot exists)
-pot: potfiles cleanup-pot ;
-potfiles: $(POT_FILES) ;
+# Remove left over po files
 cleanup-pot:
 	$(msg) "Cleaning up pot files ..."
 	$(cmd) $(find_l) pot/ $(pot_file_predicates) | \
@@ -350,6 +361,12 @@ cleanup-pot:
 		potfile=$${potfile#pot/}; srcfile=src/$${potfile%.pot}.xml \
 		test -e $${srcfile} || rm -f $${potfile}; \
 	done
+
+# Targets suitable for command line
+pot: potfiles cleanup-pot ;
+potfiles: $(POT_FILES) ;
+
+.PHONY: pot potfiles cleanup-pot
 
 
 ########################################################################

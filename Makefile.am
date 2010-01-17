@@ -347,36 +347,43 @@ $(AUTHORS_DOCBOOK_XML): $(AUTHORS_DATA_XML) $(AUTHORS_DOCBOOK_STYLESHEETS)
 ########################################################################
 ####            Make pot files:  XML(en) --> POT                    ####
 ########################################################################
-#
+
 # src/path/to/file/*.xml --> pot/path/to/file.pot
 POT_FILES  = $(patsubst src/%,pot/%.pot,$(filter-out src src/,$(SRC_DIRS)))
 # Special case: src/*.xml --> pot/gimp.pot
 POT_FILES += pot/gimp.pot
 
 # General case
-pot/%.pot: $(srcdir)/src/%/*.xml
-	$(cmd) $(call make_target_dir,$@)
-	$(msg) "[POT] $@"
-	$(cmd) $(call xml2pot,$^,$@)
+# HIDE FROM AUTOMAKE #ifeq ($(filter pot/%.pot,$(MAKECMDGOALS)),)
+# HIDE FROM AUTOMAKE #pot/%.pot: $(srcdir)/src/%/*.xml
+# HIDE FROM AUTOMAKE #else
+# HIDE FROM AUTOMAKE #pot/%.pot: $(srcdir)/src/%/*.xml FORCE
+# HIDE FROM AUTOMAKE #endif
+# HIDE FROM AUTOMAKE #	$(cmd) $(call make_target_dir,$@)
+# HIDE FROM AUTOMAKE #	$(msg) "[POT] $@"
+# HIDE FROM AUTOMAKE #	$(cmd) $(call xml2pot,$(filter-out FORCE,$^),$@)
 # Special case: rename pot file for toplevel xml files
-pot/gimp.pot: $(srcdir)/src/*.xml
-	$(cmd) $(call make_target_dir,$@)
-	$(msg) "[POT] $@"
-	$(cmd) $(call xml2pot,$^,$@)
+# HIDE FROM AUTOMAKE #ifeq ($(filter pot/%.pot,$(MAKECMDGOALS)),)
+# HIDE FROM AUTOMAKE #pot/gimp.pot: $(srcdir)/src/*.xml
+# HIDE FROM AUTOMAKE #else
+# HIDE FROM AUTOMAKE #pot/gimp.pot: $(srcdir)/src/*.xml FORCE
+# HIDE FROM AUTOMAKE #endif
+# HIDE FROM AUTOMAKE #	$(cmd) $(call make_target_dir,$@)
+# HIDE FROM AUTOMAKE #	$(msg) "[POT] $@"
+# HIDE FROM AUTOMAKE #	$(cmd) $(call xml2pot,$^,$@)
 # Special case: pot file for the authors DocBook file
 # requires an additional prerequisite
 AUTHORS_POT = $(AUTHORS_DOCBOOK_XML:src/%/$(AUTHORS_DOCBOOK_FILENAME)=pot/%.pot)
-$(AUTHORS_POT): $(AUTHORS_DOCBOOK_XML) $(wildcard $(AUTHORS_DOCBOOK_DIRNAME)/*.xml)
-	$(cmd) $(call make_target_dir,$@)
-	$(msg) "[POT] $@"
-	$(cmd) $(call xml2pot,$^,$@)
-	$(cmd) touch -c -r `ls -t $^ | $(SED) 1q` $@ || true
+# HIDE FROM AUTOMAKE #ifeq ($(filter pot/%.pot,$(MAKECMDGOALS)),)
+# HIDE FROM AUTOMAKE #$(AUTHORS_POT): $(AUTHORS_DOCBOOK_XML) $(wildcard $(AUTHORS_DOCBOOK_DIRNAME)*.xml)
+# HIDE FROM AUTOMAKE #else
+# HIDE FROM AUTOMAKE #$(AUTHORS_POT): $(AUTHORS_DOCBOOK_XML) $(wildcard $(AUTHORS_DOCBOOK_DIRNAME)*.xml) FORCE
+# HIDE FROM AUTOMAKE #endif
+# HIDE FROM AUTOMAKE #	$(cmd) $(call make_target_dir,$@)
+# HIDE FROM AUTOMAKE #	$(msg) "[POT] $@"
+# HIDE FROM AUTOMAKE #	$(cmd) $(call xml2pot,$(filter-out FORCE,$^),$@)
 
-# Targets suitable for command line
-# ("make pot" will work even if pot exists)
-pot: potfiles cleanup-pot ;
-potfiles: $(POT_FILES) ;
-
+# Remove left over po files
 cleanup-pot:
 	$(msg) "Cleaning up pot files ..."
 	$(cmd) $(find_l) pot/ $(pot_file_predicates) | \
@@ -384,6 +391,12 @@ cleanup-pot:
 		potfile=$${potfile#pot/}; srcfile=src/$${potfile%.pot}.xml \
 		test -e $${srcfile} || rm -f $${potfile}; \
 	done
+
+# Targets suitable for command line
+pot: potfiles cleanup-pot ;
+potfiles: $(POT_FILES) ;
+
+.PHONY: pot potfiles cleanup-pot
 
 
 ########################################################################
