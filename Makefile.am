@@ -651,14 +651,12 @@ log:
 ####            Make HTML files:  XML --> HTML                      ####
 ########################################################################
 
-# Note that Automake already defines an "html" target
+### Main commandline targets ###
+html-%: html/%/index.html html/%/gimp-help.xml ;
+# Note that automake already defines a target "html"
 html-local: $(foreach lang,$(LANGUAGES),html-$(lang)) ;
 
-# Chain of rules for making html-LANG:
-#     html-%  -->  index-%  -->  html/%/gimp-help.xml  -->
-#         html/%/gimp-xrefs.xml  -->  html/%/index.html
-html-%: index-% ;
-
+# Making the main HTML file (side effect: make gimp-xrefs.xml)
 html/%/index.html: xml/% $(HTML_STYLESHEETS) | html/%/images
 	$(msg) "*** Making html for $* ... "
 	$(cmd) rm -f html/$*/*.*
@@ -677,8 +675,22 @@ html/%/index.html: xml/% $(HTML_STYLESHEETS) | html/%/images
 		if [ -f $${file} ]; then cp -f $${file} html/$*; fi; \
 	done
 
-####  HTML images  ####
-# TODO: check/enhance new image files structure
+###  Cross references & context help ###
+index: $(foreach lang,$(LANGUAGES),index-$(lang)) ;
+index-%: html/%/gimp-help.xml ;
+
+html/%/gimp-help.xml: html/%/gimp-xrefs.xml stylesheets/makeindex.xsl
+	$(cmd) $(XSLTPROC) \
+	  $(XSLTFLAGS) $(XSLTEXTRAFLAGS) \
+	  $(srcdir)/stylesheets/makeindex.xsl \
+	  $< \
+	  > $@
+
+# The xrefs file is a side effect of the HTML build
+html/%/gimp-xrefs.xml: html/%/index.html
+	$(cmd) touch $@
+
+###  HTML images  ###
 html-images-%: html/%/images ;
 
 if CYGWIN
@@ -696,26 +708,7 @@ html/%/images: xml/%/images
 	$(cmd) test -e $@ || $(LN_S) ../../$< $@
 endif
 
-# The xrefs file is a side effect of the HTML build
-html/%/gimp-xrefs.xml: html/%/index.html
-	$(cmd) touch $@
-
-####  Context Help  ####
-index: $(foreach lang,$(LANGUAGES),index-$(lang)) ;
-index-%: html/%/gimp-help.xml ;
-
-html/%/gimp-help.xml: html/%/gimp-xrefs.xml stylesheets/makeindex.xsl
-	$(cmd) $(XSLTPROC) \
-	  $(XSLTFLAGS) $(XSLTEXTRAFLAGS) \
-	  $(srcdir)/stylesheets/makeindex.xsl \
-	  $< \
-	  > $@
-
-.PRECIOUS: \
-	html/%/index.html \
-	html/%/gimp-help.xml \
-	html/%/gimp-xrefs.xml \
-	html/%/images
+.PHONY: html-% html-images-% index index-%
 
 
 ########################################################################

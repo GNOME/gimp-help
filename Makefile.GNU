@@ -573,13 +573,11 @@ log:
 ####            Make HTML files:  XML --> HTML                      ####
 ########################################################################
 
+# Main commandline targets
+html-%: html/%/index.html html/%/gimp-help.xml ;
 html: $(foreach lang,$(LANGUAGES),html-$(lang)) ;
 
-# Chain of rules for making html-LANG:
-#     html-%  -->  index-%  -->  html/%/gimp-help.xml  -->
-#         html/%/gimp-xrefs.xml  -->  html/%/index.html
-html-%: index-% ;
-
+# Making the main HTML file (side effect: make gimp-xrefs.xml)
 html/%/index.html: xml/% $(HTML_STYLESHEETS) | html/%/images
 	$(msg) "*** Making html for $* ... "
 	$(cmd) rm -f html/$*/*.*
@@ -598,19 +596,7 @@ html/%/index.html: xml/% $(HTML_STYLESHEETS) | html/%/images
 		if [ -f $${file} ]; then cp -f $${file} html/$*; fi; \
 	done
 
-####  HTML images  ####
-# TODO: check/enhance new image files structure
-html-images-%: html/%/images ;
-html/%/images: xml/%/images
-	$(cmd) test -d html/$* || $(mkdir_p) html/$*
-	$(cmd) test -e $@ || $(ln_s) ../../$< $@
-
-####  Cross references  ####
-# The xrefs file is a side effect of the HTML build
-html/%/gimp-xrefs.xml: html/%/index.html
-	$(cmd) touch $@
-
-####  Context Help  ####
+###  Cross references & context help ###
 index: $(foreach lang,$(LANGUAGES),index-$(lang)) ;
 index-%: html/%/gimp-help.xml ;
 
@@ -621,11 +607,23 @@ html/%/gimp-help.xml: html/%/gimp-xrefs.xml stylesheets/makeindex.xsl
 	  $< \
 	  > $@
 
+# The xrefs file is a side effect of the HTML build
+html/%/gimp-xrefs.xml: html/%/index.html
+	$(cmd) touch $@
+
+###  HTML images  ###
+html-images-%: html/%/images ;
+html/%/images: xml/%/images
+	$(cmd) test -d html/$* || $(mkdir_p) html/$*
+	$(cmd) test -e $@ || $(ln_s) ../../$< $@
+
 .PRECIOUS: \
 	html/%/index.html \
 	html/%/gimp-help.xml \
 	html/%/gimp-xrefs.xml \
 	html/%/images
+
+.PHONY: html html-% html-images-% index index-%
 
 
 ########################################################################
