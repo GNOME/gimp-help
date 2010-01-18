@@ -4,9 +4,7 @@
 
 # The GIMP manual languages
 ALL_LINGUAS = de en es fr it ja ko nl nn pl ru sv zh_CN
-LANGUAGES = $(if $(LINGUAS), \
-              $(filter $(ALL_LINGUAS),$(LINGUAS)), \
-	      $(ALL_LINGUAS))
+LANGUAGES = $(if $(LINGUAS),$(filter $(ALL_LINGUAS),$(LINGUAS)),$(ALL_LINGUAS))
 ifneq ($(DOC_LINGUAS),)
 $(warning Do not set the internal variable DOC_LINGUAS)
 endif
@@ -94,8 +92,11 @@ AUTHORS_DOCBOOK_STYLESHEETS = \
 	stylesheets/authors_docbook.xsl \
 	stylesheets/authors_common.xsl
 
+# Targets which don't require source file list
+QUICK_TARGETS = help clean
+
 # Files & directories
-ifeq ($(filter help clean,$(MAKECMDGOALS)),)
+ifeq ($(filter $(QUICK_TARGETS),$(MAKECMDGOALS)),)
 SRC_DIRS  := $(shell cd $(srcdir) && $(find_l) src/ $(src_dir_predicates))
 SRC_FILES := $(shell cd $(srcdir) && $(find_l) src/ $(src_file_predicates)) \
              $(AUTHORS_DOCBOOK_XML)
@@ -297,9 +298,9 @@ help: make.help
 	    -e '### print if no "make" variable found ###' \
 	    -e '/@/!b' \
 	    -e '### replace "make" variables ###' \
-	    -e 's/@LANGUAGES@/@$(LANGUAGES)@/' \
-	    -e 's/@LINGUAS@/@$(LINGUAS)@/' \
-	    -e 's/@ALL_LINGUAS@/@$(ALL_LINGUAS)@/' \
+	    -e 's/@LANGUAGES@/@$(strip $(LANGUAGES))@/' \
+	    -e 's/@LINGUAS@/@$(strip $(LINGUAS))@/' \
+	    -e 's/@ALL_LINGUAS@/@$(strip $(ALL_LINGUAS))@/' \
 	    -e '### add commas ###' \
 	    -e 'tloop' \
 	    -e ':loop' \
@@ -427,7 +428,7 @@ force-po/%:
 ####            Generate XML prerequisites                          ####
 ########################################################################
 
-ifeq ($(filter help clean,$(MAKECMDGOALS)),)
+ifeq ($(filter $(QUICK_TARGETS),$(MAKECMDGOALS)),)
 include $(foreach LANG,$(PO_LANGS),xml/$(LANG)/.deps.mk)
 endif
 

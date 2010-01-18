@@ -10,53 +10,57 @@
 #
 
 Default (main) targets:
-  all              Create/update AUTHORS file and HTML
-                     (same as "make [..] html AUTHORS" or just "make [..]")
-  html             Create/update HTML for all languages
+  all              Create/update HTML manual (and AUTHORS file)
+                     (equivalent to "make [..] html AUTHORS" or "make [..]")
+  html             Create/update HTML manual for all languages
                      (@LANGUAGES@)
   AUTHORS          Create/update AUTHORS file
 
-GIMP-manual targets:
+Language-specific targets for making the GIMP-manual:
   html-LANG        Build HTML for language LANG (implies xml-LANG)
   pdf-LANG         Build  PDF for language LANG (implies xml-LANG)
   odf-LANG         Build  ODF for language LANG (implies xml-LANG)
-#    (LANG is one of @LANGUAGES@)
 
   Omitting LANG (e.g."make [..] html") is equivalent to making target
   for all languages: @LANGUAGES@
 
   WARNING: Making HTML (or PDF, ODF, XML) will automatically update
   -------  po files if necessary. This may lead to unintended commits
-           when working directly on an SVN sandbox.
+           when working directly on a GIT sandbox.
 
 Internal targets (intermediate stages):
   pot              Create/update POT files
-  po-LANG          Create/update  PO files for language LANG (implies pot)
+  po-LANG          Create/update PO files for language LANG (implies pot)
   xml-LANG         Create/update XML files for language LANG (implies po-LANG)
-#    (LANG is one of @LANGUAGES@)
 
 Special (helper) targets for documenters and translators:
   status-LANG      Show translation progress for language LANG
-  update-po/LANG/path/to/pofile.po
-                   Force re-making of pofile (useful if you updated
-                   the Compendium.po)
-  preview-xml/LANG/path/to/xmlfile.xml
-                   Make a single draft HTML file
+  po/LANG/path/to/file.po
+                   Force re-making of po file
+  pot/path/to/file.pot
+                   Force re-making of pot file
+  preview-xml/LANG/path/to/file.xml
+                   Make a single draft HTML file for language "LANG"
+  preview-src/path/to/file.xml
+                   Make single draft HTML files for all languages
 
 Checks:
   validate-LANG    Validate XML for language LANG via 'xmllint'
   validate         Same as "validate-en"
   check-images-LANG
                    Find broken image references and orphaned image files
-                   for language LANG
+                   for language LANG (and for English images ("C"))
   check-images     Same as "check-images-en"
 
 Special (helper) targets for build-system development:
   dot              Create a visualized version of the Makefile dependencies
-                   (this is not up-to-date!)
+                   (this may be not up-to-date!)
 
 Make variables (can be overriden at command-line):
-  LANGUAGES="..."  Space-separated list of manual languages (e.g. "en de fr")
+  LINGUAS="..."    Space-separated list of manual languages (e.g. "en de fr"),
+                   restricted to ALL_LINGUAS=@ALL_LINGUAS@
+  LANGUAGES="..."  Space-separated list of manual languages (e.g. "en de fr"),
+                   overriding ALL_LINGUAS
   VERBOSE=0|1|2    Controls the amount of output messages:
-                     1 = "beauty" (default), 2 = all, 0 = silent (more or less)
+                     1 = moderate (default), 2 = all, 0 = nearly silent
 

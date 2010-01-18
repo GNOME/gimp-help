@@ -9,9 +9,7 @@ LAST_RELEASE_TAG = GIMP_HELP_2_4_2
 ####            The GIMP manual languages                           ####
 ########################################################################
 
-LANGUAGES = $(if $(LINGUAS), \
-              $(filter $(ALL_LINGUAS),$(LINGUAS)), \
-	      $(ALL_LINGUAS))
+LANGUAGES = $(if $(LINGUAS),$(filter $(ALL_LINGUAS),$(LINGUAS)),$(ALL_LINGUAS))
 # HIDE FROM AUTOMAKE #ifneq ($(DOC_LINGUAS),)
 # HIDE FROM AUTOMAKE #$(warning Do not set the internal variable DOC_LINGUAS)
 # HIDE FROM AUTOMAKE #endif
@@ -102,8 +100,11 @@ AUTHORS_DOCBOOK_STYLESHEETS = \
 	stylesheets/authors_docbook.xsl \
 	stylesheets/authors_common.xsl
 
+# Targets which don't require source file list
+QUICK_TARGETS = help clean
+
 # lists of source (XML) files and source directories
-# HIDE FROM AUTOMAKE #ifeq ($(filter help clean,$(MAKECMDGOALS)),)
+# HIDE FROM AUTOMAKE #ifeq ($(filter $(QUICK_TARGETS),$(MAKECMDGOALS)),)
 # HIDE FROM AUTOMAKE #SRC_DIRS  := $(shell cd $(srcdir) && $(find_l) src/ $(src_dir_predicates))
 # HIDE FROM AUTOMAKE #SRC_FILES := $(shell cd $(srcdir) && $(find_l) src/ $(src_file_predicates))
 # HIDE FROM AUTOMAKE #else
@@ -322,6 +323,40 @@ copy = $(LN_S) $(abs_srcdir)/$(1) $(2)
 
 
 ########################################################################
+####            Help!!!                                             ####
+########################################################################
+
+make.help:
+	@echo >&2 'ERROR: cannot find the help file "$@"!'
+	@exit 66
+
+help: make.help
+	$(cmd) $(SED) \
+	    -e '### skip comments ###' \
+	    -e '/^#/d' \
+	    -e '### print if no "make" variable found ###' \
+	    -e '/@/!b' \
+	    -e '### replace "make" variables ###' \
+	    -e 's/@LANGUAGES@/@$(strip $(LANGUAGES))@/' \
+	    -e 's/@LINGUAS@/@$(strip $(LINGUAS))@/' \
+	    -e 's/@ALL_LINGUAS@/@$(strip $(ALL_LINGUAS))@/' \
+	    -e '### add commas ###' \
+	    -e 'tloop' \
+	    -e ':loop' \
+	    -e '    ### mark value of variable (@@...@@) ###' \
+	    -e '    s/@\([^@]*\)@/@@\1@@/' \
+	    -e '    twhile' \
+	    -e '    :while' \
+	    -e '        s/\(@@[^,@]*\) \([^@]*@@\)/\1, \2/' \
+	    -e '    twhile' \
+	    -e '    s/@@\([^@]*\)@@/\1/' \
+	    -e 'tloop' \
+	$<
+
+.PHONY: help
+
+
+########################################################################
 ####            Make AUTHORS file                                   ####
 ########################################################################
 
@@ -452,7 +487,7 @@ po-todo-%: po-%
 ####            Generate XML prerequisites                          ####
 ########################################################################
 
-# HIDE FROM AUTOMAKE #ifeq ($(filter help clean,$(MAKECMDGOALS)),)
+# HIDE FROM AUTOMAKE #ifeq ($(filter $(QUICK_TARGETS),$(MAKECMDGOALS)),)
 # HIDE FROM AUTOMAKE #include $(foreach LANG,$(PO_LANGS),xml/$(LANG)/.deps.mk)
 # HIDE FROM AUTOMAKE #endif
 
