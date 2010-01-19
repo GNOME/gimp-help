@@ -101,7 +101,7 @@ AUTHORS_DOCBOOK_STYLESHEETS = \
 	stylesheets/authors_common.xsl
 
 # Targets which don't require source file list
-QUICK_TARGETS = help clean
+QUICK_TARGETS = help clean dot
 
 # lists of source (XML) files and source directories
 # HIDE FROM AUTOMAKE #ifeq ($(filter $(QUICK_TARGETS),$(MAKECMDGOALS)),)
@@ -935,11 +935,11 @@ if HAVE_DOT
 ####            Build system development                            ####
 ########################################################################
 
-build-system.png: tools/build-system.dot
-	$(cmd) $(DOT) -Tpng -o $@ $< && \
+build-system.svg: tools/build-system.dot
+	$(cmd) $(DOT) -Tsvg -o $@ $< && \
 	echo "$@ created."
 
-dot: build-system.png
+dot: build-system.svg
 endif
 
 

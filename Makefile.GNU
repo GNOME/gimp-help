@@ -93,7 +93,7 @@ AUTHORS_DOCBOOK_STYLESHEETS = \
 	stylesheets/authors_common.xsl
 
 # Targets which don't require source file list
-QUICK_TARGETS = help clean
+QUICK_TARGETS = help clean dot
 
 # Files & directories
 ifeq ($(filter $(QUICK_TARGETS),$(MAKECMDGOALS)),)
@@ -860,12 +860,12 @@ check-image-resolutions-en: check-image-resolutions-C ;
 ####            Build system development & debugging                ####
 ########################################################################
 
-build-system.png: tools/build-system.dot
+build-system.svg: tools/build-system.dot
 	$(cmd) if type dot >/dev/null; then \
-		dot -Tpng -o $@ $<; \
+		dot -Tsvg -o $@ $<; \
 	fi
 
-dot: build-system.png
+dot: build-system.svg
 	$(cmd) if test -e $<; then \
 		if type display >/dev/null; then \
 			display $<; \
