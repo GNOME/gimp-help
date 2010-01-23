@@ -5,6 +5,7 @@ SUBDIRS = quickreference
 # used for creating the ChangeLog
 LAST_RELEASE_TAG = GIMP_HELP_2_4_2
 
+
 ########################################################################
 ####            The GIMP manual languages                           ####
 ########################################################################
@@ -62,8 +63,6 @@ DOCBOOK2ODFFLAGS =
 
 # Standard shell commands
 find_l = find -L
-
-# Standard shell commands
 echo_n = echo $(ECHO_N)
 
 # Calling make recursively
@@ -219,8 +218,8 @@ if HAVE_I18N_TOOLS
 #     $1 - input:  original (untranslated) XML files
 #     $2 - output: POT template file containing translatable tags
 #
-# Hint: Better don't use 'grep' for filtering-out the warning
-# messages, since grep's exit status is 1 if there is no match.
+# Hint: Don't use 'grep' for filtering-out the warning messages,
+#       since grep's exit status is 1 if there is no match.
 xml2pot = ($(XML2PO) --output='-' $(1) \
           | $(MSGUNIQ) $(MSGUNIQFLAGS) \
           | $(MSGCAT) $(MSGCATFLAGS) - > "$(2)") 2>&1 \
@@ -418,7 +417,7 @@ AUTHORS_POT = $(AUTHORS_DOCBOOK_XML:src/%/$(AUTHORS_DOCBOOK_FILENAME)=pot/%.pot)
 # HIDE FROM AUTOMAKE #	$(msg) "[POT] $@"
 # HIDE FROM AUTOMAKE #	$(cmd) $(call xml2pot,$(filter-out FORCE,$^),$@)
 
-# Remove left over po files
+# Remove left over pot files
 cleanup-pot:
 	$(msg) "Cleaning up pot files ..."
 	$(cmd) $(find_l) pot/ $(pot_file_predicates) | \
@@ -451,7 +450,7 @@ potfiles: $(POT_FILES) ;
 # HIDE FROM AUTOMAKE #po-$(1): $$($(1)_PO_FILES) cleanup-po-$(1)
 # HIDE FROM AUTOMAKE #	$$(cmd) if test -e messages.mo; then rm -f messages.mo; fi
 # HIDE FROM AUTOMAKE #cleanup-po-$(1):
-# HIDE FROM AUTOMAKE #	$$(msg) "Cleaning up po files ..."
+# HIDE FROM AUTOMAKE #	$$(msg) "Cleaning up '$(1)' po files ..."
 # HIDE FROM AUTOMAKE #	$$(cmd) $(find_l) po/$(1)/ $$(po_file_predicates) | \
 # HIDE FROM AUTOMAKE #	while read pofile; do \
 # HIDE FROM AUTOMAKE #		potfile=pot/$$$${pofile#po/$(1)/}t; \
@@ -481,6 +480,11 @@ po-status-all:
 todo-%: po-todo-% ;
 po-todo-%: po-%
 	$(cmd) perl $(srcdir)/tools/get_po_status.pl --todo po/$*
+
+# Main commandline target
+po: $(foreach LANG,$(PO_LANGS),po-$(LANG)) ;
+
+.PHONY: po po-% cleanup-po-% po-todo-% po-status-%
 
 
 ########################################################################
@@ -595,20 +599,23 @@ else
 	           $(srcdir)/images/{common,C} $@
 endif
 
-# remove stale xml files
+# Remove left over xml files
 cleanup-xml-%:
-	$(msg) "Cleaning up xml files ..."
+	$(msg) "Cleaning up '$*' xml files ..."
 	$(cmd) $(find_l) xml/$*/ $(xml_file_predicates) | \
 	while read xmlfile; do \
 		test -e src/$${xmlfile#xml/$*/} || rm -vf $${xmlfile}; \
 	done
 
 # Target suitable for command line
-xml-images-%: xml/%/images ;
 images-%: xml-images-% html-images-% ;
+xml-images-%: xml/%/images ;
 
-.PHONY: FORCE
-FORCE: ;
+# Main commandline target
+xml: $(foreach LANG,$(LANGUAGES),xml-$(LANG)) ;
+
+.PRECIOUS: xml/%/images
+.PHONY: xml xml-% xml-images-%
 
 
 ########################################################################
@@ -712,6 +719,51 @@ endif
 
 
 ########################################################################
+####            Make HTML draft (single page preview)               ####
+########################################################################
+
+preview-xml/%.xml: xml/%.xml stylesheets/drafthtml.xsl
+	$(cmd) id=`$(SED) -e 's/.*id=.//' -e tmatch \
+	                  -e d -e :match \
+			  -e 's/["'"'"'].*//' \
+			  -e q $<`; \
+	test -n "$${id}" || id=noname; \
+	lang=$(shell echo $< | $(SED) -e 's,^xml/,,; s,/.*,,'); \
+	destdir=html/$${lang}; \
+	test -d $${destdir}/images || $(RMAKE) $${destdir}/images; \
+	cp -f $(srcdir)/stylesheets/*.css $(srcdir)/stylesheets/$${lang}/*.css\
+	    $${destdir} 2>/dev/null; \
+	destfile="$${destdir}/$${id}-draft.html"; \
+	echo "Making $${destfile} (ignore any XSLT complaints) ..."; \
+	$(XSLTPROC) \
+	    $(XSLTFLAGS) $(XSLTEXTRAFLAGS) \
+	    --xinclude \
+	    --stringparam l10n.gentext.default.language $${lang} \
+	    --output $${destfile} \
+	    $(srcdir)/stylesheets/drafthtml.xsl \
+	    $<
+
+preview-src/%.xml: $(foreach lang,$(LANGUAGES),preview-xml/$(lang)/%.xml)
+	$(msg) "(Remember that links won't work in a draft file.)"
+
+preview-po/%.po:
+	@echo >&2 "After merging pofiles this feature does not work any more."
+	@echo >&2 "Use 'make ... preview-xml/$*.xml'."
+
+# For backward compatibility:
+
+xml/%.draft: preview-xml/%.xml
+	$(msg) "(Remember that links won't work in a draft file.)"
+
+src/%.draft: preview-src/%.xml ;
+
+# Synonyms
+draft-xml/%.xml: preview-xml/%.xml ;
+draft-src/%.xml: preview-src/%.xml ;
+draft-po/%.po:   preview-po/%.po   ;
+
+
+########################################################################
 ####            Make PDF files:  XML --> PDF                        ####
 ########################################################################
 if HAVE_DBLATEX
@@ -780,59 +832,13 @@ endif
 
 
 ########################################################################
-####            Make HTML draft (single page preview)               ####
-########################################################################
-
-preview-xml/%.xml: xml/%.xml stylesheets/drafthtml.xsl
-	$(cmd) id=`$(SED) -e 's/.*id=.//' -e tmatch \
-	                  -e d -e :match \
-			  -e 's/["'"'"'].*//' \
-			  -e q $<`; \
-	test -n "$${id}" || id=noname; \
-	lang=$(shell echo $< | $(SED) -e 's,^xml/,,; s,/.*,,'); \
-	destdir=html/$${lang}; \
-	test -d $${destdir}/images || $(RMAKE) $${destdir}/images; \
-	cp -f $(srcdir)/stylesheets/*.css $(srcdir)/stylesheets/$${lang}/*.css\
-	    $${destdir} 2>/dev/null; \
-	destfile="$${destdir}/$${id}-draft.html"; \
-	echo "Making $${destfile} (ignore any XSLT complaints) ..."; \
-	$(XSLTPROC) \
-	    $(XSLTFLAGS) $(XSLTEXTRAFLAGS) \
-	    --xinclude \
-	    --stringparam l10n.gentext.default.language $${lang} \
-	    --output $${destfile} \
-	    $(srcdir)/stylesheets/drafthtml.xsl \
-	    $<
-
-preview-src/%.xml: $(foreach lang,$(LANGUAGES),preview-xml/$(lang)/%.xml)
-	$(msg) "(Remember that links won't work in a draft file.)"
-
-preview-po/%.po:
-	@echo >&2 "After merging pofiles this feature does not work any more."
-	@echo >&2 "Use 'make ... preview-xml/$*.xml'."
-
-# For backward compatibility:
-
-xml/%.draft: preview-xml/%.xml
-	$(msg) "(Remember that links won't work in a draft file.)"
-
-src/%.draft: preview-src/%.xml ;
-
-# Synonyms
-draft-xml/%.xml: preview-xml/%.xml ;
-draft-src/%.xml: preview-src/%.xml ;
-draft-po/%.po:   preview-po/%.po   ;
-
-
-########################################################################
-####        Language-specific HTML tarballs for distribution        ####
+####            Make language-specific HTML tarballs                ####
 ########################################################################
 
 tarball_prefix = gimp-help-2-html
 tarball_dir    = gimp-help-2
 HTMLMETAFILES  = README AUTHORS COPYING MAINTAINERS HACKING INSTALL
 
-.SECONDARY: $(tarball_prefix)-%.tar
 $(tarball_prefix)-%.tar: html/%/index.html html/%/gimp-help.xml \
 		$(HTMLMETAFILES) tools/Makefile.html-package
 	$(msg) "Making $@ ..."
@@ -932,7 +938,7 @@ check-image-resolutions-en: check-image-resolutions-C ;
 
 if HAVE_DOT
 ########################################################################
-####            Build system development                            ####
+####            Build system development & debugging                ####
 ########################################################################
 
 build-system.svg: tools/build-system.dot
@@ -1013,6 +1019,18 @@ $(top_builddir)/config.status: $(top_srcdir)/configure ;
 
 $(top_srcdir)/configure: $(top_srcdir)/configure.ac ;
 
+
+########################################################################
+####            Special targets                                     ####
+########################################################################
+
+FORCE: ;
+
+.PHONY: FORCE
+
+# Delete the default suffixes (we don't compile C files)
+SUFFIXES =
+
 # GNU Make, please don't delete these targets when a target that depends
 # on them fails, 'kay?
 #			TODO: check: seems that xml/%/gimp.xml can be removed
@@ -1021,9 +1039,10 @@ $(top_srcdir)/configure: $(top_srcdir)/configure.ac ;
 	xml/%/images \
 	pdf/%/gimp.pdf \
 	odf/%/gimp.odt \
+	html/%/index.html \
 	html/%/gimp-xrefs.xml \
 	html/%/gimp-help.xml \
-	html/%/index.html
+	html/%/images
 
 .DELETE_ON_ERROR:
 

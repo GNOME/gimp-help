@@ -1,8 +1,7 @@
 ########################################################################
-####            Preliminaries: Variables and Functions              ####
+####            The GIMP manual languages                           ####
 ########################################################################
 
-# The GIMP manual languages
 ALL_LINGUAS = de en es fr it ja ko nl nn pl ru sv zh_CN
 LANGUAGES = $(if $(LINGUAS),$(filter $(ALL_LINGUAS),$(LINGUAS)),$(ALL_LINGUAS))
 ifneq ($(DOC_LINGUAS),)
@@ -19,7 +18,11 @@ endif
 XML_LANG = en
 PO_LANGS = $(filter-out $(XML_LANG), $(LANGUAGES))
 
-# Essential external programs and their default options
+
+########################################################################
+####            External programs                                   ####
+########################################################################
+
 XSLTPROC  = xsltproc
 XSLTFLAGS = --nonet
 
@@ -65,10 +68,11 @@ builddir = .
 abs_srcdir   := $(shell cd $(srcdir) && pwd)
 abs_builddir := $(shell pwd)
 
-# Directory names like 'xmldir', 'potdir' ,etc. have been removed;
-# IMHO we don't need them and they make the Makefile less readable.
 
-# Find files and directories
+########################################################################
+####            Files and directories                               ####
+########################################################################
+
 src_file_predicates = \
 	-name '*.xml' \
 	-not -name '$(notdir $(AUTHORS_DOCBOOK_XML))'
@@ -83,7 +87,7 @@ AUTHORS_SOURCE_XML = stylesheets/authors.xml
 AUTHORS_DOCBOOK_XML      = src/preface/authors.xml
 AUTHORS_DOCBOOK_DIRNAME  = $(dir $(AUTHORS_DOCBOOK_XML))
 AUTHORS_DOCBOOK_FILENAME = $(notdir $(AUTHORS_DOCBOOK_XML))
-# Stylesheets generating AUTHORS 
+# Stylesheets generating AUTHORS
 AUTHORS_TEXT_STYLESHEETS = \
 	stylesheets/authors_text.xsl \
 	stylesheets/authors_common.xsl
@@ -113,8 +117,10 @@ HTML_STYLESHEETS = stylesheets/html*.xsl
 # use empty variable to disable the compendium option
 COMPENDIUM = Compendium.po
 
-# To talk or not to talk, that is the question!
-VERBOSE ?= 1
+
+########################################################################
+####            Control the amount of output messages               ####
+########################################################################
 
 # Usage of the "msg" and "cmd" variables:
 # In the command lines of the make rules, use
@@ -123,7 +129,9 @@ VERBOSE ?= 1
 # then
 #     messages will be suppressed if VERBOSE=0,
 #     commands will be printed if VERBOSE=2.
-#
+
+VERBOSE = 1
+
 ifeq ("$(VERBOSE)", "0")
 msg = @:
 cmd = @
@@ -137,6 +145,10 @@ cmd =
 endif
 endif
 
+
+########################################################################
+####            Functions                                           ####
+########################################################################
 
 #--------------------------------------------------------------#
 #       The main functions used to transform                   #
@@ -153,8 +165,8 @@ endif
 #     $1 - input:  original (untranslated) XML files
 #     $2 - output: POT template file containing translatable tags
 #
-# Hint: Better don't use 'grep' for filtering-out the warning
-# messages, since grep's exit status is 1 if there is no match.
+# Hint: Don't use 'grep' for filtering-out the warning messages,
+#       since grep's exit status is 1 if there is no match.
 ifeq ("$(findstring gimphelp,$(XML2POFLAGS))","")
 xml2pot = ($(XML2PO) $(XML2POFLAGS) --output='-' $(1) \
           | $(MSGUNIQ) $(MSGUNIQFLAGS) \
@@ -289,7 +301,7 @@ all: html index AUTHORS
 make.help:
 	@echo >&2 'ERROR: cannot find the help file "$@"!'
 	@exit 66
-# TODO: replace with a "real" script tools/what-ever(?)
+# TODO?: replace with a "real" script (e.g. tools/make-help.sed)
 #   (probably "yes" if more features are needed...)
 help: make.help
 	$(cmd) $(SED) \
@@ -313,6 +325,28 @@ help: make.help
 	    -e '    s/@@\([^@]*\)@@/\1/' \
 	    -e 'tloop' \
 	$<
+
+
+########################################################################
+####            Make AUTHORS file                                   ####
+########################################################################
+
+AUTHORS: $(AUTHORS_SOURCE_XML) $(AUTHORS_TEXT_STYLESHEETS)
+	$(msg) "[DOC] $@"
+	$(cmd) $(XSLTPROC) \
+	  $(XSLTFLAGS) $(XSLTEXTRAFLAGS) \
+	  $(srcdir)/stylesheets/authors_text.xsl \
+	  $< \
+	  > $@
+
+$(AUTHORS_DOCBOOK_XML): $(AUTHORS_SOURCE_XML) $(AUTHORS_DOCBOOK_STYLESHEETS)
+	$(msg) "[SRC] $@"
+	$(cmd) $(call make_target_dir,$@)
+	$(cmd) $(XSLTPROC) \
+	  $(XSLTFLAGS) $(XSLTEXTRAFLAGS) \
+	  $(srcdir)/stylesheets/authors_docbook.xsl \
+	  $< \
+	  > $@
 
 
 ########################################################################
@@ -354,7 +388,7 @@ endif
 	$(msg) "[POT] $@"
 	$(cmd) $(call xml2pot,$(filter-out FORCE,$^),$@)
 
-# Remove left over po files
+# Remove left over pot files
 cleanup-pot:
 	$(msg) "Cleaning up pot files ..."
 	$(cmd) $(find_l) pot/ $(pot_file_predicates) | \
@@ -387,7 +421,7 @@ endif
 po-$(1): $$($(1)_PO_FILES) cleanup-po-$(1)
 	$$(cmd) if test -e messages.mo; then rm -f messages.mo; fi
 cleanup-po-$(1):
-	$$(msg) "Cleaning up po files ..."
+	$$(msg) "Cleaning up '$(1)' po files ..."
 	$$(cmd) $(find_l) po/$(1)/ $$(po_file_predicates) | \
 	while read pofile; do \
 		potfile=pot/$$$${pofile#po/$(1)/}t; \
@@ -416,12 +450,13 @@ po-todo-%: po-%
 	$(cmd) perl tools/get_po_status.pl --todo po/$*
 
 # Force updating po file(s)
-update-po/%.po:
-	$(msg) "Deprecated, use 'make po/$*.po instead'"
-	$(cmd) false
-
 force-po/%:
 	$(cmd) $(RMAKE) po/$*/*.po
+
+# Main commandline target
+po: $(foreach LANG,$(PO_LANGS),po-$(LANG)) ;
+
+.PHONY: po po-% cleanup-po-% po-todo-% po-status-%
 
 
 ########################################################################
@@ -516,21 +551,23 @@ xml/%/images: $(IMAGE_PREREQ)
 	$(cmd) perl tools/make_image_links.pl -v images/{common,C} xml/$*
 	$(cmd) touch $@
 
-# remove stale xml files
+# Remove left over xml files
 cleanup-xml-%:
-	$(msg) "Cleaning up xml files ..."
+	$(msg) "Cleaning up '$*' xml files ..."
 	$(cmd) $(find_l) xml/$*/ $(xml_file_predicates) | \
 	while read xmlfile; do \
 		test -e src/$${xmlfile#xml/$*/} || rm -vf $${xmlfile}; \
 	done
 
 # Target suitable for command line
-xml-images-%: xml/%/images ;
 images-%: xml-images-% html-images-% ;
+xml-images-%: xml/%/images ;
+
+# Main commandline target
+xml: $(foreach LANG,$(LANGUAGES),xml-$(LANG)) ;
 
 .PRECIOUS: xml/%/images
-.PHONY: FORCE
-FORCE: ;
+.PHONY: xml xml-% xml-images-% images-%
 
 
 ########################################################################
@@ -612,10 +649,12 @@ html/%/gimp-xrefs.xml: html/%/index.html
 	$(cmd) touch $@
 
 ###  HTML images  ###
-html-images-%: html/%/images ;
 html/%/images: xml/%/images
 	$(cmd) test -d html/$* || $(mkdir_p) html/$*
 	$(cmd) test -e $@ || $(ln_s) ../../$< $@
+
+# Target suitable for command line
+html-images-%: html/%/images ;
 
 .PRECIOUS: \
 	html/%/index.html \
@@ -710,7 +749,7 @@ ifneq ("$(DOCBOOK2ODF)","")
 odf: $(foreach lang,$(LANGUAGES),odf-$(lang)) ;
 odf-%: odf/%/gimp.odt ;
 
-# TODO: images; prerequisites
+# TODO?: images
 odf/%/gimp.odt: xml/%/gimp-alldocs.xml xml/%/images
 	$(cmd) if test -f odf/%.odt; then rm -f odf/%.odt; fi
 	$(cmd) test -d odf/$* || $(mkdir_p) odf/$*
@@ -719,9 +758,10 @@ odf/%/gimp.odt: xml/%/gimp-alldocs.xml xml/%/images
 	    --debug -v \
 	    --output-dir=`pwd` \
 	    --output-file=$@ \
-	    $< 
+	    $<
 
 # make temporary XML source file with all Xincludes resolved
+# TODO: find out how to avoid this
 xml/%/gimp-alldocs.xml: xml/%/gimp.xml
 	$(msg) "*** Merging XML ..."
 	$(cmd) $(XMLLINT) $(XMLLINTFLAGS) --xinclude --output $@ $<
@@ -738,36 +778,12 @@ endif
 
 
 ########################################################################
-####            Make AUTHORS file                                   ####
-########################################################################
-
-AUTHORS: $(AUTHORS_SOURCE_XML) $(AUTHORS_TEXT_STYLESHEETS)
-	$(msg) "[DOC] $@"
-	$(cmd) $(XSLTPROC) \
-	  $(XSLTFLAGS) $(XSLTEXTRAFLAGS) \
-	  $(srcdir)/stylesheets/authors_text.xsl \
-	  $< \
-	  > $@
-	
-$(AUTHORS_DOCBOOK_XML): $(AUTHORS_SOURCE_XML) $(AUTHORS_DOCBOOK_STYLESHEETS)
-	$(msg) "[SRC] $@"
-	$(cmd) $(call make_target_dir,$@)
-	$(cmd) $(XSLTPROC) \
-	  $(XSLTFLAGS) $(XSLTEXTRAFLAGS) \
-	  $(srcdir)/stylesheets/authors_docbook.xsl \
-	  $< \
-	  > $@
-
-
-########################################################################
 ####            Make language-specific HTML tarballs                ####
 ########################################################################
 
 tarball_prefix = gimp-help-2-html
 tarball_dir    = gimp-help-2
 HTMLMETAFILES  = README AUTHORS COPYING MAINTAINERS
-
-#.SECONDARY: $(tarball_prefix)-%.tar
 
 $(tarball_prefix)-%.tar: html/%/index.html html/%/gimp-help.xml \
 		$(HTMLMETAFILES) tools/Makefile.html-package
@@ -875,4 +891,13 @@ dot: build-system.svg
 	fi
 
 
-.NOEXPORT:
+########################################################################
+####            Special targets                                     ####
+########################################################################
+
+FORCE: ;
+
+.PHONY: FORCE
+
+# Delete the default suffix rules
+.SUFFIXES:
