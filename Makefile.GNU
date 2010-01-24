@@ -1,4 +1,11 @@
 ########################################################################
+####            Configuration (system-dependent) variables          ####
+########################################################################
+
+CYGWIN = $(shell make.d/test/is_cygwin.sh || echo 0)
+
+
+########################################################################
 ####            The GIMP manual languages                           ####
 ########################################################################
 
@@ -545,10 +552,14 @@ else
 IMAGE_PREREQ = $(shell cd $(srcdir) && $(find_l) images/{common,C})
 endif
 
+ifeq ($(CYGWIN),1)
+    MAKE_IMAGE_LINKS_FLAGS = --mode=hardlink,copy
+endif
 xml/%/images: $(IMAGE_PREREQ)
 	$(cmd) test -d $@ && rm -rf $@/* || $(mkdir_p) $@
 	$(cmd) $(echo_n) "Copying images ($*) ..."
-	$(cmd) perl tools/make_image_links.pl -v images/{common,C} xml/$*
+	$(cmd) perl tools/make_image_links.pl -v $(MAKE_IMAGE_LINKS_FLAGS) \
+	                images/{common,C} xml/$*
 	$(cmd) touch $@
 
 # Remove left over xml files
@@ -649,9 +660,18 @@ html/%/gimp-xrefs.xml: html/%/index.html
 	$(cmd) touch $@
 
 ###  HTML images  ###
+ifneq ($(CYGWIN),1)
 html/%/images: xml/%/images
 	$(cmd) test -d html/$* || $(mkdir_p) html/$*
 	$(cmd) test -e $@ || $(ln_s) ../../$< $@
+else
+html/%/images: FORCE
+	$(cmd) if test -h $@; then rm -f $@; fi
+	$(cmd) test -d $@ && rm -rf $@/* || $(mkdir_p) $@
+	$(cmd) $(echo_n) "Copying images ($*) ..."
+	$(cmd) perl tools/make_image_links.pl -v --mode=hardlink,copy \
+	                images/{common,C} $@
+endif
 
 # Target suitable for command line
 html-images-%: html/%/images ;
