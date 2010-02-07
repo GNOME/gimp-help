@@ -104,7 +104,7 @@ AUTHORS_DOCBOOK_STYLESHEETS = \
 	stylesheets/authors_common.xsl
 
 # Targets which don't require source file list
-QUICK_TARGETS = help clean dot
+QUICK_TARGETS = help clean dot image-%
 
 # Files & directories
 ifeq ($(filter $(QUICK_TARGETS),$(MAKECMDGOALS)),)
@@ -570,15 +570,12 @@ cleanup-xml-%:
 		test -e src/$${xmlfile#xml/$*/} || rm -vf $${xmlfile}; \
 	done
 
-# Target suitable for command line
-images-%: xml-images-% html-images-% ;
-xml-images-%: xml/%/images ;
-
-# Main commandline target
+# Command-line targets
 xml: $(foreach LANG,$(LANGUAGES),xml-$(LANG)) ;
+images-%: xml/%/images html/%/images ;
 
 .PRECIOUS: xml/%/images
-.PHONY: xml xml-% xml-images-% images-%
+.PHONY: xml xml-% images-%
 
 
 ########################################################################
@@ -665,16 +662,14 @@ html/%/images: xml/%/images
 	$(cmd) test -d html/$* || $(mkdir_p) html/$*
 	$(cmd) test -e $@ || $(ln_s) ../../$< $@
 else
-html/%/images: FORCE
+html/%/images: $(IMAGE_PREREQ)
 	$(cmd) if test -h $@; then rm -f $@; fi
 	$(cmd) test -d $@ && rm -rf $@/* || $(mkdir_p) $@
-	$(cmd) $(echo_n) "Copying images ($*) ..."
+	$(cmd) $(echo_n) "Copying HTML images ($*) ..."
 	$(cmd) perl tools/make_image_links.pl -v --mode=hardlink,copy \
 	                images/{common,C} $@
+	$(cmd) touch $@
 endif
-
-# Target suitable for command line
-html-images-%: html/%/images ;
 
 .PRECIOUS: \
 	html/%/index.html \
@@ -682,7 +677,7 @@ html-images-%: html/%/images ;
 	html/%/gimp-xrefs.xml \
 	html/%/images
 
-.PHONY: html html-% html-images-% index index-%
+.PHONY: html html-% index index-%
 
 
 ########################################################################
@@ -739,8 +734,8 @@ ifneq ("$(DBLATEX)", "")
 pdf: $(foreach lang,$(LANGUAGES),pdf-$(lang)) ;
 pdf-%: pdf/%/gimp.pdf ;
 
-# TODO: images (--fig-path option?); prerequisites
-pdf/%/gimp.pdf: xml/% stylesheets/plainprint.xsl | xml/%/images
+# TODO: check prerequisites, e.g. images (--fig-path option?)
+pdf/%/gimp.pdf: xml/% stylesheets/plainprint.xsl xml/%/images
 	$(cmd) if test -f pdf/%.pdf; then rm -f pdf/%.pdf; fi
 	$(cmd) test -d pdf/$* || $(mkdir_p) pdf/$*
 	$(msg) "*** Making PDF ($*) ..."

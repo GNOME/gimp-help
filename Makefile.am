@@ -100,7 +100,7 @@ AUTHORS_DOCBOOK_STYLESHEETS = \
 	stylesheets/authors_common.xsl
 
 # Targets which don't require source file list
-QUICK_TARGETS = help clean dot
+QUICK_TARGETS = help clean dot image-%
 
 # lists of source (XML) files and source directories
 # HIDE FROM AUTOMAKE #ifeq ($(filter $(QUICK_TARGETS),$(MAKECMDGOALS)),)
@@ -598,6 +598,7 @@ else
 	$(cmd) perl $(srcdir)/tools/make_image_links.pl -v \
 	           $(srcdir)/images/{common,C} $@
 endif
+	$(cmd) touch $@
 
 # Remove left over xml files
 cleanup-xml-%:
@@ -608,14 +609,13 @@ cleanup-xml-%:
 	done
 
 # Target suitable for command line
-images-%: xml-images-% html-images-% ;
-xml-images-%: xml/%/images ;
+images-%: xml/%/images html/%/images ;
 
 # Main commandline target
 xml: $(foreach LANG,$(LANGUAGES),xml-$(LANG)) ;
 
 .PRECIOUS: xml/%/images
-.PHONY: xml xml-% xml-images-%
+.PHONY: xml xml-%
 
 
 ########################################################################
@@ -698,16 +698,16 @@ html/%/gimp-xrefs.xml: html/%/index.html
 	$(cmd) touch $@
 
 ###  HTML images  ###
-html-images-%: html/%/images ;
-
 if CYGWIN
 # Cygwin
-html/%/images: FORCE
+html/%/images: $(IMAGE_PREREQ)
 	$(cmd) if test -h $@; then rm -f $@; fi
 	$(cmd) test -d $@ && rm -rf $@/* || $(MKDIR_P) $@
+	$(cmd) $(echo_n) "Copying HTML images ($*) ..."
 	$(cmd) perl $(srcdir)/tools/make_image_links.pl -v \
 	           --mode=hardlink,copy \
 	           $(srcdir)/images/{common,C} $@
+	$(cmd) touch $@
 else
 # Default (non-Cygwin)
 html/%/images: xml/%/images
@@ -715,7 +715,7 @@ html/%/images: xml/%/images
 	$(cmd) test -e $@ || $(LN_S) ../../$< $@
 endif
 
-.PHONY: html-% html-images-% index index-%
+.PHONY: html-% index index-%
 
 
 ########################################################################
@@ -772,8 +772,8 @@ if HAVE_DBLATEX
 pdf-local: $(foreach lang,$(LANGUAGES),pdf-$(lang)) ;
 pdf-%: pdf/%/gimp.pdf ;
 
-# TODO: images (--fig-path option?); prerequisites
-pdf/%/gimp.pdf: xml/% stylesheets/plainprint.xsl | xml/%/images
+# TODO: check prerequisites, e.g. images (--fig-path option?)
+pdf/%/gimp.pdf: xml/% stylesheets/plainprint.xsl xml/%/images
 	$(cmd) if test -f pdf/%.pdf; then rm -f pdf/%.pdf; fi
 	$(cmd) test -d pdf/$* || $(MKDIR_P) pdf/$*
 	$(msg) "*** Making PDF ($*) ..."
