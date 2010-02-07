@@ -42,7 +42,8 @@ DOC_LINGUAS = $(LINGUAS)
 ## XMLLINT      = xmllint
 XMLLINTFLAGS = --nonet
 ##
-## XML2PO = $(srcdir)/tools/xml2po
+## XML2PO        = $(srcdir)/tools/xml2po.py
+## XML2POFLAGS   = --mode=gimphelp
 ##
 MSGWIDTH      = 79
 ## MSGUNIQ       = msguniq
@@ -147,6 +148,9 @@ XSL_FILES = \
 
 # tools needed for building
 DIST_TOOLS = \
+	make.d \
+	tools/xml2po.py \
+	tools/xml2po \
 	tools/make_image_links.pl
 
 # additional files to be distributed (automake)
@@ -220,10 +224,9 @@ if HAVE_I18N_TOOLS
 #
 # Hint: Don't use 'grep' for filtering-out the warning messages,
 #       since grep's exit status is 1 if there is no match.
-xml2pot = ($(XML2PO) --output='-' $(1) \
+xml2pot = $(XML2PO) $(XML2POFLAGS) --output='-' $(1) \
           | $(MSGUNIQ) $(MSGUNIQFLAGS) \
-          | $(MSGCAT) $(MSGCATFLAGS) - > "$(2)") 2>&1 \
-          | $(SED) -e '/image file .* not found/d'; \
+          | $(MSGCAT) $(MSGCATFLAGS) - > "$(2)"; \
           test -s "$(2)" || rm -f "$(2)"; \
           touch -c -r `ls -t $(1) | $(SED) 1q` "$(2)" || true; \
           test -s "$(2)"
@@ -269,14 +272,13 @@ pot2po = with_compendium="$(shell $(call get_compendium,$3)) \
 #     $2 - PO file containing translations
 #     $3 - translation language
 #     $4 - resulting (translated) XML file
-po2xml = $(XML2PO) --po-file=$(2) --language=$(3) --output=$(4) $(1) 2>&1 \
-         | $(SED) -e '/Warning: image file .* not found./d'; \
+po2xml = $(XML2PO) $(XML2POFLAGS) --po-file=$(2) --language=$(3) --output=$(4) $(1); \
          rm -f .xml2po.mo
 
 else
 
 xml2pot = echo "Error: couldn't find xml2po or gettext tools"; exit 69
-pot2po  = echo "Error: couldn't find xml2po or gettext tools"; exit 69
+pot2po  = echo "Error: couldn't find gettext tools (msgmerge, msginit, msgfmt)"; exit 69
 po2xml  = echo "Error: couldn't find xml2po or gettext tools"; exit 69
 
 endif

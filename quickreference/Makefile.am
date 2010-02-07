@@ -33,8 +33,6 @@ EXTRA_DIST = \
 	$(XSL_FILES) \
 	$(TEMPLATES)
 
-if HAVE_XML2PO
-
 xml/gimp-keys-%.xml: po/%.po gimp-keys.xml
 	$(mkdir_p) xml
 	$(XML2PO) -p $< $(srcdir)/gimp-keys.xml > $@
@@ -44,8 +42,6 @@ xml/gimp-keys-%.xml: po/%.po gimp-keys.xml
 xml/gimp-keys-en.xml: po/gimp-keys.pot gimp-keys.xml
 	$(mkdir_p) xml
 	$(XML2PO) -p $< $(srcdir)/gimp-keys.xml > $@
-
-endif
 
 svg/gimp-keys-%.svg: xml/gimp-keys-%.xml stylesheets/keys-svg.xsl
 	$(mkdir_p) svg
@@ -65,9 +61,7 @@ docbook/gimp-keys-%.xml: xml/gimp-keys-%.xml stylesheets/keys-docbook.xsl
 
 docbook: $(foreach lang,$(QUICKREFERENCE_LINGUAS),docbook/gimp-keys-$(lang).xml)
 
-if HAVE_XML2PO
 all-local: svg docbook
-endif
 
 clean-local:
 	rm -rf docbook
