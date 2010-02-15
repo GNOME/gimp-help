@@ -139,11 +139,11 @@ COMPENDIUM = Compendium.po
 
 VERBOSE = 1
 
-ifeq ("$(VERBOSE)", "0")
+ifeq ($(VERBOSE),0)
 msg = @:
 cmd = @
 else
-ifeq ("$(VERBOSE)", "1")
+ifeq ($(VERBOSE),1)
 msg = @echo
 cmd = @
 else
@@ -174,22 +174,12 @@ endif
 #
 # Hint: Don't use 'grep' for filtering-out the warning messages,
 #       since grep's exit status is 1 if there is no match.
-ifeq ("$(findstring gimphelp,$(XML2POFLAGS))","")
-xml2pot = ($(XML2PO) $(XML2POFLAGS) --output='-' $(1) \
-          | $(MSGUNIQ) $(MSGUNIQFLAGS) \
-          | $(MSGCAT) $(MSGCATFLAGS) - > "$(2)") 2>&1 \
-          | $(SED) -e '/image file .* not found/d'; \
-          test -s "$(2)" || rm -f "$(2)"; \
-          touch -c -r $(call get_recent_file,$(1)) "$(2)" || true; \
-          test -s "$(2)"
-else
 xml2pot = $(XML2PO) $(XML2POFLAGS) --output='-' $(1) \
           | $(MSGUNIQ) $(MSGUNIQFLAGS) \
           | $(MSGCAT) $(MSGCATFLAGS) - > "$(2)"; \
           test -s "$(2)" || rm -f "$(2)"; \
           touch -c -r $(call get_recent_file,$(1)) "$(2)" || true; \
           test -s "$(2)"
-endif
 
 # Merge template (pot) and message catalog (po) or create a new catalog
 #
@@ -231,26 +221,13 @@ pot2po = with_compendium="$(shell $(call get_compendium,$3)) \
 #     $2 - PO file containing translations
 #     $3 - translation language
 #     $4 - resulting (translated) XML file
-ifeq ("$(findstring gimphelp,$(XML2POFLAGS))","")
-ifneq ("$(FORMAT_XML_WITH_XMLLINT)", "1")
-po2xml = $(XML2PO) $(XML2POFLAGS) --po-file=$(2) --language=$(3) --output=$(4) $(1) 2>&1 \
-         | $(SED) -e '/Warning: image file .* not found./d'; \
-         rm -f .xml2po.mo
-else
-po2xml = ($(XML2PO) $(XML2POFLAGS) --po-file=$(2) --language=$(3) --output='-' $(1) \
-         | $(XMLLINT) $(XMLLINTFLAGS) --format --output $(4) -) 2>&1 \
-         | $(SED) -e '/Warning: image file .* not found./d'; \
-         rm -f .xml2po.mo
-endif
-else
-ifneq ("$(FORMAT_XML_WITH_XMLLINT)", "1")
+ifneq ($(FORMAT_XML_WITH_XMLLINT),1)
 po2xml = $(XML2PO) $(XML2POFLAGS) --po-file=$(2) --language=$(3) --output=$(4) $(1); \
          rm -f .xml2po.mo
 else
 po2xml = ($(XML2PO) $(XML2POFLAGS) --po-file=$(2) --language=$(3) --output='-' $(1) \
          | $(XMLLINT) $(XMLLINTFLAGS) --format --output $(4) -); \
          rm -f .xml2po.mo
-endif
 endif
 
 
@@ -264,7 +241,7 @@ get_recent_file = $(shell ls -t $(1) | head -n 1)
 
 copy = $(ln_s) $(abs_srcdir)/$(1) $(2)
 
-ifneq ($(COMPENDIUM),"")
+ifneq ($(COMPENDIUM),)
 get_compendium = \
 	file="$(1)"; dir=$${file%/*}; \
 	while true; do \
@@ -282,10 +259,10 @@ else
 get_compendium =
 endif
 
-ifneq ($(GIMP_PO_ROOT),"")
+ifneq ($(GIMP_PO_ROOT),)
 use_gimp_po_files = \
 	for po in $(GIMP_PO_ROOT)/po*/$(1).po; do \
-		test -f "$${po}" && echo '--compendium'="$${po}"; \
+		if test -f "$${po}"; then echo '--compendium'="$${po}"; fi; \
 	done
 else
 use_gimp_po_files =
@@ -729,7 +706,7 @@ draft-po/%.po:   preview-po/%.po   ;
 ####            Make PDF files:  XML --> PDF                        ####
 ########################################################################
 
-ifneq ("$(DBLATEX)", "")
+ifneq ($(DBLATEX),)
 
 pdf: $(foreach lang,$(LANGUAGES),pdf-$(lang)) ;
 pdf-%: pdf/%/gimp.pdf ;
@@ -759,7 +736,7 @@ endif
 ####            Make ODF files:  XML --> ODF                        ####
 ########################################################################
 
-ifneq ("$(DOCBOOK2ODF)","")
+ifneq ($(DOCBOOK2ODF),)
 
 odf: $(foreach lang,$(LANGUAGES),odf-$(lang)) ;
 odf-%: odf/%/gimp.odt ;
