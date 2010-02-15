@@ -343,7 +343,7 @@ POT_FILES  = $(patsubst src/%,pot/%.pot,$(filter-out src src/,$(SRC_DIRS)))
 POT_FILES += pot/gimp.pot
 
 # General case
-ifeq ($(filter pot/%.pot,$(MAKECMDGOALS)),)
+ifeq ($(filter pot/%.pot po/%.po,$(MAKECMDGOALS)),)
 pot/%.pot: src/%/*.xml
 else
 pot/%.pot: src/%/*.xml FORCE
@@ -352,7 +352,7 @@ endif
 	$(msg) "[POT] $@"
 	$(cmd) $(call xml2pot,$(filter-out FORCE,$^),$@)
 # Special case: rename pot file for toplevel xml files
-ifeq ($(filter pot/%.pot,$(MAKECMDGOALS)),)
+ifeq ($(filter pot/%.pot po/%.po,$(MAKECMDGOALS)),)
 pot/gimp.pot: src/*.xml
 else
 pot/gimp.pot: src/*.xml FORCE
@@ -363,7 +363,7 @@ endif
 # Special case: pot file for the authors DocBook file
 # requires an additional prerequisite
 AUTHORS_POT = $(AUTHORS_DOCBOOK_XML:src/%/$(AUTHORS_DOCBOOK_FILENAME)=pot/%.pot)
-ifeq ($(filter pot/%.pot,$(MAKECMDGOALS)),)
+ifeq ($(filter pot/%.pot po/%.po,$(MAKECMDGOALS)),)
 $(AUTHORS_POT): $(AUTHORS_DOCBOOK_XML) $(wildcard $(AUTHORS_DOCBOOK_DIRNAME)*.xml)
 else
 $(AUTHORS_POT): $(AUTHORS_DOCBOOK_XML) $(wildcard $(AUTHORS_DOCBOOK_DIRNAME)*.xml) FORCE
