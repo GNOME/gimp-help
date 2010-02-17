@@ -576,13 +576,13 @@ xml-en: xml/en cleanup-xml-en ;
 
 # HIDE FROM AUTOMAKE #ifeq ($(MAKE_IMAGES), lazy)
 # HIDE FROM AUTOMAKE ## fast and lazy: detect added or removed images, but may miss changed images
-# HIDE FROM AUTOMAKE #IMAGE_PREREQ = $(shell cd $(srcdir) && $(find_l) images/{common,C} -type d)
+# HIDE FROM AUTOMAKE #IMAGE_PREREQ = $(shell cd $(srcdir) && $(find_l) images/common images/C -type d)
 # HIDE FROM AUTOMAKE #else ifeq ($(MAKE_IMAGES), force)
 # HIDE FROM AUTOMAKE ## just in case: always update images
 # HIDE FROM AUTOMAKE #IMAGE_PREREQ = FORCE
 # HIDE FROM AUTOMAKE #else
 # HIDE FROM AUTOMAKE ## strict (default): detects added, removed, or changed images
-# HIDE FROM AUTOMAKE #IMAGE_PREREQ = $(shell cd $(srcdir) && $(find_l) images/{common,C})
+# HIDE FROM AUTOMAKE #IMAGE_PREREQ = $(shell cd $(srcdir) && $(find_l) images/common images/C)
 # HIDE FROM AUTOMAKE #endif
 
 xml/%/images: $(IMAGE_PREREQ)
@@ -595,10 +595,10 @@ if CYGWIN
 # Cygwin
 	$(cmd) perl $(srcdir)/tools/make_image_links.pl -v \
 	           --mode=hardlink,copy \
-	           $(srcdir)/images/{common,C} $@
+	           $(srcdir)/images/common $(srcdir)/images/C $@
 else
 	$(cmd) perl $(srcdir)/tools/make_image_links.pl -v \
-	           $(srcdir)/images/{common,C} $@
+	           $(srcdir)/images/common $(srcdir)/images/C $@
 endif
 	$(cmd) touch $@
 
@@ -708,7 +708,7 @@ html/%/images: $(IMAGE_PREREQ)
 	$(cmd) $(echo_n) "Copying HTML images ($*) ..."
 	$(cmd) perl $(srcdir)/tools/make_image_links.pl -v \
 	           --mode=hardlink,copy \
-	           $(srcdir)/images/{common,C} $@
+	           $(srcdir)/images/common $(srcdir)/images/C $@
 	$(cmd) touch $@
 else
 # Default (non-Cygwin)

@@ -520,13 +520,13 @@ xml-en: xml/en cleanup-xml-en ;
 
 ifeq ($(MAKE_IMAGES), lazy)
 # fast and lazy: detect added or removed images, but may miss changed images
-IMAGE_PREREQ = $(shell cd $(srcdir) && $(find_l) images/{common,C} -type d)
+IMAGE_PREREQ = $(shell cd $(srcdir) && $(find_l) images/common images/C -type d)
 else ifeq ($(MAKE_IMAGES), force)
 # just in case: always update images
 IMAGE_PREREQ = FORCE
 else
 # strict (default): detects added, removed, or changed images
-IMAGE_PREREQ = $(shell cd $(srcdir) && $(find_l) images/{common,C})
+IMAGE_PREREQ = $(shell cd $(srcdir) && $(find_l) images/common images/C)
 endif
 
 ifeq ($(CYGWIN),1)
@@ -536,7 +536,7 @@ xml/%/images: $(IMAGE_PREREQ)
 	$(cmd) test -d $@ && rm -rf $@/* || $(mkdir_p) $@
 	$(cmd) $(echo_n) "Copying images ($*) ..."
 	$(cmd) perl tools/make_image_links.pl -v $(MAKE_IMAGE_LINKS_FLAGS) \
-	                images/{common,C} xml/$*
+	                images/common images/C xml/$*
 	$(cmd) touch $@
 
 # Remove left over xml files
@@ -644,7 +644,7 @@ html/%/images: $(IMAGE_PREREQ)
 	$(cmd) test -d $@ && rm -rf $@/* || $(mkdir_p) $@
 	$(cmd) $(echo_n) "Copying HTML images ($*) ..."
 	$(cmd) perl tools/make_image_links.pl -v --mode=hardlink,copy \
-	                images/{common,C} $@
+	                images/common images/C $@
 	$(cmd) touch $@
 endif
 
