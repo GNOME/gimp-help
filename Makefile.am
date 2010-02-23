@@ -69,6 +69,13 @@ echo_n = echo $(ECHO_N)
 # Calling make recursively
 RMAKE = $(MAKE) --no-print-directory
 
+# Local (gimp-help-specific) tools
+MAKE_IMAGE_LINKS = $(srcdir)/make.d/make_image_links.pl
+MAKE_IMAGE_LINKS_FLAGS = -v
+if CYGWIN
+    MAKE_IMAGE_LINKS_FLAGS += --mode=hardlink,copy
+endif
+
 
 ########################################################################
 ####            Files and directories                               ####
@@ -150,8 +157,7 @@ XSL_FILES = \
 DIST_TOOLS = \
 	make.d \
 	tools/xml2po.py \
-	tools/xml2po \
-	tools/make_image_links.pl
+	tools/xml2po
 
 # additional files to be distributed (automake)
 EXTRA_DIST = \
@@ -591,15 +597,8 @@ xml/%/images: $(IMAGE_PREREQ)
 	$(cmd) if test -d $@; then rm -rf $@/*; fi
 	$(cmd) test -d $@ || $(MKDIR_P) $@
 	$(cmd) $(echo_n) "Copying images ($*) ..."
-if CYGWIN
-# Cygwin
-	$(cmd) perl $(srcdir)/tools/make_image_links.pl -v \
-	           --mode=hardlink,copy \
+	$(cmd) perl $(MAKE_IMAGE_LINKS) $(MAKE_IMAGE_LINKS_FLAGS) \
 	           $(srcdir)/images/common $(srcdir)/images/C $@
-else
-	$(cmd) perl $(srcdir)/tools/make_image_links.pl -v \
-	           $(srcdir)/images/common $(srcdir)/images/C $@
-endif
 	$(cmd) touch $@
 
 # Remove left over xml files
@@ -706,8 +705,7 @@ html/%/images: $(IMAGE_PREREQ)
 	$(cmd) if test -h $@; then rm -f $@; fi
 	$(cmd) test -d $@ && rm -rf $@/* || $(MKDIR_P) $@
 	$(cmd) $(echo_n) "Copying HTML images ($*) ..."
-	$(cmd) perl $(srcdir)/tools/make_image_links.pl -v \
-	           --mode=hardlink,copy \
+	$(cmd) perl $(MAKE_IMAGE_LINKS) $(MAKE_IMAGE_LINKS_FLAGS) \
 	           $(srcdir)/images/common $(srcdir)/images/C $@
 	$(cmd) touch $@
 else
@@ -842,14 +840,14 @@ tarball_dir    = gimp-help-2
 HTMLMETAFILES  = README AUTHORS COPYING MAINTAINERS HACKING INSTALL
 
 $(tarball_prefix)-%.tar: html/%/index.html html/%/gimp-help.xml \
-		$(HTMLMETAFILES) tools/Makefile.html-package
+		$(HTMLMETAFILES) make.d/Makefile.html-package
 	$(msg) "Making $@ ..."
 	$(cmd) test ! -d $(tarball_dir)
 	$(cmd) $(MKDIR_P) $(tarball_dir)/html
 	$(cmd) cd $(tarball_dir)/html && $(LN_S) ../../html/$* .
 	$(cmd) cp $(HTMLMETAFILES) $(tarball_dir)/
 	$(cmd) $(SED) -e '/LANGUAGE *=/s/en/$*/' \
-		tools/Makefile.html-package > $(tarball_dir)/Makefile
+		make.d/Makefile.html-package > $(tarball_dir)/Makefile
 	$(cmd) tar -chf $@ $(tarball_dir)/
 	$(cmd) rm -rf $(tarball_dir)
 
@@ -943,7 +941,7 @@ if HAVE_DOT
 ####            Build system development & debugging                ####
 ########################################################################
 
-build-system.svg: tools/build-system.dot
+build-system.svg: make.d/build-system.dot
 	$(cmd) $(DOT) -Tsvg -o $@ $< && \
 	echo "$@ created."
 
@@ -996,7 +994,7 @@ mostlyclean-local:
 	$(cmd) rm -f $(AUTHORS_DOCBOOK_XML)
 # HIDE FROM AUTOMAKE #endif
 	$(cmd) rm -f $(tarball_prefix)-*
-	$(cmd) rm -f build-system.png
+	$(cmd) rm -f build-system.*
 	$(cmd) rm -f .xml2po.mo messages.mo
 
 clean-local: mostlyclean-local

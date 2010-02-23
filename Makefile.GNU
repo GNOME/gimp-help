@@ -67,6 +67,13 @@ find_l  = find -L
 # Calling make recursively
 RMAKE = $(MAKE) -f Makefile.GNU --no-print-directory
 
+# Local (gimp-help-specific) tools
+MAKE_IMAGE_LINKS = make.d/make_image_links.pl
+MAKE_IMAGE_LINKS_FLAGS = -v
+ifeq ($(CYGWIN),1)
+    MAKE_IMAGE_LINKS_FLAGS += --mode=hardlink,copy
+endif
+
 # FIXME/TODO:
 #     make it work with srcdir != builddir
 # Directories
@@ -529,13 +536,10 @@ else
 IMAGE_PREREQ = $(shell cd $(srcdir) && $(find_l) images/common images/C)
 endif
 
-ifeq ($(CYGWIN),1)
-    MAKE_IMAGE_LINKS_FLAGS = --mode=hardlink,copy
-endif
 xml/%/images: $(IMAGE_PREREQ)
 	$(cmd) test -d $@ && rm -rf $@/* || $(mkdir_p) $@
 	$(cmd) $(echo_n) "Copying images ($*) ..."
-	$(cmd) perl tools/make_image_links.pl -v $(MAKE_IMAGE_LINKS_FLAGS) \
+	$(cmd) perl $(MAKE_IMAGE_LINKS) $(MAKE_IMAGE_LINKS_FLAGS) \
 	                images/common images/C xml/$*
 	$(cmd) touch $@
 
@@ -643,7 +647,7 @@ html/%/images: $(IMAGE_PREREQ)
 	$(cmd) if test -h $@; then rm -f $@; fi
 	$(cmd) test -d $@ && rm -rf $@/* || $(mkdir_p) $@
 	$(cmd) $(echo_n) "Copying HTML images ($*) ..."
-	$(cmd) perl tools/make_image_links.pl -v --mode=hardlink,copy \
+	$(cmd) perl $(MAKE_IMAGE_LINKS) $(MAKE_IMAGE_LINKS_FLAGS) \
 	                images/common images/C $@
 	$(cmd) touch $@
 endif
@@ -778,14 +782,14 @@ tarball_dir    = gimp-help-2
 HTMLMETAFILES  = README AUTHORS COPYING MAINTAINERS
 
 $(tarball_prefix)-%.tar: html/%/index.html html/%/gimp-help.xml \
-		$(HTMLMETAFILES) tools/Makefile.html-package
+		$(HTMLMETAFILES) make.d/Makefile.html-package
 	$(msg) "Making $@ ..."
 	$(cmd) test ! -d $(tarball_dir)
 	$(cmd) $(mkdir_p) $(tarball_dir)/html
 	$(cmd) cd $(tarball_dir)/html && $(ln_s) ../../html/$* .
 	$(cmd) cp $(HTMLMETAFILES) $(tarball_dir)/
 	$(cmd) $(SED) -e '/LANGUAGE *=/s/en/$*/' \
-		tools/Makefile.html-package > $(tarball_dir)/Makefile
+		make.d/Makefile.html-package > $(tarball_dir)/Makefile
 	$(cmd) tar -chf $@ $(tarball_dir)/
 	$(cmd) rm -rf $(tarball_dir)
 
@@ -820,7 +824,7 @@ clean:
 		echo "Removing  $${dir} ..."; \
 		rm -rf $${dir}; \
 	done
-	$(cmd) for f in AUTHORS $(AUTHORS_DOCBOOK_XML) build-system.png; do \
+	$(cmd) for f in AUTHORS $(AUTHORS_DOCBOOK_XML) build-system.*; do \
 		test -f $${f} || continue; \
 		echo "Removing  $${f} ..."; \
 		rm -f $${f}; \
@@ -868,7 +872,7 @@ check-image-resolutions-en: check-image-resolutions-C ;
 ####            Build system development & debugging                ####
 ########################################################################
 
-build-system.svg: tools/build-system.dot
+build-system.svg: make.d/build-system.dot
 	$(cmd) if type dot >/dev/null; then \
 		dot -Tsvg -o $@ $<; \
 	fi
