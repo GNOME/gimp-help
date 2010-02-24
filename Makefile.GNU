@@ -181,7 +181,7 @@ endif
 #
 # Hint: Don't use 'grep' for filtering-out the warning messages,
 #       since grep's exit status is 1 if there is no match.
-xml2pot = $(XML2PO) $(XML2POFLAGS) --output='-' $(1) \
+xml2pot = $(XML2PO) $(XML2POFLAGS) --output='-' $(filter %.xml,$(1)) \
           | $(MSGUNIQ) $(MSGUNIQFLAGS) \
           | $(MSGCAT) $(MSGCATFLAGS) - > "$(2)"; \
           test -s "$(2)" || rm -f "$(2)"; \
@@ -351,7 +351,7 @@ POT_FILES += pot/gimp.pot
 
 # General case
 ifeq ($(filter pot/%.pot po/%.po,$(MAKECMDGOALS)),)
-pot/%.pot: src/%/*.xml
+pot/%.pot: src/%/*.xml $(wildcard images/C/%/*.*)
 else
 pot/%.pot: src/%/*.xml FORCE
 endif
@@ -360,7 +360,7 @@ endif
 	$(cmd) $(call xml2pot,$(filter-out FORCE,$^),$@)
 # Special case: rename pot file for toplevel xml files
 ifeq ($(filter pot/%.pot po/%.po,$(MAKECMDGOALS)),)
-pot/gimp.pot: src/*.xml
+pot/gimp.pot: src/*.xml $(wildcard images/C/*.*)
 else
 pot/gimp.pot: src/*.xml FORCE
 endif
@@ -371,6 +371,7 @@ endif
 # requires an additional prerequisite
 AUTHORS_POT = $(AUTHORS_DOCBOOK_XML:src/%/$(AUTHORS_DOCBOOK_FILENAME)=pot/%.pot)
 ifeq ($(filter pot/%.pot po/%.po,$(MAKECMDGOALS)),)
+# TODO: add images to prerequisites if necessary
 $(AUTHORS_POT): $(AUTHORS_DOCBOOK_XML) $(wildcard $(AUTHORS_DOCBOOK_DIRNAME)*.xml)
 else
 $(AUTHORS_POT): $(AUTHORS_DOCBOOK_XML) $(wildcard $(AUTHORS_DOCBOOK_DIRNAME)*.xml) FORCE
