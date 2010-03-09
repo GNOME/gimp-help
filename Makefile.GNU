@@ -124,8 +124,9 @@ SRC_FILES  = $(shell cd $(srcdir) && $(find_l) src/ $(src_file_predicates)) \
              $(AUTHORS_DOCBOOK_XML)
 endif
 
-# XXX: requires that "plainhtml.xsl" has been renamed to "html.xsl"
-HTML_STYLESHEETS = stylesheets/html*.xsl
+# TODO
+#HTML_STYLESHEETS = stylesheets/html*.xsl
+HTML_STYLESHEETS = stylesheets/plainhtml.xsl stylesheets/htmlalternate.xsl
 
 # This variable is used by "msgmerge";
 # use empty variable to disable the compendium option
@@ -594,6 +595,20 @@ $(foreach LANG,$(LANGUAGES),$(eval $(call MAKE_XMLLINT_RULES,$(LANG))))
 
 log:
 	$(cmd) mkdir $@ && test -w $@
+
+
+########################################################################
+####            Make XSL styesheets for HTML                        ####
+########################################################################
+
+# TODO
+stylesheets/plainhtml.xsl: stylesheets/plainhtml.xsl.in
+	$(msg) "[XSL] $@"
+	$(cmd) $(SED) -e s,@STYLEBASE@,http://docbook.sourceforge.net/release/xsl/current, $< > $@
+
+stylesheets/htmlalternate.xsl: stylesheets/htmlalternate.xsl.in
+	$(msg) "[XSL] $@"
+	$(cmd) cp $< $@
 
 
 ########################################################################
