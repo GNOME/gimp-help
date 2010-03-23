@@ -128,17 +128,9 @@ fi
 AM_CONDITIONAL(HAVE_DOCBOOK2ODF, test -n "$DOCBOOK2ODF")
 
 
-#  Search for xml2po
-#
-#AC_PATH_PROG(XML2PO, xml2po)
-#if test -z "$XML2PO"; then
-#  AC_MSG_WARN([cannot find xml2po])
-#  missing_i18n_tools="xml2po"
-#fi
-#
-#AM_CONDITIONAL(HAVE_XML2PO, test -n "$XML2PO")
+#  Use our customized xml2po
 
-XML2PO='$(srcdir)/tools/xml2po.py'
+XML2PO='$(top_srcdir)/tools/xml2po.py'
 XML2POFLAGS="--mode=gimphelp"
 AC_SUBST(XML2PO)
 AC_SUBST(XML2POFLAGS)
