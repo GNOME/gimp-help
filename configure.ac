@@ -24,6 +24,18 @@ AM_CONDITIONAL(CYGWIN, test $IS_CYGWIN = yes)
 #AC_SUBST(IS_CYGWIN)
 
 AC_CONFIG_SRCDIR([src/gimp.xml])
+AC_CONFIG_COMMANDS(
+    [stylesheets],
+    [test "${srcdir:-.}" != "${builddir:-.}" &&
+     { test -d stylesheets || mkdir stylesheets; } &&
+     cp -f $srcdir/stylesheets/*.xsl $srcdir/stylesheets/*.dtd stylesheets/]
+)
+# XXX: use this if 'configure' (instead of 'config.status') should do it:
+#AC_CONFIG_COMMANDS_POST([
+#    test "${srcdir:-.}" != "${builddir:-.}" &&
+#    { test -d stylesheets || mkdir stylesheets; } &&
+#    cp -f $srcdir/stylesheets/*.xsl $srcdir/stylesheets/*.dtd stylesheets/
+#])
 
 AM_INIT_AUTOMAKE([1.6 dist-bzip2 -Wall -Wno-portability])
 
