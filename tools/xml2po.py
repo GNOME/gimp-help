@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 # -*- encoding: utf-8 -*-
 # Copyright (c) 2004, 2005, 2006 Danilo Šegan <danilo@gnome.org>.
 # Copyright (c) 2009 Claude Paroz <claude@2xlibre.net>.
