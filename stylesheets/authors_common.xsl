@@ -50,6 +50,7 @@
       fr:French
       hr:Croatian
       it:Italian
+      ja:Japanese
       ko:Korean
       lt:Lithuanian
       nl:Dutch

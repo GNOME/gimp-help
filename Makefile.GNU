@@ -111,7 +111,7 @@ AUTHORS_DOCBOOK_STYLESHEETS = \
 	stylesheets/authors_common.xsl
 
 # Targets which don't require source file list
-QUICK_TARGETS = help clean dot image-%
+QUICK_TARGETS = help clean dot image-% AUTHORS
 
 # Files & directories
 ifeq ($(filter $(QUICK_TARGETS),$(MAKECMDGOALS)),)

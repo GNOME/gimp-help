@@ -108,7 +108,7 @@ AUTHORS_DOCBOOK_STYLESHEETS = \
 	stylesheets/authors_common.xsl
 
 # Targets which don't require source file list
-QUICK_TARGETS = help clean dot image-%
+QUICK_TARGETS = help clean dot image-% AUTHORS
 
 # lists of source (XML) files and source directories
 # HIDE FROM AUTOMAKE #ifeq ($(filter $(QUICK_TARGETS),$(MAKECMDGOALS)),)
