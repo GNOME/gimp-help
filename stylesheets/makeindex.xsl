@@ -51,10 +51,11 @@
   </xsl:template>
 
   <xsl:template match="obj">
-    <xsl:if test="@targetptr and starts-with(@targetptr, 'gimp-')
-              and not(@element = 'anchor')
+    <xsl:if test="@targetptr
               and not(@element = 'footnote')
-              and not(@element = 'figure')">
+              and not(@element = 'figure')
+              and (starts-with(@targetptr, 'gimp-') or
+                   starts-with(@targetptr, 'plug-in-'))">
       <help-item>
         <xsl:attribute name="id">
           <xsl:value-of select="@targetptr" />
