@@ -179,9 +179,6 @@ endif
 # Parameters:
 #     $1 - input:  original (untranslated) XML files
 #     $2 - output: POT template file containing translatable tags
-#
-# Hint: Don't use 'grep' for filtering-out the warning messages,
-#       since grep's exit status is 1 if there is no match.
 xml2pot = $(XML2PO) $(XML2POFLAGS) --output='-' $(filter %.xml,$(1)) \
           | $(MSGUNIQ) $(MSGUNIQFLAGS) \
           | $(MSGCAT) $(MSGCATFLAGS) - > "$(2)"; \
@@ -296,7 +293,7 @@ make.help:
 # TODO?: replace with a "real" script (e.g. tools/make-help.sed)
 #   (probably "yes" if more features are needed...)
 help: make.help
-	$(cmd) $(SED) \
+	@$(SED) \
 	    -e '### skip comments ###' \
 	    -e '/^#/d' \
 	    -e '### print if no "make" variable found ###' \
@@ -449,7 +446,7 @@ force-po/%:
 # Main commandline target
 po: $(foreach LANG,$(PO_LANGS),po-$(LANG)) ;
 
-.PHONY: po po-% cleanup-po-% po-todo-% po-status-%
+.PHONY: po po-% cleanup-po-% todo-% po-todo-% po-status-%
 
 
 ########################################################################

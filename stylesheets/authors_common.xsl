@@ -62,11 +62,16 @@
     </xsl:variable>
     <xsl:variable name="tail"
       select="substring-after($languages,concat($langid,':'))"/>
-    <xsl:if test="$tail != ''">
-      <xsl:value-of select="translate(
-                              normalize-space(substring-before($tail,' ')),
-                              '_', ' ')"/>
-    </xsl:if>
+    <xsl:choose>
+      <xsl:when test="$tail != ''">
+        <xsl:value-of select="translate(
+                                normalize-space(substring-before($tail,' ')),
+                                '_', ' ')"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="$langid"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 </xsl:stylesheet>
 

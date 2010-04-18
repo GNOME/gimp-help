@@ -228,9 +228,6 @@ if HAVE_I18N_TOOLS
 # Parameters:
 #     $1 - input:  original (untranslated) XML files
 #     $2 - output: POT template file containing translatable tags
-#
-# Hint: Don't use 'grep' for filtering-out the warning messages,
-#       since grep's exit status is 1 if there is no match.
 xml2pot = $(XML2PO) $(XML2POFLAGS) --output='-' $(1) \
           | $(MSGUNIQ) $(MSGUNIQFLAGS) \
           | $(MSGCAT) $(MSGCATFLAGS) - > "$(2)"; \
@@ -506,7 +503,7 @@ po-todo-%: po-%
 # Main commandline target
 po: $(foreach LANG,$(PO_LANGS),po-$(LANG)) ;
 
-.PHONY: po po-% cleanup-po-% po-todo-% po-status-%
+.PHONY: po po-% cleanup-po-% todo-% po-todo-% po-status-%
 
 
 ########################################################################
