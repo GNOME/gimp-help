@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+                       "http://www.docbook.org/xml/4.3/docbookx.dtd">
+<!-- section history:
+  2010-01-26 liangtai: created initial version
+-->
+<sect2 id="script-fu-clothify">
+  <title>Clothify</title>
+
+  <indexterm>
+    <primary>Filters</primary>
+    <secondary>Artistic</secondary>
+    <tertiary>Clothify</tertiary>
+  </indexterm>
+  <indexterm>
+    <primary>Clothify</primary>
+  </indexterm>
+
+  <sect3>
+    <title>Overview</title>
+    <figure>
+      <title>Example of Clothify</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata format="JPG"
+            fileref="images/filters/examples/artistic-taj-clothify.jpg"/>
+        </imageobject>
+        <caption>
+          <para>Filter <quote>Clothify</quote> applied (in selection)</para>
+        </caption>
+      </mediaobject>
+    </figure>
+
+    <para>
+      <guimenuitem>Clothify</guimenuitem> command is a script which
+      adds a cloth-like texture to the selected region or alpha.
+      If the image is in indexed colors, this menu entry is grayed out
+      and unavailable.
+    </para>
+    <para>
+      This script is achieved by the following steps.
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          Creating an image in the same size as the original image,
+          or selection or region in alpha if it is given, then adds a
+          layer to this image filled with white and
+          <link linkend="plug-in-rgb-noise">noisified</link> strongly.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Reproducing a layer from the recently added layer and set
+          the mode of the upper layer to <quote>Multiply</quote>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Applying
+          <link linkend="plug-in-gauss">Gaussian blur</link> in
+          different directions, horizontally on the lower layer by the
+          given parameter <guilabel>Blur X</guilabel> as the radius, and
+          vertically on the upper layer with <guilabel>Blur Y</guilabel>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Merging these two layers into an image and making its contrast
+          <link linkend="plug-in-c-astretch">expanded as possibly</link>,
+          then slightly noisifying again on this working image.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Finally doing
+          <link linkend="plug-in-bump-map">bump map</link> on the original
+          image by the working image with parameters
+          <guilabel>Azimuth</guilabel>, <guilabel>Elevation</guilabel>,
+          and <guilabel>Depth</guilabel>.
+        </para>
+      </listitem>
+    </orderedlist>
+  </sect3>
+
+  <sect3>
+    <title>Activate the filter</title>
+    <para>
+      This filter is found in the image window menu under
+      <menuchoice>
+        <guimenu>Filters</guimenu>
+        <guisubmenu>Artistic</guisubmenu>
+        <guimenuitem>Clothify...</guimenuitem>
+      </menuchoice>.
+    </para>
+  </sect3>
+
+  <sect3>
+    <title>Options</title>
+    <figure>
+      <title><quote>Clothify</quote> filter options</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata format="PNG"
+            fileref="images/filters/options-artistic-clothify.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+    <para>
+      <guilabel>Azimuth</guilabel>, <guilabel>Elevation</guilabel>, and
+      <guilabel>Depth</guilabel> come from
+      <link linkend="plug-in-bump-map">Bump Map</link> filter.
+    </para>
+    <variablelist>
+      <varlistentry>
+        <term>Blur X; Blur Y</term>
+        <listitem>
+          <para>
+            These parameters lengthen fibers of the texture, horizontally
+            by <guilabel>Blur X</guilabel>, and vertically by
+            <guilabel>Blur Y</guilabel>.  The range of value is between
+            3 to 100.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Azimuth</term>
+        <listitem>
+          <para>
+            <guilabel>Azimuth</guilabel> slider controls the bearings
+            where light comes from according to the point of the compass.
+            Both the minimum value (0.00) and the maximum value (360.00)
+            are the direction of three o'clock on the dial panel of an
+            analogue clock.  Increasing value goes counter-clockwise.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Elevation</term>
+        <listitem>
+          <para>
+            <guilabel>Elevation</guilabel> slider controls the height
+            where light comes from.  For the minimal value (0.50)
+            the light comes from horizon, and for the maximum value
+            (90.0) the light comes from zenith.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Depth</term>
+        <listitem>
+          <para>
+            <guilabel>Depth</guilabel> slider controls distance between bump
+            height and hollow depth.  Increasing value causes more rugged
+            features.  Values vary from 1 to 65.
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </sect3>
+</sect2>
