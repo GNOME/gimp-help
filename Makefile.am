@@ -106,9 +106,11 @@ AUTHORS_TEXT_STYLESHEETS = \
 AUTHORS_DOCBOOK_STYLESHEETS = \
 	stylesheets/authors_docbook.xsl \
 	stylesheets/authors_common.xsl
+# Stylesheet generating MAINTAINERS
+DOAP_STYLESHEET = stylesheets/doap2text.xsl
 
 # Targets which don't require source file list
-QUICK_TARGETS = help clean dot image-% AUTHORS
+QUICK_TARGETS = help clean dot image-% AUTHORS MAINTAINERS
 
 # lists of source (XML) files and source directories
 # HIDE FROM AUTOMAKE #ifeq ($(filter $(QUICK_TARGETS),$(MAKECMDGOALS)),)
@@ -152,7 +154,8 @@ XSL_FILES = \
 	stylesheets/makeindex.xsl	\
 	stylesheets/plainprint.xsl	\
 	stylesheets/plainhtml.xsl.in	\
-	stylesheets/htmlalternate.xsl
+	stylesheets/htmlalternate.xsl	\
+	stylesheets/doap2text.xsl
 
 # tools needed for building
 DIST_TOOLS = \
@@ -163,6 +166,7 @@ DIST_TOOLS = \
 # additional files to be distributed (automake)
 EXTRA_DIST = \
 	AUTHORS			\
+	MAINTAINERS		\
 	HACKING			\
 	INSTALL			\
 	TERMINOLOGY		\
@@ -335,7 +339,7 @@ copy = $(LN_S) $(abs_srcdir)/$(1) $(2)
 # at top of Makefile, so running "make" might create some random file
 # (depending on which target is the first one in the Makefile).
 # Use "make all" instead. (FIXME: and get rid of automake/autoconf!)
-all-local: html-local index AUTHORS
+all-local: html-local index AUTHORS MAINTAINERS
 
 # TODO?: check-local: validate
 
@@ -375,7 +379,7 @@ help: make.help
 
 
 ########################################################################
-####            Make AUTHORS file                                   ####
+####            Make AUTHORS and MAINTAINERS file                   ####
 ########################################################################
 
 AUTHORS: $(AUTHORS_DATA_XML) $(AUTHORS_TEXT_STYLESHEETS)
@@ -395,6 +399,11 @@ $(AUTHORS_DOCBOOK_XML): $(AUTHORS_DATA_XML) $(AUTHORS_DOCBOOK_STYLESHEETS)
 	  $< \
 	  > $@
 	$(cmd) touch -c -r $< $@ || true
+
+MAINTAINERS: gimp-help-2.doap $(DOAP_STYLESHEET)
+	$(msg) "[DOC] $@"
+	$(cmd) $(XSLTPROC) --output $@ $(XSLTFLAGS) $(XSLTEXTRAFLAGS) \
+	  $(DOAP_STYLESHEET) $<
 
 
 ########################################################################

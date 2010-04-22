@@ -109,9 +109,11 @@ AUTHORS_TEXT_STYLESHEETS = \
 AUTHORS_DOCBOOK_STYLESHEETS = \
 	stylesheets/authors_docbook.xsl \
 	stylesheets/authors_common.xsl
+# Stylesheet generating MAINTAINERS
+DOAP_STYLESHEET = stylesheets/doap2text.xsl
 
 # Targets which don't require source file list
-QUICK_TARGETS = help clean dot image-% AUTHORS
+QUICK_TARGETS = help clean dot image-% AUTHORS MAINTAINERS
 
 # Files & directories
 ifeq ($(filter $(QUICK_TARGETS),$(MAKECMDGOALS)),)
@@ -279,7 +281,7 @@ endif
 ########################################################################
 
 .PHONY: all
-all: html index AUTHORS
+all: html index AUTHORS MAINTAINERS
 
 
 ########################################################################
@@ -317,7 +319,7 @@ help: make.help
 
 
 ########################################################################
-####            Make AUTHORS file                                   ####
+####            Make AUTHORS and MAINTAINERS file                   ####
 ########################################################################
 
 AUTHORS: $(AUTHORS_SOURCE_XML) $(AUTHORS_TEXT_STYLESHEETS)
@@ -336,6 +338,11 @@ $(AUTHORS_DOCBOOK_XML): $(AUTHORS_SOURCE_XML) $(AUTHORS_DOCBOOK_STYLESHEETS)
 	  $(srcdir)/stylesheets/authors_docbook.xsl \
 	  $< \
 	  > $@
+
+MAINTAINERS: gimp-help-2.doap $(DOAP_STYLESHEET)
+	$(msg) "[DOC] $@"
+	$(cmd) $(XSLTPROC) --output $@ $(XSLTFLAGS) $(XSLTEXTRAFLAGS) \
+	  $(DOAP_STYLESHEET) $<
 
 
 ########################################################################
