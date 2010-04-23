@@ -49,7 +49,7 @@ use Getopt::Long;
 use File::Find;
 
 my $PROG = $0;
-my $VERSION = 0.02;
+my $VERSION = 0.03;
 
 my %Languages = (
 	de => "German",
@@ -58,6 +58,7 @@ my %Languages = (
 	fr => "French",
 	hr => "Croatian",
 	it => "Italian",
+	ja => "Japanese",
 	ko => "Korean",
 	lt => "Lithuanian",
 	nb => "Norwegian",
@@ -155,12 +156,15 @@ if ($pid == 0) {
 	# Child process
 	$ENV{"LANG"} = "C";
 	for (sort @Pofiles) {
-		my $statistics = `msgfmt --statistics $_ 2>&1`;
+		# XXX: is "--output-file=/dev/null" portable?
+		my $statistics = `msgfmt --statistics --output-file=/dev/null $_ 2>&1`;
 		# TODO: better do regex matching here?
 		chomp $statistics;
 		my $filesize = (lstat())[7] || 0;
 		print "$_ $filesize $statistics\n";
 	}
+	# use this if there are problems with "msgfmt --output-file=/dev/null"
+	#unlink "messages.mo" if -e "messages.mo" && @Pofiles;
 	close STDOUT or die "ERROR: Cannot close pipe (w): $!\n";
 	exit;
 }
@@ -176,14 +180,15 @@ my $msg_re = qr/^   (\S+) \s                     # $1 = filename
 while (<MSGFMT>) {
 	m/$msg_re/ or die("ERROR matching msgfmt output '$_'\n");
 	my ($n, $s, $t, $f, $u) = ($1, $2, $3, $4 || 0, $5 || 0);
-	print_file_statistics($n, $s, $t, $f, $u);
+	# print and save file statistics
+	handle_file_statistics($n, $s, $t, $f, $u);
 }
 close MSGFMT or die "ERROR: Cannot close pipe (r): $!\n";
 print_summary($translated, $fuzzy, $untranslated, $size);
 
 
 # ------------------------------------------------------
-sub print_file_statistics
+sub handle_file_statistics
 # ------------------------------------------------------
 {
 	my ($n, $s, $t, $f, $u) = @_;
@@ -242,7 +247,7 @@ Ulf-D. Ehlert
 
 =head1 COPYRIGHT
 
-(C) 2008 The GIMP Documentation Team.
+(C) 2008-2010 The GIMP Documentation Team.
 
 License: GPL
 
