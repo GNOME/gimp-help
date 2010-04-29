@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+                       "http://www.docbook.org/xml/4.3/docbookx.dtd">
+<!-- section history:
+  2010-04-30 liangtai: created initial version
+-->
+<sect2 id="script-fu-circuit">
+  <title>Circuit</title>
+
+  <indexterm>
+    <primary>Filters</primary>
+    <secondary>Render</secondary>
+    <tertiary>Circuit</tertiary>
+  </indexterm>
+  <indexterm>
+    <primary>Circuit</primary>
+  </indexterm>
+
+  <sect3>
+    <title>Overview</title>
+    <figure>
+      <title>Example of Circuit</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata format="JPG"
+            fileref="images/filters/examples/render-circuit.jpg"/>
+        </imageobject>
+        <caption>
+          <para>Filter <quote>Circuit</quote> applied.</para>
+        </caption>
+      </mediaobject>
+    </figure>
+    <para>
+      <guimenuitem>Circuit</guimenuitem> command is a script which fills
+      the selected region (or alpha) with traces like those on a circuit
+      board.  The result looks a little like the back of an old circuit
+      board.  It looks even better when gradmapped with a suitable gradient.
+      If the image is in indexed colors, this menu entry is grayed out
+      and unavailable.
+    </para>
+    <note>
+      <para>
+        This filter creates an grey level image in <acronym>RGB</acronym> mode.
+      </para>
+      <para>
+        The result image is not be mattered by what image was drawn.
+      </para>
+    </note>
+    <para>This script is achieved by the following steps:</para>
+    <procedure>
+      <step>
+        <para>
+          First, <link linkend="plug-in-maze">draw maze</link> with 5 pixels
+          width pathways and walls by the <quote>Depth First</quote>
+          algorithm.  The pattern of maze is set by <guilabel>Circuit
+          seed</guilabel>.
+        </para>
+      </step>
+      <step>
+        <para>
+          <link linkend="plug-in-oilify">Oilify</link> this maze with a brush
+          of <guilabel>Oilify mask size</guilabel>.
+        </para>
+      </step>
+      <step>
+        <para>
+          By Sobel alogorithm, with Smear option and setting Amount to 2.0,
+          <link linkend="plug-in-edge">extract edge</link> from the oilified
+          maze image to crowd of high contrast winding curves like as a
+          circuit map.
+        </para>
+      </step>
+      <step>
+        <para>
+          Finally, <link linkend="gimp-tool-desaturate">Desaturate</link> the
+          map with gray color in <acronym>RGB</acronym> mode.
+        </para>
+      </step>
+    </procedure>
+    <tip>
+      <para>
+        This script doesn't handle or color combos well, i.e. black/black
+        doesn't work..
+        The effect seems to work best on odd shaped selections because of
+        some limitations in the maze codes selection handling ablity.
+      </para>
+    </tip>
+  </sect3>
+
+  <sect3>
+    <title>Activate the filter</title>
+    <para>
+      This filter is found in the image window menu under
+      <menuchoice>
+        <guimenu>Filters</guimenu>
+        <guisubmenu>Render</guisubmenu>
+        <guimenuitem>Circuit...</guimenuitem>
+      </menuchoice>.
+    </para>
+  </sect3>
+
+  <sect3>
+    <title>Options</title>
+    <figure>
+      <title><quote>Circuit</quote> filter options</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata format="PNG"
+            fileref="images/filters/options-render-circuit.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+    <para>
+    </para>
+    <variablelist>
+      <varlistentry>
+        <term>Oilify mask size</term>
+        <listitem>
+          <para>
+            By this option you can set the option value of the
+            <link linkend="plug-in-oilify">Oilify</link> filter in pixel
+            from range 3 to 50.  Larger values make lines more fuzzy.
+            17 is the default value.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Circuit seed</term>
+        <listitem>
+          <para>
+            You can give a randamizing seed number between 1 and 3000000.
+            The default value is 3.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>No background (only for separate layer)</term>
+        <listitem>
+          <para>
+            If this option is enabled, dark pixels of the circuit are set
+            to be transparent so that the back image is shown through these
+            holes.  This option is disabled in default settings.  Setting
+            enable on <guilabel>Separate layer</guilabel> option is required.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Keep selection</term>
+        <listitem>
+          <para>
+            If an active selection is given when this script is called,
+            you can keep the selection by this option.  This option is
+            enabled in default settings.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Separate layer</term>
+        <listitem>
+          <para>
+            If this option is not checked, the generated texture is drawn
+            on the base layer.  When this option is enabled (in default),
+            this script adds a layer which circuit texture is drawn on.
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </sect3>
+</sect2>
