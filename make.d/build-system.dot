@@ -98,11 +98,12 @@ digraph gimp_build_system {
         xml_files[label="LANG_XML_FILES\n----\nxml/LANG/.../*.xml"
                   shape=polygon side=4 skew=.2 color=green];
         xml_lang -> xml_dir -> xml_files;
-        xml_files -> po_files;
     } /* subgraph cluster_xml */
 
-    xml_files -> src_files[color=grey label="copy if\nLANG = en"];
     xml -> xml_lang[weight=4];
+    xml_lang  -> po_lang;
+    xml_files -> src_files[color=grey label="copy if\nLANG = en"];
+    xml_files -> po_files[color=grey label="via\ninclude\n.deps.mk"];
 
     index -> index_lang;
 
@@ -127,6 +128,7 @@ digraph gimp_build_system {
     } /* subgraph cluster_html */
 
     html -> html_lang;
+    html_lang  -> xml_lang;
 
     /* TODO */
 

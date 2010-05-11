@@ -565,6 +565,7 @@ po: $(foreach LANG,$(PO_LANGS),po-$(LANG)) ;
 # HIDE FROM AUTOMAKE #	srcfile=$$(srcdir)/src/$$$${stem}.xml; \
 # HIDE FROM AUTOMAKE #	test "$$$${stem}" != "$$$${stem%/*}" && stem=$$$${stem%/*} || stem=gimp; \
 # HIDE FROM AUTOMAKE #	pofile=$$(srcdir)/po/$(1)/$$$${stem}.po; \
+# HIDE FROM AUTOMAKE #	test -e "$$$${pofile}" || $$(RMAKE) "$$$${pofile}"; \
 # HIDE FROM AUTOMAKE #	$(call po2xml,$$$${srcfile},$$$${pofile},$(1),$$@)
 # Special case: authors.xml
 # HIDE FROM AUTOMAKE #xml/$(1)/$(AUTHORS_DOCBOOK_XML:src/%=%): $(AUTHORS_DOCBOOK_XML)
@@ -574,6 +575,7 @@ po: $(foreach LANG,$(PO_LANGS),po-$(LANG)) ;
 # HIDE FROM AUTOMAKE #	srcfile=$(AUTHORS_DOCBOOK_XML); \
 # HIDE FROM AUTOMAKE #	stem=$$(dir $$(@:xml/$(1)/%=%)); \
 # HIDE FROM AUTOMAKE #	pofile=$$(srcdir)/po/$(1)/$$$${stem%/}.po; \
+# HIDE FROM AUTOMAKE #	test -e "$$$${pofile}" || $$(RMAKE) "$$$${pofile}"; \
 # HIDE FROM AUTOMAKE #	$(call po2xml,$$$${srcfile},$$$${pofile},$(1),$$@)
 # HIDE FROM AUTOMAKE #
 # HIDE FROM AUTOMAKE ## This is indirectly used as HTML and PDF prerequisite:
@@ -581,7 +583,7 @@ po: $(foreach LANG,$(PO_LANGS),po-$(LANG)) ;
 # HIDE FROM AUTOMAKE #	$$(cmd) test -d $$@ && touch $$@ || $(mkdir_p) $$@
 # HIDE FROM AUTOMAKE #
 # HIDE FROM AUTOMAKE ## Targets suitable for command line
-# HIDE FROM AUTOMAKE #xml-$(1): xml/$(1) cleanup-xml-$(1) ;
+# HIDE FROM AUTOMAKE #xml-$(1): po-$(1) xml/$(1) cleanup-xml-$(1) ;
 # HIDE FROM AUTOMAKE #endef
 # HIDE FROM AUTOMAKE #$(foreach LANG,$(PO_LANGS),$(eval $(call MAKE_XML_RULES,$(LANG))))
 
@@ -680,7 +682,7 @@ log:
 ########################################################################
 
 ### Main commandline targets ###
-html-%: html/%/index.html html/%/gimp-help.xml ;
+html-%: xml-% html/%/index.html html/%/gimp-help.xml ;
 # Note that automake already defines a target "html"
 html-local: $(foreach lang,$(LANGUAGES),html-$(lang)) ;
 

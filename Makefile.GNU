@@ -505,6 +505,7 @@ xml/$(1)/%.xml:
 	srcfile=src/$$$${stem}.xml; \
 	test "$$$${stem}" != "$$$${stem%/*}" && stem=$$$${stem%/*} || stem=gimp; \
 	pofile=po/$(1)/$$$${stem}.po; \
+	test -e "$$$${pofile}" || $$(RMAKE) "$$$${pofile}"; \
 	$(call po2xml,$$$${srcfile},$$$${pofile},$(1),$$@)
 
 # This is indirectly used as HTML and PDF prerequisite:
@@ -512,7 +513,7 @@ xml/$(1): $$($(1)_XML_FILES) | xml/$(1)/images
 	$$(cmd) test -d $$@ && touch $$@ || $(mkdir_p) $$@
 
 # Targets suitable for command line
-xml-$(1): xml/$(1) cleanup-xml-$(1) ;
+xml-$(1): po-$(1) xml/$(1) cleanup-xml-$(1) ;
 endef
 $(foreach LANG,$(PO_LANGS),$(eval $(call MAKE_XML_RULES,$(LANG))))
 
@@ -620,7 +621,7 @@ stylesheets/htmlalternate.xsl: stylesheets/htmlalternate.xsl.in
 ########################################################################
 
 # Main commandline targets
-html-%: html/%/index.html html/%/gimp-help.xml ;
+html-%: xml-% html/%/index.html html/%/gimp-help.xml ;
 html: $(foreach lang,$(LANGUAGES),html-$(lang)) ;
 
 # Making the main HTML file (side effect: make gimp-xrefs.xml)
