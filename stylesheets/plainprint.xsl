@@ -36,6 +36,8 @@
   <xsl:param name="figure.note">images/note.png</xsl:param>
   <xsl:param name="figure.caution">images/caution.png</xsl:param>
 
+  <!-- use relative URIs (in fileref attributes) in the generated output -->
+  <xsl:param name="keep.relative.image.uris" select="1"/>
   <!--
     The following templates (may) override the defaults:
   -->
