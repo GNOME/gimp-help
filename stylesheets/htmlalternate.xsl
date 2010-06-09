@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- This file is part of the gimp-help-2 project and is 
+<!-- This file is part of the gimp-help-2 project and is
      (C) 2002, 2003, 2004, 2005, 2006, 2007 Daniel Egger, Róman Joost
      You may use this file in accordance to the GNU Free Documentation License
      Version 1.1 which is available from http://www.gnu.org. -->
@@ -11,18 +11,18 @@
 
   <!--
       template: output.html.stylesheets
-  
+
       This is a modified copy of the docbook-xsl-1.72 template;
       it will replace the original template.
       Its string value is a list of HTML <link> tags with attribute
-      rel="stylesheet" as produced by the the original docbook-xsl 
+      rel="stylesheet" as produced by the the original docbook-xsl
       template, and (if xsl:parameter "html.stylesheet.alternate" is
       not empty) a list of HTML <link> tags with attributes
       rel="alternate stylesheet" and title="[filename without '.css']".
   -->
   <xsl:template name="output.html.stylesheets">
     <xsl:param name="stylesheets" select="''"/>
-  
+
     <xsl:choose>
       <xsl:when test="contains($stylesheets, ' ')">
         <link rel="stylesheet" href="{substring-before($stylesheets, ' ')}">
@@ -44,7 +44,7 @@
             </xsl:attribute>
           </xsl:if>
         </link>
-  
+
         <!-- here's our modification, calling the new template below -->
         <xsl:if test="$html.stylesheet.alternate != ''">
           <xsl:call-template name="output.html.stylesheet.alternates">
@@ -55,10 +55,10 @@
       </xsl:when>
     </xsl:choose>
   </xsl:template>
-  
+
   <!--
       template: output.html.stylesheets.alternates
-  
+
       This is also a modified copy of the docbook-xsl-1.72 template.
       It produces the HTML <link> tags for alternate styleshhets,
       using the file's basename without '.css' extension as the
@@ -67,7 +67,7 @@
   <xsl:template name="output.html.stylesheet.alternates">
     <!-- parameter: a space-separated list of filenames -->
     <xsl:param name="alternates" select="''"/>
-  
+
     <xsl:choose>
       <xsl:when test="contains($alternates, ' ')">
         <xsl:variable name="href" select="substring-before($alternates, ' ')"/>

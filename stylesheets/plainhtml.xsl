@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- This file is part of the gimp-help-2 project and is 
+<!-- This file is part of the gimp-help-2 project and is
      (C) 2002, 2003, 2004, 2005, 2006 Daniel Egger, Róman Joost
      You may use this file in accordance to the GNU Free Documentation License
      Version 1.1 which is available from http://www.gnu.org. -->
      <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
          xmlns="http://www.w3.org/1999/xhtml">
-         <xsl:import href="@STYLEBASE@/xhtml/chunk.xsl" />
+         <xsl:import href="http://docbook.sourceforge.net/release/xsl/current/xhtml/chunk.xsl" />
 
          <xsl:include href="htmlalternate.xsl" />
 
@@ -17,7 +17,7 @@
          <xsl:param name="chunk.section.depth" select="2" />
          <!-- doesn't work correctly currently
          <xsl:param name="chunk.tocs.and.lots" select="1" />
-         <xsl:param name="chunk.seperate.lots" select="1" /> 
+         <xsl:param name="chunk.seperate.lots" select="1" />
          -->
          <xsl:param name="chunker.output.indent" select="'yes'" />
 
@@ -90,8 +90,8 @@
              <xsl:variable name="row2" select="($prev and $navig.showtitles != 0)
                  or (generate-id($home) != generate-id(.)
                  or $nav.context = 'toc')
-                 or ($chunk.tocs.and.lots != 0                   
-                 and $nav.context != 'toc')                      
+                 or ($chunk.tocs.and.lots != 0
+                 and $nav.context != 'toc')
                  or ($next and $navig.showtitles != 0)"/>
 
              <xsl:if test="$suppress.navigation = '0' and $suppress.footer.navigation = '0'">
@@ -224,7 +224,7 @@
          </xsl:template>
 
          <!-- For unknown reasons the original version of the template starting
-         from August 2004 would unwind the path of the sourcecode several 
+         from August 2004 would unwind the path of the sourcecode several
          times into the processing of the fileref thus prepending the path
          a few times into the src attribute of the img tag -->
          <xsl:template name="mediaobject.filename">

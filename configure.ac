@@ -241,22 +241,21 @@ AM_CONDITIONAL(HAVE_PNGOPTIMIZERS, test -n "$PNGNQ" && test -n "$PNGCRUSH")
 
 STYLEBASE='http://docbook.sourceforge.net/release/xsl/current'
 
-
-#  Allow to explicitely specify the stylesheet location
-#  in case the XML catalog doesn't exist or is broken.
-
+#  Do not allow to explicitely specify the stylesheet location any more.
 AC_ARG_WITH(xsl,
-            AS_HELP_STRING([--with-xsl=<basedir>],
-                           [path to the base of the DocBook Modular Stylesheets
-                            (deprecated - fix your DocBook Stylesheets package!)
-                           ]))
+            AS_HELP_STRING([--with-xsl=<basedir>], [obsolete]))
 
 if test "x$with_xsl" != "x"; then
-  STYLEBASE="$with_xsl"
-  AC_CHECK_FILE($STYLEBASE/xhtml/docbook.xsl, ,
-                AC_MSG_ERROR([** Couldn't find docbook.xsl in $STYLEBASE/xhtml]))
+    AC_MSG_WARN([
+    ** Ignoring '--with-xsl' -- this option is obsolete!
+    ** (Fix your DocBook XSL Stylesheets configuration if necessary!)])
 fi
 
+# Quick test for DocBook XSL Stylesheets
+
+GIMPHELP_DOCBOOK_CHECK_CONFIG($STYLEBASE)
+
+# TODO: remove this
 AC_SUBST(STYLEBASE)
 
 
@@ -295,8 +294,6 @@ AC_CONFIG_FILES([
 Makefile
 quickreference/Makefile
 omf/gimp-C.omf
-stylesheets/plainhtml.xsl
-stylesheets/htmlalternate.xsl
 ])
 
 AC_OUTPUT

@@ -603,20 +603,6 @@ log:
 
 
 ########################################################################
-####            Make XSL styesheets for HTML                        ####
-########################################################################
-
-# TODO
-stylesheets/plainhtml.xsl: stylesheets/plainhtml.xsl.in
-	$(msg) "[XSL] $@"
-	$(cmd) $(SED) -e s,@STYLEBASE@,http://docbook.sourceforge.net/release/xsl/current, $< > $@
-
-stylesheets/htmlalternate.xsl: stylesheets/htmlalternate.xsl.in
-	$(msg) "[XSL] $@"
-	$(cmd) cp $< $@
-
-
-########################################################################
 ####            Make HTML files:  XML --> HTML                      ####
 ########################################################################
 
