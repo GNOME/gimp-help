@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN" "http://www.docbook.org/xml/4.3/docbookx.dtd">
+<!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+                       "http://www.docbook.org/xml/4.3/docbookx.dtd">
 <!-- section history:
   2008-12-09 ude: moved "activate filter" paras to separate sect3
   2008-06-01 j.h: adopted 'de' example.
@@ -11,6 +12,7 @@
 -->
 <sect2 id="plug-in-convmatrix">
   <title>Convolution Matrix</title>
+
   <indexterm>
     <primary>Filters</primary>
     <secondary>Generic</secondary>
@@ -56,7 +58,8 @@
     </para>
     <mediaobject>
       <imageobject>
-        <imagedata fileref="images/filters/examples/convolution-calculate.png" format="PNG"/>
+        <imagedata format="PNG"
+          fileref="images/filters/examples/convolution-calculate.png"/>
       </imageobject>
     </mediaobject>
     <para>
@@ -94,7 +97,8 @@
       <title><quote>Convolution matrix</quote> options</title>
       <mediaobject>
         <imageobject>
-          <imagedata fileref="images/filters/filters-generic-convolution.png" format="PNG"/>
+          <imagedata format="PNG"
+            fileref="images/filters/filters-generic-convolution.png"/>
         </imageobject>
       </mediaobject>
     </figure>
@@ -106,15 +110,28 @@
             This is the 5x5 kernel matrix: you enter wanted values directly
             into boxes.
           </para>
-          <para><guilabel>Divisor</guilabel>: The result of previous calculation
-            will be divided by this divisor. You will hardly use 1, which
-            lets result unchanged, and 9 or 25 according to matrix size,
-            which gives the average of pixel values.
-          </para>
-          <para><guilabel>Offset</guilabel>: this value is added to the division
-            result. This is useful if result may be negative. This offset may
-            be negative.
-          </para>
+          <variablelist>
+            <varlistentry>
+              <term><guilabel>Divisor</guilabel></term>
+              <listitem>
+                <para>
+                  The result of previous calculation will be divided by this
+                  divisor. You will hardly use 1, which lets result unchanged,
+                  and 9 or 25 according to matrix size, which gives the
+                  average of pixel values.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term><guilabel>Offset</guilabel></term>
+              <listitem>
+                <para>
+                  This value is added to the division result. This is useful
+                  if result may be negative. This offset may be negative.
+                </para>
+              </listitem>
+            </varlistentry>
+          </variablelist>
         </listitem>
       </varlistentry>
       <varlistentry>
@@ -123,22 +140,26 @@
           <para>
             <inlinemediaobject>
               <imageobject>
-                <imagedata fileref="images/filters/filters-convolution-milord.png" format="PNG"/>
+                <imagedata format="PNG"
+                  fileref="images/filters/filters-convolution-milord.png"/>
               </imageobject>
             </inlinemediaobject>
             <inlinemediaobject>
               <imageobject>
-                <imagedata fileref="images/filters/filters-convolution-extend.png" format="PNG"/>
+                <imagedata format="PNG"
+                  fileref="images/filters/filters-convolution-extend.png"/>
               </imageobject>
             </inlinemediaobject>
             <inlinemediaobject>
               <imageobject>
-                <imagedata fileref="images/filters/filters-convolution-wrap.png" format="PNG"/>
+                <imagedata format="PNG"
+                  fileref="images/filters/filters-convolution-wrap.png"/>
               </imageobject>
             </inlinemediaobject>
             <inlinemediaobject>
               <imageobject>
-                <imagedata fileref="images/filters/filters-convolution-crop.png" format="PNG"/>
+                <imagedata format="PNG"
+                  fileref="images/filters/filters-convolution-crop.png"/>
               </imageobject>
             </inlinemediaobject>
           </para>
@@ -147,24 +168,32 @@
             When the initial pixel is on a border, a part of kernel is out of
             image. You have to decide what filter must do:
           </para>
-          <itemizedlist>
-            <listitem>
-              <para><guilabel>Extend</guilabel>: this part of kernel is not
-                taken into account.
-              </para>
-            </listitem>
-            <listitem>
-              <para><guilabel>Wrap</guilabel>: this part of kernel will study
-                pixels of the opposite border, so pixels disappearing from
-                one side reappear on the other side.
-              </para>
-            </listitem>
-            <listitem>
-              <para><guilabel>Crop</guilabel>: Pixels on borders are not
-                modified, but they are cropped.
-              </para>
-            </listitem>
-          </itemizedlist>
+          <variablelist>
+            <varlistentry>
+              <term><guilabel>Extend</guilabel></term>
+              <listitem>
+                <para>This part of kernel is not taken into account.</para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term><guilabel>Wrap</guilabel></term>
+              <listitem>
+                <para>
+                  This part of kernel will study pixels of the opposite
+                  border, so pixels disappearing from one side reappear on the
+                  other side.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term><guilabel>Crop</guilabel></term>
+              <listitem>
+                <para>
+                  Pixels on borders are not modified, but they are cropped.
+                </para>
+              </listitem>
+            </varlistentry>
+          </variablelist>
         </listitem>
       </varlistentry>
       <varlistentry>
@@ -189,7 +218,7 @@
         </listitem>
       </varlistentry>
       <varlistentry>
-        <term>Alpha weighting</term>
+        <term>Alpha-weighting</term>
         <listitem>
           <para>
             If this option is not checked, the filter doesn't take in account
@@ -202,85 +231,83 @@
   </sect3>
 
   <sect3>
-    <title>
-      Examples
-    </title>
+    <title>Examples</title>
     <para>
       Design of kernels is based on high levels mathematics. You can find
       ready-made kernels on the Web. Here are a few examples:
     </para>
     <figure>
-      <title>
-        Sharpen
-      </title>
+      <title>Sharpen</title>
       <mediaobject>
         <imageobject>
-          <imagedata fileref="images/filters/examples/convolution-sharpen.png" format="PNG"/>
+          <imagedata format="PNG"
+            fileref="images/filters/examples/convolution-sharpen.png"/>
         </imageobject>
       </mediaobject>
       <mediaobject>
         <imageobject>
-          <imagedata fileref="images/filters/examples/generic-taj-convmatrix-sharpen.jpg" format="JPG"/>
-        </imageobject>
-      </mediaobject>
-    </figure>
-    <figure>
-      <title>
-        Blur
-      </title>
-      <mediaobject>
-        <imageobject>
-          <imagedata fileref="images/filters/examples/convolution-blur.png" format="PNG"/>
-        </imageobject>
-      </mediaobject>
-      <mediaobject>
-        <imageobject>
-          <imagedata fileref="images/filters/examples/generic-taj-convmatrix-blur.jpg" format="JPG"/>
+          <imagedata format="JPG"
+            fileref="images/filters/examples/generic-taj-convmatrix-sharpen.jpg"/>
         </imageobject>
       </mediaobject>
     </figure>
     <figure>
-      <title>
-        Edge enhance
-      </title>
+      <title>Blur</title>
       <mediaobject>
         <imageobject>
-          <imagedata fileref="images/filters/examples/convolution-edge.png" format="PNG"/>
+          <imagedata format="PNG"
+            fileref="images/filters/examples/convolution-blur.png"/>
         </imageobject>
       </mediaobject>
       <mediaobject>
         <imageobject>
-          <imagedata fileref="images/filters/examples/generic-taj-convmatrix-edge-enhance.jpg" format="JPG"/>
-        </imageobject>
-      </mediaobject>
-    </figure>
-    <figure>
-      <title>
-        Edge detect
-      </title>
-      <mediaobject>
-        <imageobject>
-          <imagedata fileref="images/filters/examples/convolution-edge-detect1.png" format="PNG"/>
-        </imageobject>
-      </mediaobject>
-      <mediaobject>
-        <imageobject>
-          <imagedata fileref="images/filters/examples/generic-taj-convmatrix-edge-detect.jpg" format="JPG"/>
+          <imagedata format="JPG"
+            fileref="images/filters/examples/generic-taj-convmatrix-blur.jpg"/>
         </imageobject>
       </mediaobject>
     </figure>
     <figure>
-      <title>
-        Emboss
-      </title>
+      <title>Edge enhance</title>
       <mediaobject>
         <imageobject>
-          <imagedata fileref="images/filters/examples/convolution-emboss.png" format="PNG"/>
+          <imagedata format="PNG"
+            fileref="images/filters/examples/convolution-edge.png"/>
         </imageobject>
       </mediaobject>
       <mediaobject>
         <imageobject>
-          <imagedata fileref="images/filters/examples/generic-taj-convmatrix-emboss.jpg" format="JPG"/>
+          <imagedata format="JPG"
+            fileref="images/filters/examples/generic-taj-convmatrix-edge-enhance.jpg"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+    <figure>
+      <title>Edge detect</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata format="PNG"
+            fileref="images/filters/examples/convolution-edge-detect1.png"/>
+        </imageobject>
+      </mediaobject>
+      <mediaobject>
+        <imageobject>
+          <imagedata format="JPG"
+            fileref="images/filters/examples/generic-taj-convmatrix-edge-detect.jpg"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+    <figure>
+      <title>Emboss</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata format="PNG"
+            fileref="images/filters/examples/convolution-emboss.png"/>
+        </imageobject>
+      </mediaobject>
+      <mediaobject>
+        <imageobject>
+          <imagedata format="JPG"
+            fileref="images/filters/examples/generic-taj-convmatrix-emboss.jpg"/>
         </imageobject>
       </mediaobject>
     </figure>
