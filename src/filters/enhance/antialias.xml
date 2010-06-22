@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+                       "http://www.docbook.org/xml/4.3/docbookx.dtd">
+
+<sect2 id="plug-in-antialias">
+  <title>Antialias</title>
+
+  <indexterm>
+    <primary>Filters</primary>
+    <secondary>Enhance</secondary>
+    <tertiary>Antialias</tertiary>
+  </indexterm>
+  <indexterm>
+    <primary>Antialias</primary>
+  </indexterm>
+
+  <sect3>
+    <title>Overview</title>
+    <para>
+      This filter reduces alias effects
+      (see <link linkend="glossary-antialiasing">Antialiasing</link>)
+      using the Scale3X edge-extrapolation algorithm.
+    </para>
+    <para>
+      Scale3X is derived from Scale2X, which is a graphics effect to increase
+      the size of small bitmaps guessing the missing pixels without
+      interpolating pixels and blurring the images.<footnote><para>
+        <xref linkend="bibliography-online-scale2x"/>.
+      </para></footnote>
+      Scale2X was originally developed to improve the quality of old Arcade
+      and PC games with a low video resolution played with video hardware like
+      TVs, Arcade monitors, PC monitors and LCD screens.<footnote><para>
+        <xref linkend="bibliography-online-advancemame"/>.
+      </para></footnote>
+    </para>
+    <!--
+        XXX: merge the following snippets if the <procedure> makes translating
+        too hard.
+    -->
+    <para>
+      The Antialias filter works as follows:
+    </para>
+    <procedure>
+      <para>For every pixel,</para>
+      <step>
+        <para>
+          the filter expands the original pixel in 9 (3x3) new pixels
+          according to the Scale3X algorithm, using the colors of the pixel
+          and its 8 adjacent pixels (extrapolation);
+        </para>
+      </step>
+      <step>
+        <para>
+          then the filter subsamples the new pixels to a weighted average
+          pixel.
+        </para>
+      </step>
+    </procedure>
+<!--
+    <para>
+      The Antialias filter works as follows: for every pixel, the filter
+      expands the original pixel in 9 (3x3) new pixels according to the
+      Scale3X algorithm, using the colors of the pixel and its 8 adjacent
+      pixels (extrapolation); then it subsamples the new pixels to a weighted
+      average pixel.
+    </para>
+-->
+  </sect3>
+
+  <sect3>
+    <title>Activating the filter</title>
+    <para>
+      You can find this filter through
+      <menuchoice>
+        <guimenu>Filters</guimenu>
+        <guisubmenu>Enhance</guisubmenu>
+        <guimenuitem>Antialias</guimenuitem>
+      </menuchoice>.
+    </para>
+  </sect3>
+
+  <sect3>
+    <title>Examples</title>
+    <para>
+      The following examples illustrate the effect on some patterns. The
+      small squares are one pixel in size (zoom 16:1).
+    </para>
+    <mediaobject>
+      <imageobject>
+        <imagedata format="PNG"
+          fileref="images/filters/enhance/antialias-orig.png"/>
+      </imageobject>
+      <caption>
+        <para>Original image (zoom 16:1)</para>
+      </caption>
+    </mediaobject>
+    <mediaobject>
+      <imageobject>
+        <imagedata format="PNG"
+          fileref="images/filters/enhance/antialias-applied.png"/>
+      </imageobject>
+      <caption>
+        <para><quote>Antialias</quote> applied (zoom 16:1)</para>
+      </caption>
+    </mediaobject>
+  </sect3>
+</sect2>
