@@ -42,7 +42,7 @@
             </xsl:choose>
           </xsl:attribute>
           <xsl:attribute name="parent">
-            <xsl:value-of select="../@targetptr" />
+            <xsl:value-of select="ancestor::div[@targetptr][1]/@targetptr"/>
           </xsl:attribute>
         </help-item>
       </xsl:when>
@@ -110,14 +110,7 @@
           </xsl:choose>
         </xsl:attribute> <!--title-->
         <xsl:attribute name="parent">
-          <xsl:choose>
-            <xsl:when test="../@targetptr">
-              <xsl:value-of select="../@targetptr" />
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:value-of select="../../@targetptr" />
-            </xsl:otherwise>
-          </xsl:choose>
+          <xsl:value-of select="ancestor::*[@targetptr][1]/@targetptr"/>
         </xsl:attribute>
       </help-item>
     </xsl:if>
