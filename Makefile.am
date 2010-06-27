@@ -3,7 +3,7 @@
 SUBDIRS = quickreference
 
 # used for creating the ChangeLog
-LAST_RELEASE_TAG = GIMP_HELP_2_4_2
+LAST_RELEASE_TAG = GIMP_HELP_2_6_0
 
 
 ########################################################################
