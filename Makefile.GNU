@@ -809,6 +809,7 @@ $(tarball_prefix)-%.tar: html/%/index.html html/%/gimp-help.xml \
 	$(cmd) $(mkdir_p) $(tarball_dir)/html
 	$(cmd) cd $(tarball_dir)/html && $(ln_s) ../../html/$* .
 	$(cmd) cp $(HTMLMETAFILES) $(tarball_dir)/
+	$(cmd) cp make.d/INSTALL.html-package $(tarball_dir)/INSTALL
 	$(cmd) $(SED) -e '/LANGUAGE *=/s/en/$*/' \
 		make.d/Makefile.html-package > $(tarball_dir)/Makefile
 	$(cmd) tar -chf $@ $(tarball_dir)/

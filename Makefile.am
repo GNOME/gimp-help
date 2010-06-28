@@ -859,7 +859,7 @@ endif
 
 tarball_prefix = gimp-help-2-html
 tarball_dir    = gimp-help-2
-HTMLMETAFILES  = README AUTHORS COPYING MAINTAINERS HACKING INSTALL
+HTMLMETAFILES  = README AUTHORS COPYING MAINTAINERS
 
 $(tarball_prefix)-%.tar: html/%/index.html html/%/gimp-help.xml \
 		$(HTMLMETAFILES) make.d/Makefile.html-package
@@ -868,6 +868,7 @@ $(tarball_prefix)-%.tar: html/%/index.html html/%/gimp-help.xml \
 	$(cmd) $(MKDIR_P) $(tarball_dir)/html
 	$(cmd) cd $(tarball_dir)/html && $(LN_S) ../../html/$* .
 	$(cmd) cp $(HTMLMETAFILES) $(tarball_dir)/
+	$(cmd) cp make.d/INSTALL.html-package $(tarball_dir)/INSTALL
 	$(cmd) $(SED) -e '/LANGUAGE *=/s/en/$*/' \
 		make.d/Makefile.html-package > $(tarball_dir)/Makefile
 	$(cmd) tar -chf $@ $(tarball_dir)/

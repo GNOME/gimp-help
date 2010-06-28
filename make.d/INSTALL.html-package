@@ -18,7 +18,7 @@ structure:
 Depending for which language you downloaded the installation package,
 you need to copy the html folder to the shared GIMP directory:
 
-    $ cp html/en $prefix/share/gimp/2.0/help/
+    $ cp -R html/en $prefix/share/gimp/2.0/help/
     $ ls $prefix/share/gimp/2.0/help
     en
     $ ls $prefix/share/gimp/2.0/help/en
@@ -28,6 +28,22 @@ you need to copy the html folder to the shared GIMP directory:
 
 If the help directory in $prefix/share/gimp/2.0/ doesn't exist, create
 it.
+
+Tip:
+
+There is a basic (special-purpose) Makefile shipped with this HTML
+package for simplifying the installation procedure, e.g.:
+
+    $ make install    # copy the html folder to the correct location
+or
+    $ make install DESTDIR=$RPM_BUILD_ROOT    # for packagers
+or
+    $ make install GIMPDATADIR=/opt/myprogs/gimp/2.0
+
+A short help text is displayed with
+
+    $ make help
+
 
 -- The GIMP-Help team.
 
