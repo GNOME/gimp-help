@@ -13,6 +13,7 @@
 -->
 <sect2 id="plug-in-lic">
   <title>Van Gogh (LIC)</title>
+
   <indexterm>
     <primary>Filters</primary>
     <secondary>Artistic</secondary>
@@ -21,6 +22,7 @@
   <indexterm>
     <primary>Van Gogh (LIC)</primary>
   </indexterm>
+
   <sect3>
     <title>Overview</title>
     <figure>
@@ -53,7 +55,7 @@
     <para>
       It uses a blur map. Unlike other maps, this filter doesn't use grey
       levels of this blur map. <emphasis>Filter takes in account only
-        gradient direction(s)</emphasis>. Image pixels corresponding to
+      gradient direction(s)</emphasis>. Image pixels corresponding to
       solid areas of the map are ignored.
     </para>
   </sect3>
@@ -100,30 +102,70 @@
     </tip>
     <variablelist>
       <varlistentry>
-        <term>Convolution</term>
+        <term>Effect Channel</term>
+        <listitem>
+          <para>
+            By selecting <guilabel>Hue</guilabel>, <guilabel>Saturation
+            </guilabel> or <guilabel>Brightness (=Value)</guilabel>, filter
+            will use this channel to treat image.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Effect Operator</term>
+        <listitem>
+          <para>
+            The <quote>Derivative</quote> option reverses <quote>Gradient
+            </quote> direction:
+          </para>
+          <figure>
+            <title>Derivative option example</title>
+            <mediaobject>
+              <imageobject>
+                <imagedata format="PNG"
+                  fileref="images/filters/examples/map-lic-deriv.png"/>
+              </imageobject>
+              <caption>
+                <para>
+                  Using a square gradient map, Effect operator is on
+                  <quote>Gradient</quote> on the left, on
+                  <quote>Derivative</quote> on the right: what was sharp is
+                  blurred and conversely.
+                </para>
+              </caption>
+            </mediaobject>
+          </figure>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Convolve</term>
         <listitem>
           <para>
             You can use two types of convolution. That's the first parameter
             you have to set:
           </para>
-          <itemizedlist>
+          <variablelist>
+            <varlistentry>
+              <term><guilabel>With white noise</guilabel></term>
+              <listitem>
+                <para>
+                  White noise is an acoustics name. It's a noise where all
+                  frequencies have the same amplitude. Here, this option is
+                  used to create patterns.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term><guilabel>With source image</guilabel></term>
             <listitem>
-              <para><guilabel>With White Noise</guilabel>: White Noise is an
-                acoustics name. It's a noise where all frequencies have
-                the same amplitude. Here, this option is used to create
-                patterns.
-              </para>
+              <para>The source image will be blurred.</para>
             </listitem>
-            <listitem>
-              <para><guilabel>With Source Image</guilabel>: The source
-                image will be blurred.
-              </para>
-            </listitem>
-          </itemizedlist>
+            </varlistentry>
+          </variablelist>
         </listitem>
       </varlistentry>
       <varlistentry>
-        <term>Effect Image</term>
+        <term>Effect image</term>
         <listitem>
           <para>
             That's the map for blur or pattern direction. This map must have
@@ -182,43 +224,7 @@
         </listitem>
       </varlistentry>
       <varlistentry>
-        <term>Effect Channel</term>
-        <listitem>
-          <para>
-            By selecting <guilabel>Hue</guilabel>, <guilabel>Saturation
-            </guilabel> or <guilabel>Brightness (=Value)</guilabel>, filter
-            will use this channel to treat image.
-          </para>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>Effect Operator</term>
-        <listitem>
-          <para>
-            The <quote>Derivative</quote> option reverses <quote>Gradient
-            </quote> direction:
-          </para>
-          <figure>
-            <title>Derivative option example</title>
-            <mediaobject>
-              <imageobject>
-                <imagedata format="PNG"
-                  fileref="images/filters/examples/map-lic-deriv.png"/>
-              </imageobject>
-              <caption>
-                <para>
-                  Using a square gradient map, Effect operator is on
-                  <quote>Gradient</quote> on the left, on
-                  <quote>Derivative</quote> on the right: what was sharp is
-                  blurred and conversely.
-                </para>
-              </caption>
-            </mediaobject>
-          </figure>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>Filter Length</term>
+        <term>Filter length</term>
         <listitem>
           <para>
             When applying blur, this option controls how important blur is.
@@ -260,7 +266,7 @@
         </listitem>
       </varlistentry>
       <varlistentry>
-        <term>Noise Magnitude</term>
+        <term>Noise magnitude</term>
         <listitem>
           <para>
             This options controls the amount and size of White Noise. Low
@@ -282,7 +288,7 @@
         </listitem>
       </varlistentry>
       <varlistentry>
-        <term>Integration Steps</term>
+        <term>Integration steps</term>
         <listitem>
           <para>
             This options controls the influence of gradient map on texture.
@@ -305,7 +311,8 @@
         </listitem>
       </varlistentry>
       <varlistentry>
-        <term>Minimum/Maximum values</term>
+        <term>Minimum value</term>
+        <term>Maximum value</term>
         <listitem>
           <para>
             Both values determine a range controlling texture contrast:
@@ -313,7 +320,7 @@
             in low contrast.
           </para>
           <figure>
-            <title>Action example of Min/max values on texture</title>
+            <title>Action example of min/max values on texture</title>
             <mediaobject>
               <imageobject>
                 <imagedata format="PNG"
