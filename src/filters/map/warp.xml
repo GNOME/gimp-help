@@ -111,7 +111,7 @@
     <variablelist>
       <title>Basic Options</title>
       <varlistentry>
-        <term>Step Size</term>
+        <term>Step size</term>
         <listitem>
           <para>
             <quote>Step</quote> is displacement distance for every filter
@@ -125,13 +125,12 @@
         <term>Iterations</term>
         <listitem>
           <para>
-            <guilabel>Iteration</guilabel> is the number of repetitions of
-            effect when applying filter.
+            The number of repetitions of effect when applying filter.
           </para>
         </listitem>
       </varlistentry>
       <varlistentry>
-        <term>On Edges</term>
+        <term>On edges</term>
         <listitem>
           <para>
             Because of displacement, a part of pixels are driven over the
@@ -139,45 +138,53 @@
             places are emptying. Four following options allow you to fix this
             issue:
           </para>
-          <itemizedlist>
-            <listitem>
-              <para>
-                <guilabel>Warp</guilabel>
-                (default): What goes out on one side is going into the
-                opposite side.
-              </para>
-            </listitem>
-            <listitem>
-              <para>
-                <guilabel>Smear</guilabel>:
-                Emptying places are filled with a spreading of the
-                neighbouring image line.
-              </para>
-            </listitem>
-            <listitem>
-              <para>
-                <guilabel>Black</guilabel>
-                : Emptying places are filled with black color.
-              </para>
-            </listitem>
-            <listitem>
-              <para>
-                <guilabel>FG Color</guilabel>
-                : Emptying places are filled with the Foreground color of the
-                color area in Toolbox.
-              </para>
-            </listitem>
-          </itemizedlist>
+          <variablelist>
+            <varlistentry>
+              <term><guilabel>Warp</guilabel></term>
+              <listitem>
+                <para>
+                  What goes out on one side is going into the opposite side
+                  (this is the default).
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term><guilabel>Smear</guilabel></term>
+              <listitem>
+                <para>
+                  Emptying places are filled with a spreading of the
+                  neighbouring image line.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term><guilabel>Black</guilabel></term>
+              <listitem>
+                <para>
+                  Emptying places are filled with black color.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term><guilabel>Foreground color</guilabel></term>
+              <listitem>
+                <para>
+                  Emptying places are filled with the Foreground color of the
+                  color area in Toolbox.
+                </para>
+              </listitem>
+            </varlistentry>
+          </variablelist>
         </listitem>
       </varlistentry>
       <varlistentry>
-        <term>Displacement Map</term>
+        <term>Displacement map</term>
         <listitem>
           <para>
-            To be listed in this drop-down list, the displacement map,
-            which is a grey-scaled image, must be <emphasis>present on
-              your screen when you call filter and must have the same size
-              as the original image</emphasis>.
+            To be listed in this drop-down list, the displacement map, which
+            should be a grayscaled image, must be <emphasis>present on your
+            screen when you call filter and must have the same size as the
+            original image</emphasis>.
           </para>
         </listitem>
       </varlistentry>
@@ -185,7 +192,7 @@
     <variablelist>
       <title>Advanced Options</title>
       <varlistentry>
-        <term>Dither Size</term>
+        <term>Dither size</term>
         <listitem>
           <para>
             Once all pixels displaced, this option scatters them randomly,
@@ -204,7 +211,7 @@
         </listitem>
       </varlistentry>
       <varlistentry>
-        <term>Rotation Angle</term>
+        <term>Rotation angle</term>
         <listitem>
           <para>
             This option sets displacement angle of pixels according to the
@@ -233,21 +240,33 @@
         </listitem>
       </varlistentry>
       <varlistentry>
+        <term>Substeps</term>
+        <listitem>
+          <!-- CHECK: I'm unsure whether this is (a) makes senses, and
+               (b) is correct... :-| (ude, 2010-07-19) -->
+          <para>
+            If you specify a value > 1, the displacement vector is computed in
+            several substeps, giving you a finer control to the displace
+            process.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
         <term>Magnitude map</term>
         <listitem>
           <para>
-            In addition to displacement map, you can add a
-            <guilabel>Magnitude Map</guilabel>. This map is also a
-            grey-scaled image, with the same size as the source image and
-            which must be present on your screen when you call filter.
-            This map gives more or less strength to filter on some parts
-            of the image, according to the grey levels of this magnitude
-            map. Image areas corresponding to white parts of this map will
-            undergo all the strength of filter. Image areas corresponding
-            to black parts of the map will be spared by filter.
+            In addition to displacement map, you can add a Magnitude map. This
+            map should also be a grayscaled image, with the same size as the
+            source image and which must be present on your screen when you
+            call filter.  This map gives more or less strength to filter on
+            some parts of the image, according to the grey levels of this
+            magnitude map. Image areas corresponding to white parts of this
+            map will undergo all the strength of filter. Image areas
+            corresponding to black parts of the map will be spared by filter.
             Intermediate grey levels will lessen filter action on
-            corresponding areas of the image. <guilabel>Use magnitude
-              map</guilabel> must be checked for that.
+            corresponding areas of the image.
+            <guilabel>Use&nbsp;magnitude&nbsp;map</guilabel> must be checked
+            for that.
           </para>
           <figure>
             <title>Magnitude Map example:</title>
@@ -282,18 +301,19 @@
         </para>
       </note>
       <varlistentry>
-        <term>The Gradient Map</term>
+        <term>Gradient scale</term>
         <listitem>
-          <para><emphasis>The gradient map</emphasis> is also a grayscaled map.
-            Here, the displacement of pixels depends on the direction of
+          <para>
+            Using a gradient map, (this map should also be a grayscaled
+            image), the displacement of pixels depends on the direction of
             grayscale transitions. The <guilabel>Gradient scale</guilabel>
             option lets you set how much the grayscale variations will
-            influence the displacement of pixels.
-            On every iteration, the filter works of the whole image, not
-            only on the red object: this explains burredness.
+            influence the displacement of pixels. On every iteration, the
+            filter works of the whole image, not only on the red object: this
+            explains burredness.
           </para>
           <figure>
-            <title>Gradient map example</title>
+            <title>Gradient scale example</title>
             <mediaobject>
               <imageobject>
                 <imagedata format="PNG"
@@ -301,23 +321,33 @@
               </imageobject>
               <caption>
                 <para>
-                  From left to right: original image, displacement map,
-                  after applying <quote>Warp</quote> filter with a Gradient
-                  Scale map. Gradient is oblique, from top left to right
-                  bottom. The part of the image corresponding to the gradient
-                  is moved obliquely, 90° rotated (Rotation Angle 90° in
-                  Advanced options).
+                  From left to right: original image, Gradient map, filter
+                  applied.
                 </para>
               </caption>
             </mediaobject>
           </figure>
+          <para>
+            In the example above, <quote>Warp</quote> filter is applied with a
+            gradient map (Gradient scale = 10.0). Gradient is oblique, from
+            top left to right bottom. The part of the image corresponding to
+            the gradient is moved obliquely, 90° rotated (Rotation angle 90°
+            in Advanced Options).
+          </para>
         </listitem>
       </varlistentry>
       <varlistentry>
-        <term>The Vector Map</term>
+        <term>Vector mag</term>
         <listitem>
+          <para>
+            With this map, the displacement depends on the angle you set in
+            the <guilabel>Angle</guilabel> text box. 0° is upwards.  Angles go
+            counter-clockwise. The <emphasis>vector control map</emphasis>
+            determines by how many pixels the image will move on every
+            iteration.
+          </para>
           <figure>
-            <title>Vector map example</title>
+            <title>Vector mag example</title>
             <mediaobject>
               <imageobject>
                 <imagedata format="PNG"
@@ -326,22 +356,24 @@
               <caption>
                 <para>
                   From left to right: original image, displacement map,
-                  after applying <quote>Warp</quote> filter with a Vector
-                  map. Gradient is vertical, from top to bottom. Vector angle
-                  is 45°. The image is moved obliquely, 45° to the top left
-                  corner. The image is blurred because every iteration works
-                  on the whole image, and not only on the red bar.
+                  filter applied.
                 </para>
               </caption>
             </mediaobject>
           </figure>
           <para>
-            With this map, the displacement depends on the angle you set
-            in the <guilabel>Angle</guilabel> text box. 0° is upwards.
-            Angles go counter-clockwise. The <guilabel>Vector Magnitude
-            </guilabel> determines by how many pixels the image will move on
-            every iteration.
+            In the above example, <quote>Warp</quote> filter is applied with a
+            Vector mag. Gradient is vertical, from top to bottom. Vector angle
+            is 45°. The image is moved obliquely, 45° to the top left corner.
+            The image is blurred because every iteration works on the whole
+            image, and not only on the red bar.
           </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Angle</term>
+        <listitem>
+          <para>Angle for fixed vector map (see above).</para>
         </listitem>
       </varlistentry>
     </variablelist>
