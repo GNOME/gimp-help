@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+                       "http://www.docbook.org/xml/4.3/docbookx.dtd">
+
+<sect2 id="script-fu-sota-chrome-it">
+  <title>Stencil Chrome</title>
+
+  <indexterm>
+    <primary>Filters</primary>
+    <secondary>Decor</secondary>
+    <tertiary>Stencil Chrome</tertiary>
+  </indexterm>
+  <indexterm>
+    <primary>Stencil Chrome</primary>
+  </indexterm>
+
+  <sect3>
+    <title>Overview</title>
+    <figure id="script-fu-sota-chrome-it-example">
+      <title>Example for the <quote>Stencil Chrome</quote> filter</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata format="JPG"
+            fileref="images/filters/examples/taj_grayscale.jpg"/>
+        </imageobject>
+        <caption>
+          <para>Original image</para>
+        </caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject>
+          <imagedata format="JPG"
+            fileref="images/filters/examples/decor/taj-chrome-it.jpg"/>
+        </imageobject>
+        <caption>
+          <para><quote>Stencil Chrome</quote> applied</para>
+        </caption>
+      </mediaobject>
+    </figure>
+    <para>
+      This filter provides a state of the art chrome effect. The source image
+      must be a grayscale image containing a single layer without alpha
+      channel. This layer is used as mask (<quote>stencil</quote>) for the
+      chrome effect.
+    </para>
+    <para>
+      The filter creates a new image with the chrome effect applied to the
+      source image or, if a selection exists, to the selection of the source
+      image (a nice background is added too).
+    </para>
+  </sect3>
+
+  <sect3>
+    <title>Activating the filter</title>
+    <para>
+      This filter is found in the image window menu under
+      <menuchoice>
+        <guimenu>Filters</guimenu>
+        <guisubmenu>Decor</guisubmenu>
+        <guimenuitem>Stencil Chrome</guimenuitem>
+      </menuchoice>.
+    </para>
+    <tip>
+      <para>
+        If this command remains grayed out although the image is grayscale,
+        check for an Alpha channel and delete it.
+      </para>
+    </tip>
+  </sect3>
+
+  <sect3>
+    <title>Options</title>
+    <figure>
+      <title><quote>Stencil Chrome</quote> options</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata format="PNG"
+            fileref="images/filters/decor/chrome-it.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+    <variablelist>
+      <varlistentry>
+        <term>Chrome saturation</term>
+        <term>Chrome lightness</term>
+        <listitem>
+          <!-- TRANSLATORS: <quote>d "Chrome", "Highlight" and
+"Drop Shadow" are the layer names set by the script. -->
+          <para>
+            Use this option to control how
+            <link linkend="gimp-tool-hue-saturation">saturation and
+            lightness</link> of the <quote>Chrome</quote> layer are adjusted.
+            Negative values decrease saturation and lightness respectively.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Chrome factor</term>
+        <listitem>
+          <para>
+            This factor lets you adjust offsets, feather radius, and brush
+            size used to construct the <quote>Chrome</quote> and
+            <quote>Highlight</quote> layer (and the <quote>Drop Shadow</quote>
+            as well).
+          </para>
+          <para>
+            Change with caution, decreasing this value may make the chrome
+            effect worse. The default factor 0.75 seems to be a good choice.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Environment map</term>
+        <listitem>
+          <para>
+            The environment map is an image that is added as some kind of
+            <quote>noise</quote> to the source. The effect is best to see if
+            you use a simple map with some obvious shapes:
+          </para>
+          <mediaobject>
+            <imageobject>
+              <imagedata format="PNG"
+                fileref="images/filters/decor/chrome-it-env-example.png"/>
+            </imageobject>
+            <caption>
+              <para>Using a simple environment map</para>
+            </caption>
+          </mediaobject>
+          <para>
+            The environment map must be a grayscale image too. Size doesn't
+            matter, the environment map is scaled to the size of the source
+            image.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Highlight balance</term>
+        <listitem>
+          <para>
+            This color is used to modify the
+            <link linkend="gimp-tool-color-balance">color balance</link> of
+            the <quote>Highlight</quote> layer: the amount of red, green, and
+            blue colors is increased according to the corresponding values of
+            the specified option.
+          </para>
+          <para>
+            Avoid colors with red, green or blue value > 230.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Chrome balance</term>
+        <listitem>
+          <para>
+            Same as above, but modifies the
+            <link linkend="gimp-tool-color-balance">color balance</link> of
+            the <quote>Chrome</quote> layer.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Chrome white areas</term>
+        <listitem>
+          <para>
+            If checked (this is the default), the source image is used as
+            mask. If unchecked, the <emphasis>inverted</emphasis> source image
+            is used.
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </sect3>
+
+  <sect3>
+    <title>How to create the chrome effect</title>
+    <para>
+      The following section provides a brief and simplified description of how
+      the script (actually this filter is a Script-Fu) creates the chrome
+      effect.
+    </para>
+    <para>
+      If you apply the filter to your source images and then look at the
+      <link linkend="gimp-layer-dialog">layer dialog</link> of the resulting
+      image, you will see that there are two main layers which make up the
+      chrome effect: the <quote>Chrome</quote> layer and the
+      <quote>Highlight</quote> layer. These layers are created as follows:
+    </para>
+    <procedure>
+      <step>
+        <para>
+          The script constructs a somewhat simplified and blurred layer from
+          the source image (from the inverted source image if
+          <guilabel>Chrome&nbsp;white&nbsp;areas</guilabel> is unchecked).
+        </para>
+        <mediaobject>
+          <imageobject>
+            <imagedata format="PNG"
+              fileref="images/filters/decor/chrome-it-step1.png"/>
+          </imageobject>
+        </mediaobject>
+        <para>
+          The <guilabel>Chrome factor</guilabel> controls the appearance of
+          this layer.
+        </para>
+      </step>
+      <step>
+        <para>
+          The (scaled) environment map is blurred and merged into the above
+          layer with 50% opacity. (Do you spot the cat in the introducing
+          <link linkend="script-fu-sota-chrome-it-example">example</link>?)
+        </para>
+        <mediaobject>
+          <imageobject>
+            <imagedata format="PNG"
+              fileref="images/filters/decor/chrome-it-step2.png"/>
+          </imageobject>
+          <caption>
+            <para>Merging the environment map</para>
+          </caption>
+        </mediaobject>
+      </step>
+      <step>
+        <para>
+          The brightness (value) of the layer is modified according to a
+          spline-based intensity curve.
+        </para>
+        <mediaobject>
+          <imageobject>
+            <imagedata format="PNG"
+              fileref="images/filters/decor/chrome-it-step3.png"/>
+          </imageobject>
+          <caption>
+            <para>Modifying the intensity curve</para>
+          </caption>
+        </mediaobject>
+      </step>
+      <step>
+        <para>
+          A layer mask is added, initialized with the source image
+          (the <quote>Chrome Stencil</quote>). This is the
+          <quote>Chrome</quote> layer before the final step.
+        </para>
+        <para>
+          The <quote>Highlight</quote> layer is a copy of the
+          <quote>Chrome</quote> layer where the layer mask is stroked with a
+          white brush.
+        </para>
+        <mediaobject>
+          <imageobject>
+            <imagedata format="PNG"
+              fileref="images/filters/decor/chrome-it-step4.png"/>
+          </imageobject>
+          <caption>
+            <para>Chrome and Highlight base</para>
+          </caption>
+        </mediaobject>
+      </step>
+      <step>
+        <para>
+          For both layers the color balance is modified (according to
+          <guilabel>Highlight&nbsp;balance</guilabel> and
+          <guilabel>Chrome&nbsp;balance</guilabel>), increasing the amount of
+          red, green, and blue, with emphasis on highlights.
+        </para>
+        <para>
+          Additionally, saturation and lightness of the <quote>Chrome</quote>
+          layer is modified (controlled by
+          <guilabel>Chrome&nbsp;saturation</guilabel> and
+          <guilabel>Chrome&nbsp;lightness</guilabel>).
+        </para>
+        <mediaobject>
+          <imageobject>
+            <imagedata format="PNG"
+              fileref="images/filters/decor/chrome-it-step5.png"/>
+          </imageobject>
+          <caption>
+            <para>Chrome and Highlight layer</para>
+          </caption>
+        </mediaobject>
+      </step>
+    </procedure>
+    <para>
+      Now add a drop shadow and a background layer and you get the
+      <link linkend="script-fu-sota-chrome-it-example">Example image</link>
+      for the <quote>Stencil Chrome</quote> filter.
+    </para>
+  </sect3>
+</sect2>
