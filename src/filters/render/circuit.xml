@@ -36,6 +36,14 @@
       circuit board. It looks even better when gradmapped with a suitable
       gradient.
     </para>
+    <tip>
+      <para>
+        <!--This script doesn't handle or color combos well, i.e. black/black
+        doesn't work. (I don't understand this)-->
+        The effect seems to work best on odd shaped selections because of
+        some limitations in the maze codes selection handling ability.
+      </para>
+    </tip>
     <para>
       If the image is in indexed colors, this menu entry is grayed out
       and unavailable.
@@ -48,45 +56,6 @@
         The resulting image doesn't depend on the original image.
       </para>
     </note>
-    <para>This effect is achieved through the following steps:</para>
-    <procedure>
-      <step>
-        <para>
-          First, <link linkend="plug-in-maze">draw maze</link> with 5 pixels
-          width pathways and walls with the <quote>Depth First</quote>
-          algorithm.  The pattern of maze is set by <guilabel>Circuit
-          seed</guilabel>.
-        </para>
-      </step>
-      <step>
-        <para>
-          <link linkend="plug-in-oilify">Oilify</link> this maze with a brush
-          of <guilabel>Oilify mask size</guilabel>.
-        </para>
-      </step>
-      <step>
-        <para>
-          Then apply the <link linkend="plug-in-edge">extract edge</link>
-          filter with Sobel algorithm, Smear option and Amount to 2.0,
-          to the oilified maze image. This crowds high contrast winding curves
-          like as a circuit map.
-        </para>
-      </step>
-      <step>
-        <para>
-          Finally, <link linkend="gimp-tool-desaturate">Desaturate</link> the
-          map with gray color in <acronym>RGB</acronym> mode.
-        </para>
-      </step>
-    </procedure>
-    <tip>
-      <para>
-        <!--This script doesn't handle or color combos well, i.e. black/black
-        doesn't work. (I don't understand this)-->
-        The effect seems to work best on odd shaped selections because of
-        some limitations in the maze codes selection handling ability.
-      </para>
-    </tip>
   </sect3>
 
   <sect3>
@@ -167,5 +136,40 @@
         </listitem>
       </varlistentry>
     </variablelist>
+  </sect3>
+
+  <sect3>
+    <title>Making the Circuit effect</title>
+    <para>The Circuit effect is achieved through the following steps:</para>
+      <procedure>
+        <step>
+          <para>
+            First, <link linkend="plug-in-maze">draw maze</link> with 5 pixels
+            width pathways and walls with the <quote>Depth First</quote>
+            algorithm.  The pattern of maze is set by <guilabel>Circuit
+            seed</guilabel>.
+          </para>
+        </step>
+        <step>
+          <para>
+            <link linkend="plug-in-oilify">Oilify</link> this maze with a
+            brush of <guilabel>Oilify mask size</guilabel>.
+          </para>
+        </step>
+        <step>
+          <para>
+            Then apply the <link linkend="plug-in-edge">extract edge</link>
+            filter with Sobel algorithm, Smear option and Amount to 2.0, to
+            the oilified maze image. This crowds high contrast winding curves
+            like as a circuit map.
+          </para>
+        </step>
+        <step>
+          <para>
+            Finally, <link linkend="gimp-tool-desaturate">Desaturate</link>
+            the map with gray color in <acronym>RGB</acronym> mode.
+          </para>
+        </step>
+      </procedure>
   </sect3>
 </sect2>
