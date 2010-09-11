@@ -2,8 +2,9 @@
 
 <!--
   This file is part of the gimp-help-2 project and is
-  You may use this file in accordance to the GNU Free Documentation License
-  Version 1.1 which is available from http://www.gnu.org.
+  (C) 2002, 2003, 2004, 2005, 2006 Daniel Egger, Róman Joost
+  You may use this file in accordance to the GNU General Public License
+  Version 2 which is available from http://www.gnu.org.
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
