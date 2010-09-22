@@ -55,7 +55,8 @@
               and not(@element = 'footnote')
               and not(@element = 'figure')
               and (starts-with(@targetptr, 'gimp-') or
-                   starts-with(@targetptr, 'plug-in-'))">
+                   starts-with(@targetptr, 'plug-in-') or
+                   starts-with(@targetptr, 'script-fu-'))">
       <help-item>
         <xsl:attribute name="id">
           <xsl:value-of select="@targetptr" />
