@@ -414,15 +414,19 @@ MAINTAINERS: gimp-help-2.doap $(DOAP_STYLESHEET)
 ########################################################################
 
 # src/path/to/file/*.xml --> pot/path/to/file.pot
-POT_FILES  = $(patsubst src/%,pot/%.pot,$(filter-out src src/,$(SRC_DIRS)))
+# HIDE FROM AUTOMAKE #POT_FILES  = $(patsubst src/%,pot/%.pot,$(filter-out src src/,$(SRC_DIRS)))
 # Special case: src/*.xml --> pot/gimp.pot
-POT_FILES += pot/gimp.pot
+# HIDE FROM AUTOMAKE #POT_FILES += pot/gimp.pot
 
+# XXX: Secondary Expansion of the following two rules is required because
+# "pot/%.pot: $(srcdir)/src/%/*.xml" didn't work with make v3.82
+# (cf. bug #637505).
+# HIDE FROM AUTOMAKE #.SECONDEXPANSION:
 # General case
 # HIDE FROM AUTOMAKE #ifeq ($(filter pot/%.pot,$(MAKECMDGOALS)),)
-# HIDE FROM AUTOMAKE #pot/%.pot: $(srcdir)/src/%/*.xml
+# HIDE FROM AUTOMAKE #pot/%.pot: $(srcdir)/src/$$*/*.xml $$(wildcard images/C/$$*/*.*)
 # HIDE FROM AUTOMAKE #else
-# HIDE FROM AUTOMAKE #pot/%.pot: $(srcdir)/src/%/*.xml FORCE
+# HIDE FROM AUTOMAKE #pot/%.pot: $(srcdir)/src/$$*/*.xml FORCE
 # HIDE FROM AUTOMAKE #endif
 # HIDE FROM AUTOMAKE #	$(cmd) $(call make_target_dir,$@)
 # HIDE FROM AUTOMAKE #	$(msg) "[POT] $@"
@@ -435,10 +439,10 @@ POT_FILES += pot/gimp.pot
 # HIDE FROM AUTOMAKE #endif
 # HIDE FROM AUTOMAKE #	$(cmd) $(call make_target_dir,$@)
 # HIDE FROM AUTOMAKE #	$(msg) "[POT] $@"
-# HIDE FROM AUTOMAKE #	$(cmd) $(call xml2pot,$^,$@)
+# HIDE FROM AUTOMAKE #	$(cmd) $(call xml2pot,$(filter-out FORCE,$^),$@)
 # Special case: pot file for the authors DocBook file
 # requires an additional prerequisite
-AUTHORS_POT = $(AUTHORS_DOCBOOK_XML:src/%/$(AUTHORS_DOCBOOK_FILENAME)=pot/%.pot)
+# HIDE FROM AUTOMAKE #AUTHORS_POT = $(AUTHORS_DOCBOOK_XML:src/%/$(AUTHORS_DOCBOOK_FILENAME)=pot/%.pot)
 # HIDE FROM AUTOMAKE #ifeq ($(filter pot/%.pot,$(MAKECMDGOALS)),)
 # HIDE FROM AUTOMAKE #$(AUTHORS_POT): $(AUTHORS_DOCBOOK_XML) $(wildcard $(AUTHORS_DOCBOOK_DIRNAME)*.xml)
 # HIDE FROM AUTOMAKE #else

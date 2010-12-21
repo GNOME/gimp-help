@@ -354,11 +354,15 @@ POT_FILES  = $(patsubst src/%,pot/%.pot,$(filter-out src src/,$(SRC_DIRS)))
 # Special case: src/*.xml --> pot/gimp.pot
 POT_FILES += pot/gimp.pot
 
+# XXX: Secondary Expansion of the following two rules is required because
+# "pot/%.pot: $(srcdir)/src/%/*.xml" didn't work with make v3.82
+# (cf. bug #637505).
+.SECONDEXPANSION:
 # General case
 ifeq ($(filter pot/%.pot po/%.po,$(MAKECMDGOALS)),)
-pot/%.pot: src/%/*.xml $(wildcard images/C/%/*.*)
+pot/%.pot: src/$$*/*.xml $$(wildcard images/C/$$*/*.*)
 else
-pot/%.pot: src/%/*.xml FORCE
+pot/%.pot: src/$$*/*.xml FORCE
 endif
 	$(cmd) $(call make_target_dir,$@)
 	$(msg) "[POT] $@"
