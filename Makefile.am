@@ -234,12 +234,13 @@ if HAVE_I18N_TOOLS
 #     $(call xml2pot,xml-files,pot-file)
 # Parameters:
 #     $1 - input:  original (untranslated) XML files
+#                  and other prerequisites, e.g. images or "FORCE"
 #     $2 - output: POT template file containing translatable tags
-xml2pot = $(XML2PO) $(XML2POFLAGS) --output='-' $(1) \
+xml2pot = $(XML2PO) $(XML2POFLAGS) --output='-' $(filter %.xml,$(1)) \
           | $(MSGUNIQ) $(MSGUNIQFLAGS) \
           | $(MSGCAT) $(MSGCATFLAGS) - > "$(2)"; \
           test -s "$(2)" || rm -f "$(2)"; \
-          touch -c -r `ls -t $(1) | $(SED) 1q` "$(2)" || true; \
+          touch -c -r $(call get_recent_file,$(1)) "$(2)" || true; \
           test -s "$(2)"
 
 # Merge template (pot) and message catalog (po) or create a new catalog
@@ -303,6 +304,8 @@ endif
 #--------------------------------------------------------------#
 
 make_target_dir = f=$(1); d=$${f%/*}; test -d $$d || $(MKDIR_P) $$d
+
+get_recent_file = $(shell ls -t $(1) | $(SED) 1q)
 
 copy = $(LN_S) $(abs_srcdir)/$(1) $(2)
 
@@ -430,27 +433,28 @@ MAINTAINERS: gimp-help-2.doap $(DOAP_STYLESHEET)
 # HIDE FROM AUTOMAKE #endif
 # HIDE FROM AUTOMAKE #	$(cmd) $(call make_target_dir,$@)
 # HIDE FROM AUTOMAKE #	$(msg) "[POT] $@"
-# HIDE FROM AUTOMAKE #	$(cmd) $(call xml2pot,$(filter-out FORCE,$^),$@)
+# HIDE FROM AUTOMAKE #	$(cmd) $(call xml2pot,$^,$@)
 # Special case: rename pot file for toplevel xml files
 # HIDE FROM AUTOMAKE #ifeq ($(filter pot/%.pot,$(MAKECMDGOALS)),)
-# HIDE FROM AUTOMAKE #pot/gimp.pot: $(srcdir)/src/*.xml
+# HIDE FROM AUTOMAKE #pot/gimp.pot: $(srcdir)/src/*.xml $(wildcard images/C/*.*)
 # HIDE FROM AUTOMAKE #else
 # HIDE FROM AUTOMAKE #pot/gimp.pot: $(srcdir)/src/*.xml FORCE
 # HIDE FROM AUTOMAKE #endif
 # HIDE FROM AUTOMAKE #	$(cmd) $(call make_target_dir,$@)
 # HIDE FROM AUTOMAKE #	$(msg) "[POT] $@"
-# HIDE FROM AUTOMAKE #	$(cmd) $(call xml2pot,$(filter-out FORCE,$^),$@)
+# HIDE FROM AUTOMAKE #	$(cmd) $(call xml2pot,$^,$@)
 # Special case: pot file for the authors DocBook file
 # requires an additional prerequisite
 # HIDE FROM AUTOMAKE #AUTHORS_POT = $(AUTHORS_DOCBOOK_XML:src/%/$(AUTHORS_DOCBOOK_FILENAME)=pot/%.pot)
 # HIDE FROM AUTOMAKE #ifeq ($(filter pot/%.pot,$(MAKECMDGOALS)),)
+# HIDE FROM AUTOMAKE ## TODO: add images to prerequisites if necessary
 # HIDE FROM AUTOMAKE #$(AUTHORS_POT): $(AUTHORS_DOCBOOK_XML) $(wildcard $(AUTHORS_DOCBOOK_DIRNAME)*.xml)
 # HIDE FROM AUTOMAKE #else
 # HIDE FROM AUTOMAKE #$(AUTHORS_POT): $(AUTHORS_DOCBOOK_XML) $(wildcard $(AUTHORS_DOCBOOK_DIRNAME)*.xml) FORCE
 # HIDE FROM AUTOMAKE #endif
 # HIDE FROM AUTOMAKE #	$(cmd) $(call make_target_dir,$@)
 # HIDE FROM AUTOMAKE #	$(msg) "[POT] $@"
-# HIDE FROM AUTOMAKE #	$(cmd) $(call xml2pot,$(filter-out FORCE,$^),$@)
+# HIDE FROM AUTOMAKE #	$(cmd) $(call xml2pot,$^,$@)
 
 # Remove left over pot files
 cleanup-pot:
