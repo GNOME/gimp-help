@@ -180,6 +180,7 @@ endif
 #     $(call xml2pot,xml-files,pot-file)
 # Parameters:
 #     $1 - input:  original (untranslated) XML files
+#                  and other prerequisites, e.g. images or "FORCE"
 #     $2 - output: POT template file containing translatable tags
 xml2pot = $(XML2PO) $(XML2POFLAGS) --output='-' $(filter %.xml,$(1)) \
           | $(MSGUNIQ) $(MSGUNIQFLAGS) \
@@ -366,7 +367,7 @@ pot/%.pot: src/$$*/*.xml FORCE
 endif
 	$(cmd) $(call make_target_dir,$@)
 	$(msg) "[POT] $@"
-	$(cmd) $(call xml2pot,$(filter-out FORCE,$^),$@)
+	$(cmd) $(call xml2pot,$^,$@)
 # Special case: rename pot file for toplevel xml files
 ifeq ($(filter pot/%.pot po/%.po,$(MAKECMDGOALS)),)
 pot/gimp.pot: src/*.xml $(wildcard images/C/*.*)
@@ -375,7 +376,7 @@ pot/gimp.pot: src/*.xml FORCE
 endif
 	$(cmd) $(call make_target_dir,$@)
 	$(msg) "[POT] $@"
-	$(cmd) $(call xml2pot,$(filter-out FORCE,$^),$@)
+	$(cmd) $(call xml2pot,$^,$@)
 # Special case: pot file for the authors DocBook file
 # requires an additional prerequisite
 AUTHORS_POT = $(AUTHORS_DOCBOOK_XML:src/%/$(AUTHORS_DOCBOOK_FILENAME)=pot/%.pot)
@@ -387,7 +388,7 @@ $(AUTHORS_POT): $(AUTHORS_DOCBOOK_XML) $(wildcard $(AUTHORS_DOCBOOK_DIRNAME)*.xm
 endif
 	$(cmd) $(call make_target_dir,$@)
 	$(msg) "[POT] $@"
-	$(cmd) $(call xml2pot,$(filter-out FORCE,$^),$@)
+	$(cmd) $(call xml2pot,$^,$@)
 
 # Remove left over pot files
 cleanup-pot:
