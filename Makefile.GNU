@@ -9,7 +9,7 @@ CYGWIN = $(shell make.d/test/is_cygwin.sh || echo 0)
 ####            The GIMP manual languages                           ####
 ########################################################################
 
-ALL_LINGUAS = de en es fr it ja ko nl nn pl ru sv zh_CN
+ALL_LINGUAS = da de en es fr it ja ko nl nn pl ru sv zh_CN
 LANGUAGES = $(if $(LINGUAS),$(filter $(ALL_LINGUAS),$(LINGUAS)),$(ALL_LINGUAS))
 ifneq ($(DOC_LINGUAS),)
 $(warning Do not set the internal variable DOC_LINGUAS)

@@ -52,6 +52,7 @@ my $PROG = $0;
 my $VERSION = 0.03;
 
 my %Languages = (
+	da => "Danish",
 	de => "German",
 	es => "Spanish",
 	fi => "Finnish",
@@ -62,6 +63,7 @@ my %Languages = (
 	ko => "Korean",
 	lt => "Lithuanian",
 	nb => "Norwegian",
+	nn => "Norwegian",
 	no => "Norwegian",
 	nl => "Dutch",
 	pl => "Polish",
