@@ -814,7 +814,7 @@ pdf/%/gimp.pdf: xml/% stylesheets/plainprint.xsl xml/%/images
 
 else
 
-pdf-local pdf-%:
+pdf-local $(foreach lang,$(LANGUAGES),pdf-$(lang)):
 	@echo "*** Cannot build PDFs because dblatex(1) was not found ***"
 	@exit 69
 
@@ -854,7 +854,7 @@ endif
 
 else
 
-odf odf-%:
+odf $(foreach lang,$(LANGUAGES),odf-$(lang)):
 	@echo "*** Cannot build ODFs because docbook2odf(1) was not found ***"
 	@exit 69
 
