@@ -755,7 +755,7 @@ pdf/%/gimp.pdf: xml/% stylesheets/plainprint.xsl xml/%/images
 
 else
 
-pdf pdf-%:
+pdf $(foreach lang,$(LANGUAGES),pdf-$(lang)):
 	@echo "*** Cannot build PDFs because DBLATEX was not defined ***"
 	@exit 69
 
@@ -792,7 +792,7 @@ xml/%/gimp-alldocs.xml: xml/%/gimp.xml
 
 else
 
-odf odf-%:
+odf $(foreach lang,$(LANGUAGES),odf-$(lang)):
 	@echo "*** Cannot build ODFs because DOCBOOK2ODF was not defined ***"
 	@exit 69
 
