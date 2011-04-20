@@ -1,7 +1,7 @@
 #!/usr/bin/env perl
 #
 # gimp-help-2 -- get translation status
-# Copyright (C) 2008-2009 The GIMP Documentation Team.
+# Copyright (C) 2008-2011 The GIMP Documentation Team.
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -241,7 +241,7 @@ __END__
 
 =head1 BUGS
 
-The script has not been tested under Microsoft Windows or Mac OS X.
+The script has not been tested under BSD or Mac OS X.
 
 =head1 AUTHOR
 
@@ -249,7 +249,7 @@ Ulf-D. Ehlert
 
 =head1 COPYRIGHT
 
-(C) 2008-2010 The GIMP Documentation Team.
+(C) 2008-2011 The GIMP Documentation Team.
 
 License: GPL
 
