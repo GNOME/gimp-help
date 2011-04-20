@@ -459,11 +459,13 @@ MAINTAINERS: gimp-help-2.doap $(DOAP_STYLESHEET)
 # Remove left over pot files
 cleanup-pot:
 	$(msg) "Cleaning up pot files ..."
-	$(cmd) $(find_l) pot/ $(pot_file_predicates) | \
-	while read potfile; do \
-		potfile=$${potfile#pot/}; srcfile=src/$${potfile%.pot}.xml \
-		test -e $${srcfile} || rm -f $${potfile}; \
-	done
+	$(cmd) if [ "$(srcdir)" = "$(builddir)" ]; then \
+		$(find_l) pot/ $(pot_file_predicates) | \
+		while read potfile; do \
+			potfile=$${potfile#pot/}; srcfile=src/$${potfile%.pot}.xml \
+			test -e $${srcfile} || rm -f $${potfile}; \
+		done; \
+	fi
 
 # Targets suitable for command line
 pot: potfiles cleanup-pot ;
@@ -489,12 +491,14 @@ potfiles: $(POT_FILES) ;
 # HIDE FROM AUTOMAKE #po-$(1): $$($(1)_PO_FILES) cleanup-po-$(1)
 # HIDE FROM AUTOMAKE #	$$(cmd) if test -e messages.mo; then rm -f messages.mo; fi
 # HIDE FROM AUTOMAKE #cleanup-po-$(1):
+# HIDE FROM AUTOMAKE #ifeq ($$(srcdir),$$(builddir))
 # HIDE FROM AUTOMAKE #	$$(msg) "Cleaning up '$(1)' po files ..."
 # HIDE FROM AUTOMAKE #	$$(cmd) $(find_l) po/$(1)/ $$(po_file_predicates) | \
 # HIDE FROM AUTOMAKE #	while read pofile; do \
 # HIDE FROM AUTOMAKE #		potfile=pot/$$$${pofile#po/$(1)/}t; \
 # HIDE FROM AUTOMAKE #		test -e $$$${potfile} || rm -vf $$$${pofile}; \
 # HIDE FROM AUTOMAKE #	done
+# HIDE FROM AUTOMAKE #endif
 # HIDE FROM AUTOMAKE #endef
 
 $(foreach LANG,$(PO_LANGS),$(eval $(call MAKE_PO_RULES,$(LANG))))
@@ -637,10 +641,12 @@ xml/%/images: $(IMAGE_PREREQ)
 # Remove left over xml files
 cleanup-xml-%:
 	$(msg) "Cleaning up '$*' xml files ..."
-	$(cmd) $(find_l) xml/$*/ $(xml_file_predicates) | \
-	while read xmlfile; do \
-		test -e src/$${xmlfile#xml/$*/} || rm -vf $${xmlfile}; \
-	done
+	$(cmd) if [ "$(srcdir)" = "$(builddir)" ]; then \
+		$(find_l) xml/$*/ $(xml_file_predicates) | \
+		while read xmlfile; do \
+			test -e src/$${xmlfile#xml/$*/} || rm -vf $${xmlfile}; \
+		done; \
+	fi
 
 # Target suitable for command line
 images-%: xml/%/images html/%/images ;
