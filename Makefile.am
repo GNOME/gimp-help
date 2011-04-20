@@ -155,10 +155,13 @@ XSL_FILES = \
 	stylesheets/plainprint.xsl	\
 	stylesheets/plainhtml.xsl.in	\
 	stylesheets/htmlalternate.xsl	\
-	stylesheets/doap2text.xsl
+	stylesheets/float-images.xsl 	\
+	stylesheets/doap2text.xsl	\
+	gimp-help-2.doap
 
 # tools needed for building
 DIST_TOOLS = \
+	autogen.sh \
 	make.d \
 	tools/xml2po.py \
 	tools/xml2po
@@ -1015,7 +1018,7 @@ endif
 # Delete all files that are normally created by building the program.
 clean-local: mostlyclean-local
 	$(cmd) rm -rf html
-	$(cmd) rm -f AUTHORS
+	$(cmd) rm -f AUTHORS MAINTAINERS
 
 # Like `clean-local', but may refrain from deleting a few files that people
 # normally don't want to recompile.
