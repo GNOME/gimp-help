@@ -302,7 +302,7 @@ endif
 
 make_target_dir = f=$(1); d=$${f%/*}; test -d $$d || $(MKDIR_P) $$d
 
-get_recent_file = $(shell ls -t $(1) | $(SED) 1q)
+get_recent_file = $(shell ls -t $(1) 2>/dev/null | $(SED) 1q)
 
 copy = $(LN_S) $(abs_srcdir)/$(1) $(2)
 
