@@ -57,7 +57,7 @@ AC_PROG_SED
 #  QUICKREFERENCE_ALL_LINGUAS *and* (intersecton) ALL_LINGUAS
 
 if test "x$ALL_LINGUAS" = "x"; then
-  ALL_LINGUAS="da de en es fr it ja ko nl nn pl ru sv zh_CN"
+  ALL_LINGUAS="da de en en_GB es fr it ja ko nl nn pl ru sv zh_CN"
 fi
 if test "x$QUICKREFERENCE_ALL_LINGUAS" = "x"; then
   QUICKREFERENCE_ALL_LINGUAS="de en fi fr it ja ko ru sv zh_CN"
