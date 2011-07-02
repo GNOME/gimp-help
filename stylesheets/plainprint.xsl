@@ -14,6 +14,7 @@
 
   <!-- enable processing of unicode characters -->
   <xsl:param name="latex.unicode.use">1</xsl:param>
+  <xsl:param name="latex.encoding">utf8</xsl:param>
 
   <!-- define what to show in the toc -->
   <xsl:param name="doc.lot.show">example</xsl:param>
