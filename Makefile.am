@@ -58,7 +58,7 @@ MSGINITFLAGS  = --no-translator --width=$(MSGWIDTH)
 MSGMERGEFLAGS = --quiet --width=$(MSGWIDTH)
 ##
 ## DBLATEX       = dblatex
-DBLATEXFLAGS     = --verbose
+DBLATEXFLAGS     = --backend=xetex --style=db2latex --debug --verbose
 ## DOCBOOK2ODF      = docbook2odf
 DOCBOOK2ODFFLAGS =
 
