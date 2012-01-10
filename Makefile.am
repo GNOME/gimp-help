@@ -152,6 +152,7 @@ XSL_FILES = \
 	stylesheets/authors_common.xsl	\
 	stylesheets/authors.dtd 	\
 	stylesheets/makeindex.xsl	\
+	stylesheets/getsortkey.xsl	\
 	stylesheets/plainprint.xsl	\
 	stylesheets/plainhtml.xsl.in	\
 	stylesheets/htmlalternate.xsl	\
@@ -727,11 +728,16 @@ index: $(foreach lang,$(LANGUAGES),index-$(lang)) ;
 index-%: html/%/gimp-help.xml ;
 
 html/%/gimp-help.xml: html/%/gimp-xrefs.xml stylesheets/makeindex.xsl
+	$(msg) "[XML] $@"
 	$(cmd) $(XSLTPROC) \
 	  $(XSLTFLAGS) $(XSLTEXTRAFLAGS) \
 	  $(srcdir)/stylesheets/makeindex.xsl \
 	  $< \
 	  > $@
+
+# Making index includes creating sort keys
+stylesheets/makeindex.xsl: stylesheets/getsortkey.xsl
+	$(cmd) touch $@
 
 # The xrefs file is a side effect of the HTML build
 html/%/gimp-xrefs.xml: html/%/index.html

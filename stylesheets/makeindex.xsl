@@ -3,6 +3,9 @@
 
   <xsl:output method="xml" encoding="UTF-8" indent="yes" />
 
+  <!-- include template "gimp-help.help-id.sort" -->
+  <xsl:include href="getsortkey.xsl" />
+
   <xsl:param name="obj.missing.title.warning" select="0"/>
   <xsl:param name="obj.title.debug"           select="0"/>
 
@@ -43,6 +46,9 @@
           </xsl:attribute>
           <xsl:attribute name="parent">
             <xsl:value-of select="ancestor::div[@targetptr][1]/@targetptr"/>
+          </xsl:attribute>
+          <xsl:attribute name="sort">
+            <xsl:call-template name="gimp-help.help-id.sort"/>
           </xsl:attribute>
         </help-item>
       </xsl:when>
@@ -112,6 +118,9 @@
         </xsl:attribute> <!--title-->
         <xsl:attribute name="parent">
           <xsl:value-of select="ancestor::*[@targetptr][1]/@targetptr"/>
+        </xsl:attribute>
+        <xsl:attribute name="sort">
+          <xsl:call-template name="gimp-help.help-id.sort"/>
         </xsl:attribute>
       </help-item>
     </xsl:if>
