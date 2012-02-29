@@ -58,6 +58,8 @@ AC_PROG_SED
 
 if test "x$ALL_LINGUAS" = "x"; then
   ALL_LINGUAS="ca da de el en en_GB es fi fr hr it ja ko lt nl nn pl ru sl sv zh_CN"
+else
+  ALL_LINGUAS=`echo "$ALL_LINGUAS" | $SED -e 's/[,] */ /g'`
 fi
 if test "x$QUICKREFERENCE_ALL_LINGUAS" = "x"; then
   QUICKREFERENCE_ALL_LINGUAS="ca de el en fi fr it ja ko ru sv zh_CN"
