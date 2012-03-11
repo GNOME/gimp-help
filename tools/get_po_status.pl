@@ -1,7 +1,7 @@
 #!/usr/bin/env perl
 #
 # gimp-help-2 -- get translation status
-# Copyright (C) 2008-2011 The GIMP Documentation Team.
+# Copyright (C) 2008-2012 The GIMP Documentation Team.
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -48,12 +48,14 @@ use strict;
 use Getopt::Long;
 use File::Find;
 
-my $PROG = $0;
-my $VERSION = 0.03;
+(my $PROG = $0) =~ s,.*/,,;
+my $VERSION = 0.04;
 
 my %Languages = (
+	ca => "Catalan",
 	da => "Danish",
 	de => "German",
+	el => "Greek",
 	es => "Spanish",
 	fi => "Finnish",
 	fr => "French",
@@ -68,6 +70,7 @@ my %Languages = (
 	nl => "Dutch",
 	pl => "Polish",
 	ru => "Russian",
+	sl => "Slovenian",
 	sv => "Swedish",
 );
 
@@ -157,6 +160,7 @@ die "ERROR: Cannot fork: $!\n" unless defined $pid;
 if ($pid == 0) {
 	# Child process
 	$ENV{"LANG"} = "C";
+	$ENV{"LC_ALL"} = "C";
 	for (sort @Pofiles) {
 		# XXX: is "--output-file=/dev/null" portable?
 		my $statistics = `msgfmt --statistics --output-file=/dev/null $_ 2>&1`;
@@ -180,7 +184,7 @@ my $msg_re = qr/^   (\S+) \s                     # $1 = filename
                 (?: (\S+) \s untranslated \D+ )? # $5 = untranslated msgs.
                 $/ix;
 while (<MSGFMT>) {
-	m/$msg_re/ or die("ERROR matching msgfmt output '$_'\n");
+	m/$msg_re/ or die("\n$PROG: ERROR matching msgfmt output '$_'\n");
 	my ($n, $s, $t, $f, $u) = ($1, $2, $3, $4 || 0, $5 || 0);
 	# print and save file statistics
 	handle_file_statistics($n, $s, $t, $f, $u);
@@ -249,7 +253,7 @@ Ulf-D. Ehlert
 
 =head1 COPYRIGHT
 
-(C) 2008-2011 The GIMP Documentation Team.
+(C) 2008-2012 The GIMP Documentation Team.
 
 License: GPL
 
