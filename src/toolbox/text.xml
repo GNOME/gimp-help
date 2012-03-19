@@ -2,16 +2,15 @@
 <!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
                        "http://www.docbook.org/xml/4.3/docbookx.dtd">
 <!-- section history:
+  2012-03-18 j.h: update to v2.7
   2009-07-09 ude: added scroll wheel tip (#585823),
                   fixed "entering special chars" (#580532)
   2009-03-09 j.h: updated to v2.6
-  2008-01-05 j.h: updated en;fr to v2.4.
-  2007-06-04 kost: added 'no'
+  2008-01-05 j.h: updated to v2.4.
   2006-07-03 lexa: enhanced docbook compliance
-  2006-06-17 added note en;fr for special characters by j.h
+  2006-06-17 added note for special characters by j.h
   2005-12-07 replaced <simplesect> by <sect3> by lexa
   2005-12-06 replaced informalfigure by figure by lexa
-  050818 de reviewed by axel.wernicke
   -->
 <sect2 id="gimp-tool-text">
   <title>Text</title>
@@ -35,39 +34,34 @@
   </figure>
 
   <para>
-    The Text tool places text into an image. When you click on an image with
-    this tool the <emphasis>Text Editor dialog</emphasis> is opened where
-    you can type your text, and a text layer is added in the Layer Dialog.
-    In the <emphasis>Text Option dialog</emphasis>, you can change the font,
-    color and size of your text, and justify it, interactively.
+    The Text tool places text into an image. With <acronym>GIMP-2.8</acronym>, 
+    you can write your text directly on the canvas. No Text Editor is needed 
+    anymore (although you can still use it if you want by checking the 
+    <guilabel>Use editor</guilabel> option in the Tool Options dialog. A text
+    toolbar has been added which allows you to edit text in different ways but
+    you can still go on using the <emphasis>Text Option dialog</emphasis>, to
+    change the font, color and size of your text, and justify it,
+    interactively. Right clicking on the frame opens a context menu that allows
+    you to copy, cut, paste, load a text...
   </para>
   <para>
-    A new possibility appeared with <acronym>GIMP</acronym>-2.6:
-    click-dragging the mouse pointer on the canvas draws a rectangular frame
-    that you can enlarge and move as you do with rectangular selections. The
-    text you type in the Text Editor is displayed in this frame and
-    automatically adapted to the frame size. You can adjust this frame
-    whenever you like.
+    As soon as you type your text, it appears on the canvas in a rectangular
+    frame. If you draw the rectangular frame first, the text is automatically 
+    adapted to the frame size. You can enlarge this frame as you do with 
+    rectangular selections.
   </para>
-  <figure id="gimp-text-bounding-box">
-    <title>Text tool bounding box</title>
+  
     <mediaobject>
       <imageobject>
         <imagedata format="PNG" fileref="images/using/text-tool.png"/>
       </imageobject>
     </mediaobject>
-  </figure>
   <para>
-    When the mouse pointer is around the center of the frame, it
-    comes with a small crosshair
-    <guiicon>
-      <inlinegraphic fileref="images/toolbox/stock-tool-move-16.png"/>
-    </guiicon>.
-    Click-and-drag to move the frame and its contents (the text shows up when
-    you release the mouse button). The text remains at the same place in the
-    frame.
+    To move the text on canvas, you have to select the Move tool and click 
+    on a character to drag the frame and its text.
   </para>
-
+  
+     
   <sect3>
     <title>Activating the Tool</title>
     <para>
@@ -134,7 +128,7 @@
           <itemizedlist>
             <para>
               At the bottom of the font selector you find some icons which
-              act as buttoms for:
+              act as buttons for:
             </para>
             <listitem>
               <para>resizing the font previews,</para>
@@ -177,22 +171,13 @@
           </para>
         </listitem>
       </varlistentry>
-
-      <varlistentry>
-        <term>Hinting</term>
+      
+      <varlistentry> <!--Added-->
+        <term>Use editor</term>
         <listitem>
           <para>
-            Uses the indices of adjustment to modify the characters in
-            order to produce clear letters in small font sizes.
-          </para>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>Force Auto-Hinter</term>
-        <listitem>
-          <para><guilabel>Auto Hinter</guilabel> tries to automatically
-            compute information for better representation of the
-            character font.
+            Use an external editor window for text editing instead of
+            direct-on-canvas editing.
           </para>
         </listitem>
       </varlistentry>
@@ -206,6 +191,16 @@
             edges. This option can radically improve the visual appearance of
             the rendered typeface. Caution should be exercised when using
             antialiasing on images that are not in RGB color space.
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term>Hinting</term>
+        <listitem>
+          <para>
+            Uses the index of adjustment of the font to modify characters in
+            order to produce clear letters in small font sizes.
           </para>
         </listitem>
       </varlistentry>
@@ -247,7 +242,7 @@
             <primary>Indent</primary>
           </indexterm>
           <para>
-            Controls the indent spacing from the left margin, for the fist
+            Controls the indent spacing from the left margin, for the first
             line.
           </para>
         </listitem>
@@ -275,86 +270,150 @@
           <para>
             Controls the spacing between letters. Also in this case the number
             is not the space itself between letters, but how many pixels must
-            be added to or substracted from this space (the value can be
+            be added to or subtracted from this space (the value can be
             negative).
           </para>
         </listitem>
       </varlistentry>
 
-      <varlistentry id="text-along-path">
-        <term>Text along Path</term>
+      <varlistentry>
+        <term>Box</term>
         <listitem>
+          <para>
+            Concerns the text box. The associated drop down list offers two
+            options:
+          </para>
+          <para>
+            <emphasis role="bold">Dynamic</emphasis>: default option. The size
+            of the text box increases as you type. Text may go out of the
+            image. You have to press the <keycap>Enter</keycap> key to add a
+            new line. The indent option indents all lines. If you increase the
+            box size, the option turns to "Fixed".
+          </para>
+          <para>
+            <emphasis role="bold">Fixed</emphasis>: you must enlarge the text
+            box first. Else, usual shortcuts are active! The text is limited
+            by the right side of the box and continues on next line. This is
+            not true new line: you must press the <keycap>Enter</keycap> key
+            to add a real new line. The text may go out the lower border of the
+            image. The indent option works on the first line only.
+          </para>
+        </listitem>
+      </varlistentry>      
+    </variablelist>
+  </sect3>
+
+  <sect3 id="text-tool-popup">
+    <title>The Text tool context menu</title>
+    <para>
+      You get this menu by right clicking in a text frame with handles.
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          <guilabel>Cut, Copy, Paste, Delete</guilabel>: these options concern
+          a selected text. They remain grayed out as long as no text is
+          selected. <quote>Paste</quote> is activated if the clipboard
+          is not empty.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <guilabel>Open text file</guilabel>: this command opens a file browser
+          where you can find the wanted text file.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <guilabel>Clear</guilabel>: this command deletes all the text,
+          selected or not.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <guilabel>Path from text</guilabel>: this command creates a
+          path from the outlines of the current text. The result is not
+          evident. You have to open the Path dialog and make path visible.
+          Then select the Path tool and click on the text. Every letter
+          is  now surrounded with a path component. So you can modify
+          the shape of letters by moving path control points.
+        </para>
+        <para>
+          This command is similar to
+          <menuchoice>
+            <guimenu>Layer</guimenu>
+            <guisubmenu>Text to Path</guisubmenu>
+          </menuchoice>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <guilabel>Text along path</guilabel>:
           <indexterm>
             <primary>Text along Path</primary>
           </indexterm>
-          <para>
-            This option is enabled only if a
-            <link linkend="gimp-using-paths">path</link> exists. When your
-            text is created, then create or import a path and make it active.
-            If you create your path before the text, the path becomes
-            invisible and you have to make it visible in the Path Dialog.
-          </para>
-          <para>
-            This command is also available from the <quote>Layer</quote> menu:
-          </para>
-          <figure>
-            <title>
-              The Text to Path command among text commands in the Layer menu
-            </title>
-            <mediaobject>
-              <imageobject>
-                <imagedata format="PNG"
-                  fileref="images/menus/layer/text-commands.png"/>
-              </imageobject>
-              <caption>
-                <para>
-                  This group of options appears only if a layer text exists.
-                </para>
-              </caption>
-            </mediaobject>
-          </figure>
-          <para>
-            If you want to use a text which already exists, make it active
-            in the <link linkend="gimp-layer-dialog">Layer dialog</link>,
-            select the Text tool and click on the text in the image window.
-          </para>
-          <para>
-            Click on the <guibutton>Text along Path</guibutton> button. The
-            text is bent along the path. Letters are represented with their
-            outline. Each of them is a component of the new path which
-            appears in the <link linkend="gimp-path-dialog">Path
-            dialog</link>. All path options should apply to this new path.
-          </para>
-          <figure>
-            <title><quote>Text along Path</quote> example</title>
-            <mediaobject>
-              <imageobject>
-                <imagedata fileref="images/toolbox/text-along-path.png" format="PNG"/>
-              </imageobject>
-            </mediaobject>
-            <mediaobject>
-              <imageobject>
-                <imagedata fileref="images/toolbox/text-path.png" format="PNG"/>
-              </imageobject>
-            </mediaobject>
-          </figure>
-        </listitem>
-      </varlistentry>
+        </para>
+        <para>
+          This option is enabled only if a
+          <link linkend="gimp-using-paths">path</link> exists. When your
+          text is created, then create or import a path and make it active.
+          If you create your path before the text, the path becomes
+          invisible and you have to make it visible in the Path Dialog.
+        </para>
+        <para>
+          This command is also available from the <quote>Layer</quote> menu:
+        </para>
+        <figure>
+          <title>
+            The Text along Path command among text commands in the Layer menu
+          </title>
+          <mediaobject>
+            <imageobject>
+              <imagedata format="PNG"
+                fileref="images/menus/layer/text-commands.png"/>
+            </imageobject>
+            <caption>
+              <para>
+                This group of options appears only if a layer text exists.
+              </para>
+            </caption>
+          </mediaobject>
+        </figure>
+        <para>
+          If you want to use a text that already exists, make it active
+          in the <link linkend="gimp-layer-dialog">Layer dialog</link>,
+          select the Text tool and click on the text in the image window.
+        </para>
+        <para>
+          Click on the <guibutton>Text along Path</guibutton> button. The
+          text is bent along the path. Letters are represented with their
+          outline. Each of them is a component of the new path that
+          appears in the <link linkend="gimp-path-dialog">Path
+          dialog</link>. All path options should apply to this new path.
+        </para>
+        <figure>
+          <title><quote>Text along Path</quote> example</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/toolbox/text-along-path.png"
+              format="PNG"/>
+            </imageobject>
+          </mediaobject>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/toolbox/text-path.png" format="PNG"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+      </listitem>
+      <listitem>
+        <para>
+          <guilabel>From Left to Right / From Right to Left</guilabel>: fix
+          the writing direction of your language.
+        </para>
+      </listitem>
 
-      <varlistentry id="text-to-path">
-        <term>Path from Text</term>
-        <listitem>
-          <indexterm>
-            <primary>Text to Path</primary>
-          </indexterm>
-          <para>
-            This tool creates a selection path from the selected text. Every
-            letter is surrounded with a path component. So you can modify
-            the shape of letters by moving path control points.
-          </para>
-        </listitem>
-      </varlistentry>
-    </variablelist>
+    </itemizedlist>
   </sect3>
 
   <sect3 id="gimp-text-editor-dialog">
@@ -376,9 +435,10 @@
     </figure>
 
     <para>
-      This dialog window is opened when you click on the image with the Text
-      Tool. There, you can enter the text which shows up in real time in the
-      frame on top of the canvas.
+      With <acronym>GIMP-2.8</acronym>, this text editor is available only if 
+      the <guilabel>Use editor</guilabel> option is checked. It persists 
+      probably because all its functions are not transferred to the 
+      direct-on-canvas mode, for instance the Unicode characters.
     </para>
     <para>
       You can correct the text you are writing and you can change the text
@@ -473,26 +533,16 @@
         <secondary>Load from file</secondary>
       </indexterm>
       <varlistentry>
-        <term>
-          <guiicon>
-            <inlinegraphic fileref="images/dialogs/stock-fileopen-16.png"/>
-          </guiicon>
-          <phrase condition="tag-is-required">Load text from file</phrase>
-        </term>
+        <term>Load Text from file</term>
         <listitem>
           <para>
-            Text can be loaded from a text file by clicking the folder icon
-            in the text editor. All the text in the file is loaded.
+            Text can be loaded from a text file by clicking the folder icon in
+            the text editor. All the text in the file is loaded.
           </para>
         </listitem>
       </varlistentry>
       <varlistentry>
-        <term>
-          <guiicon>
-            <inlinegraphic fileref="images/dialogs/stock-edit-clear-16.png"/>
-          </guiicon>
-          <phrase condition="tag-is-required">Clear all text</phrase>
-        </term>
+        <term>Clear all text</term>
         <listitem>
           <para>
             Clicking this icon clears the editor and the associated text on

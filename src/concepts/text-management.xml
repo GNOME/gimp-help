@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+                       "http://www.docbook.org/xml/4.3/docbookx.dtd">
+<!-- section history:
+  2012-03-18 j.h: created
+ -->
+<sect1 id="gimp-text-management">
+  <title>Text Management</title>
+
+  <indexterm>
+    <primary>Text</primary>
+    <secondary>Editing text</secondary>
+  </indexterm>
+
+  <!--FOR TRANSLATORS: this file is a reshaping of the old
+    concepts/fonts-and-text.xml file. A large part can be copy-pasted-->
+
+  <para>
+    Text is managed with the Text tool. This tool creates a new layer containing
+    the text, above the current layer in the layer dialog, with the size of the
+    text box. Its name is the beginning of the text.
+  </para>
+
+  <figure>
+    <title>Example of a text item</title>
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref="images/using/text-example.png" format="PNG"/>
+      </imageobject>
+      <caption>
+        <para>
+          Example of a text item, showing the boundary of the text layer.
+          (Font: Utopia Bold)
+        </para>
+      </caption>
+    </mediaobject>
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref="images/using/text-example-2.png" format="PNG"/>
+      </imageobject>
+      <caption>
+        <para>
+          The layer dialog, with the text layer above the layer which was
+          current.
+        </para>
+      </caption>
+    </mediaobject>
+  </figure>
+
+  <para>
+    The Text tool is progressively improved. With <acronym>GIMP</acronym>-2.8,
+    you can now edit text directly on canvas. A text tool box has been added
+    which overlays the canvas above the text box.
+  </para>
+
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="images/using/text-toolbar.png" format="PNG"/>
+    </imageobject>
+    <caption>
+      <para>
+        As soon as you click on the canvas with the Text tool, you get a closed
+        text box and a semi-transparent tool box just above.
+      </para>
+    </caption>
+  </mediaobject>
+
+  <para>
+    Text tool options are described in <xref linkend="gimp-tool-text"/>.
+  </para>
+
+  <para>
+    The default box mode is <quote>Dynamic</quote>, and you can start typing
+    text at once. The text box will enlarge gradually. Press
+    <keycap>Enter</keycap> to add a new line.
+  </para>
+  <para>
+    You can also <emphasis role="bold">enlarge the text box</emphasis> by
+    click-and-dragging, as you do with selections, before starting typing
+    text. Note that box mode turns to "Fixed". You also have to press
+    <keycap>Enter</keycap> to add a new line.
+  </para>
+  <para>
+    To <emphasis role="bold">edit text</emphasis>, you must, first, select the
+    part you want to edit by click-and-drag, or
+    <keycombo><keycap>Shift</keycap><keycap>arrow key</keycap></keycombo> and
+    then use the options of the <xref linkend="gimp-text-tool-box"/>.
+  </para>
+
+  <para>
+    Instead of using the on-canvas text editing, you can use the 
+    <xref linkend="gimp-text-editor-dialog"/>.
+  </para>
+
+  <para>
+    You can <emphasis role="bold">move the text</emphasis> on the image using
+    the Move tool: you must click on a character, not on the background.
+  </para>
+
+  <para>
+    You can get <emphasis role="bold">Unicode characters</emphasis> with
+    <keycombo>
+      <keycap>Ctrl</keycap><keycap>Shift</keycap><keycap>U</keycap>
+    </keycombo>
+    plus hexadecimal Unicode code of the desired char. Please see <xref
+    linkend="gimp-text-editor-dialog"/>.
+  </para>
+
+  <para>
+    You can <emphasis role="bold">edit the text later</emphasis>, if the text
+    layer still exists and has not been modified by another tool (see below):
+    make the text layer active in the<link linkend="gimp-layer-dialog">Layer
+    dialog</link>, select the Text tool and click on the text in the image
+    window.
+  </para>
+
+ <variablelist>
+   <varlistentry>
+     <term>Managing Text Layer</term>
+     <listitem>
+       <para>
+         You can operate on a text layer in the same ways as any other layer,
+         but doing so often means giving up the ability to edit the text
+         without losing the results of your work.
+        </para>
+        <para>
+          To understand some of the idiosyncrasies of text handling, it may help
+          for you to realize that a text layer contains more information than
+          the  pixel data that you see: it also contains a representation of the
+          text in a text-editor format. You can see this in the text-editor
+          window that pops  up while you are using the Text tool. Every time you
+          alter the text, the image layer is redrawn to reflect your changes.
+        </para>
+        <para>
+          Now suppose you create a text layer, and then operate on it in some
+          way that does not involve the Text tool: rotate it, for example.
+          Suppose you then come back and try to edit it using the Text tool. As
+          soon as you  edit the text, the Text tool will redraw the layer,
+          wiping out the results of the operations you performed in the
+          meantime.
+        </para>
+        <para>
+          Because this danger is not obvious, the Text tool tries to protect you
+          from it. If you operate on a text layer, and then later try to edit
+          the text, a message pops up, warning you that your alterations will be
+          undone, and giving you three options:
+        </para>
+        <itemizedlist>
+          <listitem>
+            <para>edit the text anyway;</para>
+          </listitem>
+          <listitem>
+            <para>cancel;</para>
+          </listitem>
+          <listitem>
+            <para>
+              create a new text layer with the same text as the existing layer,
+              leaving the existing layer unchanged.
+            </para>
+          </listitem>
+        </itemizedlist>
+        <figure>
+          <title>Warning lose modifications</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/using/text-warning.png" format="PNG"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term>Text Editing Context Menu</term>
+      <listitem>
+        <figure>
+          <title>Text Editing Context Menu</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata format="PNG"
+                fileref="images/toolbox/text-editing-context-menu.png"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+
+        <para>
+          You get this menu by right-clicking on text. It is somewhat different
+          from that of the Text Editor dialog.
+        </para>
+      
+        <itemizedlist>
+          <!--Options migrated from old text.xml-->
+          <listitem>
+            <para>
+              <guilabel>Cut, Copy, Paste, Delete</guilabel>: these options
+              concern a selected text. They remain grayed out as long as no text
+              is selected. <quote>Paste</quote> is activated if the clipboard is
+              not empty.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <guilabel>Open text file</guilabel>: this command opens a file
+              browser where you can find the wanted text file.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <guilabel>Clear</guilabel>: this command deletes all the text,
+              selected or not.
+            </para>
+          </listitem>
+          <listitem>
+            <para id="text-to-path">
+              <guilabel>Path from text</guilabel>: this command creates a
+              path from the outlines of the current text. The result is not
+              evident. You have to open the Path dialog and make path visible.
+              Then select the Path tool and click on the text. Every letter
+              is  now surrounded with a path component. So you can modify
+              the shape of letters by moving path control points.
+            </para>
+            <para>
+              This command is similar to
+              <menuchoice>
+                <guimenu>Layer</guimenu>
+                <guisubmenu>Text to Path</guisubmenu>
+              </menuchoice>.
+            </para>
+          </listitem>
+          <listitem>
+            <para id="text-along-path">
+              <guilabel>Text along path</guilabel>:
+              <indexterm>
+                <primary>Text along Path</primary>
+              </indexterm>
+            </para>
+            <para>
+              This option is enabled only if a
+              <link linkend="gimp-using-paths">path</link> exists. When your
+              text is created, then create or import a path and make it active.
+              If you create your path before the text, the path becomes
+              invisible and you have to make it visible in the Path Dialog.
+            </para>
+            <para>
+              This command is also available from the <quote>Layer</quote> menu:
+            </para>
+            <figure>
+              <title>
+                The Text along Path command among text commands in the Layer
+                menu
+              </title>
+              <mediaobject>
+                <imageobject>
+                  <imagedata format="PNG"
+                    fileref="images/menus/layer/text-commands.png"/>
+                </imageobject>
+                <caption>
+                  <para>
+                    This group of options appears only if a text layer exists.
+                  </para>
+                </caption>
+              </mediaobject>
+            </figure>
+
+            <para>
+              Click on the <guibutton>Text along Path</guibutton> button. The
+              text is bent along the path. Letters are represented with their
+              outline. Each of them is a component of the new path that
+              appears in the <link linkend="gimp-path-dialog">Path
+              dialog</link>. All path options should apply to this new path.
+            </para>
+            <figure>
+              <title><quote>Text along Path</quote> example</title>
+              <mediaobject>
+                <imageobject>
+                  <imagedata fileref="images/toolbox/text-along-path.png"
+                  format="PNG"/>
+                </imageobject>
+              </mediaobject>
+              <mediaobject>
+                <imageobject>
+                  <imagedata fileref="images/toolbox/text-path.png"
+                  format="PNG"/>
+                </imageobject>
+              </mediaobject>
+            </figure>
+          </listitem>
+          <listitem>
+            <para>
+              <guilabel>From Left to Right / From Right to Left</guilabel>: fix
+              the writing direction of your language.
+            </para>
+          </listitem>
+          <listitem>
+            <para id="gimp-input-methods">
+              <guilabel>Input Methods</guilabel>: methods are available for some
+              languages. For example, selecting <quote>Inuktitut</quote>
+              transforms your keyboard into an Inuktitut keyboard, temporarily.
+            </para>
+          </listitem>
+        </itemizedlist>
+      </listitem>
+    </varlistentry>
+  </variablelist>
+</sect1>
