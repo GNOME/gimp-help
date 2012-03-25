@@ -2,13 +2,10 @@
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
                        "http://www.docbook.org/xml/4.3/docbookx.dtd">
 <!-- section history:
-  2008-04-03 Mr.Dust : added 'ko' for some missing part
+  2012-03-23 j.h: update to v2.8
   2007-10-06 ude: added description for "quality settings from original image"
   2007-07-15 lexa: added PackBits description
   2007-03-19 lexa: added description for save dialogs for jpeg gif png and tif
-  2007-02-14 added Spanish translation by manuq
-  2006-11-25 added enhanced Korean translation by Dust
-  2006-09-12 added norwegian translation by KoSt
   2006-07-11 lexa: enhanced docbook compliance
   2006-02-25 fixed invalid image reference
 -->
@@ -20,20 +17,36 @@
   </indexterm>
 
   <para>
-    The <acronym>GIMP</acronym> is capable of reading and writing a large
+    <acronym>GIMP</acronym> is capable of reading and writing a large
     variety of graphics file formats.  With the exception of
     <acronym>GIMP</acronym>'s native XCF file type, file handling is done by
     Plugins.  Thus, it is relatively easy to extend <acronym>GIMP</acronym>
     to support new file types when the need arises.
   </para>
-  <para>
-    Not all file types are equally good for all purposes. This part of the
-    documentation should help you understand the advantages and disadvantages
-    of each type.
-  </para>
 
-  <sect2>
-    <title>Saving Images</title>
+  <sect2 id="save-export-image">
+    <title>Save / Export Images</title>
+    <indexterm>
+      <primary>Save/Export Images</primary>
+    </indexterm>
+    <indexterm>
+      <primary>Export Images</primary>
+    </indexterm>
+    <note>
+      <para>
+        In former <acronym>GIMP</acronym> releases, when you loaded an image in
+        some format, let us say JPG or PNG, the image kept its format and
+        was saved in the same format by <command>Save</command>. With
+        <acronym>GIMP</acronym>-2.8, images are loaded, imported, in the XCF
+        format as a new project. For example, a <quote>sunflower.png</quote>
+        image will be loaded as <quote>*[sunflower] (imported)-1.0 (indexed
+        color, 1 layer)</quote>. The leading asterisk indicates that this file
+        has been changed. This image will be saved as
+        <quote>sunflower.xcf</quote> by <command>Save</command>. To save this
+        image in a format other than XCF, you must use
+        <command>Export</command>.
+      </para>
+    </note>
     <para>
       When you are finished working with an image, you will want to save the
       results. (In fact, it is often a good idea to save at intermediate
@@ -49,59 +62,55 @@
       intermediate results, and for saving images to be re-opened later in
       <acronym>GIMP</acronym>.
       XCF files are not readable by most other programs that display images,
-      so once you have finished, you will probably also want to save the image
+      so once you have finished, you will probably also want to export the image
       in a more widely used format, such as JPEG, PNG, TIFF, etc.
     </para>
   </sect2>
 
   <sect2 id="gimp-using-fileformats-export-dialog">
-    <title>Saving Files</title>
+    <title>File Formats</title>
     <para>
-      There are several commands for saving images. A list, and information on
-      how to use them, can be found in the section covering the
-      <link linkend="gimp-file-menu">File Menu</link>.
+      There are several commands for <emphasis>saving</emphasis> images. A list,
+      and information on how to use them, can be found in the section covering
+      the <link linkend="gimp-file-menu">File Menu</link>.
     </para>
-    <para><acronym>GIMP</acronym> allows you to save the images you create in a
-      wide variety of formats.  It is important to realize that the only
-      format capable of saving <emphasis>all</emphasis> of the information in
-      an image, including layers, transparency, etc., is GIMP's native XCF
-      format.   Every other format preserves some image properties and loses
-      others.  When you save an image, <acronym>GIMP</acronym> tries to warn
-      you, but it is up to you to understand the
+    <para><acronym>GIMP</acronym> allows you to <emphasis>export</emphasis> the
+      images you create in a wide variety of formats.  It is important to
+      realize that the only format capable of saving <emphasis>all</emphasis> of
+      the information in an image, including layers, transparency, etc., is
+      GIMP's native XCF format. Every other format preserves some image
+      properties and loses others. It is up to you to understand the
       capabilities of the format you choose.
     </para>
-    <figure>
-      <title>Example of an Export dialog</title>
-      <mediaobject>
-        <imageobject>
-          <imagedata fileref="images/using/export-dialog.png" format="PNG"/>
-        </imageobject>
-      </mediaobject>
-    </figure>
     <para>
-      As stated above, there is no file format, with the exception of GIMP's
-      native <link linkend="glossary-xcf">XCF</link> format, that is capable
-      of storing all the information in a <acronym>GIMP</acronym>
-      image. When you ask to save an image in a format that will lose
-      information, <acronym>GIMP</acronym>
-      notifies you, tells you what information will be lost,
-      and asks you whether you would like to <quote>export</quote> the image
-      in a form that the file type can handle. Exporting an image does not
-      modify the image itself, so you do not lose anything by exporting. See
+      Exporting an image does not modify the image itself, so you do not lose
+      anything by exporting. See
       <link linkend="gimp-export-dialog">Export file</link>.
     </para>
     <note>
       <para>
         When you close an image (possibly by quitting GIMP), you are warned if
         the image is "dirty"; that is, if it has been changed without
-        subsequently being saved. Saving an image in any file format will
-        cause the image to be considered "not dirty", even if the file format
-        does not represent all of the information from the image.
+        subsequently being saved (an asterisk is in front of the image name).
+      </para>
+      <figure>
+        <title>Closing warning</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata format="PNG"
+              fileref="images/using/close-warning.png"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
+      <para>
+        Saving an image in any file format will cause the image to be considered
+        "not dirty", even if the file format does not represent all of the
+        information from the image.
       </para>
     </note>
 
     <sect3 id="file-gif-save">
-      <title>Saving as GIF</title>
+      <title>Export Image as GIF</title>
       <anchor id="file-gif-load" xreflabel="GIF"/>
 
       <indexterm>
@@ -111,7 +120,7 @@
         <primary>.gif</primary>
       </indexterm>
       <indexterm>
-        <primary>Save as GIF</primary>
+        <primary>Export Image as GIF</primary>
       </indexterm>
       <indexterm>
         <primary>Formats</primary>
@@ -119,21 +128,20 @@
       </indexterm>
 
       <figure>
-        <title>The GIF Save dialog</title>
+        <title>The GIF Export dialog</title>
         <mediaobject>
           <imageobject>
             <imagedata format="PNG"
-              fileref="images/using/gif-save-dialog.png"/>
+              fileref="images/using/export-gif-dialog.png"/>
           </imageobject>
         </mediaobject>
       </figure>
       <warning>
         <para>
-          The GIF file format does not support some basic image
-          properties such as
-          <emphasis>print resolution</emphasis>.
-          If you care for these properties, use a different
-          file format like PNG.
+          The GIF file format does not support some basic image        
+          properties such as <emphasis>print resolution</emphasis>.
+          If you care for these properties, use a different file
+          format like PNG.
         </para>
       </warning>
       <variablelist>
@@ -160,7 +168,7 @@
                   <para>
                     GIF comments support only 7-bit ASCII characters.
                     If you use a character outside the 7-bit ASCII set,
-                    <acronym>GIMP</acronym> will save the image without
+                    <acronym>GIMP</acronym> will export the image without
                     a comment, and then inform you that the comment was not
                     saved.
                   </para>
@@ -169,6 +177,7 @@
             </variablelist>
           </listitem>
         </varlistentry>
+        
         <varlistentry>
           <term>Animated GIF Options</term>
           <listitem>
@@ -187,7 +196,7 @@
                 </listitem>
               </varlistentry>
               <varlistentry>
-                <term>Delay between frames if unspecified</term>
+                <term>Delay between frames where unspecified</term>
                 <listitem>
                   <para>
                     You can set the delay, in milliseconds, between frames
@@ -197,7 +206,7 @@
                 </listitem>
               </varlistentry>
               <varlistentry>
-                <term>Frame disposal when unspecified</term>
+                <term>Frame disposal where unspecified</term>
                 <listitem>
                   <para>
                     If this has not been set before, you can set how frames
@@ -228,6 +237,22 @@
                   </itemizedlist>
                 </listitem>
               </varlistentry>
+              <varlistentry>
+                <term>Use delay entered above for all frames</term>
+                <listitem>
+                  <para>
+                    Self-explanatory.
+                  </para>
+                </listitem>
+              </varlistentry>
+              <varlistentry>
+                <term>Use disposal entered above for all frames</term>
+                <listitem>
+                  <para>
+                    Self-explanatory.
+                  </para>
+                </listitem>
+              </varlistentry>
             </variablelist>
           </listitem>
         </varlistentry>
@@ -235,7 +260,7 @@
     </sect3>
 
     <sect3 id="file-jpeg-save">
-      <title>Saving as JPEG</title>
+      <title>Export Image as JPEG</title>
       <anchor id="file-jpeg-load" xreflabel="JPEG"/>
 
       <indexterm>
@@ -248,7 +273,7 @@
         <primary>.jpeg</primary>
       </indexterm>
       <indexterm>
-        <primary>Save as JPEG</primary>
+        <primary>Export Image as JPEG</primary>
       </indexterm>
       <indexterm>
         <primary>Formats</primary>
@@ -260,16 +285,14 @@
         very widely used format, because it compresses images very
         efficiently, while minimizing the loss of image quality. No other
         format comes close to achieving the same level of compression. It does
-        not, however, support transparency or multiple layers. For this
-        reason, saving images as JPEG often requires them to be exported from
-        <acronym>GIMP</acronym>.
+        not, however, support transparency or multiple layers.
       </para>
       <figure>
-        <title>The JPEG Save dialog</title>
+        <title>The JPEG Export dialog</title>
         <mediaobject>
           <imageobject>
             <imagedata format="PNG"
-              fileref="images/using/save-jpeg-dialog.png"/>
+              fileref="images/using/export-jpeg-dialog.png"/>
           </imageobject>
         </mediaobject>
       </figure>
@@ -278,20 +301,6 @@
         of options, whose meaning is beyond the scope of this documentation.
         Unless you are a JPEG expert, the Quality parameter is probably the
         only one you will need to adjust.
-      </para>
-      <para>
-        <caution>
-          <para>
-            After you save an image as a JPEG file, the image is no longer
-            considered <quote>dirty</quote> by <acronym>GIMP</acronym>,
-            so unless you make further changes to it, you will not receive
-            any warning if you close it. Because JPEG is lossy and does not
-            support transparency or multiple layers, some of the information
-            in the image might then be lost. If you want to save all of the
-            information in an image, use <acronym>GIMP</acronym>'s native
-            <link linkend="glossary-xcf">XCF format</link>.
-          </para>
-        </caution>
       </para>
       <variablelist>
         <varlistentry>
@@ -378,15 +387,15 @@
                     read and write EXIF data, the library is not
                     automatically packaged with GIMP. If GIMP was built with
                     libexif support, then EXIF data is preserved if you open a
-                    JPEG file, work with the resulting image, and then save it
-                    as JPEG. The EXIF data is not altered in any way when you
-                    do this. The EXIF data may indicate things such as image
-                    creation time and file name, which may no longer be
+                    JPEG file, work with the resulting image, and then export 
+                    it as JPEG. The EXIF data is not altered in any way when 
+                    you do this. The EXIF data may indicate things such as 
+                    image creation time and file name, which may no longer be
                     correct.
                     If GIMP was not built with EXIF support, you can still
                     open JPG files containing EXIF data, but the EXIF data
                     is ignored, and will not be saved when the resulting image
-                    is later saved.
+                    is later exported.
                   </para>
                 </listitem>
               </varlistentry>
@@ -493,7 +502,7 @@
                     <listitem>
                       <para>
                         <guilabel>2x1,1x1,1x1 (4:2:2)</guilabel>:
-                        This is the standard subsampling, which usually 
+                        This is the standard subsampling, which usually
                         provides a good ratio between image quality and file
                         size. There are situations, however, in which using no
                         subsampling (4:4:4) provides a noticeable increase in
@@ -575,14 +584,13 @@
         </varlistentry>
       </variablelist>
     </sect3>
-
+       
     <sect3 id="file-png-save">
-      <title>Saving as PNG</title>
+      <title>Export Image as PNG</title>
       <anchor id="file-png-load" xreflabel="PNG"/>
       <anchor id="file-png-save-defaults" xreflabel="PNG"/>
-
       <indexterm>
-        <primary>Save as PNG</primary>
+        <primary>Export Image as PNG</primary>
       </indexterm>
       <indexterm>
         <primary>PNG</primary>
@@ -593,11 +601,11 @@
       </indexterm>
 
       <figure>
-        <title>The <quote>Save as PNG</quote> dialog</title>
+        <title>The <quote>Export Image as PNG</quote> dialog</title>
         <mediaobject>
           <imageobject>
             <imagedata format="PNG"
-              fileref="images/using/save-png-dialog.png"/>
+              fileref="images/using/export-png-dialog.png"/>
           </imageobject>
         </mediaobject>
       </figure>
@@ -686,8 +694,8 @@
           <term>Save color values from transparent pixels</term>
           <listitem>
             <para>
-              With this option is checked, the color values are saved even if the
-              pixels are completely transparent.
+              With this option is checked, the color values are saved even if
+              the pixels are completely transparent.
             </para>
           </listitem>
         </varlistentry>
@@ -741,23 +749,23 @@
     </sect3>
 
     <sect3 id="file-tiff-save">
-      <title>Saving as TIFF</title>
+      <title>Export Image as TIFF</title>
+      <indexterm>
+        <primary>Export Image as TIFF</primary>
+      </indexterm>
+      <indexterm>
+        <primary>TIFF</primary>
+      </indexterm>
+      <indexterm>
+        <primary>Formats</primary>
+        <secondary>TIFF</secondary>
+      </indexterm>
       <figure>
-        <title>The TIFF Save dialog</title>
-        <indexterm>
-          <primary>Save as TIFF</primary>
-        </indexterm>
-        <indexterm>
-          <primary>TIFF</primary>
-        </indexterm>
-        <indexterm>
-          <primary>Formats</primary>
-          <secondary>TIFF</secondary>
-        </indexterm>
+        <title>The TIFF Export dialog</title>
         <mediaobject>
           <imageobject>
             <imagedata format="PNG"
-              fileref="images/using/save-tiff-dialog.png"/>
+              fileref="images/using/export-tiff-dialog.png"/>
           </imageobject>
         </mediaobject>
       </figure>
@@ -854,5 +862,37 @@
         </varlistentry>
       </variablelist>
     </sect3>
+    
+      <sect3 id="file-mng-export">
+        <title>Export Image as MNG</title>
+        <indexterm>
+          <primary>Export Image as MNG</primary>
+        </indexterm>
+        <indexterm>
+          <primary>MNG</primary>
+        </indexterm>
+        <indexterm>
+          <primary>Formats</primary>
+          <secondary>MNG</secondary>
+        </indexterm>
+        <figure>
+          <title>Export MNG File Dialog</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata format="PNG"
+                          fileref="images/using/export-mng-dialog.png"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+        <para>
+          MNG is acronym for <quote>Multiple-Image Network Graphics</quote>. 
+        </para>
+        <para>
+          The main problem is that Konqueror is the only Web navigator that 
+          recognizes the MNG animation format. Please see 
+          <ulink url="http://en.wikipedia.org/wiki/Multiple-image_Network_Graphics"/>.
+        </para>
+      </sect3>
+      
   </sect2>
 </sect1>
