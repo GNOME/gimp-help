@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+                       "http://www.docbook.org/xml/4.3/docbookx.dtd">
+<!--  section history:
+  2009-02-23 j.h: copied content from gimp.org as astart for v2.6
+  2009-02-23 j.h: move v2.4 content to appendix/history-24.xml
+  2008-03-21 Mr.Dust: added 'ko'
+  2007-11-08 KoSt: added 'no'
+  2007-09-21 AntI: Added 'es'
+  2007-09-02 lexa: copied content from gimp.org as a start for 2.4 for en de
+  2007-09-02 lexa: moved 2.2 content to the appendix to make room for 2.4 news
+-->
+<sect1 id="gimp-introduction-history-2-6">
+  <title>What's New in GIMP 2.6? </title>
+
+  <para>
+    GIMP 2.6 is an important release from a development point of view. It
+    features changes to the user interface addressing some often received
+    complaints, and a tentative integration of GEGL, the graph based image
+    processing library that will eventually bring high bit-depth and
+    non-destructive editing to GIMP.
+  </para>
+
+  <variablelist>
+    <title>User Interface</title>
+
+    <varlistentry>
+      <term>Toolbox Menubar removed</term>
+      <listitem>
+        <para>
+          The toolbox menubar has been removed and merged with the image
+          window menubar. To be able to do this a window called the empty
+          image window has been introduced. It hosts the menubar and keeps
+          the application instance alive when no images are opened. It also
+          acts as a drag and drop target. When opening the first image the
+          empty image window is transformed into a normal image window, and
+          when closing the last image, that window becomes the empty image
+          window.
+        </para>
+        <figure>
+          <title>New Look of the image window in GIMP 2.6</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata format="PNG"
+                fileref="images/using/empty-image-window.png"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term>Toolbox and docks are utility windows</term>
+      <listitem>
+        <para>
+          With the empty image window acting as a natural main window, the
+          Toolbox and Docks windows are now utility windows rather than main
+          windows. This enables window managers to do a much better
+          job of managing the GIMP windows, including omitting the Toolbox
+          and Docks from the taskbar and ensuring that the Toolbox and Docks
+          always are above image windows.
+        </para>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term>Ability to scroll beyond image border</term>
+      <listitem>
+        <para>
+          The Navigation dialog now allows panning beyond the image border;
+          so it is no longer a problem to use a brush on the edge of
+          an image that fills the entire display window. Also, if a utility
+          window covers the image, you can pan the image to view or edit the
+          portion covered by the utility window.
+        </para>
+        <figure>
+          <title>Scrolling beyond border</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata format="PNG"
+                    fileref="images/using/scroll-beyond-border.png"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term>Minor changes</term>
+      <listitem>
+      <itemizedlist>
+        <listitem>
+          <para>
+            Renamed Dialogs menu to Windows.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Keep a list of recently closed Docks and allow reopening them.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Make opening images in already running GIMP instances work better
+            on Windows.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            You can now enter the image zoom ratio directly in the status bar.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Added support for using online help instead of a locally
+            installed GIMP Help package.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Make it possible to lock tabs in docks to prevent accidental
+            moving.
+          </para>
+        </listitem>
+      </itemizedlist>
+    </listitem>
+    </varlistentry>
+  </variablelist>
+
+  <variablelist>
+    <title>Tools, Filters and Plug-ins</title>
+    <varlistentry>
+      <term>Improved Free Select Tool</term>
+      <listitem>
+        <para>
+          The freehand select tool has been enhanced to support polygonal
+          selections. It also allows mixing free hand segments with polygonal
+          segments, editing of existing segments, applying angle-constraints
+          to segments, and of course the normal selection tool operations
+          like add and subtract. Altogether this ends up making the Free
+          Select Tool a very versatile, powerful and easy-to-use selection
+          tool.
+        </para>
+        <figure>
+          <title>Polygonal Selection</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata format="PNG"
+                fileref="images/using/new-free-select-tool.png"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term>Brush Dynamics</term>
+      <listitem>
+        <para>
+          Brush dynamics uses an input dynamic such as pressure, velocity, or
+          random, to modify brush parameters such as opacity, hardness, size,
+          or color; every brush supports size and opacity, most support more.
+          Velocity and random are usable with a mouse. The Ink tool, that
+          supported velocity, has been overhauled to better handle
+          velocity-dependent painting.
+        </para>
+        <figure>
+          <title>Brush Dynamics</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata format="JPG"
+                fileref="images/using/brush-dynamics.jpg"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+        <para>
+          Brush dynamics have enabled a new feature in stroking paths. There
+          is now a check box under the <quote>paint tool</quote> option, for
+          emulating brush dynamics if you stroke using a paint tool. What this
+          means is that when your stroke is painted, GIMP tells
+          the brush that the pressure and velocity are varying along the
+          length of the stroke. Pressure starts with no pressure, ramps up to
+          full pressure, and then ramps down again to no pressure.
+          Velocity starts from zero and ramps up to full speed by the end of
+          the stroke.
+        </para>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term>Minor changes</term>
+      <listitem>
+        <itemizedlist>
+          <listitem>
+            <para>
+              Added a bounding box for the Text Tool that supports automatic
+              wrapping of text within that bounding box.
+            </para>
+            <figure>
+              <title>Text tool bounding box</title>
+              <mediaobject>
+                <imageobject>
+                  <imagedata format="PNG"
+                    fileref="images/using/text-tool.png"/>
+                </imageobject>
+              </mediaobject>
+            </figure>
+          </listitem>
+          <listitem>
+            <para>
+              Move handles for rectangle based tools like Crop and Rectangle
+              Select to the outside of the rectangle when the rectangle is
+              narrow.
+            </para>
+            <figure>
+              <title>Rectangle handles</title>
+              <mediaobject>
+                <imageobject>
+                  <imagedata format="PNG"
+                    fileref="images/using/rectangle-handles.png"/>
+                </imageobject>
+              </mediaobject>
+            </figure>
+          </listitem>
+          <listitem>
+            <para>
+              Added motion constraints to the Move Tool.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              Improved event smoothing for paint tools.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              Mark the center of rectangles while they are moved, and snap
+              the center to grid and rulers.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              Enable brush scaling for the Smudge tool.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              Added ability to save presets in all color tools for color
+              adjustments you use frequently.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              Allow to transfer settings from <emphasis>Brightness-Contrast
+              </emphasis> to <emphasis>Levels</emphasis>, and from
+              <emphasis>Levels</emphasis> to <emphasis>Curves</emphasis>.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              Allow changing opacity on transform tool previews.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              The Screenshot plug-in has been given the ability to capture
+              the mouse cursor (using Xfixes).
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              Display aspect ratio of the Crop and Rectangle Select Tool
+              rectangles in the status bar.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              Desaturate has been given an on-canvas preview.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              The Flame plug-in has been extended with 22 new variations.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              Data file folders like brush folders are searched recursively
+              for files.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              Replaced the PSD import plug-in with a rewritten version that
+              does what the old version did plus some other things, for
+              example reading of ICC color profiles.
+            </para>
+          </listitem>
+          <listitem>
+            <para>Several displays use Cairo library.</para>
+            <figure id="gimp-cairo-2-4-vs-2-6">
+              <title>Comparing 2.6 display vs 2.4</title>
+              <mediaobject>
+                <imageobject>
+                  <imagedata format="PNG"
+                    fileref="images/using/gimp-curves-tool-2-4-vs-2-6.png"/>
+                </imageobject>
+              </mediaobject>
+            </figure>
+          </listitem>
+        </itemizedlist>
+      </listitem>
+    </varlistentry>
+  </variablelist>
+
+  <variablelist>
+    <title>Under the Hood</title>
+    <varlistentry>
+      <term>GEGL</term>
+      <listitem>
+        <para>
+          Important progress towards high bit-depth and non-destructive
+          editing in GIMP has been made. Most color operations in GIMP are
+          now ported to the powerful graph based image processing framework
+          GEGL <xref linkend="bibliography-online-gegl"/>, meaning that the
+          internal processing is done in 32bit floating point linear
+          light RGBA. By default the legacy 8bit code paths are still used,
+          but a curious user can turn on the use of GEGL for the color
+          operations with <link linkend="gimp-config-use-gegl">Colors / Use
+          GEGL</link>.
+        </para>
+        <para>
+          In addition to porting color operations to GEGL, an experimental
+          GEGL Operation tool has been added, found in the Tools menu. It
+          enables applying GEGL operations to an image and it gives on-canvas
+          previews of the results. The screenshot below shows this
+          for a Gaussian Blur.
+        </para>
+        <figure>
+          <title>GEGL operation</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata format="PNG"
+                fileref="images/using/experimental-gegl-tool.png"/>
+            </imageobject>
+          </mediaobject>
+            </figure>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term>Minor changes</term>
+      <listitem>
+        <para>
+          Ported many widgets to use the 2D graphics library cairo
+          <xref linkend="bibliography-online-cairo"/> for drawing. See this
+          <link linkend="gimp-cairo-2-4-vs-2-6">comparison</link> for an
+          example of how much better this looks.
+        </para>
+      </listitem>
+    </varlistentry>
+  </variablelist>
+
+  <variablelist>
+    <title>Miscellaneous</title>
+    <varlistentry>
+      <term>Plug-in Development</term>
+      <listitem>
+        <para>
+          There are new things for a plug-in developer to enjoy as well.
+          For example, procedures can now give a detailed error
+          description in case of an error, and the error can be propagated
+          to the user.
+        </para>
+        <para>
+          GIMP 2.6 also further enhances its scripting abilities. In
+          particular there is now a much richer API for the creation and
+          manipulation of text layers. Here is a list of new symbols in GIMP
+          2.6: <xref linkend="bibliography-online-gimp-dev-new"/>.
+        </para>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term>Backwards Compatibility</term>
+      <listitem>
+        <para>
+          Some old scripts could not be used with GIMP-2.4. This has been
+          improved and 2.6 should run 2.0 and 2.2 scripts.
+        </para>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term>Known Problems</term>
+      <listitem>
+      <itemizedlist>
+        <listitem>
+          <para>
+            The Utility window hint is currently only known to work well in
+            the Linux GNOME desktop environment and on Windows starting with
+            GIMP 2.6.1.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Using the Text Tool is currently not an optimal experience.
+            Making it work better is a goal for GIMP 2.8.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            If you build GIMP yourself and don't have GVfs support on your
+            platform you need to explicitly pass
+            <option>--without-gvfs</option> to <command>configure</command>,
+            otherwise opening remote files will not work properly.
+          </para>
+        </listitem>
+      </itemizedlist>
+    </listitem>
+    </varlistentry>
+  </variablelist>
+</sect1>
