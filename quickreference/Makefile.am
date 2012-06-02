@@ -1,24 +1,12 @@
 ## Process this file with automake to produce Makefile.in
 
 ALL_LINGUAS ?= de el en es fr it ja ko nl nn pl ru sl sv zh_CN
-QUICKREFERENCE_ALL_LINGUAS ?= de el en fi fr it ja ko ru sl sv zh_CN
+QUICKREFERENCE_ALL_LINGUAS ?= ca de el en fi fr it ja ko ru sv zh_CN
 QUICKREFERENCE_LINGUAS = $(filter $(ALL_LINGUAS), $(QUICKREFERENCE_ALL_LINGUAS))
 
-PO_FILES = \
-	po/gimp-keys.pot\
-	po/de.po	\
-	po/el.po	\
-	po/es.po	\
-	po/fi.po	\
-	po/fr.po	\
-	po/it.po	\
-	po/ja.po	\
-	po/ko.po	\
-	po/nn.po	\
-	po/sl.po	\
-	po/sv.po	\
-	po/ru.po	\
-	po/zh_CN.po
+POT_FILES = po/gimp-keys.pot
+
+PO_FILES = $(foreach lang,$(filter-out en,$(QUICKREFERENCE_ALL_LINGUAS)),po/$(lang).po)
 
 XSL_FILES = \
 	stylesheets/keys-svg.xsl	\
@@ -31,6 +19,7 @@ TEMPLATES = \
 
 EXTRA_DIST = \
 	gimp-keys.xml \
+	$(POT_FILES) \
 	$(PO_FILES) \
 	$(XSL_FILES) \
 	$(TEMPLATES)
