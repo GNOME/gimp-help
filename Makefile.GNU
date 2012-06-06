@@ -577,6 +577,7 @@ images-%: xml/%/images html/%/images ;
 
 validate: validate-en ;
 validate-%: xmllint-% ;
+validate-all: $(foreach LANG,$(LANGUAGES),validate-$(LANG)) ;
 
 xmllint: xmllint-en ;
 xmllint-%: log/%-xmllint.log

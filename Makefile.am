@@ -665,6 +665,7 @@ xml: $(foreach LANG,$(LANGUAGES),xml-$(LANG)) ;
 
 validate: validate-en ;
 validate-%: xmllint-% ;
+validate-all: $(foreach LANG,$(LANGUAGES),validate-$(LANG)) ;
 
 xmllint: xmllint-en ;
 xmllint-%: log/%-xmllint.log
