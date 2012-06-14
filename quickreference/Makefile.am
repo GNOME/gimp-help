@@ -24,15 +24,44 @@ EXTRA_DIST = \
 	$(XSL_FILES) \
 	$(TEMPLATES)
 
+COMPENDIUM = Compendium.po
+
+po/gimp-keys.pot: gimp-keys.xml
+	@echo Making $@; \
+	$(XML2PO) $(XML2POFLAGS) $< | $(MSGUNIQ) --width=$(MSGWIDTH) - > $@
+
+po/%.po: po/gimp-keys.pot
+	@echo Making $@; \
+	if [ -f $(top_srcdir)/po/$*/$(COMPENDIUM) ]; then \
+		with_compendium="--compendium=$(top_srcdir)/po/$*/$(COMPENDIUM)"; \
+	fi; \
+	if [ -d "$(GIMP_PO_ROOT)" ]; then \
+		for po in $(GIMP_PO_ROOT)/po*/$*.po; do \
+			with_gimp="$${with_gimp} --compendium=$${po}"; \
+		done; \
+	fi; \
+	if [ ! -s $@ ]; then \
+		$(MSGINIT) $(MSGINITFLAGS) --input=$< --locale=$* --output=$@; \
+	fi; \
+	$(MSGMERGE) $(MSGMERGEFLAGS) $${with_compendium} $${with_gimp} \
+		--update $@ $<; \
+	test -s $@
+
+.PHONY: pot po-% po
+pot: po/gimp-keys.pot ;
+po-%: po/%.po ;
+po: $(foreach lang,$(filter-out en,$(QUICKREFERENCE_LINGUAS)),po-$(lang)) ;
+
 xml/gimp-keys-%.xml: po/%.po gimp-keys.xml
 	$(mkdir_p) xml
 	$(XML2PO) -p $< $(srcdir)/gimp-keys.xml > $@
 
 # English is a special case
 #
-xml/gimp-keys-en.xml: po/gimp-keys.pot gimp-keys.xml
-	$(mkdir_p) xml
-	$(XML2PO) -p $< $(srcdir)/gimp-keys.xml > $@
+.INTERMEDIATE: xml/gimp-keys-en.xml
+xml/gimp-keys-en.xml: gimp-keys.xml
+	$(mkdir_p) xml; \
+	cp $< $@
 
 svg/gimp-keys-%.svg: xml/gimp-keys-%.xml stylesheets/keys-svg.xsl
 	$(mkdir_p) svg
