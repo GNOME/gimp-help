@@ -30,37 +30,26 @@ DOC_LINGUAS = $(LINGUAS)
 ####            External programs                                   ####
 ########################################################################
 
-## Essential external programs and their default options
-## (some of these variables are provided via "configure" -- see configure.ac)
+## Essential external programs and their default options:
 ##
-## XSLTPROC  = xsltproc
-## XSLTFLAGS = --nonet
+## (the following variables are provided via "configure";
+## edit configure.ac to change their default values)
+##
+## XSLTPROC, XSLTFLAGS
+## XMLLINT, XMLLINTFLAGS
+## XML2PO, XML2POFLAGS
+## MSGWIDTH
+## MSGUNIQ. MSGUNIQFLAGS
+## MSGCAT, MSGCATFLAGS
+## MSGINIT, MSGINITFLAGS
+## MSGFMT, MSGFMTFLAGS
+## MSGMERGE, MSGMERGEFLAGS
+## DBLATEX, DBLATEXFLAGS
+## DOCBOOK2ODF, DOCBOOK2ODFFLAGS
+
 # HIDE FROM AUTOMAKE #ifneq ($(srcdir),$(builddir))
 # HIDE FROM AUTOMAKE #XSLTFLAGS += --path $(builddir)
 # HIDE FROM AUTOMAKE #endif
-##
-## XMLLINT      = xmllint
-XMLLINTFLAGS = --nonet
-##
-## XML2PO        = $(srcdir)/tools/xml2po.py
-## XML2POFLAGS   = --mode=gimphelp
-##
-MSGWIDTH      = 79
-## MSGUNIQ       = msguniq
-MSGUNIQFLAGS  =
-## MSGCAT        = msgcat
-MSGCATFLAGS   = --width=$(MSGWIDTH)
-## MSGINIT       = msginit
-MSGINITFLAGS  = --no-translator --width=$(MSGWIDTH)
-## MSGFMT        = msgfmt
-## MSGFMTFLAGS   = --check --use-fuzzy --statistics
-## MSGMERGE      = msgmerge
-MSGMERGEFLAGS = --quiet --width=$(MSGWIDTH)
-##
-## DBLATEX       = dblatex
-DBLATEXFLAGS     = --backend=xetex --style=db2latex --verbose
-## DOCBOOK2ODF      = docbook2odf
-DOCBOOK2ODFFLAGS =
 
 # Standard shell commands
 find_l = find -L

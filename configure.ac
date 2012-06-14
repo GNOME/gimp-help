@@ -120,6 +120,8 @@ if test -z "$XMLLINT" && test "x$enable_build" = "xyes"; then
 fi
 
 AM_CONDITIONAL(HAVE_XMLLINT, test -n "$XMLLINT")
+XMLLINTFLAGS="--nonet"
+AC_SUBST(XMLLINTFLAGS)
 
 
 #  Search for dblatex
@@ -130,6 +132,8 @@ if test -z "$DBLATEX"; then
 fi
 
 AM_CONDITIONAL(HAVE_DBLATEX, test -n "$DBLATEX")
+DBLATEXFLAGS="--backend=xetex --style=db2latex --verbose"
+AC_SUBST(DBLATEXFLAGS)
 
 
 #  Search for docbook2odf
@@ -140,6 +144,8 @@ if test -z "$DOCBOOK2ODF"; then
 fi
 
 AM_CONDITIONAL(HAVE_DOCBOOK2ODF, test -n "$DOCBOOK2ODF")
+DOCBOOK2ODFFLAGS=
+AC_SUBST(DOCBOOK2ODFFLAGS)
 
 
 #  Use our customized xml2po
@@ -158,7 +164,6 @@ if test -z "$MSGFMT" && test "x$enable_i18n" = "xyes"; then
   AC_MSG_WARN([cannot find msgfmt])
   missing_i18n_tools=${missing_i18n_tools:+"${missing_i18n_tools} "}msgfmt
 fi
-
 MSGFMTFLAGS="--check --use-fuzzy --statistics"
 AC_SUBST(MSGFMTFLAGS)
 
@@ -167,24 +172,35 @@ AC_PATH_PROG(MSGINIT, msginit)
 if test -z "$MSGINIT" && test "x$enable_i18n" = "xyes"; then
   missing_i18n_tools=${missing_i18n_tools:+"${missing_i18n_tools} "}msginit
 fi
+MSGINITFLAGS='--no-translator --width=$(MSGWIDTH)'
+AC_SUBST(MSGINITFLAGS)
 
 
 AC_PATH_PROG(MSGMERGE, msgmerge)
 if test -z "$MSGMERGE" && test "x$enable_i18n" = "xyes"; then
   missing_i18n_tools=${missing_i18n_tools:+"${missing_i18n_tools} "}msgmerge
 fi
+MSGMERGEFLAGS='--quiet --width=$(MSGWIDTH)'
+AC_SUBST(MSGMERGEFLAGS)
 
 
 AC_PATH_PROG(MSGUNIQ, msguniq)
 if test -z "$MSGUNIQ" && test "x$enable_i18n" = "xyes"; then
   missing_i18n_tools=${missing_i18n_tools:+"${missing_i18n_tools} "}msguniq
 fi
+MSGUNIQFLAGS=
+AC_SUBST(MSGUNIQFLAGS)
 
 
 AC_PATH_PROG(MSGCAT, msgcat)
 if test -z "$MSGCAT" && test "x$enable_i18n" = "xyes"; then
   missing_i18n_tools=${missing_i18n_tools:+"${missing_i18n_tools} "}msgcat
 fi
+MSGCATFLAGS='--width=$(MSGWIDTH)'
+AC_SUBST(MSGCATFLAGS)
+
+MSGWIDTH=79
+AC_SUBST(MSGWIDTH)
 
 #  Optional: dot to create build system map
 
