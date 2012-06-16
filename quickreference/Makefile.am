@@ -35,17 +35,11 @@ po/%.po: po/gimp-keys.pot
 	if [ -f $(top_srcdir)/po/$*/$(COMPENDIUM) ]; then \
 		with_compendium="--compendium=$(top_srcdir)/po/$*/$(COMPENDIUM)"; \
 	fi; \
-	if [ -d "$(GIMP_PO_ROOT)" ]; then \
-		for po in $(GIMP_PO_ROOT)/po*/$*.po; do \
-			with_gimp="$${with_gimp} --compendium=$${po}"; \
-		done; \
-	fi; \
 	if [ ! -s $@ ]; then \
 		$(MSGINIT) $(MSGINITFLAGS) --input=$< --locale=$* --output=$@; \
 	fi; \
-	$(MSGMERGE) $(MSGMERGEFLAGS) $${with_compendium} $${with_gimp} \
-		--update $@ $<; \
-	test -s $@
+	$(MSGMERGE) $(MSGMERGEFLAGS) $${with_compendium} --update $@ $<; \
+	rm -f $@~
 
 .PHONY: pot po-% po
 pot: po/gimp-keys.pot ;
@@ -53,18 +47,18 @@ po-%: po/%.po ;
 po: $(foreach lang,$(filter-out en,$(QUICKREFERENCE_LINGUAS)),po-$(lang)) ;
 
 xml/gimp-keys-%.xml: po/%.po gimp-keys.xml
-	$(mkdir_p) xml
+	$(MKDIR_P) xml
 	$(XML2PO) -p $< $(srcdir)/gimp-keys.xml > $@
 
 # English is a special case
 #
 .INTERMEDIATE: xml/gimp-keys-en.xml
 xml/gimp-keys-en.xml: gimp-keys.xml
-	$(mkdir_p) xml; \
+	$(MKDIR_P) xml; \
 	cp $< $@
 
 svg/gimp-keys-%.svg: xml/gimp-keys-%.xml stylesheets/keys-svg.xsl
-	$(mkdir_p) svg
+	$(MKDIR_P) svg
 	$(XSLTPROC) \
 	  $(srcdir)/stylesheets/keys-svg.xsl \
 	  $< \
@@ -73,7 +67,7 @@ svg/gimp-keys-%.svg: xml/gimp-keys-%.xml stylesheets/keys-svg.xsl
 svg: $(foreach lang,$(QUICKREFERENCE_LINGUAS),svg/gimp-keys-$(lang).svg)
 
 docbook/gimp-keys-%.xml: xml/gimp-keys-%.xml stylesheets/keys-docbook.xsl
-	$(mkdir_p) docbook
+	$(MKDIR_P) docbook
 	$(XSLTPROC) \
 	  $(srcdir)/stylesheets/keys-docbook.xsl \
 	  $< \

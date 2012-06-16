@@ -241,29 +241,12 @@ xml2pot = $(XML2PO) $(XML2POFLAGS) --output='-' $(filter %.xml,$(1)) \
 #     $1 - input POT file
 #     $2 - translation language
 #     $3 - output PO file
-pot2po = with_compendium="$(shell $(call get_compendium,$3)) \
-                          $(shell $(call use_gimp_po_files,$2))"; \
-         tmpfile=$(3).tmp; \
-         if [ -s $(3) ]; then \
-             $(MSGMERGE) $(MSGMERGEFLAGS) $${with_compendium} \
-                 --output-file $${tmpfile} $(3) $(1); \
-         else \
+pot2po = test -e $(3) || \
              $(MSGINIT) $(MSGINITFLAGS) --input $(1) --locale=$(2) --output=$(3); \
-             pofile=$(3); \
-             if [ -s $${pofile%/*}.po ]; then \
-                 $(MSGMERGE) $(MSGMERGEFLAGS) $${with_compendium} \
-                     --output-file $${tmpfile} $${pofile%/*}.po $(3); \
-             elif [ -n "$${with_compendium}" ]; then \
-                 $(MSGMERGE) $(MSGMERGEFLAGS) $${with_compendium} \
-	             --output-file $${tmpfile} $(3) $(1); \
-             else \
-                 $(SED) -e '/Plural-Forms:/d' $(3) > $${tmpfile}; \
-             fi; \
-         fi; \
-         test -s $${tmpfile} && mv -f $${tmpfile} $(3) || rm -f $${tmpfile}; \
-         test -s $(3) && $(MSGFMT) $(MSGFMTFLAGS) $(3); \
-         rm -f messages.mo messages.gmo; \
-         test -s $(3)
+         with_compendium="$(shell $(call get_compendium,$3))"; \
+         $(MSGMERGE) $(MSGMERGEFLAGS) $${with_compendium} --update $(3) $(1) \
+         && $(MSGFMT) $(MSGFMTFLAGS) $(3) || exit 70; \
+         rm -f $(3)~ messages.mo messages.gmo
 
 # Merge PO file into (translated) XML file
 #
@@ -304,15 +287,14 @@ copy = $(LN_S) $(abs_srcdir)/$(1) $(2)
 # HIDE FROM AUTOMAKE #	file="$(1)"; dir=$${file%/*}; \
 # HIDE FROM AUTOMAKE #	while true; do \
 # HIDE FROM AUTOMAKE #		if test -f $${dir}/$(COMPENDIUM); then \
-# HIDE FROM AUTOMAKE #			opt="$${opt} --compendium=$${dir}/$(COMPENDIUM)"; \
+# HIDE FROM AUTOMAKE #			echo "--compendium=$${dir}/$(COMPENDIUM)"; \
 # HIDE FROM AUTOMAKE #		fi; \
 # HIDE FROM AUTOMAKE #		case "$${dir}" in \
 # HIDE FROM AUTOMAKE #			po|*/po) break;; \
 # HIDE FROM AUTOMAKE #			    */*) dir="$${dir%/*}";; \
 # HIDE FROM AUTOMAKE #			      *) break;; \
 # HIDE FROM AUTOMAKE #		esac; \
-# HIDE FROM AUTOMAKE #	done; \
-# HIDE FROM AUTOMAKE #	if test -n "$${opt}"; then echo $${opt}; fi
+# HIDE FROM AUTOMAKE #	done
 # HIDE FROM AUTOMAKE #else
 # HIDE FROM AUTOMAKE #get_compendium =
 # HIDE FROM AUTOMAKE #endif
@@ -353,22 +335,11 @@ help: make.help
 	    -e '### skip comments ###' \
 	    -e '/^#/d' \
 	    -e '### print if no "make" variable found ###' \
-	    -e '/@/!b' \
+	    -e '/%/!b' \
 	    -e '### replace "make" variables ###' \
-	    -e 's/@LANGUAGES@/@$(strip $(LANGUAGES))@/' \
-	    -e 's/@LINGUAS@/@$(strip $(LINGUAS))@/' \
-	    -e 's/@ALL_LINGUAS@/@$(strip $(ALL_LINGUAS))@/' \
-	    -e '### add commas ###' \
-	    -e 'tloop' \
-	    -e ':loop' \
-	    -e '    ### mark value of variable (@@...@@) ###' \
-	    -e '    s/@\([^@]*\)@/@@\1@@/' \
-	    -e '    twhile' \
-	    -e '    :while' \
-	    -e '        s/\(@@[^,@]*\) \([^@]*@@\)/\1, \2/' \
-	    -e '    twhile' \
-	    -e '    s/@@\([^@]*\)@@/\1/' \
-	    -e 'tloop' \
+	    -e 's/%LANGUAGES%/%$(strip $(LANGUAGES))%/' \
+	    -e 's/%LINGUAS%/%$(strip $(LINGUAS))%/' \
+	    -e 's/%ALL_LINGUAS%/%$(strip $(ALL_LINGUAS))%/' \
 	$<
 
 .PHONY: help
@@ -585,7 +556,7 @@ po: $(foreach LANG,$(PO_LANGS),po-$(LANG)) ;
 # HIDE FROM AUTOMAKE #
 # HIDE FROM AUTOMAKE ## This is indirectly used as HTML and PDF prerequisite:
 # HIDE FROM AUTOMAKE #xml/$(1): $$($(1)_XML_FILES) | xml/$(1)/images
-# HIDE FROM AUTOMAKE #	$$(cmd) test -d $$@ && touch $$@ || $(mkdir_p) $$@
+# HIDE FROM AUTOMAKE #	$$(cmd) test -d $$@ && touch $$@ || $(MKDIR_P) $$@
 # HIDE FROM AUTOMAKE #
 # HIDE FROM AUTOMAKE ## Targets suitable for command line
 # HIDE FROM AUTOMAKE #xml-$(1): po-$(1) xml/$(1) cleanup-xml-$(1) ;

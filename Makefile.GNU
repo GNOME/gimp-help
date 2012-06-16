@@ -197,28 +197,12 @@ xml2pot = $(XML2PO) $(XML2POFLAGS) --output='-' $(filter %.xml,$(1)) \
 #     $1 - input POT file
 #     $2 - translation language
 #     $3 - output PO file
-pot2po = with_compendium="$(shell $(call get_compendium,$3)) \
-                          $(shell $(call use_gimp_po_files,$2))"; \
-         tmpfile=$(3).tmp; \
-         if [ -s $(3) ]; then \
-             $(MSGMERGE) $(MSGMERGEFLAGS) $${with_compendium} \
-                 --output-file $${tmpfile} $(3) $(1); \
-         else \
+pot2po = test -e $(3) || \
              $(MSGINIT) $(MSGINITFLAGS) --input $(1) --locale=$(2) --output=$(3); \
-             pofile=$(3); \
-             if [ -s $${pofile%/*}.po ]; then \
-                 $(MSGMERGE) $(MSGMERGEFLAGS) $${with_compendium} \
-                     --output-file $${tmpfile} $${pofile%/*}.po $(3); \
-             elif [ -n "$${with_compendium}" ]; then \
-                 $(MSGMERGE) $(MSGMERGEFLAGS) $${with_compendium} \
-	             --output-file $${tmpfile} $(3) $(1); \
-             else \
-                 $(SED) -e '/Plural-Forms:/d' $(3) > $${tmpfile}; \
-             fi; \
-         fi; \
-         test -s $${tmpfile} && mv -f $${tmpfile} $(3) || rm -f $${tmpfile}; \
-         test -s $(3) && $(MSGFMT) $(MSGFMTFLAGS) $(3) || exit 70; \
-         rm -f messages.mo messages.gmo
+         with_compendium="$(shell $(call get_compendium,$3))"; \
+         $(MSGMERGE) $(MSGMERGEFLAGS) $${with_compendium} --update $(3) $(1) \
+         && $(MSGFMT) $(MSGFMTFLAGS) $(3) || exit 70; \
+         rm -f $(3)~ messages.mo messages.gmo
 
 # Merge PO file into (translated) XML file
 #
@@ -245,7 +229,7 @@ endif
 
 make_target_dir = f=$(1); d=$${f%/*}; test -d $$d || $(mkdir_p) $$d
 
-get_recent_file = $(shell ls -t $(1) | head -n 1)
+get_recent_file = $(shell ls -t $(1) 2>/dev/null | head -n 1)
 
 copy = $(ln_s) $(abs_srcdir)/$(1) $(2)
 
@@ -254,15 +238,14 @@ get_compendium = \
 	file="$(1)"; dir=$${file%/*}; \
 	while true; do \
 		if test -f $${dir}/$(COMPENDIUM); then \
-			opt="$${opt} --compendium=$${dir}/$(COMPENDIUM)"; \
+			echo "--compendium=$${dir}/$(COMPENDIUM)"; \
 		fi; \
 		case "$${dir}" in \
 			po|*/po) break;; \
 			    */*) dir="$${dir%/*}";; \
 			      *) break;; \
 		esac; \
-	done; \
-	if test -n "$${opt}"; then echo $${opt}; fi
+	done
 else
 get_compendium =
 endif
@@ -300,22 +283,11 @@ help: make.help
 	    -e '### skip comments ###' \
 	    -e '/^#/d' \
 	    -e '### print if no "make" variable found ###' \
-	    -e '/@/!b' \
+	    -e '/%/!b' \
 	    -e '### replace "make" variables ###' \
-	    -e 's/@LANGUAGES@/@$(strip $(LANGUAGES))@/' \
-	    -e 's/@LINGUAS@/@$(strip $(LINGUAS))@/' \
-	    -e 's/@ALL_LINGUAS@/@$(strip $(ALL_LINGUAS))@/' \
-	    -e '### add commas ###' \
-	    -e 'tloop' \
-	    -e ':loop' \
-	    -e '    ### mark value of variable (@@...@@) ###' \
-	    -e '    s/@\([^@]*\)@/@@\1@@/' \
-	    -e '    twhile' \
-	    -e '    :while' \
-	    -e '        s/\(@@[^,@]*\) \([^@]*@@\)/\1, \2/' \
-	    -e '    twhile' \
-	    -e '    s/@@\([^@]*\)@@/\1/' \
-	    -e 'tloop' \
+	    -e 's/%LANGUAGES%/%$(strip $(LANGUAGES))%/' \
+	    -e 's/%LINGUAS%/%$(strip $(LINGUAS))%/' \
+	    -e 's/%ALL_LINGUAS%/%$(strip $(ALL_LINGUAS))%/' \
 	$<
 
 
