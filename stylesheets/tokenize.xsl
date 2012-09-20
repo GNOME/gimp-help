@@ -9,28 +9,32 @@
 
   <xsl:template name="tokenize">
     <xsl:param name="linguas" />
-    <xsl:param name="uri" />
+    <xsl:param name="filename" />
     <xsl:param name="tail">
       <xsl:value-of select="substring-after($linguas, $splitstr)" />
     </xsl:param>
     <xsl:param name="lang">
       <xsl:value-of select="substring-before($linguas, $splitstr)" />
     </xsl:param>
+    <xsl:param name="uri">
+      <xsl:value-of select="concat('../', $lang, '/', $filename)" />
+    </xsl:param>
 
     <xsl:choose>
       <xsl:when test="contains($tail, $splitstr)">
         <xsl:call-template name="create_link">
-            <xsl:with-param name="href" select="concat('..', $lang, '/', $uri)" />
+          <xsl:with-param name="href" select="$uri" />
           <xsl:with-param name="title" select="$vocab/vocab/item[@value=$lang]" />
         </xsl:call-template>
 
         <xsl:call-template name="tokenize">
           <xsl:with-param name="linguas" select="$tail" />
+          <xsl:with-param name="filename" select="$filename" />
         </xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
         <xsl:call-template name="create_link">
-          <xsl:with-param name="href" select="$tail" />
+          <xsl:with-param name="href" select="$uri" />
           <xsl:with-param name="title" select="$vocab/vocab/item[@value=$tail]" />
         </xsl:call-template>
       </xsl:otherwise>
