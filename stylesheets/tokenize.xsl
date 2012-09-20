@@ -7,7 +7,11 @@
   <xsl:variable name="vocab" select="document('vocab.xml')" />
   <xsl:variable name="splitstr" select="' '" />
 
-  <xsl:template name="tokenize">
+  <!-- The tokenizer splits all languages and creates for each language
+       a link element with the href pointing to the concatenated result
+       of the language id and the given filename paramenter.
+    -->
+  <xsl:template name="gimp.help.tokenize">
     <xsl:param name="linguas" />
     <xsl:param name="filename" />
     <xsl:param name="tail">
@@ -20,25 +24,17 @@
       <xsl:value-of select="concat('../', $lang, '/', $filename)" />
     </xsl:param>
 
-    <xsl:choose>
-      <xsl:when test="contains($tail, $splitstr)">
-        <xsl:call-template name="create_link">
-          <xsl:with-param name="href" select="$uri" />
-          <xsl:with-param name="title" select="$vocab/vocab/item[@value=$lang]" />
-        </xsl:call-template>
+    <xsl:call-template name="create_link">
+      <xsl:with-param name="href" select="$uri" />
+      <xsl:with-param name="title" select="$vocab/vocab/item[@value=$lang]" />
+    </xsl:call-template>
 
-        <xsl:call-template name="tokenize">
-          <xsl:with-param name="linguas" select="$tail" />
-          <xsl:with-param name="filename" select="$filename" />
-        </xsl:call-template>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:call-template name="create_link">
-          <xsl:with-param name="href" select="$uri" />
-          <xsl:with-param name="title" select="$vocab/vocab/item[@value=$tail]" />
-        </xsl:call-template>
-      </xsl:otherwise>
-    </xsl:choose>
+    <xsl:if test="contains($tail, $splitstr)">
+      <xsl:call-template name="gimp.help.tokenize">
+        <xsl:with-param name="linguas" select="$tail" />
+        <xsl:with-param name="filename" select="$filename" />
+      </xsl:call-template>
+    </xsl:if>
   </xsl:template>
 
   <xsl:template name="create_link">
