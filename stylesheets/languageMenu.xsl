@@ -4,14 +4,14 @@
 
   <xsl:output method="xml" encoding="UTF-8" indent="yes" />
 
-  <xsl:variable name="vocab" select="document('vocab.xml')" />
+  <xsl:variable name="vocab" select="document('languageVocab.xml')" />
   <xsl:variable name="splitstr" select="' '" />
 
   <!-- The tokenizer splits all languages and creates for each language
        a link element with the href pointing to the concatenated result
        of the language id and the given filename paramenter.
     -->
-  <xsl:template name="gimp.help.tokenize">
+  <xsl:template name="gimp.help.linguas.tokenize">
     <xsl:param name="linguas" />
     <xsl:param name="filename" />
     <xsl:param name="tail">
@@ -30,7 +30,7 @@
     </xsl:call-template>
 
     <xsl:if test="contains($tail, $splitstr)">
-      <xsl:call-template name="gimp.help.tokenize">
+      <xsl:call-template name="gimp.help.linguas.tokenize">
         <xsl:with-param name="linguas" select="$tail" />
         <xsl:with-param name="filename" select="$filename" />
       </xsl:call-template>
