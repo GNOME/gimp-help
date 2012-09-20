@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- This file is part of the gimp-help-2 project and is
-     (C) 2002, 2003, 2004, 2005, 2006 Daniel Egger, Róman Joost
+     (C) 2002-2012 Daniel Egger, Róman Joost
      You may use this file in accordance to the GNU General Public License
      Version 2 which is available from http://www.gnu.org.
 -->
@@ -8,6 +8,7 @@
     xmlns="http://www.w3.org/1999/xhtml">
 
   <xsl:import href="@STYLEBASE@/xhtml/chunk.xsl" />
+  <xsl:import href="tokenize.xsl" />
   <xsl:import href="float-images.xsl" />
   <xsl:include href="htmlalternate.xsl" />
 
@@ -64,6 +65,7 @@
   <xsl:param name="targets.filename" select="'gimp-xrefs.xml'" />
   <xsl:param name="toc.section.depth" select="2" />
   <xsl:param name="use.id.as.filename">1</xsl:param>
+  <xsl:param name="all_linguas">@ALL_LINGUAS@</xsl:param>
 
   <!-- Add NotInToc role to simplesect, which is using in fdl.xml to
   deal with FDL-In-TOC issue.
@@ -174,6 +176,15 @@
         <xsl:if test="$header.rule != 0">
           <hr/>
         </xsl:if>
+        <div id="show_other_language">
+            <xsl:variable name="uri">
+                <xsl:call-template name="href.target" />
+            </xsl:variable>
+            <xsl:call-template name="tokenize">
+                <xsl:with-param name="linguas" select="$all_linguas" />
+                <xsl:with-param name="uri" select="$uri" />
+            </xsl:call-template>
+        </div>
       </div>
     </xsl:if>
   </xsl:template>
