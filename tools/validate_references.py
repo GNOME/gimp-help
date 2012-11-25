@@ -60,25 +60,28 @@ class FileNameContainer(object):
         """Is there an entry 'key'?."""
         return self.data.has_key(key)
 
-    def add(self, key, val=True):
-        """Add a (key, value) pair to the container, e.g.
-           filename and some info corresponding to this filename.
-        """
-        self.data[key] = val
-
     def __setitem__(self, key, val):
         """Add a (key, value) pair to the container, e.g.
            filename and some info corresponding to this filename.
         """
         self.data[key] = val
 
+    def add(self, key, val=True):
+        """Add a (key, value) pair to the container, e.g.
+           filename and some info corresponding to this filename.
+        """
+        self.data[key] = val
+
+    def clear(self):
+        """Remove all entries, i.e. remove all (key, value) pairs."""
+        self.data = {}
+
     def erase(self, key):
         """Mark an entry as invalid.
-        
+
         Set the info to False rather than deleting it,
         so that "removing" while iterating is possible.
         """
-        #if key in self.data: self.data[key] = False
         self.data[key] = False
 
     def files(self):
@@ -103,7 +106,6 @@ class FileNameContainer(object):
         """Remove entries common to 'self' and 'other'."""
         for key in (k for k in self.data if k in other):
             self.erase(key)
-            #other.erase(key)
 
 
 class ImageFilesList(FileNameContainer):
@@ -115,34 +117,31 @@ class ImageFilesList(FileNameContainer):
     """
     def __init__(self):
         super(ImageFilesList, self).__init__()
+        self.imageroot = ""
 
     def find(self, imageroot):
         """Search for PNG and JPG files in the image directory."""
 
-        self.data.clear()
+        self.clear()
         self.imageroot = os.path.normpath(imageroot)
-        imageroot = self.imageroot + "/"
 
-        Logger.info("searching images in %s ..." % imageroot)
+        Logger.info("\nsearching images in '%s' ..." % self.imageroot)
 
         for root, dirs, files in os.walk(self.imageroot):
             for prune in [ 'callouts', '.git' ]:
                 if prune in dirs:
                     dirs.remove(prune)
 
-            # ignore images in the first level of the images dirs
-            if root == self.imageroot:
-                Logger.debug("skipping root dir %s" % root)
-                continue
-
+            # don't save the prefix common to all entries
+            prefixlen = len(self.imageroot) + 1  # path + "/"
             # don't care about other files than images files
             for filename in (name for name in files
                                   if IMAGEFILE_REGEX.match(name)):
                 filepath = os.path.join(root, filename)
                 Logger.debug(filepath)
-                self.add(filepath.replace(imageroot, ""))
+                self.add(filepath[prefixlen:])
 
-        Logger.info("found %d image files" % len(self.data))
+        Logger.info("found %d image files\n" % len(self))
 
     def report(self):
         """Print the list of orphaned image files, i.e. image files
@@ -150,12 +149,10 @@ class ImageFilesList(FileNameContainer):
         """
         files = self.files()
         Logger.info("%d orphaned image file%s%s" % \
-                    (len(files), char_if("s", len(files) != 1), 
+                    (len(files), char_if("s", len(files) != 1),
                                  char_if(":", len(files) != 0)))
-        #sys.stderr.flush()
         for imagefile in sorted(files):
             print "ORPHANED:", os.path.join(self.imageroot, imagefile)
-        sys.stdout.flush()
 
 
 class ImageReferencesList(FileNameContainer):
@@ -189,7 +186,7 @@ class ImageReferencesList(FileNameContainer):
         # even the external DTD subset."
         parser.setFeature(xml.sax.handler.feature_external_pes, 0)
         return parser
-        
+
     def find(self, source_file):
         """Parse XML files and extract image references."""
 
@@ -201,12 +198,26 @@ class ImageReferencesList(FileNameContainer):
             self.parser.parse(source_file)
         except xml.sax.SAXException, err:
             Logger.error("ERROR parsing %s" % err)
+            sys.exit(65)
         except:
             Logger.error("ERROR reading %s" % source_file)
+            sys.exit(65)
 
         assert(len(self.cur_files) == 1)
-        Logger.info("parsed %d files, %d references" % \
-                    (self.all_files, len(self.data)))
+        Logger.info("found %d references in %d files" % \
+                    (len(self), self.all_files))
+
+    def add(self, imagefile_reference):
+        """Add a (reference, location) pair to the list of image files.
+
+        "imagefile_reference" is the value of the 'fileref' attribute
+        as returned from the xml-parser. The common prefix "images/"
+        will be removed.
+        "location" is the name of the current xml source file.
+        """
+        key = imagefile_reference.replace("images/", "")
+        val = self.current_file()
+        super(ImageReferencesList, self).add(key, val)
 
     def report(self):
         """Print the list of broken image referencess
@@ -214,12 +225,10 @@ class ImageReferencesList(FileNameContainer):
         """
         files = self.files()
         Logger.info("%d broken image reference%s%s" % \
-                    (len(files), char_if("s", len(files) != 1), 
+                    (len(files), char_if("s", len(files) != 1),
                                  char_if(":", len(files) != 0)))
-        #sys.stderr.flush()
         for imagefile in sorted(files):
             print "BROKEN: images/%s IN %s" % (imagefile, self.data[imagefile])
-        sys.stdout.flush()
 
     # Internal stack methods to keep track of the opened files
 
@@ -246,9 +255,12 @@ class XMLHandler(xml.sax.handler.ContentHandler):
     def startElement(self, name, attrs):
         """Handle image nodes."""
         if name in IMAGE_NODES:
-            fileref = attrs.getValue('fileref').replace("images/", "")
-            if not IGNORE_IMAGE_REGEX.match(fileref):
-                self.owner.add(fileref, self.owner.current_file())
+            try:
+                fileref = attrs.getValue('fileref')
+                if not IGNORE_IMAGE_REGEX.match(fileref):
+                    self.owner.add(fileref)
+            except KeyError:
+                self.error("missing 'fileref' attribute")
         if name == "xi:include" and attrs.has_key('href'):
             filename = os.path.join(os.path.dirname(self.owner.current_file()),
                                     attrs.getValue('href'))
@@ -256,26 +268,36 @@ class XMLHandler(xml.sax.handler.ContentHandler):
                 parser = self.owner.make_parser()
                 self.owner.push_file(filename)
                 Logger.debug("parsing %s" % filename)
-                try:
-                    parser.parse(filename)
-                except xml.sax.SAXException, err:
-                    Logger.error("ERROR parsiong %s" % err)
-                except:
-                    Logger.error("ERROR reading %s" % filename)
+                parser.parse(filename)
                 self.owner.pop_file()
             else:
-                Logger.warn("not parsing %s" % filename)
+                self.error("missing file: '%s'" % filename)
+
+    def error(self, errmsg=""):
+        """Wrapper function for raising an xml.sax.SAXException.
+
+        This is a simple workaround to raise an exception with
+        line and column number provided.
+        """
+        try:
+            line = self._locator.getLineNumber()
+            column = self._locator.getColumnNumber()
+        except AttributeError:
+            line, column = '?', '?'
+        errmsg = "%s:%s:%s: %s" % \
+                 (self.owner.current_file(), line, column, errmsg)
+        raise xml.sax.SAXException(errmsg)
 
 
 def main():
     """The main program (hmm, what did you expect?).
-       
+
        The algorithm for validating image files and references is
        very simple:
 
        Let
-           (1) I := (set of) all image files,
-           (2) R := (set of) all image file references,
+           (1) R := (set of) all image file references,
+           (2) I := (set of) all image files,
        then
            (3) B := R \ I = R \ (R ∩ I)
        is the set containing files in R but not in I, that is the set
@@ -287,15 +309,16 @@ def main():
     gimp_help_root_dir     = "."
     xml_dir                = "src"
     img_dirs               = "images/C"
+    languages              = "C"
     xml_root_file          = "gimp.xml"
     find_orphaned_images   = False
     find_broken_references = False
 
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "hvr:x:s:i:blio",
+        opts, args = getopt.getopt(sys.argv[1:], "hvr:x:s:blof:",
                          ["help", "verbose",
-                          "root=", "xmldir=", "srcdir=", "imgdir=",
-                          "broken", "links", "orphaned", "images"])
+                          "root=", "xmldir=", "srcdir=", "file=",
+                          "broken", "links", "orphaned",])
     except getopt.GetoptError, err:
         usage(64, str(err))
 
@@ -303,14 +326,13 @@ def main():
         if opt == "-h" or opt == "--help":
             usage()
         elif opt == "-v" or opt == "--verbose":
-            Logger.setLevel(Logger.getEffectiveLevel() - logging.DEBUG)
+            if not Logger.isEnabledFor(logging.DEBUG):
+                Logger.setLevel(Logger.getEffectiveLevel() - logging.DEBUG)
         elif opt in ["-r", "--root"]:
             gimp_help_root_dir = arg
         elif opt in ["-x", "--xmldir", "-s", "--srcdir"]:
             xml_dir = arg
             xml_root_file = os.path.join(xml_dir, xml_root_file)
-        elif opt in ["-i", "--imgdir"]:
-            img_dirs = re.split('[, ]+', arg)
         elif opt in ["-b", "--broken", "-l", "--links"]:
             find_broken_references = True
         elif opt in ["-o", "--orphaned"]:
@@ -319,8 +341,12 @@ def main():
             find_broken_references = True
             xml_root_file = arg
 
-    if args:
-        usage(64, "Too many arguments.")
+    languages = args or ["C"];
+    if "en" in languages:
+        if "C" in languages:
+            languages.remove("en")
+        else:
+            languages[languages.index("en")] = "C"
 
     # Change to user specified root dir.
     if gimp_help_root_dir != ".":
@@ -350,27 +376,30 @@ def main():
     if not (find_orphaned_images or find_broken_references):
         find_broken_references = True
 
-    # Step 1: find all image references.
-    image_refs = ImageReferencesList()
-    image_refs.find(xml_root_file)
+    image_refs  = ImageReferencesList()
+    image_files = ImageFilesList()
 
-    # Step 2: find all image files. 
-    image_files = ImageFilesList() 
-    if isinstance(img_dirs, str): img_dirs = [img_dirs]
-    for imgdir in img_dirs:
-        image_files.find(imgdir)
+    # find all image references.
+    image_refs.find(xml_root_file)                         # (1)
 
-        # Step 3: remove intersection of image references and images files,
-        # the result is the list of invalid (broken) references.
-        if find_broken_references:
-            image_refs.sort_out_valid(image_files)
-            image_refs.report()
-            find_broken_references = False
+    # find all image files in "images/C", then
+    # remove intersection of image references and image files;
+    # the result is the list of invalid (broken) references.
+    if find_broken_references:
+        image_files.find("images/C")                       # (2)
+        image_refs.sort_out_valid(image_files)             # (3)
+        image_refs.report()
 
-        # Step 4: remove intersection of image references and images files,
-        # the result is the list of orphaned image files.
-        if find_orphaned_images:
-            image_files.sort_out_valid(image_refs)
+    # find all image files in "images/LANG", then
+    # remove intersection of image references and image files;
+    # the result is the list of orphaned image files.
+    if find_orphaned_images:
+        img_dirs = ("images/" + lang for lang in languages)
+        for imgdir in img_dirs:
+            # if possible, avoid searching in "images/C" twice
+            if not (imgdir == image_files.imageroot):
+                image_files.find(imgdir)                   # (2)
+            image_files.sort_out_valid(image_refs)         # (4)
             image_files.report()
 
 
@@ -384,19 +413,18 @@ def usage(exitcode=0, msg=""):
 validate_references - validates image file references in DocBook xml files
 
 Copyright (C) 2006-2007 Róman Joost,
-          (C) 2008-2009 Róman Joost, Ulf-D. Ehlert
+          (C) 2008-2012 Róman Joost, Ulf-D. Ehlert
 
-Usage: validate_references.py [options]
+Usage: validate_references.py [options] [language ...]
 
     options:
         -h | --help          this help
-        -v | --verbose       verbose; doubling (-v -v) is possible
+        -v | --verbose       verbose; may be provided twice (-vv)
         -r | --root <dir>    specify the gimp-help-2 root directory
         -x | --xmldir <dir>  specify the XML files directory
-        -i | --imgdir <dir>  comma-separated list of images directories
         -o | --orphaned      check for orphaned image files
         -b | --broken        check for broken links (default action)
-\n""")    
+\n""")
     sys.exit(exitcode)
 
 

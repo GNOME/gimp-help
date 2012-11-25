@@ -960,14 +960,13 @@ check-image-references:
 	    echo "*** Checking image references ... "; \
 	    python tools/validate_references.py \
 	        --verbose --broken --orphaned \
-		$(VALIDATEREFERENCESFLAGS); \
+		$(IMAGE_LANGS); \
 	else \
 	    echo >&2 "*** Cannot check image references (no Python installed?) ***"; \
 	fi
 
 check-images-%: FORCE
-	$(cmd) $(RMAKE) check-image-references \
-		VALIDATEREFERENCESFLAGS="--imgdir=images/C,images/$*"
+	$(cmd) $(RMAKE) check-image-references IMAGE_LANGS="C $*"
 
 check-image-resolutions-%:
 	$(cmd) /bin/sh tools/check_image_resolutions.sh images/$*
