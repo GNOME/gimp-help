@@ -18,7 +18,14 @@
       <xsl:value-of select="substring-after($linguas, $splitstr)" />
     </xsl:param>
     <xsl:param name="lang">
-      <xsl:value-of select="substring-before($linguas, $splitstr)" />
+      <xsl:choose>
+        <xsl:when test="contains($linguas, $splitstr)">
+          <xsl:value-of select="substring-before($linguas, $splitstr)"/>
+        </xsl:when>
+        <xsl:when test="$linguas != ''">
+          <xsl:value-of select="$linguas"/>
+        </xsl:when>
+      </xsl:choose>
     </xsl:param>
     <xsl:param name="uri">
       <xsl:value-of select="concat('../', $lang, '/', $filename)" />
@@ -29,7 +36,7 @@
       <xsl:with-param name="title" select="$vocab/vocab/item[@value=$lang]" />
     </xsl:call-template>
 
-    <xsl:if test="contains($tail, $splitstr)">
+    <xsl:if test="$tail != ''">
       <xsl:call-template name="gimp.help.linguas.tokenize">
         <xsl:with-param name="linguas" select="$tail" />
         <xsl:with-param name="filename" select="$filename" />
