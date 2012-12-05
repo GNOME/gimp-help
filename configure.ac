@@ -234,6 +234,22 @@ fi
 
 AC_SUBST(XSLTFLAGS)
 
+
+#  Optionally allow to build a language selector. A HTML menu is
+#  rendered based on ALL_LINGUAS below the header navigation in the HTML
+#  output.
+
+AC_ARG_ENABLE(languageMenu,
+              AS_HELP_STRING([--enable-languageMenu],
+                             [Compile the HTML output with a language selector.]))
+
+if test "x$enable_languageMenu" == "xyes"; then
+    XSLTFLAGS="$XSLTFLAGS --stringparam gimp.help.languageselector 1"
+fi
+
+AC_SUBST(XSLTFLAGS)
+
+
 #  Optionally search for pngnq and pngcrush, which are helpful for
 #  creating distributions
 
