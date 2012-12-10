@@ -149,7 +149,7 @@
                 <para>
                   The color of each pixel is computed as the average color of
                   the eight closest pixels in the original image. This usually
-                  gives the best result, but it naturally takes more time.
+                  gives a good result, but it naturally takes more time.
                   Sometimes this method is called <quote>Bicubic</quote>.
                 </para>
               </listitem>
@@ -159,7 +159,9 @@
               <listitem>
                 <para>
                   The Lanczos3 method uses the Sinc mathematical function and
-                  performs a high quality interpolation.
+                  performs a high quality interpolation. This is usually the
+                  best method but if you are not satisfied with the result,
+                  you may give <quote>Cubic</quote> a try.
                 </para>
               </listitem>
             </varlistentry>
@@ -287,18 +289,34 @@
             <varlistentry>
               <term>Crop with aspect</term>
               <listitem>
-<!--                <figure>
+                <figure>
                   <title>Example for Crop with aspect</title>
                   <mediaobject>
                     <imageobject>
-                      <imagedata fileref="images/toolbox/clip-4.png" format="PNG"/>
+                      <imagedata fileref="images/toolbox/clip-4a.png" format="PNG"/>
                     </imageobject>
                     <caption>
-                      <para>Crop with aspect</para>
+                      <para>Original image</para>
                     </caption>
                   </mediaobject>
+                  <mediaobject>
+                    <imageobject>
+                      <imagedata fileref="images/toolbox/clip-4b.png" format="PNG"/>
+                    </imageobject>
+                    <caption>
+                      <para>Rotation -22°</para>
+                    </caption>
+                  </mediaobject>
+                  <mediaobject>
+                    <imageobject>
+                      <imagedata fileref="images/toolbox/clip-4c.png" format="PNG"/>
+                    </imageobject>
+                    <caption>
+                      <para>The rotated image</para>
+                    </caption>
+                  </mediaobject>                    
                 </figure>
-Commented until somebody finds a valid example-->
+
                 <para>
                   This option works like the one described before, but makes
                   sure, that the aspect ratio is maintained.
@@ -314,64 +332,107 @@ Commented until somebody finds a valid example-->
           <indexterm>
             <primary>Preview</primary>
             <secondary>Transformation tools</secondary>
-          </indexterm>
+          </indexterm>         
           <variablelist>
             <para>
-              <acronym>GIMP</acronym> lets you select among four Preview
-              possibilities:
+              If this is marked, which is the default setting, the transformed
+              image will be visible above the original image or layer. There 
+              will also be a slider with which you may select the visibility of 
+              the preview.
             </para>
+          </variablelist>  
+        </listitem>    
+      </varlistentry>
+      
+      <varlistentry>
+        <term>Guides</term>
+        <listitem>
+          <para>
+            This is a drop down list where you select the type of guide lines 
+            which suits your transforming. All the guides uses a frame to mark 
+            the image's outline in addition to the lines used by the different 
+            selections. 
+          </para>
+          <variablelist>
             <varlistentry>
-              <term>Outline</term>
+              <term>No guides</term>
               <listitem>
                 <para>
-                  Puts a frame to mark the image outline, with a handle on
-                  each corner. Movements will affect this frame only on the
-                  Preview, but the result of the transformation will concern
-                  either the content or the boundaries of the selection
-                  according to the selected Affect mode.
+                  As the name tells you, there are no guides used.
                 </para>
               </listitem>
             </varlistentry>
             <varlistentry>
-              <term>Grid</term>
+              <term>Center lines</term>
+                <listitem>
+                  <para>
+                    Uses one vertical line and one horizontal line crossing each 
+                    other in the center of the image or layer.
+                  </para>
+                </listitem>
+            </varlistentry>        
+            <varlistentry>
+              <term>Rule of thirds</term>
               <listitem>
                 <para>
-                  Puts a grid on the image, with four handles. Movements will
-                  affect this grid only on the Preview, but the result of the
-                  transformation will concern either the content or the
-                  boundaries of the selection according to the selected
-                  Transform mode.
+                  Divides the transforming area in nine equal parts by adding 
+                  two horizontal lines and two vertical lines equally spaced. 
+                  According to this rule the most interesting parts of the image 
+                  should be placed at the intersection points.              
+                </para>
+              </listitem>
+            </varlistentry>        
+            <varlistentry>
+              <term>Rule of fifths</term>
+              <listitem>
+                <para>
+                  Just as the <quote>Rules of thirds</quote> but divides the area in five by 
+                  five parts.
                 </para>
               </listitem>
             </varlistentry>
             <varlistentry>
-              <term>Image</term>
+              <term>Golden sections</term>
               <listitem>
                 <para>
-                  Here, the preview is a copy of the image superimposed on the
-                  image, with an outline. Movements affect this copy and the
-                  underlying image appears.
+                  Also called <quote>The Golden Ratio</quote>. This divides the 
+                  transforming area in nine parts using a mathematical formula 
+                  proportioning the parts to each others and to the area to be
+                  transformed.
+                </para>
+              </listitem>
+            </varlistentry> 
+            <varlistentry>
+              <term>Diagonal lines</term>
+              <listitem>
+                <para>
+                  Divide the transforming area using diagonally lines.
                 </para>
               </listitem>
             </varlistentry>
             <varlistentry>
-              <term>Grid+Image</term>
+              <term>Number of lines</term>
               <listitem>
-                <para>Both turn at the same time.</para>
+                <para>
+                  Puts a rectangular grid with equal numbers of vertically 
+                  and horizontally lines. The number of lines is set in the 
+                  slider popping up when this guide is selected.
+                </para>
+              </listitem>
+            </varlistentry> 
+            <varlistentry>
+              <term>Line spacing</term>
+              <listitem>
+                <para>
+                  Puts a rectangular grid on the transforming area using the 
+                  spacing between the lines set in the slider.
+                </para>
               </listitem>
             </varlistentry>
           </variablelist>
-          <para>
-            Options with grid activate a drop-list with two options:
-            <guilabel>Number of Grid Lines</guilabel> will allow control
-            over the total number of displayed grid lines. Use the
-            slider to set the number of grid lines.
-            <guilabel>Grid Line Spacing</guilabel> allows control over
-            the distance between the grid lines. Use the slider to set
-            the distance.
-          </para>
-        </listitem>
+        </listitem>        
       </varlistentry>
+
       <varlistentry>
         <term>Opacity</term>
         <listitem>
