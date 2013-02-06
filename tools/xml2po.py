@@ -81,8 +81,7 @@ def main(argv):
         sys.exit(2)
 
     name = os.path.join(os.path.dirname(__file__), '..')
-    if os.path.exists(os.path.join(name, 'tests')):
-        print >> sys.stderr, 'Running from source folder, modifying PYTHONPATH'
+    if not name in sys.path:
         sys.path.insert(0, name)
 
     from xml2po import Main
