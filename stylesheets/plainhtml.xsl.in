@@ -67,6 +67,8 @@
   <xsl:param name="use.id.as.filename">1</xsl:param>
   <xsl:param name="gimp.help.languageselector">0</xsl:param>
   <xsl:param name="gimp.help.all_linguas">@ALL_LINGUAS@</xsl:param>
+  <!-- Quick access to report bugs in our Bugzilla Bug: 711318 -->
+  <xsl:param name="gimphelp.reportbug" select="//ulink[@id='reportbug']" />
 
   <!-- Add NotInToc role to simplesect, which is using in fdl.xml to
   deal with FDL-In-TOC issue.
@@ -335,6 +337,15 @@
             </xsl:if>
           </table>
         </xsl:if>
+        <a>
+          <xsl:attribute name="href">
+            <xsl:value-of select="$gimphelp.reportbug/@url"/>
+          </xsl:attribute>
+          <xsl:attribute name="class">
+            <xsl:value-of select="$gimphelp.reportbug/@id"/>
+          </xsl:attribute>
+          <xsl:value-of select="$gimphelp.reportbug" />
+        </a>
       </div>
     </xsl:if>
   </xsl:template>
