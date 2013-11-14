@@ -59,6 +59,10 @@
       ru:Russian
       sv:Swedish
       zh_CN:Chinese
+      pt_BR:Brasilian
+      fi:Finnish
+      da:Danish
+      el:Greek
     </xsl:variable>
     <xsl:variable name="tail"
       select="substring-after($languages,concat($langid,':'))"/>
