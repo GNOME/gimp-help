@@ -136,17 +136,9 @@ OTHER_CSS_FILES = \
 
 # stylesheets (and more) for XSLT
 XSL_FILES = \
-	stylesheets/authors_docbook.xsl	\
-	stylesheets/authors_text.xsl	\
-	stylesheets/authors_common.xsl	\
 	stylesheets/authors.dtd 	\
-	stylesheets/makeindex.xsl	\
-	stylesheets/getsortkey.xsl	\
-	stylesheets/plainprint.xsl	\
 	stylesheets/plainhtml.xsl.in	\
-	stylesheets/htmlalternate.xsl	\
-	stylesheets/float-images.xsl 	\
-	stylesheets/doap2text.xsl	\
+	$(shell cd $(srcdir) && $(find_l) stylesheets/ -type f -name '*.xsl')	\
 	gimp-help-2.doap
 
 # tools needed for building
