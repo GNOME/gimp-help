@@ -76,7 +76,70 @@ to date information of the current GIMP development.
   * before saving an image as PNG, check if you can convert it to indexed
     mode without loss of quality (saves space and bandwidth)
   * provide your source images (eg. for making new screenshots in other
-    languages) 
+    languages)
+
+Creating a Release
+==================
+
+Before you create a release you'll need:
+
+    * be a maintainer
+    * have ssh access to cube.gtk.org
+    * have access to http://www.gimp.org/admin/
+
+Steps
+-----
+
+* Make sure that all XML is valid. Run:
+
+    make validate-all
+
+* Prepare the NEWS file, by adding an additional release, bugs fixed and
+  contributors.
+
+* Check if the authors.xml have to be adjusted for this release. (Not
+  needed for every minor release).
+
+* Bump the version number (help_(major, minor, micro)_version) in
+  configure.ac, commit, push. Rule of thumb: It should be documented the
+  current GIMP stable release. The minor version aligns therefore with
+  the current stable release.
+
+    vi configure.ac
+
+* Create a distribution package:
+
+    make dist
+
+* Tag the release:
+
+    git tag -s
+
+  Rule of thumb: Use capital case, whitespace delimited by underscores.
+
+* Copy the *.bz2 on to cube.gtk.org:/ftp/pub/gimp/help/:
+
+    scp gimp-help-*.tar.* cube.gtk.org:/ftp/pub/gimp/help/
+
+  Verify the tarball appears on:
+
+    ftp://ftp.gimp.org/pub/gimp/help/
+
+* Announce the release on http://www.gimp.org/admin/. Click on `Pending
+  News` → `New News`, fill in the form (subject, announce), choose a
+  reading wilber and press `Save`. Depending if it needs review (ask one
+  of the developers), approve it to publish it.
+
+* Announce the release on our mailing lists:
+
+    GIMP Developer
+    https://mail.gnome.org/mailman/listinfo/gimp-developer-list
+
+    GIMP User
+    https://mail.gnome.org/mailman/listinfo/gimp-user-list
+
+    GIMP Docs
+    https://mail.gnome.org/mailman/listinfo/gimp-docs-list
 
 
 TODO
