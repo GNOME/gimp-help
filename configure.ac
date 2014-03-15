@@ -243,7 +243,7 @@ AC_ARG_ENABLE(languageMenu,
               AS_HELP_STRING([--enable-languageMenu],
                              [Compile the HTML output with a language selector.]))
 
-if test "x$enable_languageMenu" == "xyes"; then
+if test "x$enable_languageMenu" = "xyes"; then
     XSLTFLAGS="$XSLTFLAGS --stringparam gimp.help.languageselector 1"
 fi
 
