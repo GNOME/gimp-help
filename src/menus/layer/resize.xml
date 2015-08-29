@@ -2,9 +2,8 @@
 <!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
                        "http://www.docbook.org/xml/4.3/docbookx.dtd">
 <!-- section history:
-  2007-06-18 Added Spanish translation by AntI
-  2007-03-12 Kolbjørn: added no translation
   2005/11/03 split of from menu-layer.xml by axel.wernicke
+  2015/08/27 Fix bug "722546 by j.h
 -->
 <sect2 id="gimp-layer-resize">
   <title>Layer Boundary Size</title>
@@ -19,28 +18,20 @@
   </indexterm>
 
   <para>
-    In <acronym>GIMP</acronym>, a layer is not always the same size
-    as the image it belongs to. It might be smaller or it might be larger,
-    in which case some parts of it are hidden. The
-    <guimenuitem>Layer Boundary Size</guimenuitem> command displays a dialog
-    in which you can set the dimensions for the active layer. This command
-    changes the dimensions of the layer, but it does not
+    In <acronym>GIMP</acronym>, a layer is not always the same size as the 
+    others. This command changes the dimensions of a layer, but it does not
     <link linkend="gimp-layer-scale">scale</link> its contents.
   </para>
 
   <sect3>
     <title>Activating the Command</title>
-    <itemizedlist>
-      <listitem>
-        <para>
-          You can access this command from the image menubar through
-          <menuchoice>
-            <guimenu>Layer</guimenu>
-            <guimenuitem>Layer Boundary Size</guimenuitem>
-          </menuchoice>.
-        </para>
-      </listitem>
-    </itemizedlist>
+    <para>
+      You can access this command from the image menubar through
+      <menuchoice>
+        <guimenu>Layer</guimenu>
+        <guimenuitem>Layer Boundary Size</guimenuitem>
+      </menuchoice>.
+    </para>
   </sect3>
 
   <sect3>
@@ -52,7 +43,7 @@
       <mediaobject>
         <imageobject>
           <imagedata format="PNG"
-            fileref="images/menus/layer/boundary-size.png"/>
+          fileref="images/menus/layer/boundary-size.png"/>
         </imageobject>
       </mediaobject>
     </figure>
@@ -79,21 +70,140 @@
                 </para>
               </listitem>
             </varlistentry>
-            <varlistentry>
-              <term>X Offset; Y Offset</term>
-              <listitem>
-                <para>
-                  By default, the resized layer is placed in the upper left
-                  corner of the image. Here, you can set the offset of the
-                  upper left corner of the layer relative to the same corner
-                  of the image. The default unit of measurement is pixels,
-                  but you can change it by using the drop-down menu. You can
-                  also place the layer in the center of the image by
-                  clicking on the <guibutton>Center</guibutton> button.
-                </para>
-              </listitem>
-            </varlistentry>
           </variablelist>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>X Offset; Y Offset</term>
+        <listitem>
+          <para>
+            These coordinates are relative to the layer, not to the 
+            image. They are used to move a frame that determines which part 
+            of the layer content will be selected for the resized layer. In 
+            our example, the layer and the content have 
+            the same dimensions, and, of course, you have no frame to move. 
+            If you reduce <guilabel>Width</guilabel> and <guilabel>Height
+            </guilabel>, the frame of the resized layer appears in the 
+            preview.     
+          </para>
+          <para>
+            Below the coordinates, a preview represents the layer with 
+            the frame of the resized layer. You can move this frame using the 
+            X and Y offsets and also dragging the cross-shaped moving pointer 
+            that appears when the mouse pointer overflies the layer area.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>The Center button</term>
+        <listitem>
+          <para>
+            This button allows you to place the frame at the center of the 
+            layer.
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </sect3>
+    
+  <sect3>
+    <title>Resizing Layer</title>
+    <variablelist>
+      <varlistentry>
+        <term>Resizing a layer larger</term>
+        <listitem>
+          <para>
+            You can't resize a layer to bigger dimensions than that of 
+            the image.
+          </para>
+          <para>
+            If the layer is smaller than the image, you can enlarge 
+            <guilabel>Width</guilabel> and/or <guilabel>Height
+            </guilabel>. There is no good reason to do that, except if you 
+            want to enlarge the layer to the size of the image; but, in that 
+            case, it's better to use 
+            <link linkend="gimp-layer-resize-to-image">Layer to Image Size</link>.
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term>Resizing a layer smaller</term>
+        <listitem>
+          <para>
+            You can resize the layer to a smaller dimension to eliminate 
+            unwanted parts. 
+          </para>
+                  
+          <figure>
+            <title>Example</title>
+            <mediaobject>
+              <imageobject>
+                <imagedata format="PNG"
+                  fileref="images/menus/layer/boundary-size-ex-1.png"/>
+              </imageobject>
+              <caption>
+                <para>
+                  Original image with 2 layers
+                </para>
+              </caption>
+            </mediaobject>
+            <mediaobject>
+              <imageobject>
+                <imagedata format="PNG"
+                  fileref="images/menus/layer/boundary-size-ex-2.png"/>
+              </imageobject>
+              <caption>
+                <para>
+                  The two layers
+                </para>
+              </caption>
+            </mediaobject>
+          </figure>
+            
+          <figure>  
+            <title>Example</title>
+            <mediaobject>
+              <imageobject>
+                <imagedata format="PNG"
+                  fileref="images/menus/layer/boundary-size-ex-3.png"/>
+              </imageobject>
+              <caption>
+                <para>
+                  The selected layer for resizing
+                </para>
+              </caption>
+            </mediaobject>
+            <mediaobject>
+              <imageobject>
+                <imagedata format="PNG"
+                  fileref="images/menus/layer/boundary-size-ex-4.png"/>
+              </imageobject>
+              <caption>
+                <para>
+                  The frame representing the new layer size. It has been 
+                  placed at the center of the layer using the <guibutton>
+                  Center</guibutton> button.
+                </para>
+              </caption>
+            </mediaobject>
+          </figure>
+          
+          <figure>  
+            <title>Result</title>
+            <mediaobject>
+              <imageobject>
+                <imagedata format="PNG"
+                  fileref="images/menus/layer/boundary-size-ex-5.png"/>
+              </imageobject>
+            </mediaobject>
+          </figure>
+                
+          <para>         
+            If the image has only one layer, it's better to use the 
+            <link linkend="gimp-tool-crop">Crop tool</link>.
+          </para>
+          
         </listitem>
       </varlistentry>
     </variablelist>
