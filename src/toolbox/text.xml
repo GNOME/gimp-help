@@ -2,6 +2,7 @@
 <!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
                        "http://www.docbook.org/xml/4.3/docbookx.dtd">
 <!-- section history:
+  2015-12-12 j.h fix bug #675745: add on-canvas editor
   2012-03-18 j.h: update to v2.7
   2009-07-09 ude: added scroll wheel tip (#585823),
                   fixed "entering special chars" (#580532)
@@ -53,12 +54,13 @@
   
     <mediaobject>
       <imageobject>
-        <imagedata format="PNG" fileref="images/using/text-tool.png"/>
+        <imagedata format="PNG" fileref="images/using/text-toolbar.png"/>
       </imageobject>
     </mediaobject>
   <para>
-    To move the text on canvas, you have to select the Move tool and click 
-    on a character to drag the frame and its text.
+    In this chapter, tool options will be described. To know how to use the 
+    Text tool, please refer to <link linkend="gimp-text-management">text 
+    management</link>.
   </para>
   
      
@@ -172,7 +174,7 @@
         </listitem>
       </varlistentry>
       
-      <varlistentry> <!--Added-->
+      <varlistentry>
         <term>Use editor</term>
         <listitem>
           <para>
@@ -302,120 +304,7 @@
       </varlistentry>      
     </variablelist>
   </sect3>
-
-  <sect3 id="text-tool-popup">
-    <title>The Text tool context menu</title>
-    <para>
-      You get this menu by right clicking in a text frame with handles.
-    </para>
-    <itemizedlist>
-      <listitem>
-        <para>
-          <guilabel>Cut, Copy, Paste, Delete</guilabel>: these options concern
-          a selected text. They remain grayed out as long as no text is
-          selected. <quote>Paste</quote> is activated if the clipboard
-          is full of text.
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          <guilabel>Open text file</guilabel>: this command opens a file browser
-          where you can find the wanted text file.
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          <guilabel>Clear</guilabel>: this command deletes all the text,
-          selected or not.
-        </para>
-      </listitem>
-      <listitem>
-        <para id="path-from-text">
-          <guilabel>Path from Text</guilabel>: this command creates a
-          path from the outlines of the current text. The result is not
-          evident. You have to open the Path dialog and make path visible.
-          Then select the Path tool and click on the text. Every letter
-          is  now surrounded with a path component. So you can modify
-          the shape of letters by moving path control points.
-        </para>
-        <para>
-          This command is similar to
-          <menuchoice>
-            <guimenu>Layer</guimenu>
-            <guisubmenu>Text to Path</guisubmenu>
-          </menuchoice>.
-        </para>
-      </listitem>
-      <listitem>
-        <para id="text-along-path">
-          <guilabel>Text along path</guilabel>:
-          <indexterm>
-            <primary>Text along Path</primary>
-          </indexterm>
-        </para>
-        <para>
-          This option is enabled only if a
-          <link linkend="gimp-using-paths">path</link> exists. When your
-          text is created, then create or import a path and make it active.
-          If you create your path before the text, the path becomes
-          invisible and you have to make it visible in the Path Dialog.
-        </para>
-        <para>
-          This command is also available from the <quote>Layer</quote> menu:
-        </para>
-        <figure>
-          <title>
-            The Text along Path command among text commands in the Layer menu
-          </title>
-          <mediaobject>
-            <imageobject>
-              <imagedata format="PNG"
-                fileref="images/menus/layer/text-commands.png"/>
-            </imageobject>
-            <caption>
-              <para>
-                This group of options appears only if a layer text exists.
-              </para>
-            </caption>
-          </mediaobject>
-        </figure>
-        <para>
-          If you want to use a text that already exists, make it active
-          in the <link linkend="gimp-layer-dialog">Layer dialog</link>,
-          select the Text tool and click on the text in the image window.
-        </para>
-        <para>
-          Click on the <guibutton>Text along Path</guibutton> button. The
-          text is bent along the path. Letters are represented with their
-          outline. Each of them is a component of the new path that
-          appears in the <link linkend="gimp-path-dialog">Path
-          dialog</link>. All path options should apply to this new path.
-        </para>
-        <figure>
-          <title><quote>Text along Path</quote> example</title>
-          <mediaobject>
-            <imageobject>
-              <imagedata fileref="images/toolbox/text-along-path.png"
-              format="PNG"/>
-            </imageobject>
-          </mediaobject>
-          <mediaobject>
-            <imageobject>
-              <imagedata fileref="images/toolbox/text-path.png" format="PNG"/>
-            </imageobject>
-          </mediaobject>
-        </figure>
-      </listitem>
-      <listitem>
-        <para>
-          <guilabel>From Left to Right / From Right to Left</guilabel>: fix
-          the writing direction of your language.
-        </para>
-      </listitem>
-
-    </itemizedlist>
-  </sect3>
-
+  
   <sect3 id="gimp-text-editor-dialog">
     <title>Text Editor</title>
 
@@ -438,11 +327,8 @@
       With <acronym>GIMP-2.8</acronym>, this text editor is available only if 
       the <guilabel>Use editor</guilabel> option is checked. It persists 
       probably because all its functions are not transferred to the 
-      direct-on-canvas mode, for instance the Unicode characters.
-    </para>
-    <para>
-      You can correct the text you are writing and you can change the text
-      font with the Font Editor.
+      direct-on-canvas mode. We will 
+      limit description to commands that has not been transferred.
     </para>
     <para>
       As soon as you start writing, a Text layer is created in the Layer
@@ -458,73 +344,6 @@
       text to another one activate the corresponding text layer and click on
       it to activate the editor.
     </para>
-    <!--cf. bug #580532 (2009-06-15)-->
-    <para>
-      You can get Unicode characters with
-      <keycombo>
-        <keycap>Ctrl</keycap><keycap>Shift</keycap><keycap>U</keycap>
-      </keycombo>
-      plus hexadecimal Unicode code of the desired char, for example:
-    </para>
-    <figure>
-      <title>Entering Unicode characters</title>
-      <mediaobject>
-        <imageobject>
-          <imagedata format="PNG"
-            fileref="images/using/enter-unicode-char1.png"/>
-        </imageobject>
-        <caption>
-          <para>
-            <keycombo>
-              <keycap>Ctrl</keycap>
-              <keycap>Shift</keycap>
-              <keycap>U</keycap>
-            </keycombo>
-          </para>
-        </caption>
-      </mediaobject>
-      <mediaobject>
-        <imageobject>
-          <imagedata format="PNG"
-            fileref="images/using/enter-unicode-char2.png"/>
-        </imageobject>
-        <caption>
-          <para>
-            <keycombo action="seq">
-              <keycap>4</keycap><keycap>7</keycap>
-            </keycombo>
-          </para>
-        </caption>
-      </mediaobject>
-      <mediaobject>
-        <imageobject>
-          <imagedata format="PNG"
-            fileref="images/using/enter-unicode-char3.png"/>
-        </imageobject>
-        <caption>
-          <para>
-            <keycap>Enter</keycap>
-          </para>
-        </caption>
-      </mediaobject>
-    </figure>
-    <para>
-      Of course this feature is more useful for entering special (even exotic)
-      characters, provided that the required glyphs for these characters are
-      supplied by the selected font &mdash; only few fonts support Klingon.
-      ;-)
-    </para>
-    <mediaobject>
-      <imageobject>
-        <imagedata format="PNG"
-          fileref="images/using/enter-unicode-char4.png"/>
-      </imageobject>
-      <caption>
-        <para>
-          Unicode 0x47 (<quote>G</quote>), 0x2665, 0x0271, 0x03C0
-        </para>
-      </caption>
-    </mediaobject>
 
     <variablelist>
       <title>The Text Editor options</title>
@@ -539,14 +358,8 @@
             Text can be loaded from a text file by clicking the folder icon in
             the text editor. All the text in the file is loaded.
           </para>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>Clear all text</term>
-        <listitem>
           <para>
-            Clicking this icon clears the editor and the associated text on
-            the image.
+            This option is also in the text context menu.
           </para>
         </listitem>
       </varlistentry>
@@ -558,6 +371,9 @@
             is the case with most Western languages and may Eastern
             languages.
           </para>
+          <para>
+            This option is also in the text context menu.
+          </para>
         </listitem>
       </varlistentry>
       <varlistentry>
@@ -567,6 +383,9 @@
             This option allows text to be entered from right to left, as is
             the case with some Eastern languages, such as Arabic (illustrated
             in the icon).
+          </para>
+          <para>
+            This option is also in the text context menu.
           </para>
         </listitem>
       </varlistentry>
