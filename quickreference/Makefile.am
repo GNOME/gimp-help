@@ -1,7 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
-ALL_LINGUAS ?= da de el en es fr it ja ko nl nn ru sl sv zh_CN
-QUICKREFERENCE_ALL_LINGUAS ?= ca da de el en fi fr it ja ko pl ru sv zh_CN
+ALL_LINGUAS ?= ca da de el en es fi fr it ja ko nn pl pt_BR ru sl sv zh_CN
+QUICKREFERENCE_ALL_LINGUAS ?= ca da de el en es fi fr it ja ko nn pl pt_BR ru sl sv zh_CN
 QUICKREFERENCE_LINGUAS = $(filter $(ALL_LINGUAS), $(QUICKREFERENCE_ALL_LINGUAS))
 
 POT_FILES = po/gimp-keys.pot
