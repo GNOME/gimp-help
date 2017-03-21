@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
-                       "http://www.docbook.org/xml/4.3/docbookx.dtd">
+<!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+                       "http://www.docbook.org/xml/4.5/docbookx.dtd">
 <!-- section history:
-  2009-01-10 j.h: reviewed for v2.6
+  2017-03-20 j.h: update to v2.9
   2007-08-05 ude: added new options of GIMP 2.4.
 -->
 <sect2 id="gimp-selection-border">
@@ -55,11 +55,35 @@
       You can access this command from the image menubar through
       <menuchoice>
         <guimenu>Select</guimenu>
-        <guimenuitem>Border</guimenuitem>
+        <guimenuitem>Border…</guimenuitem>
       </menuchoice>.
     </para>
+    <para>
+      This command is grayed out, inactive, if there is no selection.
+    </para>
+    <!--</sect3>
+  <sect3>
+    <note>-->
+      <para>
+        Two conditions must be respected to use this command:         
+        <itemizedlist>
+          <listitem>
+            <para>
+              The image must have an alpha channel.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              The original image must be created with the 
+              <quote>Antialiasing</quote> option checked in the selection tool 
+              that is used.
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <!--</note>-->
   </sect3>
-
+  
   <sect3>
     <title>Description of the <quote>Border</quote> dialog window</title>
     <figure>
@@ -82,20 +106,81 @@
         </listitem>
       </varlistentry>
       <varlistentry>
-        <term>Feather border</term>
+        <term>Border Style</term>
         <listitem>
-          <para>
-            If this option is checked, the edges of the selection will be
-            feathered. This creates a smooth transition between the selection
-            and its surroundings. Note than you can't use the
-            <guilabel>Feather Edges</guilabel> option of the selection tools
-            for this purpose.
-          </para>
+          <itemizedlist>
+            <listitem>
+              <para>
+                <emphasis role="bold">Hard</emphasis>: this option does not 
+                keep antialiasing. This can be useful in some cases.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <emphasis role="bold">Smooth</emphasis>: this option does not 
+                keeps antialiasing. Note that <quote>Smooth</quote> does not 
+                create any antialiasing. That's why antialiasing must be 
+                added when creating the original selection. This option is 
+                the best one.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <emphasis role="bold">Feathered</emphasis>: this option does 
+                the same things as <quote>Hard</quote>, but instead of the 
+                resulting border being fully selected, it fades outwards. The 
+                result is not very good; if you want a feathered border, 
+                better is use one of the other modes, and then feather the 
+                result. It's there for history reason.
+              </para>
+            </listitem>
+          </itemizedlist>
+          
+          <figure>
+            <title>Border Style Comparison</title>           
+            <mediaobject>
+              <imageobject>
+                <imagedata format="PNG" 
+                  fileref="images/menus/select/border-hard.png"/>
+              </imageobject>
+              <caption>
+                <para>
+                  <quote>Hard</quote> option. Selection editor, zoom 800%
+                </para>
+              </caption>
+            </mediaobject>
+            <mediaobject>
+              <imageobject>
+                <imagedata format="PNG" 
+                  fileref="images/menus/select/border-smooth.png"/>
+              </imageobject>
+              <caption>
+                <para>
+                  <quote>Smooth</quote> option. Selection editor, zoom 800%
+                </para>
+              </caption>
+            </mediaobject>
+            <mediaobject>
+              <imageobject>
+                <imagedata format="PNG" 
+                  fileref="images/menus/select/border-feathered.png"/>
+              </imageobject>
+              <caption>
+                <para>
+                  <quote>Feathered</quote> option. Selection editor, zoom 800%
+                </para>
+              </caption>
+            </mediaobject>
+          </figure>             
         </listitem>
       </varlistentry>
       <varlistentry>
-        <term>Lock selection to image edges</term>
+        <term>Selected areas continue outside the image</term>
         <listitem>
+          <para>
+            This option was <quote>Lock selection to image edges</quote>. Its 
+            function is unchanged.           
+          </para>
           <para>
             With this option enabled, an edge of an (usually rectangle)
             selection remains unchanged if it is aligned with an edge of the
@@ -103,8 +188,8 @@
           </para>
           <figure>
             <title>
-              Select border with and without <quote>Lock to image
-              edges</quote>
+              Select border with and without <quote>Selected areas continue 
+              outside the image</quote>
             </title>
             <mediaobject>
               <imageobject>
