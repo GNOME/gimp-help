@@ -2,15 +2,8 @@
 <!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
                        "http://www.docbook.org/xml/4.3/docbookx.dtd">
 <!-- section history:
+  2017-03-26 elle stone: update desaturate help and add new images
   2017-01-29 desaturate moved to Colors/Desaturate, changed id to plug-in-desaturate
-  2009-04-11 ude: changed id (gimp-layer-desaturate -> gimp-tool-desaturate)
-  2009-03-12 j.h: moved from menus:colors/. revised for v2.6
-  2008-01-21 ude: updated de; added equations
-  2007-12-31 j.h updated to v2.4. Options added en;fr
-  2007-10-16 ude: copied here from "menus/layer-desaturate.xml"
-  2007-06-6 Added Spanish translation by AntI
-  2007-02-22 KoSt: added no
-  2005/11/12 split of from layer-colors.xml by axel.wernicke
 -->
 <sect2 id="gimp-filter-desaturate">
   <title>Desaturate</title>
@@ -23,13 +16,13 @@
     <primary>Desaturate</primary>
   </indexterm>
   <para>
-    By using the <guimenuitem>Desaturate</guimenuitem> command, you can
-    convert all of the colors on the active layer to corresponding shades
-    of gray. This differs from converting the image to grayscale in two
-    respects. First, it only operates on the active layer and second,
-    the colors on the layer are still RGB values with three components. This
-    means that you can paint on the layer, or individual parts of it,
-    using color at a later time.
+    By using the <guimenuitem>Desaturate</guimenuitem> command, you can convert
+    all of the colors on the active layer to corresponding shades of gray. This
+    differs from converting the image to grayscale in two respects. First, it
+    only operates on the active layer and second, the colors on the layer are
+    still RGB values with three components, with R=G=B, which makes gray.
+    This means that you then can paint on the layer, or individual parts of it,
+    using non-gray colors.
   </para>
 
   <note>
@@ -42,7 +35,7 @@
 
   <sect3>
     <title>Activating the Command</title>
-    <para>You can find this command through 
+    <para>You can find this command through
       <menuchoice>
         <guimenu>Colors</guimenu>
         <guisubmenu>Desaturate</guisubmenu>
@@ -57,22 +50,30 @@
       <title>The <quote>Desaturate</quote> option dialog</title>
       <mediaobject>
         <imageobject>
-          <imagedata fileref="images/menus/colors/desaturate/desaturate.png" format="PNG"/>
+          <imagedata fileref="images/menus/colors/desaturate/desaturate.png"
+          format="PNG"/>
         </imageobject>
       </mediaobject>
     </figure>
-    <para>Three options are available:</para>
+    <para><guilabel>Mode:</guilabel> Five options are available for converting
+    from color to black and white:</para>
     <variablelist>
-      <title>Choose shade of gray based on</title>
       <varlistentry>
-        <term>Lightness</term>
+        <term><link linkend="More-information-about-Luminance">Luminance</link>
+        </term>
         <listitem>
-          <para>The graylevel will be calculated as</para>
+          <para>The shades of gray will be calculated using
+          <ulink url="http://brucelindbloom.com/index.html?Eqn_RGB_to_XYZ.html">
+          linearized sRGB</ulink> as
+          </para>
           <informalequation>
             <mediaobject>
               <textobject>
                 <phrase>
-                  Lightness = &frac12; &times; (max(R,G,B) + min(R,G,B))
+                  Luminance =
+                  (0.22 &times; R) +
+                  (0.72 &times; G) +
+                  (0.06 &times; B)
                 </phrase>
               </textobject>
             </mediaobject>
@@ -80,14 +81,15 @@
         </listitem>
       </varlistentry>
       <varlistentry>
-        <term>Luma</term>
+        <term><link linkend="More-information-about-Luma">Luma</link></term>
         <listitem>
-          <para>The graylevel will be calculated as</para>
+          <para>The shades of gray will be calculated using non-linearized sRGB
+          </para>
           <informalequation>
             <mediaobject>
               <textobject>
                 <phrase>
-                  Luma = 0.21 &times; R + 0.72 &times; G + 0.07 &times; B
+                  Luma = (0.22 &times; R) + (0.72 &times; G) + (0.06 &times; B)
                 </phrase>
               </textobject>
             </mediaobject>
@@ -95,29 +97,49 @@
         </listitem>
       </varlistentry>
       <varlistentry>
-        <term>Average</term>
+        <term>
+          <link linkend="More-information-about-Lightness-Average-and-Value">
+            Lightness (HSL)</link></term>
         <listitem>
-          <para>The graylevel will be calculated as</para>
+          <para>The shades of gray will be calculated as</para>
           <informalequation>
             <mediaobject>
               <textobject>
-                <phrase>Average Brightness = (R + G + B) &divide; 3</phrase>
+                <phrase>
+                  Lightness (HSL)) = &frac12; &times; (max(R,G,B) + min(R,G,B))
+                </phrase>
               </textobject>
             </mediaobject>
           </informalequation>
         </listitem>
       </varlistentry>
       <varlistentry>
-        <term>Luminance</term>
+        <term>
+          <link linkend="More-information-about-Lightness-Average-and-Value">
+            Average (HSI Intensity)</link></term>
         <listitem>
-          <para>The graylevel will be calculated as</para>
+          <para>The shades of gray will be calculated as</para>
+          <informalequation>
+            <mediaobject>
+              <textobject>
+                <phrase>Average (HSI Intensity) = (R + G + B) &divide; 3
+                </phrase>
+              </textobject>
+            </mediaobject>
+          </informalequation>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          <link linkend="More-information-about-Lightness-Average-and-Value">
+            Value (HSV)</link></term>
+        <listitem>
+          <para>The shades of gray will be calculated as</para>
           <informalequation>
             <mediaobject>
               <textobject>
                 <phrase>
-                  Luminance = 0.21 &times; R +
-                               0.72 &times; G +
-                               0.07 &times; B
+                  Value (HSV) = max(R,G,B)
                 </phrase>
               </textobject>
             </mediaobject>
@@ -125,13 +147,14 @@
         </listitem>
       </varlistentry>
     </variablelist>
+
     <figure>
-      <title>Comparing the three options</title>
+      <title>Using the five modes to convert two very different color images
+      to black and white</title>
       <mediaobject>
         <imageobject>
-          <!--was: "images/menus/sunflower.png"-->
           <imagedata format="PNG"
-            fileref="images/toolbox/colors-desaturate-orig.png"/>
+            fileref="images/menus/colors/desaturate/colors-desaturate-original-sunflower.png"/>
         </imageobject>
         <caption>
           <para>Original image</para>
@@ -140,55 +163,256 @@
       <mediaobject>
         <imageobject>
           <imagedata format="PNG"
-            fileref="images/toolbox/colors-desaturate-brightness.png"/>
+            fileref="images/menus/colors/desaturate/colors-desaturate-original-red-globe.png"/>
         </imageobject>
         <caption>
-          <para><quote>Lightness</quote> applied</para>
+          <para>Original image</para>
+        </caption>
+      </mediaobject>
+      <literallayout>
+      </literallayout>
+      <mediaobject>
+        <imageobject>
+          <imagedata format="PNG"
+            fileref="images/menus/colors/desaturate/colors-desaturate-luminance-sunflower.png"/>
+        </imageobject>
+        <caption>
+          <para><quote>Luminance</quote> applied</para>
         </caption>
       </mediaobject>
       <mediaobject>
         <imageobject>
           <imagedata format="PNG"
-            fileref="images/toolbox/colors-desaturate-luminosity.png"/>
+            fileref="images/menus/colors/desaturate/colors-desaturate-luminance-red-globe.png"/>
+        </imageobject>
+        <caption>
+          <para><quote>Luminance</quote> applied</para>
+        </caption>
+      </mediaobject>
+      <literallayout>
+      </literallayout>
+      <mediaobject>
+        <imageobject>
+          <imagedata format="PNG"
+            fileref="images/menus/colors/desaturate/colors-desaturate-luma-sunflower.png"/>
         </imageobject>
         <caption>
           <para>
             <quote>Luma</quote> applied.
-            <!-- The result is brighter. -->
           </para>
         </caption>
       </mediaobject>
       <mediaobject>
         <imageobject>
           <imagedata format="PNG"
-            fileref="images/toolbox/colors-desaturate-average.png"/>
+            fileref="images/menus/colors/desaturate/colors-desaturate-luma-red-globe.png"/>
         </imageobject>
         <caption>
           <para>
-            <quote>Average</quote> applied.
-            <!-- The result is in between Brightness and Luminosity. -->
+            <quote>Luma</quote> applied.
           </para>
         </caption>
       </mediaobject>
-<!--  Find out what Luminance and Luma really do
+      <literallayout>
+      </literallayout>
       <mediaobject>
         <imageobject>
           <imagedata format="PNG"
-            fileref="images/toolbox/colors-desaturate-luminance.png"/>
+            fileref="images/menus/colors/desaturate/colors-desaturate-lightness-sunflower.png"/>
         </imageobject>
         <caption>
           <para>
-            <quote>Luminance</quote> applied.
+            <quote>Lightness (HSL)</quote> applied.
           </para>
         </caption>
       </mediaobject>
--->
-      <!-- XXX:
-        The conclusions above are true only for this special example;
-        e.g. try
-        lightness vs. luminosity with (0, 255, 0) or (0, 0, 255),
-        lightness vs. average with (255, 255, 0) or (255, 0, 0).
-      -->
+      <mediaobject>
+        <imageobject>
+          <imagedata format="PNG"
+            fileref="images/menus/colors/desaturate/colors-desaturate-lightness-red-globe.png"/>
+        </imageobject>
+        <caption>
+          <para>
+            <quote>Lightness (HSL)</quote> applied.
+          </para>
+        </caption>
+      </mediaobject>
+      <literallayout>
+      </literallayout>
+      <mediaobject>
+        <imageobject>
+          <imagedata format="PNG"
+            fileref="images/menus/colors/desaturate/colors-desaturate-average-sunflower.png"/>
+        </imageobject>
+        <caption>
+          <para>
+            <quote>Average (HSI Intensity)</quote> applied.
+          </para>
+        </caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject>
+          <imagedata format="PNG"
+            fileref="images/menus/colors/desaturate/colors-desaturate-average-red-globe.png"/>
+        </imageobject>
+        <caption>
+          <para>
+            <quote>Average (HSI Intensity)</quote> applied.
+          </para>
+        </caption>
+      </mediaobject>
+      <literallayout>
+      </literallayout>
+      <mediaobject>
+        <imageobject>
+          <imagedata format="PNG"
+            fileref="images/menus/colors/desaturate/colors-desaturate-value-sunflower.png"/>
+        </imageobject>
+        <caption>
+          <para>
+            <quote>Value (HSV)</quote> applied.
+          </para>
+        </caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject>
+          <imagedata format="PNG"
+            fileref="images/menus/colors/desaturate/colors-desaturate-value-red-globe.png"/>
+        </imageobject>
+        <caption>
+          <para>
+            <quote>Value (HSV)</quote> applied.
+          </para>
+        </caption>
+      </mediaobject>
     </figure>
   </sect3>
+
+  <sect3>
+    <title>Comparing results from using different options for
+    converting from color to black and white:</title>
+    <orderedlist>
+      <listitem>
+        <para>The degree and direction from which the various ways to convert
+        an image to black and white diverge from a straight Luminance conversion
+        to black and white depends on:</para>
+        <itemizedlist>
+          <listitem><para>The conversion method you choose.</para></listitem>
+          <listitem><para>The RGB color space in which the conversion is done.
+          </para></listitem>
+          <listitem><para>How saturated the colors in the original image happen to
+          be, with more saturated starting colors (such as the red globe and the
+          bright yellow sunflower) producing greater amounts of deviation from a
+          straight Luminance conversion.</para></listitem>
+          <listitem><para>The hues (for example yellows vs reds) of the various
+          saturated colors in an image also make a difference.</para></listitem>
+          <listitem><para>Being the maximum of the RGB channel values for each
+          pixel, an HSV Value conversion to black and white is always lighter than
+          the original color image, and also lighter than all the other ways to
+          convert to black and white.</para></listitem>
+        </itemizedlist>
+        </listitem>
+        <listitem>
+        <para>Comparing the red globe to the yellow sunflower:</para>
+        <itemizedlist>
+          <listitem><para>For the red globe Lightness (HSL) produces a result very
+          similar to Luminance, and Luma produces a conversion that is much darker.
+          </para></listitem>
+          <listitem><para>For the sunflower, Luma produces a result very similar to
+          Luminance, and Lightness (HSL) produces a conversion that is much darker.
+          </para></listitem>
+          <listitem><para>Notice that the less saturated parts of each image look
+          more or less the same, regardless of which method is chosen for converting
+          from color to black and white.
+          </para></listitem>
+        </itemizedlist>
+      </listitem>
+    </orderedlist>
+  </sect3>
+
+  <sect3>
+  <title>More information about the five options for
+  converting from color to black and white:</title>
+  <orderedlist>
+    <listitem id="More-information-about-Luminance">
+    <para><emphasis>More information about Luminance:</emphasis></para>
+    <itemizedlist>
+      <listitem><para>"Luminance" is the only physically meaningful way to
+      convert a color image to black and white, as the resulting black and
+      white image has the same relative luminance (reflects the same
+      percentage of light from the various shades of gray) as the colors in
+      the original color image.</para></listitem>
+      <listitem><para>Luminance must be calculated using linearized RGB
+      values.</para></listitem>
+      <listitem><para>For convenience we say "Luminance", but what we really
+      mean is "Relative Luminance". For more information, see
+      <ulink url="https://en.wikipedia.org/wiki/Relative_luminance">Relative
+      Luminance</ulink> and
+      <ulink url="https://en.wikipedia.org/wiki/CIE_1931_color_space#Meaning_of_X.2C_Y.2C_and_Z">
+      CIE 1931 [XYZ] color space</ulink>.</para></listitem>
+      <listitem>
+      <para>GIMP 2.10 uses hard-coded sRGB values to do Luminance
+      conversions to black and white. "Future GIMP" will support correct
+      conversions for images in other color spaces.</para>
+      </listitem>
+    </itemizedlist>
+    </listitem>
+    <listitem id="More-information-about-Luma">
+    <para><emphasis>More information about Luma:</emphasis></para>
+    <itemizedlist>
+      <listitem><para>"Luma" is what you get if you use the formula for
+      Luminance on RGB values that haven't been properly linearized. Luma
+      corresponds to GIMP 2.8's "Luminosity" method of converting to black and
+      white.</para></listitem>
+      <listitem><para>Compared to GIMP 2.8, GIMP 2.10's "Luma" option uses
+      slightly different multipliers. Unlike the GIMP 2.8 multipliers, the
+      GIMP 2.10 multipliers have been properly Bradford-adapted from D65 to
+      D50, which is required for use in an ICC profile color-managed editing
+      application (at least until the next version of the ICC specs is
+      released and people figure out how to deal with the new freedom to use
+      non-D50 reference white points).</para></listitem>
+      <listitem>
+      <para>GIMP 2.10 uses hard-coded sRGB values to do Luma
+      conversions to black and white. "Future GIMP" will support correct
+      conversions for images in other color spaces.</para>
+    </listitem>
+    </itemizedlist>
+    </listitem>
+    <listitem id="More-information-about-Lightness-Average-and-Value">
+    <para><emphasis>More information about Lightness, Average, and Value:
+    </emphasis></para>
+    <para>The "Lightness (HSL)", "Average (HSI Intensity)", and "Value (HSV)"
+    ways to to convert a color image to black and white use color space models
+    that were invented for fast processing on consumer-grade computers from the
+    1990s. For details see
+    <ulink url="https://en.wikipedia.org/wiki/HSL_and_HSV">HSV and HSV</ulink>,
+    paying particular attention to the section on
+    <ulink url="https://en.wikipedia.org/wiki/HSL_and_HSV">Disadvantages
+    </ulink>.</para>
+    </listitem>
+    <listitem>
+    <para><emphasis>In case you are wondering why LAB Lightness</emphasis> is
+    not among the options
+    for converting an RGB image to black and white, a properly calculated
+    conversion from RGB to LAB Lightness, and then back to RGB, produces exactly
+    the same result as the Luminance conversion to black and white. Here is why:
+    </para>
+    <itemizedlist>
+      <listitem><para>In the XYZ color space, Y is Luminance. So if you
+      convert a color RGB image to XYZ, the "Y" of XYZ is the same number as
+      the R=G=B values that you get when you calculate RGB Luminance.</para></listitem>
+      <listitem><para>LAB is a perceptually uniform transform of XYZ. If you
+      convert from RGB to XYZ and then to LAB, and set A=B=0.0 (or 0.5 for
+      image editors that put the midpoint of the A and B axes as 0.5 instead
+      of at 0.0), and then convert back to XYZ, the X and Z values will
+      change, but Y will not change.</para></listitem>
+    </itemizedlist>
+    <para>Tutorials that produce anything other than Relative Luminance when
+    converting an RGB image to black and white using LAB Lightness, very sadly
+    are trading on various mathematical mistakes in the conversion routines.
+    </para>
+    </listitem>
+  </orderedlist>
+  </sect3>
+
 </sect2>
