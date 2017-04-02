@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+                       "http://www.docbook.org/xml/4.3/docbookx.dtd">
+<!-- section history:
+  2017-04-02 elle stone: add precision.xml
+-->
+<sect2 id="gimp-image-precision">
+  <title>Precision</title>
+
+  <indexterm>
+    <primary>Image</primary>
+    <secondary>Precision</secondary>
+  </indexterm>
+  <indexterm>
+    <primary>Precision</primary>
+  </indexterm>
+
+  <figure>
+    <title>
+      The <quote>Precision</quote> submenu of the <quote>Image</quote> menu
+    </title>
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref="images/menus/image/precision.png" format="PNG"/>
+      </imageobject>
+    </mediaobject>
+  </figure>
+  <para>The <guimenuitem>Precision</guimenuitem> submenu contains commands which
+  let you change the precision of the image. The Precision options affect
+  the precision and channel encoding used for storing the image in RAM during
+  processing.</para>
+
+  <sect3>
+    <title>Activating the Submenu</title>
+    <itemizedlist>
+      <listitem>
+        <para>
+          You can access this submenu from the image menubar through
+          <menuchoice>
+            <guimenu>Image</guimenu>
+            <guimenuitem>Precision</guimenuitem>
+          </menuchoice>.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </sect3>
+
+  <sect3>
+    <title>The Contents of the <quote>Precision</quote> Submenu</title>
+    <para>The Precision Menu is divided into two parts: precision and channel
+    encoding.</para>
+
+    <para>The precision at which image data is stored is a function of the
+    bit depth (8-bit vs 16-bit vs 32-bit) and whether the data is stored as
+    integer data or floating point data. The Precision menu offers
+    the following precision options:</para>
+        <orderedlist>
+          <listitem><para>Integer precision options:</para>
+            <orderedlist>
+              <listitem><para><guimenuitem>8-bit integer</guimenuitem>
+              </para></listitem>
+              <listitem><para><guimenuitem>16-bit integer</guimenuitem>
+              </para></listitem>
+              <listitem><para><guimenuitem>32-bit integer</guimenuitem>
+              </para></listitem>
+            </orderedlist>
+          </listitem>
+          <listitem><para>Floating point precision options:</para>
+            <orderedlist>
+              <listitem><para><guimenuitem>16-bit floating point</guimenuitem>
+              </para></listitem>
+              <listitem><para><guimenuitem>32-bit floating point</guimenuitem>
+              </para></listitem>
+            </orderedlist>
+          </listitem>
+        </orderedlist>
+
+   <para>The Precision menu also allows you to choose a
+   <link linkend="glossary-channel-encoding">channel encoding</link> for the
+   image data. Currently there are two choices:</para>
+    <orderedlist>
+      <listitem><para><guimenuitem>Perceptual gamma (sRGB)</guimenuitem>,
+      which encodes the channel data using the approximately perceptually
+      uniform sRGB TRC.</para></listitem>
+      <listitem><para><guimenuitem>Linear light</guimenuitem>, which encodes the
+      channel data using the linear gamma TRC.</para></listitem>
+    </orderedlist>
+  </sect3>
+
+  <sect3>
+    <title>Choosing the image precision and channel encoding</title>
+    <note>
+    <para>Regardless of which options you choose in the Precision menu,
+    in high bit depth GIMP 2.10 all internal processing is done at 32-bit
+    floating point precision, and most editing operations are done using
+    Linear light channel encoding.</para>
+    </note>
+    <para><emphasis>Which Precision options should you choose?</emphasis>
+    In a nutshell:</para>
+    <orderedlist>
+      <listitem><para>To take full advantage of GIMP's internal 32-bit
+      floating point processing, choose 32-bit floating point precision and
+      also choose the Linear light channel encoding.</para></listitem>
+      <listitem><para>If you are editing on a machine with limited RAM,
+      or if you are editing very large images and layer stacks, consider
+      using 16-bit floating point or integer precision.</para></listitem>
+      <listitem><para>If you want to take advantage of high bit depth image
+      editing but you don't want to deal with floating point channel values,
+      then use 16-bit integer precision.</para></listitem>
+      <listitem><para>On a very low-spec machine with not very much RAM,
+      consider using 8-bit integer precision, in which case also choose
+      the Perceptual gamma (sRGB) channel encoding (at 8-bit precision,
+      if you choose the Linear light channel encoding your image will have
+      horribly posterized shadows).</para></listitem>
+    </orderedlist>
+  </sect3>
+
+  <sect3>
+    <title>More information about the Precision options</title>
+    <orderedlist>
+      <listitem><para><emphasis>Choosing the bit depth
+      (8-bits vs 16-bits vs 32-bits):</emphasis></para>
+      <itemizedlist>
+        <listitem><para>The bit depth of an image sets limits on how much
+        precision is available when processing your image files. All things
+        being equal, higher bit depths provide more precision.</para></listitem>
+        <listitem><para>The bit depth of an image file partially determines how
+        much RAM is required for processing. The higher the bit depth, the more
+        RAM is required to store data during image processing. Other relevant
+        factors include the size of the image layers and the number of layers
+        in the layer stack.</para></listitem>
+      </itemizedlist>
+      </listitem>
+      <listitem><para><emphasis>Choosing between integer and floating point
+      precision:</emphasis></para>
+      <itemizedlist>
+        <listitem><para>Floating point precision is required for taking full
+        advantage of high bit depth GIMP's internal 32-bit floating point
+        processing. Floating point precision allows for the generation and
+        use of channel values that fall outside the
+        <link linkend="glossary-display-referred">display-referred range</link>
+        from 0.0 ("display black") to 1.0 ("display white"), thus making
+        possible very useful editing possibilities such as unbounded ICC
+        profile conversions and
+        <link linkend="glossary-high-dynamic-range">High Dynamic Range</link>
+        <link linkend="glossary-scene-referred">scene-referred</link>
+        editing operations.</para>
+        </listitem>
+        <listitem><para>Unlike floating point precision, integer precision
+        cannot store channel values outside the display range. So choosing an
+        integer precision from the Precision menu means that all floating
+        point channel values produced during processing are clipped to fit
+        within the equivalent floating point range between 0.0 and 1.0
+        inclusively:</para>
+          <itemizedlist>
+           <listitem><para>8-bit integer values are clipped to the range
+           0-255.</para></listitem>
+           <listitem><para>16-bit integer values are clipped to the range
+           0-65535.</para></listitem>
+           <listitem><para>32-bit integer values are clipped to the range
+           0-4294967295.</para></listitem>
+          </itemizedlist>
+        </listitem>
+        <listitem><para>At any given bit depth, all things being equal
+        integer precision is more precise than floating point precision.
+        So 16-bit integer precision is more precise than 16-bit floating point
+        precision, and 32-bit integer precision is more precise than 32-bit
+        floating point precision. However, in GIMP you don't get more
+        precision by choosing 32-bit integer over 32-bit floating point:
+        GIMP still does all internal processing using 32-bit floating point
+        precision even if you choose 32-bit integer precision in the
+        Precision menu. Remember, the Precision menu choices only determine
+        how the image information is held in RAM.</para></listitem>
+        <listitem><para>At any given bit depth, integer and floating point
+        precision use approximately the same amount of RAM for internal
+        calculations during image processing, and also require about the
+        same amount of disk space when saving an image file to disk.
+        </para></listitem>
+        </itemizedlist>
+      </listitem>
+      <listitem><para><emphasis>Choosing between Linear light and
+      Perceptual gamma (sRGB) channel encoding:</emphasis></para>
+        <itemizedlist>
+          <listitem><para>At 8-bit precision, if you choose the Linear light
+          channel encoding your image will have horribly posterized shadows.
+          So don't use Linear light unless you also choose a higher bit depth.
+          </para></listitem>
+          <listitem> <para>Other than the fact that Linear light channel
+          encoding is not being suitable for 8-bit editing, from a user
+          perspective the channel encoding you choose in the Precision menu
+          won't have much affect on your workflow:</para>
+          <itemizedlist>
+            <listitem><para>Currently if you choose "Linear light", then
+            linear gamma channel values are displayed in the "pixel" values
+            when using the the Color Picker Tool, Sample Points, and
+            Pointer dialogs. If you choose "Perceptual gamma", then
+            perceptually uniform (sRGB) channel values are displayed
+            instead.</para></listitem>
+            <listitem><para>Currently the channel encoding that you choose
+            makes a difference in the wrong colors that you might see if you
+            uncheck <link linkend="gimp-image-enable-color-management">
+            Image/Color Management/Enable Color Management</link> and
+            your image isn't already in one of the GIMP built-in sRGB color
+            spaces (but with either channel encoding choice, the colors are
+            still wrong).</para></listitem>
+            <listitem><para>The only other way (that I know of) in which the
+            channel encoding chosen in the Precision menu might affect your
+            workflow has to do with results of using the "Gamma hack" found
+            in the Advanced Color Options.</para></listitem>
+          </itemizedlist>
+        </listitem>
+      </itemizedlist>
+      </listitem>
+    </orderedlist>
+  </sect3>
+
+</sect2>
