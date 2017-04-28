@@ -564,7 +564,7 @@ class Main(object):
                 raise IOError("Unable to read file '%s'" % xmlfile)
             try:
                 doc = XMLDocument(xmlfile, self)
-            except Exception, e:
+            except Exception as e:
                 print >> sys.stderr, "Unable to parse XML file '%s': %s" % (xmlfile, str(e))
                 sys.exit(1)
             self.current_mode.preProcessXml(doc.doc, self.msg)
@@ -577,7 +577,7 @@ class Main(object):
             raise IOError("Unable to read file '%s'" % xmlfile)
         try:
             doc = XMLDocument(xmlfile, self)
-        except Exception, e:
+        except Exception as e:
             print >> sys.stderr, str(e)
             sys.exit(1)
 
@@ -606,7 +606,7 @@ class Main(object):
             raise IOError("Unable to read file '%s'" % xmlfile)
         try:
             doc = XMLDocument(xmlfile, self)
-        except Exception, e:
+        except Exception as e:
             print >> sys.stderr, str(e)
             sys.exit(1)
         doc.generate_messages()
@@ -614,7 +614,7 @@ class Main(object):
         self.msg.translationsFollow()
         try:
             doc = XMLDocument(origxml, self)
-        except Exception, e:
+        except Exception as e:
             print >> sys.stderr, str(e)
             sys.exit(1)
         doc.generate_messages()
