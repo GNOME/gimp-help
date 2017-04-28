@@ -141,7 +141,7 @@ def main(argv):
         elif opt in ('-o', '--output'):
             output = arg
         elif opt in ('-v', '--version'):
-            print VERSION
+            print(VERSION)
             sys.exit(0)
         elif opt in ('-h', '--help'):
             usage(True)
