@@ -1,0 +1,563 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE appendix PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+                          "http://www.docbook.org/xml/4.3/docbookx.dtd">
+
+<appendix id="gimp-contributing">
+  <title>How to Contribute</title>
+
+  <indexterm>
+    <primary>GIMP</primary>
+    <secondary>How to contribute</secondary>
+  </indexterm>
+  <para>
+    Welcome to the GIMP-Help team!
+  </para>
+  
+  <para>
+    This tutorial is intended for writing documentation. If you want to 
+    <emphasis>translate</emphasis> the documentation or the user interface, 
+    please go to "https://l10n.gnome.org/teams/xx" where "xx"  
+    is your language code: ISO 639-1 language codes can be found at
+    <ulink url="http://www.loc.gov/standards/iso639-2/php/code_list.php"/>.
+  </para>
+  
+  <sect1>
+    <title>Prerequisites</title>
+
+    <sect2>
+      <title>Join our mailing list></title>
+      <para>You can join our mailing list at
+        <ulink url='https://mail.gnome.org/mailman/listinfo/gimp-docs-list'/>.
+        Please, feel free to ask questions.
+      </para>
+    </sect2>
+
+    <sect2>
+      <title>Create a Local Working Copy of Code</title>
+      <para>
+        The GIMP help Manual is lodged in a central repository at
+        http://git.gnome.org. Creating a local copy of this repository to work
+        on makes sure that everyone can work on his own without fuzzing around
+        into works of other contributors.
+      </para>
+      <para>
+        As a newbie, you will access the git repository anonymously (without an
+        account). Open a terminal and type:
+        <emphasis>git clone git://git.gnome.org/gimp-help-2</emphasis>.
+      </para>
+      <para>
+        If you have a GNOME account, the command is:
+        <emphasis>git clone ssh://yourusername>@git.gnome.org/git/gimp-help-2
+        </emphasis>.
+      </para>
+      <para>
+        This will create a <quote>gimp-help-2</quote> folder in your current
+        directory. Be patient! That's a big download: about 700 MB.
+      </para>
+    </sect2>
+
+    <sect2>
+      <title>Installing your sandbox</title>
+      <para>
+        After downloading your local copy, run:
+        <emphasis>cd gimp-help-2</emphasis> then
+        <emphasis>./autogen.sh --without-gimp</emphasis>.
+      </para>
+
+      <para>
+        When running ./autogen.sh, you can notice some not found packages, for
+        example <quote>checking for dblatex... no</quote>. Most of them are
+        related to PDF files and you have to install them before running
+        ./autogen.sh again if you want to create PDF files.
+      </para>
+    </sect2>
+
+    <sect2>
+      <title>The gimp-help-2 folder</title>
+      <para>
+        The GIMP User Manual is maintained in the xml files of the
+        <quote>src</quote> folder. These xml files are used by developers. 
+      </para>
+    </sect2>
+  </sect1>
+
+  <sect1>
+    <title>Workflow</title>
+    <sect2>
+      <title>Writing</title>
+      <para>
+        The language is English (USA).
+      </para>
+      <para>
+        To edit XML files, use your preferred text editor. Personally I use 
+        Kate. You must set the editor for:
+        <itemizedlist>
+          <listitem>
+            <para>
+              English language.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              Indent with 2 spaces (the <keycap>Tab</keycap> key must move
+              pointer by two spaces).
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              Replace tabs with spaces (for compatibility with all text
+              editors and web browsers).
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              80 characters per line.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              Automatic spell checking with English (USA) for default 
+              language.
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+
+      <para>
+        Source files are written in the XML language according to the DocBook
+        DTD. DocBook specifications can be found at
+        <ulink url='http://tdg.docbook.org/tdg/5.0/docbook.html'/>.
+      </para>
+
+      <para>
+        Don't be afraid. We don't use all these items and you will learn XML
+        progressively reading existing XML files. For new files, please use
+        the templates you can find in the gimp-help-2/docs/templates folder.
+      </para>
+
+      <note>
+        <para>
+          If you write a new file, you must add it in the src/gimp.xml file, 
+          or in the XML file that calls it (for example, the 
+          src/menus/edit.xml file calls undo.xml, redo.xml, fade.xml... and so 
+          on).
+        </para>
+      </note>
+    </sect2>
+    
+    <sect2>
+      <title>Validating</title>
+      <para>
+        When you have finished writing, you must validate your work:
+        <itemizedlist>
+          <listitem>
+            <para>
+              In command line, for a single file, you can use: 
+              <command>xmllint --noout your-file.xml</command>. This command 
+              displays nothing if your file is OK. Else it indicates where the 
+              error is. This command is for quickly sorting an xml file out; it 
+              can miss or may not find some errors.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              Else just run: <command>make validate-en</command>. You must
+              get a <quote>No error</quote> message.
+            </para>
+            <para>
+              Else, a list of validity errors is displayed with line numbers 
+              referring to the en.xml log file that you can find in the /log 
+              folder.
+            </para>
+            <para>
+              Open this en.xml file in a text editor, type <keycombo>
+              <keycap>Ctrl</keycap><keycap>G</keycap></keycombo> and enter 
+              the line number to jump to the concerned line in the en.xml 
+              file. There,you will find the error.
+            </para>
+            <para>
+              if you have worked on several XML files, look above in the en.xml 
+              file to find (in the <quote>xml:base</quote> field of the 
+              <quote>id</quote> tag), in which xml file the error is. 
+            </para>
+            
+            <para>
+              Fix the error. Don't forget to save the file and run 
+              <command>make validate-en</command> again.
+            </para>
+            <note>
+              <para>
+                A frequent foolish mistake is editing the en.xml log file 
+                instead of the XML file.
+              </para>
+            </note>
+          </listitem>
+        </itemizedlist>
+      </para>
+    </sect2>
+
+    <sect2>
+      <title>Images</title>
+      <para>
+        You also have to manage screenshots. Here are some hints for 
+        making good screenshots:
+        <itemizedlist>
+          <listitem>
+            <para>
+              reduce screenshot area as much as possible cropping the window
+              manager borders and disabling the help button (you can do it
+              in the preference dialog),
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              set the image mode to indexed 255 colors
+              <menuchoice>
+                <guimenu>Image</guimenu>
+                <guisubmenu>Mode</guisubmenu>
+                <guimenuitem>Indexed</guimenuitem>
+              </menuchoice>
+            </para>
+            <para>
+              This is not necessary for icons and if your image has only few 
+              colors. In these cases, indexed images are bigger than 
+              non-indexed.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              set print resolution to 144 ppi (not for small images like 
+              icons). You can do this easily with GIMP from
+              <menuchoice>
+                <guimenu>Image</guimenu>
+                <guisubmenu>Print Size...</guisubmenu>
+              </menuchoice>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              Export images in the PNG format.
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      
+      <para>
+        Don't include English text in images. Translators can't translate it 
+        and many users don't like that. Use XML captions instead, or provide a 
+        .xcf file in the <guimenuitem>docs</guimenuitem> folder, indicating 
+        it by a comment in the XML file: "TRANSLATORS: there is a .xcf file for 
+        this image in the docs folder."
+      </para>
+      
+      <para>
+        Icons for GIMP are in usr/share/gimp/2.0/icons. GTK icons are in 
+        usr/share/gtk-doc/html/gtk2.
+      </para>
+      
+        <para>
+          To include an icon in the text:
+          <literallayout>
+            <guiicon><inlinegraphic fileref="path-to-icon"/></guiicon>
+          </literallayout>
+        </para>
+
+      <para>
+        Three commands to manage your images:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <command>make check-image-resolutions-en</command>: gives the
+              references of images whose resolution is not 144 ppi.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <command>make check-images-en</command>: give references of
+              missing or orphaned images.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <command>mogrify units PixelsPerTrack -density 144x144 
+              *.png</command> to set the print resolution of all PNG images.
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+    </sect2>
+      
+    <sect2>
+      <title>Create HTML Files</title>
+      <para>
+        Once XML files have been validated, run <command>make 
+        html-en</command>. Creating HTML files is important to have 
+        an idea about what users will see. You will probably notice 
+        some improvements to be made on your XML file.
+      </para>
+      <para>
+        You can make an HTML draft (when the folder xml/en has been created 
+        during validation) for a single source xml file, by running, for 
+        instance, the command         
+        <command>make xml/en/concepts/brushes.draft</command>. This create 
+        the brushes-draft.html for the brushes.xml file. But images are not 
+        embedded in draft files.
+      </para>
+      <para>
+        You can also use <acronym>yelp</acronym> and run <command>yelp 
+        file:///your-file.xml</command>.
+      </para>
+    </sect2>
+    
+    <sect2>
+      <title>Sending your files</title>
+      <para>
+        When your files are ready:
+      </para>
+      <variablelist>
+        <varlistentry>
+          <term>You don't have a GNOME account</term>
+          <listitem>
+            <para>
+              if you don't have a GNOME account, you must find a correspondent 
+              who accepts to "push" files for you; that will not be difficult 
+              if you send a message to the list. Either you send your xml 
+              files and the attached images in a compressed file, (in a tree 
+              reproducing that of the scr and images folders if you send 
+              several files to make your correspondent's task easier), or you 
+              send a "patch" that you have to create.
+            </para>
+            <para>
+              Before creating a patch, you have to get all your xml files 
+              and images in the index. Being in the gimp-help-2 folder, do 
+              <command>git status</command>. If you have files in the 
+              Untracked files section, run <command>git add -A</command>.
+            </para>
+            <para>
+              Then run <command>diff --full-index --binary origine > 
+              name-of-the-patch</command> to create the patch.
+            </para>
+          </listitem>
+        </varlistentry>
+        
+        <varlistentry>
+          <term>You have a GNOME account</term>
+          <listitem>
+            <para>All being well, you know how to manage Git. There are many 
+              tutorials for that on the Web.
+            </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </sect2>
+  </sect1>
+
+  <sect1>
+    <title>Annexes</title>
+    <variablelist>
+      
+      <varlistentry>
+        <term>XML notes</term>
+        <listitem>
+          <para><emphasis role="bold">ID's</emphasis></para>
+          <para>
+            ID's, which identify commands and are used when pressing the F1 key 
+            in the GIMP interface, are in 
+            https://git.gnome.org/browse/gimp/tree/app/widgets/gimphelp-ids.h
+          </para>
+          
+          <para><emphasis role="bold">XML Tags Examples</emphasis></para>
+          <para>
+            <emphasis>procedure</emphasis>: in using/web.xml.
+          </para>
+          <para>
+            <emphasis>table</emphasis>: in 
+            toolbox/tools-painting.xml.
+          </para>
+          <para>
+            <emphasis>programlisting</emphasis>: in 
+            filters/web/slice.xml.
+          </para>
+          <para>
+            <emphasis>segmentedlist</emphasis>: in 
+            dialogs/path-dialog.xml for a n columns list.
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term>Parents and Children</term>
+        <listitem>
+          <para>
+            Here is a diagram I often use.
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref="images/contribute/xml-tags.png"/>
+              </imageobject>
+            </mediaobject>
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </sect1>
+  
+  <sect1>
+    <title>Working under Windows</title>
+    <para>
+      If you are using Windows you have to install Cygwin or a similar program 
+      to simulate Linux to be able to install the programs used in writing. This 
+      chapter will tell you how to install Cygwin on Windows and what packages 
+      needed to work on the GIMP manual.   
+    </para>
+    <para>
+      The first thing to do is downloading the <quote>setup.exe</quote> from 
+      <ulink url='http://www.cygwin.com/' /> and save it on your computer. You 
+      need this program every time you have to do changes in Cygwin, so save it 
+      on a place easily to find, e.g. <quote>D:/cygwin/cygwin.exe</quote>.
+    </para>
+    <para>
+      Open the program setup.exe by double-clicking on it. This will open the 
+      start window. Click on the <quote>Next</quote> button to open a window 
+      where you have to choose how to install Cygwin. The default setting is 
+      <quote>Install from Internet</quote>. This means that the downloaded 
+      files will be saved on your computer before the files will be used to 
+      install Cygwin. This is the easiest way to do it.  
+    </para>
+    <para>
+      In the next window you have to choose where to install Cygwin on your 
+      computer. The default is C:\cygwin which is a good choice. Normally you 
+      also choose the installation for all users. 
+    </para>
+    <para>
+      If you marked the <quote>Download without Installing</quote> in the 
+      previous window you will instead get a window where you determines where 
+      to save the files. This window will be the next window if you install 
+      from internet.
+    </para>
+    <para>
+      The next window is how the computer is connected to internet. Normally 
+      you choose the default setting.
+    </para>
+    <para>
+      In the window <quote>Choose A Download Site</quote> you will find lots 
+      of sites to download from. You may choose any of those starting with 
+      <quote>http://</quote>, but it is a good rule to select one near you. 
+      The installation program makes a folder with the same name as the site 
+      you downloads from. If you change site, all the previous downloads will 
+      be downloaded again in the new folder. That is not a problem. Normally 
+      the program remember the last site used the next time you open it.    
+    </para>
+    <para>
+      The next window lists all package categories available in Cygwin. A 
+      package contains programs or program parts to be used in Cygwin. You do 
+      not need all of them. As you see, every category is followed by a symbol 
+      and the word <quote>Default</quote>. This means that the installer 
+      will only load the packages necessary to run a minimum version of Cygwin. 
+      So go on and press the <quote>Next</quote> button and admire the progress 
+      of the downloading in the next window.  
+    </para>
+    <para>
+      When downloading and installing is finished your copy of Cygwin is ready 
+      to be adapted to GIMP.
+    </para>
+    
+    <sect2>
+      <title>Adapting Cygwin to use with GIMP documentation tools</title>
+      <para>
+        I am not able to guarantee that the procedure described here will work 
+        for you. It is a resume of the way I did it. Tested on Windows XP and 
+        Windows 7.
+      </para>
+      <para>
+        To be sure that Cygwin will use your language and the char code used in 
+        GIMP documentation I changed the batch file used to open Cygwin. (After 
+        saving a copy of the original batch file.) If you used the default 
+        installation you will find the batch file in 
+        <filename>C:/cygwin/Cygwin.bat</filename>. Rewrite the batch file to
+        <literallayout>
+          @echo off
+          C:
+          chdir C:\cygwin\bin
+          set LANG=[language-code].UTF-8
+          bash --login -i  
+        </literallayout>
+          If you have put Cygwin in another location than the default, you have 
+          to write the new path instead of <quote>C:\cygwin\bin</quote> above. 
+          You may find your language code in 
+          <ulink       
+  url='http://gcc.gnu.org/onlinedocs/libstdc++/manual/localization.html'/>.      
+ 
+      </para>
+      <para>
+        Then you are ready for the next step. Open <quote>cygwin/startup.exe
+        </quote> and click on <quote>Next</quote> until you reach the package 
+        window. You need the following packages:
+        <literallayout>
+            Devel/automake 1.12
+            Devel/gettext-devel
+            Devel/gettext
+            Libs/libxml2
+            Libs/libxml2-devel
+            Interpreters/m4
+            Devel/make
+            Devel/pkg-config
+            Libs/libxslt
+            Libs/libxslt-devel
+            Python/python
+            Python/python-libxml2
+            Python/python-libxslt
+            Text/docbook-xml45
+            Graphics/ImageMagic
+            ....../wget
+            ....../dblatex
+            ....../pngcrush             
+        </literallayout>
+        The first package to be installed is the <quote>automake 1.12</quote> 
+        in the <quote>Devel</quote> category. Click on the + mark in front of 
+        the category's name (Devel) to open the package list. Search down the 
+        rightmost column to find the package name <quote>automake 1.12</quote>. 
+        Click once on the word <quote>Skip</quote>. The text will change to 
+        <quote>1.12.3-1</quote> which is the version number for the choosed 
+        package. Do the same with the other packages in the list above. Some 
+        packages will be marked <quote>Keep</quote> instead of <quote>Skip
+        </quote>. This means that these packages already are installed. Do not 
+        alter these settings unless you know for certain that this package 
+        should be deleted, or reloaded, or something else.    
+      </para>
+      <para>
+        When you have marked all packages to be added to Cygwin you press 
+        <quote>Next</quote>. You will then be told that the packages you 
+        selected needs some additional packages. Accept this. When you reaches 
+        the end of the updating, your Cygwin copy is ready for all that stuff 
+        mentioned in the start of this side.
+      </para>
+      <para>
+        Some packages, especially those needed for PDF, can't be found with
+        setup.exe. You can try installing them from sources. You can use
+        "wget url-to-the-package" to download the
+        wanted package, but, as you have to know the url, the best way is
+        browsing the web under Windows; download the package (usually a
+        .tar.gz file) and copy-paste into the Cygwin folder.
+      </para>
+      <para>
+        Then run <userinput>tar -xvzf your-package</userinput> to decompress
+        the package.
+      </para>
+      <para>
+        Go into the new folder and read the INSTALL file for instructions about
+        installation.
+      </para>
+      <note>
+        <para>
+          pngnq cannot be installed from sources under Cygwin (dark problems
+          with the libz library).
+        </para>
+      </note>
+      <para>
+        If you run into problems as mysterious error messages and so one, feel 
+        free to ask for help on the mailing list mentioned on the top of this 
+        page.
+      </para>
+    </sect2>
+  </sect1>
+</appendix>
