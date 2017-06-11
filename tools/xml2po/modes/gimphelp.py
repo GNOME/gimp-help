@@ -61,6 +61,9 @@ class gimphelpXmlMode(docbookXmlMode):
                 origimagepath = attr
                 for subdir in ("C", "commmon"):
                     imagepath = origimagepath.replace("/", "/%s/" % subdir, 1)
+                    # I need to search files relatively to the source directory.
+                    scriptdir = os.path.dirname(os.path.realpath(__file__))
+                    imagepath = os.path.join(scriptdir, '../../../', imagepath)
                     if os.path.exists(imagepath):
                         hash = self._md5_for_file(imagepath)
                         break
