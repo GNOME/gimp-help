@@ -4,7 +4,7 @@ ALL_LINGUAS ?= ca da de el en es fi fr it ja ko nn pl pt_BR ru sl sv zh_CN
 QUICKREFERENCE_ALL_LINGUAS ?= ca da de el en es fi fr it ja ko nn pl pt_BR ru sl sv zh_CN
 QUICKREFERENCE_LINGUAS = $(filter $(ALL_LINGUAS), $(QUICKREFERENCE_ALL_LINGUAS))
 
-POT_FILES = po/gimp-keys.pot
+POT_FILES = $(srcdir)/po/gimp-keys.pot
 
 PO_FILES = $(foreach lang,$(filter-out en,$(QUICKREFERENCE_ALL_LINGUAS)),po/$(lang).po)
 
@@ -26,11 +26,11 @@ EXTRA_DIST = \
 
 COMPENDIUM = Compendium.po
 
-po/gimp-keys.pot: gimp-keys.xml
+$(srcdir)/po/gimp-keys.pot: $(srcdir)/gimp-keys.xml
 	@echo Making $@; \
 	$(XML2PO) $(XML2POFLAGS) $< | $(MSGUNIQ) --width=$(MSGWIDTH) - > $@
 
-po/%.po: po/gimp-keys.pot
+po/%.po: $(srcdir)/po/gimp-keys.pot
 	@echo Making $@; \
 	if [ -f $(top_srcdir)/po/$*/$(COMPENDIUM) ]; then \
 		with_compendium="--compendium=$(top_srcdir)/po/$*/$(COMPENDIUM)"; \
@@ -46,7 +46,7 @@ pot: po/gimp-keys.pot ;
 po-%: po/%.po ;
 po: $(foreach lang,$(filter-out en,$(QUICKREFERENCE_LINGUAS)),po-$(lang)) ;
 
-xml/gimp-keys-%.xml: po/%.po gimp-keys.xml
+xml/gimp-keys-%.xml: $(srcdir)/po/%.po gimp-keys.xml
 	$(MKDIR_P) xml
 	$(XML2PO) -p $< $(srcdir)/gimp-keys.xml > $@
 
