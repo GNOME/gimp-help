@@ -50,7 +50,7 @@ AC_PROG_SED
 
 #  You can set the LINGUAS or LANGUAGES environment variable to
 #  control what languages are build:
-#      LINGUAS   will be re restricted to languges in ALL_LINGUAS
+#      LINGUAS   will be re restricted to languages in ALL_LINGUAS
 #      LANGUAGES will override ALL_LINGUAS
 #
 #  Quickreference files are built for languages in
