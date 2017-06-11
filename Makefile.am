@@ -441,7 +441,7 @@ potfiles: $(POT_FILES) ;
 # HIDE FROM AUTOMAKE #endif
 # HIDE FROM AUTOMAKE #	$$(cmd) $$(call make_target_dir,$$@)
 # HIDE FROM AUTOMAKE #	$$(msg) "[PO]  $$@"
-# HIDE FROM AUTOMAKE #	$$(cmd) if test -s $$<; then $$(call pot2po,$$<,$(1),$$@); else touch $$@; fi
+# HIDE FROM AUTOMAKE #	$$(cmd) if test -s $$<; then $$(call pot2po,$$<,$(1),$(srcdir)/$$@); else touch $$@; fi
 # HIDE FROM AUTOMAKE #po-$(1): $$($(1)_PO_FILES) cleanup-po-$(1)
 # HIDE FROM AUTOMAKE #	$$(cmd) if test -e messages.mo; then rm -f messages.mo; fi
 # HIDE FROM AUTOMAKE #cleanup-po-$(1):
