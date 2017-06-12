@@ -37,7 +37,7 @@ AC_CONFIG_COMMANDS(
 #    cp -f $srcdir/stylesheets/*.xsl $srcdir/stylesheets/*.dtd stylesheets/
 #])
 
-AM_INIT_AUTOMAKE([1.6 dist-bzip2 -Wall -Wno-portability])
+AM_INIT_AUTOMAKE([1.10 tar-pax dist-bzip2 -Wall -Wno-portability])
 
 AM_MAINTAINER_MODE
 
