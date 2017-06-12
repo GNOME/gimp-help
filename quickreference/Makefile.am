@@ -6,7 +6,7 @@ QUICKREFERENCE_LINGUAS = $(filter $(ALL_LINGUAS), $(QUICKREFERENCE_ALL_LINGUAS))
 
 POT_FILES = $(srcdir)/po/gimp-keys.pot
 
-PO_FILES = $(foreach lang,$(filter-out en,$(QUICKREFERENCE_ALL_LINGUAS)),po/$(lang).po)
+PO_FILES = $(foreach lang,$(filter-out en,$(QUICKREFERENCE_ALL_LINGUAS)),$(srcdir)/po/$(lang).po)
 
 XSL_FILES = \
 	stylesheets/keys-svg.xsl	\
