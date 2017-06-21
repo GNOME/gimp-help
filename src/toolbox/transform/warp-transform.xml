@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+                       "http://www.docbook.org/xml/4.3/docbookx.dtd">
+
+<sect2 id="gimp-tool-warp">
+  <title>Warp Transform</title>
+
+  <indexterm>
+    <primary>Tools</primary>
+    <secondary>Warp Transform</secondary>
+  </indexterm>
+  <indexterm><primary>Warp Transform</primary></indexterm>
+
+  <figure>
+    <title>Warp Transform Tool</title>
+
+    <mediaobject>
+      <imageobject>
+        <imagedata format="PNG"
+          fileref="images/toolbox/warp-toolbox.png"/>
+      </imageobject>
+    </mediaobject>
+  </figure>
+
+  <para>
+    Warp Transform is a GEGL based brush-like tool which replaces the old iWarp 
+    filter and works directly on the image, on real things instead of a tiny 
+    preview window. You can use an erase mode to partially remove warping you 
+    applied. You have available options to adapt strength and size of warping.
+  </para>
+
+  <sect3>
+    <title>
+      <phrase>Activating the Tool</phrase>
+    </title>
+
+    <para>
+      There are different possibilities to activate the tool:
+    </para>
+
+    <itemizedlist>
+      <listitem>
+        <para>
+          from the image-menu:
+          <menuchoice>
+            <guimenu>Tools</guimenu>
+            <guisubmenu>Transform</guisubmenu>
+            <guimenuitem>Warp Transform</guimenuitem>
+          </menuchoice>,
+        </para>
+      </listitem>
+
+      <listitem>
+        <para>
+          by clicking the tool icon in toolbox:
+          <guiicon>
+            <inlinemediaobject>
+              <imageobject>
+                <imagedata fileref="images/toolbox/warp-icon.png" />
+              </imageobject>
+            </inlinemediaobject>,
+          </guiicon>
+        </para>
+      </listitem>
+
+      <listitem>
+        <para>
+          or by clicking on the <keycap>W</keycap> keyboard shortcut.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </sect3>
+
+  <sect3>
+    <title>Options</title>
+    <figure>
+      <title>Warp Tool options</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata format="PNG"
+            fileref="images/toolbox/warp-dialog-options.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+
+    <para>
+      The available tool options can be accessed by double clicking the
+      Warp Transform tool icon in toolbox.
+      <guiicon>
+        <inlinemediaobject>
+          <imageobject>
+            <imagedata format="PNG"
+              fileref="images/toolbox/warp-icon.png" />
+          </imageobject>
+        </inlinemediaobject>
+      </guiicon>
+    </para>
+    
+    <variablelist>
+      <varlistentry>
+        <term>Interpolation</term>
+        <listitem>
+          <note>
+            <para>
+              An interpolation method is used during warping.
+              See <xref linkend="gimp-tool-interpolation-methods" /> for a 
+              description of these methods.
+            </para>
+          </note>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>Move pixels</term>
+        <listitem>
+          <para>
+            <quote>Move pixels</quote> is the first item of a drop-down list 
+            which contains various warping methods:
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <guilabel>Move pixels</guilabel> is the default method.
+                </para>
+                <figure>
+                  <title>Move pixels example</title>
+                  <mediaobject>
+                    <imageobject>
+                      <imagedata format="PNG"
+                        fileref="images/toolbox/warp-ex-move.png"/>
+                    </imageobject>
+                  </mediaobject>
+                </figure>
+              </listitem>
+              <listitem>
+                <para>
+                  <guilabel>Grow</guilabel>
+                </para>
+                <figure>
+                  <title>Grow example</title>
+                  <mediaobject>
+                    <imageobject>
+                      <imagedata format="PNG"
+                        fileref="images/toolbox/warp-ex-grow.png"/>
+                    </imageobject>
+                  </mediaobject>
+                </figure>
+              </listitem>
+              <listitem>
+                <para>
+                  <guilabel>Shrink</guilabel>
+                </para>
+                <figure>
+                  <title>Shrink example</title>
+                  <mediaobject>
+                    <imageobject>
+                      <imagedata format="PNG"
+                        fileref="images/toolbox/warp-ex-shrink.png"/>
+                    </imageobject>
+                    <caption>
+                      <para>
+                        Clicking 5 times at the center of the image with brush 
+                        size = image size.
+                      </para>
+                    </caption>
+                  </mediaobject>
+                </figure>
+              </listitem>
+              <listitem>
+                <para>
+                  <guilabel>Swirl clockwise/counter-clockwise</guilabel>
+                </para>
+                <figure>
+                  <title>Swirl example</title>
+                  <mediaobject>
+                    <imageobject>
+                      <imagedata format="PNG"
+                        fileref="images/toolbox/warp-ex-swirl.gif"/>
+                    </imageobject>
+                    <caption>
+                      <para>
+                        Swirling clockwise the whole image (brush size = image 
+                        size) with a circular movement of the brush.
+                      </para>
+                    </caption>
+                  </mediaobject>
+                </figure>
+              </listitem>
+            </itemizedlist>
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term>Adapting Size, Hardness, Strength, Spacing</term>
+        <listitem>
+          <para>
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <guilabel>Size</guilabel> : the size of the brush is 
+                  increased.
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <guilabel>Hardness</guilabel> : TODO (work in progress).
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <guilabel>Strength</guilabel>: set displacement of pixels 
+                  during warping. The maximum of displacement is on the brush 
+                  diameter.
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <guilabel>Spacing</guilabel> : TODO (work in progress)
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term>Abyss policy</term>
+        <listitem>
+          <para>
+            <quote>Abyss</quote> is a term used by GIMP developers for 
+            <quote>data outside the input buffer</quote>.
+          </para>
+          <para>
+            When warping a whole layer, you may get some parts of the 
+            future layer (the layer you will get after validating the 
+            transformation) that are empty. <quote>Abyss policy</quote> has a 
+            drop-down list that allows you to fill empty areas in different 
+            manners:
+          </para>
+          <itemizedlist>
+            <listitem>
+              <para>
+                <guilabel>None</guilabel>: this is the default option. Empty 
+                areas are transparent.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <guilabel>Clamp</guilabel>: each edge of the transformed layer 
+                stretches out indefinitely, so, for example, a pixel to the left 
+                of the layer boundary has the same color as the leftmost pixel 
+                of the layer with the same y coordinate.  An alternative way to 
+                think of it is that each pixel outside the layer boundary has 
+                the same color as the closest pixel inside the layer boundary.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <guilabel>Loop</guilabel>: the transformed layer repeats itself 
+                in all directions, so that, for example, falling off the right 
+                edge of the layer takes you back to the left edge.
+              </para>
+            </listitem>
+          </itemizedlist>
+          
+          <!--TO TRANSLATORS: a xcf file exists for this image at 
+            https://git.gnome.org/browse/gimp-help-2/tree/docs-->
+          <figure>
+            <title>Examples for Abyss policy options</title>
+            <mediaobject>
+              <imageobject>
+                <imagedata format="PNG"
+                  fileref="images/toolbox/warp-ex-abyss.gif"/>
+              </imageobject>
+            </mediaobject>
+          </figure>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term>High quality preview</term>
+        <listitem>
+          <para>
+            <quote>preview</quote> is the image window, where you work, before 
+            pressing <keycap>Enter</keycap> to validate the transformation. 
+            With this option checked, preview is more accurate, but slower.
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term>Stroke</term>
+        <listitem>
+          <para>TODO (work in progress)</para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term>Animate</term>
+        <listitem>
+          <para>
+            This option allows you to generate several intermediate images 
+            between the original image and the final deformation of this image.
+          </para>
+          <para>
+            <guilabel>Frames</guilabel> to set the number of frames in this 
+            animation.
+          </para>
+          <para>
+            <guibutton>Create Animation</guibutton> button: to create the 
+            animation. A new image window is created. Export it as a GIF image, 
+            checking the <guilabel>As animation</guilabel> option in the export 
+            dialog.
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+ </sect3>
+</sect2>
