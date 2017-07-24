@@ -155,14 +155,47 @@
               </listitem>
             </varlistentry>
             <varlistentry>
-              <term>Sinc (Lanczos3)</term>
+              <term>LoHalo, NoHalo</term>
               <listitem>
                 <para>
-                  The Lanczos3 method uses the Sinc mathematical function and
-                  performs a high quality interpolation. This is usually the
-                  best method but if you are not satisfied with the result,
-                  you may give <quote>Cubic</quote> a try.
+                  Halo is an artifact that can be created by interpolation. It 
+                  remembers the halo you can get when using <xref 
+                  linkend="gimp-filter-unsharp-mask"/>. Here is a note from 
+                  Nicolas Robidoux, the creator of the new quality samplers for 
+                  GEGL and GIMP:
                 </para>
+                <literallayout>
+                  "If haloing is not an issue with your content and use case, 
+                  which of the two should you try first? 
+                  (Clearly, if you want to minimize haloing, NoHalo is the 
+                  ticket.)
+
+                  If you are reducing an image, LoHalo is generally better.
+
+                  If your transformation is not an all around reduction, for 
+                  example if you enlarge, rotate or apply a perspective 
+                  transformation that keeps portions of the image at the same or 
+                  higher resolution, I generally prefer NoHalo. This preference, 
+                  however, changes depending on the image content. If, for 
+                  example, the image contains text or text-like objects or has 
+                  significant areas with only a handful of different colours, 
+                  like old school pixel art, I’d switch to LoHalo. Likewise if  
+                  the image is quite noisy or marred by compression artifacts 
+                  (as are most JPEGs found on the web). Conversely, if the 
+                  image is noise free, very slightly blurry (meaning that when 
+                  pixel peeking, the lines and interfaces are smeared over two 
+                  or more pixels), and there are delicate skin tones to be    
+                  preserved, I’d try NoHalo first. Actually, if I find that 
+                  colours have not been preserved nicely after transforming an 
+                  image with LoHalo, I’d immediately switch to NoHalo, even if  
+                  reducing.
+
+                  In any case, these recommendations should not be taken as 
+                  gospel. I still have much to learn and figure out. For 
+                  example, how best to deal with transparency and different 
+                  colour spaces is something I’m likely to be thinking about 
+                  for a while."
+                </literallayout>
               </listitem>
             </varlistentry>
           </variablelist>
