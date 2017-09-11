@@ -2,14 +2,10 @@
 <!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
                        "http://www.docbook.org/xml/4.3/docbookx.dtd">
 <!-- section history:
-  2007-11-24 j.h: updated to v2.4
-  2007-09-26 AntI: Added 'es'
-  2007-03-08 alex falappa: added it translation
-  2007-08-01 scb: revised 'en'
-  2006-07-29 lexa: patch from julien that includes suggestions by Sally
+  2017-09-09 j.h update v2.10
 -->
 <sect2 id="gimp-image-crop">
-  <title>Crop to Selection</title>
+  <title>Crop Image</title>
 
   <indexterm>
     <primary>Image</primary>
@@ -19,24 +15,102 @@
   <indexterm>
     <primary>Crop to selection</primary>
   </indexterm>
-
+  
+  <indexterm>
+    <primary>Image</primary>
+    <secondary>Crop</secondary>
+    <tertiary>To content</tertiary>
+  </indexterm>
+  <indexterm>
+    <primary>Crop to content</primary>
+  </indexterm>
+  
   <para>
-    The <guimenuitem>Crop to Selection</guimenuitem> command crops the image to
-    the boundary of the selection by removing any strips at the edges whose
-    contents are all completely unselected. Areas which are partially
-    selected (for example, by feathering) are not cropped. If the selection
-    has been feathered, cropping is performed on the external limit of the
-    feathered area. If there is no selection for the image, the menu entry is
-    disabled and grayed out.
+    You can crop image in two ways:
+    <itemizedlist>
+      <listitem>
+        <para>
+          Crop to selection
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Crop to content
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
-  <note>
-    <para>
-      This command crops all of the image layers. To crop just the active
-      layer, use the <link linkend="gimp-layer-crop">Crop Layer</link>
-      command.
-    </para>
-  </note>
 
+  <sect3 id="crop-image-to-selection">
+    <title>Crop to selection</title>
+    <para>
+      The <guimenuitem>Crop to Selection</guimenuitem> command crops the image 
+      to the boundary of the selection by removing any strips at the edges 
+      whose contents are all completely unselected. Areas which are 
+      partially selected (for example, by feathering) are not cropped. If 
+      the selection has been feathered, cropping is performed on the 
+      external limit of the feathered area. If there is no selection for 
+      the image, the menu entry is disabled and grayed out.
+    </para>
+    <note>
+      <para>
+        This command crops all of the image layers. To crop the active layer 
+        only, use the <link linkend="crop-layer-to-selection">Crop to 
+        selection</link> command.
+      </para>
+    </note>
+  </sect3>
+  
+  <sect3 id="crop-image-to-content">
+    <title>Crop to content</title>
+    <para>
+      Before GIMP-2.10, this command was named <quote>Autocrop image</quote>. 
+      The <guimenuitem>Crop to content</guimenuitem> command removes the
+      borders from an image. It searches the active layer for the largest
+      possible border area that is all the same color, and then crops this
+      area from the image, as if you had used the
+      <link linkend="gimp-tool-crop">Crop</link> tool.
+    </para>
+    <caution>
+      <para>
+        Note carefully that this command only uses the
+        <emphasis>active layer</emphasis> of the image to find borders. 
+        Other layers are cropped according to the same limits as limits in 
+        the active layer.
+      </para>
+    </caution>
+    <figure>
+      <title><quote>Crop to content</quote> example</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata format="PNG"
+            fileref="images/menus/image/autocrop-1.png"/>
+        </imageobject>
+        <caption>
+          <para>
+            This image is made of three layers. One with a red square,
+            another with a green square; both on a yellow semi-transparent
+            background. The green layer is active.
+          </para>
+        </caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject>
+          <imagedata format="PNG"
+            fileref="images/menus/image/autocrop-2.png"/>
+        </imageobject>
+        <caption>
+          <para>
+            <quote>Crop to content</quote> has cropped the green square and 
+            made a layer from it. The other layers have been cropped to the 
+            same size as the green one. Only a small part of the red square has
+            been kept.
+          </para>
+        </caption>
+      </mediaobject>
+    </figure>
+  </sect3>
+  
   <sect3>
     <title>Activate the command</title>
     <itemizedlist>
