@@ -2,14 +2,7 @@
 <!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
                        "http://www.docbook.org/xml/4.3/docbookx.dtd">
 <!-- section history:
-  2008-08-01 prokoudine: added RU caption to the images
-  2008-08-01 prokoudine: improved Russian content, added localized screenshot
-  2007-03-28 KoSt: added 'no'
-  2006-03-07 fixed wrong utf-8 character in cs
-  2005-12-07 replaced <simplesect> by <sect3> by lexa
-  2005-11-28 replaced informalfigures by figures by lexa
-  2005-11-10 en;fr reviewed by julien hardelin
-  2005-09-30 de fixed figure issue by axel.wernicke
+  2017-10-12 j.h : some updates
 -->
 <sect2 id="gimp-filter-gaussian-blur">
   <title>Gaussian Blur</title>
@@ -47,14 +40,14 @@
       </mediaobject>
     </figure>
     <para>
-      The IIR Gaussian Blur plug-in acts on each pixel of the active layer or
+      The Gaussian Blur plug-in acts on each pixel of the active layer or
       selection, setting its Value to the average of all pixel Values present
       in a radius defined in the dialog. A higher Value will produce a higher
       amount of blur. The blur can be set to act in one direction more than
       the other by clicking the Chain Button so that it is broken, and
       altering the radius. GIMP supports two implementations of Gaussian Blur:
-      IIR G.B. and RLE G.B. They both produce the same results, but each one
-      can be faster in some cases.
+      FIR and RLE. They both produce the same results, but each one can be 
+      faster in some cases.
     </para>
   </sect3>
 
@@ -83,40 +76,64 @@
     </figure>
     <variablelist>
       <varlistentry>
-        <term>Blur Radius</term>
+        <term><guilabel>Presets</guilabel>, <guilabel>Preview</guilabel>, 
+          <guilabel>Split view</guilabel></term>
+        <listitem>
+          <para>
+            These options are common to GEGL filters. Please refer to <xref 
+              linkend="gimp-filters-common"/>.
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term>Size X, Size Y</term>
         <listitem>
           <para>
             Here you can set the blur intensity. By altering the ratio of
             horizontal to vertical blur, you can give the effect of a motion
-            blur. You can choose the unit with the drop list.
+            blur.
           </para>
         </listitem>
       </varlistentry>
+      
       <varlistentry>
-        <term>Blur Method</term>
+        <term>Filter</term>
         <listitem>
-          <variablelist>
-            <varlistentry>
-              <term><guilabel>IIR</guilabel></term>
-              <listitem>
-                <para>
-                  IIR stands for <quote>infinite impulse response</quote>. This
-                  blur works best for large radius values and for images which
-                  are not computer generated.
-                </para>
-              </listitem>
-            </varlistentry>
-            <varlistentry>
-              <term><guilabel>RLE</guilabel></term>
-              <listitem>
-                <para>
-                  RLE stands for <quote>run-length encoding</quote>. RLE
-                  Gaussian Blur is best used on computer-generated images or
-                  those with large areas of constant intensity.
-                </para>
-              </listitem>
-            </varlistentry>
-          </variablelist>
+          <para>
+            <guilabel>None</guilabel>: default option: no FIR nor RLE  
+            filter is applied.
+          </para>
+          <para>
+            <guilabel>FIR</guilabel>: stands for <quote>Finite Impulse 
+              Response</quote>.
+          </para>
+          <para>
+            <guilabel>RLE</guilabel>: stands for <quote>run-length 
+            encoding</quote>. RLE Gaussian Blur is best used on 
+            computer-generated images or those with large areas of constant 
+            intensity.
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term><guilabel>Abyss policy</guilabel></term>
+        <listitem>
+          <para>
+            Abyss policy (border management) is treated with 
+              <xref linkend="abyss-policy"/>.
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term><guilabel>Clip to the input extent</guilabel></term>
+        <listitem>
+          <para>
+            TODO. Not working. Should the output extent be clipped to the 
+            input extent.
+          </para>
         </listitem>
       </varlistentry>
     </variablelist>
