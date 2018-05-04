@@ -7,21 +7,24 @@
   2012-05-05 Marco: created
  -->
 <sect1 id="gimp-introduction-whats-new">
-  <title>What's New in GIMP 2.10? </title>
+  <title>What's new in GIMP 2.10? </title>
   
   <para>
-    FIXME: GEGL port, better UI, new tools, and more.
+    GIMP 2.10 is the result of six years of work that originally focused on
+    porting the program to a new image processing engine, GEGL. However the new
+    version ships with far more new features, including new and improved tools,
+    better file formats support, various usability improvements, revamped color
+    management support, a plethora of improvements targeted at digital painters
+    and photographers, metadata editing, and much, much more.
   </para>
 
-  <variablelist>
-    <title>Major Changes</title>
-
-    <varlistentry>
-      <term>High Bit Depth Support</term>
-      <listitem>
-        <para>
-          FIXME: GEGL port, 16/32-bit, gamma/linear etc.
-        </para>
+  <sect2 id="gimp-introduction-whats-new-ui">
+    <title>Updated user interface and initial HiDPI support</title>
+    <para>
+      One thing immediately noticeable about GIMP 2.10 is the new dark theme and
+      symbolic icons enabled by default. This is meant to somewhat dim the
+      environment and shift the focus towards content.
+    </para>
 <!--         <figure>
           <title>FIXME</title>
           <mediaobject>
@@ -31,15 +34,580 @@
             </imageobject>
           </mediaobject>
         </figure> -->
-      </listitem>
-    </varlistentry>
+    <para>
+      There are now 4 user interface themes available in GIMP:
+      <emphasis>Dark</emphasis> (default), <emphasis>Gray</emphasis>,
+      <emphasis>Light</emphasis>, and <emphasis>System</emphasis>. Icons are now
+      separate from themes, and we maintain both color and symbolic icons, so
+      you can configure GIMP to have <emphasis>System</emphasis> theme with
+      color icons if you prefer the old look.
+    </para>
+    <para>
+      Moreover, icons are available in four sizes now, so that GIMP would look
+      better on HiDPI displays. GIMP will do its best to detect which size to
+      use, but you can manually override that selection in
+      <menuchoice>
+        <guimenu>Edit</guimenu>
+        <guisubmenu>Preferences</guisubmenu>
+        <guisubmenu>Interface</guisubmenu>
+        <guisubmenu>Icon Themes</guisubmenu>
+      </menuchoice>.
+    </para>
+    <para>
+      <emphasis>Contributors:</emphasis> Benoit Touchette, Klaus Staedtler,
+      Ville Pätsi, Aryeom Han, Jehan Pagès, Alexandre Prokoudine…
+    </para>
+  </sect2>
 
-    <varlistentry>
-      <term>New Color Management Implementation</term>
+  <sect2 id="gimp-introduction-whats-new-gegl-port">
+    <title>GEGL port, high bit depth support, multi-threading, and more</title>
+    <para>
+      The ultimate goal for v2.10 was completing the port to GEGL image
+      processing library, started with v2.6 when we introduced optional use of
+      GEGL for color tools and an experimental GEGL tool, and continued with
+      v2.8 where we added GEGL-based projection of layers.
+    </para>
+    <para>
+      Now GIMP uses GEGL for all tile management and builds an acyclic graph for
+      every project. This is a prerequisite for adding non-destructive editing
+      planned for v3.2.
+    </para>
+    <para>
+      There are many benefits from using GEGL, and some of them you can already
+      enjoy in GIMP 2.10.
+    </para>
+    <para>
+      <emphasis>High bit depth support</emphasis> allows processing images with
+      up to 32-bit per color channel precision and open/export PSD, TIFF, PNG,
+      EXR, and RGBE files in their native fidelity. Additionally, FITS images
+      can be opened with up to 64-bit per channel precision.
+    </para>
+    <para>
+      <emphasis>Multi-threading</emphasis> allows making use of multiple cores
+      for processing. Not all features in GIMP make use of that, it's something
+      we intend to work on further. A point of interest is that multi-threading
+      happens through GEGL processing, but also in core GIMP itself, for
+      instance to separate painting from display code.
+    </para>
+    <para>
+      <emphasis>GPU-side processing</emphasis> is still optional, but available
+      for systems with stable OpenCL drivers.
+    </para>
+    <para>
+      You can find configuration options for multi-threading and hardware
+      acceleration in
+      <menuchoice>
+        <guimenu>Edit</guimenu>
+        <guisubmenu>Preferences</guisubmenu>
+        <guisubmenu>System Resources</guisubmenu>
+      </menuchoice>.
+    </para>
+    <para>
+      <emphasis>Contributors:</emphasis> Michael Natterer, Øyvind Kolås, Ell,
+      Jehan Pagès…
+    </para>
+  </sect2>
+
+  <sect2 id="gimp-introduction-whats-new-linear-color-space-workflow">
+    <title>Linear color space workflow</title>
+    <para>
+      Another benefit of using GEGL is being able to work on images in a linear
+      RGB color space as opposed to gamma-corrected (perceptual) RGB color space.
+    </para>
+<!--         <figure>
+      <title>FIXME</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata format="PNG"
+            fileref="FIXME"/>
+        </imageobject>
+      </mediaobject>
+    </figure> -->
+    <para>
+      Here is what it boils down to:
+    </para>
+    <itemizedlist>
       <listitem>
         <para>
-          FIXME: all managed, new options
+          You now have both linear and perceptual versions of most blending
+          modes.
         </para>
+      </listitem>
+      <listitem>
+        <para>
+          There is now a linear version of the _Color Invert_ command.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can freely switch between the two at any time via
+          <menuchoice>
+            <guimenu>Image</guimenu>
+            <guisubmenu>Precision</guisubmenu>
+          </menuchoice>
+          submenu.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can choose which mode is displayed in the
+          <emphasis>Histogram</emphasis> docker.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can apply <emphasis>Levels</emphasis> and
+          <emphasis>Curves</emphasis> filters in either perceptual or linear
+          mode.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          When higher than 8-bit per channel precision is used, all channels
+          data is linear.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can choose whether the gradient tool should work in perceptual
+          RGB, linear RGB, or CIE LAB color space.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis>Contributors:</emphasis> Michael Natterer, Øyvind Kolås, Ell…
+    </para>
+  </sect2>
+
+  <sect2 id="gimp-introduction-whats-new-cms">
+    <title>Color management revamped</title>
+    <para>
+      Color management is now a core feature of GIMP rather than a plug-in. This
+      made it possible, in particular, to introduce color management to all
+      custom widgets we could think of: image previews, color and pattern
+      previews etc.
+    </para>
+<!--         <figure>
+      <title>FIXME</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata format="PNG"
+            fileref="FIXME"/>
+        </imageobject>
+      </mediaobject>
+    </figure> -->
+    <para>
+      GIMP now uses LittleCMS v2, which allows it to use ICC v4 color profiles.
+      It also partially relies on the babl library for handling color
+      transforms, since babl is simply up to 10 times faster than LCMS2 for the
+      cases we tested both of them on. Eventually babl could replace LittleCMS
+      in GIMP.
+    </para>
+    <para>
+      <emphasis>Contributors:</emphasis> Michael Natterer, Øyvind Kolås…
+    </para>
+  </sect2>
+
+  <sect2 id="gimp-introduction-whats-new-layers-masks">
+    <title>Layers and masks</title>
+    <para>
+      GIMP now ships with two groups of blending modes: legacy (perceptual,
+      mostly to make old XCF files look exactly as before) and default (mostly
+      linear).
+    </para>
+    <para>
+      New blend modes are:
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          LCH layer modes: <emphasis>Hue</emphasis>,
+          <emphasis>Chroma</emphasis>, <emphasis>Color</emphasis>, and
+          <emphasis>Lightness</emphasis>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <emphasis>Pass-Through</emphasis> mode for layer groups.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <emphasis>Linear Burn</emphasis>, <emphasis>Vivid Light</emphasis>,
+          <emphasis>Linear Light</emphasis>, <emphasis>Pin Light</emphasis>,
+          <emphasis>Hard Mix</emphasis>, <emphasis>Exclusion</emphasis>,
+          <emphasis>Merge</emphasis>, and <emphasis>Split</emphasis>.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      Layers, paths, and channels can also be tagged with color labels to
+      improve project organization. This will be even more useful once we add
+      multi-layer selection later on.
+    </para>
+    <para>
+      Compositing options for layers are exposed to users now, and all
+      layer-related settings are finally available in the
+      <emphasis>Layer Attributes</emphasis> dialog.
+    </para>
+<!--         <figure>
+      <title>FIXME</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata format="PNG"
+            fileref="FIXME"/>
+        </imageobject>
+      </mediaobject>
+    </figure> -->
+  <para>
+    Moreover, if you always need alpha in your layers, you can enable automatic
+    generation of the alpha channel in imported images upon opening them. See
+    <menuchoice>
+      <guimenu>Edit</guimenu>
+      <guisubmenu>Preferences</guisubmenu>
+      <guisubmenu>Image Import &amp; Export</guisubmenu>
+    </menuchoice>
+    page for this and more policies.
+  </para>
+  <para>
+    Layer groups can finally have masks on:
+  </para>
+<!--         <figure>
+      <title>FIXME</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata format="PNG"
+            fileref="FIXME"/>
+        </imageobject>
+      </mediaobject>
+    </figure> -->
+  </sect2>
+
+  <sect2 id="gimp-introduction-whats-new-lab-lch">
+    <title>More use for CIE LAB and CIE LCH</title>
+    <para>
+      With GIMP 2.10, we introduced a number of features that make use of CIE
+      LAB and CIE LCH color spaces:
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Color dialogs now have an LCH color selector you can use instead of
+          HSV. The LCH selector also displays out-of-gamut warning.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          A new <emphasis>Hue-Chroma</emphasis> filter in the 
+          <emphasis>Colors</emphasis> menu works much like
+          <emphasis>Hue-Saturation</emphasis>, but operates in CIE LCH color
+          space.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The <emphasis>Fuzzy Select</emphasis> and the
+          <emphasis>Bucket Fill</emphasis> tools can now select colors by their
+          values in CIE <emphasis>L</emphasis>, <emphasis>C</emphasis>, and
+          <emphasis>H</emphasis> channels. 
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Both the <emphasis>Color Picker</emphasis> and the <emphasis>Sample
+          Points</emphasis> dialog now display pixel values in CIE LAB and CIE
+          LCH at your preference.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis>Contributors:</emphasis> Michael Natterer, Elle Stone, Ell…
+    </para>
+  </sect2>
+
+  <sect2 id="gimp-introduction-whats-new-tools">
+    <title>New and improved tools</title>
+
+    <sect3 id="gimp-introduction-whats-new-tools-unified-transform">
+      <title>Unified Transform</title>
+      <para>
+        New <emphasis>Unified Transform</emphasis> tool
+        (<keycombo><keycap>Shift</keycap><keycap>L</keycap></keycombo>) simplifies
+        making multiple transforms, such as scaling, rotating, and correcting
+        perspective in one go. The design is based on a functional spec written
+        by our former UX expert Peter Sikking.
+      </para>
+<!--         <figure>
+        <title>FIXME</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata format="PNG"
+              fileref="FIXME"/>
+          </imageobject>
+        </mediaobject>
+      </figure> -->
+      <para>
+        <emphasis>Contributors:</emphasis> Mikael Magnusson, Michael Natterer…
+      </para>
+    </sect3>
+
+    <sect3 id="gimp-introduction-whats-new-tools-warp-transform">
+      <title>Warp Transform</title>
+      <para>
+        The new <emphasis>Warp Transform</emphasis> tool (<keycap>W</keycap>)
+        allows doing localized transforms like growing or shifting pixels with a
+        soft brush and undo support. Such tools are commonly used in fashion
+        photography for retouching.
+      </para>
+<!--         <figure>
+        <title>FIXME</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata format="PNG"
+              fileref="FIXME"/>
+          </imageobject>
+        </mediaobject>
+      </figure> -->
+      <para>
+        As such, the new tool retires the old <emphasis>iWarp</emphasis> filter
+        that was innovative at the time of its inception (and pre-dated
+        Photoshop's <emphasis>Liquify</emphasis> filter), but was ultimately
+        cumbersome to use. The <emphasis>Warp Transform</emphasis> tool also
+        features an <guilabel>Eraser</guilabel> mode to selectively remove
+        changes, previously unavailable in the <emphasis>iWarp</emphasis>
+        filter.
+      </para>
+      <para>
+        <emphasis>Contributors:</emphasis> Michael Muré, Michael Natterer,
+        Jonathan Tait…
+      </para>
+    </sect3>
+
+    <sect3 id="gimp-introduction-whats-new-tools-handle-transform">
+      <title>Handle Transform</title>
+      <para>
+        The new <emphasis>Handle Transform</emphasis> tool
+        (<keycombo><keycap>Shift</keycap><keycap>L</keycap></keycombo>) provides
+        an interesting approach at applying scaling, rotating, and perspective
+        correction using handles placed on the canvas. People who are used to
+        editing on touch surfaces might find this tool strangely easy to grasp.
+      </para>
+      <para>
+        <emphasis>Contributors:</emphasis> Johannes Matschke, Michael Natterer,
+        Ell…
+      </para>
+<!--         <figure>
+        <title>FIXME</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata format="PNG"
+              fileref="FIXME"/>
+          </imageobject>
+        </mediaobject>
+      </figure> -->
+    </sect3>
+
+    <sect3 id="gimp-introduction-whats-new-tools-gradient">
+      <title>Blend tool becomes Gradient tool and gets on-canvas editing</title>
+      <para>
+        We renamed the <emphasis>Blend</emphasis> tool to
+        <emphasis>Gradient</emphasis> tool and changed its default shortcut to
+        <keycap>G</keycap>. But this pales in comparison to what the tool can
+        actually do now, and it's a lot.
+      </para>
+      <para>
+        The new tool pretty much obsoletes the old <emphasis>Gradient
+        Editor</emphasis> dialog. Now you can create and delete color stops,
+        select and shift them, assign colors to color stops, change blending and
+        coloring for segments between color stops and create new color stops
+        from midpoints <emphasis>right on the canvas</emphasis>.
+      </para>
+<!--         <figure>
+        <title>FIXME</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata format="PNG"
+              fileref="FIXME"/>
+          </imageobject>
+        </mediaobject>
+      </figure> -->
+      <para>
+        All gradients available by default are also "editable" now. What it
+        means is that when you try to change an existing gradient from a system
+        folder, GIMP will create a copy of it, call it a <emphasis>Custom
+        Gradient</emphasis> and preserve it across sessions. Unless, of course,
+        you edit another 'system' gradient, in which case it will become the new
+        custom gradient.
+      </para>
+      <para>
+        We intend to use the generic implementation of this later for brushes
+        and other types of resources.
+      </para>
+      <para>
+        <emphasis>Contributors:</emphasis> Michael Henning, Michael Natterer,
+        Ell, Øyvind Kolås…
+      </para>
+    </sect3>
+
+    <sect3 id="gimp-introduction-whats-new-tools-selection">
+      <title>Better selection tools</title>
+      <para>
+        The <emphasis>Foreground Select</emphasis> tool can finally make
+        subpixel selections in complex cases such as strays of hair on textured
+        background. Two new masking methods are now available for that.
+      </para>
+<!--         <figure>
+        <title>New foreground select tool using Matting Global for fine selections of foreground objects, particularly things like find hairs.</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata format="PNG"
+              fileref="FIXME"/>
+          </imageobject>
+        </mediaobject>
+      </figure> -->
+      <para>
+        The <emphasis>Select by Color</emphasis> and <emphasis>Fuzzy
+        Select</emphasis> tools now both feature a <guilabel>Draw mask</guilabel>
+        option to display future selection area with a magenta fill, and the
+        latter tool also got a <guilabel>Diagonal neighbors</guilabel> option to
+        select diagonally neighboring pixels.
+      </para>
+      <para>
+        For the <emphasis>Free Select</emphasis> tool, closing a polygonal/free
+        selection now doesn't confirm the selection automatically. Instead you
+        still can tweak positions of nodes (where applicable), then press
+        <keycap>Enter</keycap>, double-click inside the selection, or switch to
+        another tool to confirm the selection.
+      </para>
+      <para>
+        The <emphasis>Intelligent Scissors</emphasis> tool finally allows to
+        remove the last added segment with <keycap>Backspace</keycap> key, and
+        GIMP now checks, whether the first and the last segments are distinct
+        before closing the curve.
+      </para>
+      <para>
+        <emphasis>Contributors:</emphasis> Michael Natterer, Jan Rüegg, Daniel
+        Sabo, Ell…
+      </para>
+    </sect3>
+
+    <sect3 id="gimp-introduction-whats-new-tools-color">
+      <title>Color tools</title>
+      <para>
+        All color tools have been refactored to become GEGL-based filters, so
+        they could be properly used later on when we introduce non-destructive
+        editing. Hence, the <emphasis>Color</emphasis> submenu in the
+        <emphasis>Tools</emphasis> menu has been removed, and these filters are
+        now mostly unavailable in the toolbox.
+      </para>
+      <para>
+        <emphasis>Contributors:</emphasis> Michael Natterer…
+      </para>
+    </sect3>
+
+    <sect3 id="gimp-introduction-whats-new-tools-text">
+      <title>Text tool supports CJK and more writing systems</title>
+      <para>
+        The <emphasis>Text</emphasis> tool now fully supports advanced input
+        methods for CJK and other non-western languages. The pre-edit text is
+        now displayed just as expected, depending on your platform and input
+        method engine (IME). Several input method-related bugs and crashes have
+        also been fixed.
+      </para>
+<!--         <figure>
+        <title>FIXME</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata format="PNG"
+              fileref="FIXME"/>
+          </imageobject>
+        </mediaobject>
+      </figure> -->
+      <para>
+        <emphasis>Contributors:</emphasis> Jehan Pagès…
+      </para>
+    </sect3>
+
+    <sect3 id="gimp-introduction-whats-new-tools-experimental">
+      <title>Experimental tools</title>
+      <para>
+        Two new tools were incomplete for inclusion to GIMP 2.10 by default, but
+        still can be enabled. Please note that they are highly experimental and
+        likely to be broken for you (up to have GIMP crash). We only mention
+        them, because we need contributors to get them into the releasable state.
+      </para>
+      <para>
+        <emphasis>N-Point Deformation</emphasis> tool introduces the kind of
+        smooth, as little rigid as possible warping you would expect physical
+        objects to have.
+      </para>
+<!--         <figure>
+        <title>FIXME</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata format="PNG"
+              fileref="FIXME"/>
+          </imageobject>
+        </mediaobject>
+      </figure> -->
+      <para>
+        The <emphasis>Seamless Clone</emphasis> tool is aimed to simplify making
+        layered compositions. Typically when you paste one image into another,
+        there are all sorts of mismatches: color temperature, brightness etc.
+        This new experimental tool tries to adapt various properties of a pasted
+        image with regards to its backdrop.
+      </para>
+      <para>
+        To enable these tools, you need to first enable the
+        <emphasis>Playground</emphasis> page of the
+        <emphasis>Preferences</emphasis> dialog. Do it by running GIMP with a
+        <command>--show-playground</command> switch (for Windows, you might want
+        tweaking the path to GIMP in the shortcut properties accordingly). Then
+        you need to go to
+        <menuchoice>
+          <guimenu>Edit</guimenu>
+          <guisubmenu>Preferences</guisubmenu>
+          <guisubmenu>Playground</guisubmenu>
+        </menuchoice>
+        and enable the respective options, so that the tools would show up in
+        the toolbox.
+      </para>
+      <para>
+        We need to stress again that you should only do so either if you are
+        very curious, or (which we hope for) intend to help us fix them.
+      </para>
+      <para>
+        <emphasis>Contributors:</emphasis> Marek Dvoroznak, Barak Itkin, Jehan
+        Pagès, Michael Natterer…
+      </para>
+    </sect3>
+  </sect2>
+
+  <sect2 id="gimp-introduction-whats-new-painting">
+    <title>Digital painting improvements</title>
+    <para>
+      GIMP 2.10 ships with a number of improvements requested by digital
+      painters. One of the most interesting new additions here is the
+      <emphasis>MyPaint Brush</emphasis> tool (<keycap>Y</keycap>) that first
+      appeared in the GIMP-Painter fork.
+    </para>
+    <para>
+      The <emphasis>Smudge</emphasis> tool got updates specifically targeted in
+      painting use case. The new <guilabel>No erase effect</guilabel> option
+      prevents the tools from changing alpha of pixels. And the foreground color
+      can now be blended into smudged pixels, controlled by a new
+      <guilabel>Flow</guilabel> slider, where 0 means no blending.
+    </para>
+    <para>
+      All painting tools now have explicit <guilabel>Hardness</guilabel> and
+      <guilabel>Force</guilabel> sliders except for the
+      <emphasis>MyPaint Brush</emphasis> tool that only has the
+      <guilabel>Hardness</guilabel> slider.
+    </para>
+    <para>
+      Most importantly, GIMP now supports canvas rotation and flipping to help
+      illustrators checking proportions and perspective.
+    </para>
 <!--         <figure>
           <title>FIXME</title>
           <mediaobject>
@@ -49,16 +617,17 @@
             </imageobject>
           </mediaobject>
         </figure> -->
-      </listitem>
-    </varlistentry>
-
-    <varlistentry>
-      <term>Major Filters Improvements</term>
-      <listitem>
-        <para>
-          FIXME: lots of new filters, 32 bpc, on-canvas preview, 
-          split preview
-        </para>
+    <para>
+      A new <guilabel>Brush lock to view</guilabel> option gives you a choice
+      whether you want a brush locked to a certain zoom level and rotation angle
+      of the canvas. The option is available for all painting tools that use a
+      brush except for the <emphasis>MyPaint Brush</emphasis> tool.
+    </para>
+    <para>
+      New <emphasis>Symmetry Painting</emphasis> dockable dialog, enabled on
+      per-image basis, allows to use all painting tools with various symmetries
+      (mirror, mandala, tiling…).
+    </para>
 <!--         <figure>
           <title>FIXME</title>
           <mediaobject>
@@ -68,16 +637,26 @@
             </imageobject>
           </mediaobject>
         </figure> -->
-      </listitem>
-    </varlistentry>
+    <para>
+      This new version of GIMP also ships with more new brushes available by
+      default.
+    </para>
+    <para>
+      <emphasis>Contributors:</emphasis> Michael Natterer, Alexia Death, Daniel
+      Sabo, shark0r, Jehan Pagès, Ell, Jose Americo Gobbo, Aryeom Han…
+    </para>
+  </sect2>
 
-    <varlistentry>
-      <term>Major Filters Improvements</term>
-      <listitem>
-        <para>
-          FIXME: lots of new filters, 32 bpc, on-canvas preview, 
-          split preview
-        </para>
+  <sect2 id="gimp-introduction-whats-new-photography">
+    <title>Digital photography improvements</title>
+    <para>
+      Some of the new GEGL-based filters are specifically targeted at
+      photographers: <emphasis>Exposure</emphasis>,
+      <emphasis>Shadows-Highlights</emphasis>, <emphasis>High-pass</emphasis>,
+      <emphasis>Wavelet Decompose</emphasis>, <emphasis>Panorama
+      Projection</emphasis> and others will be an important addition to your
+      toolbox.
+    </para>
 <!--         <figure>
           <title>FIXME</title>
           <mediaobject>
@@ -87,19 +666,24 @@
             </imageobject>
           </mediaobject>
         </figure> -->
-      </listitem>
-    </varlistentry>
-  </variablelist>
-
-  <variablelist>
-    <title>Improved User Interface</title>
-
-    <varlistentry>
-      <term>New UI and icon themes</term>
-      <listitem>
-        <para>
-          FIXME
-        </para>
+    <para>
+      On top of that, the new <emphasis>Extract Component</emphasis> filter
+      simplifies extracting a channel of an arbitrary color model (LAB, LCH,
+      CMYK etc.) from currently selected layer. If you were used to decomposing
+      and recomposing images just for this, your work will be that easier now.
+    </para>
+    <para>
+      Moreover, you can now use either <emphasis>darktable</emphasis> or
+      <emphasis>RawTherapee</emphasis> as GIMP plug-ins for opening raw digital
+      photos. Any recent version of either application will do.
+    </para>
+    <para>
+      A new <emphasis>Clip Warning</emphasis> display filter will visualize
+      underexposed and overexposed areas of a photo for you, with customizable
+      colors. For now, it’s mostly geared towards images where colors are stored
+      with floating point precision. You will mostly benefit from this if you
+      work on 16/32 bit per channel float images such as EXR and TIFF.
+    </para>
 <!--         <figure>
           <title>FIXME</title>
           <mediaobject>
@@ -109,15 +693,46 @@
             </imageobject>
           </mediaobject>
         </figure> -->
-      </listitem>
-    </varlistentry>
+    <para>
+      <emphasis>Contributors:</emphasis> Michael Natterer, Ell, Thomas Manni,
+      Tobias Ellinghaus, Øyvind Kolås, Jehan Pagès, Alberto Griggio…
+    </para>
+  </sect2>
 
-    <varlistentry>
-      <term>Action Search</term>
+  <sect2 id="gimp-introduction-whats-new-effects">
+    <title>Effects</title>
+    <para>
+      GIMP now ships with over <emphasis>80</emphasis> GEGL-based filters. A lot
+      of those are former GIMP effects.  Here is why GEGL-based implementations
+      are better:
+    </para>
+    <itemizedlist>
       <listitem>
         <para>
-          FIXME
+          You can apply them on images in 32-bit per color channel precision
+          mode.
         </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can preview them right on the canvas, and if an image is larger
+          than the viewport, GIMP will render the viewport first for immediate
+          feedback.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can use split preview to compare original image with its processed
+          version and swap before/after sides both horizontally and vertically.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          In a future non-destructive GIMP, you will be able to adjust settings
+          of those filters without undoing a ton of steps.
+        </para>
+      </listitem>
+    </itemizedlist>
 <!--         <figure>
           <title>FIXME</title>
           <mediaobject>
@@ -127,15 +742,115 @@
             </imageobject>
           </mediaobject>
         </figure> -->
-      </listitem>
-    </varlistentry>
-  
-    <varlistentry>
-      <term>Updated Preferences dialog</term>
+    <para>
+      Some of the GEGL-based filters have OpenCL version for hardware
+      acceleration. This will come in handy, if OpenCL drivers work well for you.
+      Furthermore many operations can come multi-threaded to use your processor
+      at their full power.
+    </para>
+    <para>
+      <emphasis>Contributors:</emphasis> Michael Natterer, Øyvind Kolås, Thomas
+      Manni…
+    </para>
+  </sect2>
+
+  <sect2 id="gimp-introduction-whats-new-usability">
+    <title>Usability improvements</title>
+    <para>
+      While working with active users, we got rid of quite a few usability
+      issues. Here are just some of these changes:
+    </para>
+    <itemizedlist>
       <listitem>
         <para>
-          FIXME
+          All transformation tools now automatically disable original layer view
+          so that you could clearly see adjustments against the backdrop.
         </para>
+      </listitem>
+      <listitem>
+        <para>
+          Masks can now easily be created with last values you used by just
+          pressing <keycap>Shift</keycap> and clicking on respective layer's
+          preview.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          All dialogs except the ones like <emphasis>Scale</emphasis> now
+          remember last values you used across sessions.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          All GEGL-based filters allow saving named presets and automatically
+          make timestamped presets for the last time you used them.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can now choose fill color or pattern for empty spaces after
+          resizing the canvas.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      There is a lot to improve to make GIMP better suited for professional
+      workflows. As usual, we welcome constructive discussion and recently
+      created a
+      <ulink url="https://mail.gnome.org/mailman/listinfo/gimp-gui-list">mailing
+      list</ulink> to discuss the topic of improving GIMP's usability. This is
+      a long-term enhancement process, which can take more time than localized
+      changes and features.
+    </para>
+    <para>
+      <emphasis>Contributors:</emphasis> Michael Natterer, Daniel Sabo, Benoit
+      Touchette, Massimo Valentini, Jehan Pagès…
+    </para>
+  </sect2>
+
+  <sect2 id="gimp-introduction-whats-new-file-formats">
+    <title>File formats support</title>
+    <para>
+      GIMP is now capable of reading and writing TIFF, PNG, PSD, and FITS files
+      with up to 32-bit per channel precision where applicable.
+    </para>
+    <para>
+      The PSD plug-in additionally supports <emphasis>pass-through</emphasis>,
+      <emphasis>hard mix</emphasis>, <emphasis>pin light</emphasis>,
+      <emphasis>vivid light</emphasis>, and <emphasis>linear light</emphasis>
+      blending modes.
+    </para>
+    <para>
+      GIMP now also ships with native WebP support, including features like
+      animation, ICC profiles, and metadata. Both importing and exporting are
+      supported.
+    </para>
+    <para>
+      The JPEG 2000 plug-in was rewritten to use the
+      <emphasis>OpenJPEG</emphasis> library rather than the somewhat obsolete
+      <emphasis>Jasper</emphasis> library.
+    </para>
+    <para>
+      Finally, the PDF plug-in now supports importing password-protected files
+      (you need to know the password) and exporting multipage PDF documents
+      (each layer will be a page).
+    </para>
+    <para>
+      <emphasis>Contributors:</emphasis> Michael Natterer, Mukund Sivamaran,
+      Ell, Jehan Pagès, Lionel N, Darshan Kadu…
+    </para>
+  </sect2>
+
+  <sect2 id="gimp-introduction-whats-new-metadata">
+    <title>Metadata viewing, editing, and preservation</title>
+    <para>
+      GIMP now ships with plug-ins for viewing and editing Exif, XMP, IPTC, GPS,
+      and DICOM metadata. They are available via the
+      <menuchoice>
+        <guimenu>Image</guimenu>
+        <guisubmenu>Metadata</guisubmenu>
+      </menuchoice> submenu.
+    </para>
 <!--         <figure>
           <title>FIXME</title>
           <mediaobject>
@@ -145,19 +860,33 @@
             </imageobject>
           </mediaobject>
         </figure> -->
-      </listitem>
-    </varlistentry>
-  </variablelist>
-  
-  <variablelist>
-    <title>Better Layers Workflow</title>
+    <para>
+      GIMP will also preserve existing metadata in TIFF, PNG, JPEG, and WebP
+      files. Each plug-in has respective options when exporting to enable or
+      disable exporting the metadata.
+    </para>
+    <para>
+      Additionally, users now can set defaults to preserving or not preserving
+      metadata in all affected file format plug-ins at once depending on whether
+      they want complete privacy or, instead, do a lot of microstock
+      photography. The settings are available on the <emphasis>Image Import
+      &amp; Export</emphasis> page in <emphasis>Preferences</emphasis>.
+    </para>
+    <para>
+      <emphasis>Contributors:</emphasis> Benoit Touchette, Michael Natterer,
+      Jehan Pagès…
+    </para>
+  </sect2>
 
-    <varlistentry>
-      <term>New and Updated Layer Modes</term>
-      <listitem>
-        <para>
-          FIXME: Vivid Light, Hard Mix etc. New Overlay. 
-        </para>
+  <sect2 id="gimp-introduction-whats-new-painting-on-canvas-interaction">
+    <title>On-canvas interaction</title>
+    <para>
+      GIMP 2.10 ships with a new feature that allows some GEGL-based filters to
+      render on-canvas controls. For now, this applies to just three filters:
+      <emphasis>Spiral</emphasis>, <emphasis>Supernova</emphasis>, and
+      <emphasis>Panorama Projection</emphasis>. But there will be more in the
+      future.
+    </para>
 <!--         <figure>
           <title>FIXME</title>
           <mediaobject>
@@ -167,18 +896,20 @@
             </imageobject>
           </mediaobject>
         </figure> -->
-      </listitem>
-    </varlistentry>
+    <para>
+      <emphasis>Contributors:</emphasis> Michael Natterer, Ell…
+    </para>
+  </sect2>
 
-    <varlistentry>
-      <term>New Layer Attributes</term>
-      <listitem>
-        <para>
-          FIXME: New locks, Color tags. Compositing options.
-          Updated dialog. 
-        </para>
+  <sect2 id="gimp-introduction-whats-new-bug-reporting-recovery">
+    <title>Simplified bug reporting and crash recovery</title>
+    <para>
+      We need good bug reports to make GIMP better for you, so we introduced a
+      new feature to watch and intercept critical errors and crashes, then
+      generate a useful error log that you can copy/paste to a bug report.
+    </para>
 <!--         <figure>
-          <title>FIXME</title>
+          <title>Debug dialog to simplify bug reporting</title>
           <mediaobject>
             <imageobject>
               <imagedata format="PNG"
@@ -186,17 +917,28 @@
             </imageobject>
           </mediaobject>
         </figure> -->
-      </listitem>
-    </varlistentry>
-  
-    <varlistentry>
-      <term>Copying Layer Data Across Projects</term>
-      <listitem>
-        <para>
-          FIXME: just select layer or layer group, Ctrl+C, then Ctrl+V elsewhere.
-        </para>
+    <para>
+      On development versions, the dialog will be raised on all kind of errors
+      (even minor ones). On stable releases, it will be raised only during
+      crashes. The default behavior can be customized in
+      <menuchoice>
+          <guimenu>Edit</guimenu>
+          <guisubmenu>Preferences</guisubmenu>
+          <guisubmenu>Debugging</guisubmenu>
+        </menuchoice>.
+    </para>
+    <para>
+      Please note that we still need you to provide context, e.g. what you were
+      doing when a crash occurred. A step-by-step description of how to
+      reproduce this bug will be most helpful.
+    </para>
+    <para>
+      Additionally, in case of a crash, GIMP will now attempt to backup all
+      images with unsaved changes, then suggest to reopen them the next time you
+      start the application.
+    </para>
 <!--         <figure>
-          <title>FIXME</title>
+          <title>Crash recovery dialog</title>
           <mediaobject>
             <imageobject>
               <imagedata format="PNG"
@@ -204,460 +946,50 @@
             </imageobject>
           </mediaobject>
         </figure> -->
-      </listitem>
-    </varlistentry>
-    <varlistentry>
-      <term>Streamlined Mask Creation</term>
-      <listitem>
-        <para>
-          FIXME: adding/removing layer masks by clicking layer previews
-          or via new button inthe Layers dialog. Remembering the added
-          mask's type and the invert boolean.
-        </para>
-<!--         <figure>
-          <title>FIXME</title>
-          <mediaobject>
-            <imageobject>
-              <imagedata format="PNG"
-                fileref="FIXME"/>
-            </imageobject>
-          </mediaobject>
-        </figure> -->
-      </listitem>
-    </varlistentry>
-  </variablelist>
+    <para>
+      We cannot guarantee 100% success, but it will succeed sometimes, and this
+      might rescue your unsaved work!
+    </para>
+    <para>
+      <emphasis>Contributors:</emphasis> Jehan Pagès…
+    </para>
+  </sect2>
 
-  <variablelist>
-    <title>New and Improved Tools</title>
+  <sect2 id="gimp-introduction-whats-new-api">
+    <title>API changes</title>
+    <para>
+      Over the course of this development cycle, we deprecated a lot of API,
+      providing a compatibility layer for 3rd party developers who write scripts
+      and plug-ins.
+    </para>
+    <para>
+      For the full list of changes in PDB, please
+      <ulink url="https://wiki.gimp.org/wiki/Release:2.10_changelog#API_Changes">see the wiki</ulink>.
+      This ChangeLog page also has a verbose list of all other changes in 2.10.
+    </para>
+  </sect2>
 
-    <varlistentry>
-      <term>New Unified Transform Tool</term>
-      <listitem>
-        <para>
-          FIXME: combines all transform tools, adds missing
-          pivot feature.
-        </para>
-<!--         <figure>
-          <title>FIXME</title>
-          <mediaobject>
-            <imageobject>
-              <imagedata format="PNG"
-                fileref="FIXME"/>
-            </imageobject>
-          </mediaobject>
-        </figure> -->
-      </listitem>
-    </varlistentry>
-  
-    <varlistentry>
-      <term>New Warp Transform Tool</term>
-      <listitem>
-        <para>
-          FIXME: replaces iWarp plug-in with on-canvas tool.
-        </para>
-<!--         <figure>
-          <title>FIXME</title>
-          <mediaobject>
-            <imageobject>
-              <imagedata format="PNG"
-                fileref="FIXME"/>
-            </imageobject>
-          </mediaobject>
-        </figure> -->
-      </listitem>
-    </varlistentry>
-  
-    <varlistentry>
-      <term>New MyPaint Brush Tool</term>
-      <listitem>
-        <para>
-          FIXME: options, currently missing pen pressure etc. support
-        </para>
-<!--         <figure>
-          <title>FIXME</title>
-          <mediaobject>
-            <imageobject>
-              <imagedata format="PNG"
-                fileref="FIXME"/>
-            </imageobject>
-          </mediaobject>
-        </figure> -->
-      </listitem>
-    </varlistentry>
-
-    <varlistentry>
-      <term>Improved Blend Tool</term>
-      <listitem>
-        <para>
-          FIXME
-        </para>
-<!--         <figure>
-          <title>FIXME</title>
-          <mediaobject>
-            <imageobject>
-              <imagedata format="PNG"
-                fileref="FIXME"/>
-            </imageobject>
-          </mediaobject>
-        </figure> -->
-      </listitem>
-    </varlistentry>
-
-    <varlistentry>
-      <term>Better Foreground Select Tool</term>
-      <listitem>
-        <para>
-          FIXME
-        </para>
-<!--         <figure>
-          <title>FIXME</title>
-          <mediaobject>
-            <imageobject>
-              <imagedata format="PNG"
-                fileref="FIXME"/>
-            </imageobject>
-          </mediaobject>
-        </figure> -->
-      </listitem>
-    </varlistentry>
-
-    <varlistentry>
-      <term>Improved support for languages using Input Method Engines</term>
-      <listitem>
-        <para>
-          FIXME
-        </para>
-<!--         <figure>
-          <title>FIXME</title>
-          <mediaobject>
-            <imageobject>
-              <imagedata format="PNG"
-                fileref="FIXME"/>
-            </imageobject>
-          </mediaobject>
-        </figure> -->
-      </listitem>
-    </varlistentry>
-
-    <varlistentry>
-      <term>Even More Improvements</term>
-      <listitem>
-        <para>
-          FIXME: Align, Move, Select by Color, Fuzzy Select, 
-          Intelligent Scissors, Bucket Fill, Color Picker.
-        </para>
-<!--         <figure>
-          <title>FIXME</title>
-          <mediaobject>
-            <imageobject>
-              <imagedata format="PNG"
-                fileref="FIXME"/>
-            </imageobject>
-          </mediaobject>
-        </figure> -->
-      </listitem>
-    </varlistentry>
-  </variablelist>
-
-  <variablelist>
-    <title>More Painting Features</title>
-
-    <varlistentry>
-      <term>Canvas Rotation and Flipping</term>
-      <listitem>
-        <para>
-          FIXME
-        </para>
-<!--         <figure>
-          <title>FIXME</title>
-          <mediaobject>
-            <imageobject>
-              <imagedata format="PNG"
-                fileref="FIXME"/>
-            </imageobject>
-          </mediaobject>
-        </figure> -->
-      </listitem>
-    </varlistentry>
-
-    <varlistentry>
-      <term>Painting Symmetry</term>
-      <listitem>
-        <para>
-          FIXME
-        </para>
-<!--         <figure>
-          <title>FIXME</title>
-          <mediaobject>
-            <imageobject>
-              <imagedata format="PNG"
-                fileref="FIXME"/>
-            </imageobject>
-          </mediaobject>
-        </figure> -->
-      </listitem>
-    </varlistentry>
-  
-    <varlistentry>
-      <term>Painting on transparent layers</term>
-      <listitem>
-        <para>
-          FIXME: Painting with various blend modes on a transparent
-          layer. See Americo's posts on Google+.
-        </para>
-<!--         <figure>
-          <title>FIXME</title>
-          <mediaobject>
-            <imageobject>
-              <imagedata format="PNG"
-                fileref="FIXME"/>
-            </imageobject>
-          </mediaobject>
-        </figure> -->
-      </listitem>
-    </varlistentry>
-
-    <varlistentry>
-      <term>Color History</term>
-      <listitem>
-        <para>
-          FIXME
-        </para>
-<!--         <figure>
-          <title>FIXME</title>
-          <mediaobject>
-            <imageobject>
-              <imagedata format="PNG"
-                fileref="FIXME"/>
-            </imageobject>
-          </mediaobject>
-        </figure> -->
-      </listitem>
-    </varlistentry>
-  </variablelist>
-
-  <variablelist>
-    <title>Improved File Formats Support</title>
-
-    <varlistentry>
-      <term>Better Support for TIFF, PNG, PSD</term>
-      <listitem>
-        <para>
-          FIXME: 16/32-bit, layer modes in PSD etc.
-        </para>
-<!--         <figure>
-          <title>FIXME</title>
-          <mediaobject>
-            <imageobject>
-              <imagedata format="PNG"
-                fileref="FIXME"/>
-            </imageobject>
-          </mediaobject>
-        </figure> -->
-      </listitem>
-    </varlistentry>
-
-    <varlistentry>
-      <term>Basic OpenEXR Support</term>
-      <listitem>
-        <para>
-          FIXME: loading and exporting
-        </para>
-<!--         <figure>
-          <title>FIXME</title>
-          <mediaobject>
-            <imageobject>
-              <imagedata format="PNG"
-                fileref="FIXME"/>
-            </imageobject>
-          </mediaobject>
-        </figure> -->
-      </listitem>
-    </varlistentry>
-  
-    <varlistentry>
-      <term>Newly added WebP support</term>
-      <listitem>
-        <para>
-          FIXME: static and animation, ICC profiles, metadata
-        </para>
-<!--         <figure>
-          <title>FIXME</title>
-          <mediaobject>
-            <imageobject>
-              <imagedata format="PNG"
-                fileref="FIXME"/>
-            </imageobject>
-          </mediaobject>
-        </figure> -->
-      </listitem>
-    </varlistentry>
-
-    <varlistentry>
-      <term>New Raw Importer via darktable</term>
-      <listitem>
-        <para>
-          FIXME
-        </para>
-<!--         <figure>
-          <title>FIXME</title>
-          <mediaobject>
-            <imageobject>
-              <imagedata format="PNG"
-                fileref="FIXME"/>
-            </imageobject>
-          </mediaobject>
-        </figure> -->
-      </listitem>
-    </varlistentry>
-  </variablelist>
-
-  <variablelist>
-    <title>Better Image Metadata Support</title>
-
-    <varlistentry>
-      <term>View Exif/XMP/IPTC metadata</term>
-      <listitem>
-        <para>
-          FIXME
-        </para>
-<!--         <figure>
-          <title>FIXME</title>
-          <mediaobject>
-            <imageobject>
-              <imagedata format="PNG"
-                fileref="FIXME"/>
-            </imageobject>
-          </mediaobject>
-        </figure> -->
-      </listitem>
-    </varlistentry>
-
-    <varlistentry>
-      <term>Read and save metadata in JPEG, TIFF, PNG</term>
-      <listitem>
-        <para>
-          FIXME
-        </para>
-<!--         <figure>
-          <title>FIXME</title>
-          <mediaobject>
-            <imageobject>
-              <imagedata format="PNG"
-                fileref="FIXME"/>
-            </imageobject>
-          </mediaobject>
-        </figure> -->
-      </listitem>
-    </varlistentry>
-  </variablelist>
-
-  <variablelist>
-    <title>Miscellaneous</title>
-
-    <varlistentry>
-      <term>Improved remote file access</term>
-      <listitem>
-        <para>
-          FIXME
-        </para>
-<!--         <figure>
-          <title>FIXME</title>
-          <mediaobject>
-            <imageobject>
-              <imagedata format="PNG"
-                fileref="FIXME"/>
-            </imageobject>
-          </mediaobject>
-        </figure> -->
-      </listitem>
-    </varlistentry>
-
-    <varlistentry>
-      <term>Wider configurability</term>
-      <listitem>
-        <para>
-          FIXME
-        </para>
-<!--         <figure>
-          <title>FIXME</title>
-          <mediaobject>
-            <imageobject>
-              <imagedata format="PNG"
-                fileref="FIXME"/>
-            </imageobject>
-          </mediaobject>
-        </figure> -->
-      </listitem>
-    </varlistentry>
-
-    <varlistentry>
-      <term>Add undo/redo to many tools using the normal shortcuts</term>
-      <listitem>
-        <para>
-          FIXME
-        </para>
-<!--         <figure>
-          <title>FIXME</title>
-          <mediaobject>
-            <imageobject>
-              <imagedata format="PNG"
-                fileref="FIXME"/>
-            </imageobject>
-          </mediaobject>
-        </figure> -->
-      </listitem>
-    </varlistentry>
-
-    <varlistentry>
-      <term>Batch processing on multiple files</term>
-      <listitem>
-        <para>
-          FIXME
-        </para>
-<!--         <figure>
-          <title>FIXME</title>
-          <mediaobject>
-            <imageobject>
-              <imagedata format="PNG"
-                fileref="FIXME"/>
-            </imageobject>
-          </mediaobject>
-        </figure> -->
-      </listitem>
-    </varlistentry>
-
-    <varlistentry>
-      <term>API changes</term>
-      <listitem>
-        <para>
-          FIXME
-        </para>
-<!--         <figure>
-          <title>FIXME</title>
-          <mediaobject>
-            <imageobject>
-              <imagedata format="PNG"
-                fileref="FIXME"/>
-            </imageobject>
-          </mediaobject>
-        </figure> -->
-      </listitem>
-    </varlistentry>
-  </variablelist>
-
- <variablelist>
-    <varlistentry>
-      <term>Known Problems</term>
-        <listitem>
-          <para>
-            Working with graphics tablets could be problematic due to
-            the GTK+2 library in use. If in this case either use the
-            older version 2.6 or wait for the up coming version 3.0
-            for the full GTK+3 support.
-          </para>
-        </listitem>
-    </varlistentry>
- </variablelist>
-
+  <sect2 id="gimp-introduction-whats-new-roadmap">
+    <title>Roadmap and what's next</title>
+    <para>
+      We maintain a <ulink url="http://wiki.gimp.org/index.php/Roadmap">roadmap
+      for GIMP development</ulink> that outlines the order of features to be
+      implemented based on priorities.
+    </para>
+    <para>
+      The next big update will be v3.0 that will feature GTK+3 port and a lot of
+      internal changes. For users, this will mostly mean: updated user
+      interface, better support for graphic tablets, better support for HiDPI
+      displays, better support for Wayland on Linux.
+    </para>
+    <para>
+      We are also opening the 2.10.x series for new features. This means you
+      don't have to wait for exciting improvements for years anymore: any new
+      feature can indeed be backported to a 2.10.x release as long as its code
+      is not too invasive and making maintenance difficult.
+    </para>
+    <para>
+      All the new features from 2.10.x will be part of 3.0 as well.
+    </para>
+  </sect2>
 </sect1>
