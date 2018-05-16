@@ -2,10 +2,7 @@
 <!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
                        "http://www.docbook.org/xml/4.3/docbookx.dtd">
 <!-- section history:
-  2008-02-17: ude: renamed id: gimp-new-layer-dialog -> gimp-layer-new
-  2007-02-21: adde Norwegian by KoSt
-  2007-02-15: added Spanish translation by manuq
-  2005-11-03: split of from menu-layer.xml by axel.wernicke
+  2010-05-10 j.h: Update to v2.10
 -->
 <sect2 id="gimp-layer-new">
   <title>New Layer</title>
@@ -23,8 +20,6 @@
     The <guimenuitem>New Layer…</guimenuitem> command opens the <quote>Create 
     a New Layer</quote> dialog that allows you to add a new, empty
     layer to the layer stack of the image, just above the active layer.
-    The command displays a dialog in which you can specify the size of
-    the new layer.
   </para>
 
   <sect3>
@@ -36,7 +31,8 @@
           <menuchoice>
             <guimenu>Layer</guimenu>
             <guimenuitem>New Layer…</guimenuitem>
-          </menuchoice>.
+          </menuchoice>,
+          or by clicking on the dedicated button in the layer dialog.
         </para>
       </listitem>
     </itemizedlist>
@@ -73,6 +69,183 @@
           </para>
         </listitem>
       </varlistentry>
+      
+      <varlistentry>
+        <term>Color tag</term>
+        <listitem>
+          <para>
+            If you click on one of these color buttons, the "Eye" icon box 
+            of the created layer will have this color. This is interesting 
+            when you have many layers in the image.
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term>Mode</term>
+        <listitem>
+          <para>
+            Default is <quote>Normal</quote>. The drop-down list offers all 
+            layer blend modes. On the right, another drop-down list to select 
+            between <quote>Default</quote> or <quote>Legacy</quote> group 
+            of modes.
+          </para>
+          <para>
+            Layer blend modes are described in 
+              <link linkend="gimp-concepts-layer-modes">Layer Modes</link>.
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term>Blend space</term>
+        <listitem>
+          <para>
+            The space used by the layer mode. This option is not activated.
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry >
+        <term>Composite mode</term>
+        <listitem>
+          <para>
+            The <emphasis role="bold">layer's mode</emphasis> (sometimes 
+            referred to as its <quote>blend mode</quote>: Normal, Multiply, 
+            etc.) determines how the <emphasis>color values</emphasis> of the 
+            layer and its backdrop are combined, while the <emphasis> 
+            role="bold">layer's composite mode</emphasis> determines how the 
+            <emphasis>alpha values</emphasis> of the layer and its backdrop 
+            are combined. (The layer's backdrop is the content against which 
+            the layer is composited; namely, it's the combination of the layers 
+            below it.)
+          </para>
+          <para>
+            There are two regions of interest when compositing the layer 
+            against its backdrop: the opaque region of the backdrop, and the 
+            opaque region of the layer.  The layer's blend mode determines how 
+            to combine the colors of the <emphasis>intersection</emphasis> of 
+            these two regions: i.e., the common opaque region of both 
+            the backdrop and the layer (pixels belonging to only one of these 
+            regions don't need to be combined with anything, and retain their 
+            original color.). The layer's composite mode determines which part 
+            of these regions to keep, and which to discard.
+          </para>
+          <para>
+            The example images below show the composition of two layers -- the 
+            bottom layer containing a red feathered circle, and the top layer 
+            containing a green feathered circle -- using 
+            <quote>Addition</quote> mode, and different composite modes 
+            (applied to the top layer).
+          </para>
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <guilabel>Union</guilabel>:
+                keeps the opaque regions of both the layer and its backdrop, 
+                i.e their union.
+              </para>
+              <figure>
+                <title><quote>Union</quote> option example</title>
+                <mediaobject>
+                  <imageobject>
+                    <imagedata 
+format="PNG" fileref="images/menus/layer/composite-mode-union.png"/>
+                  </imageobject>
+                </mediaobject>
+              </figure>
+            </listitem>
+            <listitem>
+              <para>
+                <guilabel>Clip to backdrop</guilabel>:
+                keeps only the opaque regions of the backdrop (this includes 
+                the common opaque region to both the backdrop and the layer i.e 
+                their intersection).
+              </para>
+              <figure>
+                <title><quote>Clip to backdrop</quote> option example</title>
+                <mediaobject>
+                  <imageobject>
+                    <imagedata format="PNG"
+              fileref="images/menus/layer/composite-mode-clip-to-backdrop.png"/>
+                  </imageobject>
+                </mediaobject>
+              </figure>
+            </listitem>
+            <listitem>
+              <para>
+                <guilabel>Clip to layer</guilabel>:
+                keeps only the opaque region of the layer (this includes 
+                the common opaque region to both the backdrop and the layer, 
+                i.e their intersection).
+              </para>
+              <figure>
+                <title><quote>Clip to layer</quote> option example</title>
+                <mediaobject>
+                  <imageobject>
+                    <imagedata format="PNG"
+                fileref="images/menus/layer/composite-mode-clip-to-layer.png"/>
+                  </imageobject>
+                </mediaobject>
+              </figure>
+            </listitem>
+            <listitem>
+              <para>
+                <guilabel>Intersection</guilabel>:
+                keeps only the opaque region to both the backdrop and the 
+                layer, i.e their intersection.
+              </para>
+              <figure>
+                <title><quote>Intersection</quote> option example</title>
+                <mediaobject>
+                  <imageobject>
+                    <imagedata format="PNG"
+                  fileref="images/menus/layer/composite-mode-intersection.png"/>
+                  </imageobject>
+                </mediaobject>
+              </figure>
+            </listitem>
+            <listitem>
+              <para>
+                <guilabel>Auto</guilabel>:
+                <quote>Auto</quote> mode is not a separate composite mode, but 
+                rather corresponds to one of the other composite modes, 
+                depending on the layer's blend mode: for <quote>Normal</quote>, 
+                <quote>Dissolve</quote>, and <quote>Merge</quote>, it 
+                corresponds to <quote>Union</quote>, and for the other modes 
+                (that support different composite modes) it corresponds to 
+                <quote>Clip to Backdrop</quote>.
+              </para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term>Composite space</term>
+        <listitem>
+          <para>
+            Default is <quote>Auto</quote>. In the drop-down list, you can 
+            choose between <quote>RGB linear</quote> and <quote>RGB 
+            perceptual</quote>.
+          </para>
+          <para>
+            Channel encodings are described in 
+              <link linkend="glossary-channel-encoding">Glossary</link>.
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term>Opacity</term>
+        <listitem>
+          <para>
+            Sets the opacity of painting on the layer. Default is 100%.
+          </para>
+        </listitem>
+      </varlistentry>
+      
       <varlistentry>
         <term>Width; Height</term>
         <listitem>
@@ -84,15 +257,37 @@
           </para>
         </listitem>
       </varlistentry>
+      
       <varlistentry>
-        <term>Layer Fill Type</term>
+        <term>Offset X; Y</term>
         <listitem>
           <para>
-            There are four options for the solid color that fills the layer:
+            The origin of the new layer is the upper left corner of the 
+            image. Here, you can set precisely the position of layers smaller 
+            than the canvas, especially text layers.
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term>Fill With</term>
+        <listitem>
+          <para>
+            There are five options for the solid color that fills the layer:
             the current <guilabel>Foreground color</guilabel>,
             the current <guilabel>Background color</guilabel>,
-            <guilabel>White</guilabel> and
-            <guilabel>Transparency</guilabel>.
+            <guilabel>White</guilabel>, <guilabel>Transparency</guilabel>, and 
+            <guilabel>Pattern</guilabel>.
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term>Switches</term>
+        <listitem>
+          <para>
+            These switches reproduce options described in the 
+              <link linkend="gimp-layer-characteristics">Layer Dialog</link>.
           </para>
         </listitem>
       </varlistentry>
