@@ -9,6 +9,13 @@
 
 <sect1 id="gimp-layer-groups">
   <title>Layer Groups</title>
+	
+	<indexterm>
+    <primary>Layer groups</primary>
+  </indexterm>
+	<indexterm>
+    <primary>Pass Through</primary>
+  </indexterm>
 
   <para>
     This possibility appeared with <acronym>GIMP-2.8</acronym>.
@@ -100,7 +107,26 @@
         </para>
       </listitem>
     </varlistentry>
-
+    
+    <varlistentry>
+      <term>Visibility</term>
+      <listitem>
+        <para>
+          If a layer group is made invisible using the eye icon but still open 
+          (so that the layers inside the group are shown in the list), there is 
+          a struck out eye shown besides the layers that are inside the 
+          group to indicate that these layers are not displayed in the final 
+          projection of the image, but theoretically visible in the layer group.
+        </para>
+        <mediaobject>
+          <imageobject>
+            <imagedata format="PNG"
+              fileref="images/dialogs/layer-group-visibility.png"/>
+          </imageobject>
+        </mediaobject>
+      </listitem>
+    </varlistentry>
+    
     <varlistentry>
       <term>Raise and Lower Layer Groups</term>
       <listitem>
@@ -213,7 +239,29 @@
               </para>
             </caption>
           </mediaobject>
-        </figure>        
+        </figure>
+        
+        <para>
+          Since GIMP-2.10, layer groups have a special layer mode: the 
+          <guilabel>Pass Through</guilabel> mode. This mode exists only if a 
+          layer group is active.
+        </para>
+        <para>
+          When this mode is used instead of any other one, layers inside the 
+					layer group will behave as if they were a part of the layer stack, 
+					not belonging to the group. Layers within the group blend with layers 
+					below, inside and outside the group. 
+				</para>
+				<para>
+					While with Normal mode, layers within a group are treated as if they 
+					were a single layer, which is then blended with other layers below in 
+					the stack; a modifier on a layer inside the group blends layers below 
+					in the group only.
+				</para>
+				<para>
+					More details about Pass Through in 
+					<xref linkend="glossary-pass-through"/>.
+				</para>
       </listitem>
     </varlistentry>
 
@@ -231,9 +279,14 @@
       <term>Layer Mask</term>
       <listitem>
         <para>
-           You cannot add a layer mask to a layer group (the corresponding
-           option is grayed out). But, as with normal layers, you can add a layer
-           mask to a layer in the group to mask a part of the layer.
+					Since GIMP-2.10, masks on layer groups are possible. They work similarly to 
+					ordinary-layer masks, with the following considerations.
+				</para>
+				<para>
+					The group’s mask size is the same as group’s size (i.e., the bounding box of its children) at all times. When the group’s size changes, the mask is cropped to the new size — areas of the mask that fall outside of the new bounds are discarded, and newly added areas are filled with black (and hence are transparent by default).
+				</para>
+				<para>
+					 Of course, you still can add a layer mask to a layer in the group to mask a part of the layer:
         </para>
         <mediaobject>
           <imageobject>
