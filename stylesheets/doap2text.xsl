@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
     Simple XSL transformation to create MAINTAINERS text version from
-    gimp-help-2.doap.
+    gimp-help.doap.
 
     This file is part of the gimp-help-2 project and is
     (C) 2010 The GIMP Documentation Team (License: GPL).
@@ -39,13 +39,13 @@
         <xsl:if test="$doap2text.maintainers.add-footnote=1">
           <xsl:text>
 (This file was generated automatically
-from "gimp-help-2.doap". Do not edit.)
+from "gimp-help.doap". Do not edit.)
 </xsl:text>
         </xsl:if>
       </xsl:when>
       <xsl:when test="$doap2text.target='authors'">
         <xsl:message terminate="yes">
-          <xsl:text>Error: Generating AUTHORS from gimp-help-2.doap is </xsl:text>
+          <xsl:text>Error: Generating AUTHORS from gimp-help.doap is </xsl:text>
           <xsl:text>not implemented yet.</xsl:text>
         </xsl:message>
       </xsl:when>

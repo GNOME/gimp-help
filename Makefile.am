@@ -140,7 +140,7 @@ XSL_FILES = \
 	stylesheets/plainhtml.xsl.in	\
 	stylesheets/languageVocab.xml	\
 	$(shell cd $(srcdir) && $(find_l) stylesheets/ -type f -name '*.xsl')	\
-	gimp-help-2.doap
+	gimp-help.doap
 
 # tools needed for building
 DIST_TOOLS = \
@@ -360,7 +360,7 @@ $(AUTHORS_DOCBOOK_XML): $(AUTHORS_DATA_XML) $(AUTHORS_DOCBOOK_STYLESHEETS)
 	  > $@
 	$(cmd) touch -c -r $< $@ || true
 
-MAINTAINERS: gimp-help-2.doap $(DOAP_STYLESHEET)
+MAINTAINERS: gimp-help.doap $(DOAP_STYLESHEET)
 	$(msg) "[DOC] $@"
 	$(cmd) $(XSLTPROC) --output $@ $(XSLTFLAGS) $(XSLTEXTRAFLAGS) \
 	  $(DOAP_STYLESHEET) $<
