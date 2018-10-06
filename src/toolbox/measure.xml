@@ -2,15 +2,8 @@
 <!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
                        "http://www.docbook.org/xml/4.3/docbookx.dtd">
 <!-- section history
-  2088-02-04 kost: changes to 'no'
-  2088-01-30 j.h: some changes to 'en;fr"'
-  2007-06-04 kost: added 'no'
-  2006-02-10 en;fr revised by j.h ; control keys modified; added section for
-             Measuring surfaces
-  2005-12-06 replaced sect3 by sect3 by lexa
-  2005-12-06 replaced informalfigure by figure by lexa
-  050818 de reorganized key modifier list
-  050818 de reviewed by axel.wernicke
+  2018-09-30 j.h update to v2.10
+  2006-02-10 Control keys modified; added section for Measuring surfaces
 -->
 <sect2 id="gimp-tool-measure">
   <title>Measure</title>
@@ -30,6 +23,9 @@
   <indexterm>
     <primary>Measure a surface</primary>
   </indexterm>
+  <indexterm>
+    <primary>Straighten</primary>
+  </indexterm>
   <figure>
     <title>Measure tool</title>
     <mediaobject>
@@ -40,10 +36,21 @@
   </figure>
   <para>
     The Measure Tool is used to gain knowledge about pixel distances in your
-    working image. By clicking and holding the mouse button, you can determine
-    the angle and number of pixels between the point of click and where the
-    mouse pointer is located. The information is displayed on the status bar
-    or can also be displayed in the Info Window.
+    working image. By clicking and dragging the mouse button, you can 
+    determine the angle and number of pixels between the point of click and 
+    where the mouse pointer is located. The information is displayed on the 
+    status bar or can also be displayed in the Info Window.
+  </para>
+  <para>
+    A common use case for <quote>Measure</quote> is to calculate the angle of 
+    rotation when horizon is uneven on a photo. Since 
+    <acronym>GIMP-2.10.4</acronym>, you no longer have to perform the rotation 
+    manually to straighten horizon: after measuring the angle, just click 
+    the new <emphasis>Straighten</emphasis> button.
+  </para>
+  <para>
+    This button can be used in straightening horizontal or vertical lines up: 
+    the starting point comes with a small bar that shows the direction.
   </para>
   <para>
     When you pass the mouse pointer over the end point it turns to a move
@@ -82,7 +89,7 @@
     <itemizedlist>
       <listitem>
         <para>
-          You can get to the Measure Tool from the image-menu through:
+          You can get to the <quote>Measure</quote> from the image-menu through:
           <menuchoice>
             <guimenu>Tools</guimenu>
             <guimenuitem>Measure</guimenuitem>
@@ -113,8 +120,36 @@
             measure. Angle is measured from the previous line and not from
             the default horizontal. The mouse pointer goes with a
             <quote>+</quote> sign. So, you can
-            <emphasis>measure any angle</emphasis> on the image.
+            <emphasis>measure any angle</emphasis> on the image:
           </para>
+          <figure>
+            <title>Shift modifier</title>
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref="images/tool-options/measure-shift-ex1.png" 
+                format="PNG"/>
+              </imageobject>
+              <caption>
+                <para>
+                  Click on start point and drag following a side of the 
+                  angle.
+                </para>
+              </caption>
+            </mediaobject>
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref="images/tool-options/measure-shift-ex2.png" 
+                format="PNG"/>
+              </imageobject>
+              <caption>
+                <para>
+                  Then, Shift-click on start point and drag following the 
+                  other side of the angle: you get the value of this particular 
+                  angle.
+                </para>
+              </caption>
+            </mediaobject>
+          </figure>
         </listitem>
       </varlistentry>
       <varlistentry>
@@ -127,11 +162,16 @@
           </para>
           <para>
             <keycap>Ctrl</keycap> key pressed and click on an end point
-            creates a horizontal guide. The mouse pointer goes with the
+            creates a horizontal guide. The mouse pointer goes with 
+            the
             <guiicon>
-              <inlinegraphic fileref="images/toolbox/measure-horiz.png" />
+              <inlinegraphic fileref="images/tool-options/measure-horiz.png" />
             </guiicon>
             icon.
+          </para>
+          <para>
+            In Horizontal or Vertical Orientation modes, <keycap>Ctrl</keycap> 
+            also toggles between Horizontal and Vertical.
           </para>
         </listitem>
       </varlistentry>
@@ -140,11 +180,7 @@
         <listitem>
           <para>
             <keycap>Alt</keycap> key and click on an end point creates a
-            vertical guide. The mouse pointer goes with the
-            <guiicon>
-              <inlinegraphic fileref="images/toolbox/measure-vert.png"/>
-            </guiicon>
-            icon.
+            vertical guide. 
           </para>
         </listitem>
       </varlistentry>
@@ -179,12 +215,156 @@
     </figure>
     <variablelist>
       <varlistentry>
+        <term>Orientation (Ctrl)</term>
+        <listitem>
+          <para>
+            In the <guilabel>Auto</guilabel> mode (default), 
+            <guibutton>Straighten</guibutton> will snap to the smallest angle 
+            between the measure line and the vertical or horizontal direction. 
+            <guilabel>Horizontal</guilabel> and <guilabel>Vertical</guilabel> 
+            allow to override this behavior by specifying explicitly what it 
+            should be.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
         <term>Use Info Window</term>
         <listitem>
           <para>
             This option will display an Info Window dialog that details the
-            measure tool results. The results are more complete on the status
-            bar.
+            measure tool results. The results are more complete than on the 
+            status bar.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Straighten</term>
+        <listitem>
+          <para>
+            <guilabel>Transform</guilabel>, <guilabel>Interpolation</guilabel>, 
+            and <guilabel>Clipping</guilabel> are treated in 
+            <xref linkend="gimp-tool-brush"/>. Here is an example for 
+            straightening a path:
+            <mediaobject>
+              <imageobject>
+                <imagedata format="JPG"
+                  fileref="images/tool-options/measure-ex1.jpg"/>
+              </imageobject>
+              <caption>
+                <para>
+                  Original image
+                </para>
+              </caption>
+            </mediaobject>
+            <mediaobject>
+              <imageobject>
+                <imagedata format="PNG"
+                  fileref="images/tool-options/measure-path-ex1.png"/>
+              </imageobject>
+              <caption>
+                <para>
+                  Draw path
+                </para>
+              </caption>
+            </mediaobject>
+            <mediaobject>
+              <imageobject>
+                <imagedata format="PNG"
+                  fileref="images/tool-options/measure-path-ex2.png"/>
+              </imageobject>
+              <caption>
+                <para>
+                  Make path visible
+                </para>
+              </caption>
+            </mediaobject>
+            <mediaobject>
+              <imageobject>
+                <imagedata format="PNG"
+                  fileref="images/tool-options/measure-path-ex3.png"/>
+              </imageobject>
+              <caption>
+                <para>
+                  Draw measure line on the segment you want to straighten
+                </para>
+              </caption>
+            </mediaobject>
+            <mediaobject>
+              <imageobject>
+                <imagedata format="PNG"
+                  fileref="images/tool-options/measure-path-ex4.png"/>
+              </imageobject>
+              <caption>
+                <para>
+                  Straighten
+                </para>
+              </caption>
+            </mediaobject>
+          </para>
+          <figure>
+            <title><quote>Straighten</quote> clipping options</title>
+            
+            <mediaobject>
+              <imageobject>
+                <imagedata format="JPG"
+                  fileref="images/tool-options/measure-ex1-b.jpg"/>
+              </imageobject>
+              <caption>
+                <para>
+                  Draw measure line
+                </para>
+              </caption>
+            </mediaobject>
+            <mediaobject>
+              <imageobject>
+                <imagedata format="JPG"
+                  fileref="images/tool-options/measure-adjust-ex.jpg"/>
+              </imageobject>
+              <caption>
+                <para>
+                  Straighten with <quote>Adjust</quote> option
+                </para>
+              </caption>
+            </mediaobject>
+            <mediaobject>
+              <imageobject>
+                <imagedata format="JPG"
+                  fileref="images/tool-options/measure-clip-ex.jpg"/>
+              </imageobject>
+              <caption>
+                <para>
+                  Straighten with <quote>Clip</quote> option
+                </para>
+              </caption>
+            </mediaobject>
+          </figure>
+          <mediaobject>
+            <imageobject>
+              <imagedata format="JPG"
+                fileref="images/tool-options/measure-crop_to_result-ex.jpg"/>
+            </imageobject>
+            <caption>
+              <para>
+                Straighten with <quote>Crop to result</quote> option
+              </para>
+            </caption>
+          </mediaobject>
+          <mediaobject>
+            <imageobject>
+              <imagedata format="JPG"
+              fileref="images/tool-options/measure-crop_with_aspect-ex.jpg"/>
+            </imageobject>
+            <caption>
+              <para>
+                Straighten with <quote>Crop with aspect</quote> option
+              </para>
+            </caption>
+          </mediaobject>
+          
+          
+          <para>
+            <guibutton>Straighten</guibutton>: click on this button to perform 
+            straightening.
           </para>
         </listitem>
       </varlistentry>
