@@ -2,6 +2,7 @@
 <!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
                        "http://www.docbook.org/xml/4.3/docbookx.dtd">
 <!-- section history:
+  2018-10-17 j.h: update to v2.10
   2017-08-24 j.h: update
   2007-08-27 ude: added rubber-banding
 -->
@@ -19,7 +20,7 @@
     <title>The Align tool in toolbox</title>
     <mediaobject>
       <imageobject>
-        <imagedata fileref="images/toolbox/toolbox-align.png" format="PNG"/>
+        <imagedata fileref="images/toolbox/align-toolbox.png" format="PNG"/>
       </imageobject>
     </mediaobject>
   </figure>
@@ -30,10 +31,10 @@
     image, you choose the layer which will be moved (with <keycap>Shift
     </keycap> + click, you can choose several layers to be aligned);
     this focused layer has small squares in corners and is called 
-    <emphasis>target</emphasis>.
-    Various buttons in the dialog allow you to select how the layer
-    will be moved. And you can select the image object (other layer,
-    selection, path...) the selected layer will be aligned with.
+    <emphasis>source</emphasis>. Then buttons in the dialog become active 
+    (they remain active during all the GIMP session): they allow you to select 
+    the <emphasis>target</emphasis>, i.e other layer, selection, path, the 
+    source will be aligned with.
   </para>
 
   <sect3>
@@ -55,7 +56,7 @@
           by clicking on the tool icon:
           <guiicon>
             <inlinegraphic
-                fileref="images/toolbox/stock-tool-align-22.png"/>
+                fileref="images/toolbox/align-icon.png"/>
           </guiicon>
           in the toolbox,
         </para>
@@ -104,7 +105,7 @@
       <mediaobject>
         <imageobject>
           <imagedata format="PNG"
-                     fileref="images/toolbox/align-options.png"/>
+                     fileref="images/toolbox/align-dialog.png"/>
         </imageobject>
       </mediaobject>
     </figure>
@@ -120,7 +121,8 @@
               <term>Relative to:</term>
               <listitem>
                 <para>
-                  To reference the image object the layer will be aligned with.
+                  In this drop down list, you select the target, the image 
+                  object the layer will be aligned with.
                 </para>
                 <itemizedlist>
                   <listitem>
@@ -134,103 +136,37 @@
                   </listitem>
                   <listitem>
                     <para>
-                      <guilabel>Image</guilabel>: the image is used as  
-                      alignment reference.
+                      <guilabel>Image</guilabel>: the image is the target.
                     </para>
                   </listitem>
                   <listitem>
                     <para>
-                      <guilabel>Selection</guilabel>: the selection is used as  
-                      alignment reference.
+                      <guilabel>Selection</guilabel>: the selection is the 
+                      target.
                     </para>
                   </listitem>
                   <listitem>
                     <para>
                       <guilabel>Active layer</guilabel>: the active layer, in 
-                      the layer dialog, is used as alignment reference.
+                      the layer dialog, is the target.
                     </para>
                   </listitem>
                   <listitem>
                     <para>
-                      <guilabel>Active Channel</guilabel>: the active channel 
-                      is used as alignment reference.
+                      <guilabel>Active Channel</guilabel>: the active channel, 
+                      containing a selection you made before, is the target.
                     </para>
                   </listitem>
                   <listitem>
                     <para>
-                      <guilabel>Active Path</guilabel>: the active path is used 
-                      as alignment reference.
+                      <guilabel>Active Path</guilabel>: the active path is the 
+                      target.
                     </para>
                   </listitem>
                 </itemizedlist>
-                <figure>
-                  <title>Alignment References Examples</title>
-                  <mediaobject>
-                    <imageobject>
-                      <imagedata 
-fileref="images/toolbox/align-ex-ref-orig.png"     format="PNG"/>
-                    </imageobject>
-                    <caption>
-                      <para>
-                        An image with a selection, a text layer and an active 
-                        layer. This layer is cropped to content. 
-                      </para>
-                    </caption>
-                  </mediaobject>
-                  <mediaobject>
-                    <imageobject>
-                      <imagedata 
-fileref="images/toolbox/align-ex-ref-image.png"     format="PNG"/>
-                    </imageobject>
-                    <caption>
-                      <para>
-                        Image is the alignment reference. The 
-<guiicon><inlinegraphic 
-fileref="images/tool-options/stock-gravity-east-24.png"/></guiicon>
-                        (Align right edge of target) command has been used.
-                      </para>
-                    </caption>
-                  </mediaobject>
-                </figure>
-                <figure>
-                  <title></title>
-                  <mediaobject>
-                    <imageobject>
-                      <imagedata 
-fileref="images/toolbox/align-ex-ref-selection.png"     format="PNG"/>
-                    </imageobject>
-                    <caption>
-                      <para>
-                        Selection is the alignment reference
-                      </para>
-                    </caption>
-                  </mediaobject>
-                  <mediaobject>
-                    <imageobject>
-                      <imagedata 
-fileref="images/toolbox/align-ex-ref-active-layer.png"     format="PNG"/>
-                    </imageobject>
-                    <caption>
-                      <para>
-                        Active layer is the alignment reference
-                      </para>
-                    </caption>
-                  </mediaobject>
-                  <mediaobject>
-                    <imageobject>
-                      <imagedata 
-fileref="images/toolbox/align-ex-ref-path.png"     format="PNG"/>
-                    </imageobject>
-                    <caption>
-                      <para>
-                        Path is the alignment reference
-                      </para>
-                    </caption>
-                  </mediaobject>
-                </figure>
               </listitem>
             </varlistentry>
-              
+            
             <varlistentry>
               <term>Align buttons</term>
               <listitem>
@@ -239,46 +175,105 @@ fileref="images/toolbox/align-ex-ref-path.png"     format="PNG"/>
                   <itemizedlist>
                     <listitem>
                       <para> 
-<inlinegraphic fileref="images/tool-options/stock-gravity-west-24.png"/>: to 
-                        align left edge of target with left edge of reference.
+<inlinegraphic fileref="images/tool-options/stock-gravity-west-24.png"/> 
+                        <guibutton>Align left edge of target</guibutton>: to 
+                        align left edge of source with left edge of target.
                       </para>
                     </listitem>
                     <listitem>
                       <para> 
-<inlinegraphic fileref="images/tool-options/stock-gravity-hcenter-24.png"/>: to 
-                        align center of target with center of 
-                        reference horizontally.
+<inlinegraphic fileref="images/tool-options/stock-gravity-hcenter-24.png"/> 
+                        <guibutton>Align center of target</guibutton>: to 
+                        align center of source on the 
+                        <emphasis>vertical</emphasis> middle line of target.
                       </para>
                     </listitem>
                     <listitem>
                       <para> 
-<inlinegraphic fileref="images/tool-options/stock-gravity-east-24.png"/>: to 
-                        align right edge of target with right edge of reference.
+<inlinegraphic fileref="images/tool-options/stock-gravity-east-24.png"/>: 
+                        <guibutton>Align right edge of target</guibutton>: to
+                        align right edge of source with right edge of target.
                       </para>
                     </listitem>
                     <listitem>
                       <para> 
-<inlinegraphic fileref="images/tool-options/stock-gravity-north-24.png"/>: to 
-                        align top edge of target with top edge of 
-                        reference.
+<inlinegraphic fileref="images/tool-options/stock-gravity-north-24.png"/>: 
+                        <guibutton>Align top edge of target</guibutton>: to
+                        align top edge of source with top edge of target.
                       </para>
                     </listitem>
                     <listitem>
                       <para> 
-<inlinegraphic fileref="images/tool-options/stock-gravity-vcenter-24.png"/>: to 
-                        align center of target with center of 
-                        reference vertically.
+<inlinegraphic fileref="images/tool-options/stock-gravity-vcenter-24.png"/>: 
+                        <guibutton>Align middle of target</guibutton>: to 
+                        align center of source on the 
+                        <emphasis>horizontal</emphasis> middle line of target.
                       </para>
                     </listitem>
                     <listitem>
                       <para> 
-<inlinegraphic fileref="images/tool-options/stock-gravity-south-24.png"/>: to 
-                        align bottom edge of target with bottom edge of 
-                        reference.
+<inlinegraphic fileref="images/tool-options/stock-gravity-south-24.png"/>: 
+                        <guibutton>Align bottom edge of target</guibutton>: to 
+                        align bottom edge of source with bottom edge of target.
                       </para>
                     </listitem>
                   </itemizedlist>
                 </para>
+              </listitem>
+            </varlistentry>
+            
+            <varlistentry>
+              <term>Example</term>
+              <listitem>
+                <mediaobject>
+                  <imageobject>
+                    <imagedata 
+fileref="images/toolbox/align-ex-orig.png"     format="PNG"/>
+                  </imageobject>
+                  <caption>
+                    <para>
+                      An image with a selection, layer #1 (background) is 
+                      active, layer #2 is cropped to content, layer #3 is a 
+                      text layer.
+                    </para>
+                  </caption>
+                </mediaobject>
+                <mediaobject>
+                  <imageobject>
+                    <imagedata 
+fileref="images/toolbox/align-ex1.png"     format="PNG"/>
+                  </imageobject>
+                  <caption>
+                    <para>
+                      We click on the yellow circle: layer #2 becomes the 
+                      source. We want to send this source to the middle of 
+                      the selection: the <guilabel>Relative to</guilabel> 
+                      option is set to <quote>Selection</quote>.
+                    </para>
+                  </caption>
+                </mediaobject>
+                <mediaobject>
+                  <imageobject>
+                    <imagedata 
+fileref="images/toolbox/align-ex2.png"     format="PNG"/>
+                  </imageobject>
+                  <caption>
+                    <para>
+                      <guibutton>Align center of target</guibutton> clicked
+                    </para>
+                  </caption>
+                </mediaobject>
+                <mediaobject>
+                  <imageobject>
+                    <imagedata 
+fileref="images/toolbox/align-ex3.png"     format="PNG"/>
+                  </imageobject>
+                  <caption>
+                    <para>
+                      <guibutton>Align middle of target</guibutton> clicked
+                    </para>
+                  </caption>
+                </mediaobject>
               </listitem>
             </varlistentry>
           </variablelist>
@@ -294,69 +289,81 @@ fileref="images/toolbox/align-ex-ref-path.png"     format="PNG"/>
               <listitem>
                 <para>
                   These options are used when you have several targets and want 
-                  to arrange them. <quote>targets</quote> are the layers 
-                  selected with <keycap>Shift</keycap> + Click.
+                  to arrange them. Here, layers selected with 
+                  <keycap>Shift</keycap> + Click are called 
+                  <quote>targets</quote> . But they are actually sources. 
+                  <quote>Relative to</quote> options are active to set the 
+                  target. These transformations are usually relative to 
+                  <quote>Image</quote>.
                 </para>
                 <para>
-                  Note that <quote>Relative to</quote> options are active when 
-                  using Distribute.
+                  These options work as Align options, but you can can add an 
+                  offset and new options are available to distribute sources 
+                  evenly.
                 </para>
                 <itemizedlist>
                     <listitem>
                       <para> 
-<inlinegraphic fileref="images/tool-options/stock-gravity-west-24.png"/>: to 
-                        distribute left edges of targets with left edge of 
-                        reference.
+<inlinegraphic fileref="images/tool-options/stock-gravity-west-24.png"/>: 
+                        <guibutton>Distribute left edges of 
+                        targets</guibutton>: to distribute left edges of sources 
+                        on the left edge of the target (the image).
                       </para>
                     </listitem>
                     <listitem>
                       <para>
-<inlinegraphic fileref="images/tool-options/stock-gravity-hcenter-24.png"/>: to 
-                        distribute centers of targets with center 
-                        of reference horizontally.
+<inlinegraphic fileref="images/tool-options/stock-gravity-hcenter-24.png"/>: 
+                        <guibutton>Distribute horizontal centers of 
+                        targets</guibutton>: to distribute centers of sources 
+                        with center of the target horizontally.
                       </para>
                     </listitem>
                     <listitem>
                       <para>
-<inlinegraphic fileref="images/tool-options/stock-gravity-east-24.png"/>: to 
-                        distribute right edges of targets with right edge of 
-                        reference.
+<inlinegraphic fileref="images/tool-options/stock-gravity-east-24.png"/>: 
+                        <guibutton>Distribute right edges of 
+                        targets</guibutton>: to distribute right edges of 
+                        sources on right edge of the target.
                       </para>
                     </listitem>
                     <listitem>
                       <para>
-<inlinegraphic fileref="images/tool-options/stock-gravity-north-24.png"/>: to 
-                        distribute top edges of targets with top edge of 
-                        reference.
+<inlinegraphic fileref="images/tool-options/align-hfill.png"/>: 
+                        <guibutton>Distribute targets evenly in the 
+                        horizontal</guibutton>: to distribute sources evenly 
+                        horizontally.
                       </para>
                     </listitem>
                     <listitem>
                       <para>
-<inlinegraphic fileref="images/tool-options/stock-gravity-vcenter-24.png"/>: to 
-                        distribute centers of targets with center of 
-                        reference vertically.
+<inlinegraphic fileref="images/tool-options/stock-gravity-north-24.png"/>: 
+                        <guibutton>Distribute left edges of 
+                        targets</guibutton>: to distribute top edges of sources  
+                        on top edge of target.
                       </para>
                     </listitem>
                     <listitem>
                       <para>
-<inlinegraphic fileref="images/tool-options/stock-gravity-south-24.png"/>: to 
-                        distribute bottom edges of targets with bottom edge 
-                        of reference.
+<inlinegraphic fileref="images/tool-options/stock-gravity-vcenter-24.png"/>: 
+                        <guibutton>Distribute vertical centers of 
+                        targets</guibutton>: to distribute centers of sources 
+                        with center of target.
                       </para>
                     </listitem>
                     <listitem>
                       <para>
-<inlinegraphic fileref="images/tool-options/align-hfill.png"/>: to 
-                        distribute targets evenly in the horizontal.
+<inlinegraphic fileref="images/tool-options/stock-gravity-south-24.png"/>: 
+                        <guibutton>Distribute bottom edges of 
+                        targets</guibutton>: to distribute bottom edges of 
+                        sources with bottom edge of target.
                       </para>
                     </listitem>
                     <listitem>
                       <para>
-<inlinegraphic fileref="images/tool-options/align-vfill.png"/>: to 
-                        distribute targets evenly in the vertical.
-                      </para>
-                      <para>
-                        Last both buttons ones are new in GIMP-2.10.
+<inlinegraphic fileref="images/tool-options/align-vfill.png"/>: 
+                        <guibutton>Distribute targets evenly in the 
+                        vertical</guibutton>: to distribute sources evenly 
+                        vertically.
                       </para>
                     </listitem>
                 </itemizedlist>
@@ -369,7 +376,7 @@ fileref="images/toolbox/align-ex-ref-path.png"     format="PNG"/>
                   This offset can be positive or negative and is expressed in 
                   pixels.  Distribute add it to the left edges, horizontal 
                   centers, right edges, top edges, vertical centers, or bottoms 
-                  of targets. 
+                  of sources. 
                 </para>
               </listitem>
             </varlistentry>
@@ -396,7 +403,7 @@ fileref="images/toolbox/align-ex-ref-path.png"     format="PNG"/>
       fileref="images/toolbox/align-ex-distrib-0-yellow.png" format="PNG"/>
               </imageobject>
               <caption>
-                Active layer is yellow (reference). Offset = 0: all layers are 
+                Active layer is yellow (target). Offset = 0: all layers are 
                 aligned on the the right edge of the yellow layer.
               </caption>
             </mediaobject>
@@ -417,7 +424,7 @@ fileref="images/toolbox/align-ex-ref-path.png"     format="PNG"/>
   </sect3>
   
   <sect3>
-    <title> A practical example</title>
+    <title> A practical example for <quote>Distribute</quote></title>
     <figure>
       <title>Origin</title>
       <mediaobject>
@@ -439,7 +446,7 @@ fileref="images/toolbox/align-ex-distrib-2.png" format="PNG"/>
         </imageobject>
         <caption>
           <para>
-            We select them as targets with <keycap>Shift</keycap> + Click.
+            We select them as sources with <keycap>Shift</keycap> + Click.
           </para>
         </caption>
       </mediaobject>
@@ -450,7 +457,7 @@ fileref="images/toolbox/align-ex-distrib-3.png" format="PNG"/>
         </imageobject>
         <caption>
           <para>
-            Alignment reference (<guilabel>Relative to</guilabel>) is 
+            The default target (<guilabel>Relative to</guilabel>) is 
             <quote>Image</quote>. Offset = 0. We used the 
 <guiicon><inlinegraphic 
 fileref="images/tool-options/align-vfill.png"/>
