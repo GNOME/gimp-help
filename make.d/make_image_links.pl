@@ -91,7 +91,7 @@ if ($Verbose > 1) {
                  "Mode(s)      = ", join(' ', @Mode), "\n";
 }
 
-# Check for existance of directories:
+# Check for existence of directories:
 foreach (@Srcdirs, $Destdir) {
     die "Error: no such directory: $_\n" unless -d
 }
@@ -140,7 +140,7 @@ sub get_copy_command {
     }
 }
 
-# Subroutine for (re)setting coyp/link mode
+# Subroutine for (re)setting copy/link mode
 sub set_copy_mode {
     if (defined($exec_copy_command)) {
         # Fallback
@@ -172,7 +172,7 @@ foreach my $srcdir (sort @Image_dirs) {
         next unless -f $imgfile;
         my $basename = (splitpath($imgfile))[2];  # (vol, dir, file)
         my $destfile = catfile($dstdir, $basename);  # the new file/link
-        # Check for existance of localized image:
+        # Check for existence of localized image:
         if ($Localize_images) {
             (my $localized_imgfile = $imgfile) =~ s|/C/|/$Language/|o;
             $inc_i18n = (-e $localized_imgfile) ? 1 : 0;

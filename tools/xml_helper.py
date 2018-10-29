@@ -38,8 +38,8 @@ CHANGEDTAG = "xml_changed"
 work_dir = "./working_translation"
 
 version = "0.91"
-#TODO (v.0.9): properly formating the final gimp-help xml files
-#that is: Adding a DTD header, and doing line wrapping and identation
+#TODO (v.0.9): properly formatting the final gimp-help xml files
+#that is: Adding a DTD header, and doing line wrapping and indentation
 
 
 class Stub(object):
@@ -554,7 +554,7 @@ Operation modes:
 --merge:
     will integrate back a working copy of a XML file into
     the main XML structure. The hidden version in .helper
-    dir must exist. Merged files are formated as for the
+    dir must exist. Merged files are formatted as for the
     --format mode, unless stated otherwise.
     N.B. the paths to the files passed to the script are the paths
     on main src tree, not the in the working dir.
@@ -592,7 +592,7 @@ Options:
         create new language tags, but empty tags, instead of copying
         the content of the first language specified. NB - tags created in
         this way are self closed ( <tag  />  ), by the xml generator.
-        Dont forget to change the format to <tag> </tag>  when adding
+        Don't forget to change the format to <tag> </tag>  when adding
         content.
     --no-format:
         passed to merge mode - doesn't run the formatting routines
@@ -600,7 +600,7 @@ Options:
 
     --no-delete-rip:
         To avoid conflicts, the working XML version is deleted when merging
-        is successfull. If passing this option, the file is preserved (the
+        is successful. If passing this option, the file is preserved (the
         xmlids change when merging, so it is basically impossible to use
         this script to merge a XML a second time.
 
@@ -611,7 +611,7 @@ If a version of the XML being split already exists in the
 a 'changed=""' XML attribute. This way translations can be kept in sink
 without further resource to Harry Potter style magic.
 
-This script will not normally  supress existing XML tags. If
+This script will not normally suppress existing XML tags. If
 a tag is deleted in the working file, it's copy in the  .helper file
 will be used.
 
