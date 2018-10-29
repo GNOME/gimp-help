@@ -184,10 +184,10 @@ class Statistics(object):
         invalid = []
         names = {}
         root = os.path.join(self.helproot, "src")
-        # dirs which we can savely skip
+        # dirs which we can safely skip
         filter_directories = ['glossary', 'faq', 'filters']
 
-        # filenames which we can savely skip
+        # filenames which we can safely skip
         filter_files = ['gimp', 'introduction', 'menu']
 
         for root, dirs, files in os.walk(root):
