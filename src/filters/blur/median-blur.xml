@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+                       "http://www.docbook.org/xml/4.3/docbookx.dtd">
+<!-- section history:
+  2018-10-29 j.h : created
+-->
+<sect2 id="gimp-filter-median-blur">
+  <title>Median Blur</title>
+
+  <indexterm>
+    <primary>Filters</primary>
+    <secondary>Blur</secondary>
+    <tertiary>Median Blur</tertiary>
+  </indexterm>
+  <indexterm>
+    <primary>Median Blur</primary>
+  </indexterm>
+  
+  <sect3>
+    <title>Overview</title>
+    <para>
+      While the <quote>Gaussian</quote> blur filter calculates the mean of the 
+      neighboring pixels, the <quote>Median</quote> blur filter calculates the 
+      median:
+      <figure>
+        <title>Calculating Median</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata format="PNG"
+              fileref="images/filters/examples/blur/median-calcul.png"/>
+          </imageobject>
+          <caption>
+            <para>A 3x3 neighborhood. Values in ascending order. Median 
+              surrounded in red.
+            </para>
+          </caption>
+        </mediaobject>
+      </figure>
+      This calculation does not create a new value, and an unrepresentative 
+      pixel in the neighborhood will not affect the result. So, the filter 
+      preserves edges and rounds corners. It is used to reduce noise, 
+      especially salt and pepper noise, and delete scratches on photographs.
+    </para>
+  </sect3>
+  
+  <sect3>
+    <title>Activate the filter</title>
+    <para>
+      You can find this filter in the image menu under
+      <menuchoice>
+        <guimenu>Filters</guimenu>
+        <guisubmenu>Blur</guisubmenu>
+        <guimenuitem>Median Blur…</guimenuitem>
+      </menuchoice>
+    </para>
+  </sect3>
+  
+  <sect3>
+    <title>Options</title>
+    <figure>
+      <title><quote>Median</quote> filter parameters</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata format="PNG"
+            fileref="images/filters/blur/median-dialog.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+    <variablelist>
+      <varlistentry>
+        <term><guilabel>Presets</guilabel>, <guilabel>Preview</guilabel>, 
+          <guilabel>Split view</guilabel></term>
+        <listitem>
+          <para>
+            These options are common to GEGL-based filters. Please refer to 
+            <xref linkend="gimp-filters-common"/>.
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term><guilabel>Neighborhood</guilabel></term>
+        <listitem>
+          <para>
+            The shape of the neighborhood. Three options: 
+            <guilabel>Square</guilabel>, <guilabel>Circle</guilabel>(default), 
+            <guilabel>Diamond</guilabel>. Differences are subtle and not 
+            predictable: experiment, on-canvas editing makes this easy.
+          </para>
+          <figure>
+            <title><quote>Median</quote> Neighborhood</title>
+            <mediaobject>
+              <imageobject>
+                <imagedata format="PNG"
+                  fileref="images/filters/examples/blur/median-neighbor.png"/>
+              </imageobject>
+              <caption>
+                <para>
+                  Radius=3..........Left: Square
+                </para>
+                <para>
+                  Middle: Circle..........Right: Diamond
+                </para>
+              </caption>
+            </mediaobject>
+          </figure>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term><guilabel>Radius</guilabel></term>
+        <listitem>
+          <para>
+            The radius of the neighborhood. Increasing radius increases blur. 
+            Contrary to the <quote>Gaussian</quote> filter, edges are not 
+            blurred. Corners are rounded and convex surfaces are eroded.
+          </para>
+          <figure>
+            <title><quote>Median</quote> blur vs <quote>Gaussian</quote> 
+              blur</title>
+            <mediaobject>
+              <imageobject>
+                <imagedata format="PNG"
+                fileref="images/filters/examples/blur/median-vs-gaussian.png"/>
+              </imageobject>
+              <caption>
+                <para>
+                  Left: Origin
+                </para>
+                <para>
+                  Middle: Median
+                </para>
+                <para>
+                  Right: Gaussian
+                </para>
+              </caption>
+            </mediaobject>
+          </figure>
+          <para>
+            Increasing radius too much can create unwanted effects:
+          </para>
+          <mediaobject>
+            <imageobject>
+              <imagedata format="PNG"
+                fileref="images/filters/examples/blur/median-radius-100.png"/>
+            </imageobject>
+            <caption>
+              <para>
+                Left: Origin
+              </para>
+              <para>
+                Right: Radius=100
+              </para>
+            </caption>
+          </mediaobject>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term><guilabel>Percentile</guilabel></term>
+        <listitem>
+          <para>
+            By default, the Median Blur filter finds the median value at the
+            neighborhood of each pixel.  In spite of its name, the filter can
+            actually find *any* arbitrary percentile, not just the median 
+            (i.e., the 50th percentile).  The "Percentile" parameter controls 
+            the percentile used for the color components. Lower values shift 
+            the image toward darker tones and higher values toward brighter 
+            ones.
+          </para>
+          <mediaobject>
+            <imageobject>
+              <imagedata format="JPEG"
+                fileref="images/filters/examples/blur/median-percent.jpg"/>
+            </imageobject>
+            <caption>
+              <para>
+                Left: Origin
+              </para>
+              <para>
+                Middle: Percentile=0. Image is darker. Stems are enlarged but 
+                sharp.
+              </para>
+              <para>
+                Right: Percentile=100. Image is brighter and much blurred.
+              </para>
+            </caption>
+          </mediaobject>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term><guilabel>Alpha Percentile</guilabel></term>
+        <listitem>
+          <para>
+            To see the effect of this parameter, you need an image with 
+            transparency. If the alpha channel is opaque everywhere, the 
+            result will also be fully opaque, regardless of the percentile.
+          </para>
+          <para>
+            Lower values for the <quote>Alpha percentile</quote> parameter 
+            shift the image toward more transparency, and higher values shift 
+            the image toward more opacity, where a value of 50% is balanced. 
+            Roughly speaking, values less than 50% make the opaque regions of 
+            the image smaller, while values greater than 50% make the opaque 
+            regions of the image larger.
+          </para>
+          <mediaobject>
+            <imageobject>
+              <imagedata format="PNG"
+            fileref="images/filters/examples/blur/median-alpha-percent-bw.png"/>
+            </imageobject>
+          </mediaobject>
+          <mediaobject>
+            <imageobject>
+              <imagedata format="PNG"
+              fileref="images/filters/examples/blur/median-alpha-percent.png"/>
+            </imageobject>
+            <caption>
+              <para>
+                Left: Origin. The image has an alpha channel. A circle is 
+                transparent.
+              </para>
+              <para>
+                Middle: Percentile=0%. Transparent circle is enlarged.
+              </para>
+              <para>
+                Right: Alpha percentile=100%. Transparent circle is reduced.
+              </para>
+            </caption>
+          </mediaobject>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </sect3>
+  
+  <sect3>
+    <title>Using Median Blur</title>
+    <variablelist>
+      <varlistentry>
+        <term>Reducing salt and pepper noise</term>
+        <listitem>
+          <mediaobject>
+            <imageobject>
+              <imagedata format="PNG"
+              fileref="images/filters/examples/blur/median-noise.png"/>
+            </imageobject>
+            <caption>
+              <para>
+                Left: origin (from Wikipedia)
+              </para>
+              <para>
+                Middle: radius = 1 applied twice
+              </para>
+              <para>
+                Right: radius = 1 applied three times
+              </para>
+            </caption>
+          </mediaobject>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term>Reducing scratches</term>
+        <listitem>
+          <mediaobject>
+            <imageobject>
+              <imagedata format="PNG"
+              fileref="images/filters/examples/blur/median-scratch.png"/>
+            </imageobject>
+            <caption>
+              <para>
+                Left: origin
+              </para>
+              <para>
+                Middle: radius = 2
+              </para>
+              <para>
+                Right: radius = 1 applied twice. The image is less blurred.
+              </para>
+            </caption>
+          </mediaobject>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </sect3>
+</sect2>
