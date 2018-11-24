@@ -38,22 +38,25 @@
       <title>Create a Local Working Copy of Code</title>
       <para>
         The GIMP help Manual is lodged in a central repository at
-        http://git.gnome.org. Creating a local copy of this repository to work
-        on makes sure that everyone can work on his own without fuzzing around
-        into works of other contributors.
+        https://gitlab.gnome.org/GNOME/gimp-help. Creating a local copy of this 
+        repository to work on makes sure that everyone can work on his own 
+        without fuzzing around into works of other contributors.
       </para>
       <para>
         As a newbie, you will access the git repository anonymously (without an
         account). Open a terminal and type:
-        <emphasis>git clone git://git.gnome.org/gimp-help-2</emphasis>.
-      </para>
-      <para>
-        If you have a GNOME account, the command is:
-        <emphasis>git clone ssh://yourusername@git.gnome.org/git/gimp-help-2
+        <emphasis>
+          git clone https://gitlab.gnome.org/GNOME/gimp-help.git
         </emphasis>.
       </para>
       <para>
-        This will create a <quote>gimp-help-2</quote> folder in your current
+        If you have a GNOME account, the command is:
+        <emphasis>
+          git clone git@gitlab.gnome.org:GNOME/gimp-help.git
+        </emphasis>.
+      </para>
+      <para>
+        This will create a <quote>gimp-help</quote> folder in your current
         directory. Be patient! That's a big download: about 700 MB.
       </para>
     </sect2>
@@ -62,8 +65,8 @@
       <title>Installing your sandbox</title>
       <para>
         After downloading your local copy, run:
-        <emphasis>cd gimp-help-2</emphasis> then
-        <emphasis>./autogen.sh --without-gimp</emphasis>.
+        <emphasis>cd gimp-help</emphasis> then
+        <emphasis>./autogen.sh --without-gimp ALL_LINGUAS="en xx"</emphasis>.
       </para>
 
       <para>
@@ -75,10 +78,10 @@
     </sect2>
 
     <sect2>
-      <title>The gimp-help-2 folder</title>
+      <title>The gimp-help folder</title>
       <para>
         The GIMP User Manual is maintained in the xml files of the
-        <quote>src</quote> folder. These xml files are used by developers. 
+        <quote>src</quote> folder. You will use these xml files to work on.
       </para>
     </sect2>
   </sect1>
@@ -96,7 +99,7 @@
         <itemizedlist>
           <listitem>
             <para>
-              English language.
+              English-US language.
             </para>
           </listitem>
           <listitem>
@@ -128,13 +131,13 @@
       <para>
         Source files are written in the XML language according to the DocBook
         DTD. DocBook specifications can be found at
-        <ulink url='http://tdg.docbook.org/tdg/5.0/docbook.html'/>.
+        <ulink url='http://tdg.docbook.org/tdg/4.5/docbook.html'/>.
       </para>
 
       <para>
         Don't be afraid. We don't use all these items and you will learn XML
         progressively reading existing XML files. For new files, please use
-        the templates you can find in the gimp-help-2/docs/templates folder.
+        the templates you can find in the gimp-help/docs/templates folder.
       </para>
 
       <note>
@@ -160,6 +163,10 @@
               error is. This command is for quickly sorting an xml file out; it 
               can miss or may not find some errors.
             </para>
+            <para>
+              (The Kate editor has an option (a plug-in) to validate the active 
+              xml file.)
+            </para>
           </listitem>
           <listitem>
             <para>
@@ -173,13 +180,13 @@
             </para>
             <para>
               Open this en.xml file in a text editor, type the editor
-	      <quote>jump to line</quote> command (the Kate editor command is
-	      <keycombo><keycap>Ctrl</keycap><keycap>G</keycap></keycombo>)
-	      and enter the line number to jump to the concerned line in the en.xml 
-              file. There, you will find the error.
+              <quote>jump to line</quote> command (the Kate editor command is
+              <keycombo><keycap>Ctrl</keycap><keycap>G</keycap></keycombo>)
+              and enter the line number to jump to the concerned line in the 
+              en.xml file. There, you will find the error.
             </para>
             <para>
-              if you have worked on several XML files, look above in the en.xml 
+              If you have worked on several XML files, look above in the en.xml 
               file to find (in the <quote>xml:base</quote> field of the 
               <quote>id</quote> tag), in which xml file the error is. 
             </para>
@@ -248,8 +255,12 @@
       <para>
         Don't include English text in images. Translators can't translate it 
         and many users don't like that. Use XML captions instead, or provide a 
-        .xcf file in the <guimenuitem>docs</guimenuitem> folder, indicating 
-        it by a comment in the XML file:
+        .xcf file in the 
+        <menuchoice>
+          <guimenu>Docs</guimenu>
+          <guisubmenu>xcf images</guisubmenu>
+        </menuchoice>
+        folder, indicating it by a comment in the XML file:
         <mediaobject>
           <imageobject>
             <imagedata fileref="images/contribute/to-translators.png"/>
@@ -307,10 +318,9 @@
       <para>
         You can make an HTML draft (when the folder xml/en has been created 
         during validation) for a single source xml file, by running, for 
-        instance, the command         
-        <command>make xml/en/concepts/brushes.draft</command>. This create 
-        the brushes-draft.html for the brushes.xml file. But images are not 
-        embedded in draft files.
+        instance, the command 
+        <command>make preview-xml/en/path-to-file.xml</command>. This creates 
+        draft.html file in the html folder.
       </para>
       <para>
         You can also use <acronym>yelp</acronym> and run <command>yelp 
@@ -338,7 +348,7 @@
             </para>
             <para>
               Before creating a patch, you have to get all your xml files 
-              and images in the index. Being in the gimp-help-2 folder, do 
+              and images in the index. Being in the gimp-help folder, do 
               <command>git status</command>. If you have files in the 
               Untracked files section, run <command>git add -A</command>.
             </para>
@@ -355,6 +365,20 @@
             <para>All being well, you know how to manage Git. There are many 
               tutorials for that on the Web.
             </para>
+            <para>
+              A common workflow is:
+            </para>
+            <para>- make validate-en</para>
+            <para>- git status</para>
+            <para>- git stash</para>
+            <para>- git pull</para>
+            <para>- git status</para>
+            <para>- git stash apply</para>
+            <para>- Eventually, fix conflicts</para>
+            <para>- git add -A</para>
+            <para>- git status</para>
+            <para>- git commit -m "a message"</para>
+            <para>- git push</para>
           </listitem>
         </varlistentry>
       </variablelist>
