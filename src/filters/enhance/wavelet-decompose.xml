@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+                "http://www.docbook.org/xml/4.3/docbookx.dtd">
+<!-- section history:
+  2018-12-01 j.h: created
+-->
+
+ <sect2 id="plug-in-wavelet-decompose">
+  <title>Wavelet Decompose</title>
+
+  <indexterm>
+    <primary>Filters</primary>
+    <secondary>Enhance</secondary>
+    <tertiary>Wavelet-decompose</tertiary>
+  </indexterm>
+  <indexterm><primary>Wavelet-decompose</primary></indexterm>
+
+  <sect3>
+    <title>Overview</title>
+    <note>
+      <para>
+        Explanations are mostly inspired from the Pat David's tutorials <ulink
+url="https://patdavid.net/2011/12/getting-around-in-gimp-skin-retouching.html"/>
+        and <ulink 
+url="https://patdavid.net/2014/07/wavelet-decompose-again.html"/>.
+      </para>
+    </note>
+    
+    <figure>
+      <title>Example for <quote>Wavelet decompose</quote> filter</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata format="JPG"
+            fileref="images/filters/examples/taj_orig.jpg" />
+        </imageobject>
+        <caption>
+          <para>Original image</para>
+        </caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject>
+          <imagedata format="PNG"
+            fileref="images/filters/examples/enhance/wavelet-ex-1.png" />
+        </imageobject>
+        <caption>
+          <para><quote>Wavelet Decompose</quote> applied. Only scale 2 is 
+          made visible in the layer group.</para>
+        </caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject>
+          <imagedata format="PNG"
+            fileref="images/filters/examples/enhance/wavelet-ex-2.png" />
+        </imageobject>
+      </mediaobject>
+    </figure>
+
+    <para>
+      This filter decomposes the active layer or selection into several layers, 
+      named <quote>scales</quote>, each of them containing a particular set of 
+      details. Finest details are in first layers and they become larger until 
+      you get to the last one, at bottom. This last layer is called 
+      <quote>residual</quote> and holds what is left after all detail layers 
+      have been removed; it represents the global contrast and colors of the 
+      image.
+    </para>
+    <para>
+      Each of scale layers are set to combine using the Grain Merge layer mode. 
+      This means that pixels that have a 50% value will not affect the final 
+      result. So, painting a wavelet scale with neutral gray (R:50% G:50% B:50%) 
+      will erase details.
+    </para>
+    <para>
+      Wavelet-decompose is a wonderful filter for skin smoothing and 
+      retouching, removing blemishes, wrinkles, spots from your photos. It 
+      can be used also for sharpening and local contrast enhancement 
+      and for removing stains, colors, tones. All this is well explained in 
+      tutorials mentioned above.
+    </para>
+  </sect3>
+
+  <sect3>
+    <title>Activating the filter</title>
+
+    <para>
+      This filter is found in the image window menu under
+      <menuchoice>
+        <guimenu>Filters</guimenu>
+        <guisubmenu>Enhance</guisubmenu>
+        <guimenuitem>Wavelet decompose</guimenuitem>
+      </menuchoice>.
+    </para>
+  </sect3>
+
+  <sect3>
+    <title>Options</title>
+    <figure>
+      <title><quote>Wavelet decompose</quote> options</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata format="PNG"
+            fileref="images/filters/enhance/wavelets-options.png" />
+        </imageobject>
+      </mediaobject>
+    </figure>
+
+    <para>
+      <guilabel>Scales</guilabel>: Default scales number is 5. You can increase 
+      it to increase scale fineness.
+    </para>
+    
+    <para>
+      <guilabel>Create a layer group to store the decomposition</guilabel>: 
+      layer groups are treated in <xref linkend="gimp-layer-groups"/>.
+    </para>
+    
+    <para>
+      <guilabel>Add a layer mask to each scale layer</guilabel>: layer masks 
+      are treated in <xref linkend="gimp-layer-mask"/>.
+    </para>
+
+  </sect3>
+</sect2>
