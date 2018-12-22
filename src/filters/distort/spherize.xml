@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+                       "http://www.docbook.org/xml/4.3/docbookx.dtd">
+<!-- section history:
+  2018-12-18 j.h: create
+-->
+
+<sect2 id="gimp-filter-spherize">
+  <title>Spherize</title>
+  <indexterm>
+    <primary>filters</primary>
+    <secondary>Distorts</secondary>
+  </indexterm>
+  <indexterm>
+    <primary>Spherize</primary>
+  </indexterm>
+
+  <sect3>
+    <title>Overview</title>
+    <para>
+      This filter creates a kind of bubble whose size is that of the image or 
+      selection, as if the content was wrapped around a sphere.
+    </para>
+    <figure>
+      <title>Spherize filter example, with default values</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata format="JPG"
+            fileref="images/filters/examples/distort/spherize-ex-orig.jpg"/>
+        </imageobject>
+        <caption>
+          <para>Original image</para>
+        </caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject>
+          <imagedata format="JPG"
+            fileref="images/filters/examples/distort/spherize-defaults.jpg"/>
+        </imageobject>
+        <caption>
+          <para><quote>Spherize</quote> filter applied</para>
+        </caption>
+      </mediaobject>
+    </figure>
+  </sect3>
+  
+  <sect3>
+    <title>Starting filter</title>
+    <para>
+      You can find this filter through
+      <menuchoice>
+        <guimenu>Filters</guimenu>
+        <guisubmenu>Distorts</guisubmenu>
+        <guimenuitem>Spherize…</guimenuitem>
+      </menuchoice>
+    </para>
+  </sect3>
+  
+  <sect3>
+    <title>Options</title>
+    <figure>
+      <title><quote>Spherize</quote> filter options</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata format="PNG"
+            fileref="images/filters/distort/spherize-dialog.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+    
+    <variablelist>
+      <varlistentry>
+        <term><guilabel>Presets</guilabel>, <guilabel>Preview</guilabel>, 
+          <guilabel>Split view</guilabel></term>
+        <listitem>
+          <para>
+            These options are common to GEGL-based filters. Please refer to 
+            <xref linkend="gimp-filters-common"/>.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><guilabel>Mode</guilabel></term>
+        <listitem>
+          <itemizedlist>
+            <listitem>
+              <para>
+                <emphasis role = "bold">Radial</emphasis> is the default mode. 
+                See example above.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <emphasis role = "bold">Horizontal</emphasis>: as if image was 
+                mapped on a <emphasis role="underline">vertical</emphasis> 
+                cylinder.
+              </para>
+              <mediaobject>
+                <imageobject>
+                  <imagedata format="JPG"
+          fileref="images/filters/examples/distort/spherize-ex-horizontal.jpg"/>
+                </imageobject>
+              </mediaobject>
+            </listitem>
+            <listitem>
+              <para>
+                <emphasis role = "bold">Vertical</emphasis>: as if image was 
+                mapped on a <emphasis role="underline">horizontal</emphasis> 
+                cylinder.
+              </para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><guilabel>Angle of view</guilabel></term>
+        <listitem>
+          <para>
+            Camera angle of view (0 - 180°)
+          </para>
+          <mediaobject>
+            <imageobject>
+              <imagedata format="JPG"
+              fileref="images/filters/examples/distort/spherize-ex-angle.jpg"/>
+            </imageobject>
+          </mediaobject>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><guilabel>Curvature</guilabel></term>
+        <listitem>
+          <para>
+            Spherical cap angle, as a faction of the co-angle (complement 
+            angle) of view. Result is less domed as curvature decreases 
+            (100% - 0).
+            </para>
+          <mediaobject>
+            <imageobject>
+              <imagedata format="JPG"
+          fileref="images/filters/examples/distort/spherize-ex-curvature.jpg"/>
+            </imageobject>
+          </mediaobject>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><guilabel>Amount</guilabel></term>
+        <listitem>
+          <para>
+            Interesting for negative values, which result in a hollow instead 
+            of a bump (from 1.000 to -1.000).
+            </para>
+          <mediaobject>
+            <imageobject>
+              <imagedata format="JPG"
+              fileref="images/filters/examples/distort/spherize-ex-amount.jpg"/>
+            </imageobject>
+          </mediaobject>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><guilabel>Resampling methods</guilabel></term>
+        <listitem>
+          <para>
+            These interpolation methods are described in 
+            <xref linkend="gimp-tool-interpolation-methods"/>.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><guilabel>Use the selection as input</guilabel></term>
+        <listitem>
+          <para>
+            If this option is selected, the filter uses pixels in selection 
+            only.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><guilabel>Use the entire layer as input</guilabel></term>
+        <listitem>
+          <para>
+            If this option is selected, the filter uses pixels adjacent to the 
+            selection to create a more progressive border.
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </sect3>
+  <sect3>
+    <title>Using Spherize filter</title>
+    <para>
+      Drawing a selection before applying filter allows you to create another 
+      shape, such as a sphere: select Ellipse tool with the 
+      <guilabel>Fixed</guilabel> option checked; draw a circle; apply Spherize 
+      filter with the <guilabel>Use the selection as input</guilabel> selected. 
+      Invert selection and fill it with wanted background.
+    </para>
+    <mediaobject>
+      <imageobject>
+        <imagedata format="JPG"
+          fileref="images/filters/examples/distort/spherize-ex-sphere.jpg"/>
+      </imageobject>
+    </mediaobject>
+  </sect3>
+</sect2>
+
+
