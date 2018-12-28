@@ -2,13 +2,11 @@
 <!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
                        "http://www.docbook.org/xml/4.3/docbookx.dtd">
 <!-- section history:
+  2018-12-28 j.h: update to v2.10
   2008-08-13 ude: fixed description (bug #546324); re-arranged option list
-  2007-08-15 Added Spanish translation by AntI
-  2007-04-25 KoSt: added 'no'
-  2005-12-07 replaced <simplesect> by <sect3> by lexa
-  2005-09-10 de added by axel.wernicke
 -->
-<sect2 id="gimp-filter-value-propagate">
+<sect2 xmlns:xi="http://www.w3.org/2001/XInclude" 
+                id="gimp-filter-value-propagate">
   <title>Value Propagate</title>
 
   <indexterm>
@@ -40,7 +38,7 @@
     </figure>
     <para>
       This filter works on color borders. It spreads pixels that differ in a
-      specified way from their neighbouring pixels.
+      specified way from their neighboring pixels.
     </para>
   </sect3>
 
@@ -63,18 +61,15 @@
       <mediaobject>
         <imageobject>
           <imagedata format="PNG"
-            fileref="images/filters/distort/vpropagate.png"/>
+            fileref="images/filters/distort/value_propagate-dialog.png"/>
         </imageobject>
       </mediaobject>
     </figure>
     <variablelist>
       <varlistentry>
-        <term>Preview</term>
+        <term>Presets, Preview, Split view</term>
         <listitem>
-          <para>
-            The result of your settings will appear in the Preview without
-            affecting the image until you click on <guibutton>OK</guibutton>.
-          </para>
+          <xi:include href="../about-common-features.xml"/>
         </listitem>
       </varlistentry>
       <varlistentry>
@@ -186,14 +181,17 @@
               </listitem>
             </varlistentry>
             <varlistentry>
-              <term>Foreground to peaks</term>
+              <term>Color to peaks</term>
               <listitem>
                 <para>
                   The propagated areas will be filled with the foreground
                   color of the toolbox.
                 </para>
+                <para>
+                    A color selector opens, with a color picker.
+                </para>
                 <figure>
-                  <title>Foreground to peaks</title>
+                  <title>Color to peaks</title>
                   <mediaobject>
                     <imageobject>
                       <imagedata format="PNG"
@@ -201,7 +199,7 @@
                     </imageobject>
                     <caption>
                       <para>
-                        In this example, the foreground color in Toolbox is
+                        In this example, the selected color is
                         Red. A thin border, one pixel wide, red, is added
                         around objects. With smoothed objects, this border is
                         located at the furthest limit of smoothing. Here,
@@ -215,13 +213,14 @@
               </listitem>
             </varlistentry>
             <varlistentry>
-              <term>Only foreground</term>
+              <term>Only color</term>
               <listitem>
                 <para>
-                  Only areas with the Toolbox Foreground color will propagate.
+                  Only areas with the selected color will propagate. With this 
+                  option, soft and fuzzy edges don't propagate well.
                 </para>
                 <figure>
-                  <title>Only foreground</title>
+                  <title>Only color</title>
                   <mediaobject>
                     <imageobject>
                       <imagedata format="PNG"
@@ -229,21 +228,13 @@
                     </imageobject>
                     <caption>
                       <para>
-                        In this example, the foreground color in Toolbox is
+                        In this example, the selected color is
                         that of the green object. After applying filter
                         several times, the green area is clearly enlarged.
                       </para>
                     </caption>
                   </mediaobject>
                 </figure>
-              </listitem>
-            </varlistentry>
-            <varlistentry>
-              <term>Only background</term>
-              <listitem>
-                <para>
-                  Only areas with the Background color will propagate.
-                </para>
               </listitem>
             </varlistentry>
             <varlistentry>
@@ -287,67 +278,73 @@
           </variablelist>
         </listitem>
       </varlistentry>
+      
       <varlistentry>
-        <term>Propagate</term>
+        <term>Lower threshold</term>
+        <term>Upper threshold</term>
         <listitem>
-          <variablelist>
-            <varlistentry>
-              <term>Lower threshold</term>
-              <term>Upper threshold</term>
-              <listitem>
-                <para>
-                  A pixel will be propagated (spread) if the difference in
-                  value between the pixel and its neighbour is no smaller than
-                  the lower threshold and no larger than the upper threshold.
-                </para>
-              </listitem>
-            </varlistentry>
-            <varlistentry>
-              <term>Propagating rate</term>
-              <listitem>
-                <para>
-                  That's the propagating amount. The higher it will be the
-                  more colored the propagation will be.
-                </para>
-              </listitem>
-            </varlistentry>
-            <varlistentry>
-              <!--Propagating direction-->
-              <term>To left</term>
-              <term>To top</term>
-              <term>To right</term>
-              <term>To bottom</term>
-              <listitem>
-                <para>
-                  You can select one or more directions.
-                </para>
-              </listitem>
-            </varlistentry>
-            <varlistentry>
-              <term>Propagating alpha channel</term>
-              <listitem>
-                <para>
-                  If checked, the pixel alpha value will be propagated,
-                  otherwise the pixel will get the alpha of the neighbouring
-                  pixels. This checkbox is only visible when the active layer
-                  has an alpha channel.
-                </para>
-              </listitem>
-            </varlistentry>
-            <varlistentry>
-              <term>Propagating value channel</term>
-              <listitem>
-                <para>
-                  If checked, the pixel's color channels (gray channel on
-                  grayscaled images) will be propagated. The option is
-                  checked by default, of course. This checkbox too is only
-                  visible when the active layer has an alpha channel.
-                </para>
-              </listitem>
-            </varlistentry>
-          </variablelist>
+          <para>
+            A pixel will be propagated (spread) if the difference in
+            value between the pixel and its neighbour is no smaller than
+            the lower threshold and no larger than the upper threshold.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Propagating rate</term>
+        <listitem>
+          <para>
+            That's the propagating amount. The higher it will be the
+            more colored the propagation will be.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <!--Propagating direction-->
+        <term>To top</term>
+        <term>To left</term>
+        <term>To right</term>
+        <term>To bottom</term>
+        <listitem>
+          <para>
+            You can select one or more directions.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Propagating value channel</term>
+        <listitem>
+          <para>
+            If checked, the pixel's color channels (gray channel on
+            grayscaled images) will be propagated. The option is
+            checked by default, of course. 
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Propagating alpha channel</term>
+        <listitem>
+          <para>
+            If checked, the pixel alpha value will be propagated,
+            otherwise the pixel will get the alpha of the neighboring
+            pixels.
+          </para>
         </listitem>
       </varlistentry>
     </variablelist>
+  </sect3>
+  <sect3>
+    <title>Using Value Propagate</title>
+    <mediaobject>
+      <imageobject>
+        <imagedata format="JPG"
+          fileref="images/filters/examples/distort/vpropag-ex-b-w.jpg"/>
+      </imageobject>
+      <caption>
+        <para>
+          Left: Original........Middle: More white........Right: More black
+        </para>
+      </caption>
+    </mediaobject>
   </sect3>
 </sect2>
