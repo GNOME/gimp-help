@@ -18,7 +18,7 @@
 # 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 # Adapted for the GIMP Manual's build system 2009-12-14
-# (c) 2009 The GIMP Documenation Team
+# (c) 2009 The GIMP Documentation Team
 #
 
 import re

@@ -54,7 +54,7 @@ AC_PROG_SED
 #      LANGUAGES will override ALL_LINGUAS
 #
 #  Quickreference files are built for languages in
-#  QUICKREFERENCE_ALL_LINGUAS *and* (intersecton) ALL_LINGUAS
+#  QUICKREFERENCE_ALL_LINGUAS *and* (intersection) ALL_LINGUAS
 
 if test "x$ALL_LINGUAS" = "x"; then
 	ALL_LINGUAS="ca da de el en en_GB es fi fr it ja ko nl nn pt_BR ro ru zh_CN"
@@ -160,7 +160,7 @@ AC_SUBST(XML2POFLAGS)
 
 AC_PATH_PROG(MSGFMT, msgfmt)
 if test -z "$MSGFMT" && test "x$enable_i18n" = "xyes"; then
-  # print warning only for the main i18n toos xml2po & msgfmt
+  # print warning only for the main i18n tools xml2po & msgfmt
   AC_MSG_WARN([cannot find msgfmt])
   missing_i18n_tools=${missing_i18n_tools:+"${missing_i18n_tools} "}msgfmt
 fi
@@ -276,7 +276,7 @@ AM_CONDITIONAL(HAVE_PNGOPTIMIZERS, test -n "$PNGNQ" && test -n "$PNGCRUSH")
 STYLEBASE='http://docbook.sourceforge.net/release/xsl/current'
 
 
-#  Allow to explicitely specify the stylesheet location
+#  Allow to explicitly specify the stylesheet location
 #  in case the XML catalog doesn't exist or is broken.
 
 AC_ARG_WITH(xsl,
