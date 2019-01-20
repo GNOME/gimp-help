@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+                       "http://www.docbook.org/xml/4.3/docbookx.dtd">
+<!-- section history:
+  2019-01-15 j.h create
+-->
+
+<sect2 xmlns:xi="http://www.w3.org/2001/XInclude" id="gimp-filter-distance-map">
+  <title>Distance Map</title>
+
+  <indexterm>
+    <primary>Filters</primary>
+    <secondary>Generic</secondary>
+    <tertiary>Distance Map</tertiary>
+  </indexterm>
+  <indexterm>
+    <primary>Distance Map</primary>
+  </indexterm>
+  
+  <sect3>
+    <title>Overview</title>
+    <para>
+      Each pixel in the image is replaced with a gray value dependent on the 
+      distance to the nearest obstacle pixel, generally a boundary pixel. 
+      Different methods can be used to calculate the distance.
+    </para>
+  </sect3>
+  
+  <sect3>
+    <title>Activating the filter</title>
+    <para>
+      This filter is found in the image window menu under
+      <menuchoice>
+        <guimenu>Filters</guimenu>
+        <guisubmenu>Generic</guisubmenu>
+        <guimenuitem>Distance Map…</guimenuitem>
+      </menuchoice>.
+    </para>
+  </sect3>
+  
+  <sect3>
+    <title>Options</title>
+    <figure>
+      <title><quote>Distance Map</quote> options</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata format="PNG"
+            fileref="images/filters/generic/dist_map-dialog.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+    <variablelist>
+      <varlistentry>
+        <term>Presets, Preview, Split view</term>
+        <listitem>
+          <xi:include href="../about-common-features.xml"/>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Metric</term>
+        <listitem>
+          <para>
+            <quote>Metric</quote> is a topology term. Three methods are 
+            available:
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <guilabel>Euclidean</guilabel> default: the distance is a line.
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <guilabel>Manhattan</guilabel>
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <guilabel>Chebyshev</guilabel>
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Threshold low</term>
+        <listitem>
+          <para>
+            Default is 0. Increasing this value selects higher lightness pixels
+          </para>
+          <mediaobject>
+            <imageobject>
+              <imagedata format="PNG"
+                fileref="images/filters/examples/generic/dist_map-orig.png"/>
+            </imageobject>
+            <caption>
+              <para>
+                Original image for examples. Threshold low will be progressively 
+                increased. Lightness: dark red = 0.070; bright red = 0.223; green 
+                = 0.133
+              </para>
+            </caption>
+          </mediaobject>
+           <figure>
+            <title><quote>Threshold low</quote> example</title>
+            <mediaobject>
+              <imageobject>
+                <imagedata format="PNG"
+                  fileref="images/filters/examples/generic/dist_map-low-0.png"/>
+              </imageobject>
+              <caption>
+                <para>
+                  Threshold low = 0: only border distances are visible.
+               </para>
+              </caption>
+            </mediaobject>
+            <mediaobject>
+              <imageobject>
+                <imagedata format="PNG"
+                  fileref="images/filters/examples/generic/dist_map-low-1.png"/>
+              </imageobject>
+              <caption>
+                <para>
+                  Threshold low = 0.070: <quote>dark red</quote> circle appears.
+                </para>
+              </caption>
+            </mediaobject>
+            <mediaobject>
+              <imageobject>
+                <imagedata format="PNG"
+                  fileref="images/filters/examples/generic/dist_map-low-2.png"/>
+              </imageobject>
+              <caption>
+                <para>
+                  Threshold low = 0.133: <quote>green</quote> circle appears.
+                </para>
+              </caption>
+            </mediaobject>
+            <mediaobject>
+              <imageobject>
+                <imagedata format="PNG"
+                  fileref="images/filters/examples/generic/dist_map-low-3.png"/>
+              </imageobject>
+              <caption>
+                <para>
+                  Threshold low = 0.223: <quote>bright red</quote> red circle 
+                  appears.
+                </para>
+              </caption>
+            </mediaobject>
+          </figure>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Threshold high</term>
+        <listitem>
+          <para>
+            Default is 100. Decreasing this value makes result lighter.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Grayscale Averaging</term>
+        <listitem>
+          <para>
+            Number of computations for grayscale averaging.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Normalize</term>
+        <listitem>
+          <para>
+            This option is checked by default. If you uncheck it, no blur is 
+            created.
+          </para>
+          <figure>
+            <title><quote>Normalize</quote> example</title>
+            <mediaobject>
+              <imageobject>
+                <imagedata format="PNG"
+                  fileref="images/filters/examples/generic/dist_map-low-3.png"/>
+              </imageobject>
+              <caption>
+                <para>
+                  Normalize option checked.
+               </para>
+              </caption>
+            </mediaobject>
+            <mediaobject>
+              <imageobject>
+                <imagedata format="PNG"
+            fileref="images/filters/examples/generic/dist_map-nonormalize.png"/>
+              </imageobject>
+              <caption>
+                <para>
+                  Normalize option unchecked.
+                </para>
+              </caption>
+            </mediaobject>
+          </figure>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </sect3>
+  <sect3>
+    <title>Using Distance Map filter</title>
+    <para>
+      Searching  for an example using Distance map filter in image processing...
+    </para>
+  </sect3>
+</sect2>
