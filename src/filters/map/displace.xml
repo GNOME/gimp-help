@@ -2,20 +2,14 @@
 <!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
                        "http://www.docbook.org/xml/4.3/docbookx.dtd">
 <!-- section history:
-  2007-10-14 KoSt: updated no to v2.4
-  2007-09-06 AntI: added 'es'
+  2019-02-01 j.h: update to v2.10
   2007-08-19 alex falappa: new sections for 2.4 and torough review
-  2007-08-07 alex falappa: ude's fix to 'it', polar mode
   2007-07-23 ude: new section and image for displacement details
-  2007-07-04 kost: ude's fix to 'no'
   2007-07-04 ude: added polar mode for GIMP 2.4 (disabled)
   2007-07-02 ude: fixed description of displacement calculation
-  2007-05-06 KoSt: added 'no'
-  2006-12-12 lexa: added german translation
-  2005-12-07 replaced <simplesect> by <sect3> by lexa
-  2005-10-14 created by julien hardelin
+  2005-10-14 j.h: create
 -->
-<sect2 id="gimp-filter-displace">
+<sect2 xmlns:xi="http://www.w3.org/2001/XInclude" id="gimp-filter-displace">
   <title>Displace</title>
   <indexterm>
     <primary>Filters</primary>
@@ -46,7 +40,7 @@
         </imageobject>
         <caption>
           <para>
-            The displacement map has four grey stripes with values of 210,
+            The displacement map has four gray stripes with values of 210,
             160, 110, and 60, respectively.
           </para>
         </caption>
@@ -57,8 +51,8 @@
         </imageobject>
         <caption>
           <para>
-            X displacement coefficient is 30. Vacated pixels are black. The
-            image areas corresponding to light gray (128) were displaced
+            Horizontal displacement coefficient is 30. Vacated pixels are black. 
+            The image areas corresponding to light gray (128) were displaced
             19 and 8 pixels to the left. The image areas corresponding to dark
             gray (127) were displaced 4 and 15 pixels to the right.
           </para>
@@ -69,11 +63,12 @@
       This filter uses a <quote>displace-map</quote>
       to displace corresponding pixels of the image. This filter displaces
       the content of the specified drawable (active layer or selection) by
-      the amounts specified in X and Y Displacement multiplied by the
-      intensity of the corresponding pixel in the 'displace map' drawables.
+      the amounts specified in Horizontal and vertical Displacement multiplied by 
+      the intensity of the corresponding pixel in the <quote>displace 
+      map</quote> drawables.
       <emphasis>
-        Both X and Y displace maps should be gray-scale images and have the
-        same size as the drawable
+        Both Horizontal and Vertical displace maps should be gray-scale images 
+        and have the same size as the drawable
       </emphasis>. This filter allows interesting distortion effects.
     </para>
   </sect3>
@@ -96,17 +91,30 @@
       <title>Displace filter options</title>
       <mediaobject>
         <imageobject>
-          <imagedata fileref="images/filters/map/displace.png"
+          <imagedata fileref="images/filters/map/displace-dialog.png"
             format="PNG"/>
         </imageobject>
       </mediaobject>
     </figure>
     <variablelist>
       <varlistentry>
-        <term>Preview</term>
+        <term>Presets, Preview, Split view</term>
+        <listitem>
+          <xi:include href="../about-common-features.xml"/>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Aux Input, Aux2 Input</term>
         <listitem>
           <para>
-            Uncheck this option if your processor is slow.
+            Clicking on a question mark button opens a small file browser with 
+            two panels. The left panel shows images present on your screen. The 
+            right panel shows the layers of the selected image. Double click on 
+            the wanted layer to select the map.
+          </para>
+          <para>
+            You can select different maps for Horizontal and Vertical 
+            displacements.
           </para>
         </listitem>
       </varlistentry>
@@ -116,8 +124,8 @@
           <para>
             You can choose working in
             <link linkend="gimp-filter-displace-cartesian">Cartesian</link>
-            coordinates, where pixels are displaced in X or Y direction, or
-            working in
+            coordinates, where pixels are displaced in Horizontal or Vertical 
+            direction, or working in
             <link linkend="gimp-filter-displace-polar">Polar</link> coordinates,
             where the image is pinched and whirled by displacing pixels in
             radial or tangent direction.
@@ -128,42 +136,23 @@
         </listitem>
       </varlistentry>
       <varlistentry>
-        <term>Edge Behavior</term>
+        <term>Sampler</term>
         <listitem>
           <para>
-            These options allows you to set displacement behaviour on active
-            layer or selection edges:
+            Interpolation methods are described in 
+              <link linkend="gimp-tool-interpolation-methods">Transfom 
+                tools</link>
           </para>
-          <variablelist>
-            <varlistentry>
-              <term><guilabel>Wrap</guilabel></term>
-              <listitem>
-                <para>
-                  With this option, what disappears on one edge reappears on
-                  the opposite edge.
-                </para>
-              </listitem>
-            </varlistentry>
-            <varlistentry>
-              <term><guilabel>Smear</guilabel></term>
-              <listitem>
-                <para>
-                  With this option, pixels vacated by displacement are
-                  replaced with pixels stretched from the adjacent part of the
-                  image.
-                </para>
-              </listitem>
-            </varlistentry>
-            <varlistentry>
-              <term><guilabel>Black</guilabel></term>
-              <listitem>
-                <para>
-                  With this option, pixels vacated by displacement are
-                  replaced with black.
-                </para>
-              </listitem>
-            </varlistentry>
-          </variablelist>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Abyss policy</term>
+        <listitem>
+          <para>
+            These options allows you to set displacement behavior on active
+            layer or selection edges. They are described in 
+            <xref linkend="abyss-policy"/>
+          </para>
         </listitem>
       </varlistentry>
     </variablelist>
@@ -178,7 +167,9 @@
               fileref="images/filters/map/displace-cartesian.png"/>
           </imageobject>
           <caption>
-            <para>Displacement Mode: Cartesian</para>
+            <para>
+              Horizontal and vertical displacements are 20 pixels
+            </para>
           </caption>
         </mediaobject>
       </figure>
@@ -195,15 +186,15 @@
       </para>
       <variablelist>
         <varlistentry>
-          <term>X displacement</term>
-          <term>Y displacement</term>
+          <term>Horizontal displacement</term>
+          <term>Vertical displacement</term>
           <listitem>
             <para>
               If the respective option is activated, image pixels
               corresponding to pixels from 0 to 127 will be displaced to the
-              right for X, downwards for Y, image pixels corresponding to
-              pixels from 128 to 255 will be displaced to the left for X,
-              upwards for Y.
+              right for Horizontal, downwards for Vertical, image pixels 
+              corresponding to pixels from 128 to 255 will be displaced to the 
+              left for Horizontal, upwards for Vertical.
             </para>
             <para>
               What you enter in input boxes, directly or by using arrow-head
@@ -238,7 +229,7 @@
               must be present on your screen when you call filter. Then, this
               image must have the same dimensions as the original image. Most
               often, it will be a duplicate original image, which is
-              transformed to grey scale and modified appropriately, with a
+              transformed to gray scale and modified appropriately, with a
               gradient. It may be possible to use RGB images, but color
               luminosity is used making result prevision difficult. Map may be
               different in horizontal and vertical directions.
@@ -258,7 +249,9 @@
               fileref="images/filters/map/displace-polar.png"/>
           </imageobject>
           <caption>
-            <para>Displacement Mode: Polar</para>
+            <para>
+              Polar mode: Pinch only (chain broken)
+            </para>
           </caption>
         </mediaobject>
       </figure>
@@ -276,7 +269,7 @@
             </para>
             <para>
               For the values and the displacement map see above
-              (<quote>X/Y displacement</quote>).
+              (<quote>Horizontal/Vertical displacement</quote>).
             </para>
             <para>
               The displacement is independent from the polar distance, all
@@ -285,7 +278,8 @@
             </para>
             <mediaobject>
               <imageobject>
-                <imagedata fileref="images/filters/examples/map-displace-pinch.png"
+                <imagedata 
+fileref="images/filters/examples/map-displace-pinch.png"
                   format="PNG"/>
               </imageobject>
               <caption>
@@ -293,7 +287,7 @@
               </caption>
             </mediaobject>
             <para>
-              A 160x120 pixel image, plain white displacement map, and
+              A 160x120 pixels image, plain white displacement map, and
               displacement coefficient 20.0: this results in a 20 pixels
               displacement towards center. This is a horizontal reduction in
               size by 25%, vertical by 33%, and diagonal by 20%, so the image
@@ -328,6 +322,13 @@
           <link linkend="gimp-filter-whirl-pinch">Whirl and Pinch</link>.
         </para>
       </note>
+    </sect4>
+    <sect4>
+      <title>Center displacement</title>
+      <para>
+        This option is used with Polar displacement: you can fix the displacement 
+        center.
+      </para>
     </sect4>
   </sect3>
 
@@ -403,7 +404,70 @@
       </para>
     </tip>
   </sect3>
-
+  <sect3>
+    <title>Using Displace filter to fit a text to an uneven surface</title>
+    <figure>
+      <title>Images example</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/filters/examples/map/displace-ex-1.png"
+            format="PNG"/>
+        </imageobject>
+        <caption>
+          <para>Texture and Text</para>
+        </caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/filters/examples/map/displace-ex-2.png"
+            format="PNG"/>
+        </imageobject>
+        <caption>
+          <para>Map</para>
+        </caption>
+      </mediaobject>
+    </figure>
+    <para>Follow following steps:</para>
+    <procedure>
+      <step>
+        <para>
+          Open the image with an uneven texture.
+        </para>
+      </step>
+      <step>
+        <para>
+          <emphasis role="bold">Create the map</emphasis>:
+          Duplicate the image and desaturate (Colors/Desaturate/Desaturate) 
+          this copy.
+        </para>
+      </step>
+      <step>
+        <para>
+          <emphasis role="bold">Create the text</emphasis> in Texture image. Move 
+            it if necessary. Make this text layer the same size as the image 
+            using <command>Layer to Image Size</command>
+        </para>
+      </step>
+      <step>
+        <para>
+          Open <quote>Displace</quote> filter. Click on the 
+          <guibutton>Aux. Input</guibutton> button and double-click on the 
+          map image thumbnail in the left panel.
+          <mediaobject>
+            <imageobject>
+              <imagedata format="PNG"
+                fileref="images/filters/examples/map/displace-ex-3.png"/>
+            </imageobject>
+            <caption>
+              <para>
+                Displace filter applied.
+              </para>
+            </caption>
+          </mediaobject>
+        </para>
+      </step>
+    </procedure>
+  </sect3>
   <sect3 id="gimp-filter-displace-calculation">
     <title>Displacement Calculation</title>
     <para>
@@ -412,8 +476,8 @@
       to know it, you can safely omit this section.
     </para>
     <para>
-      The overview example showed the X displacement using a coefficient of
-      30.0: 19, 8, 4, or 15 pixels, depending on the grey level of the
+      The overview example showed the horizontal displacement using a coefficient 
+      of 30.0: 19, 8, 4, or 15 pixels, depending on the gray level of the
       displacement map's color.
     </para>
     <para>Why just these amounts? That's easy:</para>
