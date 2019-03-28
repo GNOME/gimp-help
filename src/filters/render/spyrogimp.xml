@@ -20,15 +20,6 @@
       <mediaobject>
         <imageobject>
           <imagedata format="JPG"
-            fileref="images/filters/examples/taj_orig.jpg" />
-        </imageobject>
-        <caption>
-          <para>Original image</para>
-        </caption>
-      </mediaobject>
-      <mediaobject>
-        <imageobject>
-          <imagedata format="JPG"
             fileref="images/filters/examples/render/taj-spyrogimp.jpg" />
         </imageobject>
         <caption>
@@ -38,10 +29,9 @@
     </figure>
 
     <para>
-      <!--
-        Describe what the filter does, which algorithms it uses.
-        Give the user an idea what to use the filter for
-       -->
+      This filter draws Spirographs, Epitrochoids, and Lissajous curves.
+      Immediate feedback is provided, by drawing to a temporary
+      layer.
     </para>
   </sect3>
 
@@ -59,13 +49,70 @@
   </sect3>
 
   <sect3>
+    <title>Selection and Tool</title>
+    <para>
+      Much of the behavior of the plugin is determined by options set outside
+      of the plugin, such as the current selection, or settings for gimp
+      tools. These settings can be changed while the plugin is running.
+    </para>
+    <note>
+      <para>
+        In contrast to options within the plugin, changing the current selection
+        or tool settings will not redraw the pattern. To draw the change, click
+        the <guibutton>Redraw</guibutton> button at the bottom of the plugin.
+      </para>
+    </note>
+
+    <sect4>
+      <title>The Current Selection</title>
+      <para>
+        As in most plugins, the current selection determines the area where the 
+        pattern will be rendered. Typically, this would be a rectangular 
+        selection. There is however, an additional way the selection can be 
+        used.
+      </para>
+      <para>
+        The selection can be used as the shape of the fixed gear
+        (under the <guilabel>Fixed Gear</guilabel> tab).
+        The plugin will attempt to extract shapes from the selection, and draw
+        a pattern inside of each shape.
+        This is more interesting if you select a non-rectangular selection.
+      </para>
+      <para>
+        To have the pattern hug the boundaries of the shapes, use
+        <guilabel>hole percent</guilabel>=100.
+      </para>
+    </sect4>
+
+    <sect4>
+      <title>Tool Settings</title>
+      <para>
+        Spyrogimp uses gimp tools to perform the drawing.
+        All the settings with which the drawings are done are taken from the chosen tool.
+        For example, if you choose to use the 
+        <guimenuitem>Pencil</guimenuitem> tool (by choosing it from the 
+        <guilabel>Tool</guilabel> menu)then all the settings of the Gimp Pencil 
+        tool will be used for drawing. You can change any of the tool settings 
+        while the plugin is running, and press the <guibutton>Redraw</guibutton>
+        button to see how the pattern looks.
+      </para>
+    </sect4>
+
+    <sect4>
+      <title>Gradient Settings</title>
+      <para>
+        When using the <guilabel>long gradient</guilabel> mode, some settings 
+        from the gradient tool are used.
+      </para>
+    </sect4>
+
+  </sect3>
+
+  <sect3>
     <title>Options</title>
     <para>
-      <!--
-        Describe how the filter options are organized in general.
-        This part is optional, but helps if the filter options dialog is a bit
-        more complex e.g. has some tabs etc.
-       -->
+      Most of the options are organized under three tabs: Curve Pattern,
+      Fixed Gear, and Size.
     </para>
     <figure>
       <title><quote>Spyrogimp</quote> options</title>
@@ -75,105 +122,348 @@
             fileref="images/filters/render/spyrogimp.png" />
         </imageobject>
       </mediaobject>
-    </figure>
 
-    <variablelist>
-      <varlistentry>
-        <term>Type</term>
-        <listitem>
-          <para>
-            TODO
-          </para>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>Shape</term>
-        <listitem>
-          <para>
-            TODO
-          </para>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>Outer teeth</term>
-        <listitem>
-          <para>
-            TODO
-          </para>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>Inner teeth</term>
-        <listitem>
-          <para>
-            TODO
-          </para>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>Margin (pixels)</term>
-        <listitem>
-          <para>
-            TODO
-          </para>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>Hole ratio</term>
-        <listitem>
-          <para>
-            TODO
-          </para>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>Start angle</term>
-        <listitem>
-          <para>
-            TODO
-          </para>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>Tool</term>
-        <listitem>
-          <para>
-            TODO
-          </para>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>Brush</term>
-        <listitem>
-          <para>
-            TODO
-          </para>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>Color method</term>
-        <listitem>
-          <para>
-            TODO
-          </para>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>Color</term>
-        <listitem>
-          <para>
-            TODO
-          </para>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>Gradient</term>
-        <listitem>
-          <para>
-            TODO
-          </para>
-        </listitem>
-      </varlistentry>
-    </variablelist>
+    </figure>
+    <note>
+      <para>
+        This filter has been totally reimplemented since gimp
+        2.10.10 . If you are using an older version of gimp, your dialog will
+        look different.
+      </para>
+    </note>
+    <sect4>
+      <title>Options Above the Tabs</title>
+      <variablelist>
+        <varlistentry>
+          <term>Curve Type</term>
+          <listitem>
+            <para>
+              The available curve types are: <guimenuitem>Spyrograph</guimenuitem>,
+              <guimenuitem>Epitrochoid</guimenuitem>, <guimenuitem>Sine</guimenuitem>, and
+              <guimenuitem>Lissajous</guimenuitem>. These correspond to
+              physical models for drawing them, using either gears or springs.
+              Spyrograph and Epitrochoid curves are obtained by using two gears
+              - a fixed gear, and a moving gear.
+              A <guimenuitem>Spyrograph</guimenuitem> pattern is obtained when 
+              the moving gear is rotated inside the fixed gear.
+              When the moving gear is outside the fixed gear, an 
+              <guimenuitem>Epitrochoid</guimenuitem> pattern is generated.
+              The <guimenuitem>Sine</guimenuitem> curve uses the fixed gear, but 
+              instead of a moving gear, there is a spring that moves 
+              perpendicular to the fixed gear's edge.
+              The <guimenuitem>Lissajous</guimenuitem> curve is generated by two springs - that move on
+              the x and y axis - it does not use the fixed ring at all, and thus is not affected by
+              changing it.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Tool</term>
+          <listitem>
+            <para>
+              The gimp tool with which to draw the pattern. The first tool is named
+              <guimenuitem>Preview</guimenuitem> and its purpose is to draw quickly, rather than
+              beautifully - so the pattern can be previewed. The other available tools are:
+              <guimenuitem>PaintBrush</guimenuitem>, <guimenuitem>Pencil</guimenuitem>,
+              <guimenuitem>AirBrush</guimenuitem>, <guimenuitem>Stroke</guimenuitem>,
+              <guimenuitem>Ink</guimenuitem>, and <guimenuitem>MyPaintBrush</guimenuitem>.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Long Gradient</term>
+          <listitem>
+            <para>
+              When unchecked, the current tool settings will be used - this can either
+              produce a gradient or not, depending on the tool settings.
+              When checked, the plugin will produce a long gradient to match the length of the pattern,
+              based on the current gradient, the "Reverse" setting, and the
+              <guilabel>Repeat</guilabel> mode from the gradient tool settings.
+              Setting the <guilabel>Repeat</guilabel> mode to <guimenuitem>Triangle Wave</guimenuitem>
+              will produce a pattern that changes continuously, with no abrupt breaks. This is done
+              by using the gradient followed by its reverse. Any other <guilabel>Repeat</guilabel> mode
+              will simply use the gradient from start to finish.
+            </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </sect4>
+
+    <sect4>
+      <title>Curve Pattern Tab</title>
+      <figure>
+        <title>
+          <quote>Spyrogimp</quote> filter options (Curve Pattern)
+        </title>
+        <mediaobject>
+          <imageobject>
+            <imagedata format="PNG" fileref="images/filters/render/spyrogimp1.png"/>
+          </imageobject>
+          <caption>
+            <para>
+              The inner <guilabel>Toy Kit</guilabel> tab is shown on the right.
+            </para>
+          </caption>
+        </mediaobject>
+      </figure>
+      <para>
+        Specify pattern using either the <guilabel>Gears</guilabel> or <guilabel>Toy Kit</guilabel> tabs.
+        The pattern is specified only by the active tab. Toy Kit is similar to Gears,
+        but it uses gears and hole numbers which are found in toy kits.
+        If you follow the instructions from the toy kit manuals, you should obtain similar results.
+      </para>
+      <variablelist>
+        <varlistentry>
+          <term>Fixed Gear Teeth</term>
+          <listitem>
+            <para>
+              Number of teeth of fixed gear. The size of the fixed gear is
+              proportional to the number of teeth.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Moving Gear Teeth</term>
+          <listitem>
+            <para>
+              Number of teeth of moving gear. The size of the moving gear is
+              proportional to the number of teeth.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Hole percent</term>
+          <listitem>
+            <para>
+              How far is the hole from the center of the moving gear.
+              100% means that the hole is at the gear's edge.
+            </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+
+      <para>
+        The <guilabel>Toy Kit</guilabel> tab also has <guilabel>Fixed Gear Teeth</guilabel>
+        and <guilabel>Moving Gear Teeth</guilabel> options, however, these are menus
+        which limited to gear sizes that are provided with toy kits for drawing Spyrographs.
+      </para>
+      <variablelist>
+        <varlistentry>
+          <term>Hole Number</term>
+          <listitem>
+            <para>
+              Hole #1 is at the edge of the gear.
+              The maximum hole number is near the center.
+              The maximum hole number is different for each gear.
+            </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+
+       <para>
+         Below the tabs there is an additional option.
+       </para>
+      <variablelist>
+        <varlistentry>
+          <term>Rotation</term>
+          <listitem>
+            <para>
+              Rotation of the pattern, in degrees.
+              The starting position of the moving gear in the fixed gear.
+              Note that this also changes the pattern when drawing Lissajous curves.
+            </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </sect4>
+
+    <sect4>
+      <title>Fixed Gear Tab</title>
+      <figure>
+        <title>
+          <quote>Spyrogimp</quote> filter options (Fixed Gear)
+        </title>
+        <mediaobject>
+          <imageobject>
+            <imagedata format="PNG" fileref="images/filters/render/spyrogimp2.png"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <variablelist>
+        <varlistentry>
+          <term>Shape</term>
+          <listitem>
+            <para>
+              The shape of the fixed gear to be used inside current selection.
+              <itemizedlist>
+                <listitem>
+                  <para>
+                    <guimenuitem>Circle</guimenuitem>
+                  </para>
+                </listitem>
+                <listitem>
+                  <para>
+                    <guimenuitem>Rack</guimenuitem> is a long round-edged shape provided in the toy kits.
+                  </para>
+                </listitem>
+                <listitem>
+                  <para>
+                    <guimenuitem>Frame</guimenuitem> hugs the boundaries of the rectangular selection,
+                    use hole=100 in Gear notation to touch boundary.
+                  </para>
+                </listitem>
+                 <listitem>
+                  <para>
+                    <guimenuitem>Selection</guimenuitem> will hug boundaries of current selection -
+                    try something non-rectangular.
+                  </para>
+                </listitem>
+                <listitem>
+                  <para>
+                    <guimenuitem>Polygon-Star</guimenuitem> morphs from an n-sided polygon (morph=0)
+                    to an n-sided star (morph=0.3) to a crazy flower (morph=1).
+                  </para>
+                </listitem>
+                <listitem>
+                  <para>
+                    <guimenuitem>Sine</guimenuitem> with morph=0, it is just like a circle,
+                    but becomes more wavy as morph increases.
+                  </para>
+                </listitem>
+                <listitem>
+                  <para>
+                    <guimenuitem>Bumps</guimenuitem> morphs from a polygon (morph=0) to a scalloped circle.
+                  </para>
+                </listitem>
+              </itemizedlist>
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Sides</term>
+          <listitem>
+            <para>
+              Number of sides of the shape. This applies only to the <guimenuitem>Polygon-Star</guimenuitem>,
+              <guimenuitem>Sine</guimenuitem>, and <guimenuitem>Bumps</guimenuitem> shapes.
+              Otherwise this option is disabled.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Morph</term>
+          <listitem>
+            <para>
+              Morph fixed gear shape. This applies only to the <guimenuitem>Polygon-Star</guimenuitem>,
+              <guimenuitem>Sine</guimenuitem>, and <guimenuitem>Bumps</guimenuitem> shapes.
+              Otherwise this option is disabled
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Rotation</term>
+          <listitem>
+            <para>
+              Rotation of the fixed gear, in degrees.
+            </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </sect4>
+
+    <sect4>
+      <title>Size Tab</title>
+      <figure>
+        <title>
+          <quote>Spyrogimp</quote> filter options (Size)
+        </title>
+        <mediaobject>
+          <imageobject>
+            <imagedata format="PNG"
+              fileref="images/filters/render/spyrogimp3.png"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <variablelist>
+        <varlistentry>
+          <term>Margin (px)</term>
+          <listitem>
+            <para>
+              Margin from the edge of selection. This controls the size of the pattern.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Make width and height equal</term>
+          <listitem>
+            <para>
+              When unchecked, the pattern will fill the current image or selection.
+              When checked, the pattern will have same width and height, and will be centered.
+              The difference between checked and unchecked will only be noticed if the
+              size of the width and height of the selection differ.
+            </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </sect4>
+
+    <sect4>
+      <title>Buttons Below the Tabs</title>
+      <variablelist>
+        <varlistentry>
+          <term>Redraw</term>
+          <listitem>
+            <para>
+              If you change the settings of a tool, change color, or change the selection
+              (i.e., any settings outside of the plugin that effect the pattern),
+              press this to preview how the pattern looks.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Reset</term>
+          <listitem>
+            <para>
+              Resets the dialog to its default options.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Cancel</term>
+          <listitem>
+            <para>
+              Delete the temporary layer, and exit the plugin.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+        <term>OK</term>
+          <listitem>
+            <para>
+              Render pattern to image. If <guilabel>Keep Layer</guilabel> is unchecked, this might take
+              some extra time to complete, as the pattern needs to be redrawn on the active layer.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+        <term>Keep Layer</term>
+          <listitem>
+            <para>
+              Determines what will happen to the temporary layer once <guibutton>OK</guibutton> is pressed.
+              If checked, then once OK is pressed, the temporary layer is kept, and the plugin exits quickly.
+              If unchecked, the layer is deleted, and the pattern is redrawn on the active layer.
+            </para>
+            <para>
+              One reason to not keep the layer, is that by using specific paint application modes,
+              redrawing the pattern on the active layer can interact with it in interesting ways, that
+              produce a different pattern had it been drawn on a new layer.
+            </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </sect4>
+
   </sect3>
+
 </sect2>
