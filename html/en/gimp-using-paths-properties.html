@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>5.2. Path Properties</title>
+    <link rel="stylesheet" href="gimp-help-plain.css" type="text/css" />
+    <link rel="stylesheet" href="gimp-help-screen.css" type="text/css" />
+    <link rel="stylesheet" href="gimp-help-custom.css" type="text/css" />
+    <link rel="alternate stylesheet" href="gimp22.css" type="text/css" title="gimp22" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.78.0" />
+    <link rel="home" href="index.html" title="GNU Image Manipulation Program" />
+    <link rel="up" href="gimp-using-paths.html" title="5.  Paths" />
+    <link rel="prev" href="gimp-using-paths.html" title="5.  Paths" />
+    <link rel="next" href="gimp-using-paths-and-selections.html" title="5.3. Paths and Selections" />
+  </head>
+  <body>
+    <div class="navheader">
+      <table width="100%" summary="Navigation header">
+        <tr>
+          <th colspan="3" align="center">5.2. Path Properties</th>
+        </tr>
+        <tr>
+          <td width="20%" align="left">
+            <a accesskey="p" href="gimp-using-paths.html">
+              <img src="images/prev.png" alt="Prev" />
+            </a>
+          </td>
+          <th width="60%" align="center">5. 
+    
+    <span class="phrase">Paths</span>
+  </th>
+          <td width="20%" align="right"> <a accesskey="n" href="gimp-using-paths-and-selections.html"><img src="images/next.png" alt="Next" /></a></td>
+        </tr>
+      </table>
+      <hr />
+    </div>
+    <div class="sect2">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h3 class="title"><a id="gimp-using-paths-properties"></a>5.2. Path Properties</h3>
+          </div>
+        </div>
+      </div>
+      <p>
+      Paths, like layers and channels, are components of an image. When an
+      image is saved in <acronym class="acronym">GIMP</acronym>'s native XCF file format, any
+      paths it has are saved with it. The list of paths in an image can be
+      viewed and operated on using the
+      <a class="link" href="gimp-path-dialog.html" title="2.3. Paths Dialog">Paths dialog</a>.
+      You can move a path from one image to another by copying and pasting
+      using the pop-up menu in the Paths dialog, or by dragging an icon from
+      the Paths dialog into the destination image window.
+    </p>
+      <p>
+      <acronym class="acronym">GIMP</acronym> paths belong to a mathematical type called
+      <span class="quote">“<span class="quote">Bezier paths</span>”</span>. What this means in practical terms is that
+      they are defined by <span class="emphasis"><em>anchors</em></span> and
+      <span class="emphasis"><em>handles</em></span>. <span class="quote">“<span class="quote">Anchors</span>”</span> are points the path
+      goes through. <span class="quote">“<span class="quote">Handles</span>”</span> define the direction of a path when
+      it enters or leaves an anchor point: each anchor point has two handles
+      attached to it.
+    </p>
+      <p>
+      Paths can be very complex. If you create them by hand using the Path
+      tool, unless you are obsessive they probably won't contain more than a
+      few dozen anchor points (often many fewer); but if you create them by
+      transforming a selection into a path, or by transforming text into a
+      path, the result can easily contain hundreds of anchor points, or even
+      thousands.
+    </p>
+      <p>
+      A path may contain multiple <span class="emphasis"><em>components</em></span>. A
+      <span class="quote">“<span class="quote">component</span>”</span>
+      is a part of a path whose anchor points are all connected to each other
+      by path segments. The ability to have multiple components in paths
+      allows you to convert them into selections having multiple disconnected
+      parts.
+    </p>
+      <p>
+      Each component of a path can be either <span class="emphasis"><em>open</em></span> or
+      <span class="emphasis"><em>closed</em></span>: <span class="quote">“<span class="quote">closed</span>”</span>
+      means that the last anchor point is connected to the first anchor point.
+      If you transform a path into a selection, any open components are
+      automatically converted into closed components by connecting the last
+      anchor point to the first anchor point with a straight line.
+    </p>
+      <p>
+      Path segments can be either straight or curved. A path is called
+      <span class="quote">“<span class="quote">polygonal</span>”</span> if all of its segments are straight.
+      A new path segment is always created straight; the handles for the
+      anchor points are directly on top of the anchor points, yielding
+      handles of zero length, which produces straight-line segments.
+      Drag a handle handle away from an anchor point to cause a segment
+      to curve.
+    </p>
+      <p>
+      One nice thing about paths is that they use very few resources,
+      especially in comparison with images. Representing
+      a path in RAM requires storing only the coordinates of its anchors and
+      handles: 1K of memory is enough to hold a complex path, but not
+      enough to hold a small 20x20 pixel RGB layer. Therefore, it is
+      possible to have literally hundreds of paths in an image without causing
+      any significant stress to your system; the amount of stress that
+      hundreds of paths might cause <span class="emphasis"><em>you</em></span>, however, 
+      is another question. Even a path with thousands of segments
+      consumes minimal resources in comparison to a typical layer or channel.
+    </p>
+      <p>
+      Paths can be created and manipulated using the
+      <a class="link" href="gimp-tool-path.html" title="5.2. Paths">Path tool</a>.
+    </p>
+    </div>
+    <div class="navfooter">
+      <hr />
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="left"><a accesskey="p" href="gimp-using-paths.html"><img src="images/prev.png" alt="Prev" /></a> </td>
+          <td width="20%" align="center">
+            <a accesskey="u" href="gimp-using-paths.html">
+              <img src="images/up.png" alt="Up" />
+            </a>
+          </td>
+          <td width="40%" align="right"> <a accesskey="n" href="gimp-using-paths-and-selections.html"><img src="images/next.png" alt="Next" /></a></td>
+        </tr>
+        <tr>
+          <td width="40%" align="left" valign="top"><a accesskey="p" href="gimp-using-paths.html">5. 
+    
+    <span class="phrase">Paths</span>
+  </a> </td>
+          <td width="20%" align="center">
+            <a accesskey="h" href="index.html">
+              <img src="images/home.png" alt="Home" />
+            </a>
+          </td>
+          <td width="40%" align="right" valign="top"> <a accesskey="n" href="gimp-using-paths-and-selections.html">5.3. Paths and Selections</a></td>
+        </tr>
+      </table>
+      <a href="https://gitlab.gnome.org/GNOME/gimp-help/issues" class="reportbug">
+      Report an error in the bug tracker
+    </a>
+    </div>
+  </body>
+</html>

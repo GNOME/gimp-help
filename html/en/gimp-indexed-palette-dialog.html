@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>2.4. Colormap Dialog</title>
+    <link rel="stylesheet" href="gimp-help-plain.css" type="text/css" />
+    <link rel="stylesheet" href="gimp-help-screen.css" type="text/css" />
+    <link rel="stylesheet" href="gimp-help-custom.css" type="text/css" />
+    <link rel="alternate stylesheet" href="gimp22.css" type="text/css" title="gimp22" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.78.0" />
+    <link rel="home" href="index.html" title="GNU Image Manipulation Program" />
+    <link rel="up" href="gimp-dialogs-structure.html" title="2. Image Structure Related Dialogs" />
+    <link rel="prev" href="gimp-path-dialog.html" title="2.3. Paths Dialog" />
+    <link rel="next" href="gimp-histogram-dialog.html" title="2.5. Histogram dialog" />
+  </head>
+  <body>
+    <div class="navheader">
+      <table width="100%" summary="Navigation header">
+        <tr>
+          <th colspan="3" align="center">2.4. Colormap Dialog</th>
+        </tr>
+        <tr>
+          <td width="20%" align="left">
+            <a accesskey="p" href="gimp-path-dialog.html">
+              <img src="images/prev.png" alt="Prev" />
+            </a>
+          </td>
+          <th width="60%" align="center">2. Image Structure Related Dialogs</th>
+          <td width="20%" align="right"> <a accesskey="n" href="gimp-histogram-dialog.html"><img src="images/next.png" alt="Next" /></a></td>
+        </tr>
+      </table>
+      <hr />
+    </div>
+    <div class="sect2">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h3 class="title"><a id="gimp-indexed-palette-dialog"></a>2.4. Colormap Dialog</h3>
+          </div>
+        </div>
+      </div>
+      <a id="idm139754664238832" class="indexterm"></a>
+      <a id="idm139754666768064" class="indexterm"></a>
+      <div class="figure">
+        <a id="idm139754653911712"></a>
+        <p class="title">
+          <strong>Figure 15.16. An indexed image with 6 colors and its Colormap dialog</strong>
+        </p>
+        <div class="figure-contents">
+          <div class="mediaobject">
+            <img src="images/dialogs/examples/cosmos-6.png" alt="An indexed image with 6 colors and its Colormap dialog" />
+          </div>
+          <div class="mediaobject">
+            <img src="images/dialogs/colormap-dialog.png" alt="An indexed image with 6 colors and its Colormap dialog" />
+          </div>
+        </div>
+      </div>
+      <br class="figure-break" />
+      <p>
+    The Colormap (Indexed Palette is a better name) dialog allows you to edit
+    the colormap of an indexed image. (If the mode of the active image is RGB
+    or Grayscale instead of Indexed, the dialog is empty and unusable.) This
+    is a dockable dialog; see the section on
+    <a class="link" href="gimp-concepts-docks.html" title="2.3. Dialogs and Docking">Dialogs and Docking</a>
+    for help on manipulating it.
+  </p>
+      <div class="sect3">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h4 class="title"><a id="gimp-indexed-palette-dialog-activate"></a>2.4.1. Activating the dialog</h4>
+            </div>
+          </div>
+        </div>
+        <p>
+      The <span class="quote">“<span class="quote">Colormap</span>”</span> dialog is a dockable dialog; see the section
+      <a class="xref" href="gimp-concepts-docks.html" title="2.3. Dialogs and Docking">Section 2.3, “Dialogs and Docking”</a> for help on manipulating it.
+    </p>
+        <p>
+      You can access it:
+    </p>
+        <div class="itemizedlist">
+          <ul class="itemizedlist" style="list-style-type: disc; ">
+            <li class="listitem">
+              <p>
+          from the image menu:
+          <span class="guimenu">Windows</span> → <span class="guisubmenu">Dockable Dialogs</span> → <span class="guimenuitem">Colormap</span>;
+        </p>
+            </li>
+            <li class="listitem">
+              <p>
+          from the Tab menu in any dockable dialog by clicking on
+          <span class="guiicon">
+            <img src="images/dialogs/stock-menu-left-12.png" />
+          </span> and selecting
+          <span class="guimenu">Add Tab</span> → <span class="guimenuitem">Colormap</span>.
+        </p>
+            </li>
+          </ul>
+        </div>
+        <p>
+      In the <span class="guimenu">Windows</span> menu, there is a list of
+      <a class="link" href="gimp-concepts-docks.html#gimp-dockable-menu" title="2.3.2. Tab Menu">detached windows</a> which exists
+      only if at least one dialog remains open. In this case, you can raise
+      the <span class="quote">“<span class="quote">Colormap</span>”</span> dialog from the image-menu:
+      <span class="guimenu">Windows</span> → <span class="guimenuitem">Colormap</span>.
+    </p>
+      </div>
+      <div class="sect3">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h4 class="title"><a id="gimp-indexed-palette-dialog-colormaps"></a>2.4.2. Colormaps and Indexed Images</h4>
+            </div>
+          </div>
+        </div>
+        <p>
+      In an Indexed image, instead of being assigned a color directly (as
+      happens in RGB and Grayscale images), colors are assigned to pixels by
+      an indirect method, using a look-up table called a
+      <span class="emphasis"><em>colormap</em></span>.
+    </p>
+        <p>
+      To determine the color that should be shown for that pixel, GIMP looks
+      up the index in the image's colormap. Each indexed image has its own
+      private colormap. In GIMP, the maximum number of entries in a colormap
+      is 256. For a maximum-sized colormap, each index from 0 to 255 is
+      assigned an arbitrary RGB color. There are no rules restricting the
+      colors that can be assigned to an index or the order they appear in: any
+      index can be assigned any color.
+    </p>
+        <p>
+      It is important to realize that the colors in the colormap are the
+      <span class="emphasis"><em>only colors available</em></span> for an indexed image (that
+      is, unless you add new colors to the colormap). This has a major effect
+      on many GIMP operations: for example, in a pattern fill, GIMP will
+      usually not be able to find exactly the right colors in the colormap, so
+      it will approximate them by using the nearest color available. This is
+      sometimes referred to as
+      <a class="link" href="glossary.html#glossary-quantization" title="Quantization">Quantization</a>.
+      If the colormap is too limited or poorly chosen, this can easily produce
+      very poor image quality.
+    </p>
+        <p>
+      The Colormap dialog allows you to alter the colormap for an image,
+      either by creating new entries, or by changing the colors for the
+      existing entries. If you change the color associated with a given index,
+      you will see the changes reflected throughout the image, as a color
+      shift for all pixels that are assigned that index. The entries are
+      numbered with 0 in the upper left corner, 1 to its right, etc.
+    </p>
+      </div>
+      <div class="sect3">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h4 class="title"><a id="gimp-indexed-palette-dialog-using"></a>2.4.3. Using the Colormap dialog</h4>
+            </div>
+          </div>
+        </div>
+        <p>
+      Here are the operations you can perform using this dialog:
+    </p>
+        <div class="variablelist">
+          <dl class="variablelist">
+            <dt>
+              <span class="term">Click on a color entry</span>
+            </dt>
+            <dd>
+              <p>
+            This sets GIMP's foreground color to the color you click on, as
+            shown in the Toolbox color area. As a result, this color will be
+            used for the next painting operation you do.
+          </p>
+            </dd>
+            <dt>
+              <span class="term"><span class="keycap"><strong>Ctrl</strong></span>-click on a color entry</span>
+            </dt>
+            <dd>
+              <p>
+            This sets <acronym class="acronym">GIMP</acronym>'s background color to the
+            color you <span class="keycap"><strong>Ctrl</strong></span>-click on,
+            as shown in the Toolbox color area.
+          </p>
+            </dd>
+            <dt>
+              <span class="term">Double-click on a color entry</span>
+            </dt>
+            <dd>
+              <p>
+            This sets GIMP's foreground color to the color you click on, and
+            also brings up a Color Editor that allows you to change that
+            colormap entry to a new color.
+          </p>
+            </dd>
+            <dt>
+              <span class="term">Color index</span>
+            </dt>
+            <dd>
+              <p>
+            You can select a different colormap entry by typing its index
+            here, or clicking the spinbutton to the right.
+          </p>
+            </dd>
+            <dt>
+              <span class="term">HTML-Notation</span>
+            </dt>
+            <dd>
+              <p>
+            This area shows a hex-code representation (such as is used in
+            HTML) for the color assigned to the currently selected colormap
+            entry. You can edit the color here, instead of using a Color
+            Editor, if you want to. See
+            <a class="link" href="glossary.html#glossary-html-notation" title="HTML notation">HTML notation</a>
+          </p>
+            </dd>
+            <dt>
+              <span class="term">Edit color</span>
+            </dt>
+            <dd>
+              <a id="gimp-indexed-palette-edit"></a>
+              <p>
+            This button (in the lower left corner of the dialog) brings up a
+            Color Editor that allows you to change the color for the currently
+            selected colormap entry. The effect is similar to double-clicking
+            on the entry, except that it does not set GIMP's foreground color.
+          </p>
+            </dd>
+            <dt>
+              <span class="term">
+          <span class="guiicon">
+            <img src="images/dialogs/stock-gtk-add-16.png" />
+          </span>
+          <span class="phrase">Add color</span>
+        </span>
+            </dt>
+            <dd>
+              <a id="gimp-indexed-palette-add"></a>
+              <p>
+            This button (in the lower right corner of the dialog) allows you
+            to add new colors to the colormap. If you click on the button, the
+            current foreground color, as shown in the Toolbox, will be tacked
+            on to the end of the colormap. If instead you hold down
+            <span class="keycap"><strong>Ctrl</strong></span> and click, the background color from the
+            Toolbox will be added. (If the colormap contains 256 entries, it
+            is full, and trying to add more will have no effect.)
+          </p>
+            </dd>
+          </dl>
+        </div>
+        <div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;">
+          <table border="0" summary="Tip">
+            <tr>
+              <td rowspan="2" align="center" valign="top" width="25">
+                <img alt="[Tip]" src="images/tip.png" />
+              </td>
+              <th align="left">Tip</th>
+            </tr>
+            <tr>
+              <td align="left" valign="top">
+                <p>
+        If you make a mistake, you can undo it by focusing the pointer in
+        the image whose colormap you have changed, and then pressing
+        <span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>Z</strong></span> or
+        choosing
+        <span class="guimenu">Edit</span> → <span class="guimenuitem">Undo</span>
+        in the image menu.
+      </p>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+          <table border="0" summary="Note">
+            <tr>
+              <td rowspan="2" align="center" valign="top" width="25">
+                <img alt="[Note]" src="images/note.png" />
+              </td>
+              <th align="left">Note</th>
+            </tr>
+            <tr>
+              <td align="left" valign="top">
+                <p>
+        This dialog provides the most commonly used methods for altering the
+        colormap for an indexed image. The color tools, such as
+        Brightness/Contrast, Hue/Saturation, etc, do not operate on indexed
+        images. There are a few plug-ins that do so, including the
+        <span class="quote">“<span class="quote">Normalize</span>”</span>, <span class="quote">“<span class="quote">VColor Enhance</span>”</span>, and
+        <span class="quote">“<span class="quote">Stretch Contrast</span>”</span> operations, and it is possible to
+        create others as well.
+      </p>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+          <table border="0" summary="Note">
+            <tr>
+              <td rowspan="2" align="center" valign="top" width="25">
+                <img alt="[Note]" src="images/note.png" />
+              </td>
+              <th align="left">Note</th>
+            </tr>
+            <tr>
+              <td align="left" valign="top">
+                <p>
+        If you paint an indexed image with a color which is not in the
+        Colormap, GIMP will use the most similar color of the Colormap.
+      </p>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="sect3">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h4 class="title"><a id="gimp-indexed-palette-dialog-submenu"></a>2.4.4. The Colormap context menu</h4>
+            </div>
+          </div>
+        </div>
+        <p>
+      Right-clicking on a color in the Colormap selects this color and opens
+      a pop-up submenu:
+    </p>
+        <div class="figure">
+          <a id="idm139754657545824"></a>
+          <p class="title">
+            <strong>Figure 15.17. The Colormap context menu</strong>
+          </p>
+          <div class="figure-contents">
+            <div class="mediaobject">
+              <img src="images/dialogs/colormap-contextmenu.png" alt="The Colormap context menu" />
+            </div>
+          </div>
+        </div>
+        <br class="figure-break" />
+        <div class="variablelist">
+          <dl class="variablelist">
+            <dt>
+              <span class="term">Edit color</span>
+            </dt>
+            <dd>
+              <p>
+            This command opens a color selector which allows you to modify
+            the color.
+          </p>
+            </dd>
+            <dt>
+              <span class="term">Add Color from FG</span>
+            </dt>
+            <dd>
+              <p>
+            This command is enabled only if the indexed palette contains less
+            than 256 colors. The background color of the Toolbox is appended
+            to the color map.
+          </p>
+            </dd>
+            <dt>
+              <span class="term">Add Color from BG</span>
+            </dt>
+            <dd>
+              <p>
+            This command is enabled only if the indexed palette contains less
+            than 256 colors. The background color of the Toolbox is appended
+            to the color list.
+        </p>
+            </dd>
+            <dt>
+              <span class="term">Rearrange Colormap</span>
+            </dt>
+            <dd>
+              <p>
+            Rearrange Colormap: This command is described in
+            <a class="xref" href="plug-in-colormap-remap.html" title="8.34. Rearrange Colormap">Section 8.34, “Rearrange Colormap”</a>.
+          </p>
+            </dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+    <div class="navfooter">
+      <hr />
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="left"><a accesskey="p" href="gimp-path-dialog.html"><img src="images/prev.png" alt="Prev" /></a> </td>
+          <td width="20%" align="center">
+            <a accesskey="u" href="gimp-dialogs-structure.html">
+              <img src="images/up.png" alt="Up" />
+            </a>
+          </td>
+          <td width="40%" align="right"> <a accesskey="n" href="gimp-histogram-dialog.html"><img src="images/next.png" alt="Next" /></a></td>
+        </tr>
+        <tr>
+          <td width="40%" align="left" valign="top"><a accesskey="p" href="gimp-path-dialog.html">2.3. Paths Dialog</a> </td>
+          <td width="20%" align="center">
+            <a accesskey="h" href="index.html">
+              <img src="images/home.png" alt="Home" />
+            </a>
+          </td>
+          <td width="40%" align="right" valign="top"> <a accesskey="n" href="gimp-histogram-dialog.html">2.5. Histogram dialog</a></td>
+        </tr>
+      </table>
+      <a href="https://gitlab.gnome.org/GNOME/gimp-help/issues" class="reportbug">
+      Report an error in the bug tracker
+    </a>
+    </div>
+  </body>
+</html>

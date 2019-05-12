@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>4.11. NL Filter</title>
+    <link rel="stylesheet" href="gimp-help-plain.css" type="text/css" />
+    <link rel="stylesheet" href="gimp-help-screen.css" type="text/css" />
+    <link rel="stylesheet" href="gimp-help-custom.css" type="text/css" />
+    <link rel="alternate stylesheet" href="gimp22.css" type="text/css" title="gimp22" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.78.0" />
+    <link rel="home" href="index.html" title="GNU Image Manipulation Program" />
+    <link rel="up" href="filters-enhance.html" title="4. Enhance Filters" />
+    <link rel="prev" href="plug-in-destripe.html" title="4.10. Destripe" />
+    <link rel="next" href="plug-in-wavelet-decompose.html" title="4.12. Wavelet Decompose" />
+  </head>
+  <body>
+    <div class="navheader">
+      <table width="100%" summary="Navigation header">
+        <tr>
+          <th colspan="3" align="center">4.11. NL Filter</th>
+        </tr>
+        <tr>
+          <td width="20%" align="left">
+            <a accesskey="p" href="plug-in-destripe.html">
+              <img src="images/prev.png" alt="Prev" />
+            </a>
+          </td>
+          <th width="60%" align="center">4. Enhance Filters</th>
+          <td width="20%" align="right"> <a accesskey="n" href="plug-in-wavelet-decompose.html"><img src="images/next.png" alt="Next" /></a></td>
+        </tr>
+      </table>
+      <hr />
+    </div>
+    <div class="sect2">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h3 class="title"><a id="plug-in-nlfilt"></a>4.11. NL Filter</h3>
+          </div>
+        </div>
+      </div>
+      <a id="idm139754654913328" class="indexterm"></a>
+      <a id="idm139754660671360" class="indexterm"></a>
+      <a id="idm139754656887616" class="indexterm"></a>
+      <div class="sect3">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h4 class="title"><a id="idm139754649045232"></a>4.11.1. Overview</h4>
+            </div>
+          </div>
+        </div>
+        <div class="figure">
+          <a id="idm139754655652528"></a>
+          <p class="title">
+            <strong>Figure 17.41. Example for the NL-Filter</strong>
+          </p>
+          <div class="figure-contents">
+            <div class="mediaobject">
+              <img src="images/filters/examples/taj_orig.jpg" alt="Example for the NL-Filter" />
+              <div class="caption">
+                <p>Original image</p>
+              </div>
+            </div>
+            <div class="mediaobject">
+              <img src="images/filters/examples/enhance-taj-nl-filter.jpg" alt="Example for the NL-Filter" />
+              <div class="caption">
+                <p><span class="quote">“<span class="quote">NL Filter</span>”</span> applied</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br class="figure-break" />
+        <p>
+      NL means <span class="quote">“<span class="quote">Non Linear</span>”</span>. Derived from the Unix
+      <span class="command"><strong>pnmnlfilt</strong></span> program, it joins smoothing, despeckle
+      and sharpen enhancement functions. It works on the whole layer, not
+      on the selection.
+    </p>
+        <p>
+      This is something of a swiss army knife filter. It has 3 distinct
+      operating modes. In all of the modes each pixel in the image is examined
+      and processed according to it and its surrounding pixels values. Rather
+      than using 9 pixels in a 3x3 block, it uses an hexagonal block whose
+      size can be set with the Radius option.
+    </p>
+      </div>
+      <div class="sect3">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h4 class="title"><a id="idm139754651674784"></a>4.11.2. Activating the filter</h4>
+            </div>
+          </div>
+        </div>
+        <p>
+      You can find this filter through
+      <span class="guimenu">Filters</span> → <span class="guisubmenu">Enhance</span> → <span class="guimenuitem">NL Filter…</span>.
+    </p>
+        <p>
+      The filter does not work if the active layer has an alpha channel. Then
+      the menu entry is insensitive and grayed out.
+    </p>
+      </div>
+      <div class="sect3">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h4 class="title"><a id="idm139754651994272"></a>4.11.3. Options</h4>
+            </div>
+          </div>
+        </div>
+        <div class="figure">
+          <a id="idm139754672242864"></a>
+          <p class="title">
+            <strong>Figure 17.42. <span class="quote">“<span class="quote">NL Filter</span>”</span> options</strong>
+          </p>
+          <div class="figure-contents">
+            <div class="mediaobject">
+              <img src="images/filters/enhance/nlfilter.png" alt="“NL Filter” options" />
+            </div>
+          </div>
+        </div>
+        <br class="figure-break" />
+        <div class="variablelist">
+          <dl class="variablelist">
+            <dt>
+              <span class="term">Preview</span>
+            </dt>
+            <dd>
+              <p>
+            When checked, parameter setting results are interactively
+            displayed in preview.
+          </p>
+            </dd>
+            <dt>
+              <span class="term">Filter</span>
+            </dt>
+            <dd>
+              <p>
+            The <a class="link" href="plug-in-nlfilt.html#plug-in-nlfilt-mode" title="4.11.4. Operating Modes">Operating Mode</a>
+            is described below.
+          </p>
+            </dd>
+            <dt>
+              <span class="term">Alpha</span>
+            </dt>
+            <dd>
+              <p>
+            Controls the amount of the filter to apply. Valid range is
+            0.00-1.00. The exact meaning of this value depends on the selected
+            operating mode. Note that this parameter is related to but not
+            the same as the <em class="parameter"><code>alpha</code></em> parameter used in the
+            <span class="command"><strong>pnmnlfilt</strong></span> program.
+          </p>
+            </dd>
+            <dt>
+              <span class="term">Radius</span>
+            </dt>
+            <dd>
+              <p>
+            Controls the size of the effective sampling region around each
+            pixel. The range of this value is 0.33-1.00, where 0.33 means just
+            the pixel itself (and thus the filter will have no effect), and
+            1.00 means all pixels in the 3x3 grid are sampled.
+          </p>
+            </dd>
+          </dl>
+        </div>
+      </div>
+      <div class="sect3">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h4 class="title"><a id="plug-in-nlfilt-mode"></a>4.11.4. Operating Modes</h4>
+            </div>
+          </div>
+        </div>
+        <p>
+      This filter can perform several distinct functions:
+    </p>
+        <div class="variablelist">
+          <dl class="variablelist">
+            <dt>
+              <span class="term">Alpha trimmed mean</span>
+            </dt>
+            <dd>
+              <p>
+            The value of the center pixel will be replaced by the mean of
+            the 7 hexagon values, but the 7 values are sorted by size and
+            the top and bottom <em class="parameter"><code>Alpha</code></em> portion of the 7
+            are excluded from the mean. This implies that an
+            <em class="parameter"><code>Alpha</code></em> value of 0.0 gives the same sort of
+            output as a normal convolution (i.e. averaging or smoothing
+            filter), where <em class="parameter"><code>Radius</code></em> will determine the
+            <span class="quote">“<span class="quote">strength</span>”</span> of the filter. A good value to start from
+            for subtle filtering is
+            <em class="parameter"><code>Alpha</code></em> = 0.0,
+            <em class="parameter"><code>Radius</code></em> = 0.55.
+            For a more blatant effect, try
+            <em class="parameter"><code>Alpha</code></em> = 0.0 and
+            <em class="parameter"><code>Radius</code></em> = 1.0.
+          </p>
+              <p>
+            An <em class="parameter"><code>Alpha</code></em> value of 1.0 will cause the
+            median value of the 7 hexagons to be used to replace the center
+            pixel value. This sort of filter is good for eliminating
+            <span class="quote">“<span class="quote">pop</span>”</span> or single pixel noise from an image without
+            spreading the noise out or smudging features on the image.
+            Judicious use of the <em class="parameter"><code>Radius</code></em> parameter will
+            fine tune the filtering.
+          </p>
+              <p>
+            Intermediate values of <em class="parameter"><code>Alpha</code></em> give effects
+            somewhere between smoothing and "pop" noise reduction. For subtle
+            filtering try starting with values of
+            <em class="parameter"><code>Alpha</code></em> = 0.8,
+            <em class="parameter"><code>Radius</code></em> = 0.6.
+            For a more blatant effect try
+            <em class="parameter"><code>Alpha</code></em> = 1.0,
+            <em class="parameter"><code>Radius</code></em> = 1.0 .
+          </p>
+            </dd>
+            <dt>
+              <span class="term">Optimal estimation</span>
+            </dt>
+            <dd>
+              <p>
+            This type of filter applies a smoothing filter adaptively over
+            the image. For each pixel the variance of the surrounding
+            hexagon values is calculated, and the amount of smoothing is
+            made inversely proportional to it. The idea is that if the
+            variance is small then it is due to noise in the image, while if
+            the variance is large, it is because of <span class="quote">“<span class="quote">wanted</span>”</span>
+            image features.
+            As usual the <em class="parameter"><code>Radius</code></em> parameter controls
+            the effective radius, but it probably advisable to leave  the
+            radius between 0.8 and 1.0 for the variance calculation to be
+            meaningful. The <em class="parameter"><code>Alpha</code></em> parameter sets the
+            noise threshold, over which less smoothing will be done. This
+            means that small values of <em class="parameter"><code>Alpha</code></em> will
+            give the most subtle filtering effect, while large values will
+            tend to smooth all parts of the image. You could start with
+            values like
+            <em class="parameter"><code>Alpha</code></em>  = 0.2,
+            <em class="parameter"><code>Radius</code></em> = 1.0,
+            and try increasing or decreasing the
+            <em class="parameter"><code>Alpha</code></em> parameter to  get the desired
+            effect. This type of filter is best for filtering out dithering
+            noise in both bitmap and color images.
+          </p>
+            </dd>
+            <dt>
+              <span class="term">Edge enhancement</span>
+            </dt>
+            <dd>
+              <p>
+            This is the opposite type of filter to the smoothing filter. It
+            enhances edges. The <em class="parameter"><code>Alpha</code></em> parameter
+            controls the amount of edge enhancement, from subtle (0.1) to
+            blatant (0.9). The <em class="parameter"><code>Radius</code></em> parameter
+            controls the effective radius as usual, but useful values are
+            between 0.5 and 0.9. Try starting with values of
+            <em class="parameter"><code>Alpha</code></em> = 0.3,
+            <em class="parameter"><code>Radius</code></em> = 0.8.
+        </p>
+            </dd>
+          </dl>
+        </div>
+        <div class="simplesect">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h5 class="title"><a id="idm139754656003136"></a>Combination use</h5>
+              </div>
+            </div>
+          </div>
+          <p>
+        The various operating modes can be used one after the other to get the
+        desired result. For instance to turn a monochrome dithered image into
+        grayscale image you could try one or two passes of the smoothing
+        filter, followed by a pass of the optimal estimation filter, then some
+        subtle edge enhancement. Note that using edge enhancement is only
+        likely to be useful after one of the  non-linear filters (alpha
+        trimmed mean or optimal estimation filter), as edge enhancement is the
+        direct opposite of smoothing.
+      </p>
+          <p>
+        For reducing color quantization noise in images (i.e. turning .gif
+        files back into 24 bit files) you could try a pass of the optimal
+        estimation filter (<em class="parameter"><code>Alpha</code></em> = 0.2,
+        <em class="parameter"><code>Radius</code></em> = 1.0), a pass of the median filter
+        (<em class="parameter"><code>Alpha</code></em> = 1.0, <em class="parameter"><code>Radius</code></em> =
+        0.55), and possibly a pass of the edge enhancement filter. Several
+        passes of the optimal estimation filter with declining
+        <em class="parameter"><code>Alpha</code></em> values are more effective than a single
+        pass with a large <em class="parameter"><code>Alpha</code></em> value. As usual, there
+        is a trade-off between filtering effectiveness and losing detail.
+        Experimentation is encouraged.
+      </p>
+        </div>
+      </div>
+    </div>
+    <div class="navfooter">
+      <hr />
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="left"><a accesskey="p" href="plug-in-destripe.html"><img src="images/prev.png" alt="Prev" /></a> </td>
+          <td width="20%" align="center">
+            <a accesskey="u" href="filters-enhance.html">
+              <img src="images/up.png" alt="Up" />
+            </a>
+          </td>
+          <td width="40%" align="right"> <a accesskey="n" href="plug-in-wavelet-decompose.html"><img src="images/next.png" alt="Next" /></a></td>
+        </tr>
+        <tr>
+          <td width="40%" align="left" valign="top"><a accesskey="p" href="plug-in-destripe.html">4.10. Destripe</a> </td>
+          <td width="20%" align="center">
+            <a accesskey="h" href="index.html">
+              <img src="images/home.png" alt="Home" />
+            </a>
+          </td>
+          <td width="40%" align="right" valign="top"> <a accesskey="n" href="plug-in-wavelet-decompose.html">4.12. Wavelet Decompose</a></td>
+        </tr>
+      </table>
+      <a href="https://gitlab.gnome.org/GNOME/gimp-help/issues" class="reportbug">
+      Report an error in the bug tracker
+    </a>
+    </div>
+  </body>
+</html>

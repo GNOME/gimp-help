@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>11.12. Clothify</title>
+    <link rel="stylesheet" href="gimp-help-plain.css" type="text/css" />
+    <link rel="stylesheet" href="gimp-help-screen.css" type="text/css" />
+    <link rel="stylesheet" href="gimp-help-custom.css" type="text/css" />
+    <link rel="alternate stylesheet" href="gimp22.css" type="text/css" title="gimp22" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.78.0" />
+    <link rel="home" href="index.html" title="GNU Image Manipulation Program" />
+    <link rel="up" href="filters-artistic.html" title="11. Artistic Filters" />
+    <link rel="prev" href="plug-in-cartoon.html" title="11.11. Cartoon (legacy)" />
+    <link rel="next" href="plug-in-gimpressionist.html" title="11.13. GIMPressionist" />
+  </head>
+  <body>
+    <div class="navheader">
+      <table width="100%" summary="Navigation header">
+        <tr>
+          <th colspan="3" align="center">11.12. Clothify</th>
+        </tr>
+        <tr>
+          <td width="20%" align="left">
+            <a accesskey="p" href="plug-in-cartoon.html">
+              <img src="images/prev.png" alt="Prev" />
+            </a>
+          </td>
+          <th width="60%" align="center">11. Artistic Filters</th>
+          <td width="20%" align="right"> <a accesskey="n" href="plug-in-gimpressionist.html"><img src="images/next.png" alt="Next" /></a></td>
+        </tr>
+      </table>
+      <hr />
+    </div>
+    <div class="sect2">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h3 class="title"><a id="script-fu-clothify"></a>11.12. Clothify</h3>
+          </div>
+        </div>
+      </div>
+      <a id="idm139754644004096" class="indexterm"></a>
+      <a id="idm139754650090448" class="indexterm"></a>
+      <div class="sect3">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h4 class="title"><a id="idm139754645532784"></a>11.12.1. Overview</h4>
+            </div>
+          </div>
+        </div>
+        <div class="figure">
+          <a id="idm139754646162608"></a>
+          <p class="title">
+            <strong>Figure 17.207. Example of Clothify</strong>
+          </p>
+          <div class="figure-contents">
+            <div class="mediaobject">
+              <img src="images/filters/examples/artistic-taj-clothify.jpg" alt="Example of Clothify" />
+              <div class="caption">
+                <p>Filter <span class="quote">“<span class="quote">Clothify</span>”</span> applied (in selection)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br class="figure-break" />
+        <p>
+      <span class="guimenuitem">Clothify</span> command is a script which
+      adds a cloth-like texture to the selected region or alpha.
+    </p>
+        <p>
+      If the image is in indexed colors, this menu entry is grayed out
+      and unavailable.
+    </p>
+        <p>This effect is achieved through the following steps:</p>
+        <div class="procedure">
+          <ol class="procedure" type="1">
+            <li class="step">
+              <p>
+          Create an image in the same size as the original image, or selection
+          or region in alpha if it is given, then add a layer to this image
+          filled with white and
+          <a class="link" href="gimp-filter-noise-rgb.html" title="7.6. RGB Noise">noisified</a> strongly.
+        </p>
+            </li>
+            <li class="step">
+              <p>
+          Reproduce a layer from the recently added layer and set the mode of
+          the upper layer to
+          <a class="link" href="gimp-concepts-layer-modes.html#layer-mode-multiply">Multiply</a>.
+        </p>
+            </li>
+            <li class="step">
+              <p>
+          Apply <a class="link" href="gimp-filter-gaussian-blur.html" title="3.2. Gaussian Blur">Gaussian blur</a> in
+          different directions, horizontally on the lower layer by the given
+          parameter <span class="guilabel">Blur X</span> as the radius, and vertically
+          on the upper layer with <span class="guilabel">Blur Y</span>.
+        </p>
+            </li>
+            <li class="step">
+              <p>
+          Merge these two layers into an image and make its contrast
+          <a class="link" href="gimp-filter-stretch-contrast.html" title="8.21. Stretch Contrast">expanded as 
+possibly</a>, then
+          slightly noisify again on this working image.
+        </p>
+            </li>
+            <li class="step">
+              <p>
+          Finally do <a class="link" href="gimp-filter-bump-map.html" title="13.2. Bump Map">bump map</a> on the
+          original image by the working image with parameters
+          <span class="guilabel">Azimuth</span>, <span class="guilabel">Elevation</span>, and
+          <span class="guilabel">Depth</span>.
+        </p>
+            </li>
+          </ol>
+        </div>
+      </div>
+      <div class="sect3">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h4 class="title"><a id="idm139754648469024"></a>11.12.2. Activate the filter</h4>
+            </div>
+          </div>
+        </div>
+        <p>
+      This filter is found in the image window menu under
+      <span class="guimenu">Filters</span> → <span class="guisubmenu">Artistic</span> → <span class="guimenuitem">Clothify…</span>.
+    </p>
+      </div>
+      <div class="sect3">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h4 class="title"><a id="idm139754659172128"></a>11.12.3. Options</h4>
+            </div>
+          </div>
+        </div>
+        <div class="figure">
+          <a id="idm139754641719456"></a>
+          <p class="title">
+            <strong>Figure 17.208. <span class="quote">“<span class="quote">Clothify</span>”</span> filter options</strong>
+          </p>
+          <div class="figure-contents">
+            <div class="mediaobject">
+              <img src="images/filters/artistic/clothify.png" alt="“Clothify” filter options" />
+            </div>
+          </div>
+        </div>
+        <br class="figure-break" />
+        <p>
+      <span class="guilabel">Azimuth</span>, <span class="guilabel">Elevation</span>, and
+      <span class="guilabel">Depth</span> come from
+      <a class="link" href="gimp-filter-bump-map.html" title="13.2. Bump Map">Bump Map</a> filter.
+    </p>
+        <div class="variablelist">
+          <dl class="variablelist">
+            <dt>
+              <span class="term">Blur X, </span>
+              <span class="term">Blur Y</span>
+            </dt>
+            <dd>
+              <p>
+            These parameters lengthen fibers of the texture, horizontally
+            by <span class="guilabel">Blur X</span>, and vertically by
+            <span class="guilabel">Blur Y</span>.  The range of value is between
+            3 to 100.
+          </p>
+            </dd>
+            <dt>
+              <span class="term">Azimuth</span>
+            </dt>
+            <dd>
+              <p>
+            <span class="guilabel">Azimuth</span> slider controls the bearings
+            where light comes from according to the point of the compass.
+            Both the minimum value (0.00) and the maximum value (360.00)
+            are the direction of three o'clock on the dial panel of an
+            analogue clock.  Increasing value goes counter-clockwise.
+          </p>
+            </dd>
+            <dt>
+              <span class="term">Elevation</span>
+            </dt>
+            <dd>
+              <p>
+            <span class="guilabel">Elevation</span> slider controls the height
+            where light comes from.  For the minimal value (0.50)
+            the light comes from horizon, and for the maximum value
+            (90.0) the light comes from zenith.
+          </p>
+            </dd>
+            <dt>
+              <span class="term">Depth</span>
+            </dt>
+            <dd>
+              <p>
+            <span class="guilabel">Depth</span> slider controls distance between bump
+            height and hollow depth.  Increasing value causes more rugged
+            features.  Values vary from 1 to 65.
+          </p>
+            </dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+    <div class="navfooter">
+      <hr />
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="left"><a accesskey="p" href="plug-in-cartoon.html"><img src="images/prev.png" alt="Prev" /></a> </td>
+          <td width="20%" align="center">
+            <a accesskey="u" href="filters-artistic.html">
+              <img src="images/up.png" alt="Up" />
+            </a>
+          </td>
+          <td width="40%" align="right"> <a accesskey="n" href="plug-in-gimpressionist.html"><img src="images/next.png" alt="Next" /></a></td>
+        </tr>
+        <tr>
+          <td width="40%" align="left" valign="top"><a accesskey="p" href="plug-in-cartoon.html">11.11. Cartoon (legacy)</a> </td>
+          <td width="20%" align="center">
+            <a accesskey="h" href="index.html">
+              <img src="images/home.png" alt="Home" />
+            </a>
+          </td>
+          <td width="40%" align="right" valign="top"> <a accesskey="n" href="plug-in-gimpressionist.html">11.13. GIMPressionist</a></td>
+        </tr>
+      </table>
+      <a href="https://gitlab.gnome.org/GNOME/gimp-help/issues" class="reportbug">
+      Report an error in the bug tracker
+    </a>
+    </div>
+  </body>
+</html>

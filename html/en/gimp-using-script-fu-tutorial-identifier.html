@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>3.2. Variables And Functions</title>
+    <link rel="stylesheet" href="gimp-help-plain.css" type="text/css" />
+    <link rel="stylesheet" href="gimp-help-screen.css" type="text/css" />
+    <link rel="stylesheet" href="gimp-help-custom.css" type="text/css" />
+    <link rel="alternate stylesheet" href="gimp22.css" type="text/css" title="gimp22" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.78.0" />
+    <link rel="home" href="index.html" title="GNU Image Manipulation Program" />
+    <link rel="up" href="gimp-using-script-fu-tutorial.html" title="3. A Script-Fu Tutorial" />
+    <link rel="prev" href="gimp-using-script-fu-tutorial.html" title="3. A Script-Fu Tutorial" />
+    <link rel="next" href="gimp-using-script-fu-tutorial-lists.html" title="3.3. Lists, Lists And More Lists" />
+  </head>
+  <body>
+    <div class="navheader">
+      <table width="100%" summary="Navigation header">
+        <tr>
+          <th colspan="3" align="center">3.2. Variables And Functions</th>
+        </tr>
+        <tr>
+          <td width="20%" align="left">
+            <a accesskey="p" href="gimp-using-script-fu-tutorial.html">
+              <img src="images/prev.png" alt="Prev" />
+            </a>
+          </td>
+          <th width="60%" align="center">3. A Script-Fu Tutorial</th>
+          <td width="20%" align="right"> <a accesskey="n" href="gimp-using-script-fu-tutorial-lists.html"><img src="images/next.png" alt="Next" /></a></td>
+        </tr>
+      </table>
+      <hr />
+    </div>
+    <div class="sect2">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h3 class="title"><a id="gimp-using-script-fu-tutorial-identifier"></a>3.2. Variables And Functions</h3>
+          </div>
+        </div>
+      </div>
+      <p>
+      Now that we know that every Scheme statement is enclosed in parentheses,
+      and that the function name/operator is listed first, we need to know how
+      to create and use variables, and how to create and use functions. We'll
+      start with the variables.
+    </p>
+      <div class="sect3">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h4 class="title"><a id="idm139754662293760"></a>3.2.1. Declaring Variables</h4>
+            </div>
+          </div>
+        </div>
+        <p>
+        Although there are a couple of different methods for declaring
+        variables, the preferred method is to use the <span class="command"><strong>let*</strong></span>
+        construct. If
+        you're familiar with other programming languages, this construct is
+        equivalent to defining a list of local variables and a scope in which
+        they're active. As an example, to declare two variables, a and b,
+        initialized to 1 and 2, respectively, you'd write:
+      </p>
+        <pre class="programlisting">
+        (let*
+           (
+              (a 1)
+              (b 2)
+           )
+           (+ a b)
+        )
+      </pre>
+        <p>or, as one line:</p>
+        <pre class="programlisting">(let* ( (a 1) (b 2) ) (+ a b) )</pre>
+        <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+          <table border="0" summary="Note">
+            <tr>
+              <td rowspan="2" align="center" valign="top" width="25">
+                <img alt="[Note]" src="images/note.png" />
+              </td>
+              <th align="left">Note</th>
+            </tr>
+            <tr>
+              <td align="left" valign="top">
+                <p>
+          You'll have to put all of this on one line if you're using the
+          console window. In general, however, you'll want to adopt a similar
+          practice of indentation to help make your scripts more readable.
+          We'll talk a bit more about this in the section on White Space.
+        </p>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <p>
+        This declares two local variables, a and b, initializes them, then
+        prints the sum of the two variables.
+      </p>
+      </div>
+      <div class="sect3">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h4 class="title"><a id="idm139754660038816"></a>3.2.2. What Is A Local Variable?</h4>
+            </div>
+          </div>
+        </div>
+        <p>
+        You'll notice that we wrote the summation <code class="code">(+ a b)</code> within
+        the parens of the <code class="code">let*</code> expression, not after it.
+      </p>
+        <p>
+        This is because the <code class="code">let*</code>
+        statement defines an area in your script in which the declared
+        variables are usable; if you type the <strong class="userinput"><code>(+ a b)</code></strong>
+        statement after the <strong class="userinput"><code>(let* …)</code></strong> statement,
+        you'll get an error, because the declared
+        variables are only valid within the context of the <code class="code">let*</code>
+        statement; they are what programmers call local variables.
+      </p>
+      </div>
+      <div class="sect3">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h4 class="title"><a id="idm139754660464368"></a>3.2.3. The General Syntax Of <code class="code">let*</code></h4>
+            </div>
+          </div>
+        </div>
+        <p>The general form of a <code class="code">let*</code> statement is:</p>
+        <pre class="programlisting">
+        (let* ( <em class="replaceable"><code>variables</code></em> )
+          <em class="replaceable"><code>expressions</code></em> )
+      </pre>
+        <p>
+        where variables are declared within parens, e.g.,
+        <strong class="userinput"><code>(a 2)</code></strong>, and
+        expressions are any valid Scheme expressions. Remember that the
+        variables declared here are only valid within the
+        <code class="code">let*</code> statement — they're local variables.
+      </p>
+      </div>
+      <div class="sect3">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h4 class="title"><a id="idm139754661301616"></a>3.2.4. White Space</h4>
+            </div>
+          </div>
+        </div>
+        <p>
+        Previously, we mentioned the fact that you'll probably want to use
+        indentation to help clarify and organize your scripts. This is a good
+        policy to adopt, and is not a problem in Scheme — white space is
+        ignored by the Scheme interpreter, and can thus be liberally applied
+        to help clarify and organize the code within a script. However, if
+        you're working in Script-Fu's Console window, you'll have to enter an
+        entire expression on one line; that is, everything between the opening
+        and closing parens of an expression must come on one line in the
+        Script-Fu Console window.
+      </p>
+      </div>
+      <div class="sect3">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h4 class="title"><a id="idm139754669820800"></a>3.2.5. Assigning A New Value To A Variable</h4>
+            </div>
+          </div>
+        </div>
+        <p>
+        Once you've initialized a variable, you might need to change its value
+        later on in the script. Use the <code class="code">set!</code> statement to change
+        the variable's value:
+      </p>
+        <pre class="programlisting">
+        (let* ( (theNum 10) ) (set! theNum (+ theNum theNum)) )
+      </pre>
+        <p>
+        Try to guess what the above statement will do, then go ahead and enter
+        it in the Script-Fu Console window.
+      </p>
+        <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+          <table border="0" summary="Note">
+            <tr>
+              <td rowspan="2" align="center" valign="top" width="25">
+                <img alt="[Note]" src="images/note.png" />
+              </td>
+              <th align="left">Note</th>
+            </tr>
+            <tr>
+              <td align="left" valign="top">
+                <p>
+          The <span class="quote">“<span class="quote"><code class="code">\</code></span>”</span> indicates that there is no line
+          break. Ignore it (don't type it in your Script-Fu console and don't
+          hit <span class="keycap"><strong>Enter</strong></span>), just continue with the next line.
+        </p>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="sect3">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h4 class="title"><a id="idm139754668459712"></a>3.2.6. Functions</h4>
+            </div>
+          </div>
+        </div>
+        <p>
+        Now that you've got the hang of variables, let's get to work with some
+        functions. You declare a function with the following syntax:
+      </p>
+        <pre class="programlisting">
+        (define
+           (
+              <em class="replaceable"><code>name</code></em>
+              <em class="replaceable"><code>param-list</code></em>
+           )
+           <em class="replaceable"><code>expressions</code></em>
+        )
+      </pre>
+        <p>
+        where <em class="replaceable"><code>name</code></em> is the name assigned to this
+        function, <em class="replaceable"><code>param-list</code></em> is a space-delimited
+        list of parameter names, and <em class="replaceable"><code>expressions</code></em>
+        is a series of expressions that the function executes when it's
+        called. For example:
+      </p>
+        <pre class="programlisting">(define (AddXY inX inY) (+ inX inY) )</pre>
+        <p>
+        <code class="varname">AddXY</code> is the function's name and
+        <code class="varname">inX</code> and <code class="varname">inY</code>
+        are the variables. This function takes its two parameters and adds
+        them together.
+      </p>
+        <p>
+        If you've programmed in other imperative languages (like C/C++, Java,
+        Pascal, etc.), you might notice that a couple of things are absent in
+        this function definition when compared to other programming languages.
+      </p>
+        <div class="itemizedlist">
+          <ul class="itemizedlist" style="list-style-type: disc; ">
+            <li class="listitem">
+              <p>
+            First, notice that the parameters don't have any
+            <span class="quote">“<span class="quote">types</span>”</span> (that is,
+            we didn't declare them as strings, or integers, etc.). Scheme is a
+            type-less language. This is handy and allows for quicker script
+            writing.
+          </p>
+            </li>
+            <li class="listitem">
+              <p>
+            Second, notice that we don't need to worry about how to
+            <span class="quote">“<span class="quote">return</span>”</span> the result of our function — the last
+            statement is the value <span class="quote">“<span class="quote">returned</span>”</span> when calling this
+            function. Type the function into the
+            console, then try something like:
+          </p>
+              <pre class="programlisting">(AddXY (AddXY 5 6) 4)</pre>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="navfooter">
+      <hr />
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="left"><a accesskey="p" href="gimp-using-script-fu-tutorial.html"><img src="images/prev.png" alt="Prev" /></a> </td>
+          <td width="20%" align="center">
+            <a accesskey="u" href="gimp-using-script-fu-tutorial.html">
+              <img src="images/up.png" alt="Up" />
+            </a>
+          </td>
+          <td width="40%" align="right"> <a accesskey="n" href="gimp-using-script-fu-tutorial-lists.html"><img src="images/next.png" alt="Next" /></a></td>
+        </tr>
+        <tr>
+          <td width="40%" align="left" valign="top"><a accesskey="p" href="gimp-using-script-fu-tutorial.html">3. A Script-Fu Tutorial</a> </td>
+          <td width="20%" align="center">
+            <a accesskey="h" href="index.html">
+              <img src="images/home.png" alt="Home" />
+            </a>
+          </td>
+          <td width="40%" align="right" valign="top"> <a accesskey="n" href="gimp-using-script-fu-tutorial-lists.html">3.3. Lists, Lists And More Lists</a></td>
+        </tr>
+      </table>
+      <a href="https://gitlab.gnome.org/GNOME/gimp-help/issues" class="reportbug">
+      Report an error in the bug tracker
+    </a>
+    </div>
+  </body>
+</html>

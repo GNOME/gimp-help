@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>3.3. Median Blur</title>
+    <link rel="stylesheet" href="gimp-help-plain.css" type="text/css" />
+    <link rel="stylesheet" href="gimp-help-screen.css" type="text/css" />
+    <link rel="stylesheet" href="gimp-help-custom.css" type="text/css" />
+    <link rel="alternate stylesheet" href="gimp22.css" type="text/css" title="gimp22" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.78.0" />
+    <link rel="home" href="index.html" title="GNU Image Manipulation Program" />
+    <link rel="up" href="filters-blur.html" title="3. Blur Filters" />
+    <link rel="prev" href="gimp-filter-gaussian-blur.html" title="3.2. Gaussian Blur" />
+    <link rel="next" href="gimp-filter-pixelize.html" title="3.4. Pixelize" />
+  </head>
+  <body>
+    <div class="navheader">
+      <table width="100%" summary="Navigation header">
+        <tr>
+          <th colspan="3" align="center">3.3. Median Blur</th>
+        </tr>
+        <tr>
+          <td width="20%" align="left">
+            <a accesskey="p" href="gimp-filter-gaussian-blur.html">
+              <img src="images/prev.png" alt="Prev" />
+            </a>
+          </td>
+          <th width="60%" align="center">3. Blur Filters</th>
+          <td width="20%" align="right"> <a accesskey="n" href="gimp-filter-pixelize.html"><img src="images/next.png" alt="Next" /></a></td>
+        </tr>
+      </table>
+      <hr />
+    </div>
+    <div class="sect2">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h3 class="title"><a id="gimp-filter-median-blur"></a>3.3. Median Blur</h3>
+          </div>
+        </div>
+      </div>
+      <a id="idm139754661023968" class="indexterm"></a>
+      <a id="idm139754657113744" class="indexterm"></a>
+      <div class="sect3">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h4 class="title"><a id="idm139754649019104"></a>3.3.1. Overview</h4>
+            </div>
+          </div>
+        </div>
+        <p>
+      While the <span class="quote">“<span class="quote">Gaussian</span>”</span> blur filter calculates the mean of the 
+      neighboring pixels, the <span class="quote">“<span class="quote">Median</span>”</span> blur filter calculates the 
+      median:
+      </p>
+        <div class="figure">
+          <a id="idm139754660762064"></a>
+          <p class="title">
+            <strong>Figure 17.12. Calculating Median</strong>
+          </p>
+          <div class="figure-contents">
+            <div class="mediaobject">
+              <img src="images/filters/examples/blur/median-calcul.png" alt="Calculating Median" />
+              <div class="caption">
+                <p>A 3x3 neighborhood. Values in ascending order. Median 
+              surrounded in red.
+            </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p><br class="figure-break" />
+      This calculation does not create a new value, and an unrepresentative 
+      pixel in the neighborhood will not affect the result. So, the filter 
+      preserves edges and rounds corners. It is used to reduce noise, 
+      especially salt and pepper noise, and delete scratches on photographs.
+    </p>
+      </div>
+      <div class="sect3">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h4 class="title"><a id="idm139754670208752"></a>3.3.2. Activate the filter</h4>
+            </div>
+          </div>
+        </div>
+        <p>
+      You can find this filter in the image menu under
+      <span class="guimenu">Filters</span> → <span class="guisubmenu">Blur</span> → <span class="guimenuitem">Median Blur…</span>
+    </p>
+      </div>
+      <div class="sect3">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h4 class="title"><a id="idm139754666494112"></a>3.3.3. Options</h4>
+            </div>
+          </div>
+        </div>
+        <div class="figure">
+          <a id="idm139754659966592"></a>
+          <p class="title">
+            <strong>Figure 17.13. <span class="quote">“<span class="quote">Median</span>”</span> filter parameters</strong>
+          </p>
+          <div class="figure-contents">
+            <div class="mediaobject">
+              <img src="images/filters/blur/median-dialog.png" alt="“Median” filter parameters" />
+            </div>
+          </div>
+        </div>
+        <br class="figure-break" />
+        <div class="variablelist">
+          <dl class="variablelist">
+            <dt>
+              <span class="term"><span class="guilabel">Presets</span>, <span class="guilabel">Preview</span>, 
+          <span class="guilabel">Split view</span></span>
+            </dt>
+            <dd>
+              <p>
+            These options are common to GEGL-based filters. Please refer to 
+            <a class="xref" href="gimp-filters-common.html" title="2. Common Features">Section 2, “Common Features”</a>.
+          </p>
+            </dd>
+            <dt>
+              <span class="term">
+                <span class="guilabel">Neighborhood</span>
+              </span>
+            </dt>
+            <dd>
+              <p>
+            The shape of the neighborhood. Three options: 
+            <span class="guilabel">Square</span>, <span class="guilabel">Circle</span>(default), 
+            <span class="guilabel">Diamond</span>. Differences are subtle and not 
+            predictable: experiment, on-canvas editing makes this easy.
+          </p>
+              <div class="figure">
+                <a id="idm139754675092800"></a>
+                <p class="title">
+                  <strong>Figure 17.14. <span class="quote">“<span class="quote">Median</span>”</span> Neighborhood</strong>
+                </p>
+                <div class="figure-contents">
+                  <div class="mediaobject">
+                    <img src="images/filters/examples/blur/median-neighbor.png" alt="“Median” Neighborhood" />
+                    <div class="caption">
+                      <p>
+                  Radius=3..........Left: Square
+                </p>
+                      <p>
+                  Middle: Circle..........Right: Diamond
+                </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <br class="figure-break" />
+            </dd>
+            <dt>
+              <span class="term">
+                <span class="guilabel">Radius</span>
+              </span>
+            </dt>
+            <dd>
+              <p>
+            The radius of the neighborhood. Increasing radius increases blur. 
+            Contrary to the <span class="quote">“<span class="quote">Gaussian</span>”</span> filter, edges are not 
+            blurred. Corners are rounded and convex surfaces are eroded.
+          </p>
+              <div class="figure">
+                <a id="idm139754651964288"></a>
+                <p class="title">
+                  <strong>Figure 17.15. <span class="quote">“<span class="quote">Median</span>”</span> blur vs <span class="quote">“<span class="quote">Gaussian</span>”</span> 
+              blur</strong>
+                </p>
+                <div class="figure-contents">
+                  <div class="mediaobject">
+                    <img src="images/filters/examples/blur/median-vs-gaussian.png" alt="“Median” blur vs “Gaussian” blur" />
+                    <div class="caption">
+                      <p>
+                  Left: Origin
+                </p>
+                      <p>
+                  Middle: Median
+                </p>
+                      <p>
+                  Right: Gaussian
+                </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <br class="figure-break" />
+              <p>
+            Increasing radius too much can create unwanted effects:
+          </p>
+              <div class="mediaobject">
+                <img src="images/filters/examples/blur/median-radius-100.png" />
+                <div class="caption">
+                  <p>
+                Left: Origin
+              </p>
+                  <p>
+                Right: Radius=100
+              </p>
+                </div>
+              </div>
+            </dd>
+            <dt>
+              <span class="term">
+                <span class="guilabel">Percentile</span>
+              </span>
+            </dt>
+            <dd>
+              <p>
+            By default, the Median Blur filter finds the median value at the
+            neighborhood of each pixel.  In spite of its name, the filter can
+            actually find *any* arbitrary percentile, not just the median 
+            (i.e., the 50th percentile).  The "Percentile" parameter controls 
+            the percentile used for the color components. Lower values shift 
+            the image toward darker tones and higher values toward brighter 
+            ones.
+          </p>
+              <div class="mediaobject">
+                <img src="images/filters/examples/blur/median-percent.jpg" />
+                <div class="caption">
+                  <p>
+                Left: Origin
+              </p>
+                  <p>
+                Middle: Percentile=0. Image is darker. Stems are enlarged but 
+                sharp.
+              </p>
+                  <p>
+                Right: Percentile=100. Image is brighter and much blurred.
+              </p>
+                </div>
+              </div>
+            </dd>
+            <dt>
+              <span class="term">
+                <span class="guilabel">Alpha Percentile</span>
+              </span>
+            </dt>
+            <dd>
+              <p>
+            To see the effect of this parameter, you need an image with 
+            transparency. If the alpha channel is opaque everywhere, the 
+            result will also be fully opaque, regardless of the percentile.
+          </p>
+              <p>
+            Lower values for the <span class="quote">“<span class="quote">Alpha percentile</span>”</span> parameter 
+            shift the image toward more transparency, and higher values shift 
+            the image toward more opacity, where a value of 50% is balanced. 
+            Roughly speaking, values less than 50% make the opaque regions of 
+            the image smaller, while values greater than 50% make the opaque 
+            regions of the image larger.
+          </p>
+              <div class="mediaobject">
+                <img src="images/filters/examples/blur/median-alpha-percent-bw.png" />
+              </div>
+              <div class="mediaobject">
+                <img src="images/filters/examples/blur/median-alpha-percent.png" />
+                <div class="caption">
+                  <p>
+                Left: Origin. The image has an alpha channel. A circle is 
+                transparent.
+              </p>
+                  <p>
+                Middle: Percentile=0%. Transparent circle is enlarged.
+              </p>
+                  <p>
+                Right: Alpha percentile=100%. Transparent circle is reduced.
+              </p>
+                </div>
+              </div>
+            </dd>
+          </dl>
+        </div>
+      </div>
+      <div class="sect3">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h4 class="title"><a id="idm139754651051856"></a>3.3.4. Using Median Blur</h4>
+            </div>
+          </div>
+        </div>
+        <div class="variablelist">
+          <dl class="variablelist">
+            <dt>
+              <span class="term">Reducing salt and pepper noise</span>
+            </dt>
+            <dd>
+              <div class="mediaobject">
+                <img src="images/filters/examples/blur/median-noise.png" />
+                <div class="caption">
+                  <p>
+                Left: origin (from Wikipedia)
+              </p>
+                  <p>
+                Middle: radius = 1 applied twice
+              </p>
+                  <p>
+                Right: radius = 1 applied three times
+              </p>
+                </div>
+              </div>
+            </dd>
+            <dt>
+              <span class="term">Reducing scratches</span>
+            </dt>
+            <dd>
+              <div class="mediaobject">
+                <img src="images/filters/examples/blur/median-scratch.png" />
+                <div class="caption">
+                  <p>
+                Left: origin
+              </p>
+                  <p>
+                Middle: radius = 2
+              </p>
+                  <p>
+                Right: radius = 1 applied twice. The image is less blurred.
+              </p>
+                </div>
+              </div>
+            </dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+    <div class="navfooter">
+      <hr />
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="left"><a accesskey="p" href="gimp-filter-gaussian-blur.html"><img src="images/prev.png" alt="Prev" /></a> </td>
+          <td width="20%" align="center">
+            <a accesskey="u" href="filters-blur.html">
+              <img src="images/up.png" alt="Up" />
+            </a>
+          </td>
+          <td width="40%" align="right"> <a accesskey="n" href="gimp-filter-pixelize.html"><img src="images/next.png" alt="Next" /></a></td>
+        </tr>
+        <tr>
+          <td width="40%" align="left" valign="top"><a accesskey="p" href="gimp-filter-gaussian-blur.html">3.2. Gaussian Blur</a> </td>
+          <td width="20%" align="center">
+            <a accesskey="h" href="index.html">
+              <img src="images/home.png" alt="Home" />
+            </a>
+          </td>
+          <td width="40%" align="right" valign="top"> <a accesskey="n" href="gimp-filter-pixelize.html">3.4. Pixelize</a></td>
+        </tr>
+      </table>
+      <a href="https://gitlab.gnome.org/GNOME/gimp-help/issues" class="reportbug">
+      Report an error in the bug tracker
+    </a>
+    </div>
+  </body>
+</html>

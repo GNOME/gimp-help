@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Chapter 5. Getting Images into GIMP</title>
+    <link rel="stylesheet" href="gimp-help-plain.css" type="text/css" />
+    <link rel="stylesheet" href="gimp-help-screen.css" type="text/css" />
+    <link rel="stylesheet" href="gimp-help-custom.css" type="text/css" />
+    <link rel="alternate stylesheet" href="gimp22.css" type="text/css" title="gimp22" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.78.0" />
+    <link rel="home" href="index.html" title="GNU Image Manipulation Program" />
+    <link rel="up" href="become-a-gimp-wizard.html" title="Part II.  How do I Become a GIMP Wizard?" />
+    <link rel="prev" href="become-a-gimp-wizard.html" title="Part II.  How do I Become a GIMP Wizard?" />
+    <link rel="next" href="gimp-using-fileformats-creating.html" title="2. Creating new Files" />
+  </head>
+  <body>
+    <div class="navheader">
+      <table width="100%" summary="Navigation header">
+        <tr>
+          <th colspan="3" align="center">Chapter 5. Getting Images into GIMP</th>
+        </tr>
+        <tr>
+          <td width="20%" align="left">
+            <a accesskey="p" href="become-a-gimp-wizard.html">
+              <img src="images/prev.png" alt="Prev" />
+            </a>
+          </td>
+          <th width="60%" align="center">Part II. 
+      How do I Become a <acronym class="acronym">GIMP</acronym> Wizard?
+    </th>
+          <td width="20%" align="right"> <a accesskey="n" href="gimp-using-fileformats-creating.html"><img src="images/next.png" alt="Next" /></a></td>
+        </tr>
+      </table>
+      <hr />
+    </div>
+    <div class="chapter">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h2 class="title"><a id="gimp-images-in"></a>Chapter 5. Getting Images into GIMP</h2>
+          </div>
+        </div>
+      </div>
+      <div class="toc">
+        <p>
+          <strong>Table of Contents</strong>
+        </p>
+        <dl class="toc">
+          <dt>
+            <span class="sect1">
+              <a href="gimp-images-in.html#gimp-concepts-image-types">1. Image Types</a>
+            </span>
+          </dt>
+          <dt>
+            <span class="sect1">
+              <a href="gimp-using-fileformats-creating.html">2. Creating new Files</a>
+            </span>
+          </dt>
+          <dt>
+            <span class="sect1">
+              <a href="gimp-using-fileformats-opening.html">3. Opening Files</a>
+            </span>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <span class="sect2">
+                  <a href="gimp-using-fileformats-opening.html#gimp-using-open-file">3.1. Open File</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="sect2">
+                  <a href="gimp-using-open-location.html">3.2. Open Location</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="sect2">
+                  <a href="gimp-using-open-recent.html">3.3. Open Recent</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="sect2">
+                  <a href="gimp-using-external-programs.html">3.4. Using External Programs</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="sect2">
+                  <a href="gimp-using-file-manager.html">3.5. File Manager</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="sect2">
+                  <a href="gimp-using-drag-and-drop.html">3.6. Drag and Drop</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="sect2">
+                  <a href="gimp-using-open-copy-and-paste.html">3.7. Copy and Paste</a>
+                </span>
+              </dt>
+              <dt>
+                <span class="sect2">
+                  <a href="gimp-using-image-browser.html">3.8. Image Browser</a>
+                </span>
+              </dt>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+      <p>
+        This chapter is about getting images into GIMP. It explains how to
+        create new images, how to load images from files, how to scan them and
+        how to make screenshots.
+      </p>
+      <p>
+        But first we want to introduce you to the general structure of images
+        in GIMP.
+      </p>
+      <div class="sect1">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both"><a id="gimp-concepts-image-types"></a>1. Image Types</h2>
+            </div>
+          </div>
+        </div>
+        <a id="idm139754671982896" class="indexterm"></a>
+        <p>
+    It is tempting to think of an <span class="emphasis"><em>image</em></span> as
+    something that corresponds with a single display window, or to a
+    single file such as a <a class="link" href="gimp-images-out.html#file-jpeg-load">JPEG</a>
+    file. In reality, however, a <acronym class="acronym">GIMP</acronym> image is a
+    a complicated structure,
+    containing a stack of layers plus several other types of objects:
+    a selection mask, a set of channels, a set of paths, an "undo"
+    history, etc.  In this section we take a detailed
+    look at the components of a <acronym class="acronym">GIMP</acronym> image,
+    and the things that you can do with them.
+  </p>
+        <p>
+    The most basic property of an image is its
+    <span class="emphasis"><em>mode</em></span>.  There are three possible modes: RGB,
+    grayscale, and indexed. RGB stands
+    for Red-Green-Blue, and indicates that each point in the image
+    is represented by a <span class="quote">“<span class="quote">red</span>”</span> level, a <span class="quote">“<span class="quote">green</span>”</span>
+    level, and a <span class="quote">“<span class="quote">blue</span>”</span>
+    level; representing a full-color image.
+    Each color channel has 256 possible intensity
+    levels. More details in <a class="link" href="glossary.html#glossary-colormodel" title="Color model">
+    Color Models</a>
+  </p>
+        <p>
+    In a grayscale image, each point is represented by a brightness
+    value, ranging from 0 (black) to 255 (white), with intermediate
+    values representing different levels of gray.
+  </p>
+        <div class="figure">
+          <a id="idm139754670369632"></a>
+          <p class="title">
+            <strong>Figure 5.1. Components of the RGB and CMY Color Model</strong>
+          </p>
+          <div class="figure-contents">
+            <div class="mediaobject">
+              <img src="images/glossary/color-model-additive.png" alt="Components of the RGB and CMY Color Model" />
+              <div class="caption">
+                <p>
+          In the RGB Color Model, mixing Red, Green and Blue gives White,
+          which is what happens on your screen.
+        </p>
+              </div>
+            </div>
+            <div class="mediaobject">
+              <img src="images/glossary/color-model-subtractive.png" alt="Components of the RGB and CMY Color Model" />
+              <div class="caption">
+                <p>
+          In the CMY(K) color model, mixing Cyan, Magenta and Yellow gives
+          Black, which is what happens when you print on a white paper. The
+          printer will actually use the black cartridge for economical
+          reasons and better color rendering.
+        </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br class="figure-break" />
+        <p>
+    Conceptually, the difference between a grayscale image and an RGB
+    image is the number of <span class="quote">“<span class="quote">color channels</span>”</span>: a grayscale image
+    has one; an RGB image has three.  An RGB image can be thought of as
+    three superimposed grayscale images, one colored red, one green,
+    and one blue.
+  </p>
+        <p>
+    Actually, both RGB and grayscale images have one additional
+    color channel called the <span class="emphasis"><em>alpha</em></span> channel, which
+    represents opacity.  When the alpha value at a given location
+    in a given layer is zero, the layer is completely transparent
+    (you can see through it),
+    and the color at that location is determined by what lies
+    underneath.  When alpha is maximal (255), the layer is opaque
+    (you cannot see through it), and the
+    color is determined by the color of the layer.  Intermediate
+    alpha values correspond to varying degrees of transparency / opacity:
+    the
+    color at the location is a proportional mixture of color from the
+    layer and color from underneath.
+  </p>
+        <div class="figure">
+          <a id="idm139754674465120"></a>
+          <p class="title">
+            <strong>Figure 5.2. Example of an image in RGB and Grayscale mode</strong>
+          </p>
+          <div class="figure-contents">
+            <div class="mediaobject">
+              <img src="images/using/wilber-channel-rgb.png" alt="Example of an image in RGB and Grayscale mode" />
+              <div class="caption">
+                <p>
+          An image in RGB mode, with the channels corresponding to Red,
+          Green and Blue.
+        </p>
+              </div>
+            </div>
+            <div class="mediaobject">
+              <img src="images/using/wilber-channel-gray.png" alt="Example of an image in RGB and Grayscale mode" />
+              <div class="caption">
+                <p>
+          An image in Grayscale mode, with the channel corresponding to
+          Luminosity.
+        </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br class="figure-break" />
+        <p>
+    In <acronym class="acronym">GIMP</acronym>, every color channel, including the alpha
+    channel, has a range
+    of possible values from 0 to 255; in computing terminology, a depth of 8
+    bits. Some digital cameras can produce image files with a depth of 16
+    bits per color channel. <acronym class="acronym">GIMP</acronym> cannot load such a file
+    without losing
+    resolution. In most cases the effects are too subtle to be detected by
+    the human eye, but in some cases, mainly where there are large areas
+    with slowly varying color gradients, the difference may be perceptible.
+  </p>
+        <div class="figure">
+          <a id="idm139754672202384"></a>
+          <p class="title">
+            <strong>Figure 5.3. Example of an image with alpha channel</strong>
+          </p>
+          <div class="figure-contents">
+            <div class="mediaobject">
+              <img src="images/dialogs/wilber-channels-red.png" alt="Example of an image with alpha channel" />
+              <div class="caption">
+                <p>Red channel</p>
+              </div>
+            </div>
+            <div class="mediaobject">
+              <img src="images/dialogs/wilber-channels-green.png" alt="Example of an image with alpha channel" />
+              <div class="caption">
+                <p>Green channel</p>
+              </div>
+            </div>
+            <div class="mediaobject">
+              <img src="images/dialogs/wilber-channels-blue.png" alt="Example of an image with alpha channel" />
+              <div class="caption">
+                <p>Blue channel</p>
+              </div>
+            </div>
+            <div class="mediaobject">
+              <img src="images/dialogs/wilber-channels-alpha.png" alt="Example of an image with alpha channel" />
+              <div class="caption">
+                <p>
+          The Alpha channel shows the image area which is transparent.
+        </p>
+              </div>
+            </div>
+            <div class="mediaobject">
+              <img src="images/dialogs/wilber-channels-combined.png" alt="Example of an image with alpha channel" />
+              <div class="caption">
+                <p>
+          A color image in RGB mode with an Alpha channel.
+        </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br class="figure-break" />
+        <p>
+    The third type, <span class="emphasis"><em>indexed</em></span>
+    images, is a bit more complicated to understand. In an indexed image,
+    only a limited set of discrete colors are used, usually 256 or less.
+    These colors form the <span class="quote">“<span class="quote">colormap</span>”</span> of the image, and each
+    point in the image is assigned a color from the colormap. Indexed images
+    have the advantage that they can be represented inside a computer in a
+    way which consumes relatively little memory, and back in the dark ages
+    (say, ten years ago), they were very commonly used. As time goes on, they
+    are used less and less, but they are still important enough to be worth
+    supporting in <acronym class="acronym">GIMP</acronym>. (Also, there are a few important
+    kinds of image
+    manipulation that are easier to implement with indexed images than with
+    continuous-color RGB images.)
+  </p>
+        <p>
+    Some very commonly used types of files (including
+    <a class="link" href="gimp-images-out.html#file-gif-load">GIF</a> and
+    <a class="link" href="gimp-images-out.html#file-png-load">PNG</a>) produce
+    indexed images when they are opened in <acronym class="acronym">GIMP</acronym>.  Many of
+    <acronym class="acronym">GIMP</acronym>'s
+    tools don't work very well on indexed images–and many filters
+    don't work at all–because of the limited number of colors
+    available.  Because of this, it is usually best to convert an
+    image to RGB mode before working on it.  If necessary, you can
+    convert it back to indexed mode when you are ready to save it
+  </p>
+        <p>
+    <acronym class="acronym">GIMP</acronym> makes it easy to convert from one image type to
+    another,
+    using the <a class="link" href="gimp-image-mode.html" title="6.3. Mode">Mode</a> command in
+    the Image menu.  Some types of conversions, of course (RGB to
+    grayscale or indexed, for example) lose information that cannot
+    be regained by converting back in the other direction.
+  </p>
+        <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+          <table border="0" summary="Note">
+            <tr>
+              <td rowspan="2" align="center" valign="top" width="25">
+                <img alt="[Note]" src="images/note.png" />
+              </td>
+              <th align="left">Note</th>
+            </tr>
+            <tr>
+              <td align="left" valign="top">
+                <p>
+      If you are trying to use a filter on an image, and it appears grayed out
+      in the menu, usually the cause is that the image (or, more specifically,
+      the layer) you are working on is the wrong type. Many filters can't be
+      used on indexed images. Some can be used only on RGB images, or only on
+      grayscale images. Some also require the presence or absence of an alpha
+      channel. Usually the fix is to convert the image to a different type,
+      most commonly RGB.
+    </p>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="navfooter">
+      <hr />
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="left"><a accesskey="p" href="become-a-gimp-wizard.html"><img src="images/prev.png" alt="Prev" /></a> </td>
+          <td width="20%" align="center">
+            <a accesskey="u" href="become-a-gimp-wizard.html">
+              <img src="images/up.png" alt="Up" />
+            </a>
+          </td>
+          <td width="40%" align="right"> <a accesskey="n" href="gimp-using-fileformats-creating.html"><img src="images/next.png" alt="Next" /></a></td>
+        </tr>
+        <tr>
+          <td width="40%" align="left" valign="top"><a accesskey="p" href="become-a-gimp-wizard.html">Part II. 
+      How do I Become a <acronym class="acronym">GIMP</acronym> Wizard?
+    </a> </td>
+          <td width="20%" align="center">
+            <a accesskey="h" href="index.html">
+              <img src="images/home.png" alt="Home" />
+            </a>
+          </td>
+          <td width="40%" align="right" valign="top"> <a accesskey="n" href="gimp-using-fileformats-creating.html">2. Creating new Files</a></td>
+        </tr>
+      </table>
+      <a href="https://gitlab.gnome.org/GNOME/gimp-help/issues" class="reportbug">
+      Report an error in the bug tracker
+    </a>
+    </div>
+  </body>
+</html>

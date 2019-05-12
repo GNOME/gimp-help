@@ -1,0 +1,648 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>14.26. Spyrogimp</title>
+    <link rel="stylesheet" href="gimp-help-plain.css" type="text/css" />
+    <link rel="stylesheet" href="gimp-help-screen.css" type="text/css" />
+    <link rel="stylesheet" href="gimp-help-custom.css" type="text/css" />
+    <link rel="alternate stylesheet" href="gimp22.css" type="text/css" title="gimp22" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.78.0" />
+    <link rel="home" href="index.html" title="GNU Image Manipulation Program" />
+    <link rel="up" href="filters-render.html" title="14. Rendering Filters" />
+    <link rel="prev" href="plug-in-spheredesigner.html" title="14.25. Sphere Designer" />
+    <link rel="next" href="filters-web.html" title="15. Web Filters" />
+  </head>
+  <body>
+    <div class="navheader">
+      <table width="100%" summary="Navigation header">
+        <tr>
+          <th colspan="3" align="center">14.26. Spyrogimp</th>
+        </tr>
+        <tr>
+          <td width="20%" align="left">
+            <a accesskey="p" href="plug-in-spheredesigner.html">
+              <img src="images/prev.png" alt="Prev" />
+            </a>
+          </td>
+          <th width="60%" align="center">14. Rendering Filters</th>
+          <td width="20%" align="right"> <a accesskey="n" href="filters-web.html"><img src="images/next.png" alt="Next" /></a></td>
+        </tr>
+      </table>
+      <hr />
+    </div>
+    <div class="sect2">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h3 class="title"><a id="script-fu-spyrogimp"></a>14.26. Spyrogimp</h3>
+          </div>
+        </div>
+      </div>
+      <a id="idm139754643976544" class="indexterm"></a>
+      <a id="idm139754647763424" class="indexterm"></a>
+      <div class="sect3">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h4 class="title"><a id="idm139754663901552"></a>14.26.1. Overview</h4>
+            </div>
+          </div>
+        </div>
+        <div class="figure">
+          <a id="idm139754638318416"></a>
+          <p class="title">
+            <strong>Figure 17.377. Example for the <span class="quote">“<span class="quote">Spyrogimp</span>”</span> filter</strong>
+          </p>
+          <div class="figure-contents">
+            <div class="mediaobject">
+              <img src="images/filters/examples/render/taj-spyrogimp.jpg" alt="Example for the “Spyrogimp” filter" />
+              <div class="caption">
+                <p><span class="quote">“<span class="quote">Spyrogimp</span>”</span> applied</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br class="figure-break" />
+        <p>
+      This filter draws Spirographs, Epitrochoids, and Lissajous curves.
+      Immediate feedback is provided, by drawing to a temporary
+      layer.
+    </p>
+        <p>
+      It reproduces curves drawn by Spirograph© toys. Here is an example 
+      from Wikipedia showing what gears and holes are:
+      </p>
+        <div class="mediaobject">
+          <img src="images/filters/examples/render/Spiograph_Animation.gif" />
+          <div class="caption">
+            <p>
+            <span class="emphasis"><em>Moving gear</em></span> is inside <span class="emphasis"><em>fixed 
+              gear</em></span> and only one <span class="emphasis"><em>hole</em></span> is used.
+          </p>
+          </div>
+        </div>
+        <p>
+    </p>
+      </div>
+      <div class="sect3">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h4 class="title"><a id="idm139754641189952"></a>14.26.2. Activating the filter</h4>
+            </div>
+          </div>
+        </div>
+        <p>
+      This filter is found in the image window menu under
+      <span class="guimenu">Filters</span> → <span class="guisubmenu">Render</span> → <span class="guimenuitem">Spyrogimp…</span>.
+    </p>
+      </div>
+      <div class="sect3">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h4 class="title"><a id="idm139754647960672"></a>14.26.3. Selection and Tool</h4>
+            </div>
+          </div>
+        </div>
+        <p>
+      Much of the behavior of the plugin is determined by options set outside
+      of the plugin, such as the current selection, or settings for gimp
+      tools. These settings can be changed while the plugin is running.
+    </p>
+        <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+          <table border="0" summary="Note">
+            <tr>
+              <td rowspan="2" align="center" valign="top" width="25">
+                <img alt="[Note]" src="images/note.png" />
+              </td>
+              <th align="left">Note</th>
+            </tr>
+            <tr>
+              <td align="left" valign="top">
+                <p>
+        In contrast to options within the plugin, changing the current selection
+        or tool settings will not redraw the pattern. To draw the change, click
+        the <span class="guibutton">Redraw</span> button at the bottom of the plugin.
+      </p>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="sect4">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h5 class="title"><a id="idm139754644551200"></a>14.26.3.1. The Current Selection</h5>
+              </div>
+            </div>
+          </div>
+          <p>
+        As in most plugins, the current selection determines the area where the 
+        pattern will be rendered. Typically, this would be a rectangular 
+        selection. There is however, an additional way the selection can be 
+        used.
+      </p>
+          <p>
+        The selection can be used as the shape of the fixed gear
+        (under the <span class="guilabel">Fixed Gear</span> tab).
+        The plugin will attempt to extract shapes from the selection, and draw
+        a pattern inside of each shape.
+        This is more interesting if you select a non-rectangular selection.
+      </p>
+          <p>
+        To have the pattern hug the boundaries of the shapes, use
+        <span class="guilabel">hole percent</span>=100.
+      </p>
+        </div>
+        <div class="sect4">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h5 class="title"><a id="idm139754641834208"></a>14.26.3.2. Tool Settings</h5>
+              </div>
+            </div>
+          </div>
+          <p>
+        Spyrogimp uses gimp tools to perform the drawing.
+        All the settings with which the drawings are done are taken from the chosen tool.
+        For example, if you choose to use the 
+        <span class="guimenuitem">Pencil</span> tool (by choosing it from the 
+        <span class="guilabel">Tool</span> menu)then all the settings of the Gimp Pencil 
+        tool will be used for drawing. You can change any of the tool settings 
+        while the plugin is running, and press the <span class="guibutton">Redraw</span>
+        button to see how the pattern looks.
+      </p>
+        </div>
+        <div class="sect4">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h5 class="title"><a id="idm139754655792464"></a>14.26.3.3. Gradient Settings</h5>
+              </div>
+            </div>
+          </div>
+          <p>
+        When using the <span class="guilabel">long gradient</span> mode, some settings 
+        from the gradient tool are used.
+      </p>
+        </div>
+      </div>
+      <div class="sect3">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h4 class="title"><a id="idm139754641455696"></a>14.26.4. Options</h4>
+            </div>
+          </div>
+        </div>
+        <p>
+      Most of the options are organized under three tabs: Curve Pattern,
+      Fixed Gear, and Size.
+    </p>
+        <div class="figure">
+          <a id="idm139754647071120"></a>
+          <p class="title">
+            <strong>Figure 17.378. <span class="quote">“<span class="quote">Spyrogimp</span>”</span> options</strong>
+          </p>
+          <div class="figure-contents">
+            <div class="mediaobject">
+              <img src="images/filters/render/spyrogimp.png" alt="“Spyrogimp” options" />
+            </div>
+          </div>
+        </div>
+        <br class="figure-break" />
+        <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+          <table border="0" summary="Note">
+            <tr>
+              <td rowspan="2" align="center" valign="top" width="25">
+                <img alt="[Note]" src="images/note.png" />
+              </td>
+              <th align="left">Note</th>
+            </tr>
+            <tr>
+              <td align="left" valign="top">
+                <p>
+        This filter has been totally reimplemented since gimp
+        2.10.10 . If you are using an older version of gimp, your dialog will
+        look different.
+      </p>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="sect4">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h5 class="title"><a id="idm139754641418752"></a>14.26.4.1. Options Above the Tabs</h5>
+              </div>
+            </div>
+          </div>
+          <div class="variablelist">
+            <dl class="variablelist">
+              <dt>
+                <span class="term">Curve Type</span>
+              </dt>
+              <dd>
+                <p>
+              The available curve types are: <span class="guimenuitem">Spyrograph</span>,
+              <span class="guimenuitem">Epitrochoid</span>, <span class="guimenuitem">Sine</span>, and
+              <span class="guimenuitem">Lissajous</span>. These correspond to
+              physical models for drawing them, using either gears or springs.
+              Spyrograph and Epitrochoid curves are obtained by using two gears
+              - a fixed gear, and a moving gear.
+              A <span class="guimenuitem">Spyrograph</span> pattern is obtained when 
+              the moving gear is rotated inside the fixed gear.
+              When the moving gear is outside the fixed gear, an 
+              <span class="guimenuitem">Epitrochoid</span> pattern is generated.
+              The <span class="guimenuitem">Sine</span> curve uses the fixed gear, but 
+              instead of a moving gear, there is a spring that moves 
+              perpendicular to the fixed gear's edge.
+              The <span class="guimenuitem">Lissajous</span> curve is generated by two springs - that move on
+              the x and y axis - it does not use the fixed ring at all, and thus is not affected by
+              changing it.
+            </p>
+              </dd>
+              <dt>
+                <span class="term">Tool</span>
+              </dt>
+              <dd>
+                <p>
+              The gimp tool with which to draw the pattern. The first tool is named
+              <span class="guimenuitem">Preview</span> and its purpose is to draw quickly, rather than
+              beautifully - so the pattern can be previewed. The other available tools are:
+              <span class="guimenuitem">PaintBrush</span>, <span class="guimenuitem">Pencil</span>,
+              <span class="guimenuitem">AirBrush</span>, <span class="guimenuitem">Stroke</span>,
+              <span class="guimenuitem">Ink</span>, and <span class="guimenuitem">MyPaintBrush</span>.
+            </p>
+              </dd>
+              <dt>
+                <span class="term">Long Gradient</span>
+              </dt>
+              <dd>
+                <p>
+              When unchecked, the current tool settings will be used - this can either
+              produce a gradient or not, depending on the tool settings.
+              When checked, the plugin will produce a long gradient to match the length of the pattern,
+              based on the current gradient, the "Reverse" setting, and the
+              <span class="guilabel">Repeat</span> mode from the gradient tool settings.
+              Setting the <span class="guilabel">Repeat</span> mode to <span class="guimenuitem">Triangle Wave</span>
+              will produce a pattern that changes continuously, with no abrupt breaks. This is done
+              by using the gradient followed by its reverse. Any other <span class="guilabel">Repeat</span> mode
+              will simply use the gradient from start to finish.
+            </p>
+              </dd>
+            </dl>
+          </div>
+        </div>
+        <div class="sect4">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h5 class="title"><a id="idm139754646501120"></a>14.26.4.2. Curve Pattern Tab</h5>
+              </div>
+            </div>
+          </div>
+          <div class="figure">
+            <a id="idm139754640374416"></a>
+            <p class="title">
+              <strong>Figure 17.379. 
+          <span class="quote">“<span class="quote">Spyrogimp</span>”</span> filter options (Curve Pattern)
+        </strong>
+            </p>
+            <div class="figure-contents">
+              <div class="mediaobject">
+                <img src="images/filters/render/spyrogimp1.png" alt="“Spyrogimp” filter options (Curve Pattern)" />
+                <div class="caption">
+                  <p>
+              The inner <span class="guilabel">Toy Kit</span> tab is shown on the right.
+            </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <br class="figure-break" />
+          <p>
+        Specify pattern using either the <span class="guilabel">Gears</span> or <span class="guilabel">Toy Kit</span> tabs.
+        The pattern is specified only by the active tab. Toy Kit is similar to Gears,
+        but it uses gears and hole numbers which are found in toy kits.
+        If you follow the instructions from the toy kit manuals, you should obtain similar results.
+      </p>
+          <div class="variablelist">
+            <dl class="variablelist">
+              <dt>
+                <span class="term">Fixed Gear Teeth</span>
+              </dt>
+              <dd>
+                <p>
+              Number of teeth of fixed gear. The size of the fixed gear is
+              proportional to the number of teeth.
+            </p>
+              </dd>
+              <dt>
+                <span class="term">Moving Gear Teeth</span>
+              </dt>
+              <dd>
+                <p>
+              Number of teeth of moving gear. The size of the moving gear is
+              proportional to the number of teeth.
+            </p>
+              </dd>
+              <dt>
+                <span class="term">Hole percent</span>
+              </dt>
+              <dd>
+                <p>
+              How far is the hole from the center of the moving gear.
+              100% means that the hole is at the gear's edge.
+            </p>
+              </dd>
+            </dl>
+          </div>
+          <p>
+        The <span class="guilabel">Toy Kit</span> tab also has <span class="guilabel">Fixed Gear Teeth</span>
+        and <span class="guilabel">Moving Gear Teeth</span> options, however, these are menus
+        which limited to gear sizes that are provided with toy kits for drawing Spyrographs.
+      </p>
+          <div class="variablelist">
+            <dl class="variablelist">
+              <dt>
+                <span class="term">Hole Number</span>
+              </dt>
+              <dd>
+                <p>
+              Hole #1 is at the edge of the gear.
+              The maximum hole number is near the center.
+              The maximum hole number is different for each gear.
+            </p>
+              </dd>
+            </dl>
+          </div>
+          <p>
+         Below the tabs there is an additional option.
+       </p>
+          <div class="variablelist">
+            <dl class="variablelist">
+              <dt>
+                <span class="term">Rotation</span>
+              </dt>
+              <dd>
+                <p>
+              Rotation of the pattern, in degrees.
+              The starting position of the moving gear in the fixed gear.
+              Note that this also changes the pattern when drawing Lissajous curves.
+            </p>
+              </dd>
+            </dl>
+          </div>
+        </div>
+        <div class="sect4">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h5 class="title"><a id="idm139754659145344"></a>14.26.4.3. Fixed Gear Tab</h5>
+              </div>
+            </div>
+          </div>
+          <div class="figure">
+            <a id="idm139754648561504"></a>
+            <p class="title">
+              <strong>Figure 17.380. 
+          <span class="quote">“<span class="quote">Spyrogimp</span>”</span> filter options (Fixed Gear)
+        </strong>
+            </p>
+            <div class="figure-contents">
+              <div class="mediaobject">
+                <img src="images/filters/render/spyrogimp2.png" alt="“Spyrogimp” filter options (Fixed Gear)" />
+              </div>
+            </div>
+          </div>
+          <br class="figure-break" />
+          <div class="variablelist">
+            <dl class="variablelist">
+              <dt>
+                <span class="term">Shape</span>
+              </dt>
+              <dd>
+                <p>
+              The shape of the fixed gear to be used inside current selection.
+              </p>
+                <div class="itemizedlist">
+                  <ul class="itemizedlist" style="list-style-type: disc; ">
+                    <li class="listitem">
+                      <p>
+                    <span class="guimenuitem">Circle</span>
+                  </p>
+                    </li>
+                    <li class="listitem">
+                      <p>
+                    <span class="guimenuitem">Rack</span> is a long round-edged shape provided in the toy kits.
+                  </p>
+                    </li>
+                    <li class="listitem">
+                      <p>
+                    <span class="guimenuitem">Frame</span> hugs the boundaries of the rectangular selection,
+                    use hole=100 in Gear notation to touch boundary.
+                  </p>
+                    </li>
+                    <li class="listitem">
+                      <p>
+                    <span class="guimenuitem">Selection</span> will hug boundaries of current selection -
+                    try something non-rectangular.
+                  </p>
+                    </li>
+                    <li class="listitem">
+                      <p>
+                    <span class="guimenuitem">Polygon-Star</span> morphs from an n-sided polygon (morph=0)
+                    to an n-sided star (morph=0.3) to a crazy flower (morph=1).
+                  </p>
+                    </li>
+                    <li class="listitem">
+                      <p>
+                    <span class="guimenuitem">Sine</span> with morph=0, it is just like a circle,
+                    but becomes more wavy as morph increases.
+                  </p>
+                    </li>
+                    <li class="listitem">
+                      <p>
+                    <span class="guimenuitem">Bumps</span> morphs from a polygon (morph=0) to a scalloped circle.
+                  </p>
+                    </li>
+                  </ul>
+                </div>
+                <p>
+            </p>
+              </dd>
+              <dt>
+                <span class="term">Sides</span>
+              </dt>
+              <dd>
+                <p>
+              Number of sides of the shape. This applies only to the <span class="guimenuitem">Polygon-Star</span>,
+              <span class="guimenuitem">Sine</span>, and <span class="guimenuitem">Bumps</span> shapes.
+              Otherwise this option is disabled.
+            </p>
+              </dd>
+              <dt>
+                <span class="term">Morph</span>
+              </dt>
+              <dd>
+                <p>
+              Morph fixed gear shape. This applies only to the <span class="guimenuitem">Polygon-Star</span>,
+              <span class="guimenuitem">Sine</span>, and <span class="guimenuitem">Bumps</span> shapes.
+              Otherwise this option is disabled
+            </p>
+              </dd>
+              <dt>
+                <span class="term">Rotation</span>
+              </dt>
+              <dd>
+                <p>
+              Rotation of the fixed gear, in degrees.
+            </p>
+              </dd>
+            </dl>
+          </div>
+        </div>
+        <div class="sect4">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h5 class="title"><a id="idm139754655263216"></a>14.26.4.4. Size Tab</h5>
+              </div>
+            </div>
+          </div>
+          <div class="figure">
+            <a id="idm139754643395376"></a>
+            <p class="title">
+              <strong>Figure 17.381. 
+          <span class="quote">“<span class="quote">Spyrogimp</span>”</span> filter options (Size)
+        </strong>
+            </p>
+            <div class="figure-contents">
+              <div class="mediaobject">
+                <img src="images/filters/render/spyrogimp3.png" alt="“Spyrogimp” filter options (Size)" />
+              </div>
+            </div>
+          </div>
+          <br class="figure-break" />
+          <div class="variablelist">
+            <dl class="variablelist">
+              <dt>
+                <span class="term">Margin (px)</span>
+              </dt>
+              <dd>
+                <p>
+              Margin from the edge of selection. This controls the size of the pattern.
+            </p>
+              </dd>
+              <dt>
+                <span class="term">Make width and height equal</span>
+              </dt>
+              <dd>
+                <p>
+              When unchecked, the pattern will fill the current image or selection.
+              When checked, the pattern will have same width and height, and will be centered.
+              The difference between checked and unchecked will only be noticed if the
+              size of the width and height of the selection differ.
+            </p>
+              </dd>
+            </dl>
+          </div>
+        </div>
+        <div class="sect4">
+          <div class="titlepage">
+            <div>
+              <div>
+                <h5 class="title"><a id="idm139754647401232"></a>14.26.4.5. Buttons Below the Tabs</h5>
+              </div>
+            </div>
+          </div>
+          <div class="variablelist">
+            <dl class="variablelist">
+              <dt>
+                <span class="term">Redraw</span>
+              </dt>
+              <dd>
+                <p>
+              If you change the settings of a tool, change color, or change the selection
+              (i.e., any settings outside of the plugin that effect the pattern),
+              press this to preview how the pattern looks.
+            </p>
+              </dd>
+              <dt>
+                <span class="term">Reset</span>
+              </dt>
+              <dd>
+                <p>
+              Resets the dialog to its default options.
+            </p>
+              </dd>
+              <dt>
+                <span class="term">Cancel</span>
+              </dt>
+              <dd>
+                <p>
+              Delete the temporary layer, and exit the plugin.
+            </p>
+              </dd>
+              <dt>
+                <span class="term">OK</span>
+              </dt>
+              <dd>
+                <p>
+              Render pattern to image. If <span class="guilabel">Keep Layer</span> is unchecked, this might take
+              some extra time to complete, as the pattern needs to be redrawn on the active layer.
+            </p>
+              </dd>
+              <dt>
+                <span class="term">Keep Layer</span>
+              </dt>
+              <dd>
+                <p>
+              Determines what will happen to the temporary layer once <span class="guibutton">OK</span> is pressed.
+              If checked, then once OK is pressed, the temporary layer is kept, and the plugin exits quickly.
+              If unchecked, the layer is deleted, and the pattern is redrawn on the active layer.
+            </p>
+                <p>
+              One reason to not keep the layer, is that by using specific paint application modes,
+              redrawing the pattern on the active layer can interact with it in interesting ways, that
+              produce a different pattern had it been drawn on a new layer.
+            </p>
+              </dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="navfooter">
+      <hr />
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="left"><a accesskey="p" href="plug-in-spheredesigner.html"><img src="images/prev.png" alt="Prev" /></a> </td>
+          <td width="20%" align="center">
+            <a accesskey="u" href="filters-render.html">
+              <img src="images/up.png" alt="Up" />
+            </a>
+          </td>
+          <td width="40%" align="right"> <a accesskey="n" href="filters-web.html"><img src="images/next.png" alt="Next" /></a></td>
+        </tr>
+        <tr>
+          <td width="40%" align="left" valign="top"><a accesskey="p" href="plug-in-spheredesigner.html">14.25. Sphere Designer</a> </td>
+          <td width="20%" align="center">
+            <a accesskey="h" href="index.html">
+              <img src="images/home.png" alt="Home" />
+            </a>
+          </td>
+          <td width="40%" align="right" valign="top"> <a accesskey="n" href="filters-web.html">15. Web Filters</a></td>
+        </tr>
+      </table>
+      <a href="https://gitlab.gnome.org/GNOME/gimp-help/issues" class="reportbug">
+      Report an error in the bug tracker
+    </a>
+    </div>
+  </body>
+</html>

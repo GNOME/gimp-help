@@ -1,0 +1,564 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>8.31. Desaturate</title>
+    <link rel="stylesheet" href="gimp-help-plain.css" type="text/css" />
+    <link rel="stylesheet" href="gimp-help-screen.css" type="text/css" />
+    <link rel="stylesheet" href="gimp-help-custom.css" type="text/css" />
+    <link rel="alternate stylesheet" href="gimp22.css" type="text/css" title="gimp22" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.78.0" />
+    <link rel="home" href="index.html" title="GNU Image Manipulation Program" />
+    <link rel="up" href="gimp-colors-menu.html" title="8. The “Colors” Menu" />
+    <link rel="prev" href="ch16s08s30.html" title="8.30. Color to Gray" />
+    <link rel="next" href="gimp-filter-sepia.html" title="8.32. Sepia" />
+  </head>
+  <body>
+    <div class="navheader">
+      <table width="100%" summary="Navigation header">
+        <tr>
+          <th colspan="3" align="center">8.31. Desaturate</th>
+        </tr>
+        <tr>
+          <td width="20%" align="left">
+            <a accesskey="p" href="ch16s08s30.html">
+              <img src="images/prev.png" alt="Prev" />
+            </a>
+          </td>
+          <th width="60%" align="center">8. The <span class="quote">“<span class="quote">Colors</span>”</span> Menu</th>
+          <td width="20%" align="right"> <a accesskey="n" href="gimp-filter-sepia.html"><img src="images/next.png" alt="Next" /></a></td>
+        </tr>
+      </table>
+      <hr />
+    </div>
+    <div class="sect2">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h3 class="title"><a id="gimp-filter-desaturate"></a>8.31. Desaturate</h3>
+          </div>
+        </div>
+      </div>
+      <a id="idm139754653552768" class="indexterm"></a>
+      <a id="idm139754660012704" class="indexterm"></a>
+      <p>
+    By using the <span class="guimenuitem">Desaturate</span> command, you can convert
+    all of the colors on the active layer to corresponding shades of gray. This
+    differs from converting the image to grayscale in two respects. First, it
+    only operates on the active layer and second, the colors on the layer are
+    still RGB values with three components, with R=G=B, which makes gray.
+    This means that you then can paint on the layer, or individual parts of it,
+    using non-gray colors.
+  </p>
+      <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+        <table border="0" summary="Note">
+          <tr>
+            <td rowspan="2" align="center" valign="top" width="25">
+              <img alt="[Note]" src="images/note.png" />
+            </td>
+            <th align="left">Note</th>
+          </tr>
+          <tr>
+            <td align="left" valign="top">
+              <p>
+      This command only works on layers of
+      <a class="link" href="glossary.html#glossary-rgb" title="RGB">RGB</a> images. If the image is in
+      Grayscale or Indexed mode, it can do nothing.
+    </p>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="sect3">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h4 class="title"><a id="idm139754649962992"></a>8.31.1. Activating the Command</h4>
+            </div>
+          </div>
+        </div>
+        <p>You can find this command through
+      <span class="guimenu">Colors</span> → <span class="guisubmenu">Desaturate</span> → <span class="guimenuitem">Desaturate…</span>
+    </p>
+      </div>
+      <div class="sect3">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h4 class="title"><a id="idm139754669914528"></a>8.31.2. Options</h4>
+            </div>
+          </div>
+        </div>
+        <div class="figure">
+          <a id="idm139754657274672"></a>
+          <p class="title">
+            <strong>Figure 16.198. The <span class="quote">“<span class="quote">Desaturate</span>”</span> option dialog</strong>
+          </p>
+          <div class="figure-contents">
+            <div class="mediaobject">
+              <img src="images/menus/colors/desaturate/desaturate.png" alt="The “Desaturate” option dialog" />
+            </div>
+          </div>
+        </div>
+        <br class="figure-break" />
+        <p><span class="guilabel">Mode:</span> Five options are available for converting
+    from color to black and white:</p>
+        <div class="variablelist">
+          <dl class="variablelist">
+            <dt>
+              <span class="term"><a class="link" href="gimp-filter-desaturate.html#More-information-about-Luminance">Luminance</a>
+        </span>
+            </dt>
+            <dd>
+              <p>The shades of gray will be calculated using
+          <a class="ulink" href="http://brucelindbloom.com/index.html?Eqn_RGB_to_XYZ.html" target="_top">
+          linearized sRGB</a> as
+          </p>
+              <div class="informalequation">
+                <div class="mediaobject">
+                  <span class="phrase">
+                  Luminance =
+                  (0.22 × R) +
+                  (0.72 × G) +
+                  (0.06 × B)
+                </span>
+                </div>
+              </div>
+            </dd>
+            <dt>
+              <span class="term">
+                <a class="link" href="gimp-filter-desaturate.html#More-information-about-Luma">Luma</a>
+              </span>
+            </dt>
+            <dd>
+              <p>The shades of gray will be calculated using non-linearized sRGB
+          </p>
+              <div class="informalequation">
+                <div class="mediaobject">
+                  <span class="phrase">
+                  Luma = (0.22 × R) + (0.72 × G) + (0.06 × B)
+                </span>
+                </div>
+              </div>
+            </dd>
+            <dt>
+              <span class="term">
+          <a class="link" href="gimp-filter-desaturate.html#More-information-about-Lightness-Average-and-Value">
+            Lightness (HSL)</a></span>
+            </dt>
+            <dd>
+              <p>The shades of gray will be calculated as</p>
+              <div class="informalequation">
+                <div class="mediaobject">
+                  <span class="phrase">
+                  Lightness (HSL)) = ½ × (max(R,G,B) + min(R,G,B))
+                </span>
+                </div>
+              </div>
+            </dd>
+            <dt>
+              <span class="term">
+          <a class="link" href="gimp-filter-desaturate.html#More-information-about-Lightness-Average-and-Value">
+            Average (HSI Intensity)</a></span>
+            </dt>
+            <dd>
+              <p>The shades of gray will be calculated as</p>
+              <div class="informalequation">
+                <div class="mediaobject">
+                  <span class="phrase">Average (HSI Intensity) = (R + G + B) ÷ 3
+                </span>
+                </div>
+              </div>
+            </dd>
+            <dt>
+              <span class="term">
+          <a class="link" href="gimp-filter-desaturate.html#More-information-about-Lightness-Average-and-Value">
+            Value (HSV)</a></span>
+            </dt>
+            <dd>
+              <p>The shades of gray will be calculated as</p>
+              <div class="informalequation">
+                <div class="mediaobject">
+                  <span class="phrase">
+                  Value (HSV) = max(R,G,B)
+                </span>
+                </div>
+              </div>
+            </dd>
+          </dl>
+        </div>
+        <div class="figure">
+          <a id="idm139754651790848"></a>
+          <p class="title">
+            <strong>Figure 16.199. Using the five modes to convert two very different color images
+      to black and white</strong>
+          </p>
+          <div class="figure-contents">
+            <div class="mediaobject">
+              <img src="images/menus/colors/desaturate/colors-desaturate-original-sunflower.png" alt="Using the five modes to convert two very different color images to black and white" />
+              <div class="caption">
+                <p>Original image</p>
+              </div>
+            </div>
+            <div class="mediaobject">
+              <img src="images/menus/colors/desaturate/colors-desaturate-original-red-globe.png" alt="Using the five modes to convert two very different color images to black and white" />
+              <div class="caption">
+                <p>Original image</p>
+              </div>
+            </div>
+            <div class="literallayout">
+              <p><br />
+      </p>
+            </div>
+            <div class="mediaobject">
+              <img src="images/menus/colors/desaturate/colors-desaturate-luminance-sunflower.png" alt="Using the five modes to convert two very different color images to black and white" />
+              <div class="caption">
+                <p><span class="quote">“<span class="quote">Luminance</span>”</span> applied</p>
+              </div>
+            </div>
+            <div class="mediaobject">
+              <img src="images/menus/colors/desaturate/colors-desaturate-luminance-red-globe.png" alt="Using the five modes to convert two very different color images to black and white" />
+              <div class="caption">
+                <p><span class="quote">“<span class="quote">Luminance</span>”</span> applied</p>
+              </div>
+            </div>
+            <div class="literallayout">
+              <p><br />
+      </p>
+            </div>
+            <div class="mediaobject">
+              <img src="images/menus/colors/desaturate/colors-desaturate-luma-sunflower.png" alt="Using the five modes to convert two very different color images to black and white" />
+              <div class="caption">
+                <p>
+            <span class="quote">“<span class="quote">Luma</span>”</span> applied.
+          </p>
+              </div>
+            </div>
+            <div class="mediaobject">
+              <img src="images/menus/colors/desaturate/colors-desaturate-luma-red-globe.png" alt="Using the five modes to convert two very different color images to black and white" />
+              <div class="caption">
+                <p>
+            <span class="quote">“<span class="quote">Luma</span>”</span> applied.
+          </p>
+              </div>
+            </div>
+            <div class="literallayout">
+              <p><br />
+      </p>
+            </div>
+            <div class="mediaobject">
+              <img src="images/menus/colors/desaturate/colors-desaturate-lightness-sunflower.png" alt="Using the five modes to convert two very different color images to black and white" />
+              <div class="caption">
+                <p>
+            <span class="quote">“<span class="quote">Lightness (HSL)</span>”</span> applied.
+          </p>
+              </div>
+            </div>
+            <div class="mediaobject">
+              <img src="images/menus/colors/desaturate/colors-desaturate-lightness-red-globe.png" alt="Using the five modes to convert two very different color images to black and white" />
+              <div class="caption">
+                <p>
+            <span class="quote">“<span class="quote">Lightness (HSL)</span>”</span> applied.
+          </p>
+              </div>
+            </div>
+            <div class="literallayout">
+              <p><br />
+      </p>
+            </div>
+            <div class="mediaobject">
+              <img src="images/menus/colors/desaturate/colors-desaturate-average-sunflower.png" alt="Using the five modes to convert two very different color images to black and white" />
+              <div class="caption">
+                <p>
+            <span class="quote">“<span class="quote">Average (HSI Intensity)</span>”</span> applied.
+          </p>
+              </div>
+            </div>
+            <div class="mediaobject">
+              <img src="images/menus/colors/desaturate/colors-desaturate-average-red-globe.png" alt="Using the five modes to convert two very different color images to black and white" />
+              <div class="caption">
+                <p>
+            <span class="quote">“<span class="quote">Average (HSI Intensity)</span>”</span> applied.
+          </p>
+              </div>
+            </div>
+            <div class="literallayout">
+              <p><br />
+      </p>
+            </div>
+            <div class="mediaobject">
+              <img src="images/menus/colors/desaturate/colors-desaturate-value-sunflower.png" alt="Using the five modes to convert two very different color images to black and white" />
+              <div class="caption">
+                <p>
+            <span class="quote">“<span class="quote">Value (HSV)</span>”</span> applied.
+          </p>
+              </div>
+            </div>
+            <div class="mediaobject">
+              <img src="images/menus/colors/desaturate/colors-desaturate-value-red-globe.png" alt="Using the five modes to convert two very different color images to black and white" />
+              <div class="caption">
+                <p>
+            <span class="quote">“<span class="quote">Value (HSV)</span>”</span> applied.
+          </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br class="figure-break" />
+      </div>
+      <div class="sect3">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h4 class="title"><a id="idm139754649072928"></a>8.31.3. Comparing results from using different options for
+    converting from color to black and white:</h4>
+            </div>
+          </div>
+        </div>
+        <div class="orderedlist">
+          <ol class="orderedlist" type="1">
+            <li class="listitem">
+              <p>
+          The degree and direction from which the various ways to convert
+          an image to black and white diverge from a straight Luminance conversion
+          to black and white depends on:
+        </p>
+              <div class="itemizedlist">
+                <ul class="itemizedlist" style="list-style-type: disc; ">
+                  <li class="listitem">
+                    <p>
+                The conversion method you choose.
+              </p>
+                  </li>
+                  <li class="listitem">
+                    <p>
+                The RGB color space in which the conversion is done.
+              </p>
+                  </li>
+                  <li class="listitem">
+                    <p>
+                How saturated the colors in the original image happen to
+                be, with more saturated starting colors (such as the red globe and the
+                bright yellow sunflower) producing greater amounts of deviation from a
+                straight Luminance conversion.
+              </p>
+                  </li>
+                  <li class="listitem">
+                    <p>
+                The hues (for example yellows vs reds) of the various
+                saturated colors in an image also make a difference.
+              </p>
+                  </li>
+                  <li class="listitem">
+                    <p>
+                Being the maximum of the RGB channel values for each
+                pixel, an HSV Value conversion to black and white is always lighter than
+                the original color image, and also lighter than all the other ways to
+                convert to black and white.
+              </p>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li class="listitem">
+              <p>
+            Comparing the red globe to the yellow sunflower:
+          </p>
+              <div class="itemizedlist">
+                <ul class="itemizedlist" style="list-style-type: disc; ">
+                  <li class="listitem">
+                    <p>
+                For the red globe Lightness (HSL) produces a result very
+                similar to Luminance, and Luma produces a conversion that is much darker.
+              </p>
+                  </li>
+                  <li class="listitem">
+                    <p>
+                For the sunflower, Luma produces a result very similar to
+                Luminance, and Lightness (HSL) produces a conversion that is much darker.
+              </p>
+                  </li>
+                  <li class="listitem">
+                    <p>
+                Notice that the less saturated parts of each image look
+                more or less the same, regardless of which method is chosen for converting
+                from color to black and white.
+              </p>
+                  </li>
+                </ul>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </div>
+      <div class="sect3">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h4 class="title"><a id="idm139754656855456"></a>8.31.4. More information about the five options for
+    converting from color to black and white:</h4>
+            </div>
+          </div>
+        </div>
+        <div class="orderedlist">
+          <ol class="orderedlist" type="1">
+            <li class="listitem">
+              <p>
+                <a id="More-information-about-Luminance"></a>
+                <span class="emphasis">
+                  <em>More information about Luminance:</em>
+                </span>
+              </p>
+              <div class="itemizedlist">
+                <ul class="itemizedlist" style="list-style-type: disc; ">
+                  <li class="listitem">
+                    <p>
+              "Luminance" is the only physically meaningful way to
+              convert a color image to black and white, as the resulting black and
+              white image has the same relative luminance (reflects the same
+              percentage of light from the various shades of gray) as the colors in
+              the original color image.
+            </p>
+                  </li>
+                  <li class="listitem">
+                    <p>
+              Luminance must be calculated using linearized RGB values.
+            </p>
+                  </li>
+                  <li class="listitem">
+                    <p>
+              For convenience we say "Luminance", but what we really
+              mean is "Relative Luminance". For more information, see
+              <a class="ulink" href="https://en.wikipedia.org/wiki/Relative_luminance" target="_top">Relative
+              Luminance</a> and
+              <a class="ulink" href="https://en.wikipedia.org/wiki/CIE_1931_color_space#Meaning_of_X.2C_Y.2C_and_Z" target="_top">
+              CIE 1931 [XYZ] color space</a>.
+            </p>
+                  </li>
+                  <li class="listitem">
+                    <p>
+              GIMP 2.10 uses hard-coded sRGB values to do Luminance
+              conversions to black and white. "Future GIMP" will support correct
+              conversions for images in other color spaces.
+            </p>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li class="listitem">
+              <p><a id="More-information-about-Luma"></a>
+          <span class="emphasis"><em>More information about Luma:</em></span>
+        </p>
+              <div class="itemizedlist">
+                <ul class="itemizedlist" style="list-style-type: disc; ">
+                  <li class="listitem">
+                    <p>
+              "Luma" is what you get if you use the formula for
+              Luminance on RGB values that haven't been properly linearized. Luma
+              corresponds to GIMP 2.8's "Luminosity" method of converting to black and
+              white.
+            </p>
+                  </li>
+                  <li class="listitem">
+                    <p>
+              Compared to GIMP 2.8, GIMP 2.10's "Luma" option uses
+              slightly different multipliers. Unlike the GIMP 2.8 multipliers, the
+              GIMP 2.10 multipliers have been properly Bradford-adapted from D65 to
+              D50, which is required for use in an ICC profile color-managed editing
+              application (at least until the next version of the ICC specs is
+              released and people figure out how to deal with the new freedom to use
+              non-D50 reference white points).
+            </p>
+                  </li>
+                  <li class="listitem">
+                    <p>
+              GIMP 2.10 uses hard-coded sRGB values to do Luma
+              conversions to black and white. "Future GIMP" will support correct
+              conversions for images in other color spaces.
+            </p>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li class="listitem">
+              <p><a id="More-information-about-Lightness-Average-and-Value"></a>
+            <span class="emphasis"><em>More information about Lightness, Average, and Value:
+            </em></span>
+          </p>
+              <p>
+            The "Lightness (HSL)", "Average (HSI Intensity)", and "Value (HSV)"
+            ways to to convert a color image to black and white use color space models
+            that were invented for fast processing on consumer-grade computers from the
+            1990s. For details see
+            <a class="ulink" href="https://en.wikipedia.org/wiki/HSL_and_HSV" target="_top">HSL and HSV</a>,
+            paying particular attention to the section on
+            <a class="ulink" href="https://en.wikipedia.org/wiki/HSL_and_HSV" target="_top">Disadvantages</a>.
+          </p>
+            </li>
+            <li class="listitem">
+              <p>
+          <span class="emphasis"><em>In case you are wondering why LAB Lightness</em></span> is
+          not among the options
+          for converting an RGB image to black and white, a properly calculated
+          conversion from RGB to LAB Lightness, and then back to RGB, produces exactly
+          the same result as the Luminance conversion to black and white. Here is why:
+        </p>
+              <div class="itemizedlist">
+                <ul class="itemizedlist" style="list-style-type: disc; ">
+                  <li class="listitem">
+                    <p>
+              In the XYZ color space, Y is Luminance. So if you
+              convert a color RGB image to XYZ, the "Y" of XYZ is the same number as
+              the R=G=B values that you get when you calculate RGB Luminance.
+            </p>
+                  </li>
+                  <li class="listitem">
+                    <p>
+              LAB is a perceptually uniform transform of XYZ. If you
+              convert from RGB to XYZ and then to LAB, and set A=B=0.0 (or 0.5 for
+              image editors that put the midpoint of the A and B axes as 0.5 instead
+              of at 0.0), and then convert back to XYZ, the X and Z values will
+              change, but Y will not change.
+            </p>
+                  </li>
+                </ul>
+              </div>
+              <p>
+          Tutorials that produce anything other than Relative Luminance when
+          converting an RGB image to black and white using LAB Lightness, very sadly
+          are trading on various mathematical mistakes in the conversion routines.
+        </p>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+    <div class="navfooter">
+      <hr />
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="left"><a accesskey="p" href="ch16s08s30.html"><img src="images/prev.png" alt="Prev" /></a> </td>
+          <td width="20%" align="center">
+            <a accesskey="u" href="gimp-colors-menu.html">
+              <img src="images/up.png" alt="Up" />
+            </a>
+          </td>
+          <td width="40%" align="right"> <a accesskey="n" href="gimp-filter-sepia.html"><img src="images/next.png" alt="Next" /></a></td>
+        </tr>
+        <tr>
+          <td width="40%" align="left" valign="top"><a accesskey="p" href="ch16s08s30.html">8.30. Color to Gray</a> </td>
+          <td width="20%" align="center">
+            <a accesskey="h" href="index.html">
+              <img src="images/home.png" alt="Home" />
+            </a>
+          </td>
+          <td width="40%" align="right" valign="top"> <a accesskey="n" href="gimp-filter-sepia.html">8.32. Sepia</a></td>
+        </tr>
+      </table>
+      <a href="https://gitlab.gnome.org/GNOME/gimp-help/issues" class="reportbug">
+      Report an error in the bug tracker
+    </a>
+    </div>
+  </body>
+</html>

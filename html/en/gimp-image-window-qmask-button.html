@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>3. The QuickMask</title>
+    <link rel="stylesheet" href="gimp-help-plain.css" type="text/css" />
+    <link rel="stylesheet" href="gimp-help-screen.css" type="text/css" />
+    <link rel="stylesheet" href="gimp-help-custom.css" type="text/css" />
+    <link rel="alternate stylesheet" href="gimp22.css" type="text/css" title="gimp22" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.78.0" />
+    <link rel="home" href="index.html" title="GNU Image Manipulation Program" />
+    <link rel="up" href="gimp-painting.html" title="Chapter 7. Painting with GIMP" />
+    <link rel="prev" href="gimp-using-selections-add.html" title="2.2. Adding or subtracting selections" />
+    <link rel="next" href="gimp-image-window-qmask-properties.html" title="3.2. Properties" />
+  </head>
+  <body>
+    <div class="navheader">
+      <table width="100%" summary="Navigation header">
+        <tr>
+          <th colspan="3" align="center">3. The QuickMask</th>
+        </tr>
+        <tr>
+          <td width="20%" align="left">
+            <a accesskey="p" href="gimp-using-selections-add.html">
+              <img src="images/prev.png" alt="Prev" />
+            </a>
+          </td>
+          <th width="60%" align="center">Chapter 7. Painting with GIMP</th>
+          <td width="20%" align="right"> <a accesskey="n" href="gimp-image-window-qmask-properties.html"><img src="images/next.png" alt="Next" /></a></td>
+        </tr>
+      </table>
+      <hr />
+    </div>
+    <div class="sect1">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h2 class="title" style="clear: both"><a id="gimp-image-window-qmask-button"></a>3. The QuickMask</h2>
+          </div>
+        </div>
+      </div>
+      <a id="idm139754674461984" class="indexterm"></a>
+      <div class="figure">
+        <a id="idm139754670745280"></a>
+        <p class="title">
+          <strong>Figure 7.9. Image with QuickMask enabled</strong>
+        </p>
+        <div class="figure-contents">
+          <div class="mediaobject">
+            <img src="images/dialogs/channel-quickmask.png" alt="Image with QuickMask enabled" />
+          </div>
+        </div>
+      </div>
+      <br class="figure-break" />
+      <p>
+    The usual <a class="link" href="gimp-tools-selection.html" title="2. Selection Tools">selection tools</a>
+    involve tracing an outline around an area of interest, which does not
+    work well for some complex selections. The QuickMask, however, allows
+    you to paint a selection instead of just tracing its outline.
+  </p>
+      <div class="sect2">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h3 class="title"><a id="gimp-image-window-qmask-overview"></a>3.1. Overview</h3>
+            </div>
+          </div>
+        </div>
+        <p>
+      Normally, a selection in <acronym class="acronym">GIMP</acronym> is represented by
+      <span class="quote">“<span class="quote">marching ants</span>”</span> that trace the selection outline, but there
+      may be more to a selection than the marching ants show. A
+      <acronym class="acronym">GIMP</acronym> selection is actually a full-fledged grayscale
+      channel, covering the image, with pixel values ranging from 0
+      (unselected) to 255 (fully selected). The marching ants are drawn along
+      a contour of half-selected pixels. Thus, what the marching ants show you
+      as either inside or outside the boundary is really just a slice through
+      a continuum.
+    </p>
+        <p>
+      The QuickMask is <acronym class="acronym">GIMP</acronym>'s way of showing the full
+      structure of the selection.
+      QuickMask also provides the ability to interact with the
+      selection in new, and substantially more powerful, ways.
+      Click the small outlined button at the lower left of the image window to
+      toggle QuickMask on and off. The button switches between QuickMask
+      mode, and marching ants mode.
+      You can also use
+      <span class="guimenu">Select</span> → <span class="guimenuitem">Toggle QuickMask</span>, or
+      <span class="keycap"><strong>Shift</strong></span>+<span class="keycap"><strong>Q</strong></span>,
+      to toggle between QuickMask and marching ants mode.
+    </p>
+        <p>
+      In QuickMask mode, the selection is shown as a
+      translucent screen overlying the image, whose transparency at each pixel
+      indicates the degree to which that pixel is selected. By default the
+      mask is shown in red, but you can change this if another mask color
+      is more convenient. The less a pixel is selected, the more it is
+      obscured by the mask. Fully selected pixels are shown completely clear.
+    </p>
+        <p>
+      In QuickMask mode, many image manipulations act on the
+      selection channel rather than the image itself. This includes, in
+      particular, paint tools. Painting with white selects pixels, and
+      painting with black unselects pixels.
+      You can use any of the paint tools, as well as the bucket
+      fill and gradient fill tools, in this way. Advanced users of
+      <acronym class="acronym">GIMP</acronym> learn that <span class="quote">“<span class="quote">painting the selection</span>”</span>
+      is the easiest and most effective way to delicately manipulate the
+      image.
+    </p>
+        <div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;">
+          <table border="0" summary="Tip">
+            <tr>
+              <td rowspan="2" align="center" valign="top" width="25">
+                <img alt="[Tip]" src="images/tip.png" />
+              </td>
+              <th align="left">Tip</th>
+            </tr>
+            <tr>
+              <td align="left" valign="top">
+                <p>
+        To save a QuickMask selection to a new channel; Make
+        sure that there is a selection and that QuickMask mode is not
+        active in the image window. Use
+        <span class="guimenu">Select</span> → <span class="guimenuitem">Save to Channel</span>.
+        to create a new channel in the channel dialog called
+        <span class="quote">“<span class="quote">SelectionMask copy</span>”</span> (repeating this command
+        creates <span class="quote">“<span class="quote">..copy#1</span>”</span>, <span class="quote">“<span class="quote">...copy#2</span>”</span> and
+        so on...).
+      </p>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;">
+          <table border="0" summary="Tip">
+            <tr>
+              <td rowspan="2" align="center" valign="top" width="25">
+                <img alt="[Tip]" src="images/tip.png" />
+              </td>
+              <th align="left">Tip</th>
+            </tr>
+            <tr>
+              <td align="left" valign="top">
+                <p>
+        In QuickMask mode, Cut and Paste act on the selection rather
+        than the image. You can sometimes make use of this as the most
+        convenient way of transferring a selection from one image to another.
+      </p>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <p>
+      You can learn more on
+      <a class="link" href="gimp-channel-dialog.html#gimp-channel-mask" title="2.2.3. Selection masks">Selection masks</a> in the
+      section dedicated to the channel dialog.
+    </p>
+      </div>
+    </div>
+    <div class="navfooter">
+      <hr />
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="left"><a accesskey="p" href="gimp-using-selections-add.html"><img src="images/prev.png" alt="Prev" /></a> </td>
+          <td width="20%" align="center">
+            <a accesskey="u" href="gimp-painting.html">
+              <img src="images/up.png" alt="Up" />
+            </a>
+          </td>
+          <td width="40%" align="right"> <a accesskey="n" href="gimp-image-window-qmask-properties.html"><img src="images/next.png" alt="Next" /></a></td>
+        </tr>
+        <tr>
+          <td width="40%" align="left" valign="top"><a accesskey="p" href="gimp-using-selections-add.html">2.2. Adding or subtracting selections</a> </td>
+          <td width="20%" align="center">
+            <a accesskey="h" href="index.html">
+              <img src="images/home.png" alt="Home" />
+            </a>
+          </td>
+          <td width="40%" align="right" valign="top"> <a accesskey="n" href="gimp-image-window-qmask-properties.html">3.2. Properties</a></td>
+        </tr>
+      </table>
+      <a href="https://gitlab.gnome.org/GNOME/gimp-help/issues" class="reportbug">
+      Report an error in the bug tracker
+    </a>
+    </div>
+  </body>
+</html>

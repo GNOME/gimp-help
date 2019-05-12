@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>3. Use Notes</title>
+    <link rel="stylesheet" href="gimp-help-plain.css" type="text/css" />
+    <link rel="stylesheet" href="gimp-help-screen.css" type="text/css" />
+    <link rel="stylesheet" href="gimp-help-custom.css" type="text/css" />
+    <link rel="alternate stylesheet" href="gimp22.css" type="text/css" title="gimp22" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.78.0" />
+    <link rel="home" href="index.html" title="GNU Image Manipulation Program" />
+    <link rel="up" href="tone-mapping-tutorial.html" title="Appendix D.  Tone Mapping and Shadow Recovery Using GIMP’s ‘Colors/Exposure’" />
+    <link rel="prev" href="tone-mapping-example.html" title="2.  A step-by-step example showing how to recover shadow information using high bit depth GIMP’s floating point “Colors/Exposure”" />
+    <link rel="next" href="tone-mapping-conclusion.html" title="4. Conclusion" />
+  </head>
+  <body>
+    <div class="navheader">
+      <table width="100%" summary="Navigation header">
+        <tr>
+          <th colspan="3" align="center">3. Use Notes</th>
+        </tr>
+        <tr>
+          <td width="20%" align="left">
+            <a accesskey="p" href="tone-mapping-example.html">
+              <img src="images/prev.png" alt="Prev" />
+            </a>
+          </td>
+          <th width="60%" align="center">Appendix D. 
+    Tone Mapping and Shadow Recovery Using GIMP’s ‘Colors/Exposure’
+  </th>
+          <td width="20%" align="right"> <a accesskey="n" href="tone-mapping-conclusion.html"><img src="images/next.png" alt="Next" /></a></td>
+        </tr>
+      </table>
+      <hr />
+    </div>
+    <div class="sect1">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h2 class="title" style="clear: both"><a id="tone-mapping-notes"></a>3. Use Notes</h2>
+          </div>
+        </div>
+      </div>
+      <div class="orderedlist">
+        <ol class="orderedlist" type="1">
+          <li class="listitem">
+            <p>
+          Depending on your particular artistic intentions for an image, some 
+          images are more likely than others to benefit from being tone 
+          mapped using floating point “Colors/Exposure”. Your mileage may 
+          vary, but typically the procedure described on this page works best 
+          for photographs of scenes with a pronounced tonal difference 
+          between the highlights and shadows, as per typical sunny day 
+          “sky-ground” photographs.
+        </p>
+          </li>
+          <li class="listitem">
+            <p>
+          <span class="bold"><strong>For adding just one stop of positive exposure 
+          compensation, the procedure described on this page works really 
+          well</strong></span>. Depending on the image you might want to blur the 
+          mask using an edge-respecting blur algorithm, and/or tweak the mask 
+          using “Colors/Exposure”, Curves, etc. But only modify the mask 
+          after using Auto Stretch Contrast on the mask. Otherwise results 
+          will be unpredictable: 
+<a class="ulink" href="http://ninedegreesbelow.com/photography/unbounded-srgb-levels-gamma-slider.html" target="_top">
+Gamma adjustments produce odd results when operating on out of gamut 
+values</a>, 
+	  and Curves will summarily clip out of gamut values.
+        </p>
+          </li>
+          <li class="listitem">
+            <p>
+          <span class="bold"><strong>For adding more than one stop of exposure 
+          compensation, you can use one or more than one 
+          positive-exposure-compensation layers</strong></span>. Either way the 
+          layer mask(s) will need careful tweaking that’s very 
+          image-specific and also specific to your intended result. Figure 7 
+          shows an example of using two exposure compensation layers to add 
+          two and a half stops of exposure compensation to the shadows and 
+          midtones of an image: 
+        </p>
+            <p>
+          Using GIMP’s floating point unbounded Levels plus layer masks 
+          to add two stops of positive exposure compensation to the 
+          shadows and midtones of a photograph of an apple orchard truck 
+          that was taken in bright sunshine.
+        </p>
+            <p>
+              <span class="bold">
+                <strong>Figure 7</strong>
+              </span>
+            </p>
+            <div class="mediaobject">
+              <img src="images/tutorials/tone-mapping/apple-orchard-truck-from-camera.jpg" />
+            </div>
+            <p><span class="emphasis"><em>
+          Image from the camera, underexposed to avoid blowing out 
+          highlights.</em></span>
+        </p>
+            <div class="mediaobject">
+              <img src="images/tutorials/tone-mapping/apple-orchard-truck-tone-mapped-with-Exposur.jpg" />
+            </div>
+            <p><span class="emphasis"><em>
+          After tone mapping/shadow recovery using high bit depth 
+          GIMP's floating point "Color/Exposure".</em></span>
+        </p>
+            <div class="mediaobject">
+              <img src="images/tutorials/tone-mapping/truck-tone-mapped-using-gegl-mantuik.jpg" />
+            </div>
+            <p><span class="emphasis"><em>
+          For comparison, Mantuik tone mapping using the GEGL default 
+          settings.</em></span>
+        </p>
+            <p>
+          Using GIMP’s floating point “Colors/Exposure” plus layer masks to 
+          add two and a half stops of positive exposure compensation to the 
+          shadows and midtones of a “bright sun” photograph of an apple 
+          orchard truck.
+        </p>
+            <div class="mediaobject">
+              <img src="images/tutorials/tone-mapping/orchard-truck-layer-stack.jpg" />
+            </div>
+            <p><span class="emphasis"><em>
+          A screenshot of the layer stack that I used to tone-map the 
+          photograph of the apple orchard truck. Tone-mapping by hand 
+          gives you complete control over the resulting image. Mantuik 
+          and other “automagic” tone-mapping algorithms are 
+          CPU-intensive, unpredictable, and often produce 
+          unnatural-looking results.
+          </em></span>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>
+          Before using “Colors/Exposure” to add positive exposure 
+          compensation, <span class="emphasis"><em>the base layer should already be stretched 
+          to its maximum dynamic range</em></span>. The easiest way to stretch 
+          the base layer to its maximum dynamic range is to do 
+          “Colors/Auto/Stretch Contrast” and make sure that “Keep colors” is 
+          checked. 
+        </p>
+            <p>
+          If you’ve never used an unbounded floating point image editor 
+          before, “Colors/Auto/Stretch Contrast” can produce an unexpected 
+          result: The image might actually end up with a severely reduced 
+          dynamic range, having either lighter shadows or darker highlights 
+          or both:
+        </p>
+            <p>
+          Before and after doing “Colors/Auto/Stretch Contrast” on the base 
+          layer, plus the final image after tone mapping using 
+          “Colors/Exposure”:
+        </p>
+            <p>
+              <span class="bold">
+                <strong>Figure 8</strong>
+              </span>
+            </p>
+            <p>1. Image from the camera</p>
+            <div class="mediaobject">
+              <img src="images/tutorials/tone-mapping/before-auto-stretch-contrast.jpg" />
+            </div>
+            <p>
+          2. After doing "Colors/Auto/Stretch Contrast".
+        </p>
+            <div class="mediaobject">
+              <img src="images/tutorials/tone-mapping/after-auto-stretch-contrast.jpg" />
+            </div>
+            <p>
+          3. Final "Power lines" image.
+        </p>
+            <div class="mediaobject">
+              <img src="images/tutorials/tone-mapping/power-lines.jpg" />
+            </div>
+            <div class="orderedlist">
+              <ol class="orderedlist" type="a">
+                <li class="listitem">
+                  <p>
+              This scene-referred interpolated raw file from the PhotoFlow 
+              raw processor (which provides a GIMP plug-in for easy opening 
+              of raw files) has out-of-display-range RGB channel values that 
+              will be brought back into the display range by doing 
+              “Colors/Auto/Stretch Contrast”.
+            </p>
+                </li>
+                <li class="listitem">
+                  <p>
+              After doing “Colors/Auto/Stretch Contrast”, shadows are lighter 
+              and highlights are darker because the dynamic range has been 
+              compressed to fit within the display range. This looks like an 
+              editing step in the wrong direction! but actually it’s 
+              necessary.
+            </p>
+                </li>
+                <li class="listitem">
+                  <p>
+              Here’s the final “Power lines” image after tone mapping the 
+              scene-referred interpolated raw file using the procedure 
+              described in this tutorial.
+            </p>
+                </li>
+              </ol>
+            </div>
+            <p>
+          As captured by the raw file, this picture of power lines marching 
+          into the distance is a typical result of taking a photograph at 
+          noon on a bright sunny day: The sky and clouds looked pretty good 
+          right out of the camera, but the ground was far too dark. So the 
+          image could benefit from some tone mapping to raise the shadows and 
+          midtones. The first step is to do “Colors/Auto/Stretch Contrast” to 
+          bring any channel values that are less than 0.0f or greater than 
+          1.0f back within the display range of 0.0 to 1.0 floating point.
+        </p>
+            <p>
+          Performing “Auto/Stretch Contrast” to bring the channel values back 
+          inside the display range doesn’t exactly look like an editing step 
+          in the right direction for tone-mapping this particular image! but 
+          really it is. Using “Colors/Exposure” to add positive exposure 
+          compensation to the shadows and midtones won’t work if the image 
+          has channel values that fall outside the display range.
+        </p>
+          </li>
+          <li class="listitem">
+            <p>
+          <span class="bold"><strong>Dispensing with “useless” shadow and 
+          highlight information:</strong></span> Sometimes interpolated raw 
+          files of photographs of high dynamic range scenes end up with a 
+          sprinkling of highlight and shadow pixels that contains 
+          essentially no useful information. The easiest thing to do with 
+          such pixels is to use “Colors/Exposure” to set the desired black 
+          and white points, and then clip the resulting out of gamut 
+          channel information. 
+        </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: bullet; ">
+                <li class="listitem" style="list-style-type: disc">
+                  <p>
+              <span class="bold"><strong>Useless highlight information:</strong></span>
+              For the “Power lines” picture shown in Figure 8 above, after 
+              doing “Color/Auto/Stretch Contrast”, a measly 48 pixels 
+              occupied nearly half the tonal range (see the histogram to the 
+              right). A little investigation with GIMP’s Threshold tool 
+              revealed that all 48 pixels are the peak values of specular 
+              highlights on the ceramic insulators on the power line pole in 
+              the foreground.
+            </p>
+                  <div class="mediaobject">
+                    <img src="images/tutorials/tone-mapping/histogram-specular-highlights.jpg" />
+                  </div>
+                  <p>
+              In cases where nearly half the histogram is occupied by a 
+              sprinkling of specular highlights, clipping the pixels is often 
+              the best and easiest solution. For the “Power lines” image, the 
+              48 pixels in question carried essentially zero information. So 
+              I used “Colors/Exposure” to raise the white point, and then 
+              used “Colors/Clip RGB” to actually clip the 
+              channel information in the highlights (this time making sure 
+              the “Clip high pixel values” box was checked).
+            </p>
+                </li>
+                <li class="listitem" style="list-style-type: disc">
+                  <p>
+              <span class="bold"><strong>Useless shadow information:</strong></span>
+              Some raw processors can output images with negative channel 
+              values. And previous edits using high bit depth GIMP might have 
+              produced negative channel values. If doing an “Auto/Stretch 
+              Contrast” on your base image layer makes the image a whole lot 
+              lighter in the shadows, the problem is negative RGB channel 
+              values. One solution is to use “Colors/Exposure” to move the 
+              black point to where you want it to be, and then clip the 
+              negative channel values. Here are two ways to clip negative 
+              channel values:
+            </p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist" style="list-style-type: opencircle; ">
+                      <li class="listitem" style="list-style-type: circle">
+                        <p>
+                  Use “Colors/Clip RGB...”, making sure to 
+                  uncheck the “Clip high pixel values” box. 
+                </p>
+                      </li>
+                      <li class="listitem" style="list-style-type: circle">
+                        <p>
+                  Or else create a solid black layer above your base image 
+                  layer, set the blend mode to “Lighten only”, and make a 
+                  “New from Visible” layer.
+                </p>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li class="listitem">
+            <p>
+          <span class="bold"><strong>Blurring the mask to restore micro 
+          contrast:</strong></span> Putting an inverse mask on a layer that’s 
+          used to add positive exposure compensation necessarily slightly 
+          flattens micro contrast. Depending on your artistic intentions 
+          for the image, you might want to blur the mask to restore micro 
+          contrast. The trick is how to blur the mask without introducing 
+          “halos” around the edges of objects in the image. Small radius 
+          Gaussian blurs produce small but distressingly obvious halos 
+          around dark edges. A large radius gaussian blur sometimes works 
+          but just as often produces a large obvious halo separating the 
+          brighter and darker portions of the image. For many images a 
+          better solution is to blur the mask use an edge-respecting filter 
+          such as the GIMP G’MIC bilateral smooth filter: 
+        </p>
+            <p>
+          Adding exposure compensation with and without bilateral 
+          smoothing of the mask.
+        </p>
+            <p>
+              <span class="bold">
+                <strong>Figure 9</strong>
+              </span>
+            </p>
+            <div class="mediaobject">
+              <img src="images/tutorials/tone-mapping/without-bilateral-smoothing-of-mask.jpg" />
+            </div>
+            <p><span class="emphasis"><em>
+          Without applying bilateral smoothing to the mask, micro 
+          contrast is flattened.</em></span>
+        </p>
+            <div class="mediaobject">
+              <img src="images/tutorials/tone-mapping/with-bilateral-smoothing-of-mask.jpg" />
+            </div>
+            <p><span class="emphasis"><em>
+          After applying bilateral smoothing to the mask, micro 
+          contrast is restored.</em></span>
+        </p>
+            <p>
+          Adding exposure compensation combined with an inverse grayscale 
+          mask does flatten micro contrast, which might or might not be 
+          desirable depending on your artistic intentions for the image. 
+          To restore micro contrast, try using an edge-respecting blur such 
+          as G’MIC’s bilateral smoothing filter. GIMP G’MIC doesn’t work on 
+          layer masks. A workaround is to to turn the unblurred mask into a 
+          selection, save the selection as a channel, and then drag the 
+          channel to the layer stack for blurring.
+        </p>
+          </li>
+          <li class="listitem">
+            <p>
+          An essential component of the procedure for using “Colors/Exposure” 
+          to add positive exposure compensation to images with dark shadows 
+          and midtones needs to be explicitly mentioned: Not only is the high 
+          bit depth GIMP’s “Colors/Exposure” operation unbounded at floating 
+          point precision —
+  <a class="ulink" href="https://bugzilla.gnome.org/show_bug.cgi?id=737925" target="_top">layer masks 
+are also unbounded</a>.
+        </p>
+            <p>
+          If the inverted grayscale masks were summarily clipped (as is the 
+          case when editing at integer precision), then the procedure 
+          described in this tutorial wouldn’t work.
+        </p>
+          </li>
+        </ol>
+      </div>
+    </div>
+    <div class="navfooter">
+      <hr />
+      <table width="100%" summary="Navigation footer">
+        <tr>
+          <td width="40%" align="left"><a accesskey="p" href="tone-mapping-example.html"><img src="images/prev.png" alt="Prev" /></a> </td>
+          <td width="20%" align="center">
+            <a accesskey="u" href="tone-mapping-tutorial.html">
+              <img src="images/up.png" alt="Up" />
+            </a>
+          </td>
+          <td width="40%" align="right"> <a accesskey="n" href="tone-mapping-conclusion.html"><img src="images/next.png" alt="Next" /></a></td>
+        </tr>
+        <tr>
+          <td width="40%" align="left" valign="top"><a accesskey="p" href="tone-mapping-example.html">2. 
+      A step-by-step example showing how to recover shadow information using 
+      high bit depth GIMP’s floating point “Colors/Exposure”
+    </a> </td>
+          <td width="20%" align="center">
+            <a accesskey="h" href="index.html">
+              <img src="images/home.png" alt="Home" />
+            </a>
+          </td>
+          <td width="40%" align="right" valign="top"> <a accesskey="n" href="tone-mapping-conclusion.html">4. Conclusion</a></td>
+        </tr>
+      </table>
+      <a href="https://gitlab.gnome.org/GNOME/gimp-help/issues" class="reportbug">
+      Report an error in the bug tracker
+    </a>
+    </div>
+  </body>
+</html>
