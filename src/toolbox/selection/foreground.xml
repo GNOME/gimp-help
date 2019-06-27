@@ -92,7 +92,7 @@ xmlns:xi="http://www.w3.org/2001/XInclude" id="gimp-tool-foreground-select">
         <para>
           <emphasis>Roughly select the foreground</emphasis> you want
           to extract. When you select this tool, the mouse pointer goes with
-          the lasso icon. It actually works like the Fuzzy Select tool.
+          the lasso icon. It actually works like the Free Select tool.
           Select as little as possible from the background.
         </para>
         <para>
@@ -100,6 +100,10 @@ xmlns:xi="http://www.w3.org/2001/XInclude" id="gimp-tool-foreground-select">
           circle appears: release mouse button to close selection. While 
           selecting, click-and-drag draws a fuzzy line, drag only draws a 
           straight line.
+        </para>
+        <para>
+          If the mouse pointer doesn't cover start point, double clicking closes 
+          selection with a straight line.
         </para>
         <mediaobject>
           <imageobject>
@@ -120,28 +124,10 @@ xmlns:xi="http://www.w3.org/2001/XInclude" id="gimp-tool-foreground-select">
                 fileref="images/toolbox/FG-select-pop-up.png"/>
             </imageobject>
           </mediaobject>
-          There you have:
-          <itemizedlist>
-            <listitem>
-              <para>
-                A <guilabel>Preview</guilabel> checkbox that toggles displaying 
-                a preview of the foreground extraction status. 
-                <keycap>Esc</keycap> key also toggles this preview.
-              </para>
-            </listitem>
-            <listitem>
-              <para>
-                A little <emphasis>cross</emphasis> to quit: returns to the 
-                original image.
-              </para>
-            </listitem>
-            <listitem>
-              <para>
-                A <guibutton>Select</guibutton> button: not active for the 
-                moment.
-              </para>
-            </listitem>
-          </itemizedlist>
+          <para>
+            For the moment, only a little <emphasis>cross</emphasis> is active, 
+            allowing to quit: returns to the original image.
+          </para>
         </para>
       </step>
       <step>
@@ -159,9 +145,27 @@ xmlns:xi="http://www.w3.org/2001/XInclude" id="gimp-tool-foreground-select">
           The mouse pointer goes now with the Paint-brush icon.
           The dark blue area (this color can be changed) is for background. The 
           light blue area covers the zone you have selected, on which you will 
-          paint to extract foreground. Between foreground area and background 
-          is a zone you have selected belonging to background named 
+          paint to extract foreground. It contains the <emphasis>foreground 
+          area</emphasis> and a <emphasis>small part of background</emphasis>. 
+          Outside the selected area, the dark blue area is named 
           <emphasis>Unknown pixels area</emphasis>.
+        </para>
+        <para>
+          Options in the small window become active:
+          <itemizedlist>
+            <listitem>
+              <para>
+                A <guilabel>Preview mask</guilabel> checkbox that toggles 
+                displaying a preview of the foreground extraction status. 
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                A <guibutton>Select</guibutton> button that will be used to 
+                create the extraction after marking the foreground.
+              </para>
+            </listitem>
+          </itemizedlist>
         </para>
       </step>
       <step>
@@ -315,9 +319,8 @@ xmlns:xi="http://www.w3.org/2001/XInclude" id="gimp-tool-foreground-select">
         </imageobject>
         <caption>
           <para>
-            On the left: drawing foreground ill-advisedly went over unknown 
-            pixels area: a part of background will be included in foreground 
-            selection!
+            On the left: drawing foreground ill-advisedly went over background 
+            area: a part of background will be included in foreground selection!
           </para>
           <para>
             In middle: <guilabel>Draw background</guilabel> option is checked: 
@@ -330,10 +333,6 @@ xmlns:xi="http://www.w3.org/2001/XInclude" id="gimp-tool-foreground-select">
         </caption>
       </mediaobject>
     </figure>
-    <para>
-      You will often have to reduce the unknown pixels zone with Draw 
-      background.
-    </para>
     <figure>
       <title>Example for Draw unknown</title>
       <mediaobject>
@@ -348,8 +347,7 @@ xmlns:xi="http://www.w3.org/2001/XInclude" id="gimp-tool-foreground-select">
           </para>
           <para>
             On the right: with <guilabel>Draw unknown</guilabel> option 
-            checked, draw on unselected pixels. They are now selected in 
-            foreground.
+            checked, draw on unselected pixels. They are now selected.
           </para>
         </caption>
       </mediaobject>
