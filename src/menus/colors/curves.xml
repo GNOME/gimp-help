@@ -2,9 +2,7 @@
 <!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
                        "http://www.docbook.org/xml/4.3/docbookx.dtd">
 <!-- section history:
-  2018-06-20 j.h small updates to v2.10.2
-  2009-03-11 Added Presets
-  2007-05-20 lexa: enhanced docbook compliance
+  2019-07-03 j.h: update to v2.10.12
 -->
 <sect2 id="gimp-tool-curves">
   <title>Curves</title>
@@ -64,11 +62,11 @@
     </figure>
     <variablelist>
       <varlistentry>
-        <term>Presets</term>
+        <term><guilabel>Presets</guilabel>, <guilabel>Preview</guilabel>, 
+          <guilabel>Split view</guilabel></term>
         <listitem>
           <para>
-            <quote>Presets</quote> are a common feature for 
-            several Colors command. You can find its description in 
+            These options are common to GEGL-based filters. Please refer to 
             <xref linkend="gimp-colors-introduction"/>.
           </para>
         </listitem>
@@ -151,79 +149,138 @@
           <itemizedlist>
             <listitem>
               <para>
-                <emphasis>The horizontal gradient</emphasis>: it represents
-                the input tonal scale. It, too, ranges from 0 (black) to 255
-                (white), from Shadows to Highlights. When you
-                adjust the curve, it splits up into two parts; the upper part
-                then represents the <emphasis>tonal balance</emphasis> of the
-                layer or selection.
+                <emphasis role="bold">The horizontal gradient</emphasis>: it 
+                  represents the <emphasis>input</emphasis> tonal scale. It, 
+                  too, ranges from 0 (black) to 255 (white), from Shadows to 
+                  Highlights. When you adjust the curve, it splits up into two 
+                  parts; the upper part then represents the <emphasis>tonal 
+                  balance</emphasis> of the layer or selection.
               </para>
             </listitem>
             <listitem>
               <para>
-                <emphasis>The vertical gradient</emphasis>: it represents the
-                destination, the output tonal scale. It ranges from 0 (black)
-                to 255 (white), from Shadows to Highlights.
+                <emphasis role="bold">The vertical gradient</emphasis>: it 
+                represents the destination, the <emphasis>output</emphasis> 
+                tonal scale. It ranges from 0 (black) to 255 (white), from 
+                Shadows to Highlights.
               </para>
             </listitem>
             <listitem>
               <para>
-                <emphasis>The chart</emphasis>: the curve is drawn on a grid
-                and goes from the bottom left corner to the top right corner.
-                The pointer x/y position is permanently displayed in the top
-                left part of the grid. By default, this curve is straight,
-                because every input level corresponds to the same
-                output tone. GIMP automatically places an anchor at both
-                ends of the curve, for black (0) and white (255).
+                <emphasis role="bold">The chart</emphasis>: the curve is drawn 
+                on a grid and goes from the bottom left corner to the top right 
+                corner. The <emphasis>pointer x/y position</emphasis> is 
+                permanently displayed in the top left part of the grid. By 
+                default, this curve is straight, because every input level 
+                corresponds to the same output tone. GIMP automatically places a 
+                point at both ends of the curve, for black (0) and white (255).
               </para>
               <para>
-                If you click on the curve, a new <emphasis>anchor</emphasis>
-                is created. When the mouse pointer goes over an anchor, it
-                takes the form of a small hand. You can
-                click-and-drag the anchor to bend the curve. If you click
-                outside of the curve, an anchor is also created, and the
-                curve includes it automatically.
+                If you click on the curve, a new <emphasis>point</emphasis>
+                is created. When the mouse pointer goes over a point, it
+                takes the form of a small hand. You can click-and-drag the 
+                point to bend the curve.
               </para>
               <para>
-                Unactive anchors are black. The active anchor is white. You
-                can activate an anchor by clicking on it. You can also swap
-                the anchor activation by using the Left and Right arrow keys
-                of your keyboard. You can move the anchor vertically with the
-                Up and Down arrow keys. This allows you to fine tune the
-                anchor position. Holding the <keycap>Shift</keycap> down lets
-                you move it by increments of 15 pixels.
+                If you click outside the curve, a point is also created, and 
+                the curve includes it automatically. <emphasis role="underline">
+                If you <keycap>Ctrl</keycap>-click outside the curve, the 
+                Y-coordinate will snap to the original curve</emphasis>: this 
+                is particularly useful for adding points along the curve.
               </para>
               <para>
-                Two anchors define a <emphasis>curve segment</emphasis> which
+                Unactive points are white. The active point is black. You
+                can activate a point by clicking on it. You can also swap
+                the point activation by using the Left and Right arrow keys
+                of your keyboard.
+              </para>
+              <para>
+                Two points define a <emphasis>curve segment</emphasis> which
                 represents a tonal range in the layer. You can click-and-drag
-                this segment (this creates a new anchor). Of course, you
-                can't drag it beyond the end anchors.
+                this segment (this creates a new point). Of course, you
+                can't drag it beyond the end points.
               </para>
               <para>
-                To delete all anchors (apart from both ends), click on the
-                <guilabel>Reset Channel</guilabel> button. To delete only one
-                anchor, move beyond any adjacent anchor on horizontal axis.
+                To <emphasis>move a point</emphasis>, several possibilities 
+                to fine tune the point position. :
+                <itemizedlist>
+                  <listitem>
+                    <para> 
+                      Click-and-drag the point.
+                    </para>
+                  </listitem>
+                  <listitem>
+                    <para>
+                      Using Up and Down arrow keys (Holding the 
+                      <keycap>Shift</keycap> down lets you move it by 
+                      increments of 15 pixels) to move the point vertically.
+                    </para>
+                  </listitem>
+                  <listitem>
+                    <para>
+                      <emphasis role="underline"><keycap>Ctrl</keycap> + 
+                      click-and-drag allows you to move the point along the 
+                      curve in its segment, independently of the pointer 
+                      position.</emphasis>
+                    </para>
+                  </listitem>
+                  <listitem>
+                    <para>
+                      Another way to move point is using the 
+                      <quote>Input</quote> and <quote>Output</quote> spin 
+                      buttons, new in GIMP-2.10.12: see below.
+                    </para>
+                  </listitem>
+                </itemizedlist>
+              </para>
+              <para>
+                To <emphasis>delete</emphasis> all points (apart from both ends 
+                that can't be deleted), click on the <guibutton>Reset 
+                Channel</guibutton> button. To delete only one point, move it 
+                beyond any adjacent point horizontally.
               </para>
               <para>
                 Meanwhile, on the canvas, the mouse pointer has the form of
                 an eye-dropper. If you click on a pixel, a vertical line
                 appears on the chart, positioned to the source value of this
                 pixel in the selected channel. If you
-                <keycap>Shift</keycap>-click, you create an anchor in the
+                <keycap>Shift</keycap>-click, you create a point in the
                 selected channel. If you <keycap>Ctrl</keycap>-click, you
-                create an anchor in all channels, possibly including the
+                create a point in all channels, possibly including the
                 Alpha channel. You can also <keycap>Shift</keycap>-drag and
-                <keycap>Ctrl</keycap>-drag: this
-                will move the vertical line and the anchor will show up when
-                releasing the mouse left button.
+                <keycap>Ctrl</keycap>-drag: this will move the vertical line 
+                and the point will show up when releasing the mouse left 
+                button.
               </para>
               <para>
-                The histogram of the active layer or selection for the
-                selected channel is represented grayed out in the chart. It's
-                only a reference.
+                The <emphasis>histogram</emphasis> of the active layer or 
+                selection for the selected channel is represented grayed out in 
+                the chart. It's only a reference and is not updated during 
+                treatment.
               </para>
             </listitem>
           </itemizedlist>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Input, Output</term>
+        <listitem>
+          <para>
+            These spin buttons allow setting the selected point coordinates 
+            numerically and accurately if needed.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Type</term>
+        <listitem>
+          <para>
+            Control points can be either <guilabel>Smooth</guilabel> (default: 
+            all points are smooth) or <guilabel>Corner</guilabel> points. These 
+            Corner points result in sharp angle. They are displayed using a 
+            diamond shape. You can toggle between Smooth and Corner for the 
+            selected point.
+          </para>
         </listitem>
       </varlistentry>
       <varlistentry>
@@ -234,9 +291,8 @@
               <term>Smooth</term>
               <listitem>
                 <para>
-                  This the default mode. It constrains the curve type to a
-                  smooth line with tension. It provides a more realistic
-                  render than the following.
+                  This Smooth option concerns the whole curve, not only the 
+                  selected point as above.
                 </para>
               </listitem>
             </varlistentry>
@@ -244,67 +300,26 @@
               <term>Free Hand</term>
                <listitem>
                  <para>
-                   With this mode, you can draw a broken line that you can
-                   smooth by clicking the <guibutton>Curve Type</guibutton>
-                   button again.
+                   With this mode, you can draw a free hand line that you can
+                   smooth by clicking the <guilabel>Smooth</guilabel> Curve 
+                   type.
                 </para>
               </listitem>
             </varlistentry>
           </variablelist>
         </listitem>
       </varlistentry>
-      <varlistentry>
-        <term>Preview and Split view</term>
-        <listitem>
-          <para>
-            These are common features described in 
-            <xref linkend="gimp-colors-introduction"/>.
-          </para>
-        </listitem>
-      </varlistentry>
-    </variablelist>
-    <variablelist>
-      <title>Tool Options dialog</title>
-      <para>
-        <figure>
-          <title><quote>Levels</quote> tool options</title>
-          <mediaobject>
-            <imageobject>
-              <imagedata format="PNG"
-                fileref="images/toolbox/tool-options-curves.png"/>
-            </imageobject>
-          </mediaobject>
-        </figure>
-      </para>
-      <para>
-        Although this tool is not present in the Toolbox by default (For this,
-        please refer to <xref linkend="gimp-prefs-toolbox"/> if you want to add
-        it), nevertheless it has a Tool Option Dialog under the Toolbox. These
-        options are described here:
-      </para>
-      
-      <varlistentry>
-        <term>Sample Average</term>
-        <listitem>
-          <para>
-            This slider sets the <quote>radius</quote> of the color-picking
-            area. This area appears as a more or less enlarged square when you
-            maintain the click on a pixel. Here, the eye-dropper is used to
-            locate a pixel: radius = 1 seems the best.
-          </para>
-        </listitem>
-      </varlistentry>
     </variablelist>
   </sect3>
 
   <sect3>
-    <title>Using the <quote>Curves</quote> tool</title>
+    <title>Using <quote>Curves</quote></title>
 
     <sect4>
       <title>Summary and basic shapes</title>
 
       <para>
-        We create anchors and segments on the curve and we move them to
+        We create points and segments on the curve and we move them to
         shape the curve. This curve maps <quote>input</quote> tones of
         the active layer or selection to <quote>output</quote> tones.
       </para>
@@ -313,14 +328,14 @@
         <title>How the Curves tool works</title>
 
         <para>
-          Moving the anchor of a pixel upwards makes this pixel brighter.
+          Moving the point a pixel upwards makes this pixel brighter.
         </para>
         <mediaobject>
           <imageobject>
             <imagedata fileref="images/toolbox/curves-work.png" format="PNG"/>
           </imageobject>
           <caption>
-            <para lang="en">Moving the anchor upwards</para>
+            <para lang="en">Moving the point upwards</para>
           </caption>
         </mediaobject>
       </simplesect>
