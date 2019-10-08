@@ -4,50 +4,28 @@
 <!--This command is the same as gimp-layer-color-to-alpha.
     The F1 context help only refers to plug-in-color-to-alpha-->
 <!-- section history:
+  2019-10-04 j.h: update to v2.10 (threshold explanations from Elle Stone)
   2007-10-21 ude: moved here from filters/color/colortoalpha.xml ('en','de')
-  2007-07-05 Added Spanish translation by AntI
-  2007-04-05 KoSt: added 'no'
-  2005-12-18 fixed messed up image filename by lexa
-  2005-12-07 replaced <simplesect> by <sect3> by lexa
-  2005-09-30 de replaced informalfigure by axel.wernicke
-  2005-08-25 de added by axel.wernicke
 -->
 <sect2 id="gimp-filter-color-to-alpha">
   <title>Color to Alpha…</title>
 
   <sect3>
     <title>Overview</title>
-    <figure>
-      <title>Example for <quote>Color to Alpha</quote></title>
-      <mediaobject>
-        <imageobject>
-          <imagedata format="JPG"
-            fileref="images/filters/examples/taj_orig.jpg"/>
-        </imageobject>
-        <caption>
-          <para>Original image</para>
-        </caption>
-      </mediaobject>
-      <mediaobject>
-        <imageobject>
-          <imagedata format="JPG"
-            fileref="images/filters/examples/color-taj-colortoalpha.jpg"/>
-        </imageobject>
-        <caption>
-          <para><quote>Color to Alpha</quote> applied on blue areas
-          </para>
-        </caption>
-      </mediaobject>
-    </figure>
     <para>
       The Color to Alpha command makes transparent all pixels of the active
-      layer that have a selected color. An Alpha channel is created.  It will
-      attempt to preserve anti-aliasing information by using a partially
-      intelligent routine that replaces weak color information with
-      weak alpha information. In this way, areas that contain an
-      element of the selected color will maintain a blended appearance
-      with their surrounding pixels.
+      layer that have a selected color. It will attempt to preserve 
+      anti-aliasing information by using a partially intelligent routine that 
+      replaces weak color information with weak alpha information. In this 
+      way, areas that contain an element of the selected color will maintain a 
+      blended appearance with their surrounding pixels.
     </para>
+    <note>
+      <para>
+        This command is usually grayed out : you must add an alpha channel to 
+        use the command.
+      </para>
+    </note>
   </sect3>
 
   <sect3>
@@ -64,7 +42,7 @@
   <sect3>
     <title>Options</title>
     <figure>
-      <title><quote>Color to Alfa</quote> command options</title>
+      <title><quote>Color to Alpha</quote> command options</title>
       <mediaobject>
         <imageobject>
           <imagedata format="PNG"
@@ -74,19 +52,228 @@
     </figure>
     <variablelist>
       <varlistentry>
+        <term>Presets, Preview, Split view</term>
+        <listitem>
+          <para>
+            These options are common to GEGL-based filters. Please refer to 
+            <xref linkend="gimp-filters-common"/>.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
         <term>Color</term>
         <listitem>
           <para>
-            Clicking on the <guilabel>From</guilabel> color swatch
-            provides a color selection dialog where you can select a
-            color. If selection of a precise color is required, use
-            the Color Picker then drag and drop the selected color
-            from the color picker to the From color swatch. Right
-            clicking on the color will display a menu where you can
+            Clicking on the color swatch provides a color selection dialog 
+            where you can select a color. You can also select a color 
+            using the eye dropper on the right.
+          </para>
+          <para>
+            <quote>Color to alpha</quote> comes with a GEGL option dialog under 
+            Toolbox. When the <guilabel>Sample merged</guilabel> option is 
+            unchecked, color picker picks only one pixel color. When the option 
+            is checked, mouse pointer goes with a square limiting a pixel sample 
+            that determines a merged sample <quote>color</quote>. You can fix 
+            square size directly in text box, or using arrow heads, or 
+            <keycap>Up</keycap> and <keycap>Down</keycap> keyboard keys.
+          </para>
+          <para>
+            Right clicking on the color swatch will display a menu where you can 
             select Foreground or Background colors, White or Black.
           </para>
         </listitem>
       </varlistentry>
+      <varlistentry>
+        <term>Transparency and Opacity thresholds</term>
+        <listitem>
+          <itemizedlist>
+            <listitem>
+              <para>
+                <guilabel>Transparency</guilabel>: the limit below which colors 
+                become transparent.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <guilabel>Opacity</guilabel>: the limit above which colors 
+                become opaque.
+              </para>
+            </listitem>
+          </itemizedlist>
+          <para>
+            Color to Alpha modifies the transparency (and color) of the 
+            pixels based on their distance from the selected background 
+            color (the "Color" option) -- the closer they are to the 
+            background color, the more transparent they become, with the 
+            background color becoming fully transparent.
+          </para>
+          <para>
+            The transparency and opacity thresholds control how close colors 
+            should be to the background color before they become fully 
+            transparent, and how far they should be from the background color 
+            before they remain fully opaque, respectively.  With the default 
+            values of 0 and 1, only the background color becomes fully 
+            transparent, and only the colors farthest away from the background 
+            color remain fully opaque.
+          </para>
+          <para>
+            For example, while the default values work well for removing a 
+            white background from a black object, if the object is gray 
+            instead [fig. 1] it will become semi-transparent [fig. 2], since 
+            gray is midway between white and black.  Lowering the opacity 
+            threshold to 0.5 fixes that, by keeping all pixels that are gray or 
+            darker (all pixels whose distance from white is 0.5 or more, on a 
+            [0,1] scale) fully opaque [fig. 3].
+          </para>
+          <para>
+            The transparency threshold works similarly: raising it causes more
+            colors in the neighborhood of the background color to become 
+            fully transparent. This is mostly useful with noisy images, in 
+            which the background is not fully solid.  However, unlike in other 
+            cases, when the transparency threshold is above 0, recomposing the 
+            result against the background color no longer reproduces the exact 
+            same image.
+          </para>
+          <para>
+            At the risk of being a bit technical, this can be visualized by 
+            thinking of the RGB cube.  The background color is a point within 
+            the cube, and the transparency and opacity thresholds are two 
+            sub-cubes centered around the background color.  Everything 
+            inside the transparency-threshold cube becomes fully transparent, 
+            everything outside the opacity-threshold cube remains fully 
+            opaque, and everything in between gradually transitions from 
+            transparent to opaque.  In image [fig. 4] you can see the Red-Green 
+            face of the RGB cube.  (1) is the background color (Red=0.5, 
+            Green=0.5, Blue=0.0), (2) is the transparency threshold (set to 
+            0.1), and (3) is the opacity threshold (set to 0.4).
+          </para>
+          <figure>
+            <title>Color to Alpha Thresholds examples</title>
+            <mediaobject>
+              <imageobject>
+                <imagedata format="PNG"
+                  fileref="images/menus/colors/ColorToAlpha-ex1.png"/>
+              </imageobject>
+              <caption>
+                <para>fig. 1</para>
+              </caption>
+            </mediaobject>
+            <mediaobject>
+              <imageobject>
+                <imagedata format="PNG"
+                  fileref="images/menus/colors/ColorToAlpha-ex2.png"/>
+              </imageobject>
+              <caption>
+                <para>fig. 2</para>
+              </caption>
+            </mediaobject>
+          </figure>
+          <figure>
+            <title>Color to Alpha Thresholds examples</title>
+            <mediaobject>
+              <imageobject>
+                <imagedata format="PNG"
+                  fileref="images/menus/colors/ColorToAlpha-ex3.png"/>
+              </imageobject>
+              <caption>
+                <para>fig. 3</para>
+              </caption>
+            </mediaobject>
+            <mediaobject>
+              <imageobject>
+                <imagedata format="PNG"
+                  fileref="images/menus/colors/ColorToAlpha-ex4.png"/>
+              </imageobject>
+              <caption>
+                <para>fig. 4</para>
+              </caption>
+            </mediaobject>
+          </figure>
+        </listitem>
+      </varlistentry>
     </variablelist>
+  </sect3>
+  
+  <sect3>
+    <title>Using Color to Alpha</title>
+    <orderedlist>
+      <listitem>
+        <para>
+          Add an alpha channel to your image if necessary (Layer > Transparency > 
+          Add Alpha Channel).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Open Color to alpha.
+        </para>
+        <figure>
+          <title>Color to alpha open with default options</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata format="PNG"
+                fileref="images/menus/colors/ColorToAlpha-ex5.png"/>
+            </imageobject>
+            <caption>
+              <para>Original image with alpha channel</para>
+            </caption>
+          </mediaobject>
+          <mediaobject>
+            <imageobject>
+              <imagedata format="PNG"
+                fileref="images/menus/colors/ColorToAlpha-ex6.png"/>
+            </imageobject>
+            <caption>
+              <para>
+                Original image with an alpha channel. Color to alpha with 
+                default options : <quote>Color</quote> is white. Opacity 
+                threshold = 1.00 is maximum, and so only the colors farthest 
+                away from the <quote>Color</quote> remain fully opaque. 
+                Transparency threshold = 0 and so the <quote>Color</quote> is 
+                fully transparent.
+              </para>
+            </caption>
+          </mediaobject>
+        </figure>
+        <para>
+          Uncheck Preview option.
+        </para>
+        <para>
+          Pick color, here the sky.
+        </para>
+        <para>
+          Re-check Preview option.
+        </para>
+        <mediaobject>
+          <imageobject>
+            <imagedata format="PNG"
+              fileref="images/menus/colors/ColorToAlpha-ex7.png"/>
+          </imageobject>
+          <caption>
+            <para>
+              <quote>Color</quote> from sky. Default thresholds.
+            </para>
+          </caption>
+        </mediaobject>
+        <para>
+          Adapt Transparency and Opacity thresholds proceeding by trial and 
+          error.
+        </para>
+        <mediaobject>
+          <imageobject>
+            <imagedata format="PNG"
+              fileref="images/menus/colors/ColorToAlpha-ex8.png"/>
+          </imageobject>
+          <caption>
+            <para>
+              Only sky is transparent. Opacity threshold decreased to make 
+              farthest colors (monument,trees and road) fully opaque. 
+              Transparency threshold increased to make <quote>Color</quote> 
+              fully transparent and delete some imperfections in sky.
+            </para>
+          </caption>
+        </mediaobject>
+      </listitem>
+    </orderedlist>
   </sect3>
 </sect2>
