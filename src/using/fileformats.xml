@@ -330,7 +330,38 @@
           </listitem>
         </varlistentry>
         <varlistentry>
-          <term>Preview in image window</term>
+            <term>
+              Use quality settings from original image
+            </term>
+            <listitem>
+              <para>
+                If a particular quality setting (or <quote>quantization
+                table</quote>) was attached to the image when it was
+                loaded, then this option allows you to use them instead of
+                the standard ones.
+              </para>
+              <para>
+                If you have only made a few changes to the image, then
+                re-using the same quality setting will give you almost the
+                same quality and file size as the original image. This
+                will minimize the losses caused by the quantization step,
+                compared to what would happen if you used different
+                quality setting.
+              </para>
+              <para>
+                If the quality setting found in the original file are not
+                better than your default quality settings, then the option
+                <quote>Use quality settings from original image</quote>
+                will be available but not enabled. This ensures that you
+                always get at least the minimum quality specified in your
+                defaults. If you did not make major changes to the image
+                and you want to save it using the same quality as the
+                original, then you can do it by enabling this option.
+              </para>
+            </listitem>
+          </varlistentry>
+        <varlistentry>
+          <term>Show preview in image window</term>
           <listitem>
             <para>
               Checking this option causes each change in quality (or any other
@@ -341,7 +372,34 @@
           </listitem>
         </varlistentry>
         <varlistentry>
-          <term>Advanced settings</term>
+          <term>Save metadata</term>
+          <listitem>
+            <para>
+              If the image you loaded has Exif, XMP, IPTC metadata, they are 
+              preserved, and you can save them or not when exporting to jpeg.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Save thumbnail, Save color profile</term>
+          <listitem>
+            <para>
+              Many applications use the small thumbnail image as a quickly 
+              available small preview image.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Comment</term>
+          <listitem>
+            <para>
+              You can edit the comment attached to the image you loaded or write a 
+              new one.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Advanced Options</term>
           <listitem>
             <para>
               Some information about the advanced settings:
@@ -358,6 +416,49 @@
                 </listitem>
               </varlistentry>
               <varlistentry>
+                <term>Smoothing</term>
+                <listitem>
+                  <para>
+                    JPG compression creates artifacts. By using this option,
+                    you can smooth the image when saving, reducing them. But
+                    your image becomes somewhat blurred.
+                  </para>
+                </listitem>
+              </varlistentry>
+              <varlistentry>
+                <term>Use arithmetic coding</term>
+                <listitem>
+                  <para>
+                    <emphasis>Arithmetic encoding</emphasis> is a form of entropy 
+                    encoding (a lossless data compression scheme) that, since 
+                    GIMP-2.10 can be used in exporting as JPEG. Images using 
+                    arithmetic encoding can be 5 - 10 % smaller. But older 
+                    softwares may have trouble opening these images.
+                  </para>
+                </listitem>
+              </varlistentry>
+              <varlistentry>
+                <term>Use restart markers</term>
+                <listitem>
+                  <para>
+                    The image file can include markers which allow the image
+                    to be loaded as segments. If a connection is broken while
+                    loading the image in a web page,
+                    loading can resume from the next marker.
+                  </para>
+                </listitem>
+              </varlistentry>
+              <varlistentry>
+                <term>Interval (MCU rows)</term>
+                <listitem>
+                  <para>
+                    JPEG images are stored as a series of compressed square tiles 
+                    named MCU (Minimum Coding Unit). You can set the size of these 
+                    tiles (in pixels).
+                  </para>
+                </listitem>
+              </varlistentry>
+              <varlistentry>
                 <term>Progressive</term>
                 <listitem>
                   <para>
@@ -370,113 +471,6 @@
                     Unfortunately, the progressive option produces
                     slightly larger JPG files (than without the
                     progressive option).
-                  </para>
-                </listitem>
-              </varlistentry>
-              <varlistentry>
-                <term>Save EXIF data</term>
-                <listitem>
-                  <indexterm>
-                    <primary>EXIF</primary>
-                  </indexterm>
-                  <para>
-                    JPEG files from many digital cameras contain extra
-                    information, called EXIF data.
-                    EXIF data provides information about the image such as
-                    camera make and model, image size, image date, etc.
-                    Although GIMP uses the <quote>libexif</quote> library to
-                    read and write EXIF data, the library is not
-                    automatically packaged with GIMP. If GIMP was built with
-                    libexif support, then EXIF data is preserved if you open a
-                    JPEG file, work with the resulting image, and then export 
-                    it as JPEG. The EXIF data is not altered in any way when 
-                    you do this. The EXIF data may indicate things such as 
-                    image creation time and file name, which may no longer be
-                    correct.
-                    If GIMP was not built with EXIF support, you can still
-                    open JPG files containing EXIF data, but the EXIF data
-                    is ignored, and will not be saved when the resulting image
-                    is later exported.
-                  </para>
-                </listitem>
-              </varlistentry>
-              <varlistentry>
-                <term>Save thumbnail</term>
-                <listitem>
-                  <para>
-                    This option lets you save a thumbnail with the image.
-                    Many applications use the small thumbnail image as
-                    a quickly available small preview image.
-                  </para>
-                  <note>
-                    <para>
-                      This option is present only if <acronym>GIMP</acronym>
-                      was built with EXIF support.
-                    </para>
-                  </note>
-                </listitem>
-              </varlistentry>
-              <varlistentry>
-                <term>Save XMP data</term>
-                <listitem>
-                  <para>
-                    XMP data is <quote>meta</quote> data about the image;
-                    it is a competing format with EXIF.
-                    If you enable this option, the meta data of the image is
-                    saved in an <acronym>XMP</acronym>-structure within the
-                    file.
-                  </para>
-                </listitem>
-              </varlistentry>
-              <varlistentry>
-                <term>
-                  Use quality settings from original image
-                </term>
-                <listitem>
-                  <para>
-                    If a particular quality setting (or <quote>quantization
-                    table</quote>) was attached to the image when it was
-                    loaded, then this option allows you to use them instead of
-                    the standard ones.
-                  </para>
-                  <para>
-                    If you have only made a few changes to the image, then
-                    re-using the same quality setting will give you almost the
-                    same quality and file size as the original image. This
-                    will minimize the losses caused by the quantization step,
-                    compared to what would happen if you used different
-                    quality setting.
-                  </para>
-                  <para>
-                    If the quality setting found in the original file are not
-                    better than your default quality settings, then the option
-                    <quote>Use quality settings from original image</quote>
-                    will be available but not enabled. This ensures that you
-                    always get at least the minimum quality specified in your
-                    defaults. If you did not make major changes to the image
-                    and you want to save it using the same quality as the
-                    original, then you can do it by enabling this option.
-                  </para>
-                </listitem>
-              </varlistentry>
-              <varlistentry>
-                <term>Smoothing</term>
-                <listitem>
-                  <para>
-                    JPG compression creates artifacts. By using this option,
-                    you can smooth the image when saving, reducing them. But
-                    your image becomes somewhat blurred.
-                  </para>
-                </listitem>
-              </varlistentry>
-              <varlistentry>
-                <term>Restart markers</term>
-                <listitem>
-                  <para>
-                    The image file can include markers which allow the image
-                    to be loaded as segments. If a connection is broken while
-                    loading the image in a web page,
-                    loading can resume from the next marker.
                   </para>
                 </listitem>
               </varlistentry>
@@ -569,15 +563,6 @@
                       </para>
                     </listitem>
                   </itemizedlist>
-                </listitem>
-              </varlistentry>
-              <varlistentry>
-                <term>Image comments</term>
-                <listitem>
-                  <para>
-                    In this text box, you can enter a comment which is
-                    saved with the image.
-                  </para>
                 </listitem>
               </varlistentry>
             </variablelist>
