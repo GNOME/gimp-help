@@ -220,7 +220,7 @@ class ImageReferencesList(FileNameContainer):
         super(ImageReferencesList, self).add(key, val)
 
     def report(self):
-        """Print the list of broken image referencess
+        """Print the list of broken image references
            in the XML source file(s).
         """
         files = self.files()

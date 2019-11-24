@@ -59,7 +59,7 @@ class gimphelpXmlMode(docbookXmlMode):
             if attr:
                 assert attr.startswith("images/")
                 origimagepath = attr
-                for subdir in ("C", "commmon"):
+                for subdir in ("C", "common"):
                     imagepath = origimagepath.replace("/", "/%s/" % subdir, 1)
                     # I need to search files relatively to the source directory.
                     scriptdir = os.path.dirname(os.path.realpath(__file__))
