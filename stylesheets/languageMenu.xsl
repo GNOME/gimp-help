@@ -9,7 +9,7 @@
 
   <!-- The tokenizer splits all languages and creates for each language
        a link element with the href pointing to the concatenated result
-       of the language id and the given filename paramenter.
+       of the language id and the given filename parameter.
     -->
   <xsl:template name="gimp.help.linguas.tokenize">
     <xsl:param name="linguas" />
