@@ -46,7 +46,7 @@
       </div>
   </xsl:template>
 
-  <!-- thats totally stupid, but it works for this one -->
+  <!-- that's totally stupid, but it works for this one -->
   <xsl:template match="para[@class]">
     <p>
       <xsl:attribute name="class">

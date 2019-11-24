@@ -579,7 +579,7 @@ Options:
         that will be kept on the working version (ruip) or
         merged back in the main XML (merge).
         The oprder matters in (rip) mode - the first language
-        specified is the one that will be clonned in newly created tags
+        specified is the one that will be cloned in newly created tags
         for the other languages if they don't exist.
         Usage: --langs=xx,yy,zz, ... where xx, yy and zz are language
         codes
