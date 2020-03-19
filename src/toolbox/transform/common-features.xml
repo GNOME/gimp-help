@@ -21,7 +21,7 @@
       them here. More specific options will be described with their tool.
     </para>
     <variablelist>
-      <varlistentry>
+      <varlistentry id="transform-option">
         <term>Transform</term>
         <listitem>
           <para>
@@ -111,7 +111,7 @@
           </itemizedlist>
         </listitem>
       </varlistentry>
-      <varlistentry>
+      <varlistentry id="direction-option">
         <term>Direction</term>
         <listitem>
           <para>
@@ -234,7 +234,8 @@
           </para>
         </listitem>
       </varlistentry>
-      <varlistentry>
+      
+      <varlistentry id="clipping-option">
         <term>Clipping</term>
         <listitem>
           <indexterm>
@@ -395,19 +396,125 @@
           </variablelist>
         </listitem>
       </varlistentry>
-      <varlistentry>
+      
+      <varlistentry id="preview-option">
         <term>Show image preview</term>
         <listitem>
           <indexterm>
             <primary>Preview</primary>
             <secondary>Transformation tools</secondary>
-          </indexterm>         
+          </indexterm>
           <para>
             If this is marked, which is the default setting, the transformed
             image will be visible on top of the original image or layer. There 
             will also be a slider with which you may select the preview opacity.
           </para>
-        </listitem>    
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="composited-preview">
+        <term>Composited preview</term>
+        <listitem>
+          <indexterm>
+            <primary>Preview</primary>
+            <secondary>Composited preview</secondary>
+          </indexterm> 
+          <para>
+          <para>
+            <subscript>
+              Inspired from 
+              <ulink                   
+    url="https://libregraphicsworld.org/blog/entry/gimp-2-10-18-full-review"/>
+            </subscript>
+          </para>
+          </para>
+          <para>
+            <emphasis>Show preview as part of the image composition</emphasis>: 
+            when you have multiple layers, each one with its own blending mode   
+            and opacity, transforming it means it pops up right above every 
+            other layer. So in a complex layers composition you can't align 
+            this layer against other layers without much trial and error.
+          </para>
+          <para>
+            The new Composited Preview option removes this problem in favor 
+            of rendering the preview of the transformed layer exactly where it 
+            is in the layers stack, exactly with the opacity and blending mode 
+            of choice.
+          </para>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/toolbox/3DTransf-orig.jpg" 
+    format="JPEG"/>
+            </imageobject>
+            <caption>
+              <para>Original image: red layer opacity is 50%</para>
+            </caption>
+          </mediaobject>
+          <figure>
+            <title>Composited Preview Example</title>
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref="images/toolbox/3DTransf-no.jpg" 
+      format="JPEG"/>
+              </imageobject>
+              <caption>
+                <para>
+                  Composited option unchecked: in preview, red layer is above 
+                  all other layers.
+                </para>
+              </caption>
+            </mediaobject>
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref="images/toolbox/3DTransf-with.jpg" 
+      format="JPEG"/>
+              </imageobject>
+              <caption>
+                <para>
+                  Composited option checked: in preview, red layer is at its 
+                  right place, like in layer stack.
+                </para>
+              </caption>
+            </mediaobject>
+          </figure>
+          <para>
+            Two sub options are available:
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <guilabel>Preview linked items</guilabel>: display 
+                  transformation of all linked layers rather than the currently 
+                  selected one.
+                </para>
+                <mediaobject>
+                  <imageobject>
+                    <imagedata fileref="images/toolbox/3DTransf-linked.jpg" 
+          format="JPEG"/>
+                  </imageobject>
+                  <caption>
+                    <para>Two layers linked</para>
+                  </caption>
+                </mediaobject>
+              </listitem>
+              <listitem>
+                <para>
+                  <guilabel>Synchronous preview</guilabel>: this option is 
+                  experimental. The idea is to render the preview as soon as 
+                  you change the transform. So instead of waiting for the mouse 
+                  to stop moving, it renders the result immediately. If GIMP 
+                  can render everything fast enough, this means a much smoother 
+                  and more instant feedback.
+                </para>
+                <para>
+                  But this option also blocks everything until the preview is 
+                  done rendering. This means, GIMP can become much less 
+                  responsive, usually when the layer is very large. That's why 
+                  this is disabled by default.
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+        </listitem>
       </varlistentry>
       
       <varlistentry id="gimp-tool-transform-guides">
