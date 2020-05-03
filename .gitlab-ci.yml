@@ -1,0 +1,32 @@
+image: debian:testing
+
+stages:
+  - build
+
+variables:
+  INSTALL_DIR: "_install"
+  INSTALL_PREFIX: "${CI_PROJECT_DIR}/${INSTALL_DIR}"
+
+build-debian:
+  stage: build
+  artifacts:
+    expire_in: 1 week
+    when: always
+    paths:
+    - www/
+  before_script:
+    - apt-get update
+    - apt-get install -y --no-install-recommends
+        automake
+        build-essential
+        docbook-xsl
+        pkg-config
+        pngcrush
+        pngnq
+        xsltproc
+  script:
+    - mkdir _build
+    - cd _build
+    - ../autogen.sh --prefix=${INSTALL_PREFIX} --without-gimp
+    - make && make install
+    - mv ${INSTALL_PREFIX}/share/gimp/2.0/help/ ../www/
