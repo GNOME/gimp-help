@@ -42,7 +42,7 @@ class basicXmlMode:
             while child and final_children:
                 if not child.isBlankNode() and child.type != 'comment' and not self.isFinalNode(child):
                     final_children = False
-                child = child.next
+                child = child.__next__
             if final_children:
                 return True
         return False

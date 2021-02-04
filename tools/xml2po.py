@@ -41,9 +41,9 @@ NULL_STRING = '/dev/null'
 if not os.path.exists('/dev/null'): NULL_STRING = 'NUL'
 
 def usage (with_help = False):
-    print >> sys.stderr, "Usage:  %s [OPTIONS] [XMLFILE]..." % (sys.argv[0])
+    print("Usage:  %s [OPTIONS] [XMLFILE]..." % (sys.argv[0]), file=sys.stderr)
     if with_help:
-        print >> sys.stderr, """
+        print("""
 OPTIONS may be some of:
     -a    --automatic-tags     Automatically decides if tags are to be considered
                                  "final" or not
@@ -72,7 +72,7 @@ EXAMPLES:
     using -p option for each XML file:
         %(command)s -p de.po chapter1.xml > chapter1.de.xml
         %(command)s -p de.po chapter2.xml > chapter2.de.xml
-""" % {'command': sys.argv[0]}
+""" % {'command': sys.argv[0]}, file=sys.stderr)
 
 
 def main(argv):
@@ -148,7 +148,7 @@ def main(argv):
             sys.exit(0)
 
     if operation == 'update' and output != "-":
-        print >> sys.stderr, "Option '-o' is not yet supported when updating translations directly. Ignoring this option."
+        print("Option '-o' is not yet supported when updating translations directly. Ignoring this option.", file=sys.stderr)
 
     # Treat remaining arguments as XML files
     filenames = []
@@ -158,16 +158,16 @@ def main(argv):
     try:
         xml2po_main = Main(default_mode, operation, output, options)
     except IOError:
-        print >> sys.stderr, "Error: cannot open file %s for writing." % (output)
+        print("Error: cannot open file %s for writing." % (output), file=sys.stderr)
         sys.exit(5)
 
     if operation == 'merge':
         if len(filenames) > 1:
-            print  >> sys.stderr, "Error: You can merge translations with only one XML file at a time."
+            print("Error: You can merge translations with only one XML file at a time.", file=sys.stderr)
             sys.exit(2)
 
         if not mofile:
-            print >> sys.stderr, "Error: You must specify MO file when merging translations."
+            print("Error: You must specify MO file when merging translations.", file=sys.stderr)
             sys.exit(3)
 
         xml2po_main.merge(mofile, filenames[0])

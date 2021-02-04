@@ -86,14 +86,14 @@ class MessageOutput:
                 self.messages.append(t)
                 if spacepreserve:
                     self.nowrap[t] = True
-                if t in self.linenos.keys():
+                if t in list(self.linenos.keys()):
                     self.linenos[t].append((self.filename, tag, lineno))
                 else:
                     self.linenos[t] = [ (self.filename, tag, lineno) ]
                 if (not self.do_translations) and comment and not t in self.comments:
                     self.comments[t] = comment
             else:
-                if t in self.linenos.keys():
+                if t in list(self.linenos.keys()):
                     self.linenos[t].append((self.filename, tag, lineno))
                 else:
                     self.linenos[t] = [ (self.filename, tag, lineno) ]
@@ -166,7 +166,7 @@ class XMLDocument(object):
         elif node.isText():
             if node.isBlankNode():
                 if self.app.options.get('expand_entities') or \
-                  (not (node.prev and not node.prev.isBlankNode() and node.next and not node.next.isBlankNode()) ):
+                  (not (node.prev and not node.prev.isBlankNode() and node.__next__ and not node.next.isBlankNode()) ):
                     #print >>sys.stderr, "BLANK"
                     node.setContent('')
             else:
@@ -176,7 +176,7 @@ class XMLDocument(object):
             child = node.children
             while child:
                 self.normalizeNode(child)
-                child = child.next
+                child = child.__next__
 
     def normalizeString(self, text, spacepreserve = False):
         """Normalizes string to be used as key for gettext lookup.
@@ -200,7 +200,7 @@ class XMLDocument(object):
             tree = ctxt.doc()
             newnode = tree.getRootElement()
         except:
-            print >> sys.stderr, """Error while normalizing string as XML:\n"%s"\n""" % (text)
+            print("""Error while normalizing string as XML:\n"%s"\n""" % (text), file=sys.stderr)
             return text
 
         self.normalizeNode(newnode)
@@ -209,7 +209,7 @@ class XMLDocument(object):
         child = newnode.children
         while child:
             result += child.serialize('utf-8')
-            child = child.next
+            child = child.__next__
 
         result = re.sub('^ ','', result)
         result = re.sub(' $','', result)
@@ -235,7 +235,7 @@ class XMLDocument(object):
         ctxt.parseDocument()
         tree = ctxt.doc()
         if next:
-            newnode = tree.children.next
+            newnode = tree.children.__next__
         else:
             newnode = tree.children
 
@@ -243,7 +243,7 @@ class XMLDocument(object):
         child = newnode.children
         while child:
             result += child.serialize('utf-8')
-            child = child.next
+            child = child.__next__
         tree.freeDoc()
         return result
 
@@ -262,7 +262,7 @@ class XMLDocument(object):
                         result += child.content.decode('utf-8')
                 else:
                     result += self.myAttributeSerialize(child)
-                child = child.next
+                child = child.__next__
         else:
             result = node.serialize('utf-8')
         return result
@@ -338,7 +338,7 @@ class XMLDocument(object):
                 pass
 
             if not newnode:
-                print >> sys.stderr, """Error while parsing translation as XML:\n"%s"\n""" % (text.encode('utf-8'))
+                print("""Error while parsing translation as XML:\n"%s"\n""" % (text.encode('utf-8')), file=sys.stderr)
                 return
 
             newelem = newnode.getRootElement()
@@ -346,13 +346,13 @@ class XMLDocument(object):
             if newelem and newelem.children:
                 free = node.children
                 while free:
-                    next = free.next
+                    next = free.__next__
                     free.unlinkNode()
                     free = next
 
                 if node:
                     copy = newelem.copyNodeList()
-                    next = node.next
+                    next = node.__next__
                     node.replaceNode(newelem.copyNodeList())
                     node.next = next
 
@@ -377,7 +377,7 @@ class XMLDocument(object):
             if child.isText() and child.content.strip() != '':
                 return True
             else:
-                child = child.next
+                child = child.__next__
         return False
 
 
@@ -441,7 +441,7 @@ class XMLDocument(object):
                     outtxt += '<%s>%s</%s>' % (starttag, content, endtag)
                 else:
                     outtxt += self.doSerialize(child)
-            child = child.next
+            child = child.__next__
 
         if self.app.operation == 'merge':
             norm_outtxt = self.normalizeString(outtxt, self.app.isSpacePreserveNode(node))
@@ -521,7 +521,7 @@ class XMLDocument(object):
             outtxt = ''
             while child:
                 outtxt += self.doSerialize(child)
-                child = child.next
+                child = child.__next__
             return outtxt
 
 def xml_error_handler(arg, ctxt):
@@ -565,7 +565,7 @@ class Main(object):
             try:
                 doc = XMLDocument(xmlfile, self)
             except Exception as e:
-                print >> sys.stderr, "Unable to parse XML file '%s': %s" % (xmlfile, str(e))
+                print("Unable to parse XML file '%s': %s" % (xmlfile, str(e)), file=sys.stderr)
                 sys.exit(1)
             self.current_mode.preProcessXml(doc.doc, self.msg)
             doc.generate_messages()
@@ -578,13 +578,13 @@ class Main(object):
         try:
             doc = XMLDocument(xmlfile, self)
         except Exception as e:
-            print >> sys.stderr, str(e)
+            print(str(e), file=sys.stderr)
             sys.exit(1)
 
         try:
             mfile = open(mofile, "rb")
         except:
-            print >> sys.stderr, "Can't open MO file '%s'." % (mofile)
+            print("Can't open MO file '%s'." % (mofile), file=sys.stderr)
         self.gt = gettext.GNUTranslations(mfile)
         self.gt.add_fallback(NoneTranslations())
         # Has preProcessXml use cases for merge?
@@ -607,7 +607,7 @@ class Main(object):
         try:
             doc = XMLDocument(xmlfile, self)
         except Exception as e:
-            print >> sys.stderr, str(e)
+            print(str(e), file=sys.stderr)
             sys.exit(1)
         doc.generate_messages()
 
@@ -615,7 +615,7 @@ class Main(object):
         try:
             doc = XMLDocument(origxml, self)
         except Exception as e:
-            print >> sys.stderr, str(e)
+            print(str(e), file=sys.stderr)
             sys.exit(1)
         doc.generate_messages()
         self.output_po()

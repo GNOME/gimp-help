@@ -40,7 +40,7 @@ class GIMPHelpXMLParser(object):
         """Returns a list of ids parsed from gimp-help.xml."""
         fh = open(self.filepath, 'r')
         dom = xml.dom.minidom.parse(fh)
-        print "Parsing XML file: %s" % os.path.basename(os.path.dirname(self.filepath))
+        print("Parsing XML file: %s" % os.path.basename(os.path.dirname(self.filepath)))
         # XXX the ids
         ids = xml.xpath.Evaluate(self.xpathexpr, dom)
         self.ids = [x.getAttribute('id') for x in ids ]
@@ -97,7 +97,7 @@ class Statistics(object):
 
     def get_ids_from_lang(self, lang):
         """Iterator over ids of given language."""
-        if lang not in self.docs.keys():
+        if lang not in list(self.docs.keys()):
             raise KeyError("%s not found in indexed documents." % lang)
         for id in self.docs[lang]:
             yield id
@@ -111,7 +111,7 @@ class Statistics(object):
         result = []
         helpids = self.hp.ids
 
-        for lang in self.docs.keys():
+        for lang in list(self.docs.keys()):
             other_ids = []
             matched = []
 
@@ -150,7 +150,7 @@ class Statistics(object):
                              " Language. Maybe you need to build the HTML"
                              " docs? Check if gimp-help.xml files exist.")
 
-        for lang in self.docs.keys():
+        for lang in list(self.docs.keys()):
             invalid = []
             skip = ['faq', 'using', 'fdl', 'glossary',
                 'introduction', 'gimp-main', 'legal', 'tools-color',
@@ -162,8 +162,8 @@ class Statistics(object):
                 if id in skip:
                     continue
 
-                not_invalid = filter(lambda k, y=0:\
-                    y + self._is_substring(id, k), skip)
+                not_invalid = list(filter(lambda k, y=0:\
+                    y + self._is_substring(id, k), skip))
 
                 if not_invalid:
                     continue
@@ -204,11 +204,11 @@ class Statistics(object):
                     names[id] = os.path.join(root, file)
 
         # remove the valid entries
-        for id in names.keys():
+        for id in list(names.keys()):
             not_invalid = 0
 
-            not_invalid = filter(lambda k, y=0:\
-                y + self._is_substring(id, k), filter_files)
+            not_invalid = list(filter(lambda k, y=0:\
+                y + self._is_substring(id, k), filter_files))
             if not_invalid:
                 continue
 
@@ -226,41 +226,41 @@ class Statistics(object):
         invalid_ids = self.getInvalidIds()
         invalid_files = self.getInvalidFilenames()
 
-        print "General statistics:"
-        print "==================="
+        print("General statistics:")
+        print("===================")
 
         for dict in self.statistics:
             done = '#'*int(dict['prc_done']/10)
             todo = ' '*(10-(dict['prc_done']/10))
-            print "\nLanguage: %s" %dict['lang']
-            print "Found titles for: %i ids - Todo: %s ids - other ids: %s"\
-                %(dict['done'], dict['todo'], dict['others'])
-            print "Percent done: |%s%s| %s%%" %(done,todo, dict['prc_done'])
+            print("\nLanguage: %s" %dict['lang'])
+            print("Found titles for: %i ids - Todo: %s ids - other ids: %s"\
+                %(dict['done'], dict['todo'], dict['others']))
+            print("Percent done: |%s%s| %s%%" %(done,todo, dict['prc_done']))
 
-        print "\n\nInvalid ids:"
-        print "================"
-        print "Found %i ids which are not part of gimphelp-ids.h" %len(invalid_ids)
+        print("\n\nInvalid ids:")
+        print("================")
+        print("Found %i ids which are not part of gimphelp-ids.h" %len(invalid_ids))
 
         if print_invalid:
             invalid_ids.reverse()
             for id in invalid_ids:
-                print "%s" %id
+                print("%s" %id)
         else:
-            print "Hint: start the program again with parameter >>-i<<",
-            print "if you want to view them."
+            print("Hint: start the program again with parameter >>-i<<", end=' ')
+            print("if you want to view them.")
 
-        print "\n\nInvalid filenames:"
-        print "======================"
-        print "Found %i filenames which are not part of gimphelp-ids.h" %len(invalid_files)
+        print("\n\nInvalid filenames:")
+        print("======================")
+        print("Found %i filenames which are not part of gimphelp-ids.h" %len(invalid_files))
 
         if print_invalid:
-            keys = invalid_files.keys()
+            keys = list(invalid_files.keys())
             keys.sort()
             for k in keys:
-                print "%s -> %s" %(k, invalid_files[k])
+                print("%s -> %s" %(k, invalid_files[k]))
         else:
-            print "Hint: start the program again with parameter >>-i<<",
-            print "if you want to view them."
+            print("Hint: start the program again with parameter >>-i<<", end=' ')
+            print("if you want to view them.")
 
     def _makedict(self, **kwargs):
         return kwargs
@@ -277,7 +277,7 @@ class Statistics(object):
 def get_linguas(gimphelppath):
     """ returns the linguas set in configure.in in gimp-help-2 dir """
     gimphelppath = os.path.join(gimphelppath, "html")
-    if os.environ.has_key('ALL_LINGUAS'):
+    if 'ALL_LINGUAS' in os.environ:
         linguas = os.environ.get('ALL_LINGUAS')
         linguas = linguas.split(' ')
         return linguas 
@@ -324,13 +324,13 @@ def main():
         sys.exit(1)
     else:
         usage()
-        print "Error: one of your path is invalid!"
+        print("Error: one of your path is invalid!")
         sys.exit(0)
 
 
 def usage(errormsg=None):
     
-    print """idlookup.py - Copyright 2004 Roman Joost (gimp-help-2)
+    print("""idlookup.py - Copyright 2004 Roman Joost (gimp-help-2)
 generates some statistical information about the documentation process 
 
 usage: idlookup.py [options]
@@ -339,9 +339,9 @@ usage: idlookup.py [options]
         -g      path to the GIMP sources (eg. /opt/gimp)
         -x      path to the gimp-help-2 sources (eg. /opt/gimp-help-2)
         -i      print ids which are supposed to be invalid
-        -h      this help"""
+        -h      this help""")
     if errormsg:
-        print "\nError: %s" % errormsg
+        print("\nError: %s" % errormsg)
 
 if __name__ == "__main__":
     main()
