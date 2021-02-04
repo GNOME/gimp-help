@@ -43,7 +43,7 @@ try:
 except ImportError:
     from md5 import new as md5_new
 
-from basic import basicXmlMode
+from .basic import basicXmlMode
 
 class docbookXmlMode(basicXmlMode):
     """Class for special handling of DocBook document types.
@@ -95,7 +95,7 @@ class docbookXmlMode(basicXmlMode):
             ret = self._find_articleinfo(child)
             if ret:
                 return ret
-            child = child.next
+            child = child.__next__
         return None
 
     def _find_lastcopyright(self, node):
@@ -131,7 +131,7 @@ class docbookXmlMode(basicXmlMode):
                     hash = self._md5_for_file(fullpath)
                 else:
                     hash = "THIS FILE DOESN'T EXIST"
-                    print >>sys.stderr, "Warning: image file '%s' not found." % fullpath
+                    print("Warning: image file '%s' not found." % fullpath, file=sys.stderr)
 
                 msg.outputMessage("@@image: '%s'; md5=%s" % (attr, hash), node.lineNo(),
                                   "When image changes, this message will be marked fuzzy or untranslated for you.\n"+
@@ -140,7 +140,7 @@ class docbookXmlMode(basicXmlMode):
             child = node.children
             while child:
                 self._output_images(child,msg)
-                child = child.next
+                child = child.__next__
 
 
     def preProcessXml(self, doc, msg):
@@ -157,7 +157,7 @@ class docbookXmlMode(basicXmlMode):
         root = doc.getRootElement()
         # DocBook documents can be something other than article, handle that as well in the future
         while root and root.name != 'article' and root.name != 'book':
-            root = root.next
+            root = root.__next__
         if root and (root.name == 'article' or root.name == 'book'):
             root.setProp('lang', language)
         else:
@@ -198,10 +198,10 @@ class docbookXmlMode(basicXmlMode):
 # Perform some tests when ran standalone
 if __name__ == '__main__':
     test = docbookXmlMode()
-    print "Ignored tags       : " + repr(test.getIgnoredTags())
-    print "Final tags         : " + repr(test.getFinalTags())
-    print "Space-preserve tags: " + repr(test.getSpacePreserveTags())
+    print("Ignored tags       : " + repr(test.getIgnoredTags()))
+    print("Final tags         : " + repr(test.getFinalTags()))
+    print("Space-preserve tags: " + repr(test.getSpacePreserveTags()))
 
-    print "Credits from string: '%s'" % test.getStringForTranslators()
-    print "Explanation for credits:\n\t'%s'" % test.getCommentForTranslators()
+    print("Credits from string: '%s'" % test.getStringForTranslators())
+    print("Explanation for credits:\n\t'%s'" % test.getCommentForTranslators())
 

@@ -31,7 +31,7 @@ try:
 except ImportError:
     from md5 import new as md5_new
 
-from docbook import docbookXmlMode
+from .docbook import docbookXmlMode
 
 class gimphelpXmlMode(docbookXmlMode):
     """Class for special handling of gimp-help DocBook document types.
@@ -81,7 +81,7 @@ class gimphelpXmlMode(docbookXmlMode):
             child = node.children
             while child:
                 self._output_images(child,msg)
-                child = child.next
+                child = child.__next__
 
     def preProcessXml(self, doc, msg):
         """Add additional messages of interest here."""
@@ -91,10 +91,10 @@ class gimphelpXmlMode(docbookXmlMode):
 # Perform some tests when ran standalone
 if __name__ == '__main__':
     test = gimphelpXmlMode()
-    print "Ignored tags       : " + repr(test.getIgnoredTags())
-    print "Final tags         : " + repr(test.getFinalTags())
-    print "Space-preserve tags: " + repr(test.getSpacePreserveTags())
+    print("Ignored tags       : " + repr(test.getIgnoredTags()))
+    print("Final tags         : " + repr(test.getFinalTags()))
+    print("Space-preserve tags: " + repr(test.getSpacePreserveTags()))
 
-    print "Credits from string: '%s'" % test.getStringForTranslators()
-    print "Explanation for credits:\n\t'%s'" % test.getCommentForTranslators()
+    print("Credits from string: '%s'" % test.getStringForTranslators())
+    print("Explanation for credits:\n\t'%s'" % test.getCommentForTranslators())
 

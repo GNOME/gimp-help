@@ -98,7 +98,7 @@ def parse_ids (document):
 
 def get_node_by_id (document, id):
     for node in document.getiterator ():
-        if node.attrib.has_key (IDTAG) and \
+        if IDTAG in node.attrib and \
            node.attrib[IDTAG] == id:
             return node
     return None
@@ -106,14 +106,14 @@ def get_all_langs (document):
     """Rerieve all languages in use  a document"""
     langs = {}
     for node in document.get_iterator():
-        if node.attrib.has_key ("lang"):
+        if "lang" in node.attrib:
             if ";" in node.attrib["lang"]:
                 local_langs = node.attrib["lang"].split(";")
             else:
                 local_langs = [node.attrib["lang"]]
             for local_lang in local_langs:
                 langs[local_lang] = None
-    return langs.keys ()
+    return list(langs.keys ())
 
 def node_replace (parent_node, old_node, new_node):
     parent_node.insert (parent_node.getchildren().index(old_node), new_node)
@@ -149,7 +149,7 @@ def create_ids (path, document):
     idcount = 1
     for node in document.getiterator ():
         node_hash = str (ET.tostring(node, "utf-8").__hash__())
-        if not all_hashes.has_key (node_hash):
+        if node_hash not in all_hashes:
             node.attrib [CHANGEDTAG] = "True"
         node.attrib [IDTAG] = str (idcount)
         node.attrib [HASHTAG] = node_hash
@@ -158,16 +158,16 @@ def create_ids (path, document):
 def remove_ids (document):
     for node in document.getiterator ():
         for attrib in (CHANGEDTAG, HASHTAG, IDTAG):
-            if node.attrib.has_key (attrib):
+            if attrib in node.attrib:
                 del node.attrib [attrib]
 
 
 def remove_hashes (document):
     for node in document.getiterator ():
-        if node.attrib.has_key (HASHTAG):
+        if HASHTAG in node.attrib:
             del node.attrib [HASHTAG]
-        if (node.attrib.has_key (IDTAG) and
-            not node.attrib.has_key ("lang") and
+        if (IDTAG in node.attrib and
+            "lang" not in node.attrib and
             not node.getchildren()
             ):
             del node.attrib [IDTAG]
@@ -183,7 +183,7 @@ def _sort_nodes (node_list):
     for i, node in enumerate (node_list):
         reindex [node.xml_helper_order] = i
     new_list = []
-    sorted_keys = reindex.keys()[:]
+    sorted_keys = list(reindex.keys())[:]
     sorted_keys.sort()
     for key in sorted_keys:
         new_list.append (node_list[reindex[key]])
@@ -193,7 +193,7 @@ def _sort_nodes (node_list):
 
 def recurse_rip (parent, element, all_langs):
     element.children_langs = {}
-    if not element.attrib.has_key ("lang"):
+    if "lang" not in element.attrib:
         for child in element.getchildren()[:]:
             recurse_rip (element, child, all_langs)
     else:
@@ -225,7 +225,7 @@ def count_children_lang (node):
         if first:
             first = False
             continue
-        if node.attrib.has_key("lang"):
+        if "lang" in node.attrib:
             count += 1
     return count
 
@@ -237,7 +237,7 @@ def merge_docs (helper_document, translated_document, merge_langs):
         #this extra attribute is retrieved in the sorting
         #by lang attributes routine to assure the same
         #document order of the nodes with the same lang.
-        if not node.attrib.has_key ("lang"):
+        if "lang" not in node.attrib:
             continue
         if (len (node.attrib["lang"].split(";") ) > 1 and
             len (node.getchildren ())  and
@@ -254,7 +254,7 @@ def merge_docs (helper_document, translated_document, merge_langs):
             continue
         #if it got here, current node in document is to be
         #merged into helper_document
-        if node.attrib.has_key (IDTAG):
+        if IDTAG in node.attrib:
             node_to_be_replaced = all_ids [node.attrib[IDTAG]]
             node_replace (node_to_be_replaced.parent, node_to_be_replaced, node)
         else:
@@ -263,7 +263,7 @@ def merge_docs (helper_document, translated_document, merge_langs):
             found = False
             while address_node.previous_sibling != None:
                 address_node = address_node.previous_sibling
-                if address_node.attrib.has_key (IDTAG):
+                if IDTAG in address_node.attrib:
                     prev_id = address_node.attrib[IDTAG]
                     where_to_insert = all_ids [prev_id]
                     found = True
@@ -307,7 +307,7 @@ def format_xml (node):
             child_langs = []
             nodes_by_lang = {}
             group = child.tag
-        if child.attrib.has_key ("lang"):
+        if "lang" in child.attrib:
 
             lang = child.attrib["lang"]
             if len (lang.split (";")) > 1:
@@ -386,7 +386,7 @@ def create_missing_tags (node, all_langs):
             for lang in all_langs:
                 group_langs[lang] =  []
             group = child.tag
-        if child.attrib.has_key ("lang"):
+        if "lang" in child.attrib:
             lang = child.attrib["lang"]
             if len (lang.split (";")) > 1:
                 local_langs = lang.split (";")
@@ -646,7 +646,7 @@ if __name__=="__main__":
            help ()
            sys.exit(0)
        elif option == "--version":
-           print "xml_helper version %s\nby João S. O. Bueno Calligaris (c) 2006" % version
+           print("xml_helper version %s\nby João S. O. Bueno Calligaris (c) 2006" % version)
            sys.exit(0)
        elif option[:2] != "--":
            in_files.append (option)
@@ -663,5 +663,5 @@ if __name__=="__main__":
         format_files (in_files)
     else:
         short_help()
-        print options, langs
+        print(options, langs)
         sys.exit (1)

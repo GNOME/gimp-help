@@ -58,7 +58,7 @@ class FileNameContainer(object):
 
     def __contains__(self, key):
         """Is there an entry 'key'?."""
-        return self.data.has_key(key)
+        return key in self.data
 
     def __setitem__(self, key, val):
         """Add a (key, value) pair to the container, e.g.
@@ -152,7 +152,7 @@ class ImageFilesList(FileNameContainer):
                     (len(files), char_if("s", len(files) != 1),
                                  char_if(":", len(files) != 0)))
         for imagefile in sorted(files):
-            print "ORPHANED:", os.path.join(self.imageroot, imagefile)
+            print("ORPHANED:", os.path.join(self.imageroot, imagefile))
 
 
 class ImageReferencesList(FileNameContainer):
@@ -196,7 +196,7 @@ class ImageReferencesList(FileNameContainer):
 
         try:
             self.parser.parse(source_file)
-        except xml.sax.SAXException, err:
+        except xml.sax.SAXException as err:
             Logger.error("ERROR parsing %s" % err)
             sys.exit(65)
         except:
@@ -228,7 +228,7 @@ class ImageReferencesList(FileNameContainer):
                     (len(files), char_if("s", len(files) != 1),
                                  char_if(":", len(files) != 0)))
         for imagefile in sorted(files):
-            print "BROKEN: images/%s IN %s" % (imagefile, self.data[imagefile])
+            print("BROKEN: images/%s IN %s" % (imagefile, self.data[imagefile]))
 
     # Internal stack methods to keep track of the opened files
 
@@ -261,7 +261,7 @@ class XMLHandler(xml.sax.handler.ContentHandler):
                     self.owner.add(fileref)
             except KeyError:
                 self.error("missing 'fileref' attribute")
-        if name == "xi:include" and attrs.has_key('href'):
+        if name == "xi:include" and 'href' in attrs:
             filename = os.path.join(os.path.dirname(self.owner.current_file()),
                                     attrs.getValue('href'))
             if os.path.isfile(filename):
@@ -319,7 +319,7 @@ def main():
                          ["help", "verbose",
                           "root=", "xmldir=", "srcdir=", "file=",
                           "broken", "links", "orphaned",])
-    except getopt.GetoptError, err:
+    except getopt.GetoptError as err:
         usage(64, str(err))
 
     for opt, arg in opts:
@@ -352,7 +352,8 @@ def main():
     if gimp_help_root_dir != ".":
         try:
             os.chdir(gimp_help_root_dir)
-        except OSError, (errno, strerror):
+        except OSError as xxx_todo_changeme:
+            (errno, strerror) = xxx_todo_changeme.args
             Logger.error("ERROR: %s: %s" % (strerror, gimp_help_root_dir))
             sys.exit(errno)
 
