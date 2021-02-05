@@ -21,8 +21,7 @@ import os
 import os.path
 import getopt
 import re
-import xml.xpath
-import xml.dom.minidom
+import xml.etree.ElementTree as ET
 
 ALL_LINGUAS = re.compile('ALL_LINGUAS="(\w.+)\w')
 
@@ -30,7 +29,7 @@ ALL_LINGUAS = re.compile('ALL_LINGUAS="(\w.+)\w')
 class GIMPHelpXMLParser(object):
     """Parses the XML sources..."""
 
-    def __init__(self, filepath, xpathexpr="//help-item[@id]"):
+    def __init__(self, filepath, xpathexpr=".//help-item[@id]"):
         self.ids = []
         assert filepath != ""
         self.filepath = filepath
@@ -38,12 +37,14 @@ class GIMPHelpXMLParser(object):
 
     def get_ids(self):
         """Returns a list of ids parsed from gimp-help.xml."""
-        fh = open(self.filepath, 'r')
-        dom = xml.dom.minidom.parse(fh)
-        print("Parsing XML file: %s" % os.path.basename(os.path.dirname(self.filepath)))
+
+        print("Parsing XML file: %s" % self.filepath)
+        tree = ET.parse(self.filepath)
+
         # XXX the ids
-        ids = xml.xpath.Evaluate(self.xpathexpr, dom)
-        self.ids = [x.getAttribute('id') for x in ids ]
+        ids = tree.findall(self.xpathexpr)
+        self.ids = [x.get('id') for x in ids ]
+
         return self.ids
 
 
@@ -70,7 +71,7 @@ class GIMPHelpHeaderParser(object):
 
 class Statistics(object):
     """Creates statistics output."""
-    
+
     def __init__(self, headerpath, helproot):
         self.helproot = helproot
         self.hp = GIMPHelpHeaderParser(headerpath)
@@ -81,9 +82,9 @@ class Statistics(object):
 
     def getDocuments(self, helproot):
         """ returns a dictionary with languages as keys and paths to the
-            xml documents as values 
+            xml documents as values
         """
-        linguas = get_linguas(helproot) 
+        linguas = get_linguas(helproot)
         result = {}
         for lang in linguas:
             # puzzling the path to the gimp-help.xml file together
@@ -219,7 +220,7 @@ class Statistics(object):
 
     def printHTMLStatistics(self):
         """ returns HTML Code with statistics """
-        raise NotImplementedError 
+        raise NotImplementedError
 
     def printTextStatistics(self, print_invalid=0):
         """ prints Text Statistics """
@@ -231,7 +232,7 @@ class Statistics(object):
 
         for dict in self.statistics:
             done = '#'*int(dict['prc_done']/10)
-            todo = ' '*(10-(dict['prc_done']/10))
+            todo = ' '*(10-int(dict['prc_done']/10))
             print("\nLanguage: %s" %dict['lang'])
             print("Found titles for: %i ids - Todo: %s ids - other ids: %s"\
                 %(dict['done'], dict['todo'], dict['others']))
@@ -280,20 +281,26 @@ def get_linguas(gimphelppath):
     if 'ALL_LINGUAS' in os.environ:
         linguas = os.environ.get('ALL_LINGUAS')
         linguas = linguas.split(' ')
-        return linguas 
+        return linguas
 
     linguas = os.listdir(gimphelppath)
-    linguas.remove('images')
+    if 'images' in linguas:
+        linguas.remove('images')
+    print(f"Linguas: {linguas}")
+
     return linguas
 
 
 def main():
     header = None
     xml = None
+    gimp = None
     helppath = "."
     print_invalid = 0
     gimpheaderfile = "gimphelp-ids.h"
     xmldocs = {}
+    errormsg = None
+    show_usage = False
 
     try:
         opts, args = getopt.getopt(sys.argv[1:], "hx:g:i")
@@ -302,13 +309,11 @@ def main():
         sys.exit(2)
 
     if not opts:
-        errormsg = "Please set the path to gimp-help-2 and gimp installation."
-        usage(errormsg)
-        sys.exit(1)
+        show_usage = True
 
     for o, a in opts:
         if o == "-h":
-            usage()
+            show_usage = True
         if o == "-x":
             helppath = a
         if o == "-g":
@@ -316,31 +321,45 @@ def main():
         if o == "-i":
             print_invalid = 1
 
-    gimp = os.path.abspath(gimp)
-    helppath = os.path.abspath(helppath)
-    if os.path.exists(gimp) and os.path.exists(helppath):
+    if show_usage:
+        usage()
+        sys.exit(1)
+
+    if gimp:
+        gimp = os.path.abspath(gimp)
+        print(f"Path to GIMP help ids   : {gimp}")
+        if not os.path.exists(gimp):
+            errormsg = "Path to GIMP is invalid"
+    else:
+        errormsg = "Path to GIMP not set (commandline option -g)"
+
+    if not errormsg:
+        helppath = os.path.abspath(helppath)
+        if not os.path.exists(helppath):
+            errormsg = "Path to gimp-help is invalid"
+
+    if not errormsg:
         st = Statistics(gimp, helppath)
         st.printTextStatistics(print_invalid)
         sys.exit(1)
     else:
-        usage()
-        print("Error: one of your path is invalid!")
+        usage(errormsg)
         sys.exit(0)
 
 
 def usage(errormsg=None):
-    
-    print("""idlookup.py - Copyright 2004 Roman Joost (gimp-help-2)
-generates some statistical information about the documentation process 
 
-usage: idlookup.py [options]
+    print("""show_translation_progress.py - Copyright 2004 Roman Joost (gimp-help)
+Generates some statistical information about the documentation process.
+
+usage: show_translation_progress.py [options]
 
     options:
         -g      path to the GIMP sources (eg. /opt/gimp)
-        -x      path to the gimp-help-2 sources (eg. /opt/gimp-help-2)
+        -x      path to the gimp-help sources (eg. /opt/gimp-help)
         -i      print ids which are supposed to be invalid
         -h      this help""")
-    if errormsg:
+    if errormsg and errormsg != "":
         print("\nError: %s" % errormsg)
 
 if __name__ == "__main__":
