@@ -49,13 +49,14 @@ use Getopt::Long;
 use File::Find;
 
 (my $PROG = $0) =~ s,.*/,,;
-my $VERSION = 0.04;
+my $VERSION = 0.05;
 
 my %Languages = (
 	ca => "Catalan",
 	da => "Danish",
 	de => "German",
 	el => "Greek",
+	en_GB => "British English",
 	es => "Spanish",
 	fi => "Finnish",
 	fr => "French",
@@ -69,9 +70,12 @@ my %Languages = (
 	no => "Norwegian",
 	nl => "Dutch",
 	pl => "Polish",
+	pt_BR => "Brazilian Portuguese",
+	ro => "Romanian",
 	ru => "Russian",
 	sl => "Slovenian",
 	sv => "Swedish",
+	zh_CN => "Simplified Chinese"
 );
 
 =head1 OPTIONS
