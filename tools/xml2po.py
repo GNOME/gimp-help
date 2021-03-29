@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 # -*- encoding: utf-8 -*-
 # Copyright (c) 2004, 2005, 2006 Danilo Šegan <danilo@gnome.org>.
 # Copyright (c) 2009 Claude Paroz <claude@2xlibre.net>.
@@ -21,7 +21,7 @@
 #
 
 # xml2po -- translate XML documents
-VERSION = "0.18.0 (patched by GIMP Documentation Team)"
+VERSION = "0.19.0 (patched by GIMP Documentation Team)"
 
 # Versioning system (I use this for a long time, so lets explain it to
 # those Linux-versioning-scheme addicts):
@@ -37,11 +37,13 @@ import os
 import getopt
 import tempfile
 
+DEBUG_VERBOSITY = 0
+
 NULL_STRING = '/dev/null'
 if not os.path.exists('/dev/null'): NULL_STRING = 'NUL'
 
 def usage (with_help = False):
-    print("Usage:  %s [OPTIONS] [XMLFILE]..." % (sys.argv[0]), file=sys.stderr)
+    print(f"Usage: {sys.argv[0]} [OPTIONS] [XMLFILE]...", file=sys.stderr)
     if with_help:
         print("""
 OPTIONS may be some of:
@@ -85,6 +87,11 @@ def main(argv):
         sys.path.insert(0, name)
 
     from xml2po import Main
+
+
+    # Make sure stdout and stderr output utf-8 even on Windows where it's not the default
+    sys.stdout = open(sys.stdout.fileno(), 'w', encoding='utf-8', closefd=False)
+    sys.stderr = open(sys.stderr.fileno(), 'w', encoding='utf-8', closefd=False)
 
     # Default parameters
     default_mode = 'docbook'
@@ -136,6 +143,8 @@ def main(argv):
             operation = 'merge'
             if 'translationlanguage' not in options:
                 options['translationlanguage'] = os.path.split(os.path.splitext(pofile)[0])[1]
+            if DEBUG_VERBOSITY > 0:
+                print(f"Converting {pofile} to {mofile_tmppath} using msgfmt")
             os.system("msgfmt -o %s %s >%s" % (mofile_tmppath, pofile, NULL_STRING)) and sys.exit(7)
             mofile = mofile_tmppath
         elif opt in ('-o', '--output'):
@@ -170,6 +179,10 @@ def main(argv):
             print("Error: You must specify MO file when merging translations.", file=sys.stderr)
             sys.exit(3)
 
+        if DEBUG_VERBOSITY > 0:
+            print(f"Merge mo file {mofile} with {filenames[0]}")
+        if pofile:
+            xml2po_main.pofile = pofile
         xml2po_main.merge(mofile, filenames[0])
 
     elif operation == 'update':

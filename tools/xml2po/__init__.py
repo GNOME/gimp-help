@@ -26,6 +26,7 @@ import tempfile
 import gettext
 import libxml2
 
+DEBUG_VERBOSITY = 0
 NULL_STRING = '/dev/null'
 if not os.path.exists('/dev/null'): NULL_STRING = 'NUL'
 
@@ -86,14 +87,14 @@ class MessageOutput:
                 self.messages.append(t)
                 if spacepreserve:
                     self.nowrap[t] = True
-                if t in list(self.linenos.keys()):
+                if t in self.linenos.keys():
                     self.linenos[t].append((self.filename, tag, lineno))
                 else:
                     self.linenos[t] = [ (self.filename, tag, lineno) ]
                 if (not self.do_translations) and comment and not t in self.comments:
                     self.comments[t] = comment
             else:
-                if t in list(self.linenos.keys()):
+                if t in self.linenos.keys():
                     self.linenos[t].append((self.filename, tag, lineno))
                 else:
                     self.linenos[t] = [ (self.filename, tag, lineno) ]
@@ -101,7 +102,11 @@ class MessageOutput:
                     self.comments[t] = comment
 
     def outputHeader(self, out):
-        import time
+        from datetime import datetime
+        # Using time.strftime was not working correctly for me: instead of a
+        # timezone offset a timezone name was added. This fixes it.
+        dt = datetime.now()
+        tz = dt.astimezone().tzinfo
         out.write("""msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\\n"
@@ -113,7 +118,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\\n"
 "Content-Transfer-Encoding: 8bit\\n"
 
-""" % (time.strftime("%Y-%m-%d %H:%M%z")))
+""" % (dt.astimezone(tz).strftime("%Y-%m-%d %H:%M%z")))
 
     def outputAll(self, out):
         self.outputHeader(out)
@@ -138,6 +143,7 @@ msgstr ""
 
 class XMLDocument(object):
     def __init__(self, filename, app):
+        self.filename = filename
         self.app = app
         self.expand_entities = self.app.options.get('expand_entities')
         self.ignored_tags = self.app.current_mode.getIgnoredTags()
@@ -145,7 +151,13 @@ class XMLDocument(object):
         ctxt.lineNumbers(1)
         if self.app.options.get('expand_all_entities'):
             ctxt.replaceEntities(1)
-        ctxt.parseDocument()
+
+        try:
+            ctxt.parseDocument()
+        except Exception as e:
+            print("Error parsing XML file '%s': %s" % (filename, str(e)), file=sys.stderr)
+            sys.exit(1)
+
         self.doc = ctxt.doc()
         if self.doc.name != filename:
             raise Exception("Error: I tried to open '%s' but got '%s' -- how did that happen?" % (filename, self.doc.name))
@@ -166,22 +178,23 @@ class XMLDocument(object):
         elif node.isText():
             if node.isBlankNode():
                 if self.app.options.get('expand_entities') or \
-                  (not (node.prev and not node.prev.isBlankNode() and node.__next__ and not node.next.isBlankNode()) ):
-                    #print >>sys.stderr, "BLANK"
+                  (not (node.prev and not node.prev.isBlankNode() and node.next and not node.next.isBlankNode()) ):
                     node.setContent('')
             else:
-                node.setContent(re.sub('\s+',' ', node.content))
+                node.setContent(re.sub(r'\s+',' ', node.content))
 
         elif node.children and node.type == 'element':
             child = node.children
             while child:
+                nextchild = child.next
                 self.normalizeNode(child)
-                child = child.__next__
+                child = nextchild
 
     def normalizeString(self, text, spacepreserve = False):
         """Normalizes string to be used as key for gettext lookup.
 
         Removes all unnecessary whitespace."""
+        mytext = text
         if spacepreserve:
             return text
         try:
@@ -203,13 +216,20 @@ class XMLDocument(object):
             print("""Error while normalizing string as XML:\n"%s"\n""" % (text), file=sys.stderr)
             return text
 
+        # Not sure if saving the doc here is really necessary. It was one of the
+        # things done in debugging and don't want to spend time now to check if
+        # we can remove it.
+        save_doc = self.doc
+        self.doc = ctxt.doc()
         self.normalizeNode(newnode)
+        self.doc = save_doc
 
         result = ''
         child = newnode.children
         while child:
+            nextchild = child.next
             result += child.serialize('utf-8')
-            child = child.__next__
+            child = nextchild
 
         result = re.sub('^ ','', result)
         result = re.sub(' $','', result)
@@ -235,15 +255,16 @@ class XMLDocument(object):
         ctxt.parseDocument()
         tree = ctxt.doc()
         if next:
-            newnode = tree.children.__next__
+            newnode = tree.children.next
         else:
             newnode = tree.children
 
         result = ''
         child = newnode.children
         while child:
+            nextchild = child.next
             result += child.serialize('utf-8')
-            child = child.__next__
+            child = nextchild
         tree.freeDoc()
         return result
 
@@ -252,6 +273,7 @@ class XMLDocument(object):
         result = ''
         if node.children:
             child = node.children
+            nextchild = child.next
             while child:
                 if child.type=='text':
                     result += self.doc.encodeEntitiesReentrant(child.content)
@@ -262,7 +284,7 @@ class XMLDocument(object):
                         result += child.content.decode('utf-8')
                 else:
                     result += self.myAttributeSerialize(child)
-                child = child.__next__
+                child = nextchild
         else:
             result = node.serialize('utf-8')
         return result
@@ -308,10 +330,80 @@ class XMLDocument(object):
             return None
 
     def replaceAttributeContentsWithText(self, node, text):
-        node.setContent(text)
+        try:
+            node.setContent(text.decode('utf-8'))
+        except TypeError:
+            sys.stderr.write("--> replaceAttributeContentsWithText: Failed to decode text to utf-8.")
+            sys.exit(1)
+
+    def CheckMatchedTags(self, text):
+        stack = []
+        textblock = text
+
+        log=sys.stdout
+
+        # It might be even better to do the below with regex, see e.g.
+        # https://datadependence.com/2016/03/find-unclosed-tags-using-stacks/
+        # However I'm not sure it really matters that much since the text
+        # blocks usually are fairly small and most don't have a lot of tags.
+        start_tag = textblock.find('<')
+        while start_tag > -1:
+            textblock = textblock[start_tag+1:]
+            end_tag = textblock.find('>')
+            if end_tag > -1:
+                # Found left and right brackets: grab tag
+                tag = textblock[: end_tag]
+                # Check that it's not a tag that closes itself and comment tags starting with <!
+                if textblock[end_tag-1] != '/' and textblock[0] != '!':
+                    # Tag can have multiple elements inside, watch for first space
+                    space = tag.find(' ')
+                    if space > -1:
+                        tag = tag[: space]
+
+                    open_tag = (len(tag) > 0 and tag[0] != '/')
+                    if open_tag:
+                        # Add tag to stack
+                        stack.append(tag)
+                    else:
+                        tag = tag[1:]
+                        if len(stack) == 0:
+                            pass
+                        else:
+                            if stack[-1] == tag:
+                                # Close the block
+                                stack.pop()
+                            else:
+                                print(f"\n========================", file=log)
+                                print(f"Source xml: {self.filename}", file=log)
+                                print(f"Source po : {self.app.pofile}", file=log)
+                                print(f"Translated msgstr:\n{text}\n", file=log)
+                                print(f"WARNING: Found closing tag [{tag}], however we expected [{stack[0]}].", file=log)
+                                print(f"Remaining tags: {str(stack)}", file=log)
+                                if tag in stack:
+                                    stack.remove(tag)
+                                    print("  Assuming incorrect tag order, found and removed tag from the stack", file=log)
+                                print(f"========================\n", file=log)
+                textblock = textblock[end_tag+1:]
+                start_tag = textblock.find('<')
+            else:
+                start_tag = -1
+
+
+        if len(stack):
+            print(f"\n========================", file=log)
+            print(f"Source xml: {self.filename}", file=log)
+            print(f"Source po : {self.app.pofile}", file=log)
+            print(f"ERROR: Found unmatched tags in po msgstr:\n{text}\n", file=log)
+            print(f"Tags not matched: {str(stack)}", file=log)
+            print(f"========================\n", file=log)
+            return False
+        return True
 
     def replaceNodeContentsWithText(self, node, text):
         """Replaces all subnodes of a node with contents of text treated as XML."""
+
+        if not self.CheckMatchedTags(text):
+            return
 
         if node.children:
             starttag = self.startTagForNode(node)
@@ -326,7 +418,7 @@ class XMLDocument(object):
                 pass
 
             content = '<%s>%s</%s>' % (starttag, text, endtag)
-            tmp = tmp + content.encode('utf-8')
+            tmp = tmp + content
 
             newnode = None
             try:
@@ -338,7 +430,9 @@ class XMLDocument(object):
                 pass
 
             if not newnode:
-                print("""Error while parsing translation as XML:\n"%s"\n""" % (text.encode('utf-8')), file=sys.stderr)
+                print(f"\n--> Error parsing translation as XML:\n{text}")
+                # See: https://gitlab.gnome.org/GNOME/libxml2/-/issues/64
+                print("--> Note: this might be caused by a bug in libxml2.\n")
                 return
 
             newelem = newnode.getRootElement()
@@ -346,15 +440,14 @@ class XMLDocument(object):
             if newelem and newelem.children:
                 free = node.children
                 while free:
-                    next = free.__next__
+                    nextchild = free.next
                     free.unlinkNode()
-                    free = next
+                    free = nextchild
 
                 if node:
-                    copy = newelem.copyNodeList()
-                    next = node.__next__
+                    nextnode = node.next
                     node.replaceNode(newelem.copyNodeList())
-                    node.next = next
+                    node.__next__ = nextnode
 
             else:
                 # In practice, this happens with tags such as "<para>    </para>" (only whitespace in between)
@@ -374,10 +467,11 @@ class XMLDocument(object):
             return True
         child = node.children
         while child:
+            nextchild = child.next
             if child.isText() and child.content.strip() != '':
                 return True
             else:
-                child = child.__next__
+                child = nextchild
         return False
 
 
@@ -432,6 +526,10 @@ class XMLDocument(object):
 
         child = node.children
         while child:
+            # Although I do not know why, child or child.next gets changed inside the if part below.
+            # This makes child.next fail when it shouldn't. That's why we store nextchild here
+            # before going into the if and use that at the end of the loop
+            nextchild = child.next
             if (self.isFinalNode(child)) or (child.type == 'element' and self.worthOutputting(child)):
                 myrepl.append(self.processElementTag(child, myrepl, True))
                 outtxt += '<placeholder-%d/>' % (len(myrepl))
@@ -441,20 +539,20 @@ class XMLDocument(object):
                     outtxt += '<%s>%s</%s>' % (starttag, content, endtag)
                 else:
                     outtxt += self.doSerialize(child)
-            child = child.__next__
+            child = nextchild
 
         if self.app.operation == 'merge':
             norm_outtxt = self.normalizeString(outtxt, self.app.isSpacePreserveNode(node))
             translation = self.app.getTranslation(norm_outtxt)
         else:
-            translation = outtxt.decode('utf-8')
+            translation = outtxt
 
         starttag = self.startTagForNode(node)
         endtag = self.endTagForNode(node)
 
         worth = self.worthOutputting(node)
         if not translation:
-            translation = outtxt.decode('utf-8')
+            translation = outtxt
             if worth and self.app.options.get('mark_untranslated'):
                 node.setLang('C')
 
@@ -463,7 +561,7 @@ class XMLDocument(object):
                 # repl[0] may contain translated attributes with
                 # non-ASCII chars, so implicit conversion to <str> may fail
                 replacement = '<%s>%s</%s>' % \
-                              (repl[0].decode('utf-8'), repl[3], repl[2])
+                              (repl[0], repl[3], repl[2])
                 translation = translation.replace('<placeholder-%d/>' % (i+1), replacement)
 
             if worth:
@@ -479,7 +577,7 @@ class XMLDocument(object):
     def isExternalGeneralParsedEntity(self, node):
         try:
             # it would be nice if debugDumpNode could use StringIO, but it apparently cannot
-            tmp = tempfile.TemporaryFile()
+            tmp = tempfile.TemporaryFile(encoding='utf-8')
             node.debugDumpNode(tmp,0)
             tmp.seek(0)
             tmpstr = tmp.read()
@@ -507,25 +605,31 @@ class XMLDocument(object):
             if self.isExternalGeneralParsedEntity(node):
                 return node.serialize('utf-8')
             else:
-                return self.stringForEntity(node) #content #content #serialize("utf-8")
-        elif node.type == 'entity_decl':
+                return self.stringForEntity(node)
+        elif node.type == 'entity_decl --> serialize':
             return node.serialize('utf-8') #'<%s>%s</%s>' % (startTagForNode(node), node.content, node.name)
         elif node.type == 'text':
-            return node.serialize('utf-8')
+            nodetext = node.serialize('utf-8')
+            return nodetext
         elif node.type == 'element':
             repl = []
             (starttag, content, endtag, translation) = self.processElementTag(node, repl, True)
-            return '<%s>%s</%s>' % (starttag, content, endtag)
+            return '<%s>%s</%s>' % (starttag, content.encode('utf-8'), endtag)
         else:
             child = node.children
             outtxt = ''
             while child:
+                # Not sure if the same problem with using next.child happens here too
+                # but we will use nextchild here too just to be sure
+                nextchild = child.next
                 outtxt += self.doSerialize(child)
-                child = child.__next__
+                child = nextchild
             return outtxt
 
-def xml_error_handler(arg, ctxt):
+def xml_error_handler(ctxt, error):
     #deactivate error messages from the validation
+    if DEBUG_VERBOSITY > 0:
+        print(f"--> xml_error_handler: {error}")
     pass
 
 class Main(object):
@@ -538,11 +642,11 @@ class Main(object):
         self.current_mode = self.load_mode(mode)()
         # Prepare output
         if operation == 'update':
-            self.out = tempfile.TemporaryFile()
+            self.out = tempfile.TemporaryFile(encoding='utf-8')
         elif output == '-':
             self.out = sys.stdout
         else:
-            self.out = file(output, 'w')
+            self.out = open(output, 'w', encoding='utf-8', buffering=1)
 
     def load_mode(self, modename):
         try:
@@ -565,7 +669,7 @@ class Main(object):
             try:
                 doc = XMLDocument(xmlfile, self)
             except Exception as e:
-                print("Unable to parse XML file '%s': %s" % (xmlfile, str(e)), file=sys.stderr)
+                print("Error parsing XML file '%s': %s" % (xmlfile, str(e)), file=sys.stderr)
                 sys.exit(1)
             self.current_mode.preProcessXml(doc.doc, self.msg)
             doc.generate_messages()
@@ -578,13 +682,13 @@ class Main(object):
         try:
             doc = XMLDocument(xmlfile, self)
         except Exception as e:
-            print(str(e), file=sys.stderr)
+            print("Error parsing XML file '%s': %s" % (xmlfile, str(e)), file=sys.stderr)
             sys.exit(1)
-
         try:
             mfile = open(mofile, "rb")
         except:
-            print("Can't open MO file '%s'." % (mofile), file=sys.stderr)
+            print("Error opening MO file '%s': %s." % (mofile, str(e)), file=sys.stderr)
+            sys.exit(1)
         self.gt = gettext.GNUTranslations(mfile)
         self.gt.add_fallback(NoneTranslations())
         # Has preProcessXml use cases for merge?
@@ -607,7 +711,7 @@ class Main(object):
         try:
             doc = XMLDocument(xmlfile, self)
         except Exception as e:
-            print(str(e), file=sys.stderr)
+            print("Error parsing XML file '%s': %s" % (xmlfile, str(e)), file=sys.stderr)
             sys.exit(1)
         doc.generate_messages()
 
@@ -615,7 +719,7 @@ class Main(object):
         try:
             doc = XMLDocument(origxml, self)
         except Exception as e:
-            print(str(e), file=sys.stderr)
+            print("Error parsing XML file '%s': %s" % (origxml, str(e)), file=sys.stderr)
             sys.exit(1)
         doc.generate_messages()
         self.output_po()
@@ -646,11 +750,10 @@ class Main(object):
 
         text should be a string to look for.
         """
-        #print >>sys.stderr,"getTranslation('%s')" % (text.encode('utf-8'))
         if not text or text.strip() == '':
             return text
         if self.gt:
-            res = self.gt.ugettext(text.decode('utf-8'))
+            res = self.gt.gettext(text)
             return res
 
         return text
