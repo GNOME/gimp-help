@@ -81,7 +81,7 @@ class gimphelpXmlMode(docbookXmlMode):
             child = node.children
             while child:
                 self._output_images(child,msg)
-                child = child.__next__
+                child = child.next
 
     def preProcessXml(self, doc, msg):
         """Add additional messages of interest here."""
