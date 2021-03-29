@@ -95,7 +95,7 @@ class docbookXmlMode(basicXmlMode):
             ret = self._find_articleinfo(child)
             if ret:
                 return ret
-            child = child.__next__
+            child = child.next
         return None
 
     def _find_lastcopyright(self, node):
@@ -140,7 +140,7 @@ class docbookXmlMode(basicXmlMode):
             child = node.children
             while child:
                 self._output_images(child,msg)
-                child = child.__next__
+                child = child.next
 
 
     def preProcessXml(self, doc, msg):
@@ -157,7 +157,7 @@ class docbookXmlMode(basicXmlMode):
         root = doc.getRootElement()
         # DocBook documents can be something other than article, handle that as well in the future
         while root and root.name != 'article' and root.name != 'book':
-            root = root.__next__
+            root = root.next
         if root and (root.name == 'article' or root.name == 'book'):
             root.setProp('lang', language)
         else:
@@ -184,7 +184,7 @@ class docbookXmlMode(basicXmlMode):
                     else:
                         ai.addChild(copy)
                     if match.group(3):
-                        copy.newChild(None, "year", match.group(3).encode('utf-8'))
+                        copy.newChild(None, "year", match.group(3))
                     if match.group(1) and match.group(2):
                         holder = match.group(1)+"(%s)" % match.group(2)
                     elif match.group(1):
@@ -193,7 +193,7 @@ class docbookXmlMode(basicXmlMode):
                         holder = match.group(2)
                     else:
                         holder = "???"
-                    copy.newChild(None, "holder", holder.encode('utf-8'))
+                    copy.newChild(None, "holder", holder)
 
 # Perform some tests when ran standalone
 if __name__ == '__main__':
