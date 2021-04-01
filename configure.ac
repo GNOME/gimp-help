@@ -15,7 +15,7 @@ AC_INIT([GIMP-Help], [help_version])
 # Apparently this macro must be called before "AM_INIT_AUTOMAKE"
 AC_CANONICAL_BUILD
 case $build_os in
-  *cygwin*) IS_CYGWIN=yes;;
+  *cygwin*|mingw*) IS_CYGWIN=yes;;
          *) IS_CYGWIN=no;;
 esac
 # for use in Makefile.am
