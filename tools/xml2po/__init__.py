@@ -336,11 +336,18 @@ class XMLDocument(object):
             sys.stderr.write("--> replaceAttributeContentsWithText: Failed to decode text to utf-8.")
             sys.exit(1)
 
+    def printErrorHeader(self, text, log):
+        print(f"\n========================", file=log)
+        print(f"Source xml: {self.filename}", file=log)
+        print(f"Source po : {self.app.pofile}", file=log)
+        print(f"\nTranslated msgstr:\n{text}", file=log)
+
     def CheckMatchedTags(self, text):
         stack = []
         textblock = text
 
         log=sys.stdout
+        headerPrinted = False
 
         # It might be even better to do the below with regex, see e.g.
         # https://datadependence.com/2016/03/find-unclosed-tags-using-stacks/
@@ -373,16 +380,14 @@ class XMLDocument(object):
                                 # Close the block
                                 stack.pop()
                             else:
-                                print(f"\n========================", file=log)
-                                print(f"Source xml: {self.filename}", file=log)
-                                print(f"Source po : {self.app.pofile}", file=log)
-                                print(f"Translated msgstr:\n{text}\n", file=log)
-                                print(f"WARNING: Found closing tag [{tag}], however we expected [{stack[0]}].", file=log)
+                                if not headerPrinted:
+                                    self.printErrorHeader(text, log)
+                                    headerPrinted = True
+                                print(f"\nWARNING: Found closing tag [{tag}], however we expected [{stack[0]}].", file=log)
                                 print(f"Remaining tags: {str(stack)}", file=log)
                                 if tag in stack:
                                     stack.remove(tag)
                                     print("  Assuming incorrect tag order, found and removed tag from the stack", file=log)
-                                print(f"========================\n", file=log)
                 textblock = textblock[end_tag+1:]
                 start_tag = textblock.find('<')
             else:
@@ -390,13 +395,16 @@ class XMLDocument(object):
 
 
         if len(stack):
-            print(f"\n========================", file=log)
-            print(f"Source xml: {self.filename}", file=log)
-            print(f"Source po : {self.app.pofile}", file=log)
-            print(f"ERROR: Found unmatched tags in po msgstr:\n{text}\n", file=log)
+            if not headerPrinted:
+                self.printErrorHeader(text, log)
+                headerPrinted = True
+            print(f"\nERROR: Found unmatched tags in po msgstr.", file=log)
             print(f"Tags not matched: {str(stack)}", file=log)
             print(f"========================\n", file=log)
             return False
+
+        if headerPrinted:
+            print(f"========================\n", file=log)
         return True
 
     def replaceNodeContentsWithText(self, node, text):
