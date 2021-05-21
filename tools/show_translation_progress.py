@@ -23,7 +23,7 @@ import getopt
 import re
 import xml.etree.ElementTree as ET
 
-ALL_LINGUAS = re.compile('ALL_LINGUAS="(\w.+)\w')
+ALL_LINGUAS = re.compile(r'ALL_LINGUAS="(\w.+)\w')
 
 
 class GIMPHelpXMLParser(object):
@@ -51,20 +51,24 @@ class GIMPHelpXMLParser(object):
 class GIMPHelpHeaderParser(object):
     """Parses gimphelp-ids.h and indexes the ids"""
 
-    helpid = re.compile('gimp-.[a-z-]+')
+    helpid = re.compile('gimp-.[a-z-0-9]+')
 
     def __init__(self, filepath):
         assert filepath != ""
         self.filepath = filepath
         self.ids = []
 
-    def parse(self):
+    def parse(self, be_verbose):
         h_file = open(self.filepath, "r")
+        if be_verbose:
+            print("Help ID's:")
         # XXX do a read() and match with a regexp
         for line in h_file.readlines():
             try:
                 str = self.helpid.search(line).group()
                 self.ids.append(str)
+                if be_verbose:
+                    print(str)
             except AttributeError:
                 pass
 
@@ -72,23 +76,25 @@ class GIMPHelpHeaderParser(object):
 class Statistics(object):
     """Creates statistics output."""
 
-    def __init__(self, headerpath, helproot):
+    def __init__(self, headerpath, helproot, buildroot, be_verbose, print_missing):
         self.helproot = helproot
+        self.buildroot = buildroot
+        self.be_verbose = be_verbose
         self.hp = GIMPHelpHeaderParser(headerpath)
-        self.hp.parse()
+        self.hp.parse(be_verbose)
         self.totals = len(self.hp.ids)
-        self.docs = self.getDocuments(helproot)
-        self.statistics = self._generateStatistics()
+        self.docs = self.getDocuments(buildroot)
+        self.statistics = self._generateStatistics(print_missing)
 
-    def getDocuments(self, helproot):
+    def getDocuments(self, buildroot):
         """ returns a dictionary with languages as keys and paths to the
             xml documents as values
         """
-        linguas = get_linguas(helproot)
+        linguas = get_linguas(buildroot)
         result = {}
         for lang in linguas:
             # puzzling the path to the gimp-help.xml file together
-            helpfile = os.path.join(helproot, 'html', lang,
+            helpfile = os.path.join(buildroot, 'html', lang,
                                     'gimp-help.xml')
             if os.path.exists(helpfile):
                 xp = GIMPHelpXMLParser(helpfile)
@@ -103,33 +109,59 @@ class Statistics(object):
         for id in self.docs[lang]:
             yield id
 
-    def _generateStatistics(self):
+    def _generateStatistics(self, print_missing):
         """ generates statistics for every language
             returns list with dicts
                 dicts = {written items, todo items, percentage written,
                 language}
         """
+
+        # FIXME - Parse GIMP's XML menus to see which menu help topics we should have.
+
         result = []
         helpids = self.hp.ids
+        todo_ids = self.hp.ids
 
         for lang in list(self.docs.keys()):
             other_ids = []
             matched = []
+            todo_ids = self.hp.ids
+
+            if self.be_verbose:
+                print(f"\nLanguage: {lang}")
 
             for id in self.get_ids_from_lang(lang):
-                if id not in helpids:
+                if id in helpids:
                     matched.append(id)
+                    todo_ids.remove(id)
+                    if self.be_verbose:
+                        print(f"help-id found: {id}")
                 else:
                     other_ids.append(id)
+                    if self.be_verbose:
+                        print(f"not in help-ids: {id}")
 
             done = len(matched)
             add = len(other_ids)
+            total_done = done + add
+            todo = len(todo_ids)
+            print(f"\nTotal help-ids: {self.totals}, of which {done} done and {todo} missing.")
+            print(f"There are: {done} other help pages for a total of {total_done} pages.")
+
             if done < self.totals:
-                todo = self.totals - done
                 prc_done = done*100/self.totals
             else:
                 todo = 0
                 prc_done = 100
+
+            if len(todo_ids) > 0:
+                if print_missing:
+                    print("\nMissing help for ids")
+                    print(  "--------------------")
+                    for id in todo_ids:
+                        print(id)
+                else:
+                    print("\nTo show the missing help-ids enable option -m")
 
             lang = self._makedict(done=done,
                                  todo=todo,
@@ -153,10 +185,26 @@ class Statistics(object):
 
         for lang in list(self.docs.keys()):
             invalid = []
-            skip = ['faq', 'using', 'fdl', 'glossary',
-                'introduction', 'gimp-main', 'legal', 'tools-color',
-                'tools-paint', 'tools-selection', 'tools-transform',
-                'tools-menu', 'plug-in']
+            # List of ids to skip. Some of them should probably be removed here
+            # but at the moment that would lead to a long list of invalid ids.
+            # We should revisit this some time in the future.
+            skip = [
+                'authors', 'become-a-gimp-wizard', 'bibliography',
+                'clipboard', 'crop-', 'file-', 'filters', 'getting-started',
+                'gfdl', 'gimp-brush', 'gimp-buffer', 'gimp-channel',
+                'gimp-colors-', 'gimp-colorselector', 'gimp-concepts',
+                'gimp-dock', 'gimp-edit', 'gimp-file', 'gimp-filter',
+                'gimp-font', 'gimp-gradient', 'gimp-help', 'gimp-image',
+                'gimp-indexed', 'gimp-introduction', 'gimp-layer',
+                'gimp-palette', 'gimp-path', 'gimp-pattern', 'gimp-prefs',
+                'gimp-selection', 'gimp-tool', 'gimp-using', 'gimp-tutorial',
+                'gimp-view', 'gimp-windows', 'gimpressionist',
+                'introduction', 'key-reference', 'legal',
+                'plug-in', 'python-fu', 'script-fu',
+                'preface', 'tone-mapping', 'text-', 'tool-',
+                'dialogs', 'menus',
+                'gimp-', '-dialog'
+            ]
 
             for id in self.get_ids_from_lang(lang):
                 not_invalid = None
@@ -181,28 +229,45 @@ class Statistics(object):
             if filename is not in help ids append it to invalid list
             returns list with invalid filenames(str)
         """
-        # XXX needs to be rewritten
-        invalid = []
         names = {}
         root = os.path.join(self.helproot, "src")
         # dirs which we can safely skip
-        filter_directories = ['glossary', 'faq', 'filters']
+        filter_directories = [
+            'appendix', 'concepts', 'filters', 'glossary', 'images', 'introduction',
+            'preface', 'tutorial', 'using',
+            ]
 
         # filenames which we can safely skip
-        filter_files = ['gimp', 'introduction', 'menu']
+        filter_files = [
+            'about-', 'gimp', 'help-missing', 'introduction', 'key-reference',
+            ]
 
+        ignore_dirs = []
+
+        if self.be_verbose:
+            print(f"\nHelp src root: {root}")
         for root, dirs, files in os.walk(root):
-            if 'CVS' in dirs:
-                dirs.remove('CVS') # don't visit CVS dirs
+            skip = False
+            for item in ignore_dirs:
+                if root.startswith(item):
+                    skip = True
+                    break
 
-            for dir in dirs:
-                if dir in filter_directories:
-                    dirs.remove(dir)
+            if not skip:
+                if self.be_verbose and len(dirs) > 0:
+                    print(f"Root: {root} - Dirs: {dirs}")
+                for dir in dirs:
+                    if dir in filter_directories:
+                        if self.be_verbose:
+                            print(f"Removing dir: {dir}")
+                        ignore_dirs.append(os.path.join(root, dir))
+                    elif self.be_verbose:
+                        print(f"Keeping dir: {dir}")
 
-            for file in files:
-                if file.endswith('xml'):
-                    id = file[:-4]
-                    names[id] = os.path.join(root, file)
+                for file in files:
+                    if file.endswith('xml'):
+                        id = file[:-4]
+                        names[id] = os.path.join(root, file)
 
         # remove the valid entries
         for id in list(names.keys()):
@@ -211,9 +276,8 @@ class Statistics(object):
             not_invalid = list(filter(lambda k, y=0:\
                 y + self._is_substring(id, k), filter_files))
             if not_invalid:
-                continue
-
-            if self._is_helpid('gimp-' + id):
+                if self.be_verbose:
+                    print(f"Remove valid name: {names[id]}")
                 del names[id]
 
         return names
@@ -227,7 +291,7 @@ class Statistics(object):
         invalid_ids = self.getInvalidIds()
         invalid_files = self.getInvalidFilenames()
 
-        print("General statistics:")
+        print("\nGeneral statistics:")
         print("===================")
 
         for dict in self.statistics:
@@ -238,25 +302,27 @@ class Statistics(object):
                 %(dict['done'], dict['todo'], dict['others']))
             print("Percent done: |%s%s| %s%%" %(done,todo, dict['prc_done']))
 
-        print("\n\nInvalid ids:")
+        print("\n\nFound %i ids which are not part of gimphelp-ids.h and also not in our skip list." %len(invalid_ids))
+        print("Maybe their naming could be improved or else they should be added to the skip list.")
+        print("\nInvalid ids:")
         print("================")
-        print("Found %i ids which are not part of gimphelp-ids.h" %len(invalid_ids))
 
         if print_invalid:
-            invalid_ids.reverse()
+            invalid_ids.sort()
             for id in invalid_ids:
                 print("%s" %id)
         else:
             print("Hint: start the program again with parameter >>-i<<", end=' ')
             print("if you want to view them.")
 
-        print("\n\nInvalid filenames:")
+        print("\n\nFound %i filenames which are not part of gimphelp-ids.h" %len(invalid_files))
+        print("We should check if their filenames can be synchronized with their ids.")
+        print("\nInvalid filenames:")
         print("======================")
-        print("Found %i filenames which are not part of gimphelp-ids.h" %len(invalid_files))
 
         if print_invalid:
             keys = list(invalid_files.keys())
-            keys.sort()
+            #keys.sort()
             for k in keys:
                 print("%s -> %s" %(k, invalid_files[k]))
         else:
@@ -275,15 +341,20 @@ class Statistics(object):
         return name is not None and name in self.hp.ids
 
 
-def get_linguas(gimphelppath):
+def get_linguas(gimpbuildpath):
     """ returns the linguas set in configure.in in gimp-help-2 dir """
-    gimphelppath = os.path.join(gimphelppath, "html")
+    gimphtmlpath = os.path.join(gimpbuildpath, "html")
+    if not os.path.exists(gimphtmlpath):
+        print(f"WARNING: html directory {gimphtmlpath} not found!")
+        gimpbuildpath = None
+        return []
+
     if 'ALL_LINGUAS' in os.environ:
         linguas = os.environ.get('ALL_LINGUAS')
         linguas = linguas.split(' ')
         return linguas
 
-    linguas = os.listdir(gimphelppath)
+    linguas = os.listdir(gimphtmlpath)
     if 'images' in linguas:
         linguas.remove('images')
     print(f"Linguas: {linguas}")
@@ -292,18 +363,18 @@ def get_linguas(gimphelppath):
 
 
 def main():
-    header = None
-    xml = None
     gimp = None
     helppath = "."
+    buildpath = '.'
     print_invalid = 0
+    print_missing = 0
     gimpheaderfile = "gimphelp-ids.h"
-    xmldocs = {}
     errormsg = None
     show_usage = False
+    be_verbose = False
 
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "hx:g:i")
+        opts, args = getopt.getopt(sys.argv[1:], "hb:x:g:imv")
     except getopt.GetoptError:
         usage()
         sys.exit(2)
@@ -316,10 +387,16 @@ def main():
             show_usage = True
         if o == "-x":
             helppath = a
+        if o == "-b":
+            buildpath = a
         if o == "-g":
             gimp = os.path.join(a, "app", "widgets", gimpheaderfile)
         if o == "-i":
             print_invalid = 1
+        if o == "-m":
+            print_missing = 1
+        if o == "-v":
+            be_verbose = True
 
     if show_usage:
         usage()
@@ -339,7 +416,12 @@ def main():
             errormsg = "Path to gimp-help is invalid"
 
     if not errormsg:
-        st = Statistics(gimp, helppath)
+        buildpath = os.path.abspath(buildpath)
+        if not os.path.exists(buildpath):
+            errormsg = "Path to gimp-help build root is invalid"
+
+    if not errormsg:
+        st = Statistics(gimp, helppath, buildpath, be_verbose, print_missing)
         st.printTextStatistics(print_invalid)
         sys.exit(1)
     else:
@@ -357,7 +439,10 @@ usage: show_translation_progress.py [options]
     options:
         -g      path to the GIMP sources (eg. /opt/gimp)
         -x      path to the gimp-help sources (eg. /opt/gimp-help)
-        -i      print ids which are supposed to be invalid
+        -b      path to the gimp-help build root (eg. /opt/gimp-help/build)
+        -i      print ids which are invalid or have inconsistencies
+        -m      print help-ids that are missing from gimp-help
+        -v      be more verbose
         -h      this help""")
     if errormsg and errormsg != "":
         print("\nError: %s" % errormsg)
