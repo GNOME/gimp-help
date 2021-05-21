@@ -1,16 +1,111 @@
 These tools should make your documentation life easier:
 
-xml_helper.py           - helps you to separate your language from the XML,
-                        and merge your changes back. Run with --help
-                        option to see how to use it
+show_translation_progress.py
+                    This script shows statistics about the percentage
+                    of the help-ids done.
+                    It can also tell you which help-ids do not have a
+                    corresponding help document and can show inconsistencies
+                    between help-ids and their filenames.
+                    Run with -h option to see how to use it.
 
-validate_references.py  - validates the references to image files in the
-                        XML files. Run with -h option to see how to use it.
+validate_references.py
+                    Validates the references to image files in the
+                    XML files.
+                    Run with -h option to see how to use it.
 
+check_image_resolutions.sh
+                    A simple shell script to find images with resolution
+                    != 144x144 dpi.
+
+get_po_status.pl    This Perl script searches for po files in the specified
+                    directory and prints statistics about translation
+                    progress as well as a short summary (number of files
+                    and strings, number of translated, fuzzy, or
+                    untranslated strings).
+
+
+xml_helper.py       Not ported to python 3 yet.
+                    Helps you to separate your language from the XML,
+                    and merge your changes back.
+                    Run with --help option to see how to use it
+
+
+
+show_translation_progress.py
+============================
+
+This script parses the gimp-help.xml which has been generated during
+transformation from DocBook/XML to HTML. It compares the ids with the
+gimphelp-ids.h header file located in the gimp source tree and creates
+statistics.
+It can tell you which help-ids do not have a corresponding help
+document and (option -i) can show inconsistencies between help-ids
+and their filenames.
+
+Requirements:
+    - Path to GIMP sources (option -g)
+    - For best results also set the paths to the gimp-help
+      sources and the gimp-help build root (options -x and -b).
+
+Call the script like this (adjust paths as necessary):
+
+    python tools/show_translation_progress.py -g ../gimp -x . -b ../build/gimp-help
+
+
+validate_references.py
+======================
+
+Call the script from the gimp-help root:
+
+    python tools/validate_references.py
+
+Use the --help option for more information.
+
+
+get_po_status.pl
+================
+
+This Perl script searches for po files in the specified directory
+and prints statistics about translation progress as well as a
+short summary (number of files and strings, number of translated,
+fuzzy, or untranslated strings).
+
+Requirements:
+    - Perl
+    - msgfmt (package "gettext" or "gettext-runtime")
+
+Usage:
+    Call the script from the gimp-help root:
+
+        tools/get_po_status.pl [options] po-directory
+
+Options:
+        --[no]files       [Don't] print file statistics
+        --[no]summary     [Don't] print summary
+        --[no]progress    [Don't] print "progress" bar
+        --todo            Only print files with untranslated messages
+        --lang LANG       Add language "LANG" for naming the progress bar
+
+Use "perldoc tools/get_po_status.pl" for more information.
+
+
+check_image_resolutions.sh
+==========================
+
+A simple shell script to find images with resolution != 144x144 dpi.
+
+Requirements:
+    - identify (from the ImageMagick package: http://www.imagemagick.org)
+    - awk
+
+Usage:
+    tools/check_image_resolutions.sh DIR [DIR ...]
 
 
 xml_helper.py
 =============
+
+Note: not ported to python 3 yet!
 
 Usage:
     xml_helper.py --rip|--merge|--format  [--no-format] [--no-clone-content]
@@ -118,77 +213,10 @@ Workflow example :
     ./tools/xml_helper.py --merge --langs=pt_BR src/gimp.xml
 
 
-validate_references.py
-======================
-
-Call the script from the gimp-help root:
-
-    python tools/validate_references.py
-
-Use the --help option for more information.
-
-
-show_translation_progress.py
-============================
-XXX - can still be buggy XXX
-
-This script parses the gimp-help.xml which has been generated during
-transformation from DocBook/XML to HTML. It compares the ids with the
-gimphelp-ids.h header file located in the gimp source tree and creates
-statistics.
-
-Requirements:
-    - GIMP sources
-
-Call the script from the gimp-help root:
-
-    python tools/show_translation_progress.py -g ../gimp
-
-
 check_lang_attributes.pl
 ==========================
 
 Removed after changing to gettext-based documentation.
-
-
-get_po_status.pl
-================
-
-This Perl script searches for po files in the specified directory
-and prints statistics about translation progress as well as a
-short summary (number of files and strings, number of translated,
-fuzzy, or untranslated strings).
-
-Requirements:
-    - Perl
-    - msgfmt (package "gettext" or "gettext-runtime")
-
-Usage:
-    Call the script from the gimp-help root:
-
-        tools/get_po_status.pl [options] po-directory
-
-Options:
-        --[no]files       [Don't] print file statistics
-        --[no]summary     [Don't] print summary
-        --[no]progress    [Don't] print "progress" bar
-        --todo            Only print files with untranslated messages
-        --lang LANG       Add language "LANG" for naming the progress bar
-
-Use "perldoc tools/get_po_status.pl" for more information.
-
-
-check_image_resolutions.sh
-==========================
-
-A simple shell script to find images with resolution != 144x144 dpi.
-
-Requirements:
-    - identify (from the ImageMagick package: http://www.imagemagick.org)
-    - awk
-
-Usage:
-    tools/check_image_resolutions.sh DIR [DIR ...]
 
 
 check_keywords_property.pl
