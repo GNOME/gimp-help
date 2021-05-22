@@ -125,7 +125,7 @@ class Statistics(object):
         for lang in list(self.docs.keys()):
             other_ids = []
             matched = []
-            todo_ids = self.hp.ids
+            todo_ids = self.hp.ids.copy()
 
             if self.be_verbose:
                 print(f"\nLanguage: {lang}")
@@ -145,7 +145,7 @@ class Statistics(object):
             add = len(other_ids)
             total_done = done + add
             todo = len(todo_ids)
-            print(f"\nTotal help-ids: {self.totals}, of which {done} done and {todo} missing.")
+            print(f"\nLanguage: {lang}. Total help-ids: {self.totals}, of which {done} done and {todo} missing.")
             print(f"There are: {done} other help pages for a total of {total_done} pages.")
 
             if done < self.totals:
