@@ -174,6 +174,9 @@ def main(argv):
         if len(filenames) > 1:
             print("Error: You can merge translations with only one XML file at a time.", file=sys.stderr)
             sys.exit(2)
+        elif len(filenames) == 0:
+            print("Error: You need to specify the XML input file.")
+            sys.exit(4)
 
         if not mofile:
             print("Error: You must specify MO file when merging translations.", file=sys.stderr)
