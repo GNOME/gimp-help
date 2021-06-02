@@ -151,7 +151,7 @@ AC_SUBST(DOCBOOK2ODFFLAGS)
 #  Use our customized xml2po
 
 XML2PO='$(top_srcdir)/tools/xml2po.py'
-XML2POFLAGS="--mode=gimphelp"
+XML2POFLAGS="--mode=gimphelp --base=$(top_srcdir)/"
 AC_SUBST(XML2PO)
 AC_SUBST(XML2POFLAGS)
 
