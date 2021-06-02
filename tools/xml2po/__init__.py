@@ -142,11 +142,20 @@ msgstr ""
             out.write("msgstr \"%s\"\n\n" % (translation))
 
 class XMLDocument(object):
-    def __init__(self, filename, app):
+    def __init__(self, filename, base_path, app):
         self.filename = filename
         self.app = app
         self.expand_entities = self.app.options.get('expand_entities')
         self.ignored_tags = self.app.current_mode.getIgnoredTags()
+
+        # Remove the part of the path that redirects from build dir to
+        # source dir since that part depends on personal setup and can
+        # cause a lot of unnecessary changes in commits.
+        self.base_path = base_path
+        self.source_filename = self.filename
+        if self.source_filename.startswith(self.base_path):
+            self.source_filename = self.source_filename[len(self.base_path):]
+
         ctxt = libxml2.createFileParserCtxt(filename)
         ctxt.lineNumbers(1)
         if self.app.options.get('expand_all_entities'):
@@ -162,11 +171,11 @@ class XMLDocument(object):
         if self.doc.name != filename:
             raise Exception("Error: I tried to open '%s' but got '%s' -- how did that happen?" % (filename, self.doc.name))
         if self.app.msg:
-            self.app.msg.setFilename(filename)
+            self.app.msg.setFilename(self.source_filename)
         self.isFinalNode = self.app.current_mode.isFinalNode
 
     def generate_messages(self):
-        self.app.msg.setFilename(self.doc.name)
+        self.app.msg.setFilename(self.source_filename)
         self.doSerialize(self.doc)
 
     def normalizeNode(self, node):
@@ -641,13 +650,14 @@ def xml_error_handler(ctxt, error):
     pass
 
 class Main(object):
-    def __init__(self, mode, operation, output, options):
+    def __init__(self, mode, operation, output, base_path, options):
         libxml2.registerErrorHandler(xml_error_handler, None)
         self.operation = operation
         self.options = options
         self.msg = None
         self.gt = None
         self.current_mode = self.load_mode(mode)()
+        self.base_path = base_path
         # Prepare output
         if operation == 'update':
             self.out = tempfile.TemporaryFile(encoding='utf-8')
@@ -675,7 +685,7 @@ class Main(object):
             if not os.access(xmlfile, os.R_OK):
                 raise IOError("Unable to read file '%s'" % xmlfile)
             try:
-                doc = XMLDocument(xmlfile, self)
+                doc = XMLDocument(xmlfile, self.base_path, self)
             except Exception as e:
                 print("Error parsing XML file '%s': %s" % (xmlfile, str(e)), file=sys.stderr)
                 sys.exit(1)
@@ -688,7 +698,7 @@ class Main(object):
         if not os.access(xmlfile, os.R_OK):
             raise IOError("Unable to read file '%s'" % xmlfile)
         try:
-            doc = XMLDocument(xmlfile, self)
+            doc = XMLDocument(xmlfile, self.base_path, self)
         except Exception as e:
             print("Error parsing XML file '%s': %s" % (xmlfile, str(e)), file=sys.stderr)
             sys.exit(1)
@@ -717,7 +727,7 @@ class Main(object):
         if not os.access(origxml, os.R_OK):
             raise IOError("Unable to read file '%s'" % xmlfile)
         try:
-            doc = XMLDocument(xmlfile, self)
+            doc = XMLDocument(xmlfile, self.base_path, self)
         except Exception as e:
             print("Error parsing XML file '%s': %s" % (xmlfile, str(e)), file=sys.stderr)
             sys.exit(1)
@@ -725,7 +735,7 @@ class Main(object):
 
         self.msg.translationsFollow()
         try:
-            doc = XMLDocument(origxml, self)
+            doc = XMLDocument(origxml, self.base_path, self)
         except Exception as e:
             print("Error parsing XML file '%s': %s" % (origxml, str(e)), file=sys.stderr)
             sys.exit(1)

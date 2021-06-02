@@ -57,6 +57,10 @@ OPTIONS may be some of:
     -r    --reuse=FILE         Specify translated XML file with the same structure
     -t    --translation=FILE   Specify MO file containing translation, and merge
     -u    --update-translation=LANG.po   Updates a PO file using msgmerge program
+    -b    --base=PATH          Specify base path to source repository
+                               (e.g. -b ../gimp-help)
+                               If set will remove this part of filenames from
+                               po/pot comments
 
     -l    --language=LANG      Set language of the translation to LANG
           --mark-untranslated  Set 'xml:lang="C"' on untranslated tags
@@ -105,10 +109,11 @@ def main(argv):
     origxml = ''
     mofile = None
     mofile_tmppath = None
+    base = ''
 
-    try: opts, remaining_args = getopt.getopt(argv, 'avhkem:t:o:p:u:r:l:',
+    try: opts, remaining_args = getopt.getopt(argv, 'avhkem:t:o:p:u:r:l:b:',
                                ['automatic-tags','version', 'help', 'keep-entities', 'expand-all-entities', 'mode=', 'translation=',
-                                'output=', 'po-file=', 'update-translation=', 'reuse=', 'language=', 'mark-untranslated' ])
+                                'output=', 'po-file=', 'update-translation=', 'reuse=', 'language=', 'mark-untranslated', 'base=' ])
     except getopt.GetoptError:
         usage(True)
         sys.exit(2)
@@ -155,6 +160,8 @@ def main(argv):
         elif opt in ('-h', '--help'):
             usage(True)
             sys.exit(0)
+        elif opt in ('-b', '--base'):
+            base = arg
 
     if operation == 'update' and output != "-":
         print("Option '-o' is not yet supported when updating translations directly. Ignoring this option.", file=sys.stderr)
@@ -165,7 +172,7 @@ def main(argv):
         filenames.append(remaining_args.pop())
 
     try:
-        xml2po_main = Main(default_mode, operation, output, options)
+        xml2po_main = Main(default_mode, operation, output, base, options)
     except IOError:
         print("Error: cannot open file %s for writing." % (output), file=sys.stderr)
         sys.exit(5)
