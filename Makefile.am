@@ -464,11 +464,11 @@ po-en: ;
 
 status-%: po-status-% ;
 po-status-%: po-%
-	$(cmd) perl $(srcdir)/tools/get_po_status.pl po/$*
+	$(cmd) perl $(srcdir)/tools/get_po_status.pl $(srcdir)/po/$*
 
 status-all: po-status-all ;
 po-status-all:
-	$(cmd) for podir in po/*; do \
+	$(cmd) for podir in $(srcdir)/po/*; do \
 		perl $(srcdir)/tools/get_po_status.pl \
 			--nofiles --nosummary $${podir} \
 		|| break; \
@@ -476,7 +476,7 @@ po-status-all:
 
 todo-%: po-todo-% ;
 po-todo-%: po-%
-	$(cmd) perl $(srcdir)/tools/get_po_status.pl --todo po/$*
+	$(cmd) perl $(srcdir)/tools/get_po_status.pl --todo $(srcdir)/po/$*
 
 # Main commandline target
 po: $(foreach LANG,$(PO_LANGS),po-$(LANG)) ;
@@ -962,7 +962,7 @@ check-images-%: FORCE
 	$(cmd) $(RMAKE) check-image-references IMAGE_LANGS="C $*"
 
 check-image-resolutions-%:
-	$(cmd) /bin/sh tools/check_image_resolutions.sh images/$*
+	$(cmd) /bin/sh $(srcdir)/tools/check_image_resolutions.sh $(srcdir)/images/$*
 
 # special case 'en':
 check-images-en check-images-C: check-image-references ;
