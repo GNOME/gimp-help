@@ -3,18 +3,31 @@
 ===========
 
 GIMP-Help is a help system designed for use with the internal GIMP help
-browser, external web browser and HTML renderers, and human eyeballs. 
-Docbook is used to create a highly customizable system for all needs. 
+browser, external web browser and HTML renderers.
+Docbook is used to create a highly customizable documentation system.
 
 The current manual documents features for GIMP 2.10.
 
+Contents
+--------
+1. Published manuals
+2. Tips for contribution
+3. Documentation issues
+4. Creating a Release
+5. Updating supported languages
+6. ODF Files
+7. History of the gimp-help module
 
-Project page and news
-=====================
 
-Recent changes and updates about the modules are available at:
+Published manuals
+=================
+
+The most recent manuals for all supported languages are available at:
 
   https://www.gimp.org/docs/
+
+We intend to be able to automatically have up to date manuals
+published there too, but we are still working on that.
 
 
 Tips for contribution
@@ -35,6 +48,8 @@ the latest uploaded version at https://docs.gimp.org/2.10/en/.
 The source of the manual can be found in XML files in the /src
 directory of this repository. Find a topic that interests you
 or that needs updating and start writing.
+You could also take a look at our issue tracker at
+https://gitlab.gnome.org/GNOME/gimp-help/issues
 
 It would be a good idea to subscribe to the gimp mailing lists,
 especially the developer and docs lists. That way you can keep
@@ -58,7 +73,7 @@ usually during European evening hours.
   mind, that the tab width in XML Mode should be 2 spaces. It is
   recommended to attach patches to a bug report. Creating patches with
   git is probably better described at https://wiki.gnome.org, but in
-  short: 
+  short:
 
     git format-patch HEAD^
 
@@ -96,6 +111,15 @@ usually during European evening hours.
     mode without loss of quality (saves space and bandwidth)
   * provide your source images (eg. for making new screenshots in other
     languages)
+
+
+Documentation issues
+====================
+
+See our Gnome Gitlab issue tracker:
+
+  https://gitlab.gnome.org/GNOME/gimp-help/issues
+
 
 Creating a Release
 ==================
@@ -180,13 +204,23 @@ Steps
     about our goals and how you can help at https://docs.gimp.org.
 
 
-TODO
-====
+Updating supported languages
+============================
 
-see Bugzilla:
+When adding a new language for translation several files need to be
+updated. It's the intention to simplify this, but for now the list
+of languages needs to be updated in the following files:
 
-  https://gitlab.gnome.org/GNOME/gimp-help/issues
-
+  configure.ac
+    Update ALL_LINGUAS and QUICKREFERENCE_ALL_LINGUAS
+  Makefile.GNU
+    Update ALL_LINGUAS
+  quickreference/makefile.am
+    Update ALL_LINGUAS and QUICKREFERENCE_ALL_LINGUAS
+  stylesheets/languageVocab.xml
+    Update vocab
+  tools/get_po_status.pl
+    Update my %Languages
 
 
 ODF Files
@@ -199,7 +233,7 @@ a temp directory), you can start the transformation by typing:
     make odf
 
 Hint: Set the ALL_LINGUAS environment variable to create ODF files only
-for a particular language. 
+for a particular language.
 Docbook2ODF can be obtained from the following website:
 
     http://open.comsultia.com/docbook2odf/
@@ -213,8 +247,8 @@ Uncomment the line:
 and rerun 'make odf'.
 
 
-History of the gimp-help-2 module
-=================================
+History of the gimp-help module
+===============================
 
 The development on the original gimp-help modules came pretty much to a
 stop after the first few stable versions of GIMP 1.2 were released. This is
@@ -223,6 +257,8 @@ documentation had been converted from HTML to DocBook/SGML and apart from a
 bit new content, lots of markup and proofreading not too much happened to
 the organization of the complete mess.
 
-Daniel Egger and Mel Boyce were not too happy about the quirks with 
+Daniel Egger and Mel Boyce were not too happy about the quirks with
 this help system. So they started completely from scratch creating a new
-manual based on Docbook/XML.
+manual based on Docbook/XML called gimp-help-2.
+
+Later this was renamed to gimp-help.
