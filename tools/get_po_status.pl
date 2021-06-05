@@ -235,7 +235,7 @@ sub print_summary
 		$untranslated = $width - ($translated + $fuzzy);
 
 		print "\n" if $Print_file_list || $Print_summary;
-		printf "[%s%s%s]  %2d%%  %s\n",
+		printf "[%s%s%s]  %3d%%  %s\n",
 		    ">" x $translated,
 		    "~" x $fuzzy,
 		    "_" x $untranslated,
