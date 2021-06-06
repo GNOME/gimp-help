@@ -3,7 +3,7 @@
     Customized docbook-xsl template to generate an additional class
     value for (inline)mediaobjects with condition attribute "float"
 
-    This file is part of the gimp-help-2 project.
+    This file is part of the gimp-help project.
     You may use this file in accordance to the GNU General Public License
     Version 2 which is available from http://www.gnu.org.
 -->

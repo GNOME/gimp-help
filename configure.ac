@@ -1,4 +1,4 @@
-#  This the autoconf script for the gimp-help-2 project.
+#  This the autoconf script for the gimp-help project.
 #  The GPL version 2 applies to it, which you may get from
 #  http://www.gnu.org/.
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# This file is part of the gimp-help-2 project and is
+# This file is part of the gimp-help project and is
 # Copyright 2004, 2005, 2006, 2007 Roman Joost
 #
 #   This program is free software; you can redistribute it and/or modify
@@ -342,7 +342,7 @@ class Statistics(object):
 
 
 def get_linguas(gimpbuildpath):
-    """ returns the linguas set in configure.in in gimp-help-2 dir """
+    """ returns the linguas set in configure.in in gimp-help dir """
     gimphtmlpath = os.path.join(gimpbuildpath, "html")
     if not os.path.exists(gimphtmlpath):
         print(f"WARNING: html directory {gimphtmlpath} not found!")

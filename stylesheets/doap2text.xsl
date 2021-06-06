@@ -3,7 +3,7 @@
     Simple XSL transformation to create MAINTAINERS text version from
     gimp-help.doap.
 
-    This file is part of the gimp-help-2 project and is
+    This file is part of the gimp-help project and is
     (C) 2010 The GIMP Documentation Team (License: GPL).
 -->
 <xsl:stylesheet version="1.0"

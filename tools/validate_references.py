@@ -7,7 +7,7 @@
   finds orphaned images files.
 """
 
-# gimp-help-2 -- validate_references.py
+# gimp-help -- validate_references.py
 #
 # Copyright (C) 2006, 2007 Róman Joost
 #           (C) 2008, 2009 Róman Joost, Ulf-D. Ehlert
@@ -360,7 +360,7 @@ def main():
     # Check for the correct directory.
     if not (os.path.isdir("images/") and os.path.isdir("src/")):
         usage(66, "This script must be called from the " +
-                   "gimp-help-2 root directory.")
+                  "gimp-help root directory.")
 
     # We need an existing xml source file to parse.
     if not os.path.isfile(xml_root_file):
@@ -421,7 +421,7 @@ Usage: validate_references.py [options] [language ...]
     options:
         -h | --help          this help
         -v | --verbose       verbose; may be provided twice (-vv)
-        -r | --root <dir>    specify the gimp-help-2 root directory
+        -r | --root <dir>    specify the gimp-help root directory
         -x | --xmldir <dir>  specify the XML files directory
         -o | --orphaned      check for orphaned image files
         -b | --broken        check for broken links (default action)

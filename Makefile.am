@@ -834,8 +834,8 @@ endif
 ####            Make language-specific HTML tarballs                ####
 ########################################################################
 
-tarball_prefix = gimp-help-2-html
-tarball_dir    = gimp-help-2
+tarball_prefix = gimp-help-html
+tarball_dir    = gimp-help
 HTMLMETAFILES  = README AUTHORS COPYING MAINTAINERS
 
 $(tarball_prefix)-%.tar: html/%/index.html html/%/gimp-help.xml \

@@ -8,7 +8,7 @@
 # tools and you shouldn't use this script.  Just call ./configure
 # directly.
 
-PROJECT="gimp-help-2"
+PROJECT="gimp-help"
 TEST_TYPE=-f
 FILE=src/gimp.xml
 

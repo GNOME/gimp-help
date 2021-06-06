@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    This file is part of the gimp-help-2 project and is
+    This file is part of the gimp-help project and is
     (C) The GIMP Documentation Team.
     You may use this file in accordance to the GNU General Public License
     Version 2 which is available from http://www.gnu.org.
