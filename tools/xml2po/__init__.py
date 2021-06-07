@@ -529,9 +529,23 @@ class XMLDocument(object):
 
         # Translate attributes if needed
         if node.properties and self.app.current_mode.getTreatedAttributes():
-            for p in node.properties:
+            # DamnedLies has an older python3 libxml2 without an iterator for XmlAttr, try to work around it
+            # Version using iterator
+            #for p in node.properties:
+            #    if p.name in self.app.current_mode.getTreatedAttributes():
+            #        self.processAttribute(node, p)
+
+            # ugly hack to iterate node.properties without iterator
+            p = node.properties
+            while p:
+                prev = p
                 if p.name in self.app.current_mode.getTreatedAttributes():
                     self.processAttribute(node, p)
+                p = node.properties.next
+                # It looks like we can't count on p.last
+                # Apparently last node in list points to itself (prev)
+                if p == prev:
+                    break
 
         outtxt = ''
         if restart:
