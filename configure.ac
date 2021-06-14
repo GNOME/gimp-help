@@ -10,6 +10,8 @@ m4_define([help_micro_version], [0])
 
 m4_define([help_version], [help_major_version.help_minor_version.help_micro_version])
 
+m4_define([python3_required_version], [3.6.0])
+
 AC_INIT([GIMP-Help], [help_version])
 
 # Apparently this macro must be called before "AM_INIT_AUTOMAKE"
@@ -24,6 +26,7 @@ AM_CONDITIONAL(CYGWIN, test $IS_CYGWIN = yes)
 #AC_SUBST(IS_CYGWIN)
 
 AC_CONFIG_SRCDIR([src/gimp.xml])
+AC_CONFIG_MACRO_DIR([m4macros])
 AC_CONFIG_COMMANDS(
     [stylesheets],
     [test "${srcdir:-.}" != "${builddir:-.}" &&
@@ -150,7 +153,9 @@ AC_SUBST(DOCBOOK2ODFFLAGS)
 
 #  Use our customized xml2po
 
-XML2PO='$(top_srcdir)/tools/xml2po.py'
+AM_PATH_PYTHON3(python3_required_version, libxml2, ,)
+
+XML2PO='$(PYTHON) $(top_srcdir)/tools/xml2po.py'
 XML2POFLAGS='--mode=gimphelp --base=$(top_srcdir)/'
 AC_SUBST(XML2PO)
 AC_SUBST(XML2POFLAGS)
@@ -326,6 +331,7 @@ fi
 
 
 AC_CONFIG_FILES([
+m4macros/Makefile
 Makefile
 quickreference/Makefile
 stylesheets/plainhtml.xsl
