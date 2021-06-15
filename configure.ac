@@ -5,7 +5,7 @@
 AC_PREREQ(2.54)
 
 m4_define([help_major_version], [2])
-m4_define([help_minor_version], [10])
+m4_define([help_minor_version], [99])
 m4_define([help_micro_version], [0])
 
 m4_define([help_version], [help_major_version.help_minor_version.help_micro_version])
@@ -303,20 +303,20 @@ AC_SUBST(STYLEBASE)
 
 AC_ARG_WITH(gimp,
             AS_HELP_STRING([--without-gimp],
-                           [skip check for gimp2, install into PREFIX]))
+                           [skip check for gimp3, install into PREFIX]))
 
 if test "x$with_gimp" != "xno"; then
   #  Note: AC_MSG_ERROR() must be bracket-quoted, or else errors result
-  PKG_CHECK_MODULES(GIMP, gimp-2.0, , [AC_MSG_ERROR([
-** Couldn't find a GIMP-2.0 installation. If you want to skip this check and
+  PKG_CHECK_MODULES(GIMP, gimp-3.0, , [AC_MSG_ERROR([
+** Couldn't find a GIMP-3.0 installation. If you want to skip this check and
 ** install the help files to the configured prefix, use the --without-gimp
 ** configure option. Note that GIMP will then only find the help files if it
 ** is installed in the same prefix. See the file 'INSTALL' for more help.])])
 
-  gimpdatadir=`$PKG_CONFIG --variable=gimpdatadir gimp-2.0`
+  gimpdatadir=`$PKG_CONFIG --variable=gimpdatadir gimp-3.0`
 else
-  gimpdatadir=`pkg-config --variable=gimpdatadir gimp-2.0` ||
-  gimpdatadir='$(datadir)/gimp/2.0'
+  gimpdatadir=`pkg-config --variable=gimpdatadir gimp-3.0` ||
+  gimpdatadir='$(datadir)/gimp/3.0'
 fi
 
 AC_SUBST(gimpdatadir)
