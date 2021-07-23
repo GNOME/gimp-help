@@ -43,40 +43,48 @@ AC_DEFUN([AM_PATH_PYTHON3],
   AC_ARG_VAR([PYTHON], [the Python interpreter])
 
   m4_if([$1],[],[
-    dnl No version check is needed.
-    # Find any Python interpreter.
-    if test -z "$PYTHON"; then
-      AC_PATH_PROGS([PYTHON], _AM_PYTHON_INTERPRETER_LIST, :)
-    fi
-    am_display_PYTHON=python
+    dnl We still require a version check for Python >= 3.0.
+    am_display_PYTHON_MINIMUM=3.0.0
   ], [
-    dnl A version check is needed.
-    if test -n "$PYTHON"; then
-      # If the user set $PYTHON, use it and don't search something else.
-      AC_MSG_CHECKING([whether $PYTHON version >= $1])
-      AM_PYTHON3_CHECK_VERSION([$PYTHON], [$1],
-          [AC_MSG_RESULT(yes)],
-          [AC_MSG_ERROR(too old)])
-      am_display_PYTHON=$PYTHON
-    else
-      # Otherwise, try each interpreter until we find one that satisfies
-      # VERSION.
-      AC_CACHE_CHECK([for a Python 3 interpreter with version >= $1],
-          [am_cv_pathless_PYTHON],[
-          for am_cv_pathless_PYTHON in _AM_PYTHON_INTERPRETER_LIST none; do
-          test "$am_cv_pathless_PYTHON" = none && break
-          AM_PYTHON3_CHECK_VERSION([$am_cv_pathless_PYTHON], [$1], [], [continue])
-          m4_if([$2],[],[], [AM_PYTHON_CHECK_MODULE([$am_cv_pathless_PYTHON], [$2], [break])])
-          done])
-      # Set $PYTHON to the absolute path of $am_cv_pathless_PYTHON.
-      if test "$am_cv_pathless_PYTHON" = none; then
-        PYTHON=:
-      else
-        AC_PATH_PROG([PYTHON], [$am_cv_pathless_PYTHON])
-      fi
-      am_display_PYTHON=$am_cv_pathless_PYTHON
-    fi
+    am_display_PYTHON_MINIMUM=$1
   ])
+
+  if test -n "$PYTHON"; then
+    # If the user set $PYTHON, use it and don't search something else.
+    AC_CACHE_CHECK([$PYTHON (from \$PYTHON env variable) version], [am_cv_python_version],
+        [am_cv_python_version=`$PYTHON -c "import sys; sys.stdout.write(sys.version.split()[[0]])"`])
+    AC_MSG_CHECKING([whether $PYTHON version >= $am_display_PYTHON_MINIMUM])
+    AM_PYTHON3_CHECK_VERSION([$PYTHON], [$am_display_PYTHON_MINIMUM],
+        [AC_MSG_RESULT(yes)],
+        [AC_MSG_ERROR(too old)])
+    m4_if([$2],[],[], [AM_PYTHON_CHECK_MODULE([$PYTHON], [$2],
+                            [am_display_PYTHON=$PYTHON],
+                            [PYTHON=:])])
+  else
+    # Otherwise, try each interpreter until we find one that satisfies
+    # VERSION.
+    AC_MSG_NOTICE([checking for a Python 3 interpreter with version >= $am_display_PYTHON_MINIMUM among: _AM_PYTHON_INTERPRETER_LIST])
+    for am_cv_pathless_PYTHON in _AM_PYTHON_INTERPRETER_LIST none; do
+      test "$am_cv_pathless_PYTHON" = none && break
+      AC_MSG_CHECKING([$am_cv_pathless_PYTHON version])
+      am_cv_pathless_PYTHON_version=`$am_cv_pathless_PYTHON -c "import sys; sys.stdout.write(sys.version.split()[[0]])"`
+      AC_MSG_RESULT([$am_cv_pathless_PYTHON_version])
+      AC_MSG_CHECKING([whether $am_cv_pathless_PYTHON version >= $am_display_PYTHON_MINIMUM])
+      AM_PYTHON3_CHECK_VERSION([$am_cv_pathless_PYTHON], [$am_display_PYTHON_MINIMUM],
+                               [AC_MSG_RESULT(yes)],
+                               [AC_MSG_RESULT(too old)
+                                continue])
+      m4_if([$2],[], [break],
+            [AM_PYTHON_CHECK_MODULE([$am_cv_pathless_PYTHON], [$2], [break])])
+    done
+    # Set $PYTHON to the absolute path of $am_cv_pathless_PYTHON.
+    if test "$am_cv_pathless_PYTHON" = none; then
+      PYTHON=:
+    else
+      AC_PATH_PROG([PYTHON], [$am_cv_pathless_PYTHON])
+    fi
+    am_display_PYTHON=$am_cv_pathless_PYTHON
+  fi
 
   if test "$PYTHON" = :; then
   dnl Run any user-specified action, or abort.
@@ -88,7 +96,7 @@ AC_DEFUN([AM_PATH_PYTHON3],
   dnl library.
 
   AC_CACHE_CHECK([for $am_display_PYTHON version], [am_cv_python_version],
-    [am_cv_python_version=`$PYTHON -c "import sys; sys.stdout.write(sys.version[[:3]])"`])
+    [am_cv_python_version=`$PYTHON -c "import sys; sys.stdout.write(sys.version.split()[[0]])"`])
   AC_SUBST([PYTHON_VERSION], [$am_cv_python_version])
 
   dnl Use the values of $prefix and $exec_prefix for the corresponding
@@ -207,7 +215,11 @@ sys.exit(gi.check_version(version))"
 AC_DEFUN([AM_PYTHON_CHECK_MODULE],
  [prog="import $2"
   AC_MSG_CHECKING(if $1 can import module $2)
-  AS_IF([AM_RUN_LOG([$1 -c "$prog"])], [$3], [$4])])
+  AS_IF([AM_RUN_LOG([$1 -c "$prog"])],
+        [AC_MSG_RESULT(yes)
+         $3],
+        [AC_MSG_RESULT(no)
+         $4])])
 
 # AM_PYTHON3_CHECK_VERSION(PROG, VERSION, [ACTION-IF-TRUE], [ACTION-IF-FALSE])
 # ---------------------------------------------------------------------------
