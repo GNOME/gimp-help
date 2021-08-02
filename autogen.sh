@@ -91,7 +91,7 @@ if test -z "$ACLOCAL_FLAGS"; then
     done
 fi
 
-$ACLOCAL --system-acdir=m4macros $ACLOCAL_FLAGS
+$ACLOCAL -I m4macros $ACLOCAL_FLAGS
 RC=$?
 if test $RC -ne 0; then
    echo "$ACLOCAL gave errors. Please fix the error conditions and try again."
