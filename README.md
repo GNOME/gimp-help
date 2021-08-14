@@ -1,38 +1,42 @@
-===========
- GIMP-Help
-===========
+# GIMP-Help
 
 GIMP-Help is a help system designed for use with the internal GIMP help
 browser, external web browser and HTML renderers.
-Docbook is used to create a highly customizable documentation system.
+[DocBook](https://docbook.org/) is used to create a highly customizable documentation system.
 
 The current manual documents features for the 2.99 development branch of
 GIMP which is a moving target for the future GIMP 3.0.
+The manual for GIMP 2.10 is also still being maintained in a separate branch
+called `gimp-help-2-10`.
 
-Contents
---------
-1. Published manuals
-2. Tips for contribution
-3. Documentation issues
-4. Creating a Release
-5. Updating supported languages
-6. ODF Files
-7. History of the gimp-help module
+## Contents
+
+1. [Published manuals](#published-manuals)
+2. [Tips for contribution](#tips-for-contribution)
+  2.1 [Translating](#how-to-help-translating-the-manual)
+  2.2 [Manual writing](#how-to-help-writing-the-manual)
+3. [Documentation issues](#documentation-issues)
+4. [Creating a Release](#creating-a-release)
+5. [Updating supported languages](#updating-supported-languages)
+6. [ODF Files](#odf-files)
+7. [History of the gimp-help module](#history-of-the-gimp-help-module)
 
 
-Published manuals
-=================
+## Published manuals
 
 The most recent manuals for all supported languages are available at:
 
   https://www.gimp.org/docs/
+  and
+  https://docs.gimp.org/
 
-We intend to be able to automatically have up to date manuals
-published there too, but we are still working on that.
+We intend to integrate both pages and want to be able to automatically have
+up to date manuals published there too, but we are still working on that.
 
 
-Tips for contribution
-=====================
+## Tips for contribution
+
+### How to help translating the manual
 
 If you are interested in translating the manual the best way to
 start is going to https://l10n.gnome.org/module/gimp-help/,
@@ -40,6 +44,8 @@ register an account and apply to be a member of the language team
 for the language you want to translate.
 You can then start translating the po files of GIMP's manual found
 on that website.
+
+### How to help writing the manual
 
 If instead you would like to help out writing and improving the
 manual then this is the right place to start.
@@ -60,15 +66,13 @@ Most of the GIMP developers can also be reached on the #gimp
 IRC channel on irc.gimp.org. The best chances to talk are
 usually during European evening hours.
 
-  What you should know
-  --------------------
+  ### What you should know
 
   You should know a bit about Docbook and XML, or be smart enough to learn
   the syntax yourself. You can get more information about Docbook and XML
   by using your preferred search engine.
 
-  Editors, Programs and Setups
-  ----------------------------
+  ### Editors, Programs and Setups
 
   Use any editor you want, but you should handle it well. Please keep in
   mind, that the tab width in XML Mode should be 2 spaces. It is
@@ -101,8 +105,7 @@ usually during European evening hours.
   of the XML source file!) and is displayed when the file is created.
 
 
-  Hints for making good screenshots
-  ---------------------------------
+###  Hints for making good screenshots
 
   * please make screenshots only with the system default theme, which
     is of course just the plain gtk+ default look
@@ -114,16 +117,16 @@ usually during European evening hours.
     languages)
 
 
-Documentation issues
-====================
+## Documentation issues
 
 See our Gnome Gitlab issue tracker:
 
   https://gitlab.gnome.org/GNOME/gimp-help/issues
 
 
-Creating a Release
-==================
+## Creating a Release
+
+**Note:** this section needs to be updated.
 
 Before you create a release you'll need:
 
@@ -131,8 +134,7 @@ Before you create a release you'll need:
     * have ssh access to pentagon.gimp.org
     * have access to http://www.gimp.org/admin/
 
-Steps
------
+### Steps
 
 * Make sure that all XML is valid. Run:
 
@@ -205,27 +207,28 @@ Steps
     about our goals and how you can help at https://docs.gimp.org.
 
 
-Updating supported languages
-============================
+## Updating supported languages
 
 When adding a new language for translation several files need to be
 updated. It's the intention to simplify this, but for now the list
 of languages needs to be updated in the following files:
 
-  configure.ac
-    Update ALL_LINGUAS and QUICKREFERENCE_ALL_LINGUAS
-  Makefile.GNU
-    Update ALL_LINGUAS
-  quickreference/makefile.am
-    Update ALL_LINGUAS and QUICKREFERENCE_ALL_LINGUAS
-  stylesheets/languageVocab.xml
-    Update vocab
-  tools/get_po_status.pl
-    Update my %Languages
+  - [configure.ac](configure.ac)
+    - Update ALL_LINGUAS and QUICKREFERENCE_ALL_LINGUAS
+  - [Makefile.GNU](Makefile.GNU)
+    - Update ALL_LINGUAS
+  - [quickreference/makefile.am](quickreference/makefile.am)
+    - Update ALL_LINGUAS and QUICKREFERENCE_ALL_LINGUAS
+  - [stylesheets/languageVocab.xml](stylesheets/languageVocab.xml)
+    - Update vocab
+  - [tools/get_po_status.pl](tools/get_po_status.pl)
+    - Update my %Languages
 
 
-ODF Files
-=========
+## ODF Files
+
+**Note:** this section needs to be updated and info about creating PDF files
+should probably be added too.
 
 You need docbook2odf installed to create ODF files. Although the
 transformation process is very slow (because every picture is copied to
@@ -248,8 +251,7 @@ Uncomment the line:
 and rerun 'make odf'.
 
 
-History of the gimp-help module
-===============================
+## History of the gimp-help module
 
 The development on the original gimp-help modules came pretty much to a
 stop after the first few stable versions of GIMP 1.2 were released. This is
