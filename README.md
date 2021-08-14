@@ -1,19 +1,19 @@
 # GIMP-Help
 
 GIMP-Help is a help system designed for use with the internal GIMP help
-browser, external web browser and HTML renderers.
+browser, external web browser and HTML renderers.  
 [DocBook](https://docbook.org/) is used to create a highly customizable documentation system.
 
 The current manual documents features for the 2.99 development branch of
-GIMP which is a moving target for the future GIMP 3.0.
+GIMP which is a moving target for the future GIMP 3.0.  
 The manual for GIMP 2.10 is also still being maintained in a separate branch
 called `gimp-help-2-10`.
 
 ## Contents
 
 1. [Published manuals](#published-manuals)
-2. [Tips for contribution](#tips-for-contribution)
-  2.1 [Translating](#how-to-help-translating-the-manual)
+2. [Tips for contribution](#tips-for-contribution)  
+  2.1 [Translating](#how-to-help-translating-the-manual)  
   2.2 [Manual writing](#how-to-help-writing-the-manual)
 3. [Documentation issues](#documentation-issues)
 4. [Creating a Release](#creating-a-release)
@@ -26,8 +26,8 @@ called `gimp-help-2-10`.
 
 The most recent manuals for all supported languages are available at:
 
-  https://www.gimp.org/docs/
-  and
+  https://www.gimp.org/docs/  
+  and  
   https://docs.gimp.org/
 
 We intend to integrate both pages and want to be able to automatically have
@@ -41,7 +41,7 @@ up to date manuals published there too, but we are still working on that.
 If you are interested in translating the manual the best way to
 start is going to https://l10n.gnome.org/module/gimp-help/,
 register an account and apply to be a member of the language team
-for the language you want to translate.
+for the language you want to translate.  
 You can then start translating the po files of GIMP's manual found
 on that website.
 
