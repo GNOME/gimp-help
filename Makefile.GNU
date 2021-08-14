@@ -783,7 +783,7 @@ endif
 
 tarball_prefix = gimp-help-html
 tarball_dir    = gimp-help
-HTMLMETAFILES  = README AUTHORS COPYING MAINTAINERS
+HTMLMETAFILES  = README.md AUTHORS COPYING MAINTAINERS
 
 $(tarball_prefix)-%.tar: html/%/index.html html/%/gimp-help.xml \
 		$(HTMLMETAFILES) make.d/Makefile.html-package
