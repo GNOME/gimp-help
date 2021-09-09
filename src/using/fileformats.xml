@@ -805,15 +805,15 @@ url="http://en.wikipedia.org/wiki/High_Efficiency_Image_File_Format">Wikipedia</
               <listitem>
                 <para>
                   <guilabel>None</guilabel>: is fast, and lossless, but the
-                  resulting file is very large.
+                  resulting file can be very large.
                 </para>
               </listitem>
               <listitem>
                 <para>
                   <guilabel>LZW</guilabel>: The image is compressed
                   using the <quote>Lempel-Ziv-Welch</quote> algorithm, a
-                  lossless compression technique. This is old, but
-                  efficient and fast. More information at
+                  lossless compression technique. This is efficient and fast.
+                  More information at
                   <xref linkend="bibliography-online-wkpd-lzw"/>.
                 </para>
               </listitem>
@@ -832,34 +832,38 @@ url="http://en.wikipedia.org/wiki/High_Efficiency_Image_File_Format">Wikipedia</
                 <para>
                   <guilabel>Deflate</guilabel>: is a lossless data
                   compression algorithm that uses a combination of the LZ77
-                  algorithm and Huffman coding. It is also used in Zip,
-                  Gzip and PNG file formats. Source:
+                  algorithm and Huffman coding. It is also used in Zip and
+                  Gzip files and PNG images. Source:
                   <xref linkend="bibliography-online-wkpd-deflate"/>.
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <guilabel>JPEG</guilabel>: is a very good
-                  compression algorithm but lossy.
+                  <guilabel>JPEG</guilabel>: is a very good compression
+                  algorithm but lossy. This is the same compression as used in
+                  JPEG images. Since it is lossy, you should not use this when
+                  image quality is important. This compression can not be
+                  used when your image is in indexed mode.
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <guilabel>CCITT Group 3 fax</guilabel>;
-                  <guilabel>CCITT Group 4 fax</guilabel> is a
-                  black and white format developed to transfer images by FAX.
+                  <guilabel>CCITT Group 3 fax</guilabel> and
+                  <guilabel>CCITT Group 4 fax</guilabel> are black and white
+                  formats developed to transfer images by FAX.
                 </para>
                 <note>
                   <para>
-                    These options can only be selected, if the image is in
-                    indexed mode and reduced to two colors. Use
+                    These two compression modes can only be selected, if the
+                    image is in indexed mode and reduced to two colors. Use
                     <menuchoice>
                       <guimenu>Image</guimenu>
                       <guisubmenu>Mode</guisubmenu>
                       <guimenuitem>Indexed</guimenuitem>
                     </menuchoice>
-                    to convert the image to indexed. Be certain to check
-                    <quote>Use black and white (1-bit) palette</quote>.
+                    to convert the image to indexed mode. Make sure that
+                    <quote>Use black and white (1-bit) palette</quote> is
+                    checked.
                   </para>
                 </note>
               </listitem>
@@ -871,6 +875,20 @@ url="http://en.wikipedia.org/wiki/High_Efficiency_Image_File_Format">Wikipedia</
           <listitem>
             <para>
               Since GIMP-2.10.12, you can save layers when exporting to TIFF.
+              Each layer will be a separate page in the TIFF image.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Crop layers to image bounds</term>
+          <listitem>
+            <para>
+              When <guilabel>Save layers</guilabel> is checked, this option,
+              which is enabled by default, will resize all layers to the size
+              of the image. TIFF images can not have negative offsets. This
+              option enables you to import the TIFF again without having to
+              change the position of layers that had a different size as the
+              image in the original.
             </para>
           </listitem>
         </varlistentry>
@@ -878,7 +896,7 @@ url="http://en.wikipedia.org/wiki/High_Efficiency_Image_File_Format">Wikipedia</
           <term>Save color values from transparent pixels</term>
           <listitem>
             <para>
-              With this option the color values are saved even if the pixels
+              When this is enabled the color values are saved even if the pixels
               are completely transparent.
             </para>
           </listitem>
@@ -893,17 +911,64 @@ url="http://en.wikipedia.org/wiki/High_Efficiency_Image_File_Format">Wikipedia</
           </listitem>
         </varlistentry>
         <varlistentry>
-          <term>Keep metadata</term>
+          <term>Save Exif data</term>
           <listitem>
             <para>
-              If the image you loaded has Exif, XMP, IPTC metadata, they are 
-              preserved, and you can keep them or not when exporting to TIFF.
+              When this option is enabled existing EXIF metadata will be saved
+              in the exported TIFF image.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Save XMP data</term>
+          <listitem>
+            <para>
+              When this option is enabled existing XMP metadata will be saved
+              in the exported TIFF image.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Save IPTC data</term>
+          <listitem>
+            <para>
+              When this option is enabled existing IPTC metadata will be saved
+              in the exported TIFF image.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Save thumbnail</term>
+          <listitem>
+            <para>
+              When this option is enabled a thumbnail will be saved as the
+              second page in the exported TIFF image. This will also cause
+              certain EXIF tags to be saved even if you have disabled saving
+              EXIF metadata.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Save color profile</term>
+          <listitem>
+            <para>
+              When this option is enabled the color profile will be saved in
+              the exported TIFF image.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Save GeoTIFF data</term>
+          <listitem>
+            <para>
+              When this option is enabled GeoTIFF metadata that was present in
+              the original image will be saved in the exported TIFF image.
             </para>
           </listitem>
         </varlistentry>
       </variablelist>
     </sect3>
-    
+
       <sect3 id="file-mng-export">
         <title>Export Image as MNG</title>
         <indexterm>
