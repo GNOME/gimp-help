@@ -153,15 +153,21 @@
     <sect2>
       <title>Validating</title>
       <para>
-        When you have finished writing, you must validate your work:
+        When you have finished writing, you should validate your work:
         <itemizedlist>
           <listitem>
             <para>
-              In command line, for a single file, you can use: 
-              <command>xmllint --noout your-file.xml</command>. This command 
-              displays nothing if your file is OK. Else it indicates where the 
-              error is. This command is for quickly sorting an xml file out; it 
-              can miss or may not find some errors.
+              For a single file, you can use the following command line:
+              <command>xmllint --noout --nonet --valid your-file.xml</command>.
+              This command displays nothing if your file is OK. When an error
+              is found it will show a message indicating the kind of error and
+              where in your file it was encountered.
+            </para>
+            <para>
+              This command can be used for quickly checking an xml file. It 
+              can miss or may not find some errors. In case of external
+              references to other files it also may show incorrect error
+              messages, because this command only checks a single file.
             </para>
             <para>
               (The Kate editor has an option (a plug-in) to validate the active 
@@ -170,18 +176,20 @@
           </listitem>
           <listitem>
             <para>
-              Else just run: <command>make validate-en</command>. You must
-              get a <quote>No error</quote> message.
+              When you want to check multiple files or the whole gimp-help
+              repository you should run <command>make validate-en</command>.
+              You should get a <quote>No error</quote> message.
             </para>
             <para>
-              Else, a list of validity errors is displayed with line numbers 
+              If not, a list of validity errors is displayed with line numbers 
               referring to the en.xml log file that you can find in the /log 
               folder.
             </para>
             <para>
-              Open this en.xml file in a text editor, type the editor
-              <quote>jump to line</quote> command (the Kate editor command is
-              <keycombo><keycap>Ctrl</keycap><keycap>G</keycap></keycombo>)
+              Open this en.xml file in a text editor, use the 
+              <quote>jump to line</quote> command of your editor (the Kate
+              editor command is
+              <keycombo><keycap>Ctrl</keycap><keycap>G</keycap></keycombo>),
               and enter the line number to jump to the concerned line in the 
               en.xml file. There, you will find the error.
             </para>
@@ -197,8 +205,8 @@
             </para>
             <note>
               <para>
-                A frequent foolish mistake is editing the en.xml log file 
-                instead of the XML file.
+                A common mistake is editing the en.xml log file instead of the
+                XML file.
               </para>
             </note>
           </listitem>
