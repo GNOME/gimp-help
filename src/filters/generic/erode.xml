@@ -12,6 +12,7 @@
 -->
 <sect2 id="plug-in-erode">
   <title>Erode</title>
+
   <indexterm>
     <primary>Filters</primary>
     <secondary>Generic</secondary>
@@ -24,7 +25,7 @@
   <sect3>
     <title>Overview</title>
     <figure>
-      <title>Erode noise</title>
+      <title>Applying example for the Erode filter</title>
       <mediaobject>
         <imageobject>
           <imagedata format="JPG"
@@ -40,36 +41,58 @@
             fileref="images/filters/examples/generic-taj-erode.jpg"/>
         </imageobject>
         <caption>
-          <para>Filter <quote>Erode noise</quote> applied</para>
+          <para>Filter <quote>Erode</quote> applied</para>
         </caption>
       </mediaobject>
     </figure>
     <para>
-      This filter widens and enhances bright areas of the active layer or
+      This filter widens and enhances dark areas of the active layer or
       selection.
     </para>
     <para>
       For every image pixel, it brings the pixel Value (luminosity) into line
-      with the upper value (the brightest) of the 8 neighbouring pixels (3x3
-      matrix). So, a bright pixel is added around bright areas. An isolated
-      pixel on a brighter background will be deleted. A larger bright area
-      will dilate by one pixel in all directions.
+      with the lowest Value (the darkest) of the 8 neighbouring pixels (3x3
+      matrix). So, a dark pixel is added around dark areas. An isolated pixel
+      on a brighter background will be changed to a big <quote>pixel</quote>,
+      composed of 9 pixels, and that will create some noise in the image.
+    </para>
+    <mediaobject>
+      <imageobject>
+        <imagedata format="PNG"
+          fileref="images/filters/generic/erode-pixel.png"/>
+      </imageobject>
+    </mediaobject>
+    <para>
+      In this image, the studied pixel has a red border and the studied
+      matrix has a green border. I hope you have understood how to go on
+      with the process and get a 3x3 pixel block: when the <quote>I</quote>
+      pixel is inside the green border, the studied pixel turns to black.
     </para>
     <para>
-      On complex images, bright areas are widened and enhanced the same, and
-      somewhat pixellated.
+      A larger dark area will expand by one pixel in all directions:
+    </para>
+    <mediaobject>
+      <imageobject>
+        <imagedata format="PNG"
+          fileref="images/filters/generic/erode-zone.png"/>
+      </imageobject>
+    </mediaobject>
+    <para>
+      The filter was applied 3 times.
     </para>
     <para>
-      On a solid background, this filter can delete noise:
-      <figure>
-        <title><quote>Erode noise</quote> example</title>
-        <mediaobject>
-          <imageobject>
-            <imagedata format="PNG"
-              fileref="images/filters/examples/erode-noise.png"/>
-          </imageobject>
-        </mediaobject>
-      </figure>
+      On more complex images, dark areas are widened and enhanced the same,
+      and somewhat pixellated. Here, the filter was applied 3 times:
+    </para>
+    <mediaobject>
+      <imageobject>
+        <imagedata format="PNG"
+          fileref="images/filters/generic/erode-milord.png"/>
+      </imageobject>
+    </mediaobject>
+    <para>
+      Of course, if background is darker than foreground, it will cover the
+      whole image.
     </para>
   </sect3>
 
@@ -83,5 +106,18 @@
         <guimenuitem>Erode</guimenuitem>
       </menuchoice>.
     </para>
+  </sect3>
+
+  <sect3>
+    <title>Examples</title>
+    <figure>
+      <title>Erode text</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata format="PNG"
+            fileref="images/filters/examples/erode-text.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
   </sect3>
 </sect2>

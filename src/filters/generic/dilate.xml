@@ -11,7 +11,6 @@
 -->
 <sect2 id="plug-in-dilate">
   <title>Dilate</title>
-
   <indexterm>
     <primary>Filters</primary>
     <secondary>Generic</secondary>
@@ -24,7 +23,7 @@
   <sect3>
     <title>Overview</title>
     <figure>
-      <title>Applying example for the Dilate filter</title>
+      <title>Dilate</title>
       <mediaobject>
         <imageobject>
           <imagedata format="JPG"
@@ -45,53 +44,31 @@
       </mediaobject>
     </figure>
     <para>
-      This filter widens and enhances dark areas of the active layer or
+      This filter widens and enhances bright areas of the active layer or
       selection.
     </para>
     <para>
       For every image pixel, it brings the pixel Value (luminosity) into line
-      with the lowest Value (the darkest) of the 8 neighbouring pixels (3x3
-      matrix). So, a dark pixel is added around dark areas. An isolated pixel
-      on a brighter background will be changed to a big <quote>pixel</quote>,
-      composed of 9 pixels, and that will create some noise in the image.
-    </para>
-    <mediaobject>
-      <imageobject>
-        <imagedata format="PNG"
-          fileref="images/filters/generic/dilate-pixel.png"/>
-      </imageobject>
-    </mediaobject>
-    <para>
-      In this image, the studied pixel has a red border and the studied
-      matrix has a green border. I hope you have understood how to go on
-      with the process and get a 3x3 pixel block: when the <quote>I</quote>
-      pixel is inside the green border, the studied pixel turns to black.
+      with the upper value (the brightest) of the 8 neighbouring pixels (3x3
+      matrix). So, a bright pixel is added around bright areas. An isolated
+      pixel on a brighter background will be deleted. A larger bright area
+      will dilate by one pixel in all directions.
     </para>
     <para>
-      A larger dark area will dilate by one pixel in all directions:
-    </para>
-    <mediaobject>
-      <imageobject>
-        <imagedata format="PNG"
-          fileref="images/filters/generic/dilate-zone.png"/>
-      </imageobject>
-    </mediaobject>
-    <para>
-      The filter was applied 3 times.
+      On complex images, bright areas are widened and enhanced the same, and
+      somewhat pixellated.
     </para>
     <para>
-      On more complex images, dark areas are widened and enhanced the same,
-      and somewhat pixellated. Here, the filter was applied 3 times:
-    </para>
-    <mediaobject>
-      <imageobject>
-        <imagedata format="PNG"
-          fileref="images/filters/generic/dilate-milord.png"/>
-      </imageobject>
-    </mediaobject>
-    <para>
-      Of course, if background is darker than foreground, it will cover the
-      whole image.
+      On a solid background, this filter can delete noise:
+      <figure>
+        <title><quote>Dilate</quote> example</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata format="PNG"
+              fileref="images/filters/examples/dilate-noise-removal.png"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
     </para>
   </sect3>
 
@@ -109,15 +86,6 @@
 
   <sect3>
     <title>Examples</title>
-    <figure>
-      <title>Dilate text</title>
-      <mediaobject>
-        <imageobject>
-          <imagedata format="PNG"
-            fileref="images/filters/examples/dilate-text.png"/>
-        </imageobject>
-      </mediaobject>
-    </figure>
     <figure>
       <title>Dilate neon effect</title>
       <mediaobject>
