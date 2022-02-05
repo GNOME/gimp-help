@@ -60,7 +60,7 @@
       ru:Russian
       sv:Swedish
       zh_CN:Chinese
-      pt_BR:Brasilian
+      pt_BR:Brazilian
       fi:Finnish
       da:Danish
       el:Greek
