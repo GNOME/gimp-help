@@ -18,8 +18,7 @@ called `gimp-help-2-10`.
 3. [Documentation issues](#documentation-issues)
 4. [Creating a Release](#creating-a-release)
 5. [Updating supported languages](#updating-supported-languages)
-6. [ODF Files](#odf-files)
-7. [History of the gimp-help module](#history-of-the-gimp-help-module)
+6. [History of the gimp-help module](#history-of-the-gimp-help-module)
 
 
 ## Published manuals
@@ -223,32 +222,6 @@ of languages needs to be updated in the following files:
     - Update vocab
   - [tools/get_po_status.pl](tools/get_po_status.pl)
     - Update my %Languages
-
-
-## ODF Files
-
-**Note:** this section needs to be updated and info about creating PDF files
-should probably be added too.
-
-You need docbook2odf installed to create ODF files. Although the
-transformation process is very slow (because every picture is copied to
-a temp directory), you can start the transformation by typing:
-
-    make odf
-
-Hint: Set the ALL_LINGUAS environment variable to create ODF files only
-for a particular language.
-Docbook2ODF can be obtained from the following website:
-
-    http://open.comsultia.com/docbook2odf/
-
-HINT: If you get an error opening the created ODT files, open
-docbook2odf (probably installed in /usr/bin/) in a text editor.
-Uncomment the line:
-
-    #use encoding 'utf-8';
-
-and rerun 'make odf'.
 
 
 ## History of the gimp-help module

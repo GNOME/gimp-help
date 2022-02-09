@@ -53,8 +53,6 @@ MSGMERGEFLAGS = --quiet --width=$(MSGWIDTH)
 
 DBLATEX          = dblatex
 DBLATEXFLAGS     = --verbose
-DOCBOOK2ODF      = docbook2odf
-DOCBOOK2ODFFLAGS =
 
 SED = sed
 
@@ -741,43 +739,6 @@ endif
 
 
 ########################################################################
-####            Make ODF files:  XML --> ODF                        ####
-########################################################################
-
-ifneq ($(DOCBOOK2ODF),)
-
-odf: $(foreach lang,$(LANGUAGES),odf-$(lang)) ;
-odf-%: odf/%/gimp.odt ;
-
-# TODO?: images
-odf/%/gimp.odt: xml/%/gimp-alldocs.xml xml/%/images
-	$(cmd) if test -f odf/%.odt; then rm -f odf/%.odt; fi
-	$(cmd) test -d odf/$* || $(mkdir_p) odf/$*
-	$(msg) "*** Making ODF ($*) ..."
-	$(cmd) $(DOCBOOK2ODF) $(DOCBOOK2ODFFLAGS) \
-	    --debug -v \
-	    --output-dir=`pwd` \
-	    --output-file=$@ \
-	    $<
-
-# make temporary XML source file with all Xincludes resolved
-# TODO: find out how to avoid this
-xml/%/gimp-alldocs.xml: xml/%/gimp.xml
-	$(msg) "*** Merging XML ..."
-	$(cmd) $(XMLLINT) $(XMLLINTFLAGS) --xinclude --output $@ $<
-
-.PRECIOUS: odf/%/gimp.odt
-
-else
-
-odf $(foreach lang,$(LANGUAGES),odf-$(lang)):
-	@echo "*** Cannot build ODFs because DOCBOOK2ODF was not defined ***"
-	@exit 69
-
-endif
-
-
-########################################################################
 ####            Make language-specific HTML tarballs                ####
 ########################################################################
 
@@ -824,7 +785,7 @@ $(tarball_prefix)-%.zip: $(tarball_prefix)-%.tar
 ########################################################################
 
 clean:
-	$(cmd) for dir in pot xml log html pdf odf; do \
+	$(cmd) for dir in pot xml log html pdf; do \
 		test -d $${dir} || continue; \
 		echo "Removing  $${dir} ..."; \
 		rm -rf $${dir}; \

@@ -139,18 +139,6 @@ DBLATEXFLAGS="--backend=xetex --style=db2latex --verbose"
 AC_SUBST(DBLATEXFLAGS)
 
 
-#  Search for docbook2odf
-
-AC_PATH_PROG(DOCBOOK2ODF, docbook2odf)
-if test -z "$DOCBOOK2ODF"; then
-  AC_MSG_NOTICE([cannot find docbook2odf(1), ODF generation disabled])
-fi
-
-AM_CONDITIONAL(HAVE_DOCBOOK2ODF, test -n "$DOCBOOK2ODF")
-DOCBOOK2ODFFLAGS=
-AC_SUBST(DOCBOOK2ODFFLAGS)
-
-
 #  Use our customized xml2po
 
 AM_PATH_PYTHON3(python3_required_version, libxml2, ,)

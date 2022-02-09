@@ -45,7 +45,6 @@ DOC_LINGUAS = $(LINGUAS)
 ## MSGFMT, MSGFMTFLAGS
 ## MSGMERGE, MSGMERGEFLAGS
 ## DBLATEX, DBLATEXFLAGS
-## DOCBOOK2ODF, DOCBOOK2ODFFLAGS
 
 # HIDE FROM AUTOMAKE #ifneq ($(srcdir),$(builddir))
 # HIDE FROM AUTOMAKE #XSLTFLAGS += --path $(builddir)
@@ -791,46 +790,6 @@ endif
 
 
 ########################################################################
-####            Make ODF files:  XML --> ODF                        ####
-########################################################################
-if HAVE_DOCBOOK2ODF
-
-odf: $(foreach lang,$(LANGUAGES),odf-$(lang)) ;
-odf-%: odf/%/gimp.odt ;
-
-# TODO: images; prerequisites
-odf/%/gimp.odt: xml/%/gimp-alldocs.xml xml/%/images
-	$(cmd) if test -f odf/%.odt; then rm -f odf/%.odt; fi
-	$(cmd) test -d odf/$* || $(MKDIR_P) odf/$*
-	$(msg) "*** Making ODF ($*) ..."
-	$(cmd) $(DOCBOOK2ODF) $(DOCBOOK2ODFFLAGS) \
-	    --debug -v \
-	    --output-dir=`pwd` \
-	    --output-file=$@ \
-	    $<
-
-if HAVE_XMLLINT
-# make temporary XML source file with all Xincludes resolved
-xml/%/gimp-alldocs.xml: xml/%/gimp.xml
-	$(XMLLINT) $(XMLLINTFLAGS) --xinclude --output $@ $<
-else
-# TODO: use xsltproc and a simple stylesheet?
-xml/%/gimp-alldocs.xml: xml/%/gimp.xml
-	@echo "*** WARNING: Cannot resolve xincludes ***"; \
-	echo  "*** because xmllint(1) was not found. ***"; \
-	cp -v $< $@
-endif
-
-else
-
-odf $(foreach lang,$(LANGUAGES),odf-$(lang)):
-	@echo "*** Cannot build ODFs because docbook2odf(1) was not found ***"
-	@exit 69
-
-endif
-
-
-########################################################################
 ####            Make language-specific HTML tarballs                ####
 ########################################################################
 
@@ -996,7 +955,6 @@ clean-local: mostlyclean-local
 # Like `clean-local', but may refrain from deleting a few files that people
 # normally don't want to recompile.
 mostlyclean-local:
-	$(cmd) rm -rf odf
 	$(cmd) rm -rf pdf
 	$(cmd) rm -rf xml
 	$(cmd) rm -rf pot
@@ -1057,7 +1015,6 @@ SUFFIXES =
 	xml/%/gimp.xml \
 	xml/%/images \
 	pdf/%/gimp.pdf \
-	odf/%/gimp.odt \
 	html/%/index.html \
 	html/%/gimp-xrefs.xml \
 	html/%/gimp-help.xml \
