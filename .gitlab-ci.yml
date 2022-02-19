@@ -6,6 +6,7 @@ stages:
 variables:
   INSTALL_DIR: "_install"
   INSTALL_PREFIX: "${CI_PROJECT_DIR}/${INSTALL_DIR}"
+  LINGUAS: "en nl"
 
 build-debian:
   stage: build
@@ -20,20 +21,26 @@ build-debian:
     - apt-get install -y --no-install-recommends
         automake
         build-essential
+        dblatex
         docbook-website
         docbook-xml
         docbook-xsl
+        fonts-freefont-otf
+        gettext
         pkg-config
         pngcrush
         pngnq
         python3
         python3-libxml2
+        texlive-fonts-recommended
+        texlive-lang-all
+        texlive-xetex
         xsltproc
   script:
     - mkdir _build
     - cd _build
     - ../autogen.sh --prefix=${INSTALL_PREFIX} --without-gimp
-    - make && make install
+    - make pdf-en && make install
     - mv ${INSTALL_PREFIX}/share/gimp/2.0/help/ ../www/
     - cd ../web
     - make
