@@ -23,6 +23,9 @@ build-debian:
         docbook-website
         docbook-xml
         docbook-xsl
+        gettext
+        librsvg2-2
+        librsvg2-bin
         pkg-config
         pngcrush
         pngnq
@@ -37,5 +40,7 @@ build-debian:
     - mv ${INSTALL_PREFIX}/share/gimp/2.0/help/ ../www/
     - cd ../web
     - make
-    - mv html/ ../html/
-  timeout: 2 hours
+    - mv /html/ ../html/
+    - cd ../_build
+    - find ./quickreference/pdf/ -name "*.pdf" -exec mv '{}' ../html/ \;
+  timeout: 2 hours 30 minutes
