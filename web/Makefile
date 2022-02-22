@@ -9,31 +9,32 @@ include depends.tabular
 
 autolayout.xml: layout.xml
 	@echo "-- Creating autolayout file"; \
-	$(PROC) --noout -o autolayout.xml $(AUTOLAYOUT) layout.xml 
+	$(PROC) --noout -o autolayout.xml $(AUTOLAYOUT) layout.xml
 	$(MAKE) depends
 
 
 dirs: autolayout.xml
 	@echo "-- Creating directories"; \
-	mkdir -p html;
-	if ! test -e html/Layout; then \
-	  mkdir html/Layout && cp -r layout/* html/Layout; \
+	mkdir -p $(BUILD_DIR)/html;
+	@if ! test -e $(BUILD_DIR)/html/Layout; then \
+	  mkdir $(BUILD_DIR)/html/Layout && cp -r layout/* $(BUILD_DIR)/html/Layout; \
 	fi
 
 %.html: autolayout.xml
 	@echo "-- Building " $@; \
 	$(PROC) $(STYLEDIR)/createHTML.xsl $(filter-out autolayout.xml, $^) $(TIDY) > $@
-	
-built: website
-	mv *.html html	
 
-style: website 
+built: website
+	@echo "-- Copying html to $(BUILD_DIR)/html/"; \
+	mv *.html $(BUILD_DIR)/html/
+
+style: website
 	@echo "-- Copying stylesheet"; \
-	cp style.css html/
+	cp style.css $(BUILD_DIR)/html/
 
 clean: Makefile
 	@echo "-- Cleaning html and autolayout"
-	@rm -rf html; \
+	@rm -rf $(BUILD_DIR)/html; \
 	rm -f autolayout.xml;\
 
 depends: autolayout.xml
@@ -42,4 +43,3 @@ depends: autolayout.xml
 depends.tabular: layout.xml
 	touch $@
 	$(MAKE) depends
-
