@@ -65,6 +65,16 @@ svg/gimp-keys-%.svg: xml/gimp-keys-%.xml stylesheets/keys-svg.xsl
 
 svg: $(foreach lang,$(QUICKREFERENCE_LINGUAS),svg/gimp-keys-$(lang).svg)
 
+SVG2PDF = rsvg-convert
+SVG2PDF_FLAGS = -a -f Pdf
+
+pdf/gimp-keys-%.pdf: svg/gimp-keys-%.svg
+	@$(MKDIR_P) pdf
+	@if test -f pdf/%.pdf; then rm -f pdf/%.pdf; fi
+	@echo "*** Making Quickreference PDF ($*) ..."
+	@$(SVG2PDF) $(SVG2PDF_FLAGS) -o $@ $<
+
+pdf-local: $(foreach lang,$(QUICKREFERENCE_LINGUAS),pdf/gimp-keys-$(lang).pdf)
 docbook/gimp-keys-%.xml: xml/gimp-keys-%.xml stylesheets/keys-docbook.xsl
 	$(MKDIR_P) docbook
 	$(XSLTPROC) \
@@ -74,13 +84,15 @@ docbook/gimp-keys-%.xml: xml/gimp-keys-%.xml stylesheets/keys-docbook.xsl
 
 docbook: $(foreach lang,$(QUICKREFERENCE_LINGUAS),docbook/gimp-keys-$(lang).xml)
 
-all-local: svg docbook
+all-local: svg pdf-local docbook
 
 clean-local:
-	rm -rf docbook
-	rm -rf svg
-	rm -rf xml
-	rm -f .xml2po.mo
+	@echo "*** Cleaning up ..."
+	@rm -rf docbook
+	@rm -rf pdf
+	@rm -rf svg
+	@rm -rf xml
+	@rm -f .xml2po.mo
 
 .DELETE_ON_ERROR:
 
