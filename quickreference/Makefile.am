@@ -27,7 +27,7 @@ COMPENDIUM = Compendium.po
 
 $(srcdir)/po/gimp-keys.pot: $(srcdir)/gimp-keys.xml
 	@echo Making $@; \
-	@$(XML2PO) $(XML2POFLAGS) $< | $(MSGUNIQ) --width=$(MSGWIDTH) - > $@
+	$(XML2PO) $(XML2POFLAGS) $< | $(MSGUNIQ) --width=$(MSGWIDTH) - > $@
 
 po/%.po: $(srcdir)/po/gimp-keys.pot
 	@echo Making $@; \
@@ -38,7 +38,7 @@ po/%.po: $(srcdir)/po/gimp-keys.pot
 		$(MSGINIT) $(MSGINITFLAGS) --input=$< --locale=$* --output=$@; \
 	fi; \
 	$(MSGMERGE) $(MSGMERGEFLAGS) $${with_compendium} --update $@ $<; \
-	@rm -f $@~
+	rm -f $@~
 
 .PHONY: pot po-% po
 pot: po/gimp-keys.pot ;
