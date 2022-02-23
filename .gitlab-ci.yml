@@ -6,6 +6,7 @@ stages:
 variables:
   INSTALL_DIR: "_install"
   INSTALL_PREFIX: "${CI_PROJECT_DIR}/${INSTALL_DIR}"
+  LINGUAS: "en"
 
 build-debian:
   stage: build
@@ -23,6 +24,9 @@ build-debian:
         docbook-website
         docbook-xml
         docbook-xsl
+        gettext
+        librsvg2-2
+        librsvg2-bin
         pkg-config
         pngcrush
         pngnq
@@ -37,5 +41,7 @@ build-debian:
     - mv ${INSTALL_PREFIX}/share/gimp/2.0/help/ ../www/
     - cd ../web
     - BUILD_DIR='.' make
-    - mv html/ ../html/
-  timeout: 2 hours
+    - mv /html/ ../html/
+    - cd ../_build
+    - mv /quickreference/pdf/ ../html/2.10/pdf/
+  timeout: 2 hours 30 minutes
