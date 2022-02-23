@@ -29,7 +29,7 @@ $(srcdir)/po/gimp-keys.pot: $(srcdir)/gimp-keys.xml
 	@echo Making $@; \
 	$(XML2PO) $(XML2POFLAGS) $< | $(MSGUNIQ) --width=$(MSGWIDTH) - > $@
 
-po/%.po: $(srcdir)/po/gimp-keys.pot
+$(srcdir)/po/%.po: $(srcdir)/po/gimp-keys.pot
 	@echo Making $@; \
 	if [ -f $(top_srcdir)/po/$*/$(COMPENDIUM) ]; then \
 		with_compendium="--compendium=$(top_srcdir)/po/$*/$(COMPENDIUM)"; \
@@ -41,18 +41,18 @@ po/%.po: $(srcdir)/po/gimp-keys.pot
 	rm -f $@~
 
 .PHONY: pot po-% po
-pot: po/gimp-keys.pot ;
-po-%: po/%.po ;
+pot: $(srcdir)/po/gimp-keys.pot ;
+po-%: $(srcdir)/po/%.po ;
 po: $(foreach lang,$(filter-out en,$(QUICKREFERENCE_LINGUAS)),po-$(lang)) ;
 
-xml/gimp-keys-%.xml: $(srcdir)/po/%.po gimp-keys.xml
+xml/gimp-keys-%.xml: $(srcdir)/po/%.po $(srcdir)/gimp-keys.xml
 	@$(MKDIR_P) xml
 	@$(XML2PO) -p $< $(srcdir)/gimp-keys.xml > $@
 
 # English is a special case
 #
 .INTERMEDIATE: xml/gimp-keys-en.xml
-xml/gimp-keys-en.xml: gimp-keys.xml
+xml/gimp-keys-en.xml: $(srcdir)/gimp-keys.xml
 	@$(MKDIR_P) xml; \
 	cp $< $@
 
