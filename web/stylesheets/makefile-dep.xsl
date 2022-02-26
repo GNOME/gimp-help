@@ -15,6 +15,8 @@
   <xsl:apply-templates select="toc"/>
   <xsl:apply-templates select="notoc"/>
   <xsl:text>&#10;</xsl:text>
+  <xsl:text>website.xml: langstats.xml </xsl:text>
+  <xsl:text>&#10;&#10;</xsl:text>
   <xsl:text>distclean: clean
 &#9;rm -f </xsl:text>
   <xsl:text>depends.tabular</xsl:text>
