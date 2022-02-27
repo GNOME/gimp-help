@@ -84,7 +84,7 @@ class GetFolderStats(object):
             pct = 0
             if self.total_messages > 0:
                 pct = self.translated_messages / self.total_messages * 100
-            pct_round = round(pct)
+            pct_round = round(pct,1)
             if pct_round == 100 and self.translated_messages < self.total_messages:
                 pct_round = 99
             print(f"{self.lang_dir} - Total files: {self.total_files}, messages: {self.total_messages}, {pct_round}% done")
@@ -114,7 +114,7 @@ class WriteStats(object):
             langcode = stats.lang_dir
             percent  = 0
             if stats.total_messages > 0:
-                percent = int(stats.translated_messages / stats.total_messages * 100)
+                percent = stats.translated_messages / stats.total_messages * 100
             pct_round = round(percent)
 
             # Don't show it as 100% done until all messages are translated.
