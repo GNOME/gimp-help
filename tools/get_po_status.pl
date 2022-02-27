@@ -53,6 +53,7 @@ my $VERSION = 0.05;
 
 my %Languages = (
 	ca => "Catalan",
+	cs => "Czeski",
 	da => "Danish",
 	de => "German",
 	el => "Greek",
