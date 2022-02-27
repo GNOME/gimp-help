@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8\n"
-"POT-Creation-Date: 2011-01-30 17:43+0100\n"
+"POT-Creation-Date: 2022-02-27 14:52-0500\n"
 "PO-Revision-Date: 2010-04-25 16:12+0100\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: NORWEGIAN NYNORSK <none>\n"
@@ -41,12 +41,14 @@ msgid "Smooth Palette"
 msgstr "Palettutglatting"
 
 #: src/menus/colors/info/smooth_palette.xml:16(primary)
+#: src/menus/colors/info/export-histogram.xml:13(primary)
 #: src/menus/colors/info/ccanalyse.xml:18(primary)
 #: src/menus/colors/info/borderaverage.xml:23(primary)
 msgid "Colors"
 msgstr "Fargar"
 
 #: src/menus/colors/info/smooth_palette.xml:24(title)
+#: src/menus/colors/info/export-histogram.xml:21(title)
 #: src/menus/colors/info/ccanalyse.xml:26(title)
 #: src/menus/colors/info/borderaverage.xml:31(title)
 msgid "Overview"
@@ -78,6 +80,7 @@ msgstr ""
 "bruk med filteret <link linkend=\"plug-in-flame\">Flamme</link>."
 
 #: src/menus/colors/info/smooth_palette.xml:54(title)
+#: src/menus/colors/info/export-histogram.xml:62(title)
 #: src/menus/colors/info/ccanalyse.xml:57(title)
 #: src/menus/colors/info/borderaverage.xml:67(title)
 msgid "Activating the filter"
@@ -94,6 +97,7 @@ msgstr ""
 "guimenuitem></menuchoice>"
 
 #: src/menus/colors/info/smooth_palette.xml:66(title)
+#: src/menus/colors/info/export-histogram.xml:74(title)
 #: src/menus/colors/info/borderaverage.xml:79(title)
 msgid "Options"
 msgstr "Innstillingar"
@@ -138,6 +142,135 @@ msgid ""
 "\"/>."
 msgstr ""
 "Histogramdialogen er omtalt i <xref linkend=\"gimp-histogram-dialog\"/>."
+
+#: src/menus/colors/info/export-histogram.xml:10(title)
+#: src/menus/colors/info/export-histogram.xml:14(secondary)
+#: src/menus/colors/info/export-histogram.xml:17(primary)
+#, fuzzy
+msgid "Export Histogram"
+msgstr "Histogram"
+
+#: src/menus/colors/info/export-histogram.xml:22(para)
+msgid ""
+"Exports the image histogram to a text file, so it can be used by other "
+"programs and loaded into spreadsheets. The histogram is produced for the "
+"selected image area. Fully transparent pixels are not counted."
+msgstr ""
+
+#: src/menus/colors/info/export-histogram.xml:27(para)
+msgid ""
+"The resulting file is a CSV file (Comma Separated Values), which can be "
+"imported directly in most spreadsheet programs. The first row of the CSV "
+"file is a title row. One data row is generated for each \"Bucket\". Each "
+"pixel value can be in the range of 0 to 255, and will be included in one of "
+"the buckets depending on the bucket's range."
+msgstr ""
+
+#: src/menus/colors/info/export-histogram.xml:33(para)
+msgid ""
+"The first column is titled \"Range Start\" and contains the starting value "
+"of the bucket. The following columns contain the values for different "
+"channels. Which channels will be included depends on the image type. The "
+"meaning of the values in each of the channel columns, depends on the "
+"<guilabel>Output Format</guilabel> option."
+msgstr ""
+
+#: src/menus/colors/info/export-histogram.xml:40(title)
+#, fuzzy
+msgid "Example of file exported by <quote>Export Histogram</quote>"
+msgstr "Eksempel på bruk av filteret"
+
+#: src/menus/colors/info/export-histogram.xml:41(screen)
+#, no-wrap
+msgid ""
+"\n"
+"Range start,   Value,   Red,   Green,   Blue\n"
+"          0,     0.0,   0.0,   486.0,    0.0\n"
+"          1,     0.0,   0.0,   300.0,    0.0\n"
+"          2,     0.0,   0.0,   336.0,    0.0\n"
+"          3,     0.0,   0.0,   399.0,    0.0\n"
+"          4,     0.0,   0.0,   510.0,    0.0\n"
+"          ....\n"
+"      "
+msgstr ""
+
+#: src/menus/colors/info/export-histogram.xml:51(para)
+msgid ""
+"The example file above was generated for an RGB image, using the "
+"<guilabel>Pixel count</guilabel> output format, and a <guilabel>Bucket Size</"
+"guilabel> of 1. The row starting with the number 3 describes the fourth "
+"bucket and will include all pixels from value 3 up to (but not including) "
+"value 4. The number 399.0 in that row can then be interpreted as \"There are "
+"399 pixels that have a Green value of 3\"."
+msgstr ""
+
+#: src/menus/colors/info/export-histogram.xml:63(para)
+#, fuzzy
+msgid ""
+"This filter is found in the image window menu under "
+"<menuchoice><guimenu>Colors</guimenu><guimenu>Info</"
+"guimenu><guimenuitem>Export Histogram</guimenuitem></menuchoice>."
+msgstr ""
+"Du har tilgang til filteret frå biletmenyen via <menuchoice><guimenu>Fargar</"
+"guimenu><guisubmenu>Info</guisubmenu><guimenuitem>Kantgjennomsnitt</"
+"guimenuitem></menuchoice>"
+
+#: src/menus/colors/info/export-histogram.xml:77(term)
+#, fuzzy
+msgid "Histogram File"
+msgstr "Histogram"
+
+#: src/menus/colors/info/export-histogram.xml:79(para)
+msgid "The file into which the histogram will be exported."
+msgstr ""
+
+#: src/menus/colors/info/export-histogram.xml:85(term)
+#, fuzzy
+msgid "Bucket Size"
+msgstr "Kantbreidde"
+
+#: src/menus/colors/info/export-histogram.xml:87(para)
+#, fuzzy
+msgid ""
+"The <guilabel>Bucket Size</guilabel> lets you control the number of values "
+"considered as similar and counted in the same <quote>bucket</quote>. A "
+"higher bucket size will produce less buckets, and thus less rows in the "
+"exported file. For example, a Bucket Size of 1 will produced 256 buckets, "
+"whereas a bucket size of 16 will produce 16 buckets."
+msgstr ""
+"Filteret samlar fargane i større eller mindre «bøtter». Store bøtter bettyr "
+"at filteret samlar mange liknande fargar i ei bøtte. Små bøtter betyr at "
+"filteret får mange bøtter til rådvelde, og kan såleis sortera fargane meir "
+"nøyaktig. I <guilabel>bøttestorleik</guilabel> bestemmer du kor store desse "
+"bøttene skal vere. Små bøtter gir eit meir nøyaktig resultat, men dette "
+"treng likevel ikkje vere det same som eit betre resultat. Sjå eksemplet "
+"nedanfor."
+
+#: src/menus/colors/info/export-histogram.xml:97(term)
+#, fuzzy
+msgid "Sample Average"
+msgstr "Kantgjennomsnitt"
+
+#: src/menus/colors/info/export-histogram.xml:99(para)
+msgid ""
+"If <guilabel>Sample Average</guilabel> is activated, the histogram will be "
+"generated for an image obtained by merging all visible layers. Otherwise, "
+"the histogram will only consider the current layer."
+msgstr ""
+
+#: src/menus/colors/info/export-histogram.xml:107(term)
+msgid "Output Format"
+msgstr ""
+
+#: src/menus/colors/info/export-histogram.xml:109(para)
+msgid ""
+"If the <guilabel>Pixel count</guilabel> option is chosen, the values in the "
+"generated file will reflect the amount of pixels in each bucket. If "
+"<guilabel>Normalized</guilabel> is chosen, the values will be the amount of "
+"pixels in the bucket divided by the total amount of pixels. The "
+"<guilabel>Percent</guilabel> option is similar to <guilabel>Normalized</"
+"guilabel>, but the values are formatted as percents."
+msgstr ""
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -368,8 +501,8 @@ msgstr ""
 "fargeverdiane kan vere frå 0 til 63. I den grøne bøtta kan såleis "
 "raudkanalen vere mellom 0 og 63, grønkanalen mellom 192 og 255 og blåkanalen "
 "mellom 0 og 63. Resultatfargen er grøn (32,224,32). Dette er gjennomsnittet "
-"for grenseverdiane for kvar einskild kanal: (63 + 0)/2, (255+192)/2 , (63"
-"+0)/2. (Dersom du beherskar hex-notasjon, vil det faktisk bli meir "
+"for grenseverdiane for kvar einskild kanal: (63 + 0)/2, (255+192)/2 , "
+"(63+0)/2. (Dersom du beherskar hex-notasjon, vil det faktisk bli meir "
 "forståeleg om du skriv alt i hex)."
 
 #. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
