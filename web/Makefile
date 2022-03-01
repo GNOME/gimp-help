@@ -4,13 +4,13 @@ PCTPROC=$(TOOLSPATH)translated_percentage.py
 STYLEDIR=stylesheets
 AUTOLAYOUT=$(STYLEDIR)/autolayout.xsl
 STYLEOPT=
-HTMLIGNORE= autolayout.xml langstats.xml
+HTMLIGNORE= autolayout.xml langstats.xml qrstats.xml
 
-all:  langstats.xml dirs built style
+all:  langstats.xml qrstats.xml dirs built style
 
 include depends.tabular
 
-autolayout.xml: layout.xml langstats.xml
+autolayout.xml: layout.xml langstats.xml qrstats.xml
 	@echo "-- Creating autolayout file"; \
 	$(PROC) --noout -o autolayout.xml $(AUTOLAYOUT) layout.xml
 	$(MAKE) depends
@@ -18,12 +18,17 @@ autolayout.xml: layout.xml langstats.xml
 clean-langstats:
 # Make sure this gets rebuilt because the source po files are not under /web/
 # so we can't know when we need to update.
-	@echo "-- Deleting langstats.xml";
+	@echo "-- Deleting langstats.xml and qrstats.xml";
 	@rm -f langstats.xml;
+	@rm -f qrstats.xml;
 
 langstats.xml:
 	@echo "-- Updating translation percentages"; \
 	$(PCTPROC) -v -p ../po -o "langstats.xml"
+
+qrstats.xml:
+	@echo "-- Updating quickreference translation percentages"; \
+	$(PCTPROC) -v -q -p ../quickreference/po -o "qrstats.xml"
 
 dirs: autolayout.xml
 	@echo "-- Creating directories"; \
@@ -49,6 +54,7 @@ clean: Makefile
 	@rm -rf $(BUILD_DIR)/html; \
 	rm -f autolayout.xml;\
 	rm -f langstats.xml;\
+	rm -f qrstats.xml;\
 
 depends: autolayout.xml
 	$(PROC) $(STYLEDIR)/makefile-dep.xsl $< > depends.tabular
