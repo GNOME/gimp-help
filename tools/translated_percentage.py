@@ -31,8 +31,9 @@ import re
 VERSION = 0.1
 
 class GetStats(object):
-    def __init__(self, pofile):
+    def __init__(self, pofile, outfile):
         self.pofile = pofile
+        self.outfile= outfile
         self.percentage = 0
         #self.out = sys.stdout # todo: write to file maybe...
         self.out = sys.stderr
@@ -42,8 +43,9 @@ class GetStats(object):
         self.total        = 0
 
     def run(self):
-        #self.out.seek(0)
-        cmd = subprocess.Popen(["msgfmt", "--statistics", self.pofile],
+        # -o output is very picky on Windows
+        out_param = f"-o{self.outfile}"
+        cmd = subprocess.Popen(["msgfmt", "--statistics", out_param, self.pofile],
                                stdin=self.out, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         cmdout, cmderr = cmd.communicate()
         if cmd.returncode:
@@ -69,12 +71,12 @@ class GetFolderStats(object):
         self.total_messages = 0
         self.translated_messages = 0
 
-    def run(self, verbose):
+    def run(self, verbose, mofile):
         root_folder = os.path.join(self.base_folder, self.lang_dir)
         for root, dirs, files in os.walk(root_folder):
             for file in files:
                 filepath = os.path.join(root, file)
-                gs = GetStats(filepath)
+                gs = GetStats(filepath, mofile)
                 gs.run()
                 self.total_files += 1
                 self.total_messages += gs.total
@@ -88,6 +90,32 @@ class GetFolderStats(object):
             if pct_round == 100 and self.translated_messages < self.total_messages:
                 pct_round = 99
             print(f"{self.lang_dir} - Total files: {self.total_files}, messages: {self.total_messages}, {pct_round}% done")
+
+class GetQRStats(object):
+    def __init__(self, basefolder, lang):
+        self.base_folder = basefolder
+        self.lang = lang
+        self.total_files = 0
+        self.total_messages = 0
+        self.translated_messages = 0
+
+    def run(self, verbose, mofile):
+        pofile = self.lang + '.po'
+        filepath = os.path.join(self.base_folder, pofile)
+        gs = GetStats(filepath, mofile)
+        gs.run()
+        self.total_files += 1
+        self.total_messages += gs.total
+        self.translated_messages += gs.translated
+
+        if verbose:
+            pct = 0
+            if self.total_messages > 0:
+                pct = self.translated_messages / self.total_messages * 100
+            pct_round = round(pct,1)
+            if pct_round == 100 and self.translated_messages < self.total_messages:
+                pct_round = 99
+            print(f"{self.lang} - Messages: {self.total_messages}, {pct_round}% done")
 
 class CollectStats(object):
     def __init__(self):
@@ -109,9 +137,17 @@ class WriteStats(object):
         # add xml header
         f.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n")
 
+        basecode = "invalid"
+
         # add entities
         for stats in self.collected_stats.languages:
-            langcode = stats.lang_dir
+            if isinstance(stats, GetFolderStats):
+                langcode = stats.lang_dir
+                basecode = "langcode"
+            elif isinstance(stats, GetQRStats):
+                langcode = stats.lang
+                basecode = "langcodeqr"
+
             percent  = 0
             if stats.total_messages > 0:
                 percent = stats.translated_messages / stats.total_messages * 100
@@ -121,7 +157,7 @@ class WriteStats(object):
             if pct_round == 100 and stats.translated_messages < stats.total_messages:
                 pct_round = 99
 
-            entity = f"<!ENTITY gimphelp.langcode.{langcode} '{pct_round}' >\n"
+            entity = f"<!ENTITY gimphelp.{basecode}.{langcode} '{pct_round}' >\n"
             f.write(entity)
 
         # close file
@@ -139,14 +175,15 @@ def main(argv):
     verbose = False
     # One language per (sub) folder, or all languages in this folder
     lang_dirs = True
+    quick_ref = False
     # By default we expect to be started from /web/
     po_dir    = "../po"
     outfile   = "../web/langstats.xml"
 
     try:
-        opts, remaining_args = getopt.getopt(argv, "hvo:p:",
+        opts, remaining_args = getopt.getopt(argv, "hvqo:p:",
             [
-                "help", "verbose"
+                "help", "verbose", "podir", "output", "quickreference"
             ])
     except getopt.GetoptError as err:
         usage()
@@ -162,29 +199,48 @@ def main(argv):
             po_dir = arg
         elif opt in ('-o', '--output'):
             outfile = arg
+        elif opt in ('-q', '--quickreference'):
+            lang_dirs = False
+            quick_ref = True
 
 
     if verbose:
         printVersion()
 
+    path = po_dir
+    messages = "./output.mo"
+    languages = CollectStats()
+
     if lang_dirs:
-        path = po_dir
+        messages = "./pomessages.mo"
         list_langdirs = [f.name for f in os.scandir(path) if f.is_dir()]
-        languages = CollectStats()
         for dir in list_langdirs:
             gfs = GetFolderStats(path, dir)
-            gfs.run(verbose)
+            gfs.run(verbose, messages)
             languages.addStats(gfs)
-        writer = WriteStats(outfile, languages)
-        writer.run(verbose)
-
-        messages = "./messages.mo"
-        if os.path.isfile(messages):
-            os.remove(messages)
 
     else:
-        # todo!
-        pass
+        if quick_ref:
+            messages = "./qrmessages.mo"
+            # Handle quickreference po files that are in one folder and
+            # have the language code attached to the po filename
+            list_pofiles = [f.name for f in os.scandir(path) if f.is_file() and f.name.endswith('.po')]
+            languages = CollectStats()
+            for po in list_pofiles:
+                langcode = po[:-3]
+                gfs = GetQRStats(path, langcode)
+                gfs.run(verbose, messages)
+                languages.addStats(gfs)
+
+        else:
+            # In the future maybe also handle translations for our web pages?
+            pass
+
+    writer = WriteStats(outfile, languages)
+    writer.run(verbose)
+
+    if os.path.isfile(messages):
+        os.remove(messages)
 
     # if errors > 0:
     #     print(f"Total number of errors: {errors}")
@@ -198,10 +254,11 @@ def usage():
 usage: translated_percentage.py [options]
 
     options:
-        -o      --output        default: ../web/langstats.xml
-        -p      --podir         default: ../po
-        -v      --verbose       be more verbose
-        -h      --help          this help""")
+        -o      --output          default: ../web/langstats.xml
+        -p      --podir           default: ../po
+        -q      --quickreference  handle quickreference po files
+        -v      --verbose         be more verbose
+        -h      --help            this help""")
 
 
 if __name__ == "__main__":
