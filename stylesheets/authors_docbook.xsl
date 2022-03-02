@@ -152,10 +152,14 @@
   <!-- ============================================================= -->
     <xsl:param name="print.language">1</xsl:param>
     <member>
+      <author>
+        <personname>
+          <xsl:apply-templates match="." />
+        </personname>
+      </author>
       <phrase>
-        <xsl:apply-templates match="." />
         <xsl:if test="@lang != '' and $print.language != 0">
-          <xsl:text> (</xsl:text>
+          <xsl:text>(</xsl:text>
           <xsl:call-template name="lang.split">
             <xsl:with-param name="lang" select="@lang" />
           </xsl:call-template>
