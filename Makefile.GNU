@@ -199,7 +199,8 @@ xml2pot = $(XML2PO) $(XML2POFLAGS) --output='-' $(filter %.xml,$(1)) \
 #     $3 - output PO file
 pot2po = test -e $(3) || \
              $(MSGINIT) $(MSGINITFLAGS) --input $(1) --locale=$(2) --output=$(3); \
-         with_compendium="$(shell $(call get_compendium,$3))"; \
+         with_compendium="$(shell $(call get_compendium,$3)) \
+                          $(shell $(call use_gimp_po_files,$2))"; \
          $(MSGMERGE) $(MSGMERGEFLAGS) $${with_compendium} --update $(3) $(1) \
          && $(MSGFMT) $(MSGFMTFLAGS) $(3) || exit 70; \
          rm -f $(3)~ messages.mo messages.gmo
