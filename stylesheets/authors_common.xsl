@@ -44,10 +44,14 @@
          e.g. xx:Pidgin_English -->
     <xsl:variable name="languages">
       ca:Catalan
-      cz:Czech
+      cs:Czech
+      da:Danish
       de:German
+      el:Greek
       en:English
+      en_GB:British_English
       es:Spanish
+      fi:Finnish
       fr:French
       hr:Croatian
       it:Italian
@@ -55,15 +59,14 @@
       ko:Korean
       lt:Lithuanian
       nl:Dutch
-      no:Norwegian
+      nn:Norwegian_Nynorsk
       pl:Polish
+      pt_BR:Brazilian_Portuguese
+      ro:Romanian
       ru:Russian
+      sl:Slovenian
       sv:Swedish
-      zh_CN:Chinese
-      pt_BR:Brazilian
-      fi:Finnish
-      da:Danish
-      el:Greek
+      zh_CN:Simplified_Chinese
     </xsl:variable>
     <xsl:variable name="tail"
       select="substring-after($languages,concat($langid,':'))"/>
