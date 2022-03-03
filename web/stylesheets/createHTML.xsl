@@ -16,6 +16,7 @@
 
   <xsl:param name="output-root">html</xsl:param>
   <xsl:param name="collect.xref.targets">yes</xsl:param>
+  <xsl:param name="currentpage.marker"></xsl:param>
   <xsl:template name="home.navhead" />
   <xsl:template name="home.navhead.upperright" />
 
