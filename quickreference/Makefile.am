@@ -7,6 +7,8 @@ POT_FILES = $(srcdir)/po/gimp-keys.pot
 
 PO_FILES = $(foreach lang,$(filter-out en,$(QUICKREFERENCE_ALL_LINGUAS)),$(srcdir)/po/$(lang).po)
 
+PDF_FILES = $(foreach lang,$(QUICKREFERENCE_LINGUAS),gimp-keys-$(lang).pdf)
+
 XSL_FILES = \
 	stylesheets/keys-svg.xsl	\
 	stylesheets/keys-docbook.xsl
@@ -24,6 +26,9 @@ EXTRA_DIST = \
 	$(TEMPLATES)
 
 COMPENDIUM = Compendium.po
+
+# gimp-help directories
+helpdir  = $(gimpdatadir)/help
 
 $(srcdir)/po/gimp-keys.pot: $(srcdir)/gimp-keys.xml
 	@echo Making $@; \
@@ -88,6 +93,26 @@ docbook/gimp-keys-%.xml: xml/gimp-keys-%.xml stylesheets/keys-docbook.xsl
 docbook: $(foreach lang,$(QUICKREFERENCE_LINGUAS),docbook/gimp-keys-$(lang).xml)
 
 all-local: svg pdf-local docbook
+
+install-data-local:
+	@$(MKDIR_P) $(DESTDIR)$(helpdir)/pdf || exit 77
+	@echo "*** Installing Quickreference PDF's into: $(DESTDIR)$(helpdir)/pdf"
+	@cd pdf; \
+	for file in $(PDF_FILES); do \
+		cp -f $${file} $(DESTDIR)$(helpdir)/pdf/$* ; \
+	done; \
+	echo .
+
+uninstall-local:
+	@test -d $(DESTDIR)$(helpdir)/pdf || exit 70
+	@echo "*** Uninstalling PDF:"
+	@for file in $(PDF_FILES); do \
+		rm -rf $(DESTDIR)$(helpdir)/pdf/$${file}; \
+	done; \
+	echo .
+	@test -z "$(DESTDIR)" || cd $(DESTDIR) && \
+	rmdir $(helpdir)/pdf \
+	&& echo "Removed $(DESTDIR)${helpdir}/pdf"
 
 clean-local:
 	@echo "*** Cleaning up ..."
