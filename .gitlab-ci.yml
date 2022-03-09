@@ -6,7 +6,7 @@ stages:
 variables:
   INSTALL_DIR: "_install"
   INSTALL_PREFIX: "${CI_PROJECT_DIR}/${INSTALL_DIR}"
-  LINGUAS: "en"
+  LINGUAS: "en nl"
 
 build-debian:
   stage: build
@@ -14,8 +14,7 @@ build-debian:
     expire_in: 1 week
     when: always
     paths:
-    - www/
-    - html/
+    - dist/
   before_script:
     - apt-get update
     - apt-get install -y --no-install-recommends
@@ -34,15 +33,11 @@ build-debian:
         python3-libxml2
         xsltproc
   script:
+    - mkdir dist
     - mkdir _build
     - cd _build
     - ../autogen.sh --prefix=${INSTALL_PREFIX} --without-gimp
-    - make && make install
-    - mv ${INSTALL_PREFIX}/share/gimp/2.0/help/ ../www/
-    - cd ../web
-    - make
-    - mv /html/ ../html/
-    - mkdir ../html/2.10
-    - cd ../_build/quickreference
-    - mv ./pdf/ ../../html/2.10/pdf/
+    - make dist
+    - mv ./config.* ../dist/
+    - mv ./gimp-help-2.10.30.tar.* ../dist/
   timeout: 2 hours 30 minutes
