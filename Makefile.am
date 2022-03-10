@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS = quickreference
+SUBDIRS = quickreference m4macros
 
 # used for creating the ChangeLog
 LAST_RELEASE_TAG = GIMP_HELP_2_8_2
