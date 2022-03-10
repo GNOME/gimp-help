@@ -95,6 +95,13 @@ class Validate(object):
                 # Check that it's not a tag that closes itself and comment tags starting with <!
                 if textblock[end_tag-1] != '/' and textblock[0] != '!':
                     # check for closing tag first
+                    if len(tag) > 2 and tag[0] == ' ' and tag[1] == '/':
+                        # space not allowed when closing tag between < and /
+                        err += 1
+                        self.printErrorHeader(entry, self.log)
+                        tag = tag[1:]
+                        print(f"ERROR: No space allowed between '<' and '/' when closing a tag, in this case [{tag}].", file=self.log)
+
                     if len(tag) > 0 and tag[0] == '/':
                         if tag[1] == ' ':
                             # space not allowed when closing tag between / and tag
