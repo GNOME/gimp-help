@@ -125,12 +125,12 @@ class Validate(object):
                         if tag != lo_tag:
                             self.printErrorHeader(entry, self.log)
                             err += 1
-                            print(f"ERROR: Closing tag [{tag}] should be all lowercase.", file=self.log)
+                            print(f"ERROR: Closing tag [/{tag}] should be all lowercase.", file=self.log)
                             tag = lo_tag
                         if len(stack) == 0:
                             self.printErrorHeader(entry, self.log)
                             err += 1
-                            print(f"ERROR: Closing tag [{tag}] before opening tag.", file=self.log)
+                            print(f"ERROR: Closing tag [/{tag}] before opening tag.", file=self.log)
                         else:
                             if stack[-1] == tag:
                                 # Correct closing tag found, remove from stack
@@ -138,7 +138,7 @@ class Validate(object):
                             else:
                                 self.printErrorHeader(entry, self.log)
                                 err += 1
-                                print(f"ERROR: Found closing tag [{tag}], however we expected [{stack[0]}].", file=self.log)
+                                print(f"ERROR: Found closing tag [/{tag}], however we expected [{stack[0]}].", file=self.log)
                                 print(f"\tRemaining tags: {str(stack)}", file=self.log)
                                 if tag in stack:
                                     stack.remove(tag)
