@@ -154,7 +154,7 @@
     <member>
       <author>
         <personname>
-          <xsl:apply-templates match="." />
+          <othername><xsl:apply-templates match="." /></othername>
         </personname>
       </author>
       <phrase>
