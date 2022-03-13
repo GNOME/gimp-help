@@ -46,19 +46,20 @@ po-%: po/%.po ;
 po: $(foreach lang,$(filter-out en,$(QUICKREFERENCE_LINGUAS)),po-$(lang)) ;
 
 xml/gimp-keys-%.xml: $(srcdir)/po/%.po gimp-keys.xml
-	$(MKDIR_P) xml
-	$(XML2PO) -p $< $(srcdir)/gimp-keys.xml > $@
+	@$(MKDIR_P) xml
+	@$(XML2PO) -p $< $(srcdir)/gimp-keys.xml > $@
 
 # English is a special case
 #
 .INTERMEDIATE: xml/gimp-keys-en.xml
 xml/gimp-keys-en.xml: gimp-keys.xml
-	$(MKDIR_P) xml; \
+	@$(MKDIR_P) xml; \
 	cp $< $@
 
 svg/gimp-keys-%.svg: xml/gimp-keys-%.xml stylesheets/keys-svg.xsl
-	$(MKDIR_P) svg
-	$(XSLTPROC) \
+	@$(MKDIR_P) svg
+	@echo "*** Making Quickreference SVG ($*) ..."
+	@$(XSLTPROC) \
 	  $(srcdir)/stylesheets/keys-svg.xsl \
 	  $< \
 	  > $@
@@ -75,9 +76,11 @@ pdf/gimp-keys-%.pdf: svg/gimp-keys-%.svg
 	@$(SVG2PDF) $(SVG2PDF_FLAGS) -o $@ $<
 
 pdf-local: $(foreach lang,$(QUICKREFERENCE_LINGUAS),pdf/gimp-keys-$(lang).pdf)
+
 docbook/gimp-keys-%.xml: xml/gimp-keys-%.xml stylesheets/keys-docbook.xsl
-	$(MKDIR_P) docbook
-	$(XSLTPROC) \
+	@$(MKDIR_P) docbook
+	@echo "*** Making Quickreference docbook ($*) ..."
+	@$(XSLTPROC) \
 	  $(srcdir)/stylesheets/keys-docbook.xsl \
 	  $< \
 	  > $@
