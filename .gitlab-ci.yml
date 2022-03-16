@@ -3,6 +3,7 @@ image: debian:testing
 stages:
   - prepare
   - build
+  - distribution
 
 variables:
   INSTALL_DIR: "_install"
@@ -33,34 +34,73 @@ build-image:
     expire_in: 1 week
     when: always
     paths:
-    - www/
-    - html/
+    - "${HELP_DIR}"
+    - "${PDF_DIR}"
   script:
     - mkdir _build
     - cd _build
     - ../autogen.sh --prefix=${INSTALL_PREFIX} --without-gimp
     - make && make install
-    - mv ${INSTALL_PREFIX}/share/gimp/2.0/help/ ../www/
-    - cd ../web
-    - make
-    - mv /html/ ../html/
-    - mkdir ../html/2.10
-    - cd ../_build/quickreference
-    - mv ./pdf/ ../../html/2.10/pdf/
+    - mv ${INSTALL_PREFIX}/share/gimp/2.0/help/ ../${HELP_DIR}
+    - mv ../${HELP_DIR}/pdf/ ../${PDF_DIR}
   timeout: 2 hours 30 minutes
   needs: ["build-image"]
 
 build-debian-1:
   extends: .build-debian-base
   variables:
-    LINGUAS: "ca cs da de el en en_GB es"
+    LINGUAS: "ca cs da de el en en_GB"
+    HELP_DIR: "_html1"
+    PDF_DIR: "_pdf1"
 
 build-debian-2:
   extends: .build-debian-base
   variables:
-    LINGUAS: "fi fr hr it ja ko lt nl"
+    LINGUAS: "es fi fr hr it ja"
+    HELP_DIR: "_html2"
+    PDF_DIR: "_pdf2"
 
 build-debian-3:
   extends: .build-debian-base
   variables:
-    LINGUAS: "nn pt_BR ro ru sl sv zh_CN"
+    LINGUAS: "ko lt nl nn pt_BR"
+    HELP_DIR: "_html3"
+    PDF_DIR: "_pdf3"
+
+build-debian-4:
+  extends: .build-debian-base
+  variables:
+    LINGUAS: "ro ru sl sv zh_CN"
+    HELP_DIR: "_html4"
+    PDF_DIR: "_pdf4"
+
+www-debian:
+  stage: distribution
+  image: $CI_REGISTRY_IMAGE:build-debian-latest
+  dependencies:
+    - build-debian-1
+    - build-debian-2
+    - build-debian-3
+    - build-debian-4
+  artifacts:
+    expire_in: 1 week
+    when: always
+    paths:
+    - htdocs/
+  script:
+    # build the landing pages.
+    - cd web
+    - make
+    - cd ..
+    - mv /html/ htdocs/
+    # Move all PDF quickreferences
+    - mkdir -p htdocs/2.10/pdf
+    - mv _pdf1/*.pdf htdocs/2.10/pdf/
+    - mv _pdf2/*.pdf htdocs/2.10/pdf/
+    - mv _pdf3/*.pdf htdocs/2.10/pdf/
+    - mv _pdf4/*.pdf htdocs/2.10/pdf/
+    # Move all the help html files.
+    - mv _html1/* htdocs/2.10/
+    - mv _html2/* htdocs/2.10/
+    - mv _html3/* htdocs/2.10/
+    - mv _html4/* htdocs/2.10/
