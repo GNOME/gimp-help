@@ -7,7 +7,6 @@ stages:
 variables:
   INSTALL_DIR: "_install"
   INSTALL_PREFIX: "${CI_PROJECT_DIR}/${INSTALL_DIR}"
-  LINGUAS: "en ja"
 
 build-image:
   stage: prepare
@@ -27,7 +26,7 @@ build-image:
 
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:build-debian-latest --cache=true --cache-ttl=120h
 
-build-debian:
+.build-debian-base:
   stage: build
   image: $CI_REGISTRY_IMAGE:build-debian-latest
   artifacts:
@@ -50,3 +49,18 @@ build-debian:
     - mv ./pdf/ ../../html/2.99/pdf/
   timeout: 2 hours 30 minutes
   needs: ["build-image"]
+
+build-debian-1:
+  extends: .build-debian-base
+  variables:
+    LINGUAS: "ca cs da de el en en_GB es"
+
+build-debian-2:
+  extends: .build-debian-base
+  variables:
+    LINGUAS: "fi fr hr it ja ko lt nl"
+
+build-debian-3:
+  extends: .build-debian-base
+  variables:
+    LINGUAS: "nn pt_BR ro ru sl sv zh_CN"
