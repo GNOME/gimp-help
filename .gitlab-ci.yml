@@ -1,6 +1,7 @@
 image: debian:testing
 
 stages:
+  - prepare
   - build
 
 variables:
@@ -8,32 +9,33 @@ variables:
   INSTALL_PREFIX: "${CI_PROJECT_DIR}/${INSTALL_DIR}"
   LINGUAS: "en ja"
 
+build-image:
+  stage: prepare
+  variables:
+    GIT_STRATEGY: none
+  cache: {}
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
+  script:
+    - mkdir -p /kaniko/.docker
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
+    - echo "FROM debian:testing" > Dockerfile
+    - echo "RUN apt-get update" >> Dockerfile
+    - echo "RUN apt-get install -y --no-install-recommends \\" >> Dockerfile
+    - echo "automake build-essential docbook-website docbook-xml docbook-xsl fonts-noto-cjk gettext librsvg2-2 librsvg2-bin pkg-config pngcrush pngnq python3 python3-libxml2 xsltproc" >> Dockerfile
+
+    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:build-debian-latest --cache=true --cache-ttl=120h
+
 build-debian:
   stage: build
+  image: $CI_REGISTRY_IMAGE:build-debian-latest
   artifacts:
     expire_in: 1 week
     when: always
     paths:
     - www/
     - html/
-  before_script:
-    - apt-get update
-    - apt-get install -y --no-install-recommends
-        automake
-        build-essential
-        docbook-website
-        docbook-xml
-        docbook-xsl
-        fonts-noto-cjk
-        gettext
-        librsvg2-2
-        librsvg2-bin
-        pkg-config
-        pngcrush
-        pngnq
-        python3
-        python3-libxml2
-        xsltproc
   script:
     - mkdir _build
     - cd _build
@@ -47,3 +49,4 @@ build-debian:
     - cd ../_build/quickreference
     - mv ./pdf/ ../../html/2.10/pdf/
   timeout: 2 hours 30 minutes
+  needs: ["build-image"]
