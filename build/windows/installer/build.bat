@@ -1,11 +1,29 @@
 @echo off
 if "%1"=="" goto help
-for /a:d %l in (N:\gimp\output\2.10.12\x86_64-w64-mingw32\share\gimp\2.0\help\*) if not "%l"=="N:\gimp\output\2.10.12\x86_64-w64-mingw32\share\gimp\2.0\help\." .and. not "%l"=="N:\gimp\output\2.10.12\x86_64-w64-mingw32\share\gimp\2.0\help\.." (
-	echo %@name[%l]
-	start "" /LOW "D:\Program Files\Inno Setup 6 Dev\iscc.exe" "Gimp - Help.iss" /DVERSION="%1" /DLANG="%@name[%l]"
+
+if [%INNOPATH%]==[] (
+FOR /F "usebackq tokens=5,* skip=2" %%A IN (`REG QUERY "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Uninstall\Inno Setup 6_is1" /v "Inno Setup: App Path" /reg:32`) DO set INNOPATH=%%B
+) else (if [%INNOPATH%]==[] (
+FOR /F "usebackq tokens=5,* skip=2" %%A IN (`REG QUERY "HKLM\Software\Microsoft\Windows\CurrentVersion\Uninstall\Inno Setup 6_is1" /v "Inno Setup: App Path" /reg:32`) DO set INNOPATH=%%B
+))
+if not exist "%INNOPATH%\iscc.exe" goto noinno
+
+echo "%INNOPATH%"
+FOR /D %%l in (..\..\..\htdocs\2.10\*) DO if not "%l"=="..\..\..\htdocs\2.10\." (
+    if not "%l"=="..\..\..\htdocs\2.10\.." (
+            echo Creating installer for %%~nxl
+            "%INNOPATH%\iscc.exe" "gimp-help.iss" /DVERSION="%1" /DLANG="%%~nxl" /DHELPDIR="..\..\..\htdocs\2.10"
+    )
 )
 goto end
+
 :help
 echo Usage: %0 version
 goto end
+
+:noinno
+echo Inno Setup path could not be read from Registry - install Inno Setup or set INNOPATH environment variable pointing at it's
+echo install directory
+goto :end
+
 :end

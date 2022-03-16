@@ -94,6 +94,7 @@
 #elif LANG=='zh_CN'
 	#define LANGUAGE='ChineseSimplified'
 #endif
+
 [Setup]
 AppName={cm:GimpHelp} {#VERSION}
 AppID=GIMP-Help-2
@@ -101,13 +102,12 @@ AppVerName=GIMP Help {#VERSION}
 AppPublisherURL=https://www.gimp.org/
 AppSupportURL=https://www.gimp.org/
 AppUpdatesURL=https://www.gimp.org/
-DefaultDirName={pf}\GIMP Help 2
+DefaultDirName={autopf}\GIMP Help 2
 DirExistsWarning=no
 DisableProgramGroupPage=yes
 DisableDirPage=yes
 FlatComponentsList=yes
 WizardImageFile=big.bmp
-WizardImageBackColor=$ffffff
 WizardSmallImageFile=small.bmp
 WizardImageStretch=no
 CreateUninstallRegKey=no
@@ -125,27 +125,41 @@ OutputDir=_Output
 Compression=lzma/ultra
 InternalCompressLevel=ultra
 SolidCompression=yes
-OutputBaseFilename=gimp-help-2-{#VERSION}-{#LANG}-setup
+OutputBaseFilename=gimp-help-{#VERSION}-{#LANG}-setup
 #endif
-SignedUninstaller=yes
-SignedUninstallerDir=_Uninst
+;SignedUninstaller=yes
+;SignedUninstallerDir=_Uninst
 PrivilegesRequired=lowest
 PrivilegesRequiredOverridesAllowed=commandline
 
 [Languages]
-#if FileExists('D:\Program Files\Inno Setup 6 Dev\Languages\' + LANGUAGE + '.isl')
-	#if FileExists('help.'+LANG+'.isl')
-Name: "{#LANG}"; MessagesFile: "compiler:Languages\{#LANGUAGE}.isl,N:\gimp\compile\gimp\build\windows\installer\lang\en.setup.isl,N:\gimp\compile\gimp\build\windows\installer\lang\{#LANG}.setup.isl"
-	#else
-Name: "{#LANG}"; MessagesFile: "compiler:Languages\{#LANGUAGE}.isl,N:\gimp\compile\gimp\build\windows\installer\lang\en.setup.isl"
-	#endif
-#else
-Name: "en"; MessagesFile: "compiler:Default.isl,N:\gimp\compile\gimp\build\windows\installer\lang\en.setup.isl"
-#endif
+Name: "en"; MessagesFile: "compiler:Default.isl,lang\help.en.isl"
+Name: "ca"; MessagesFile: "compiler:Languages\Catalan.isl,lang\help.en.isl"
+Name: "cs"; MessagesFile: "compiler:Languages\Czech.isl,lang\help.en.isl"
+Name: "da"; MessagesFile: "compiler:Languages\Danish.isl,lang\help.en.isl"
+Name: "de"; MessagesFile: "compiler:Languages\German.isl,lang\help.en.isl"
+Name: "el"; MessagesFile: "compiler:Languages\Unofficial\Greek.isl,lang\help.en.isl"
+Name: "en_GB"; MessagesFile: "compiler:Languages\Unofficial\EnglishBritish.isl,lang\help.en.isl"
+Name: "es"; MessagesFile: "compiler:Languages\Spanish.isl,lang\help.en.isl"
+Name: "fi"; MessagesFile: "compiler:Languages\Finnish.isl,lang\help.en.isl"
+Name: "fr"; MessagesFile: "compiler:Languages\French.isl,lang\help.en.isl"
+Name: "hr"; MessagesFile: "compiler:Languages\Unofficial\Croatian.isl,lang\help.en.isl"
+Name: "it"; MessagesFile: "compiler:Languages\Italian.isl,lang\help.en.isl"
+Name: "ja"; MessagesFile: "compiler:Languages\Japanese.isl,lang\help.en.isl"
+Name: "ko"; MessagesFile: "compiler:Languages\Unofficial\Korean.isl,lang\help.en.isl"
+Name: "lt"; MessagesFile: "compiler:Languages\Unofficial\Lithuanian.isl,lang\help.en.isl"
+Name: "nl"; MessagesFile: "compiler:Languages\Dutch.isl,lang\help.en.isl"
+Name: "nn"; MessagesFile: "compiler:Languages\Unofficial\NorwegianNynorsk.isl,lang\help.en.isl"
+Name: "pt_BR"; MessagesFile: "compiler:Languages\BrazilianPortuguese.isl,lang\help.en.isl"
+Name: "ro"; MessagesFile: "compiler:Languages\Unofficial\Romanian.isl,lang\help.en.isl"
+Name: "ru"; MessagesFile: "compiler:Languages\Russian.isl,lang\help.en.isl"
+Name: "sl"; MessagesFile: "compiler:Languages\Slovenian.isl,lang\help.en.isl"
+Name: "sv"; MessagesFile: "compiler:Languages\Unofficial\Swedish.isl,lang\help.en.isl"
+Name: "zh_CN"; MessagesFile: "compiler:Languages\Unofficial\ChineseSimplified.isl,lang\help.en.isl"
 
 [Files]
 #ifndef nofiles
-Source: "N:\gimp\output\2.10.12\x86_64-w64-mingw32\share\gimp\2.0\help\{#LANG}\*.*"; DestDir: "{app}\share\gimp\2.0\help\{#LANG}"; Flags: recursesubdirs ignoreversion
+Source: "{#HELPDIR}\{#LANG}\*.*"; DestDir: "{app}\share\gimp\2.0\help\{#LANG}"; Flags: recursesubdirs ignoreversion
 #endif
 ;Source: "html\{#LANG}\*.jpg"; DestDir: "{app}\share\gimp\2.0\help\{#LANG}"; Flags: recursesubdirs nocompression
 ;Source: "html\{#LANG}\*.png"; DestDir: "{app}\share\gimp\2.0\help\{#LANG}"; Flags: recursesubdirs nocompression
