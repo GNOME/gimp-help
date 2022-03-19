@@ -24,25 +24,25 @@
 ;      distribution.                                                    ;
 ;.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.;
 
-#ifndef VERSION
-	#define VERSION='2.10.0'
-#endif
-#ifndef LANG
-	#define LANG='en'
-#endif
-
-;gimp version
-#define MIN_VERSION='2.10'
 
 ;#define dontcompress
 ;#define nofiles
 
-#ifndef VERSION
-	#error VERSION must be defined
+#ifndef MAJORVERSION
+	#error MAJORVERSION must be defined
+#endif
+#ifndef MINORVERSION
+	#error MINORVERSION must be defined
+#endif
+#ifndef MICROVERSION
+	#error MICROVERSION must be defined
 #endif
 #ifndef LANG
 	#error LANG must be defined
 #endif
+
+#define VERSION MAJORVERSION + '.' + MINORVERSION + '.' + MICROVERSION
+#define MIN_VERSION MAJORVERSION + '.' + MINORVERSION
 
 ;for picking up the correct Inno Setup language file
 #if LANG=='en'
@@ -97,12 +97,12 @@
 
 [Setup]
 AppName={cm:GimpHelp} {#VERSION}
-AppID=GIMP-Help-2
+AppID=GIMP-Help-{#MAJORVERSION}
 AppVerName=GIMP Help {#VERSION}
 AppPublisherURL=https://www.gimp.org/
 AppSupportURL=https://www.gimp.org/
 AppUpdatesURL=https://www.gimp.org/
-DefaultDirName={autopf}\GIMP Help 2
+DefaultDirName={autopf}\GIMP Help {#MAJORVERSION}
 DirExistsWarning=no
 DisableProgramGroupPage=yes
 DisableDirPage=yes
