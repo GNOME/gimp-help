@@ -14,8 +14,8 @@
               doctype-public="-//OASIS//DTD DocBook XML V4.3//EN"
               doctype-system="http://www.docbook.org/xml/4.3/docbookx.dtd"/>
 
-  <xsl:param name="roles">creator documenter artist technican</xsl:param>
-  <xsl:param name="print.roles.with.lang">creator documenter</xsl:param>
+  <xsl:param name="roles">documenter translator artist technican</xsl:param>
+  <xsl:param name="print.roles.with.lang">translator</xsl:param>
 
 
   <!-- ============================================================= -->
@@ -38,7 +38,7 @@
           </xsl:otherwise>
         </xsl:choose>
       </title>
-    
+
       <variablelist>
         <!-- create recursively "varlistentry" nodes -->
         <xsl:call-template name="print.listentry">
@@ -47,7 +47,7 @@
           </xsl:with-param>
         </xsl:call-template>
       </variablelist>
-    </sect1> 
+    </sect1>
   </xsl:template>
 
   <!-- ============================================================= -->
@@ -70,11 +70,11 @@
         <term>
           <xsl:variable name="name" select="concat($role,'s')"/>
           <xsl:choose>
-            <xsl:when test="$name = 'creators'">
-              <xsl:text>Content Writers</xsl:text>
-            </xsl:when>
             <xsl:when test="$name = 'documenters'">
-              <xsl:text>Proof Reading</xsl:text>
+              <xsl:text>Documentation</xsl:text>
+            </xsl:when>
+            <xsl:when test="$name = 'translators'">
+              <xsl:text>Translations</xsl:text>
             </xsl:when>
             <xsl:when test="$name = 'artists'">
               <xsl:text>Graphics, Stylesheets</xsl:text>
@@ -85,7 +85,7 @@
             <xsl:otherwise>
               <xsl:message>
                 <xsl:text>ERROR: Unknown role '</xsl:text>
-                <xsl:value-of select="$name"/> 
+                <xsl:value-of select="$name"/>
                 <xsl:text>' in "authors_docbook.xml".</xsl:text>
               </xsl:message>
               <xsl:text>FIXME</xsl:text>
