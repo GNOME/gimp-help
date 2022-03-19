@@ -11,8 +11,10 @@ if not exist "%INNOPATH%\iscc.exe" goto noinno
 echo "%INNOPATH%"
 FOR /D %%l in (..\..\..\htdocs\2.10\*) DO if not "%l"=="..\..\..\htdocs\2.10\." (
     if not "%l"=="..\..\..\htdocs\2.10\.." (
+        if not "%l"=="..\..\..\htdocs\2.10\pdf" (
             echo Creating installer for %%~nxl
             "%INNOPATH%\iscc.exe" "gimp-help.iss" /DVERSION="%1" /DLANG="%%~nxl" /DHELPDIR="..\..\..\htdocs\2.10"
+        )
     )
 )
 goto end
