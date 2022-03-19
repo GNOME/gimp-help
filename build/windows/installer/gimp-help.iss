@@ -46,53 +46,55 @@
 
 ;for picking up the correct Inno Setup language file
 #if LANG=='en'
-	#define LANGUAGE='English'
+	#define LANGFILE='Default.isl'
 #elif LANG=='ca'
-	#define LANGUAGE='Catalan'
+	#define LANGFILE='Languages\Catalan.isl'
+#elif LANG=='cs'
+	#define LANGFILE='Languages\Czech.isl'
 #elif LANG=='de'
-	#define LANGUAGE='German'
+	#define LANGFILE='Languages\German.isl'
 #elif LANG=='da'
-	#define LANGUAGE='Danish'
+	#define LANGFILE='Languages\Danish.isl'
 #elif LANG=='el'
-	#define LANGUAGE='Greek'
+	#define LANGFILE='Languages\Unofficial\Greek.isl'
 #elif LANG=='en_GB'
-	#define LANGUAGE='English'
+	#define LANGFILE='Languages\Unofficial\EnglishBritish.isl'
 #elif LANG=='es'
-	#define LANGUAGE='Spanish'
+	#define LANGFILE='Languages\Spanish.isl'
 #elif LANG=='fi'
-	#define LANGUAGE='Finnish'
+	#define LANGFILE='Languages\Finnish.isl'
 #elif LANG=='fr'
-	#define LANGUAGE='French'
+	#define LANGFILE='Languages\French.isl'
 #elif LANG=='hr'
-	#define LANGUAGE='Croatian'
+	#define LANGFILE='Languages\Unofficial\Croatian.isl'
 #elif LANG=='it'
-	#define LANGUAGE='Italian'
+	#define LANGFILE='Languages\Italian.isl'
 #elif LANG=='ja'
-	#define LANGUAGE='Japanese'
+	#define LANGFILE='Languages\Japanese.isl'
 #elif LANG=='ko'
-	#define LANGUAGE='Korean'
+	#define LANGFILE='Languages\Unofficial\Korean.isl'
 #elif LANG=='lt'
-	#define LANGUAGE='Lithuanian'
+	#define LANGFILE='Languages\Unofficial\Lithuanian.isl'
 #elif LANG=='nl'
-	#define LANGUAGE='Dutch'
+	#define LANGFILE='Languages\Dutch.isl'
 #elif LANG=='no'
-	#define LANGUAGE='Norwegian'
+	#define LANGFILE='Languages\Norwegian.isl'
 #elif LANG=='nn'
-	#define LANGUAGE='Norwegian Nynorsk'
+	#define LANGFILE='Languages\Unofficial\NorwegianNynorsk.isl'
 #elif LANG=='pl'
-	#define LANGUAGE='Polish'
+	#define LANGFILE='Languages\Polish.isl'
 #elif LANG=='pt_BR'
-	#define LANGUAGE='BrazilianPortuguese'
+	#define LANGFILE='Languages\BrazilianPortuguese.isl'
 #elif LANG=='ro'
-	#define LANGUAGE='Romanian'
+	#define LANGFILE='Languages\Unofficial\Romanian.isl'
 #elif LANG=='ru'
-	#define LANGUAGE='Russian'
+	#define LANGFILE='Languages\Russian.isl'
 #elif LANG=='sl'
-	#define LANGUAGE='Slovenian'
+	#define LANGFILE='Languages\Slovenian.isl'
 #elif LANG=='sv'
-	#define LANGUAGE='Swedish'
+	#define LANGFILE='Languages\Unofficial\Swedish.isl'
 #elif LANG=='zh_CN'
-	#define LANGUAGE='ChineseSimplified'
+	#define LANGFILE='Languages\Unofficial\ChineseSimplified.isl'
 #endif
 
 [Setup]
@@ -133,29 +135,7 @@ PrivilegesRequired=lowest
 PrivilegesRequiredOverridesAllowed=commandline
 
 [Languages]
-Name: "en"; MessagesFile: "compiler:Default.isl,lang\help.en.isl"
-Name: "ca"; MessagesFile: "compiler:Languages\Catalan.isl,lang\help.en.isl"
-Name: "cs"; MessagesFile: "compiler:Languages\Czech.isl,lang\help.en.isl"
-Name: "da"; MessagesFile: "compiler:Languages\Danish.isl,lang\help.en.isl"
-Name: "de"; MessagesFile: "compiler:Languages\German.isl,lang\help.en.isl"
-Name: "el"; MessagesFile: "compiler:Languages\Unofficial\Greek.isl,lang\help.en.isl"
-Name: "en_GB"; MessagesFile: "compiler:Languages\Unofficial\EnglishBritish.isl,lang\help.en.isl"
-Name: "es"; MessagesFile: "compiler:Languages\Spanish.isl,lang\help.en.isl"
-Name: "fi"; MessagesFile: "compiler:Languages\Finnish.isl,lang\help.en.isl"
-Name: "fr"; MessagesFile: "compiler:Languages\French.isl,lang\help.en.isl"
-Name: "hr"; MessagesFile: "compiler:Languages\Unofficial\Croatian.isl,lang\help.en.isl"
-Name: "it"; MessagesFile: "compiler:Languages\Italian.isl,lang\help.en.isl"
-Name: "ja"; MessagesFile: "compiler:Languages\Japanese.isl,lang\help.en.isl"
-Name: "ko"; MessagesFile: "compiler:Languages\Unofficial\Korean.isl,lang\help.en.isl"
-Name: "lt"; MessagesFile: "compiler:Languages\Unofficial\Lithuanian.isl,lang\help.en.isl"
-Name: "nl"; MessagesFile: "compiler:Languages\Dutch.isl,lang\help.en.isl"
-Name: "nn"; MessagesFile: "compiler:Languages\Unofficial\NorwegianNynorsk.isl,lang\help.en.isl"
-Name: "pt_BR"; MessagesFile: "compiler:Languages\BrazilianPortuguese.isl,lang\help.en.isl"
-Name: "ro"; MessagesFile: "compiler:Languages\Unofficial\Romanian.isl,lang\help.en.isl"
-Name: "ru"; MessagesFile: "compiler:Languages\Russian.isl,lang\help.en.isl"
-Name: "sl"; MessagesFile: "compiler:Languages\Slovenian.isl,lang\help.en.isl"
-Name: "sv"; MessagesFile: "compiler:Languages\Unofficial\Swedish.isl,lang\help.en.isl"
-Name: "zh_CN"; MessagesFile: "compiler:Languages\Unofficial\ChineseSimplified.isl,lang\help.en.isl"
+Name: "{#LANG}"; MessagesFile: "compiler:{#LANGFILE},lang\help.en.isl"
 
 [Files]
 #ifndef nofiles
