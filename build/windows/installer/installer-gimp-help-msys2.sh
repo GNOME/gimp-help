@@ -54,13 +54,20 @@ cd build/windows/installer
 ./build.bat ${MAJOR_VERSION} ${MINOR_VERSION} ${MICRO_VERSION}
 
 # Test if the installer was created and return success/failure.
-if [ -f "_Output/gimp-help-${MAJOR_VERSION}.${MINOR_VERSION}.${MICRO_VERSION}-en-setup.exe" ]; then
-  cd _Output/
-  # TODO: do all langs.
-  INSTALLER="gimp-${MAJOR_VERSION}.${MINOR_VERSION}.${MICRO_VERSION}-en-setup.exe"
-  sha256sum $INSTALLER > ${INSTALLER}.SHA256SUMS
-  sha512sum $INSTALLER > ${INSTALLER}.SHA512SUMS
-  exit 0
-else
-  exit 1
-fi
+MISSING_INSTALLER=0
+
+cd _Output/
+for dir in ../../../../po/*/
+do
+  code=`basename $dir`
+  INSTALLER="gimp-help-${MAJOR_VERSION}.${MINOR_VERSION}.${MICRO_VERSION}-$code-setup.exe"
+  if [ -f "$INSTALLER" ]; then
+    sha256sum $INSTALLER >> SHA256SUMS
+    sha512sum $INSTALLER >> SHA512SUMS
+  else
+    MISSING_INSTALLER=1
+    echo "Missing installer: $INSTALLER"
+  fi
+done
+
+exit $MISSING_INSTALLER
