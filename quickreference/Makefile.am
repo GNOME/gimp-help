@@ -72,7 +72,7 @@ svg/gimp-keys-%.svg: xml/gimp-keys-%.xml stylesheets/keys-svg.xsl
 svg: $(foreach lang,$(QUICKREFERENCE_LINGUAS),svg/gimp-keys-$(lang).svg)
 
 SVG2PDF = rsvg-convert
-SVG2PDF_FLAGS = -a -f Pdf
+SVG2PDF_FLAGS = -a -f pdf
 
 pdf/gimp-keys-%.pdf: svg/gimp-keys-%.svg
 	@$(MKDIR_P) pdf
