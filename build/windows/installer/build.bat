@@ -1,5 +1,7 @@
 @echo off
 if "%1"=="" goto help
+if "%2"=="" goto help
+if "%3"=="" goto help
 
 if [%INNOPATH%]==[] (
 FOR /F "usebackq tokens=5,* skip=2" %%A IN (`REG QUERY "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Uninstall\Inno Setup 6_is1" /v "Inno Setup: App Path" /reg:32`) DO set INNOPATH=%%B
@@ -13,7 +15,7 @@ FOR /D %%l in (..\..\..\htdocs\2.10\*) DO if not "%%l"=="..\..\..\htdocs\2.10\."
     if not "%%l"=="..\..\..\htdocs\2.10\.." (
         if not "%%l"=="..\..\..\htdocs\2.10\pdf" (
             echo Creating installer for %%~nxl
-            "%INNOPATH%\iscc.exe" "gimp-help.iss" /DVERSION="%1" /DLANG="%%~nxl" /DHELPDIR="..\..\..\htdocs\2.10"
+            "%INNOPATH%\iscc.exe" "gimp-help.iss" /DMAJORVERSION="%1" /DMINORVERSION="%2" /DMICROVERSION="%3" /DLANG="%%~nxl" /DHELPDIR="..\..\..\htdocs\2.10"
         )
     )
 )

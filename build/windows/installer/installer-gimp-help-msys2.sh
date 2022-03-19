@@ -51,7 +51,7 @@ MAJOR_VERSION=`grep 'm4_define(\[help_major_version' configure.ac |sed 's/m4_def
 MINOR_VERSION=`grep 'm4_define(\[help_minor_version' configure.ac |sed 's/m4_define(\[help_minor_version.*\[\([0-9]*\)\].*/\1/'`
 MICRO_VERSION=`grep 'm4_define(\[help_micro_version' configure.ac |sed 's/m4_define(\[help_micro_version.*\[\([0-9]*\)\].*/\1/'`
 cd build/windows/installer
-./build.bat ${MAJOR_VERSION}.${MINOR_VERSION}.${MICRO_VERSION}
+./build.bat ${MAJOR_VERSION} ${MINOR_VERSION} ${MICRO_VERSION}
 
 # Test if the installer was created and return success/failure.
 if [ -f "_Output/gimp-help-${MAJOR_VERSION}.${MINOR_VERSION}.${MICRO_VERSION}-en-setup.exe" ]; then
