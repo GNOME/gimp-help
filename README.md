@@ -48,22 +48,106 @@ on that website.
 
 If instead you would like to help out writing and improving the
 manual then this is the right place to start.
+
+First, it would be a good idea to subscribe to the gimp mailing lists,
+especially the developer and docs lists. That way you can keep
+up to date about the development of GIMP, see:
+https://www.gimp.org/mail_lists.html
+
+Most of the GIMP developers can also be reached on the #gimp
+IRC channel on irc.gimp.org. The best chances to talk are
+usually during European evening hours.
+
+If some of the instructions below are unclear, don't hesitate
+to ask in one of the places mentioned above.
+
+To get started, here is a checklist of things you should do:
+- If you don't have a Gnome GitLab account yet then create one
+  (you can use GitHub credentials to login), see:
+  https://gitlab.gnome.org/
+- Next go to https://gitlab.gnome.org/GNOME/gimp-help and
+  create your own fork by clicking on "Fork" on the top
+  right of the page.
+- Go to your fork at https://gitlab.gnome.org/YOUR_USERNAME/gimp-help
+- For relatively small and simple edits you can use the web-ide
+  if you don't want to set up a build environment on your computer.
+  + On the left under Repository click Files, then navigate to the
+    /src/ folder. Find the file you want to work on then click
+    WEB-IDE.
+  + I have no personal experience with this, so it's difficult
+    to give further details. Anyway, start editing your file
+    and when ready I assume you have to click save or finish
+    or similar.
+  + I assume this will create a new commit. If possible also
+    create a new branch for every change. Make sure you give
+    a descriptivev name to your commit. That way others can
+    understand what your change is about.
+  + Next you need to create a Merge Request (MR) for the commit.
+  + This MR will show up in the main gimp-help repository and
+    will be reviewed and evaluated.
+- For more complicated edits, reordering parts of the help,
+  or adding screenshots, you should clone the repository to
+  your computer and work on it locally.
+  + On your fork of gimp-help click the blue Clone button
+    and choose your preferred method.
+  + In case you are on Windows, it is strongly advised to
+    set up a MSYS2 environment, so that you can build and
+    test the gimp-help repository.
+  + TODO: Other OS's may need some setting up too. Add
+    details here as needed.
+  + TODO: Add details about setting up MSYS2 with required
+    packages for gimp-help.
+  + Try to build the English manual without any changes,
+    to make sure everything is set up correctly.
+  + Assuming you have cloned the git repo on your computer,
+    make a build dir inside or outside your tree depending
+    on your personal preference, then run from the build dir:
+    `../autogen.sh --prefix=${INSTALL_PREFIX} --without-gimp`,
+  + TODO: On Windows you may have to add `--build=mingw64`,
+    possibly also `DESTDIR=$BUILD_DIR $SRCDIR`.
+  + After running autogen once, you can use the following
+    command repeatedly for making the English manual:
+    `make html-en`.
+  + You can check the output in your build dir in the
+    /html/en/ folder.
+  + If that is working, select a file from the /src/
+    folder that you want to work on and start editing.
+  + When finished with a set of related edits, you
+    should first validate your changes to check that
+    you didn't make any mistakes in the docbook XML
+    format. The command for this is `make validate-en`.
+  + If everything is fine commit your changes with a
+    descriptive commit message. Make sure you always do
+    related changes in a separate branch.
+  + Push your changes to your fork on Gnome GitLab.
+  + Go to your online fork and click the Merge Request
+    button.
+- Make sure that you have notifications enabled, because you
+  may be asked to change certain things, or need to explain
+  why you made certain changes.
+- Don't expect a reply immediately. There is only a small
+  team working on this. A review can sometimes take weeks or
+  even months, although we try to get back to you sooner.
+- Some additional info can also be read in the manual, see
+  https://docs.gimp.org/2.10/en/gimp-contributing.html
+  (although some parts there need to be revised).
+
+TODO
+- Mention that make sometimes causes certain po translations
+  to get updated. They should not be committed together with
+  source documentation changes.
+- What packages are required and/or optional to build gimp-help.
+- Add style guide and add link to it here.
+
 Preferrably build the most up to date manual yourself or check
 the latest uploaded version at https://docs.gimp.org/2.10/en/.
 
 The source of the manual can be found in XML files in the /src
 directory of this repository. Find a topic that interests you
 or that needs updating and start writing.
+
 You could also take a look at our issue tracker at
 https://gitlab.gnome.org/GNOME/gimp-help/issues
-
-It would be a good idea to subscribe to the gimp mailing lists,
-especially the developer and docs lists. That way you can keep
-up to date about the development of GIMP, see:
-https://www.gimp.org/mail_lists.html
-Most of the GIMP developers can also be reached on the #gimp
-IRC channel on irc.gimp.org. The best chances to talk are
-usually during European evening hours.
 
   ### What you should know
 
@@ -73,20 +157,18 @@ usually during European evening hours.
 
   ### Editors, Programs and Setups
 
-  Use any editor you want, but you should handle it well. Please keep in
-  mind, that the tab width in XML Mode should be 2 spaces. It is
-  recommended to attach patches to a bug report. Creating patches with
-  git is probably better described at https://wiki.gnome.org, but in
-  short:
-
-    git format-patch HEAD^
-
-  to create a patch with your last local commits.
+  Use any editor that supports editing XML. Please keep in mind, that the
+  tab width in XML Mode should be 2 spaces.
 
   Provided you have xmllint installed, you can validate the XML
   and check the well-formedness of the XML files by running
 
-    make validate
+    make validate-en
+
+  Running `make validate` is also possible, but validating for all
+  languages takes considerable time.
+  Translators are encouraged to validate their language by replacing
+  `en` above with their language code.
 
   When you edit an XML file and want to quickly check your changes,
   you can create a single quick-and-dirty HMTL draft file with
@@ -106,14 +188,33 @@ usually during European evening hours.
 
 ###  Hints for making good screenshots
 
-  * please make screenshots only with the system default theme, which
-    is of course just the plain gtk+ default look
-  * use default fonts like Bitstream Vera Sans
-  * crop the window manager borders
-  * before saving an image as PNG, check if you can convert it to indexed
-    mode without loss of quality (saves space and bandwidth)
-  * provide your source images (eg. for making new screenshots in other
-    languages)
+  * Please make screenshots only with the system default theme, which
+    is of course just the plain gtk+ default look - FIXME Nowadays
+    dark mode is often used. Using a dark theme is totally ok to me.
+    If we want a unified look that would mean creating all images
+    on one platform with one chosen theme. At this moment that doesn't
+    seem feasible.
+  * Use default fonts like Bitstream Vera Sans - FIXME This is not a
+    crossplatform default font, we need a better suggestion.
+  * Crop the window manager borders; or even more if the image is intended
+    to only show a limited set of things that need an explanation.
+  * Before saving an image as PNG, check if you can convert it to indexed
+    mode without loss of quality (saves space and bandwidth) FIXME:
+    see pngnq that does that for you including reducing size, but beware
+    for small images size may increase. This also only works well with
+    screenshots that do not show any photos or similar. You have to check
+    first if the resulting image does not differ too much from the original.
+    Maybe tell not to add metadata unless needed, no comment, no thumbnail,
+    maybe also no color profile or is it better to have that included.
+  * TODO Add info about the different pngcrush programs
+    pngnq in my tests is often the smallest (default settings), but check
+    if the result isn't too different from the original.
+  * Provide your source images (eg. for making new screenshots in other
+    languages) - add info where in the source tree they should be added,
+    info to keep xcf size as small as possible, small image dimensions
+    where possible (64 x 64?) - set "use better but slower compression"
+    when saving to xcf; for most example imagess using 8 bit integer precision
+    is enough, unless specifically demonstrating higher bit depth.
 
 
 ## Documentation issues
@@ -132,6 +233,7 @@ Before you create a release you'll need:
     * be a maintainer
     * have ssh access to pentagon.gimp.org
     * have access to http://www.gimp.org/admin/
+    * FIXME: Check if this is still up-to-date.
 
 ### Steps
 
@@ -146,12 +248,14 @@ Before you create a release you'll need:
 
     git shortlog -sn <release tag>..HEAD
 
+* Note: the above is not always complete for translators since most
+  translations are committed by language team coordinators, not necessarily
+  the persons that did the actual translation.
 
-* Check if the authors.xml have to be adjusted for this release. (Not
-  needed for every minor release).
+* Check if the authors.xml have to be adjusted for this release.
 
 * Bump the version number (help_(major, minor, micro)_version) in
-  configure.ac, commit, push. Rule of thumb: It should be documented the
+  configure.ac, commit, push. Rule of thumb: It should document the
   current GIMP stable release. The minor version aligns therefore with
   the current stable release.
 
@@ -174,6 +278,10 @@ Before you create a release you'll need:
   Verify the tarball appears on:
 
     http://download.gimp.org/pub/gimp/help/
+
+* Add the Windows installers
+
+* Update our websites: docs.gimp.org and gimp.org/docs
 
 * Announce the release on http://www.gimp.org/admin/. Click on `Pending
   News` → `New News`, fill in the form (subject, announce), choose a
@@ -217,11 +325,19 @@ of languages needs to be updated in the following files:
   - [Makefile.GNU](Makefile.GNU)
     - Update ALL_LINGUAS
   - [quickreference/makefile.am](quickreference/makefile.am)
-    - Update ALL_LINGUAS and QUICKREFERENCE_ALL_LINGUAS
+    - Update QUICKREFERENCE_ALL_LINGUAS
   - [stylesheets/languageVocab.xml](stylesheets/languageVocab.xml)
     - Update vocab
   - [tools/get_po_status.pl](tools/get_po_status.pl)
     - Update my %Languages
+  - [web/website.xml](web/website.xml)
+    - Update list of online user manuals and quickreference PDF's
+  - [.gitlab-ci.yml](.gitlab-ci.yml)
+    - (At the moment only the 2.10 branch, but soon also in master:)
+      Update LINGUAS where applicable and test to make sure that the build
+      doesn't get close to the maximum of an hour. If necessary rearrange
+      the builds.
+  - Soon to be added: installer languages
 
 
 ## History of the gimp-help module
