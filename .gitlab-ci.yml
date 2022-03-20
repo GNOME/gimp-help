@@ -24,7 +24,7 @@ build-image:
     - echo "FROM debian:testing" > Dockerfile
     - echo "RUN apt-get update" >> Dockerfile
     - echo "RUN apt-get install -y --no-install-recommends \\" >> Dockerfile
-    - echo "automake build-essential docbook-website docbook-xml docbook-xsl fonts-noto-cjk gettext librsvg2-2 librsvg2-bin pkg-config pngcrush pngnq python3 python3-libxml2 xsltproc" >> Dockerfile
+    - echo "automake build-essential docbook-website docbook-xml docbook-xsl fonts-noto-cjk gettext intltool librsvg2-2 librsvg2-bin pkg-config pngcrush pngnq python3 python3-libxml2 xsltproc" >> Dockerfile
 
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:build-debian-latest --cache=true --cache-ttl=120h
 
@@ -37,6 +37,7 @@ build-image:
     paths:
     - "${HELP_DIR}"
     - "${PDF_DIR}"
+    - "${LANG_DIR}"
   script:
     - mkdir _build
     - cd _build
@@ -44,6 +45,8 @@ build-image:
     - make && make install
     - mv ${INSTALL_PREFIX}/share/gimp/2.0/help/ ../${HELP_DIR}
     - mv ../${HELP_DIR}/pdf/ ../${PDF_DIR}
+    - mkdir -p ../${LANG_DIR}
+    - mv build/windows/installer/lang/*.isl ../${LANG_DIR}/
   timeout: 2 hours 30 minutes
   needs: ["build-image"]
 
@@ -53,6 +56,7 @@ build-debian-1:
     LINGUAS: "ca cs da de el en en_GB"
     HELP_DIR: "_html1"
     PDF_DIR: "_pdf1"
+    LANG_DIR: "_lang1/"
 
 build-debian-2:
   extends: .build-debian-base
@@ -60,6 +64,7 @@ build-debian-2:
     LINGUAS: "es fi fr hr it ja"
     HELP_DIR: "_html2"
     PDF_DIR: "_pdf2"
+    LANG_DIR: "_lang2/"
 
 build-debian-3:
   extends: .build-debian-base
@@ -67,6 +72,7 @@ build-debian-3:
     LINGUAS: "ko lt nl nn pt_BR"
     HELP_DIR: "_html3"
     PDF_DIR: "_pdf3"
+    LANG_DIR: "_lang3/"
 
 build-debian-4:
   extends: .build-debian-base
@@ -74,6 +80,7 @@ build-debian-4:
     LINGUAS: "ro ru sl sv zh_CN"
     HELP_DIR: "_html4"
     PDF_DIR: "_pdf4"
+    LANG_DIR: "_lang4/"
 
 www-debian:
   stage: www
@@ -87,6 +94,7 @@ www-debian:
     expire_in: 1 week
     when: always
     paths:
+    - build/windows/installer/lang/
     - htdocs/
   script:
     # build the landing pages.
@@ -105,6 +113,8 @@ www-debian:
     - mv _html2/* htdocs/2.10/
     - mv _html3/* htdocs/2.10/
     - mv _html4/* htdocs/2.10/
+    # Move .isl files to the lang directory to be found by InnoSetup.
+    - mv _lang1/*.isl build/windows/installer/lang/
 
 win-installer:
   variables:
@@ -120,6 +130,7 @@ win-installer:
     expire_in: 1 week
     paths:
     - build/windows/installer/_Output
+    - build/windows/installer/lang/
     - installer.log
   script:
     - C:\msys64\usr\bin\pacman --noconfirm -Syyuu
