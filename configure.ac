@@ -65,7 +65,7 @@ else
   ALL_LINGUAS=`echo "$ALL_LINGUAS" | $SED -e 's/[,] */ /g'`
 fi
 if test "x$QUICKREFERENCE_ALL_LINGUAS" = "x"; then
-  QUICKREFERENCE_ALL_LINGUAS="ca cs da de el es en fi fr it ja ko nl nn pl pt_BR ro ru sl sv zh_CN"
+  QUICKREFERENCE_ALL_LINGUAS="ca cs da de el en es fi fr it ja ko nl nn pl pt_BR ro ru sl sv zh_CN"
 fi
 
 AC_SUBST(ALL_LINGUAS)
