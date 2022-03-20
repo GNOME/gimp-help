@@ -207,6 +207,25 @@ AC_SUBST(MSGCATFLAGS)
 MSGWIDTH=79
 AC_SUBST(MSGWIDTH)
 
+# Not calling:
+# IT_PROG_INTLTOOL(intltool_required_version)
+# on purpose because it tries to init po/ and we don't want this as we
+# handle our main docs po files differently. So checking the tools we
+# need individually for po-windows-installer/.
+
+AC_PATH_PROG(INTLTOOL_MERGE, intltool-merge)
+if test -z "$INTLTOOL_MERGE" && test "x$enable_i18n" = "xyes"; then
+  missing_i18n_tools=${missing_i18n_tools:+"${missing_i18n_tools} "}intltool-merge
+fi
+AC_PATH_PROG(INTLTOOL_UPDATE, intltool-update)
+if test -z "$INTLTOOL_UPDATE" && test "x$enable_i18n" = "xyes"; then
+  missing_i18n_tools=${missing_i18n_tools:+"${missing_i18n_tools} "}intltool-update
+fi
+AC_PATH_PROG(INTLTOOL_EXTRACT, intltool-extract)
+if test -z "$INTLTOOL_EXTRACT" && test "x$enable_i18n" = "xyes"; then
+  missing_i18n_tools=${missing_i18n_tools:+"${missing_i18n_tools} "}intltool-extract
+fi
+
 #  Optional: dot to create build system map
 
 AC_PATH_PROG(DOT, dot)
@@ -331,12 +350,43 @@ fi
 
 
 AC_CONFIG_FILES([
+build/Makefile
+build/windows/Makefile
+build/windows/installer/Makefile
+build/windows/installer/lang/Makefile
 m4macros/Makefile
 Makefile
+po-windows-installer/Makefile.in
 quickreference/Makefile
 stylesheets/plainhtml.xsl
 stylesheets/htmlalternate.xsl
 ])
+
+# By default, autoconf will create only po/Makefile.
+# This code is used to create the POTFILES and Makefile for all
+# additional gettext catalogs.
+m4_define([generate_po_makefile], [
+  AC_MSG_NOTICE([Generating POTFILES and Makefile for $1])
+
+  AC_CONFIG_COMMANDS([$1/stamp-it],
+  [[
+    if  ! grep "^# INTLTOOL_MAKEFILE$" "$1/Makefile.in" > /dev/null ; then
+       as_fn_error $? "$1/Makefile.in.in was not created by intltoolize." "$LINENO" 5
+    fi
+    rm -f "$1/stamp-it" "$1/POTFILES"
+    sed -e '/^#/d' -e 's/^[[].*] *//' \
+        -e '/^[ 	]*$/d'        \
+        -e "s|^|	$ac_top_srcdir/|" \
+        "$srcdir/$1/POTFILES.in" | sed '$!s/$/ \\/' >"$1/POTFILES" && \
+    sed -e "/^# This comment gets stripped out/ {"  \
+        -e 'r $1/POTFILES'                          \
+        -e "d" -e "}"                               \
+        "$1/Makefile.in" >"$1/Makefile" && \
+    touch "$1/stamp-it"
+  ]])
+])
+
+generate_po_makefile([po-windows-installer])
 
 AC_OUTPUT
 

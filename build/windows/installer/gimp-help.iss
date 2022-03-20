@@ -135,7 +135,7 @@ PrivilegesRequired=lowest
 PrivilegesRequiredOverridesAllowed=commandline
 
 [Languages]
-Name: "{#LANG}"; MessagesFile: "compiler:{#LANGFILE},lang\help.en.isl"
+Name: "{#LANG}"; MessagesFile: "compiler:{#LANGFILE},lang\help.en.isl,lang\help.{#LANG}.isl"
 
 [Files]
 #ifndef nofiles
