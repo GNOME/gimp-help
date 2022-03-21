@@ -104,16 +104,18 @@ www-debian:
     - cd ..
     - mv /html/ htdocs/
     # Move all PDF quickreferences
-    - mkdir -p htdocs/2.10/pdf
-    - mv _pdf1/*.pdf htdocs/2.10/pdf/
-    - mv _pdf2/*.pdf htdocs/2.10/pdf/
-    - mv _pdf3/*.pdf htdocs/2.10/pdf/
-    - mv _pdf4/*.pdf htdocs/2.10/pdf/
+    - MAJOR_VERSION=`grep 'm4_define(\[help_major_version' configure.ac |sed 's/m4_define(\[help_major_version.*\[\([0-9]*\)\].*/\1/'`
+    - MINOR_VERSION=`grep 'm4_define(\[help_minor_version' configure.ac |sed 's/m4_define(\[help_minor_version.*\[\([0-9]*\)\].*/\1/'`
+    - mkdir -p htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/pdf
+    - mv _pdf1/*.pdf htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/pdf/
+    - mv _pdf2/*.pdf htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/pdf/
+    - mv _pdf3/*.pdf htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/pdf/
+    - mv _pdf4/*.pdf htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/pdf/
     # Move all the help html files.
-    - mv _html1/* htdocs/2.10/
-    - mv _html2/* htdocs/2.10/
-    - mv _html3/* htdocs/2.10/
-    - mv _html4/* htdocs/2.10/
+    - mv _html1/* htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/
+    - mv _html2/* htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/
+    - mv _html3/* htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/
+    - mv _html4/* htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/
 
 win-installer:
   variables:

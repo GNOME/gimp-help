@@ -139,7 +139,7 @@ Name: "{#LANG}"; MessagesFile: "compiler:{#LANGFILE},lang\help.en.isl,lang\help.
 
 [Files]
 #ifndef nofiles
-Source: "{#HELPDIR}\{#LANG}\*.*"; DestDir: "{app}\share\gimp\2.0\help\{#LANG}"; Flags: recursesubdirs ignoreversion
+Source: "{#HELPDIR}\{#LANG}\*.*"; DestDir: "{app}\share\gimp\{#MAJORVERSION}.{#MINORVERSION}\help\{#LANG}"; Flags: recursesubdirs ignoreversion
 #endif
 ;Source: "html\{#LANG}\*.jpg"; DestDir: "{app}\share\gimp\2.0\help\{#LANG}"; Flags: recursesubdirs nocompression
 ;Source: "html\{#LANG}\*.png"; DestDir: "{app}\share\gimp\2.0\help\{#LANG}"; Flags: recursesubdirs nocompression

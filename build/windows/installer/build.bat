@@ -11,11 +11,11 @@ FOR /F "usebackq tokens=5,* skip=2" %%A IN (`REG QUERY "HKLM\Software\Microsoft\
 if not exist "%INNOPATH%\iscc.exe" goto noinno
 
 echo "%INNOPATH%"
-FOR /D %%l in (..\..\..\htdocs\2.10\*) DO if not "%%l"=="..\..\..\htdocs\2.10\." (
-    if not "%%l"=="..\..\..\htdocs\2.10\.." (
-        if not "%%l"=="..\..\..\htdocs\2.10\pdf" (
+FOR /D %%l in (..\..\..\htdocs\%1.%2\*) DO if not "%%l"=="..\..\..\htdocs\%1.%2\." (
+    if not "%%l"=="..\..\..\htdocs\%1.%2\.." (
+        if not "%%l"=="..\..\..\htdocs\%1.%2\pdf" (
             echo Creating installer for %%~nxl
-            "%INNOPATH%\iscc.exe" "gimp-help.iss" /DMAJORVERSION="%1" /DMINORVERSION="%2" /DMICROVERSION="%3" /DLANG="%%~nxl" /DHELPDIR="..\..\..\htdocs\2.10"
+            "%INNOPATH%\iscc.exe" "gimp-help.iss" /DMAJORVERSION="%1" /DMINORVERSION="%2" /DMICROVERSION="%3" /DLANG="%%~nxl" /DHELPDIR="..\..\..\htdocs\%1.%2"
         )
     )
 )
