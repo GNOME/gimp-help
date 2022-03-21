@@ -37,7 +37,6 @@ build-image:
     paths:
     - "${HELP_DIR}"
     - "${PDF_DIR}"
-    - "po-windows-installer"
   script:
     - mkdir _build
     - cd _build
@@ -91,9 +90,10 @@ www-debian:
     - build/windows/installer/lang/
     - htdocs/
   script:
+    # build the installer language files only.
     - mkdir _build
     - cd _build
-    - ../autogen.sh --prefix=${INSTALL_PREFIX} --without-gimp
+    - ../autogen.sh --prefix=${INSTALL_PREFIX} --without-gimp --enable-windows-installer
     - cd build/windows/installer/lang
     - make
     - cd ../../../..
@@ -129,7 +129,6 @@ win-installer:
     expire_in: 1 week
     paths:
     - build/windows/installer/_Output
-    - build/windows/installer/lang/
     - installer.log
   script:
     - C:\msys64\usr\bin\pacman --noconfirm -Syyuu
