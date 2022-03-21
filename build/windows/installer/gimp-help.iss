@@ -44,6 +44,8 @@
 #define VERSION MAJORVERSION + '.' + MINORVERSION + '.' + MICROVERSION
 #define MIN_VERSION MAJORVERSION + '.' + MINORVERSION
 
+#include "version.isi"
+
 ;for picking up the correct Inno Setup language file
 #if LANG=='en'
 	#define LANGFILE='Default.isl'
@@ -139,7 +141,7 @@ Name: "{#LANG}"; MessagesFile: "compiler:{#LANGFILE},lang\help.en.isl,lang\help.
 
 [Files]
 #ifndef nofiles
-Source: "{#HELPDIR}\{#LANG}\*.*"; DestDir: "{app}\share\gimp\{#MAJORVERSION}.{#MINORVERSION}\help\{#LANG}"; Flags: recursesubdirs ignoreversion
+Source: "{#HELPDIR}\{#LANG}\*.*"; DestDir: "{app}\share\gimp\{#DIR_VER}\help\{#LANG}"; Flags: recursesubdirs ignoreversion
 #endif
 ;Source: "html\{#LANG}\*.jpg"; DestDir: "{app}\share\gimp\2.0\help\{#LANG}"; Flags: recursesubdirs nocompression
 ;Source: "html\{#LANG}\*.png"; DestDir: "{app}\share\gimp\2.0\help\{#LANG}"; Flags: recursesubdirs nocompression
@@ -161,7 +163,11 @@ const
 
 	BCM_SETSHIELD = $160C;
 
-	RegGimpUnins = 'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-2_is1';
+#if Defined(DEVEL) && DEVEL != ""
+	RegGimpUnins = 'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#MAJORVERSION}.{#MINORVERSION}_is1';
+#else
+	RegGimpUnins = 'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#MAJORVERSION}_is1';
+#endif
 	RegGimpUninsPathKey = 'Inno Setup: App Path';
 	RegGimpUninsDispVerKey = 'DisplayVersion';
 
