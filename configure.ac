@@ -195,23 +195,44 @@ AC_SUBST(MSGCATFLAGS)
 MSGWIDTH=79
 AC_SUBST(MSGWIDTH)
 
+AC_MSG_CHECKING([if building the Windows installer])
+AC_ARG_ENABLE(windows-installer,
+              [  --enable-windows-installer
+                          generate files needed for the Windows installer
+                          (default=no)],,
+              enable_windows_installer=no)
+AC_MSG_RESULT([$enable_windows_installer])
+AM_CONDITIONAL(BUILD_WINDOWS_INSTALLER, test "x$enable_windows_installer" != xno)
+
 # Not calling:
 # IT_PROG_INTLTOOL(intltool_required_version)
 # on purpose because it tries to init po/ and we don't want this as we
 # handle our main docs po files differently. So checking the tools we
 # need individually for po-windows-installer/.
 
-AC_PATH_PROG(INTLTOOL_MERGE, intltool-merge)
-if test -z "$INTLTOOL_MERGE" && test "x$enable_i18n" = "xyes"; then
-  missing_i18n_tools=${missing_i18n_tools:+"${missing_i18n_tools} "}intltool-merge
+if test "x$enable_windows_installer" != xno; then
+  AC_PATH_PROG(INTLTOOL_MERGE, intltool-merge)
+  if test -z "$INTLTOOL_MERGE"; then
+    AC_MSG_ERROR([
+** Couldn't find intltool-merge(8). It is necessary to build the
+** language files for the Windows installer.
+** Install the intltool or configure with --disable-windows-installer])
+  fi
 fi
+
+# The below tools are only necessary to build `make update-po` in
+# po-windows-intaller/.
 AC_PATH_PROG(INTLTOOL_UPDATE, intltool-update)
 if test -z "$INTLTOOL_UPDATE" && test "x$enable_i18n" = "xyes"; then
-  missing_i18n_tools=${missing_i18n_tools:+"${missing_i18n_tools} "}intltool-update
+  AC_MSG_WARN([
+** Couldn't find intltool-update(8). You will not be able to run
+** `make update-po` in po-windows-intaller/.])
 fi
 AC_PATH_PROG(INTLTOOL_EXTRACT, intltool-extract)
 if test -z "$INTLTOOL_EXTRACT" && test "x$enable_i18n" = "xyes"; then
-  missing_i18n_tools=${missing_i18n_tools:+"${missing_i18n_tools} "}intltool-extract
+  AC_MSG_WARN([
+** Couldn't find intltool-extract(8). You will not be able to run
+** `make update-po` in po-windows-intaller/.])
 fi
 
 #  Optional: dot to create build system map
