@@ -341,9 +341,12 @@ of languages needs to be updated in the following files:
       the build job because we don't want time-outs.
   - [build/windows/installer/installer-gimp-help-msys2.sh](build/windows/installer/installer-gimp-help-msys2.sh)
     - Check if the language is part of the official languages installed
-      together with Inno Setup.
-    - If not, check if there is an unofficial translation.
+      together with Inno Setup. An up-to-date list can be found at
+      [github](https://github.com/jrsoftware/issrc/tree/main/Files/Languages).
+    - If not, check if there is an unofficial translation,
+      [here](https://github.com/jrsoftware/issrc/tree/main/Files/Languages/Unofficial).
     - If there is, then add it to the download_lang commands.
+    - If no translation is available `Default.isl` can be used.
   - [build/windows/installer/gimp-help.iss](build/windows/installer/gimp-help.iss)
     - Add a if LANG test and define LANGFILE for you language.
   - [TRANSLATING](.TRANSLATING)
