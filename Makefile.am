@@ -433,15 +433,15 @@ potfiles: $(POT_FILES) ;
 ########################################################################
 #
 # HIDE FROM AUTOMAKE #define MAKE_PO_RULES
-# HIDE FROM AUTOMAKE #$(1)_PO_FILES = $$(patsubst pot/%.pot, po/$(1)/%.po, $$(POT_FILES))
-# HIDE FROM AUTOMAKE #ifeq ($$(filter po/$(1)/%.po,$$(MAKECMDGOALS)),)
-# HIDE FROM AUTOMAKE #$$($(1)_PO_FILES): po/$(1)/%.po : pot/%.pot
+# HIDE FROM AUTOMAKE #$(1)_PO_FILES = $$(patsubst pot/%.pot, $(srcdir)/po/$(1)/%.po, $$(POT_FILES))
+# HIDE FROM AUTOMAKE #ifeq ($$(filter $(srcdir)/po/$(1)/%.po,$$(MAKECMDGOALS)),)
+# HIDE FROM AUTOMAKE #$$($(1)_PO_FILES): $(srcdir)/po/$(1)/%.po : pot/%.pot
 # HIDE FROM AUTOMAKE #else
-# HIDE FROM AUTOMAKE #$$($(1)_PO_FILES): po/$(1)/%.po : pot/%.pot FORCE
+# HIDE FROM AUTOMAKE #$$($(1)_PO_FILES): $(srcdir)/po/$(1)/%.po : pot/%.pot FORCE
 # HIDE FROM AUTOMAKE #endif
 # HIDE FROM AUTOMAKE #	$$(cmd) $$(call make_target_dir,$$@)
 # HIDE FROM AUTOMAKE #	$$(msg) "[PO]  $$@"
-# HIDE FROM AUTOMAKE #	$$(cmd) if test -s $$<; then $$(call pot2po,$$<,$(1),$(srcdir)/$$@); else touch $$@; fi
+# HIDE FROM AUTOMAKE #	$$(cmd) if test -s $$<; then $$(call pot2po,$$<,$(1),$$@); else touch $$@; fi
 # HIDE FROM AUTOMAKE #po-$(1): $$($(1)_PO_FILES) cleanup-po-$(1)
 # HIDE FROM AUTOMAKE #	$$(cmd) if test -e messages.mo; then rm -f messages.mo; fi
 # HIDE FROM AUTOMAKE #cleanup-po-$(1):

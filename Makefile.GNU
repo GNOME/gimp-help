@@ -382,11 +382,11 @@ potfiles: $(POT_FILES) ;
 ########################################################################
 
 define MAKE_PO_RULES
-$(1)_PO_FILES = $$(patsubst pot/%.pot, po/$(1)/%.po, $$(POT_FILES))
-ifeq ($$(filter po/$(1)/%.po,$$(MAKECMDGOALS)),)
-$$($(1)_PO_FILES): po/$(1)/%.po : pot/%.pot
+$(1)_PO_FILES = $$(patsubst pot/%.pot, $(srcdir)/po/$(1)/%.po, $$(POT_FILES))
+ifeq ($$(filter $(srcdir)/po/$(1)/%.po,$$(MAKECMDGOALS)),)
+$$($(1)_PO_FILES): $(srcdir)/po/$(1)/%.po : pot/%.pot
 else
-$$($(1)_PO_FILES): po/$(1)/%.po : pot/%.pot FORCE
+$$($(1)_PO_FILES): $(srcdir)/po/$(1)/%.po : pot/%.pot FORCE
 endif
 	$$(cmd) $$(call make_target_dir,$$@)
 	$$(msg) "[PO]  $$@"
