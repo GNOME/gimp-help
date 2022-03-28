@@ -328,16 +328,38 @@ of languages needs to be updated in the following files:
     - Update QUICKREFERENCE_ALL_LINGUAS
   - [stylesheets/languageVocab.xml](stylesheets/languageVocab.xml)
     - Update vocab
+  - [stylesheets/authors_common.xsl](stylesheets/authors_common.xsl)
+    - Update `<xsl:variable name="languages">`
   - [tools/get_po_status.pl](tools/get_po_status.pl)
     - Update my %Languages
   - [web/website.xml](web/website.xml)
     - Update list of online user manuals and quickreference PDF's
   - [.gitlab-ci.yml](.gitlab-ci.yml)
-    - (At the moment only the 2.10 branch, but soon also in master:)
-      Update LINGUAS where applicable and test to make sure that the build
-      doesn't get close to the maximum of an hour. If necessary rearrange
-      the builds.
-  - Soon to be added: installer languages
+    - Update LINGUAS in the relevant build-debian-[number].
+    - Note: after committing make sure that the build job doesn't take too
+      long. When it takes more than 50 minutes, it might be time to split
+      the build job because we don't want time-outs.
+  - [build/windows/installer/installer-gimp-help-msys2.sh](build/windows/installer/installer-gimp-help-msys2.sh)
+    - Check if the language is part of the official languages installed
+      together with Inno Setup.
+    - If not, check if there is an unofficial translation.
+    - If there is, then add it to the download_lang commands.
+  - [build/windows/installer/gimp-help.iss](build/windows/installer/gimp-help.iss)
+    - Add a if LANG test and define LANGFILE for you language.
+  - [TRANSLATING](.TRANSLATING)
+    - Update ALL_LINGUAS
+    - TODO: Decide if we want to move this whole chapter to TRANSLATING,
+      or the reverse, or ...
+
+When all of the above are updated, run:
+  - `make po` in the main build directory
+  - `make po` in the quickreference directory
+  - `make update-po` in the po-windows-installer directory (make sure that
+    charset is UTF-8 here, it wasn't for me, need to check this sometime)
+
+This should create the necessary po files for the newly added language.  
+Note: some po files for other languages may have been update too, but you
+should only commit the files relevant for the new language.
 
 
 ## History of the gimp-help module
