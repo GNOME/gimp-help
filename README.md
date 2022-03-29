@@ -354,6 +354,12 @@ of languages needs to be updated in the following files:
     - TODO: Decide if we want to move this whole chapter to TRANSLATING,
       or the reverse, or ...
 
+Note: If your build directory is not a child of the source directory, then
+`msginit` will not fill in PACKAGE_VERSION in the header of the po files.  
+Since msginit tries to find `configure`, copying that to your build directory
+can solve that issue. In that case, make sure to update it when switching
+branches.
+
 When all of the above are updated, run:
   - `make po` in the main build directory
   - `make po` in the quickreference directory
