@@ -71,6 +71,7 @@ my %Languages = (
 	no => "Norwegian",
 	nl => "Dutch",
 	pl => "Polish",
+	pt => "Portuguese",
 	pt_BR => "Brazilian Portuguese",
 	ro => "Romanian",
 	ru => "Russian",

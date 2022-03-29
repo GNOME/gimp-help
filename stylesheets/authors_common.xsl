@@ -61,6 +61,7 @@
       nl:Dutch
       nn:Norwegian_Nynorsk
       pl:Polish
+      pt:Portuguese
       pt_BR:Brazilian_Portuguese
       ro:Romanian
       ru:Russian

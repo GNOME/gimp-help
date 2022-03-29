@@ -83,6 +83,8 @@
 	#define LANGFILE='Languages\Unofficial\NorwegianNynorsk.isl'
 #elif LANG=='pl'
 	#define LANGFILE='Languages\Polish.isl'
+#elif LANG=='pt'
+	#define LANGFILE='Languages\Portuguese.isl'
 #elif LANG=='pt_BR'
 	#define LANGFILE='Languages\BrazilianPortuguese.isl'
 #elif LANG=='ro'
