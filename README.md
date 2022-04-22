@@ -367,7 +367,7 @@ When all of the above are updated, run:
     charset is UTF-8 here, it wasn't for me, need to check this sometime)
 
 This should create the necessary po files for the newly added language.  
-Note: some po files for other languages may have been update too, but you
+Note: some po files for other languages may have been updated too, but you
 should only commit the files relevant for the new language.
 
 
