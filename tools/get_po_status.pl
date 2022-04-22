@@ -77,6 +77,7 @@ my %Languages = (
 	ru => "Russian",
 	sl => "Slovenian",
 	sv => "Swedish",
+	uk => "Ukrainian",
 	zh_CN => "Simplified Chinese"
 );
 

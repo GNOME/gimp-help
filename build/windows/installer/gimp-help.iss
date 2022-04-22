@@ -97,6 +97,8 @@
 	#define LANGFILE='Languages\Slovenian.isl'
 #elif LANG=='sv'
 	#define LANGFILE='Languages\Unofficial\Swedish.isl'
+#elif LANG=='uk'
+	#define LANGFILE='Languages\Ukrainian.isl'
 #elif LANG=='zh_CN'
 	#define LANGFILE='Languages\Unofficial\ChineseSimplified.isl'
 #endif

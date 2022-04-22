@@ -67,6 +67,7 @@
       ru:Russian
       sl:Slovenian
       sv:Swedish
+      uk:Ukrainian
       zh_CN:Simplified_Chinese
     </xsl:variable>
     <xsl:variable name="tail"
