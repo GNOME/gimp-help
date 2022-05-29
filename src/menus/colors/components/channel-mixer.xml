@@ -41,14 +41,14 @@
     </figure>
     <para>
       This command combines values of the RGB channels. It works with images
-      with or without an alpha channel. It has monochrome mode and a preview.
+      with or without an alpha channel.
     </para>
   </sect3>
 
   <sect3>
     <title>Activate the command</title>
     <para>
-      You can find this command through
+      You can find this command in the menu through
       <menuchoice>
         <guimenu>Colors</guimenu>
         <guisubmenu>Components</guisubmenu>
@@ -70,54 +70,35 @@
     </figure>
     <variablelist>
       <varlistentry>
-        <term>Output Channel</term>
+        <term>
+          <guilabel>Presets</guilabel>, <guilabel>Blending Options</guilabel>,
+          <guilabel>Preview</guilabel>, <guilabel>Split view</guilabel>
+        </term>
         <listitem>
           <para>
-            From this menu you select the channel to mix to. Choices are
-            Red, Green, or Blue. It is insensitive when
-            <guilabel>Monochrome</guilabel> option is checked.
+            These options are common to GEGL-based filters. Please refer to 
+            <xref linkend="gimp-filters-common"/>.
           </para>
         </listitem>
       </varlistentry>
       <varlistentry>
-        <term>Red, Green, Blue</term>
+        <term>Red Channel, Green Channel, Blue Channel</term>
         <listitem>
           <para>
-            These three sliders set the contribution of red, green or blue
-            channel to output. Can be negative. These sliders are graduated
-            from -200 to 200. They represent the percentage which will be
-            attributed to the output channel. 100% corresponds to the value of
-            the channel of the studied pixel in the image.
+            Each of these has three sliders, which set the contribution of the
+            red, green and blue input channels in the output channel.
+            The sliders go from -2 to 2. They represent the multiplication
+            factor of the input channel that will be attributed to the output
+            channel.
           </para>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>Monochrome</term>
-        <listitem>
-          <para>
-            This option converts the RGB image into a gray-scale RGB image.
-            The Channel Mixer command is often used with this aim in view,
-            because it often provides a better result than the other ways
-            (see <link linkend="glossary-graylevel">Grayscale</link> in
-            Glossary). Makes the <guilabel>Output Channel</guilabel> menu
-            insensitive.
-          </para>
-          <note>
-            <para>
-              <!--Verified for v2.6-->
-              The 21%, 72%, 7% settings give you the same gray luminosity
-              (Value) as the Grayscale command in Image/Mode. (They were 30%,
-              59%, 11% in v2.2).
-            </para>
-          </note>
         </listitem>
       </varlistentry>
       <varlistentry>
         <term>Preserve Luminosity</term>
         <listitem>
           <para>
-            Calculations may result in too high values and an image too much
-            clear. This option lessens luminosities of the color channels
+            The mixing can result in an image where some of the colors are too
+            light. This option lessens the luminosity of the color channels
             while keeping a good visual ratio between them. So, you can change
             the relative weight of the colors without changing the overall
             luminosity.
@@ -128,168 +109,76 @@
   </sect3>
 
   <sect3>
-    <title>Buttons</title>
-    <variablelist>
-      <varlistentry>
-        <term>Open</term>
-        <listitem>
-          <para>Load settings from a file.</para>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>Save</term>
-        <listitem>
-          <para>Save settings to a file.</para>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>Reset</term>
-        <listitem>
-          <para>Set default settings.</para>
-        </listitem>
-      </varlistentry>
-    </variablelist>
-  </sect3>
-
-  <sect3>
     <title>How does Channel Mixer work? </title>
-    <variablelist>
-      <varlistentry>
-        <term>In RGB mode</term>
-        <listitem>
+    <para>
+      Each of the output channels is based on the values you set for the three
+      RGB input channels. By default each output channel is based for 100%
+      on the corresponding input channel. This is the one set to 1.0, and the
+      others are set to 0.0. You can change each of the sliders from -2 to +2.
+    </para>
+    <para>
+      The three RGB input sliders let you give a percentage to every channel.
+      For every pixel in the image, the sum of the calculated values for
+      every channel from these percentages will be given to the output
+      channel. Here is an example:
+    </para>
+    <figure>
+      <title>The original image and its channels</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata format="PNG"
+            fileref="images/menus/colors/components/channel-mixer-ex1.png"/>
+        </imageobject>
+        <caption>
           <para>
-            In this mode, you have to select an <guilabel>Output Channel
-            </guilabel>. This channel is the one which will be modified. In
-            the dialog window, its default value is 100%, corresponding to
-            the value of the channel in the original image. It can be
-            increased or decreased. That's why slider ends are -200 and 200.
+            RGB values of the pixels in red, green, blue, gray squares
+            are displayed. The black rectangle is special, because black
+            (0;0;0) is not affected by the command (0 multiplied by any
+            percentage always gives 0). The result can't exceed 255 nor
+            be negative.
+          </para>
+        </caption>
+      </mediaobject>
+    </figure>
+    <figure>
+      <title>Output channel is red. Green Channel +50</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata format="PNG"
+            fileref="images/menus/colors/components/channel-mixer-ex2.png"/>
+        </imageobject>
+        <caption>
+          <para>
+            In the red square, the pixel values are 230;10;10. Relative
+            values are 1;0.5;0. The calculation result is 230*1 + 10*0,5
+            + 10*0 =235. The same reasoning is valid for the green and
+            the blue squares.
           </para>
           <para>
-            Three RGB sliders let you give a percentage to every channel. For
-            every pixel in the image, the sum of the calculated values for
-            every channel from these percentages will be given to the Output
-            Channel. Here is an example:
+            In the gray square, which contains red color, the
+            calculation result is above 255. It is reduced to 255. A
+            negative value would be reduced to 0.
           </para>
-          <figure>
-            <title>The original image and its channels</title>
-            <mediaobject>
-              <imageobject>
-                <imagedata format="PNG"
-                  fileref="images/menus/colors/components/channel-mixer-ex1.png"/>
-              </imageobject>
-              <caption>
-                <para>
-                  RGB values of the pixels in red, green, blue, gray squares
-                  are displayed. The black rectangle is special, because black
-                  (0;0;0) is not concerned by the command (0 multiplied by any
-                  percentage always gives 0). The result can't exceed 255 nor
-                  be negative.
-                </para>
-              </caption>
-            </mediaobject>
-          </figure>
-          <figure>
-            <title>Output channel is red. Green Channel +50</title>
-            <mediaobject>
-              <imageobject>
-                <imagedata format="PNG"
-                  fileref="images/menus/colors/components/channel-mixer-ex2.png"/>
-              </imageobject>
-              <caption>
-                <para>
-                  In the red square, the pixel values are 230;10;10. Relative
-                  values are 1;0.5;0. The calculation result is 230*1 + 10*0,5
-                  + 10*0 =235. The same reasoning is valid for the green and
-                  the blue squares.
-                </para>
-                <para>
-                  In the gray square, which contains red color, the
-                  calculation result is above 255. It is reduced to 255. A
-                  negative value would be reduced to 0.
-                </para>
-              </caption>
-            </mediaobject>
-          </figure>
-          <figure>
-            <title>
-              Output channel is red. Green Channel +50%. The Preserve
-              Luminosity option is checked.
-            </title>
-            <mediaobject>
-              <imageobject>
-                <imagedata format="PNG"
-                  fileref="images/menus/colors/components/channel-mixer-ex3.png"/>
-              </imageobject>
-              <caption>
-                <para>
-                  The values attributed to the Red Output channel are lower,
-                  preventing a too much clear image.
-                </para>
-              </caption>
-            </mediaobject>
-          </figure>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>In Monochrome mode</term>
-        <listitem>
+        </caption>
+      </mediaobject>
+    </figure>
+    <figure>
+      <title>
+        Output channel is red. Green Channel +50%. The Preserve
+        Luminosity option is checked.
+      </title>
+      <mediaobject>
+        <imageobject>
+          <imagedata format="PNG"
+            fileref="images/menus/colors/components/channel-mixer-ex3.png"/>
+        </imageobject>
+        <caption>
           <para>
-            When this option is checked, the image preview turns to grayscale,
-            but the image is still a RGB image with three channels, until the
-            command action is validated.
+            The values attributed to the Red Output channel are lower,
+            preventing a too bright image.
           </para>
-          <figure>
-            <title>
-              Monochrome option checked. Red: 100% Green: 50% Blue: 0%.
-              Preserve Luminosity unchecked.
-            </title>
-            <mediaobject>
-              <imageobject>
-                <imagedata format="PNG"
-                  fileref="images/menus/colors/components/channel-mixer-ex4.png"/>
-              </imageobject>
-              <caption>
-                <para>
-                  In every square, pixels have been converted into a gray
-                  level equal to the value of the Red channel in the original
-                  image (The background has been painted with pink afterwards
-                  to make all squares visible).
-                </para>
-              </caption>
-            </mediaobject>
-          </figure>
-          <para>
-            Here is how the <guilabel>Preserve Luminosity</guilabel>
-            works in the monochrome mode:
-            <quote>
-              For example, suppose the sliders were Red:75%, Green:75%,
-              Blue:0%. With <guilabel>Monochrome</guilabel> on and the
-              <guilabel>Preserve Luminosity</guilabel>
-              option off, the resulting picture would be at 75%+75%+0% =150%,
-              very bright indeed. A pixel with a value of, say,
-              R,G,B=127,100,80 would map to 127*0.75+100*0.75+80*0=170 for
-              each channel. With the Preserve Luminosity option on, the
-              sliders will be scaled so they always add up to 100%. In this
-              example, that scale value is 1/(75%+75%+0%) or 0.667. So the
-              pixel values would be about 113. The Preserve Luminosity option
-              just assures that the scale values from the sliders always adds
-              up to 100%. Of course, strange things happen when any of the
-              sliders have large negative values
-            </quote>
-            (from the plug-in author himself).
-          </para>
-          <note>
-            <para><emphasis>Which channel will you modify?</emphasis>
-              This depends on what you want to do. In principle, the Red
-              channel suits contrast modifications well. The Green channel is
-              well adapted to details changes and the Blue channel to noise,
-              grain changes. You can use the
-              <link linkend="plug-in-decompose-registered">Decompose</link>
-              command.
-            </para>
-          </note>
-        </listitem>
-      </varlistentry>
-    </variablelist>
+        </caption>
+      </mediaobject>
+    </figure>
   </sect3>
 </sect2>

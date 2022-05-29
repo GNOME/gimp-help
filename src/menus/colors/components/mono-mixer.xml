@@ -72,8 +72,9 @@
     </figure>
     <variablelist>
       <varlistentry>
-        <term><guilabel>Presets</guilabel>, <guilabel>Preview</guilabel>, 
-          <guilabel>Split view</guilabel></term>
+        <term>
+          <guilabel>Presets</guilabel>, <guilabel>Blending Options</guilabel>,
+          <guilabel>Preview</guilabel>, <guilabel>Split view</guilabel></term>
         <listitem>
           <para>
             These options are common to GEGL-based filters. Please refer to 
@@ -85,8 +86,8 @@
         <term><guilabel>Preserve luminosity</guilabel></term>
         <listitem>
           <para>
-            Calculations may result in too high values and an image too much
-            clear. This option lessens luminosities of the color channels
+            The mixing can result in an image where some of the colors are too
+            light. This option lessens the luminosity of the color channels
             while keeping a good visual ratio between them. So, you can change
             the relative weight of the colors without changing the overall
             luminosity.
@@ -108,9 +109,56 @@
     </variablelist>
   </sect3>
   <sect3>
-    <title>Using Channel Mixer</title>
+    <title>Using Mono Mixer</title>
     <para>
-      TODO
+      When this filter is opened, the image preview turns to grayscale,
+      but the image is still a RGB image with three channels, until the
+      OK button is pressed.
     </para>
+    <figure>
+      <title>
+        Red: 100% Green: 50% Blue: 0%. Preserve Luminosity unchecked.
+      </title>
+      <mediaobject>
+        <imageobject>
+          <imagedata format="PNG"
+            fileref="images/menus/colors/components/channel-mixer-ex4.png"/>
+        </imageobject>
+        <caption>
+          <para>
+            In every square, pixels have been converted into a gray
+            level equal to the value of the Red channel in the original
+            image (The background has been painted with pink afterwards
+            to make all squares visible).
+          </para>
+        </caption>
+      </mediaobject>
+    </figure>
+    <para>
+      Here is how the <guilabel>Preserve Luminosity</guilabel>
+      works in the monochrome mode:
+      <quote>For example, suppose the sliders were Red:75%, Green:75%, Blue:0%.
+      With <guilabel>Preserve Luminosity</guilabel> disabled, the resulting
+      picture would be at 75%+75%+0% =150%, very bright indeed. A pixel with a
+      value of, say, R,G,B=127,100,80 would map to 127*0.75+100*0.75+80*0=170
+      for each channel.
+      With <guilabel>Preserve Luminosity</guilabel> enabled, the sliders will
+      be scaled so they always add up to 100%. In this example, that scale
+      value is 1/(75%+75%+0%) or 0.667. So the pixel values would be about 113.
+      The Preserve Luminosity option just assures that the scale values from
+      the sliders always adds up to 100%. Of course, strange things happen when
+      any of the sliders have large negative values.</quote>
+      (from the plug-in author himself).
+    </para>
+    <note>
+      <para><emphasis>Which channel should you modify?</emphasis>
+        This depends on what you want to do. In principle, the Red
+        channel suits contrast modifications well. The Green channel is
+        well adapted to details changes and the Blue channel to noise,
+        grain changes. You can use the
+        <link linkend="plug-in-decompose-registered">Decompose</link>
+        command.
+      </para>
+    </note>
   </sect3>
 </sect2>
