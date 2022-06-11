@@ -67,6 +67,8 @@
 	#define LANGFILE='Languages\French.isl'
 #elif LANG=='hr'
 	#define LANGFILE='Languages\Unofficial\Croatian.isl'
+#elif LANG=='hu'
+	#define LANGFILE='Languages\Hungarian.isl'
 #elif LANG=='it'
 	#define LANGFILE='Languages\Italian.isl'
 #elif LANG=='ja'
