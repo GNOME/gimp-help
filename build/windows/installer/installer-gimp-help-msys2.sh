@@ -36,6 +36,7 @@ download_lang ChineseSimplified.isl
 download_lang Croatian.isl
 download_lang EnglishBritish.isl
 download_lang Greek.isl
+download_lang Hungarian.isl
 download_lang Korean.isl
 download_lang Lithuanian.isl
 download_lang NorwegianNynorsk.isl
