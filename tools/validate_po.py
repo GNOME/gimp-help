@@ -88,6 +88,12 @@ class Validate(object):
                         print(f"WARNING: XML comment closing tag missing", file=self.log)
                     start_tag = -1
                     continue
+            elif end_tag > 2 and textblock[0] == '?' and textblock[end_tag-1] == '?':
+                # XML "external command"
+                # This can be improved to explicitly search for end with '?>'
+                textblock = textblock[end_tag+1:]
+                start_tag = textblock.find('<')
+                continue
 
             if end_tag > -1:
                 # Found left and right brackets: grab tag
