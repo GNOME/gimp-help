@@ -366,6 +366,28 @@ class XMLDocument(object):
         while start_tag > -1:
             textblock = textblock[start_tag+1:]
             end_tag = textblock.find('>')
+            if end_tag > 2 and textblock[0] == '!' and textblock[1] == '-' and textblock[2] == '-':
+                # Start of comment inside a translation is suspicious!
+                if not headerPrinted:
+                    self.printErrorHeader(text, log)
+                    headerPrinted = True
+                print(f"WARNING: Suspicious XML comment found. Skipping contents of comment.", file=log)
+                end_comment = textblock.find('-->')
+                if end_comment > -1:
+                    textblock = textblock[end_comment+3:]
+                    start_tag = textblock.find('<')
+                    continue
+                else:
+                    print(f"WARNING: XML comment closing tag missing", file=log)
+                    start_tag = -1
+                    continue
+            elif end_tag > 2 and textblock[0] == '?' and textblock[end_tag-1] == '?':
+                # XML "external command"
+                # This can be improved to explicitly search for end with '?>'
+                textblock = textblock[end_tag+1:]
+                start_tag = textblock.find('<')
+                continue
+
             if end_tag > -1:
                 # Found left and right brackets: grab tag
                 tag = textblock[: end_tag]
