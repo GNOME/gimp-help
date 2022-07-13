@@ -61,6 +61,8 @@
 	#define LANGFILE='Languages\Unofficial\EnglishBritish.isl'
 #elif LANG=='es'
 	#define LANGFILE='Languages\Spanish.isl'
+#elif LANG=='fa'
+	#define LANGFILE='Languages\Unofficial\Farsi.isl'
 #elif LANG=='fi'
 	#define LANGFILE='Languages\Finnish.isl'
 #elif LANG=='fr'

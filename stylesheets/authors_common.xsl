@@ -51,6 +51,7 @@
       en:English
       en_GB:British_English
       es:Spanish
+      fa:Persian
       fi:Finnish
       fr:French
       hr:Croatian
