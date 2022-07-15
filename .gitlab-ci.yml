@@ -42,8 +42,10 @@ build-image:
     - cd _build
     - ../autogen.sh --prefix=${INSTALL_PREFIX} --without-gimp
     - make && make install
-    - mv ${INSTALL_PREFIX}/share/gimp/2.0/help/ ../${HELP_DIR}
-    - mv ../${HELP_DIR}/pdf/ ../${PDF_DIR}
+    - echo $PWD
+    - ls ../${HELP_DIR}
+    - mv ${INSTALL_PREFIX}/share/gimp/2.0/help/ ${CI_PROJECT_DIR}/${HELP_DIR}
+    - mv ${CI_PROJECT_DIR}/${HELP_DIR}/pdf/ ${CI_PROJECT_DIR}/${PDF_DIR}
   timeout: 2 hours 30 minutes
   needs: ["build-image"]
 
