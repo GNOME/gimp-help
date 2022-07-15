@@ -18,15 +18,15 @@
   <sect3>
     <title>Overview</title>
     <para>
-      This GEGL-based filter appeared with GIMP-2.10.6. It simplifies creating 
-      long shadows in several visual styles.
+      This GEGL-based filter was added in <acronym>GIMP</acronym> 2.10.6. It
+      simplifies creating long shadows in several visual styles. 
     </para>
   </sect3>
 
   <sect3>
     <title>Activate the filter</title>
     <para>
-      You can find this filter in the image menu menu through
+      You can find this filter in the menu through
       <menuchoice>
         <guimenu>Filters</guimenu>
         <guisubmenu>Light and Shadow</guisubmenu>
@@ -34,8 +34,7 @@
       </menuchoice>.
     </para>
     <para>
-      This filter is normally disabled. You must add an Alpha channel to your 
-      image to use it.
+      This filter requires that the selected layer has an alpha channel.
     </para>
   </sect3>
   
@@ -53,7 +52,7 @@ format="PNG"/>
     </figure>
     <variablelist>
       <varlistentry>
-        <term>Presets, Preview, Split view</term>
+        <term>Presets, Input Type, Blending Options, Preview, Split view</term>
         <listitem>
           <xi:include href="../about-common-features.xml"/>
         </listitem>
@@ -138,7 +137,10 @@ fileref="images/filters/examples/light-and-shadow/long-shadow-ex-angle.png"/>
         <term>Length</term>
         <listitem>
           <para>
-            Shadow length, in pixels
+            Shadow length, in pixels. Only available when
+            <guilabel>Style</guilabel> is set to
+            <guilabel>Finite</guilabel> or
+            <guilabel>Fading (fixed length)</guilabel>.
            </para>
           <mediaobject>
             <imageobject>
@@ -152,11 +154,43 @@ fileref="images/filters/examples/light-and-shadow/long-shadow-ex-length.png"/>
          </listitem>
       </varlistentry>
       <varlistentry>
+        <term>Midpoint</term>
+        <listitem>
+          <para>
+            Shadow fade midpoint. Only available when
+            <guilabel>Style</guilabel> is set to
+            <guilabel>Fading</guilabel> or
+            <guilabel>Fading (fixed length)</guilabel>.
+           </para>
+         </listitem>
+      </varlistentry>
+      <varlistentry>
         <term>Composition</term>
         <listitem>
           <para>
-            <guilabel>Shadow plus image</guilabel> is default.
+            The <quote>Output composition</quote> selects how the output of
+            this filter will be determined. There are three choices:
           </para>
+          <itemizedlist>
+            <listitem>
+              <para>
+                <guilabel>Shadow plus image</guilabel> will output both the
+                input image and the created shadow. This is the default.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <guilabel>Shadow only</guilabel> will output only the created
+                shadow.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <guilabel>Shadow minus image</guilabel> will output the
+                created shadow but subtracts the area hidden by the image.
+              </para>
+            </listitem>
+          </itemizedlist>
           <figure>
             <title><quote>Composition</quote> option examples</title>
             <mediaobject>
