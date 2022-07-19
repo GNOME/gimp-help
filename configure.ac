@@ -138,6 +138,16 @@ AM_CONDITIONAL(HAVE_DBLATEX, test -n "$DBLATEX")
 DBLATEXFLAGS="--backend=xetex --style=db2latex --verbose"
 AC_SUBST(DBLATEXFLAGS)
 
+#  Search for rsvg-convert used for building quickreference PDF's
+
+AC_PATH_PROG(SVG2PDF, rsvg-convert)
+if test -z "$SVG2PDF"; then
+  AC_MSG_NOTICE([cannot find rsvg-convert(1), Quickreference PDF generation disabled])
+fi
+
+AM_CONDITIONAL(HAVE_SVG2PDF, test -n "$SVG2PDF")
+SVG2PDF_FLAGS="-a -f pdf"
+AC_SUBST(SVG2PDF_FLAGS)
 
 #  Use our customized xml2po
 
