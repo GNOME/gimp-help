@@ -18,7 +18,7 @@
 <xsl:output method="xml" encoding="utf-8" indent="no"/>
 
 <xsl:variable name="style-section"
-    select="'fill:black;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans;font-style:normal;font-weight:bold;font-size:16;text-anchor:start;writing-mode:lr;letter-spacing:-2;'"/>
+    select="'fill:black;fill-opacity:1;stroke:none;font-family:DejaVu Sans,Bitstream Vera Sans,Verdana,sans-serif;font-style:normal;font-weight:bold;font-size:16;text-anchor:start;writing-mode:lr;letter-spacing:-2;'"/>
 <xsl:variable name="space-section" select="28"/>
 <xsl:variable name="skip-section-title" select="21"/>
 <xsl:variable name="skip-section-content" select="25"/>
@@ -26,7 +26,7 @@
 <xsl:variable name="space-group" select="3"/>
 <xsl:variable name="skip-group-content" select="1.5"/>
 
-<xsl:variable name="style-title" select="'fill:black;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans;font-style:oblique;font-weight:bold;font-size:7.4;text-anchor:start;writing-mode:lr;letter-spacing:-0.2;'"/>
+<xsl:variable name="style-title" select="'fill:black;fill-opacity:1;stroke:none;font-family:DejaVu Sans,Bitstream Vera Sans,Verdana,sans-serif;font-style:oblique;font-weight:bold;font-size:7.4;text-anchor:start;writing-mode:lr;letter-spacing:-0.2;'"/>
 <xsl:variable name="space-title" select="7"/>
 <xsl:variable name="skip-title-content" select="5"/>
 
@@ -38,16 +38,16 @@
 <xsl:variable name="skip-mouse-content" select="1.5"/>
 <xsl:variable name="skip-mouse-action" select="5"/> <!-- from mouse-content -->
 
-<xsl:variable name="style-note" select="'fill:black;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans;font-style:normal;font-weight:normal;font-size:3;text-anchor:start;writing-mode:lr;letter-spacing:0;'"/>
+<xsl:variable name="style-note" select="'fill:black;fill-opacity:1;stroke:none;font-family:DejaVu Sans,Bitstream Vera Sans,Verdana,sans-serif;font-style:normal;font-weight:normal;font-size:3;text-anchor:start;writing-mode:lr;letter-spacing:0;'"/>
 <xsl:variable name="space-note" select="4"/>
 <xsl:variable name="skip-note-content" select="3"/>
 
-<xsl:variable name="style-letterkey" select="'fill:black;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans;font-style:normal;font-weight:normal;font-size:4.4;text-anchor:start;writing-mode:lr;'"/>
-<xsl:variable name="style-keyf" select="'fill:black;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans;font-style:normal;font-weight:normal;font-size:3.3;text-anchor:start;writing-mode:lr;letter-spacing:-0.4;'"/>
-<xsl:variable name="style-keymisc" select="'fill:black;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans;font-style:normal;font-weight:normal;font-size:3.4;text-anchor:start;writing-mode:lr;letter-spacing:-0.2;'"/>
-<xsl:variable name="style-action" select="'fill:black;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans;font-style:normal;font-weight:normal;font-size:6.4;text-anchor:start;writing-mode:lr;letter-spacing:-0.4;'"/>
+<xsl:variable name="style-letterkey" select="'fill:black;fill-opacity:1;stroke:none;font-family:DejaVu Sans,Bitstream Vera Sans,Verdana,sans-serif;font-style:normal;font-weight:normal;font-size:4.4;text-anchor:start;writing-mode:lr;'"/>
+<xsl:variable name="style-keyf" select="'fill:black;fill-opacity:1;stroke:none;font-family:DejaVu Sans,Bitstream Vera Sans,Verdana,sans-serif;font-style:normal;font-weight:normal;font-size:3.3;text-anchor:start;writing-mode:lr;letter-spacing:-0.4;'"/>
+<xsl:variable name="style-keymisc" select="'fill:black;fill-opacity:1;stroke:none;font-family:DejaVu Sans,Bitstream Vera Sans,Verdana,sans-serif;font-style:normal;font-weight:normal;font-size:3.4;text-anchor:start;writing-mode:lr;letter-spacing:-0.2;'"/>
+<xsl:variable name="style-action" select="'fill:black;fill-opacity:1;stroke:none;font-family:DejaVu Sans,Bitstream Vera Sans,Verdana,sans-serif;font-style:normal;font-weight:normal;font-size:6;text-anchor:start;writing-mode:lr;letter-spacing:-0.4;'"/>
 
-<xsl:variable name="section-width" select="215"/>
+<xsl:variable name="section-width" select="240"/>
 <xsl:variable name="section-hskip" select="2"/>
 <xsl:variable name="note-hskip" select="6"/>
 
@@ -85,7 +85,7 @@
         height="1200"
         id="svg559"
         sodipodi:version="0.32"
-        inkscape:version="0.37cvs"
+        inkscape:version="1.1"
         sodipodi:docname="keys-sample.svg"
         xmlns="http://www.w3.org/2000/svg"
         xmlns:svg="http://www.w3.org/2000/svg"
@@ -113,8 +113,8 @@
 
         <!-- GIMP Quickreference title -->
         <text id="quickreference_title"
-            style="font-size: 43px;"
-            x="94"
+            style="font-size: 42px;"
+            x="50"
             y="82">
             <tspan>
                 <xsl:value-of select="//k:root/k:title" />
@@ -125,13 +125,13 @@
         <g
             id="wilber"
             inkscape:label="wilber reading"
-            transform="matrix(2.5822219,0,0,2.5822219,622.45494,24.994751)">
+            transform="matrix(2.5822219,0,0,2.5822219,850.0,25.0)">
             <xsl:copy-of select="$wilber" />
         </g>
 
         <!-- Reference -->
         <g id="outer_group"
-            transform="matrix(1.24, 0, 0, 1.24, 91.82, 136.99)">
+            transform="matrix(1.24, 0, 0, 1.24, 50.0, 136.99)">
             <xsl:apply-templates/>
         </g>
     </svg>
