@@ -71,8 +71,9 @@ svg/gimp-keys-%.svg: xml/gimp-keys-%.xml stylesheets/keys-svg.xsl
 
 svg: $(foreach lang,$(QUICKREFERENCE_LINGUAS),svg/gimp-keys-$(lang).svg)
 
-SVG2PDF = rsvg-convert
-SVG2PDF_FLAGS = -a -f pdf
+# Quickreference PDF generation
+
+if HAVE_SVG2PDF
 
 pdf/gimp-keys-%.pdf: svg/gimp-keys-%.svg
 	@$(MKDIR_P) pdf
@@ -81,6 +82,8 @@ pdf/gimp-keys-%.pdf: svg/gimp-keys-%.svg
 	@$(SVG2PDF) $(SVG2PDF_FLAGS) -o $@ $<
 
 pdf-local: $(foreach lang,$(QUICKREFERENCE_LINGUAS),pdf/gimp-keys-$(lang).pdf)
+
+endif
 
 docbook/gimp-keys-%.xml: xml/gimp-keys-%.xml stylesheets/keys-docbook.xsl
 	@$(MKDIR_P) docbook
