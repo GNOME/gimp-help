@@ -69,6 +69,8 @@
   <xsl:param name="gimp.help.all_linguas">@ALL_LINGUAS@</xsl:param>
   <!-- Quick access to report bugs in our Bugzilla Bug: 711318 -->
   <xsl:param name="gimphelp.reportbug" select="//ulink[@id='reportbug']" />
+  <xsl:param name="gimp.reportbug.url" select="'https://gitlab.gnome.org/GNOME/gimp/issues'" />
+  <xsl:param name="gimp.reportbug.text" select="'Report a bug in GIMP'" />
 
   <!-- Add NotInToc role to simplesect, which is using in fdl.xml to
   deal with FDL-In-TOC issue.
@@ -134,7 +136,7 @@
                     <!-- PATCH: if prev is empty, add a link to www.gimp.org -->
                     <xsl:otherwise>
                       <a>
-                        <xsl:attribute name="href">http://www.gimp.org</xsl:attribute>
+                        <xsl:attribute name="href">https://www.gimp.org</xsl:attribute>
                         <img>
                           <xsl:attribute name="src">
                             <xsl:value-of select="$navig.graphics.path"/>
@@ -337,6 +339,15 @@
             </xsl:if>
           </table>
         </xsl:if>
+        <a>
+          <xsl:attribute name="href">
+            <xsl:value-of select="$gimp.reportbug.url"/>
+          </xsl:attribute>
+          <xsl:attribute name="class">
+            <xsl:value-of select="$gimphelp.reportbug/@id"/>
+          </xsl:attribute>
+          <xsl:value-of select="$gimp.reportbug.text" />
+        </a>
         <a>
           <xsl:attribute name="href">
             <xsl:value-of select="$gimphelp.reportbug/@url"/>
