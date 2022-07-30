@@ -139,7 +139,7 @@ TODO
 - What packages are required and/or optional to build gimp-help.
 - Add style guide and add link to it here.
 
-Preferrably build the most up to date manual yourself or check
+Preferably build the most up to date manual yourself or check
 the latest uploaded version at https://docs.gimp.org/2.10/en/.
 
 The source of the manual can be found in XML files in the /src
@@ -171,7 +171,7 @@ https://gitlab.gnome.org/GNOME/gimp-help/issues
   `en` above with their language code.
 
   When you edit an XML file and want to quickly check your changes,
-  you can create a single quick-and-dirty HMTL draft file with
+  you can create a single quick-and-dirty HTML draft file with
 
     make src/of/the/xml-file.draft
 
@@ -182,7 +182,7 @@ https://gitlab.gnome.org/GNOME/gimp-help/issues
 
   where the path name is preceded with "preview-".
 
-  The name of the HMTL draft file depends on its id (not on the name
+  The name of the HTML draft file depends on its id (not on the name
   of the XML source file!) and is displayed when the file is created.
 
 
