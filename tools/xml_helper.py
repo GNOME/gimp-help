@@ -296,7 +296,7 @@ def _format_xml_internal (child_langs,
                 index += 1
 
 def format_xml (node):
-    """Recursively sort the chidren tags by lang attrib"""
+    """Recursively sort the children tags by lang attrib"""
     group = None
     child_langs = []
     nodes_by_lang = {}
