@@ -23,6 +23,15 @@ get_po_status.pl    This Perl script searches for po files in the specified
                     and strings, number of translated, fuzzy, or
                     untranslated strings).
 
+translated_percentage.py
+                    Generates info about what percentage of each available
+                    language has been translated. Written in a format that we
+                    can use when generating the website.
+
+validate_po.py      Validates correct use of XML tags and other possible causes
+                    of problems in po files.
+                    Note that currently only the translated messages are
+                    validated, not the original English message.
 
 
 show_translation_progress.py
@@ -97,6 +106,44 @@ Requirements:
 
 Usage:
     tools/check_image_resolutions.sh DIR [DIR ...]
+
+
+translated_percentage.py
+========================
+
+Generates info about what percentage of each available language has been
+translated. Written in a format that we can use when generating the website.
+
+Requirements:
+    - msgfmt needs to be available
+
+Usage: translated_percentage.py [options]
+
+    options:
+        -o      --output          default: ../web/langstats.xml
+        -p      --podir           default: ../po
+        -q      --quickreference  handle quickreference po files
+        -v      --verbose         be more verbose
+        -h      --help            this help""")
+
+
+validate_po.py
+==============
+
+Validates correct use of XML tags and other possible causes of problems in
+po files.
+Note that currently only the translated messages are validated, not the
+original English message.
+
+Requirements:
+    - polib
+
+Usage: validate_po.py [options] POFILES
+
+    options:
+        -v      --verbose       be more verbose
+        -w      --warnings      show warnings
+        -h      --help          this help""")
 
 
 xml_helper.py
