@@ -14,7 +14,16 @@
     <primary>CMYK</primary>
   </indexterm>
   <indexterm>
+    <primary>HSL</primary>
+  </indexterm>
+  <indexterm>
     <primary>HSV</primary>
+  </indexterm>
+  <indexterm>
+    <primary>LAB</primary>
+  </indexterm>
+  <indexterm>
+    <primary>LCH</primary>
   </indexterm>
   <indexterm>
     <primary>RGB</primary>
@@ -139,16 +148,21 @@
               <term>RGB</term>
               <listitem>
                 <para>
-                  If the RGB radio button is clicked, a grey level image is
-                  created with three layers (Red, Green and Blue), and two
-                  channels (Grey and Alpha).
+                  If the RGB option is chosen, a gray level image is created
+                  with three layers (Red, Green and Blue), and two channels
+                  (Gray and Alpha).
                 </para>
                 <para>
-                  This function is interesting when using Threshold tool. You
-                  can also perform operations like cutting, pasting or moving
-                  selections in a single RBG channel. You can use an
-                  extracted grayscale as a selection or mask by saving it in
-                  a channel (right-click&gt;Select&gt;Save to a channel).
+                  This function is interesting when using the Threshold tool.
+                  You can also perform operations like cutting, pasting or
+                  moving selections in a single RBG channel. You can use an
+                  extracted grayscale layer as a selection or mask by saving it
+                  in a channel (select the whole or a part of the layer, then
+                  <menuchoice>
+                    <guimenu>Select</guimenu>
+                    <guimenuitem>Save to a channel</guimenuitem>
+                  </menuchoice>
+                  ).
                 </para>
               </listitem>
             </varlistentry>
@@ -156,11 +170,24 @@
               <term>RGBA</term>
               <listitem>
                 <para>
-                  If the RGBA radio button is clicked, an image is created
+                  If the RGBA option is chosen, an image is created
                   similar to the RGB Decomposing with an additional Alpha
-                  layer filled with the transparencies values of the source
-                  image. Full transparent pixels are black and the full
+                  layer filled with the transparency values of the source
+                  image. Fully transparent pixels are black and fully
                   opaque pixels are white.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Alpha</term>
+              <listitem>
+                <para>
+                  This option extracts the image transparency stored in the
+                  Alpha channel in the 
+                  <link linkend="gimp-channel-dialog">Channel dialog</link>
+                  in a separate image. The fully transparent pixels are Black
+                  the fully opaque pixels are white. The graytones are smooth
+                  transitions of the transparency in the source image.
                 </para>
               </listitem>
             </varlistentry>
@@ -168,16 +195,16 @@
               <term>HSV</term>
               <listitem>
                 <para>
-                  This option decomposes image into three greyscaled layers,
+                  This option decomposes image into three grayscale layers,
                   one for Hue, one for Saturation and another for Value.
                 </para>
                 <para>
-                  Although <guilabel>Hue</guilabel> is greyscaled, it does
+                  Although <guilabel>Hue</guilabel> is grayscale, it does
                   represent hues. In color circle, white and black are
                   starting and arrival points and are superimposed. They
-                  represent Red color at top of circle. Grey intermediate
+                  represent Red color at top of circle. Gray intermediate
                   levels are corresponding to intermediate hues on circle:
-                  dark grey to orange, mid grey to green and light grey to
+                  dark gray to orange, mid gray to green and light gray to
                   magenta.
                 </para>
                 <para><guilabel>Saturation</guilabel> and
@@ -198,41 +225,16 @@
               </listitem>
             </varlistentry>
             <varlistentry>
-              <term>CMY</term>
-              <listitem>
-                <para>
-                  This option decomposes image into three greyscaled layers,
-                  one for Yellow, one for Magenta and another for Cyan.
-                </para>
-                <para>
-                  This option might be useful to transfer image into printing
-                  software with CMY capabilities.
-                </para>
-              </listitem>
-            </varlistentry>
-            <varlistentry>
               <term>CMYK</term>
               <listitem>
                 <para>
-                  This option is similar to the <guilabel>CMY Decomposing
-                  </guilabel> with an additional layer for Black.
+                  This option decomposes an image into four grayscale layers,
+                  one for Yellow, one for Magenta, one for Cyan, and one for
+                  Black.
                 </para>
                 <para>
-                  This option might be useful to transfer image into printing
+                  This option can be useful to transfer an image into printing
                   software with CMYK capabilities.
-                </para>
-              </listitem>
-            </varlistentry>
-            <varlistentry>
-              <term>Alpha</term>
-              <listitem>
-                <para>
-                  This option extracts the image transparency stored in the
-                  Alpha channel in
-                  <link linkend="gimp-channel-dialog">Channel dialog</link>
-                  in a separate image. The full transparent pixels are Black
-                  the full opaque pixels are white. The graytones are smooth
-                  transitions of the transparency in the source image.
                 </para>
               </listitem>
             </varlistentry>
@@ -240,7 +242,7 @@
               <term>LAB</term>
               <listitem>
                 <para>
-                  This option decomposes image into three greyscaled layers,
+                  This option decomposes image into three grayscale layers,
                   layer <quote>L</quote> for Luminance, layer
                   <quote>A</quote> for colors between green and red, layer
                   <quote>B</quote> for colors between blue and yellow.
@@ -254,22 +256,38 @@
               </listitem>
             </varlistentry>
             <varlistentry>
-              <term>YCbCr</term>
+              <term>LCH</term>
               <listitem>
                 <para>
-                  In <acronym>GIMP</acronym> there is four YCbCr
-                  decompositions with different values.
-                  Each option decomposes image in three greyscaled layers, a
-                  layer for Luminance and two other for blueness and redness.
+                  This option decomposes image into three grayscale layers,
+                  layer <quote>L</quote> for Luminance, layer <quote>C</quote>
+                  for Chroma, and layer <quote>H</quote> for Hue.
                 </para>
                 <para>
-                  The YCbCr color model also called YUV is now used for
+                  The LCH Decomposing is a color model of the Luminance-Color
+                  family.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>YCbCr ITU R470, YCbCr ITU R470 256, YCbCr ITU R709,
+              YCbCr ITU R709 256</term>
+              <listitem>
+                <para>
+                  In <acronym>GIMP</acronym> there are four YCbCr
+                  decompositions with different values.
+                  Each option decomposes an image in three grayscale layers, a
+                  layer for Luminance and the other two layers for blueness
+                  and redness.
+                </para>
+                <para>
+                  The YCbCr color model, also called YUV, is now used for
                   digital video (initially for PAL analog video). It's based
                   on the idea that the human eye is most sensitive to
-                  luminosity, next to colors. The YCbCr Decomposing use a
+                  luminosity, next to colors. The YCbCr Decomposing uses a
                   transformation matrix and the different options are
                   different values recommended by ITU (International
-                  Telecommunication Union) applied to the matrix .
+                  Telecommunication Union) applied to the matrix.
                 </para>
               </listitem>
             </varlistentry>
@@ -282,11 +300,10 @@
         <term>Decompose to Layers</term>
         <listitem>
           <para>
-            If this option is checked, a new grey-scaled image is created,
+            If this option is checked, a new grayscale image is created,
             with each layer representing one of the channels of the selected
-            mode. If this option is not checked, every channel is represented
-            with a specific image automatically and clearly named in the name
-            bar.
+            mode. If this option is unchecked, every channel is represented
+            in its own image and clearly named in the name bar.
           </para>
         </listitem>
       </varlistentry>
