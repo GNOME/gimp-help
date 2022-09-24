@@ -7,7 +7,7 @@
   2005-12-07 replaced <simplesect> by <sect3> by lexa
   2005-09-09 de added by axel.wernicke
 -->
-<sect2 id="plug-in-newsprint">
+<sect2 xmlns:xi="http://www.w3.org/2001/XInclude" id="gimp-filter-newsprint">
   <title>Newsprint</title>
 
   <indexterm>
@@ -38,15 +38,21 @@
             fileref="images/filters/examples/distort-taj-newsprint.jpg"/>
         </imageobject>
         <caption>
-          <para>Filter <quote>Newsprint</quote> applied</para>
+          <para>
+            Filter <quote>Newsprint</quote> applied using RGB color mode,
+            PSSquare pattern for all channels, red period 6, green period 8,
+            blue period 10, angle 15 for all channels.
+          </para>
         </caption>
       </mediaobject>
     </figure>
     <para>
-      This filter halftones the image using a clustered-dot dither. Halftoning
-      is the process of rendering an image with multiple levels of grey or
-      color (i.e. a continuous tone image) on a device with fewer tones;
+      This filter performs digital halftoning with optional modulations.
+      Halftoning is the process of rendering an image with multiple levels of
+      gray or color (i.e. a continuous tone image) on a device with fewer tones;
       often a bi-level device such as a printer or typesetter.
+      Be aware that Newsprint is not a filter for generating half-tone screens
+      for print, but for simulating the appearance of printing with them.
     </para>
     <para>
       The basic premise is to trade off resolution for greater apparent tone
@@ -59,30 +65,18 @@
       spatial resolution is lost.
     </para>
     <para>
-      This filter uses a clustered-dot ordered dither, which reduces the
-      resolution of the image by converting cells into spots which grow or
-      shrink according to the intensity that cell needs to represent.
-    </para>
-    <para>
-      Imagine a grid super-imposed on the original image.  The image is
+      Imagine a grid super-imposed on the original image. The image is
       divided into cells by the grid - each cell will ultimately hold a single
       spot made up of multiple output pixels in order to approximate the
-      darkness of the original image in that cell.
-    </para>
-    <para>
-      Obviously, a large cell size results in a heavy loss in resolution! The
-      spots in the cells typically start off as circles, and grow to be
-      diamond shaped. This change in shape is controlled by a
-      <guilabel>Spot&nbsp;function</guilabel>. By using different spot
-      functions, the evolution in the shape of the spots as the cell goes from
-      fully black to fully white may be controlled.
+      darkness of the original image in that cell. Obviously, a large cell
+      size results in a heavy loss in resolution!
     </para>
   </sect3>
 
   <sect3>
     <title>Starting filter</title>
     <para>
-      You can find this filter through
+      This filter can be accessed through the menu:
       <menuchoice>
         <guimenu>Filters</guimenu>
         <guisubmenu>Distorts</guisubmenu>
@@ -104,53 +98,93 @@
     </figure>
     <variablelist>
       <varlistentry>
-        <term>Preview</term>
+        <term>Presets, Input Type, Blending Options, Preview, Split view</term>
         <listitem>
-          <!-- changed 2010-05-17 ude: looks like just the opposite is true...
-            Note that the preview displays the whole image, even if the final
-            result will concern a selection.
-          -->
-          <para>
-            All your setting changes will appear in the Preview without
-            affecting the image until you click on <guilabel>OK</guilabel>.
-            Note that the preview displays only a part of the whole image if
-            the filter is applied to a selection. Don't keep
-            <guilabel>Preview</guilabel> checked if your computer is too slow.
-          </para>
+          <xi:include href="../about-common-features.xml"/>
         </listitem>
       </varlistentry>
       <varlistentry>
-        <term>Resolution</term>
+        <term>Channels</term>
         <listitem>
           <para>
-            This group controls the cell size, either by setting the input and
-            output resolutions, or directly.
+            This group controls the channels to use and the settings for each
+            channel.
           </para>
           <variablelist>
             <varlistentry>
-              <term>Input SPI</term>
+              <term>Color Model</term>
               <listitem>
                 <para>
-                  Resolution of the original input image, in Samples Per Inch
-                  (SPI). This is automatically initialised to the input
-                  image's resolution.
+                  Select which color inks to use:
+                  <guilabel>White on Black</guilabel>,
+                  <guilabel>Black on White</guilabel>,
+                  <guilabel>RGB</guilabel>, or
+                  <guilabel>CMYK</guilabel>.
                 </para>
               </listitem>
             </varlistentry>
             <varlistentry>
-              <term>Output LPI</term>
+              <term>For each color ink or channel</term>
               <listitem>
                 <para>
-                  Desired output resolution, in Lines Per Inch (LPI).
+                  Settings that can be changed for each color ink or channel
+                  are listed here.
                 </para>
+                <variablelist>
+                  <varlistentry>
+                    <term>Pattern</term>
+                    <listitem>
+                      <para>
+                        Select the halftoning pattern to use. Choices are
+                        <guilabel>Line</guilabel>, <guilabel>Circle</guilabel>,
+                        <guilabel>Diamond,</guilabel>,
+                        <guilabel>PSSquare (or Euclidian) dot</guilabel>,
+                        <guilabel>Crossing Lines</guilabel>.
+                      </para>
+                    </listitem>
+                  </varlistentry>
+                  <varlistentry>
+                    <term>Period</term>
+                    <listitem>
+                      <para>
+                        The number of pixels across one repetition of a base
+                        pattern at base resolution.
+                      </para>
+                    </listitem>
+                  </varlistentry>
+                  <varlistentry>
+                    <term>Angle</term>
+                    <listitem>
+                      <para>
+                        The grid angle that should be used. This angle can be
+                        adjusted with the slider, number entry, or using the
+                        angle control by moving the arrow in the circle.
+                      </para>
+                    </listitem>
+                  </varlistentry>
+                  <varlistentry>
+                    <term>Black pullout</term>
+                    <listitem>
+                      <para>
+                        This setting is only available when
+                        <guilabel>CMYK</guilabel> was chosen as Color Model and
+                        the selected channel is <guilabel>Black</guilabel>.
+                        It regulates how much of common gray to pull out of
+                        CMY.
+                      </para>
+                    </listitem>
+                  </varlistentry>
+                </variablelist>
               </listitem>
             </varlistentry>
             <varlistentry>
-              <term>Cell size</term>
+              <term>Lock patterns, Lock periods, Lock angles</term>
               <listitem>
                 <para>
-                  Resulting cell size, in pixels. Most often you will want to
-                  set this directly.
+                  These three check boxes, if enabled, lock the settings
+                  mentioned above to be the same for all channels. If
+                  disabled, then these settings can be set individually for
+                  each channel.
                 </para>
               </listitem>
             </varlistentry>
@@ -158,91 +192,52 @@
         </listitem>
       </varlistentry>
       <varlistentry>
-        <term>Screen</term>
-        <listitem>
-          <variablelist>
-            <varlistentry>
-              <term>Separate To RGB, CMYK, Intensity</term>
-              <listitem>
-                <para>
-                  Select which colorspace you wish to operate in.  In
-                  <emphasis>RGB</emphasis> mode, no colorspace conversion is
-                  performed. In <emphasis>CMYK</emphasis>, the image is first
-                  internally converted to CMYK, then each color channel is
-                  separately halftoned, before finally being recombined back
-                  to an RGB image. In <emphasis>Intensity</emphasis> mode,
-                  the image is internally converted to grayscale, halftoned,
-                  then the result used as the alpha channel for the input
-                  image. This is good for special effects, but requires a
-                  little experimentation to achieve best results.  Hint: try
-                  CMYK if you don't know which to go for initially.
-                </para>
-              </listitem>
-            </varlistentry>
-            <varlistentry>
-              <term>Black pullout (%)</term>
-              <listitem>
-                <para>
-                  When doing RGB-&gt;CMYK conversion, how much K (black)
-                  should be used?
-                </para>
-              </listitem>
-            </varlistentry>
-            <varlistentry>
-              <term>Lock channels</term>
-              <listitem>
-                <para>
-                  Make channel modifications apply to all channels.
-                </para>
-              </listitem>
-            </varlistentry>
-            <varlistentry>
-              <term>Factory Defaults</term>
-              <listitem>
-                <para>
-                  Restore the default settings which should give pleasing
-                  results.
-                </para>
-              </listitem>
-            </varlistentry>
-            <varlistentry>
-              <term>Angle</term>
-              <listitem>
-                <para>Cell grid angle for this channel.</para>
-              </listitem>
-            </varlistentry>
-            <varlistentry>
-              <term>Spot function</term>
-              <listitem>
-                <para>
-                  Spot function to be used for this channel (see preview in
-                  blue cell-boxes).
-                </para>
-              </listitem>
-            </varlistentry>
-          </variablelist>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>Antialiasing</term>
+        <term>Quality</term>
         <listitem>
           <para>
-            Proper halftoning does not need antialiasing: the aim is to
-            reduce the color depth after all!  However, since this
-            plugin is mainly for special effects, the results are
-            displayed on screen rather than by a black/white printer.
+            <guilabel>Anti-alias oversampling factor</guilabel> This sets the
+            number of samples that are averaged for anti-aliasing the result.
+          </para>
+          <para>
+            Proper halftoning does not need anti-aliasing: the aim is to
+            reduce the color depth after all! However, since this
+            plug-in is mainly for special effects, the results are
+            displayed on screen instead of on a printer.
             So it is often useful to apply a little anti-aliasing to
-            simulate ink smearing on paper.  If you do want to print the
+            simulate ink smearing on paper. If you do want to print the
             resulting image then set the antialiasing to 1 (i.e., off).
           </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Effects</term>
+        <listitem>
           <variablelist>
             <varlistentry>
-              <term>Oversample</term>
+              <term>Turbulence</term>
               <listitem>
                 <para>
-                  Number of subpixels to sample to produce each output pixel.
-                  Set to 1 to disable this feature. Warning: large numbers
-                  here will lead to very long filter runtimes!
+                  Color saturation dependent compression of period.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Blocksize</term>
+              <listitem>
+                <para>
+                  Number of periods per tile. This tiling avoids high
+                  frequency anomalies that angle boost causes.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Angle Boost</term>
+              <listitem>
+                <para>
+                  Multiplication factor for the desired rotation of the local
+                  space for the texture. The way this is computed makes it weak
+                  for desaturated colors and possibly stronger where there is
+                  color.
                 </para>
               </listitem>
             </varlistentry>
@@ -252,19 +247,4 @@
     </variablelist>
   </sect3>
 
-  <sect3>
-    <title>Example</title>
-    <figure>
-      <title>Example for Newsprint</title>
-      <mediaobject>
-        <imageobject>
-          <imagedata format="PNG"
-            fileref="images/filters/examples/newsprint.png"/>
-        </imageobject>
-        <caption>
-          <para>An example from plug-in author</para>
-        </caption>
-      </mediaobject>
-    </figure>
-  </sect3>
 </sect2>
