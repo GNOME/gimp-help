@@ -69,6 +69,15 @@ To get started, here is a checklist of things you should do:
   create your own fork by clicking on "Fork" on the top
   right of the page.
 - Go to your fork at https://gitlab.gnome.org/YOUR_USERNAME/gimp-help
+- gimp-help uses a CI pipeline to validate the contents of the repo at each
+  commit. Make sure to setup the CI settings for your fork correctly:
+  + `Settings > General > Visibility`:
+    - Set `Project visibility` to `Public`
+    - Enable `Repository` with `Everyone With Access`
+    - Enable `CI/CD` with `Everyone With Access`
+    - Enable `Container registry` (any visibility level)
+  + `Settings > CI/CD > General pipelines`:
+    - Enable `Public pipelines`
 - For relatively small and simple edits you can use the web-ide
   if you don't want to set up a build environment on your computer.
   + On the left under Repository click Files, then navigate to the
@@ -82,6 +91,8 @@ To get started, here is a checklist of things you should do:
     create a new branch for every change. Make sure you give
     a descriptivev name to your commit. That way others can
     understand what your change is about.
+  + Make sure the CI pipeline succeeds. Otherwise, inspect the pipeline for the
+    cause of failure and fix it.
   + Next you need to create a Merge Request (MR) for the commit.
   + This MR will show up in the main gimp-help repository and
     will be reviewed and evaluated.
@@ -120,6 +131,8 @@ To get started, here is a checklist of things you should do:
     descriptive commit message. Make sure you always do
     related changes in a separate branch.
   + Push your changes to your fork on Gnome GitLab.
+  + Make sure the CI pipeline succeeds. Otherwise, inspect the pipeline for the
+    cause of failure and fix it.
   + Go to your online fork and click the Merge Request
     button.
 - Make sure that you have notifications enabled, because you
