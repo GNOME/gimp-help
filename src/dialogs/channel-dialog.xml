@@ -40,21 +40,27 @@
     <acronym>GIMP</acronym> uses Red, Green, and Blue as primary colors. The
     first and primary channels display the <guilabel>Red</guilabel>,
     <guilabel>Green</guilabel>, and <guilabel>Blue</guilabel> values of each
-    pixel in your image. Next to the channel name is a thumbnail displaying a
-    grayscale representation of each channel, where white is 100% and black is
+    pixel in your image.
+  </para>
+  <para>
+    Next to the channel name is a thumbnail displaying a grayscale
+    representation of each channel, where white is 100% and black is
     0% of the primary color. Alternatively, if your image is not a colored but
     a Grayscale image, there is only one primary channel called
     <guilabel>Gray</guilabel>. For an Indexed image with a fixed number of
     known colors there is also only one primary channel called
-    <guilabel>Indexed</guilabel>. Then there is an optional channel called
-    <guilabel>Alpha</guilabel>. This channel displays transparency values of
-    each pixel in your image (See <link linkend="glossary-alpha-channel">Alpha
-    Channel</link> in Glossary). In front of this channel is a thumbnail
-    displaying a grayscale representation of the transparency where white is
-    opaque and visible, and black is transparent and invisible. If you create
-    your image without transparency then the Alpha channel is not present, but
-    you can add it from the <link linkend="gimp-layer-dialog">Layers dialog
-    menu</link>.  Also, if you have more than one layer in your image,
+    <guilabel>Indexed</guilabel>.
+  </para>
+  <para>
+    Then there is an optional channel called <guilabel>Alpha</guilabel>. This
+    channel displays transparency values of each pixel in your image
+    (See <link linkend="glossary-alpha-channel">Alpha Channel</link> in
+    Glossary). In front of this channel is a thumbnail displaying a grayscale
+    representation of the transparency where white is opaque and visible, and
+    black is transparent and invisible. If you create your image without
+    transparency then the Alpha channel is not present, but you can add it
+    from the <link linkend="gimp-layer-dialog">Layers dialog menu</link>.
+    Also, if you have more than one layer in your image,
     <acronym>GIMP</acronym> automatically creates an Alpha channel.
   </para>
   <note>
@@ -165,19 +171,56 @@
   </sect3>
 
   <sect3 id="gimp-channel-dialog-using">
-    <title>Using the Channel dialog</title>
+    <title>Using the Channels dialog</title>
 
     <sect4 id="gimp-channel-dialog-using-overview">
       <title>Overview</title>
       <para>
-        The top channels are the color channels and the optional Alpha
-        channel. They are always organized in the same order and they cannot
-        be erased. Selection masks are described below and displayed as a list
-        in the dialog. Every channel appears in the list with its attributes,
-        including a thumbnail and its name. A right-click in a channel list
-        entry opens the <link linkend="gimp-channel-menu">channel context
-        menu</link>.
+        The channels in the at the top are the color channels and the optional
+        Alpha channel. They are always organized in the same order and they
+        cannot be removed. In the middle are two lock buttons, that show the
+        lock status for the currently selected channel in the bottom area.
+        The bottom area shows a list of selection masks. Every channel appears
+        in the list with its attributes, including a thumbnail and its name.
+        A right-click in a channel list entry opens the
+        <link linkend="gimp-channel-menu">channel context menu</link>.
       </para>
+    </sect4>
+
+    <sect4 id="gimp-channel-dialog-using-locks">
+      <title>Channel lock attributes</title>
+      <para>
+        Above the list of selection mask channels are two check boxes that
+        show the lock attributes state of the currently selected mask channel.
+      </para>
+      <variablelist>
+        <varlistentry id="gimp-channel-lock-pixels">
+          <term>
+            <phrase>Lock pixels</phrase>
+          </term>
+          <listitem>
+            <para>
+              The paintbrush icon shows whether <quote>lock pixels</quote> is
+              enabled (highlighted) for the current channel. When this is
+              enabled, the channel is locked for any action that changes the
+              pixels, meaning there will be no changes done to this channel.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry id="gimp-channel-lock-position">
+          <term>
+            <phrase>Lock position and size</phrase>
+          </term>
+          <listitem>
+            <para>
+              The cross-with-arrows icon shows whether <quote>lock position and
+              size</quote> is enabled (highlighted) for the current channel.
+              When this is enabled, the channel is locked for any action that
+              changes the position or size.
+            </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
     </sect4>
 
     <sect4 id="gimp-channel-dialog-using-attributes">
@@ -195,7 +238,7 @@
                        fileref="images/dialogs/channel-list-entry.png"/>
           </imageobject>
         </mediaobject>
-        <varlistentry>
+        <varlistentry id="gimp-channel-visible">
           <term>
             <guiicon>
               <inlinegraphic fileref="images/dialogs/stock-eye-20.png"/>
@@ -211,7 +254,7 @@
             </para>
           </listitem>
         </varlistentry>
-        <varlistentry>
+        <varlistentry id="gimp-channel-linked">
           <term>
             <guiicon>
               <inlinegraphic fileref="images/dialogs/stock-vchain-24.png"/>
@@ -220,11 +263,11 @@
           </term>
           <listitem>
             <para>
-              The channels representing selection masks (the new channels in
-              the lower part of the channel list) may be grouped using the
-              button with the <quote>chain</quote> symbol. Then these channels
-              are all affected in the same way by operations applied to any
-              one of them.
+              The channels representing selection masks (in the lower part of
+              the channel list) may be grouped using the button with the
+              <quote>chain</quote> symbol. All channels that have the chain
+              enabled will be affected in the same way by operations applied
+              to any one of them.
             </para>
             <para>
               Primary color channels (the default channels in the upper part
@@ -235,8 +278,8 @@
               deactivate this channel. Operations like
               <link linkend="gimp-tool-colorize">colorizing</link> a layer
               will then be applied to the selected (<quote>grouped</quote>)
-              channels only. Clicking again on the list entry will activate
-              the channel.
+              channels only. Clicking on the deactivated list entry will
+              activate the channel again.
             </para>
           </listitem>
         </varlistentry>
@@ -245,9 +288,9 @@
           <term>Thumbnail</term>
           <listitem>
             <para>
-              A small preview-icon represents the effect of the channel. On
-              a selection mask, this preview can be enlarged by holding
-              click down on it.
+              A small preview icon represents the effect of the channel. This
+              preview can be enlarged by holding down the left mouse button
+              on it.
             </para>
           </listitem>
         </varlistentry>
@@ -259,19 +302,20 @@
               Double-clicking on the name of a selection mask channel will
               allow you to edit it. The names of the primary channels (Red,
               Green, Blue, Alpha) can not be changed.
+              Double-clicking on the preview icon will open a dialog where
+              you can set all channel attributes.
             </para>
           </listitem>
         </varlistentry>
       </variablelist>
       <caution>
         <para>
-          Activated channels appear highlighted (generally) in blue in the
-          dialog. If you click on a channel in the list you toggle activation
-          of the corresponding channel. Disabling a color channel red, blue,
-          or green has severe consequences. For instance if you disable the
-          blue channel, all pixels from now on added to the image will not
-          have blue component, and so a white pixel will have the yellow
-          complementary color.
+          Activated channels appear highlighted in the dialog. If you click on
+          a channel in the list you toggle activation of the corresponding
+          channel. Disabling a color channel red, blue, or green has severe
+          consequences. For instance if you disable the blue channel, all
+          pixels from now on added to the image will not have a blue component,
+          and so a white pixel will have the yellow complementary color.
         </para>
       </caution>
     </sect4>
@@ -306,33 +350,10 @@
       </indexterm>
 
       <para>
-        Under the channel list is a set of buttons allowing you to perform
+        Below the channel list is a set of buttons allowing you to perform
         some basic operations on channel list.
       </para>
       <variablelist>
-        <varlistentry id="gimp-channel-edit">
-          <term>
-            <guiicon>
-              <inlinemediaobject>
-                <imageobject>
-                  <imagedata format="PNG"
-                             fileref="images/dialogs/stock-edit-16.png"/>
-                </imageobject>
-              </inlinemediaobject>
-            </guiicon>
-            <phrase>Edit Channel Attributes</phrase>
-          </term>
-          <listitem>
-            <para>
-              Only available for selection masks. Here you can change the
-              <guilabel>Channel name</guilabel>. The other two parameters
-              affect channel visibility in the image window; they control
-              <guilabel>Opacity</guilabel> and color used for the mask in the
-              image window. A click on the color button displays the GIMP
-              color selector and then you can change the mask color.
-            </para>
-          </listitem>
-        </varlistentry>
         <varlistentry id="gimp-channel-new">
           <term>
             <guiicon>
@@ -347,12 +368,19 @@
           </term>
           <listitem>
             <para>
-              You can create here a new channel. The displayed dialog lets
-              you set <guilabel>Opacity</guilabel> and mask color used in
-              the image to represent the selection. (If you use the
-              <guibutton>New Channel</guibutton> button in Channel Menu,
-              you can create this new channel with the options previously
-              used by pressing the <keycap>Shift</keycap> key when clicking).
+              This creates a new channel. A dialog will open where you can set
+              the <guilabel>Channel name</guilabel>, the
+              <guilabel>Color tag</guilabel>, the
+              <link linkend="channel-attributes">channel attributes</link> and
+              <link linkend="gimp-channel-dialog-using-locks">lock attributes</link>,
+              and finally the <guilabel>Opacity</guilabel> and color used for
+              the mask in the image window. A click on the color button
+              displays the GIMP color selector where you can change the mask
+              color.
+              If you press the <keycap>Shift</keycap> key while clicking the
+              <guibutton>New Channel</guibutton> button, the New Channel Dialog
+              will not be opened. Instead the new channel will be created with
+              the same settings as used previously.
               This new channel is a channel mask (a selection mask) applied
               over the image. See
               <link linkend="gimp-channel-mask">Selection Mask</link>
@@ -374,9 +402,9 @@
           </term>
           <listitem>
             <para>
-              Only available for selection masks: you can here put the
-              channel up a level in the list. Press <keycap>Shift</keycap>
-              key to move channel to top of the list.
+              Only available for selection masks: here you can move the
+              channel up in the list. Press <keycap>Shift</keycap>
+              key to move the channel to the top of the list.
             </para>
           </listitem>
         </varlistentry>
@@ -395,9 +423,9 @@
           </term>
           <listitem>
             <para>
-              You can here put the channel down a level in the list. Press the
-              <keycap>Shift</keycap> key to move the channel to bottom of the
-              list.
+              This move the channel down in the list. Press the
+              <keycap>Shift</keycap> key to move the channel to the bottom of
+              the list.
             </para>
           </listitem>
         </varlistentry>
@@ -416,8 +444,8 @@
           </term>
           <listitem>
             <para>
-              You can create here a copy of the active channel. Name of new
-              channel is suffixed with a number.
+              This allows you to create a copy of the active channel. The name
+              of the new channel is suffixed with a number.
             </para>
             <tip>
               <para>
@@ -438,14 +466,13 @@
                 </imageobject>
               </inlinemediaobject>
             </guiicon>
-            <phrase>Channel to Selection</phrase>
+            <phrase>Replace the Selection with this Channel</phrase>
           </term>
           <listitem>
             <para>
               Here you can transform the channel to become a selection. By
               default the selection derived from a channel replaces any
-              previous active selection. It's possible to change this by
-              clicking on control keys.
+              active selection. You can change this by using control keys.
             </para>
             <itemizedlist>
               <listitem id="gimp-channel-selection-add"
@@ -453,16 +480,15 @@
                 <para>
                   <keycap>Shift</keycap>:
                   the selection derived from a channel is added to the
-                  previous active selection. The final selection is merged
-                  from both.
+                  active selection. The final selection is merged from both.
                 </para>
               </listitem>
               <listitem id="gimp-channel-selection-subtract"
                 xreflabel="Subtract from Selection">
                 <para>
                   <keycap>Ctrl</keycap>:
-                  the final selection is the subtraction of selection derived
-                  from a channel from the previously active one.
+                  the final selection is the subtraction of the selection
+                  derived from a channel from the active selection.
                 </para>
               </listitem>
               <listitem id="gimp-channel-selection-intersect"
@@ -471,9 +497,9 @@
                   <keycombo>
                     <keycap>Shift</keycap><keycap>Ctrl</keycap>
                   </keycombo>:
-                  the final selection is the intersection of selection derived
-                  from a channel with the previously active one. Only common
-                  parts are kept.
+                  the final selection is the intersection of the selection
+                  derived from a channel with the active one. Only the
+                  selected parts common to both are kept.
                 </para>
               </listitem>
             </itemizedlist>
@@ -481,7 +507,7 @@
         </varlistentry>
         <varlistentry>
           <term>
-            <anchor id="gimp-channel-selection-delete"/>
+            <anchor id="gimp-channel-delete"/>
             <guiicon>
               <inlinemediaobject>
                 <imageobject>
@@ -494,7 +520,7 @@
           </term>
           <listitem>
             <para>
-              Only available for selection masks: you can here delete the
+              Only available for selection masks: this allows you to delete the
               active channel.
             </para>
           </listitem>
