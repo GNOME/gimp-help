@@ -66,7 +66,10 @@ class GIMPHelpHeaderParser(object):
         for line in h_file.readlines():
             try:
                 str = self.helpid.search(line).group()
-                self.ids.append(str)
+                if str in self.ids:
+                    print(f"Duplicate help id found: {str}")
+                else:
+                    self.ids.append(str)
                 if be_verbose:
                     print(str)
             except AttributeError:
