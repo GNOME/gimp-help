@@ -52,34 +52,91 @@
     </mediaobject>
   </figure>
   <para>
-    Buffers are temporary repositories for image data, created when
+    Buffers are a kind of temporary storage for image data, created when
     you cut or copy part of a drawable (a layer, layer mask, etc.).
-    You can save a document in this buffer in two ways:
-    <menuchoice>
-      <guimenu>Edit</guimenu>
-      <guisubmenu>Buffer</guisubmenu>
-      <guimenuitem>Copy Named</guimenuitem>
-    </menuchoice>
-    or
-    <menuchoice>
-      <guimenu>Edit</guimenu>
-      <guisubmenu>Buffer</guisubmenu>
-      <guimenuitem>Cut Named</guimenuitem>
-    </menuchoice>
-    A dialog pops up asking you to name a buffer to store the data
-    in. There is no hard limit on the number of named buffers you
-    can create, although, of course, each one consumes a share of memory.
+    The following commands are available from the <guimenu>Edit</guimenu> menu
+    to save an image to a buffer:
+    <variablelist>
+      <varlistentry>
+        <term>Cut Named...</term>
+        <listitem>
+          <para>
+            <menuchoice>
+              <guimenu>Edit</guimenu>
+              <guisubmenu>Buffer</guisubmenu>
+              <guimenuitem>Cut Named...</guimenuitem>
+            </menuchoice>
+            This command cuts the selected part from the current drawable
+            (usually a layer) and places it in a buffer. If there is no
+            selection the whole drawable will be used. You will be asked to
+            give the buffer a name. The image will be removed from the
+            selection after this is done.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Copy Named...</term>
+        <listitem>
+          <para>
+            <menuchoice>
+              <guimenu>Edit</guimenu>
+              <guisubmenu>Buffer</guisubmenu>
+              <guimenuitem>Copy Named...</guimenuitem>
+            </menuchoice>
+            This command copies the selected part from the current drawable
+            (usually a layer) and places it in a buffer. If there is no
+            selection the whole drawable will be used. You will be asked to
+            give the buffer a name.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Copy Visible Named...</term>
+        <listitem>
+          <para>
+            <menuchoice>
+              <guimenu>Edit</guimenu>
+              <guisubmenu>Buffer</guisubmenu>
+              <guimenuitem>Copy Visible Named...</guimenuitem>
+            </menuchoice>
+            This command copies the selected part from all the visible
+            drawables and places it in a buffer. If there is no selection the
+            whole image will be used. You will be asked to give the buffer
+            a name.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Paste Named...</term>
+        <listitem>
+          <para>
+            <menuchoice>
+              <guimenu>Edit</guimenu>
+              <guisubmenu>Buffer</guisubmenu>
+              <guimenuitem>Paste Named...</guimenuitem>
+            </menuchoice>
+            This menu command opens the <guilabel>Buffers Dialog</guilabel>.
+            To actually paste a buffer, choose one of the buttons from this
+            dialog, or the context menu. Both of which will be explained below.
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
   </para>
   <para>
     The <quote>Buffers</quote> dialog shows you the contents of all existing
     named buffers, and allows you to operate on them in several ways. It
-    also shows you, at the top, the contents of the Global Buffer, but this
-    is merely a display: you can't do anything with it.
+    also shows you, at the top, the contents of the Global Buffer (the contents
+    of the clipboard). This Global Buffer is merely a display: you can't do
+    anything with it.
+    There is no hard limit on the number of named buffers you can create,
+    except that it will consume a share of your available computer memory.
   </para>
   <caution>
     <para>
-      Named buffers are not saved across sessions. The only way to save their
-      contents is to paste them into images.
+      Named buffers are not saved across sessions: they will be gone when you
+      close GIMP. The only way to save their contents is to paste them into
+      images.
     </para>
   </caution>
 
@@ -96,7 +153,17 @@
     <itemizedlist>
       <listitem>
         <para>
-          from an image menu:
+          from the main menu:
+          <menuchoice>
+            <guimenu>Edit</guimenu>
+            <guisubmenu>Buffer</guisubmenu>
+            <guimenuitem>Paste Named...</guimenuitem>
+          </menuchoice>;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          from the main menu:
           <menuchoice>
             <guimenu>Windows</guimenu>
             <guisubmenu>Dockable Dialogs</guisubmenu>
@@ -132,24 +199,16 @@
 
   <sect3 id="gimp-buffer-dialog-using">
     <title>Using the Buffers dialog</title>
-    <figure>
-      <title>The Buffers Menu</title>
-      <mediaobject>
-        <imageobject>
-          <imagedata fileref="images/dialogs/buffers-dialog.png" format="PNG"/>
-        </imageobject>
-      </mediaobject>
-    </figure>
     <para>
       Clicking on a buffer in the display area makes it the active buffer, i.
-      e., the one that will be used for paste commands executed with the
-      Buffers Menu or the buttons at the bottom of the dialog. Double-clicking
-      on a buffer causes its contents to be pasted to the active image as a
-      floating selection; this is a quick way of executing the <quote>Paste
-      Buffer</quote> command.
+      e., the one that will be used for paste commands executed from the
+      Buffers context menu, or the buttons at the bottom of the dialog.
+      Double-clicking on a buffer causes its contents to be pasted to the
+      active image as a floating selection; this is a quick way of executing
+      the <quote>Paste Buffer</quote> command.
     </para>
     <para>
-      At the bottom of the dialog are four buttons. The operations they
+      At the bottom of the dialog are five buttons. The operations they
       perform can also be accessed from the Buffers Menu that you get by right
       clicking on the active buffer.
     </para>
@@ -191,6 +250,7 @@
       <variablelist>
         <varlistentry>
           <term>Paste Buffer</term>
+          <term>Paste Buffer In Place</term>
           <listitem>
             <anchor id="gimp-buffer-paste"/>
             <para>
@@ -201,32 +261,63 @@
               command is that it uses the selected buffer rather than the
               global clipboard buffer.
             </para>
+            <anchor id="gimp-buffer-paste-in-place"/>
+            <para>
+              With the <keycap>Shift</keycap> key pressed, it pastes the buffer
+              at its original location.
+            </para>
           </listitem>
         </varlistentry>
         <varlistentry>
-          <term>Paste Buffer Into</term>
+          <term>Paste Buffer Into The Selection</term>
+          <term>Paste Buffer Into The Selection In Place</term>
           <listitem>
             <anchor id="gimp-buffer-paste-into"/>
             <para>
               This command pastes the contents of the selected buffer into
               the active image's selection, as a floating selection. The
               only difference between this and the ordinary
-              <link linkend="gimp-edit-paste-into">Paste Into 
-              Selection</link> command is that it uses the selected buffer 
+              <link linkend="gimp-edit-paste-into">Paste Into
+              Selection</link> command is that it uses the selected buffer
               rather than the global clipboard buffer.
+            </para>
+            <anchor id="gimp-buffer-paste-into-in-place"/>
+            <para>
+              With the <keycap>Shift</keycap> key pressed, it pastes the buffer
+              into the active selection at its original location.
             </para>
           </listitem>
         </varlistentry>
         <varlistentry>
-          <term>Paste Buffer as New</term>
+          <term>Paste Buffer as New Layer</term>
+          <term>Paste Buffer as New Layer in Place</term>
           <listitem>
-            <anchor id="gimp-buffer-paste-as-new"/>
+            <anchor id="gimp-buffer-paste-as-new-layer"/>
+            <para>
+              This command creates a new layer in the active image out of the
+              contents of the selected buffer. The only difference between
+              this and the ordinary
+              <link linkend="gimp-edit-paste-as-new-image">Paste as New
+              Image</link> command is that it uses the selected buffer rather
+              than the content of the global clipboard buffer.
+            </para>
+            <anchor id="gimp-buffer-paste-as-new-layer-in-place"/>
+            <para>
+              With the <keycap>Shift</keycap> key pressed, it creates the
+              layer at the original location of the buffer.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Paste Buffer as New Image</term>
+          <listitem>
+            <anchor id="gimp-buffer-paste-as-new-image"/>
             <para>
               This command creates a new single-layer image out of the
               contents of the selected buffer. The only difference between
               this and the ordinary
-              <link linkend="gimp-edit-paste-as-new-image">Paste as New 
-              Image</link> command is that it uses the selected buffer rather 
+              <link linkend="gimp-edit-paste-as-new-image">Paste as New
+              Image</link> command is that it uses the selected buffer rather
               than the content of the global clipboard buffer.
             </para>
           </listitem>
@@ -245,7 +336,7 @@
     </sect4>
 
     <sect4 id="gimp-buffer-dialog-menu">
-      <title>Context menu</title>
+      <title>Buffers Dialog Context menu</title>
       <figure>
         <title>The <quote>Buffers</quote> context menu</title>
         <mediaobject>
@@ -256,7 +347,8 @@
         </mediaobject>
       </figure>
       <para>
-        These commands are explained above with Buttons.
+        These commands are the same as available through the buttons at the
+        bottom of the dialog and are explained there.
       </para>
     </sect4>
   </sect3>
