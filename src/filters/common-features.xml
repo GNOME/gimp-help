@@ -9,7 +9,9 @@
 
   <para>
     Since <acronym>GIMP</acronym> 2.10, most filters are <acronym>GEGL</acronym>
-    filters. These have several options in common:
+    filters. <acronym>GEGL</acronym> is the image processing library used by
+    <acronym>GIMP</acronym>. These filters have several options in common,
+    some of which are only shown under certain conditions.
   </para>
   <figure>
     <title>Common Options of GEGL Filters</title>
@@ -18,6 +20,18 @@
         <imagedata format="PNG"
           fileref="images/filters/common/filter-options-common.png"/>
       </imageobject>
+      <caption>
+        <para>When a selection is active</para>
+      </caption>
+    </mediaobject>
+    <mediaobject>
+      <imageobject>
+        <imagedata format="PNG"
+          fileref="images/filters/common/filter-options-common-clipping.png"/>
+      </imageobject>
+      <caption>
+        <para>When the active layer has an alpha channel and no selection is active</para>
+      </caption>
     </mediaobject>
   </figure>
 
@@ -40,9 +54,9 @@
           <listitem>
             <para>
               <guiicon>
-                <inlinegraphic 
+                <inlinegraphic
                 fileref="images/filters/common/preset-icon-add.png"/>
-              </guiicon> 
+              </guiicon>
               An icon to save the current settings as a named preset.
             </para>
           </listitem>
@@ -51,8 +65,9 @@
               <guiicon>
                 <inlinegraphic
                  fileref="images/filters/common/preset-icon-manage.png"/>
-              </guiicon> 
-              An icon that opens a menu with options to manage presets.
+              </guiicon>
+              An icon that opens a menu with options to import presets from
+              a file, export the current presets to a file, and manage presets.
             </para>
           </listitem>
         </itemizedlist>
@@ -62,10 +77,10 @@
     <varlistentry>
       <term>Input Type</term>
       <listitem>
-        <note> 
+        <note>
           <para>
             The input type dropdown list is only visible when a selection
-            is available.
+            is active.
           </para>
         </note>
         <itemizedlist>
@@ -101,6 +116,37 @@
     </varlistentry>
 
     <varlistentry>
+      <term>Clipping</term>
+      <listitem>
+        <note>
+          <para>
+            The clipping dropdown list is only visible when the current layer
+            has an alpha channel, and no selection is active.
+          </para>
+        </note>
+        <para>
+          This setting determines what to do when the result of this filter is
+          larger than the original layer.
+        </para>
+        <itemizedlist>
+          <listitem>
+            <para>
+              <guilabel>Adjust</guilabel> The layer will be automatically
+              resized as necessary when the filter is applied. This is the
+              default.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <guilabel>Clip</guilabel> The result will be clipped to the layer
+              boundary.
+            </para>
+          </listitem>
+        </itemizedlist>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
       <term>Blending Options</term>
       <listitem>
         <para>
@@ -123,7 +169,7 @@
         </para>
       </listitem>
     </varlistentry>
-    
+
     <varlistentry>
       <term>Split view</term>
       <listitem>
@@ -141,6 +187,6 @@
         </note>
       </listitem>
     </varlistentry>
-    
+
   </variablelist>
 </sect1>
