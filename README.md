@@ -23,15 +23,13 @@ called `gimp-help-2-10`.
 
 ## Published manuals
 
-The most recent manuals for all supported languages are available at:
+The online, daily updated, manuals for all supported languages are available at:
 
-  https://www.gimp.org/docs/  
-  and  
-  https://docs.gimp.org/
+- [GIMP 2.10 manuals](https://docs.gimp.org/)
+- [GIMP 2.99 manuals (temporary location for testing purposes)](https://testing.docs.gimp.org/)
 
-We intend to integrate both pages and want to be able to automatically have
-up to date manuals published there too, but we are still working on that.
-
+The offline manuals are available for download from the same location. However,
+they are a lot more outdated.
 
 ## Tips for contribution
 
@@ -49,10 +47,11 @@ on that website.
 If instead you would like to help out writing and improving the
 manual then this is the right place to start.
 
-First, it would be a good idea to subscribe to the gimp mailing lists,
-especially the developer and docs lists. That way you can keep
-up to date about the development of GIMP, see:
-https://www.gimp.org/mail_lists.html
+First, it would be a good idea to subscribe to messages that have the GIMP or
+documentation tags on [Gnome's Discourse server](https://discourse.gnome.org/).
+Note: when asking a question on Discourse make sure you add tags for GIMP
+and documentation (or i18n if it is related to translations), or we may
+not see your message.
 
 Most of the GIMP developers can also be reached on the #gimp
 IRC channel on irc.gimp.org. The best chances to talk are
@@ -301,16 +300,10 @@ Before you create a release you'll need:
   reading wilber and press `Save`. Depending if it needs review (ask one
   of the developers), approve it to publish it.
 
-* Announce the release on our mailing lists:
+* Announce the release on Discourse using gimp and documentation tags:
 
-    GIMP Developer
-    https://mail.gnome.org/mailman/listinfo/gimp-developer-list
-
-    GIMP User
-    https://mail.gnome.org/mailman/listinfo/gimp-user-list
-
-    GIMP Docs
-    https://mail.gnome.org/mailman/listinfo/gimp-docs-list
+    Discourse
+    https://discourse.gnome.org/
 
   Template:
 
