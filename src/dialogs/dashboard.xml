@@ -12,10 +12,22 @@
   </indexterm>
 
   <para>
-    This Dashboard helps to monitor GIMP resources (Cache, Swap, CPU, Memory) , 
-    allowing you to make more educated decisions about various configuration 
-    options. It is also used by developers.
+    The Dashboard helps to monitor GIMP resource usage (Cache, Swap, CPU,
+    Memory). This allows you to make more educated decisions about various
+    configuration options, especially
+    <link linkend="gimp-prefs-system-resources">System Resources</link>.
+    It is also used by developers.
   </para>
+
+  <figure>
+    <title>The Dashboard Dialog window</title>
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref="images/dialogs/dashboard-dialog.png"
+format="PNG"/>
+      </imageobject>
+    </mediaobject>
+  </figure>
 
   <sect3>
     <title>Activating the Dialog</title>
@@ -55,15 +67,302 @@
         </para>
       </listitem>
     </itemizedlist>
-    
-    <figure>
-      <title><quote>Dashboard</quote> Dialog window</title>
-      <mediaobject>
-        <imageobject>
-          <imagedata fileref="images/dialogs/dashboard-dialog.png" 
-format="PNG"/>
-        </imageobject>
-      </mediaobject>
-    </figure>
   </sect3>
+
+  <sect3>
+    <title>Using the Dashboard</title>
+    <para>
+      The Dashboard consists of five groups that you can monitor:
+      <guilabel>Cache</guilabel> usage, <guilabel>Swap</guilabel> usage,
+      <guilabel>CPU</guilabel> usage, <guilabel>Memory</guilabel> usage, and
+      <guilabel>Misc</guilabel> information. By default the
+      Misc group is hidden and the CPU and Memory groups are collapsed.
+    </para>
+    <para>
+      Each group has a separate <link linkend="tab-menus">Tab menu</link>
+      where you can change settings related to that group.
+    </para>
+    <para>
+      At the bottom of the Dashboard are two buttons, which will be explained
+      in the Dashboard context menu, where these commands are also available.
+    </para>
+    <variablelist>
+      <varlistentry>
+        <term>Dashboard context menu</term>
+        <listitem>
+          <para>
+            This context menu allows you to change what groups are visible,
+            some other settings related to the Dashboard, as well as
+            a few Dashboard related commands.
+          </para>
+          <figure>
+            <title>The Dashboard context menu</title>
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref="images/dialogs/dashboard-context-menu.png"
+                  format="PNG"/>
+              </imageobject>
+            </mediaobject>
+          </figure>
+          <variablelist>
+            <varlistentry id="gimp-dashboard-groups">
+              <term>Groups submenu</term>
+              <listitem>
+                <para>
+                  The Groups submenu allows you to change what groups are visible.
+                  By default <guimenuitem>Cache</guimenuitem>,
+                  <guimenuitem>Swap</guimenuitem>, <guimenuitem>CPU</guimenuitem>
+                  and <guimenuitem>Memory</guimenuitem> are visible, and
+                  <guimenuitem>Misc</guimenuitem> is hidden, but you can choose
+                  to show or hide any of these here.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry id="gimp-dashboard-update-interval">
+              <term>Update Interval submenu</term>
+              <listitem>
+                <para>
+                  The Update Interval submenu allows you to change how often the
+                  information shown in the Dashboard is updated. The default is
+                  0.25 seconds, but you can change this to a longer period up to
+                  4 seconds.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry id="gimp-dashboard-history-duration">
+              <term>History Duration submenu</term>
+              <listitem>
+                <para>
+                  The History Duration submenu allows you to change for what
+                  period of time the information is shown. The default is 60
+                  seconds, but you can choose from values between 15 and 240
+                  seconds.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry id="gimp-dashboard-log-record">
+              <term>Start/Stop Recording...</term>
+              <listitem>
+                <para>
+                  This is also available as a button at the bottom of the
+                  Dashboard.
+                  This allows you to start or stop recording a performance log.
+                  In certain situations the developers may ask you to supply this
+                  log if you are experiencing performance related issues. This
+                  log can help them to figure out the problem.
+                  When you start recording you will be asked to select a
+                  location and filename where the log will be saved.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry id="gimp-dashboard-log-add-marker">
+              <term>Add Marker...</term>
+              <listitem>
+                <para>
+                  If you are recording a performance log, this enables you to
+                  mark a certain event in the log. You will be asked to give a
+                  name to this event. This can make it easier for developers to
+                  find the problem area in your log, because logs can become
+                  fairly large.
+                  This is also available as a button at the bottom of the
+                  Dashboard when you are recording a performance log.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry id="gimp-dashboard-log-add-empty-marker">
+              <term>Add Empty Marker...</term>
+              <listitem>
+                <para>
+                  If you are recording a performance log, this enables you to
+                  mark a certain point in the log. An empty marker will be
+                  added, meaning you won't be asked to give it a name. This can
+                  make it easier for developers to find the problem area in your
+                  log, because logs can become fairly large.
+                  When you are recording you can also use the button at the
+                  bottom of the Dashboard while pressing the
+                  <keycap>Shift</keycap> key to add an empty marker.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry id="gimp-dashboard-reset">
+              <term>Reset</term>
+              <listitem>
+                <para>
+                  Reset cumulative data removes the performance data and starts
+                  from zero.
+                  This is also available as a button at the bottom of the
+                  Dashboard when you are not recording a performance log.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry id="gimp-dashboard-low-swap-space-warning">
+              <term>Low Swap Space Warning...</term>
+              <listitem>
+                <para>
+                  If this option is enabled, the Dashboard will be raised to the
+                  top if your swap space is nearing the limit.
+                </para>
+              </listitem>
+            </varlistentry>
+          </variablelist>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+    <para>
+      We will now explain each group separately.
+    </para>
+    <variablelist>
+      <varlistentry>
+        <term>Cache</term>
+        <listitem>
+          <para>
+            Cache shows what part of the tile cache, the size of which can be
+            set in System Resources preferences, is currently being used.
+            If your cache is often near the maximum, and you have enough
+            available memory, you could consider increasing the cache size.
+          </para>
+          <figure>
+            <title>The Cache context menu</title>
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref="images/dialogs/dashboard-cache-menu.png"
+                  format="PNG"/>
+              </imageobject>
+            </mediaobject>
+          </figure>
+          <para>
+            By default this shows the currently occupied part of the Cache,
+            and the maximum cache size as set in preferences. What is shown
+            can be changed in the Cache tab menu. As can be seen on the
+            image above, you can choose to show or hide
+            <guilabel>Occupied</guilabel> size, <guilabel>Maximum</guilabel>
+            size used since you started measuring, the cache
+            <guilabel>Limit</guilabel>, the <guilabel>Compression</guilabel>
+            ratio, and <guilabel>Hit/Miss</guilabel> ratio.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>Swap</term>
+        <listitem>
+          <para>
+            Swap shows the current size of the on-disk tile swap, and what part
+            of that is currently being used. It also shows the swap size limit.
+            If your swap is often being used, and you have enough available
+            memory, you could consider increasing the cache size.
+          </para>
+          <figure>
+            <title>The Swap context menu</title>
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref="images/dialogs/dashboard-swap-menu.png"
+                  format="PNG"/>
+              </imageobject>
+            </mediaobject>
+          </figure>
+          <para>
+            By default this shows the current Swap size and what part is
+            occupied, as well as the Swap size limit.
+            What is shown can be changed in the Swap tab menu. As can be seen
+            on the image above, you can choose to show or hide the
+            <guilabel>Occupied</guilabel> size, the current swap file
+            <guilabel>Size</guilabel>, the swap file size
+            <guilabel>Limit</guilabel>, the <guilabel>Queued</guilabel> size
+            (the amount planned to be written to the swap file),
+            <guilabel>Read</guilabel> is the total amount read from the swap
+            file, <guilabel>Written</guilabel> is the total amount written to
+            the swap file, and the <guilabel>Compression</guilabel> ratio of
+            the data written to the swap file.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>CPU</term>
+        <listitem>
+          <para>
+            CPU shows the current CPU usage.
+          </para>
+          <figure>
+            <title>The CPU context menu</title>
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref="images/dialogs/dashboard-cpu-menu.png"
+                  format="PNG"/>
+              </imageobject>
+            </mediaobject>
+          </figure>
+          <para>
+            By default this shows the current CPU usage.
+            What is shown can be changed in the CPU tab menu. You can choose to
+            show or hide CPU <guilabel>Usage</guilabel>, and the total amount
+            of time the CPU has been <guilabel>Active</guilabel>.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>Memory</term>
+        <listitem>
+          <para>
+            Memory shows the current amount of memory used by GIMP, the
+            amount of available (free) physical memory, and the total size of
+            your physical memory.
+          </para>
+          <figure>
+            <title>The Memory context menu</title>
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref="images/dialogs/dashboard-memory-menu.png"
+                  format="PNG"/>
+              </imageobject>
+            </mediaobject>
+          </figure>
+          <para>
+            What is shown in this group can be changed in the Memory tab menu.
+            As can be seen on the image above, you can choose to show or hide
+            the occupied tile <guilabel>Cache</guilabel>, the total size of
+            the <guilabel>Tile</guilabel> memory, the amount of memory
+            <guilabel>Used</guilabel>, the size of the
+            <guilabel>Available</guilabel> physical memory, and the physical
+            memory <guilabel>Size</guilabel>.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>Misc</term>
+        <listitem>
+          <para>
+            The Misc group is not shown by default, but has to be enabled in
+            the Dashboard context menu first. It shows extra information
+            mainly useful for developers.
+          </para>
+          <figure>
+            <title>The Misc context menu</title>
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref="images/dialogs/dashboard-misc-menu.png"
+                  format="PNG"/>
+              </imageobject>
+            </mediaobject>
+          </figure>
+          <para>
+            By default all settings are shown, but you can choose to show or
+            hide total size of processed <guilabel>Mipmapped</guilabel> data,
+            the number of <guilabel>Assigned</guilabel> worker threads,
+            the number of <guilabel>Active</guilabel> worker threads, the
+            number of <guilabel>Async</guilabel> (asynchronous) operations, the
+            total size of <guilabel>Tile</guilabel> memory, the total size of
+            <guilabel>Scratch</guilabel> memory, and the total size of
+            <guilabel>TempBuf</guilabel> (temporary buffers).
+          </para>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+
+  </sect3>
+
 </sect2>
