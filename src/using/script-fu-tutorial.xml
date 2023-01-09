@@ -24,7 +24,7 @@
   </para>
   <note>
     <para>
-      This section as adapted from a tutorial written for the
+      This section was adapted from a tutorial written for the
       <application><acronym>GIMP</acronym> 1</application> User
       Manual by Mike Terry.
     </para>
@@ -34,6 +34,12 @@
     <title>Getting Acquainted With Scheme</title>
     <sect3>
       <title>Let's Start Scheme'ing</title>
+      <para>
+        <ulink url="https://en.wikipedia.org/wiki/Scheme_(programming_language)">Scheme</ulink>
+        is a dialect of the Lisp family of programming languages. GIMP uses
+        TinyScheme, which is a lightweight interpreter of a subset of the
+        so-called R5RS standard.
+      </para>
       <para>The first thing to learn is that:</para>
       <blockquote>
         <para>
@@ -309,13 +315,6 @@
         Try to guess what the above statement will do, then go ahead and enter
         it in the Script-Fu Console window.
       </para>
-      <note>
-        <para>
-          The <quote><code>\</code></quote> indicates that there is no line
-          break. Ignore it (don't type it in your Script-Fu console and don't
-          hit <keycap>Enter</keycap>), just continue with the next line.
-        </para>
-      </note>
     </sect3>
 
     <sect3>
@@ -539,7 +538,7 @@
       <title>The <function>car</function> Function</title>
       <para>
         <function>car</function> returns the first element of the list (the
-        head of the list). The list needs to be non-null. Thus, the
+        head of the list). The list needs to be non-null (not empty). Thus, the
         following returns the first element of the list:
       </para>
       <programlisting>(car '("first" 2 "third"))</programlisting>
@@ -550,10 +549,9 @@
     <sect3>
       <title>The <function>cdr</function> function</title>
       <para>
-        <function>cdr</function> returns the rest of the list after the first
-        element
-        (the tail of the list). If there is only one element in the list, it
-        returns an empty list.
+        <function>cdr</function> returns the remainder of the list after the
+        first element (the tail of the list). If there is only one element in
+        the list, it returns an empty list.
       </para>
       <programlisting>(cdr '("first" 2 "third"))</programlisting>
       <para>returns:</para>
@@ -602,10 +600,10 @@
       </para>
       <note>
         <para>
-          In Scheme, a semicolon (<code>;</code>) marks a comment.  It, and
-          anything that follows it on the same line, are ignored by the
-          script interpreter, so you can use this to add comments to jog
-          your memory when you look at the script later.
+          In Scheme, a semicolon (<code>;</code>) marks the beginning of a
+          comment. It, and everything that follows it on the same line, are
+          ignored by the script interpreter, so you can use this to add
+          comments to refresh your memory when you look at the script later.
         </para>
       </note>
     </sect3>
@@ -656,15 +654,12 @@
         directory, to keep them separate from the factory-installed scripts.
       </para>
       <para>
-        In the <filename class="directory">~/.config/GIMP/2.10/</filename>
-        directory that <acronym>GIMP</acronym> made off of your home directory,
-        you should find a directory called
-        <filename class="directory">scripts</filename>.
-        <acronym>GIMP</acronym> will automatically look in your
-        <filename class="directory">~/.config/GIMP/2.10/</filename> directory
-        for a <filename class="directory">scripts</filename> directory, and add
-        the scripts in this directory to the Script-Fu database. You should
-        place your personal scripts here.
+        In GIMP's <link linkend="gimp-prefs-folders-scripts">folder
+        preferences</link> you can see in which directories GIMP looks for
+        scripts. It is also possible to add new directories there.
+        The directory where GIMP stores its own scripts is usually not the
+        best choice for your scripts, but for the rest feel free to choose
+        what suits you best.
       </para>
     </sect3>
 
@@ -729,7 +724,7 @@
       </para>
       <programlisting><![CDATA[
   (script-fu-register
-    "script-fu-text-box"                        ;func name
+    "script-fu-text-box"                        ;function name
     "Text Box"                                  ;menu label
     "Creates a simple text box, sized to fit\
       around the user's choice of text,\
@@ -738,7 +733,7 @@
     "copyright 1997, Michael Terry;\
       2009, the GIMP Documentation Team"        ;copyright notice
     "October 27, 1997"                          ;date created
-    ""                     ;image type that the script works on
+    ""                                      ;image type that the script works on
     SF-STRING      "Text"          "Text Box"   ;a string variable
     SF-FONT        "Font"          "Charter"    ;a font variable
     SF-ADJUSTMENT  "Font size"     '(50 1 1000 1 10 0 1)
@@ -802,46 +797,11 @@
         </listitem>
         <listitem>
           <para>
-            The <emphasis>location</emphasis> in the menu where
-            the script will be inserted. The exact location of the script is
-            specified like a path in Unix, with the root of the path being
-            image menu as <code>&lt;Image&gt;</code>.<footnote><para>
-              Before version 2.6, <code>&lt;Toolbox&gt;</code> could be also
-              used, but now the toolbox menu is removed, so don't use it.
-            </para></footnote>
-          </para>
-          <para><!--TODO: obsolete!?-->
-            If your script does not operate on an existing image (and thus
-            creates a new image, like our Text Box script will), you'll want
-            to insert it in the image window menu, which you can access
-            through the image menu bar, by right-clicking the image window,
-            by clicking the menu button icon at the left-top corner of the
-            image window, or by pressing <keycap>F10</keycap>.
-          </para>
-          <para><!--FIXME: en needs more review!-->
-            If your script is intended to work on an image being edited,
-            you'll want to insert it in the image window menu.
-            The rest of the path points to the menu lists, menus and sub-menus.
-            Thus, we registered our Text Box script in the
-            <guisubmenu>Text</guisubmenu> menu of the
-            <guisubmenu>Create</guisubmenu> menu of the <guimenu>File</guimenu>
-            menu.<footnote><para>
-              The original, written by Mike, says put the menu entry in the
-              Script-Fu menu of the <guimenu>Xtns</guimenu> menu at the
-              Toolbox, but since version 2.6, the Toolbox menu had been removed
-              and merged with the image window menubar.
-            </para></footnote>
-            (<menuchoice>
-              <guimenu>File</guimenu>
-              <guisubmenu>Create</guisubmenu>
-              <guisubmenu>Text</guisubmenu>
-              <guimenuitem>Text Box</guimenuitem>
-            </menuchoice>).
-          </para>
-          <para>
-            If you notice, the Text sub-menu in the File/Create menu wasn't
-            there when we began &mdash; <acronym>GIMP</acronym> automatically
-            creates any menus not already existing.
+            The <emphasis>menu label</emphasis> is the name that will be
+            shown in the menu. In previous versions of GIMP you could
+            specify the menu location here, but that has changed. How to
+            specify the location will be shown
+            <link linkend="script-fu-adding-menu-location">below</link>.
           </para>
         </listitem>
         <listitem>
@@ -875,15 +835,6 @@
           </para>
         </listitem>
       </itemizedlist>
-      <figure>
-        <title>The menu of our script.</title>
-        <mediaobject>
-          <imageobject>
-            <imagedata format="PNG"
-              fileref="images/using/script-fu-menu.png"/>
-          </imageobject>
-        </mediaobject>
-      </figure>
     </sect3>
 
     <sect3>
@@ -1004,6 +955,50 @@
       </informaltable>
     </sect3>
     <xi:include href="script-fu-gui-api.xml"/>
+
+    <sect3 id="script-fu-adding-menu-location">
+      <title>Registering the Menu Location</title>
+      <para>
+        Once we have registered our script, we need to tell GIMP where it
+        should be found in the menu.
+      </para>
+      <para>
+        The best menu location of your script depends on its function. Most
+        scripts are found in the <guimenu>Filters</guimenu> and
+        <guimenu>Colors</guimenu> menus.
+      </para>
+      <para>
+        For the current script, which creates a new image, we choose a submenu
+        of
+        <menuchoice>
+          <guimenu>File</guimenu>
+          <guisubmenu>Create</guisubmenu>
+        </menuchoice>.
+        This is what the line with the <code>script-fu-menu-register</code>
+        function does.
+        Thus, we registered our Text Box script here:
+        <menuchoice>
+          <guimenu>File</guimenu>
+          <guisubmenu>Create</guisubmenu>
+          <guisubmenu>Text</guisubmenu>
+          <guimenuitem>Text Box</guimenuitem>
+        </menuchoice>.
+      </para>
+      <para>
+        If you notice, the Text sub-menu in the File/Create menu wasn't
+        there when we began &mdash; <acronym>GIMP</acronym> automatically
+        creates any menus not already existing.
+      </para>
+      <figure>
+        <title>The menu of our script.</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata format="PNG"
+              fileref="images/using/script-fu-menu.png"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
+    </sect3>
   </sect2>
 
   <sect2 id="gimp-using-script-fu-tutorial-script">
@@ -1088,7 +1083,7 @@
         layer, passing
         in the ID of the image we just created. (From now on, instead
         of listing the complete function, we'll only list the lines
-        we're adding to it. You can see the complete script 
+        we're adding to it. You can see the complete script
         <link linkend="gimp-using-script-fu-tutorial-result">here</link>.)
         Because we've declared all of the local variables we'll use,
         we'll also close the parentheses marking the end of our
@@ -1168,7 +1163,7 @@
                             0
                             TRUE
                             inFontSize PIXELS
-                            "Sans")
+                            inFont)
                        )
         )
       </programlisting>
@@ -1344,7 +1339,7 @@
       </programlisting>
       <programlisting><![CDATA[
   (script-fu-register
-    "script-fu-text-box"                        ;func name
+    "script-fu-text-box"                        ;function name
     "Text Box"                                  ;menu label
     "Creates a simple text box, sized to fit\
       around the user's choice of text,\
@@ -1353,7 +1348,7 @@
     "copyright 1997, Michael Terry;\
       2009, the GIMP Documentation Team"        ;copyright notice
     "October 27, 1997"                          ;date created
-    ""                     ;image type that the script works on
+    ""                                      ;image type that the script works on
     SF-STRING      "Text"          "Text Box"   ;a string variable
     SF-FONT        "Font"          "Charter"    ;a font variable
     SF-ADJUSTMENT  "Font size"     '(50 1 1000 1 10 0 1)
@@ -1443,7 +1438,7 @@
       <para>Below the complete script:</para>
       <programlisting><![CDATA[
   (script-fu-register
-            "script-fu-text-box"                        ;func name
+            "script-fu-text-box"                        ;function name
             "Text Box"                                  ;menu label
             "Creates a simple text box, sized to fit\
               around the user's choice of text,\
@@ -1452,7 +1447,7 @@
             "copyright 1997, Michael Terry;\
               2009, the GIMP Documentation Team"        ;copyright notice
             "October 27, 1997"                          ;date created
-            ""                     ;image type that the script works on
+            ""                              ;image type that the script works on
             SF-STRING      "Text"          "Text Box"   ;a string variable
             SF-FONT        "Font"          "Charter"    ;a font variable
             SF-ADJUSTMENT  "Font size"     '(50 1 1000 1 10 0 1)
@@ -1508,7 +1503,7 @@
                           0
                           TRUE
                           inFontSize PIXELS
-                          "Sans")
+                          inFont)
                       )
         )
       (set! theImageWidth   (car (gimp-drawable-width  theText) ) )
@@ -1519,6 +1514,7 @@
       (gimp-image-resize theImage theImageWidth theImageHeight 0 0)
       (gimp-layer-resize theLayer theImageWidth theImageHeight 0 0)
       (gimp-layer-set-offsets theText theBuffer theBuffer)
+      (gimp-floating-sel-to-layer theText)
       (gimp-display-new theImage)
       (list theImage theLayer theText)
     )
