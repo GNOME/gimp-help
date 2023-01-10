@@ -618,7 +618,19 @@
         <listitem>
           <para>
             This command opens a dialog window which allows you to sort the
-            colors of the palette according to certain criteria:
+            colors of the palette according to certain criteria. If the
+            palette is read only a new palette will be created that is sorted
+            based on your settings.
+          </para>
+          <para>
+            Another way of sorting a palette is by using the sorting options
+            of the <link linkend="plug-in-colormap-remap">Rearrange
+            Colormap</link> dialog.
+          </para>
+          <para>
+            Several settings of this dialog are not well understood. We would
+            welcome contributions from anyone that knows how to improve this
+            documentation.
           </para>
           <figure>
             <title>The <quote>Sort Palette</quote>dialog</title>
@@ -632,24 +644,96 @@
           <itemizedlist>
             <listitem>
               <para>
-                <guilabel>Color model</guilabel>: you can choose between
-                <emphasis>RGB</emphasis> and <emphasis>HSV</emphasis>
+                <guilabel>Selections</guilabel>: This option determines how
+                the palette is going to be sorted. How to use this has not been
+                well documented by its original author. We advise to leave it
+                at the default <guilabel>All</guilabel>.
               </para>
             </listitem>
             <listitem>
               <para>
-                <guilabel>Channel to sort</guilabel>: you can choose between
-                the three RGB channels if the RGB model is selected, or the
-                three HSV channels if the HSV channel is selected.
+                <guilabel>Slice expression</guilabel>: This option affects how
+                the palette is sorted when
+                <guilabel>Slice/Array</guilabel> was chosen above in
+                <guilabel>Selections</guilabel>.
+                Documentation taken from the code:
+              </para>
+              <para>
+                Leaving this empty, or entering <userinput>:</userinput> selects
+                all items.
+              </para>
+              <para>
+                <userinput>:4,</userinput> or <userinput>:4</userinput> makes
+                a 4-row selection out of all colors (length auto-determined).
+              </para>
+              <para>
+                <userinput>:1,4</userinput> selects the first 4 colors.
+              </para>
+              <para>
+                <userinput>:,4</userinput> selects rows of 4 colors (number of
+                rows auto-determined).
+              </para>
+              <para>
+                <userinput>:4,4</userinput> selects 4 rows of 4 colors.
+              </para>
+              <para>
+                <userinput>4:</userinput> selects a single row of all colors
+                after 4, inclusive.
+              </para>
+              <para>
+                <userinput>4:,4</userinput> selects rows of 4 colors, starting
+                at 4 (number of rows auto-determined).
+              </para>
+              <para>
+                <userinput>4:4,4</userinput> selects 4 rows of 4 colors (16
+                colors total), beginning at index 4.
+              </para>
+              <para>
+                <userinput>4</userinput> is illegal (ambiguous).
               </para>
             </listitem>
             <listitem>
               <para>
-                <guilabel>Ascending</guilabel> (default is Yes): values are
-                sorted from the lower to the upper. By clicking on this
-                <guibutton>Yes</guibutton> you can toggle to
-                <guibutton>No</guibutton> and values will be sorted in
-                descending order.
+                <guilabel>Channel to Sort</guilabel>: This option determines
+                based on what type of color channel the sorting will happen.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <guilabel>Ascending</guilabel>: This option determines if
+                the sorting needs to be ascending (Yes) or descending (No).
+                Clicking the button changes between yes and no.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <guilabel>Secondary Channel to Sort</guilabel>: This option
+                determines the secondary color channel for sorting in case
+                the first channel sort returns equal values.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <guilabel>Ascending</guilabel>: This option determines if
+                the sorting needs to be ascending (Yes) or descending (No).
+                Clicking the button changes between yes and no.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <guilabel>Quantization</guilabel>: Undocumented for now.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <guilabel>Partitioning channel</guilabel>: This option is also
+                used to determine how to sort.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <guilabel>Partitioning quantization</guilabel>: This option
+                is used in conjunction with the previous one.
               </para>
             </listitem>
           </itemizedlist>
