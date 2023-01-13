@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
           "http://www.docbook.org/xml/4.3/docbookx.dtd">
-<!-- section history:
-  
--->
-<sect2 id="gimp-filter-color-rotate">
+
+<sect2 xmlns:xi="http://www.w3.org/2001/XInclude" id="gimp-filter-color-rotate">
   <title>Rotate Colors</title>
 
   <indexterm>
@@ -18,7 +16,7 @@
   <sect3>
     <title>Overview</title>
     <figure>
-      <title>Example for the <quote>Rotate Colors</quote> filter</title>
+      <title><quote>Rotate Colors</quote> filter example</title>
       <mediaobject>
         <imageobject>
           <imagedata fileref="images/filters/examples/taj_orig.jpg"
@@ -33,13 +31,16 @@
         </imageobject>
         <caption>
           <para>
-            Filter <quote>Rotate Colors</quote> applied
+            Filter <quote>Rotate Colors</quote> applied; the blue color of the
+            sky is within the source range and gets converted to the orange
+            color in the destination range
           </para>
         </caption>
       </mediaobject>
     </figure>
     <para>
-      Colormap Rotation lets you exchange one color range to another range.
+      Colormap Rotation lets you exchange one color range (the Source Range) to
+      another range (the Destination Range).
     </para>
   </sect3>
 
@@ -56,11 +57,9 @@
   </sect3>
 
   <sect3>
-    <title>Main Options</title>
+    <title>Options</title>
     <figure>
-      <title>
-        Main Options of the <quote>Color Map Rotation</quote> filter
-      </title>
+      <title>The <quote>Rotate Colors</quote> Dialog</title>
       <mediaobject>
         <imageobject>
           <imagedata format="PNG"
@@ -68,250 +67,205 @@
         </imageobject>
       </mediaobject>
     </figure>
-    <para>
-      You have there two color circles, one for the <quote>From</quote>
-      color range and the other for the <quote>To</quote> color range:
-    </para>
     <variablelist>
       <varlistentry>
-        <term>From</term>
+        <term>Presets</term>
         <listitem>
           <para>
-            The <guilabel>Color Circle</guilabel>: Two axis to define
-            <quote>From</quote> range. The curved arrow in angle lets to
-            recognise <quote>From</quote> axis and <quote>To</quote>
-            axis of range. Click-drag these axis to change range.
-          </para>
-          <para>
-            <guilabel>Switch to Clockwise/Counterclockwise</guilabel>:
-            Sets the direction the range is going.
-          </para>
-          <para>
-            <guilabel>Change Order of Arrows</guilabel>: Inverts From and
-            To axis. This results in an important color change as colors
-            in selection angle are different.
-          </para>
-          <para>
-            <guilabel>Select All</guilabel> selects the whole color
-            circle.
-          </para>
-          <para>
-            <guilabel>From</guilabel> and <guilabel>To</guilabel> boxes
-            display start axis and end axis positions (in rad/PI) which
-            are limiting the selected color range. You can enter these
-            positions manually or with help of arrow-heads.
+            <quote>Presets</quote> are a common feature for
+            several Colors commands. You can find its description in
+            <xref linkend="colors-common-features"/>.
           </para>
         </listitem>
       </varlistentry>
+
       <varlistentry>
-        <term>To</term>
+        <term>Source Range</term>
+        <term>Destination Range</term>
         <listitem>
           <para>
-            This section options are the same as <quote>From</quote> section
-            ones.
+            Both source and destination range have a color wheel range selection
+            circle. You can drag both arrow handles to the color location
+            you want. They correspond to the <guilabel>From</guilabel> and
+            <guilabel>To</guilabel> sliders listed below.
           </para>
+          <variablelist>
+            <varlistentry>
+              <term>From</term>
+              <listitem>
+                <para>
+                  The angle of the starting position of the color range on the
+                  color wheel.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>To</term>
+              <listitem>
+                <para>
+                  The angle of the ending position of the color range on the
+                  color wheel.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Clockwise</term>
+              <listitem>
+                <para>
+                  When checked the range from start to end is computed
+                  clockwise, else counter-clockwise (default).
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Invert Range</term>
+              <listitem>
+                <para>
+                  This button inverts the <guilabel>From</guilabel> and
+                  <guilabel>To</guilabel> values.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Select All</term>
+              <listitem>
+                <para>
+                  This button selects all colors to be inside the range.
+                </para>
+              </listitem>
+            </varlistentry>
+          </variablelist>
         </listitem>
       </varlistentry>
-    </variablelist>
+
+      <varlistentry>
+        <term>Gray Handling</term>
+        <listitem>
+          <para>
+            In this section, you can specify how to treat gray. By default,
+            gray is not considered as a color and is not taken in account by
+            the rotation. Here, you can convert slightly saturated colors into
+            gray and you can also convert gray into a color depending on the
+            settings below.
+          </para>
+          <para>
+            The small circle in the color wheel adjusts the Hue and Saturation
+            that will be used to select the color that represents gray.
+            They correspond to the <guilabel>Hue</guilabel> and
+            <guilabel>Saturation</guilabel> sliders listed below.
+          </para>
+          <variablelist>
+            <varlistentry>
+              <term>Gray threshold</term>
+              <listitem>
+                <para>
+                  This slider selects which colors will be treated as gray.
+                  Colors with a Saturation less than this value will be
+                  converted to the selected "gray" color.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Gray mode</term>
+              <listitem>
+                <itemizedlist>
+                  <listitem>
+                    <para>
+                      <guilabel>Treat as this</guilabel> causes gray colors
+                      inside the source range to be treated as if they had this
+                      Hue and saturation. The color will be rotated
+                      according to the source and destination ranges.
+                    </para>
+                  </listitem>
+                <listitem>
+                  <para>
+                    <guilabel>Change to this</guilabel> will change gray
+                    colors to the selected Hue and Saturation without any
+                    rotation.
+                  </para>
+                </listitem>
+              </itemizedlist>
+              </listitem>
+            </varlistentry>
+          </variablelist>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>Blending Options, Preview and Split view</term>
+          <listitem>
+            <para>
+              These are common features described in
+              <xref linkend="colors-common-features"/>.
+            </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
   </sect3>
 
   <sect3>
-    <title>Gray Options</title>
-    <figure>
-      <title>Base image for Gray Options</title>
-      <mediaobject>
-        <imageobject>
-          <imagedata format="PNG"
-            fileref="images/filters/examples/colors-rotation-base.png"/>
-        </imageobject>
-        <caption>
-          <para>
-            Three sectors are defined for Red, Green and Blue with different
-            saturations. Gray and White colors are represented (0% Sat).
-          </para>
-        </caption>
-      </mediaobject>
-    </figure>
-    <para>
-      In this tab, you can specify how to treat gray. By default, gray is not
-      considered as a color and is not taken in account by the rotation. Here,
-      you can convert slightly saturated colors into gray and you can also
-      convert gray into color.
-    </para>
+    <title>Examples using Gray Handling</title>
+
     <variablelist>
       <varlistentry>
-        <term>Gray Color Circle</term>
+        <term>Gray Handling</term>
         <listitem>
           <para>
-            At center of this color circle is a small <quote>define
-            circle</quote>. At center, it represents gray. If you increase
-            gray threshold progressively, colors with saturation less than
-            this threshold turn to gray.
+            Using the same example as at the top of this page, but now with
+            the following gray handling settings used: Gray threshold 0.340,
+            Hue 220.0, Saturation 0.75.
           </para>
-          <para>
-            Then, if you pan the define circle in the color circle, or if
-            you use input boxes, you define
-            <emphasis>Hue</emphasis> and <emphasis>
-            Saturation</emphasis>. This color will replace all colors you
-            have defined as gray. But result depends on Gray Mode too.
-          </para>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>Gray Mode</term>
-        <listitem>
-          <para>
-            The radio buttons <emphasis>Treat As This
-            </emphasis> and <emphasis>Change As This
-            </emphasis> determine how your previous choices will be
-            treated:
-          </para>
-          <itemizedlist>
-            <listitem>
-              <para>
-                 With <emphasis>Change to this</emphasis>,
-                 gray will take the color defined by the define circle
-                 directly, without any rotation, whatever its position in
-                 the color circle.
-              </para>
-            </listitem>
-            <listitem>
-              <para>
-                 With <emphasis>Treat as this</emphasis>,
-                 gray will take the color defined by the define circle
-                 after rotation, according to <quote>From</quote> and
-                 <quote>To</quote> choices you made in the Main tab. With
-                 this option, you can select color only in the
-                 <quote>From</quote> sector, even if it is not visible in
-                 Gray tab.
-              </para>
-            </listitem>
-          </itemizedlist>
+          <note>
+            <para>
+              If you want gray instead of a different color, you should leave
+              Hue and Saturation at 0.
+            </para>
+          </note>
           <figure>
-            <title>Gray Mode</title>
+            <title><quote>Rotate Colors</quote> filter examples for gray handling</title>
             <mediaobject>
               <imageobject>
-                <!--was: images/filters/changeto.png-->
-                <imagedata format="PNG"
-                  fileref="images/menus/colors/map/rotate-colors-graymode.png"/>
+                <imagedata fileref="images/filters/examples/taj-color-rotation-gray-treat.jpg"
+                  format="JPG"/>
               </imageobject>
               <caption>
                 <para>
-                  The small circle is on yellow and mode is <quote>Change to
-                  this</quote>. <emphasis>Blue has changed to yellow. Note that
-                  Gray and White did so too.</emphasis>
+                  Gray mode set to <guilabel>Treat as this</guilabel>: any
+                  color with a Saturation below 0.34 will be converted to
+                  orange because the selected blue Hue, Saturation in the
+                  source range rotates to orange in the destination range.
+                </para>
+              </caption>
+            </mediaobject>
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref="images/filters/examples/taj-color-rotation-gray-change.jpg"
+                  format="JPG"/>
+              </imageobject>
+              <caption>
+                <para>
+                  Gray mode set to <guilabel>Change to this</guilabel>: the
+                  rotation is now ignored and the color is picked directly
+                  based on the chosen Hue and Saturation.
+                </para>
+              </caption>
+            </mediaobject>
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref="images/filters/examples/taj-color-rotation-gray.jpg"
+                  format="JPG"/>
+              </imageobject>
+              <caption>
+                <para>
+                  Saturation and Hue set to 0 turns anything below the
+                  threshold to gray.
                 </para>
               </caption>
             </mediaobject>
           </figure>
         </listitem>
       </varlistentry>
-      <varlistentry>
-        <term>Gray Threshold</term>
-        <listitem>
-          <figure>
-            <title>Gray Threshold</title>
-            <mediaobject>
-              <!--TODO: rename-->
-              <imageobject>
-                <imagedata format="PNG"
-                  fileref="images/filters/examples/colors-map-rotation-threshold.png"/>
-              </imageobject>
-              <caption>
-                <para>
-                  Gray-threshold is 0.25: the blue sector (sat 0.25) has
-                  turned to Gray (Note that Gray and White, that are 0% Sat.,
-                  are not concerned).
-                </para>
-              </caption>
-            </mediaobject>
-          </figure>
-          <!--CHECK: works for me without <quote>Continuous update</quote> -->
-          <para>
-            You specify there how much saturation will be considered gray.
-            By increasing progressively saturation, you will see an
-            enlarging circle in color circle and enlarging selected areas in
-            Preview if <quote>Continuous update</quote> is checked. In a
-            black to white gradient, you can see enlarging color replacement
-            as you increase threshold very slowly.
-          </para>
-          <mediaobject>
-            <imageobject>
-              <!--was: images/filters/greythresh.png-->
-              <imagedata format="PNG"
-                fileref="images/menus/colors/map/rotate-colors-graythresh.png"/>
-              </imageobject>
-            <caption>
-              <para>
-                Black to White gradient, progressively filled with color, as
-                threshold increases.
-              </para>
-            </caption>
-          </mediaobject>
-        </listitem>
-      </varlistentry>
     </variablelist>
   </sect3>
 
-  <sect3>
-    <title>Previews</title>
-    <variablelist>
-      <varlistentry>
-        <term>Original</term>
-        <term>Rotated</term>
-        <listitem>
-          <para>
-            The Original preview displays a thumbnail of the original image
-            and the Rotated preview displays color changes interactively,
-            before they are applied to the Image.
-          </para>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>Continuous Update</term>
-        <listitem>
-          <para><guilabel>Continuous Update</guilabel> displays color changes
-            continuously in the Rotated preview.
-          </para>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>Area</term>
-        <listitem>
-          <para>
-            In this drop down list, you can select between
-          </para>
-          <itemizedlist>
-            <listitem>
-              <para>
-                <guilabel>Entire Layer</guilabel>: works on the whole
-                layer (The image if there is no selection).
-              </para>
-            </listitem>
-            <listitem>
-              <para>
-                <guilabel>Selection</guilabel>: displays selection only.
-              </para>
-            </listitem>
-            <listitem>
-              <para>
-                <guilabel>Context</guilabel>: displays selection in image
-                context.
-              </para>
-            </listitem>
-          </itemizedlist>
-        </listitem>
-      </varlistentry>
-    </variablelist>
-  </sect3>
-
-  <sect3 id="plug-in-rotate-colormap-units">
-    <title>Units</title>
-    <para>
-      You can select here the angle unit used to locate colors in the
-      Hue/Saturation circle. This choice is valid only for the current filter
-      session: don't click on OK just after selecting unit, return to the
-      wanted tab!
-    </para>
-  </sect3>
 </sect2>
