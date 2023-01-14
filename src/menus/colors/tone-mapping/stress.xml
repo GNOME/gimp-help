@@ -1,11 +1,167 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
           "http://www.docbook.org/xml/4.3/docbookx.dtd">
-<!--section history:
-  2018-06-08 j.h Created empty
--->
 
-<sect2 id="gimp-filter-stress">
+<sect2 id="gimp-filter-stress" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>Stress</title>
-  <para>TODO</para>
+
+  <indexterm>
+    <primary>Colors</primary>
+    <secondary>Stress</secondary>
+  </indexterm>
+  <indexterm>
+    <primary>Stress</primary>
+  </indexterm>
+  <indexterm>
+    <primary>Tone Mapping</primary>
+    <secondary>Stress</secondary>
+  </indexterm>
+
+  <sect3>
+    <title>Overview</title>
+    <figure>
+      <title><quote>Stress</quote> tone mapping example</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata format="PNG"
+            fileref="images/filters/examples/colors-retinex1.png"/>
+        </imageobject>
+        <caption>
+          <para>
+            Original image
+          </para>
+        </caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject>
+          <imagedata format="JPG"
+            fileref="images/filters/examples/tone-mapping-stress.jpg"/>
+        </imageobject>
+        <caption>
+          <para>
+            Filter applied with default settings, after changing image
+            precision in GIMP to 32-bit floating point linear light.
+          </para>
+        </caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject>
+          <imagedata format="JPG"
+            fileref="images/filters/examples/tone-mapping-stress-2.jpg"/>
+        </imageobject>
+        <caption>
+          <para>
+            Filter applied with Samples 15 and Iterations 20.
+          </para>
+        </caption>
+      </mediaobject>
+    </figure>
+    <para>
+      This filter uses a Spatio Temporal Retinex-like Envelope with Stochastic
+      Sampling (STRESS).
+      The algorithms work by recalculating each pixel using envelopes for local
+      upper and lower bounds in the image. The envelopes are obtained sampling
+      neighbor pixels and can be interpreted as local reference maximum and
+      minimum. This method can be used for local contrast stretching, automatic
+      color correction, high dynamic range image rendering, spatial color
+      gamut mapping, and color to grayscale conversion with good results.
+    </para>
+    <para>
+      Based on Ø. Kolås, I. Farup, and A. Rizzi, <quote>Spatio-temporal
+      retinex-inspired envelope with stochastic sampling:A framework for spatial
+      color algorithms</quote>, Journal of Imaging Science and Technology,
+      vol. 55, no. 4, pp. 1–10, 2011.
+    </para>
+    <note>
+      <para>
+        This filter is slow on larger images. For finding the best settings
+        for your image you could make a small relevant selection first and
+        save that as a preset before using that for the whole image.
+      </para>
+    </note>
+  </sect3>
+
+  <sect3>
+    <title>Activating the filter</title>
+    <para>
+      This filter is found in the image window menu under
+      <menuchoice>
+        <guimenu>Colors</guimenu>
+        <guisubmenu>Tone Mapping</guisubmenu>
+        <guimenuitem>Stress</guimenuitem>
+      </menuchoice>.
+    </para>
+  </sect3>
+
+  <sect3>
+    <title>Options</title>
+    <figure>
+      <title>The <quote>Stress</quote> filter Dialog</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata format="PNG"
+            fileref="images/menus/colors/tone-mapping/stress-dialog.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+    <variablelist>
+      <varlistentry>
+        <term>Presets</term>
+        <listitem>
+          <para>
+            <quote>Presets</quote> are a common feature for
+            several Colors commands. You can find its description in
+            <xref linkend="colors-common-features"/>.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Radius</term>
+        <listitem>
+          <para>
+            Neighborhood taken into account, for enhancement ideal values are
+            close to the longest side of the image (which can be either width
+            or height). Increasing this value makes the filter slower.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Samples</term>
+        <listitem>
+          <para>
+            Number of samples to do per iteration looking for the range of
+            colors.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Iterations</term>
+        <listitem>
+          <para>
+            Number of iterations; a higher number of iterations provides a
+            less noisy rendering but makes the filter slower.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Enhance Shadows</term>
+        <listitem>
+          <para>
+            When enabled shadow regions are also enhanced; when disabled a more
+            natural result is yielded.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+      <term>Input Type, Clipping, Blending Options, Preview and Split view</term>
+        <listitem>
+          <para>
+            These are common features described in
+            <xref linkend="colors-common-features"/>.
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </sect3>
+
 </sect2>
