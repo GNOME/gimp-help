@@ -70,12 +70,10 @@ xmlns:xi="http://www.w3.org/2001/XInclude" id="gimp-tool-foreground-select">
           This tool has no shortcut, but you can set one using
           <menuchoice>
             <guimenu>Edit</guimenu>
-            <guisubmenu>Preferences</guisubmenu>
-            <guisubmenu>Interface</guisubmenu>
-            <guisubmenu>Configure Keyboard Shortcuts</guisubmenu>
-            <guisubmenu>Tools</guisubmenu>
-            <guimenuitem>Foreground Select</guimenuitem>
-          </menuchoice>
+            <guimenuitem>Keyboard Shortcuts</guimenuitem>
+          </menuchoice>, open the <guilabel>Tools</guilabel> group on the left,
+          select <guilabel>Foreground Select</guilabel> and then press the
+          keys you want to use as shortcut.
         </para>
       </listitem>
     </itemizedlist>
@@ -84,26 +82,54 @@ xmlns:xi="http://www.w3.org/2001/XInclude" id="gimp-tool-foreground-select">
    <sect3 id="tool-fg-select-usage">
     <title>Directions for use</title>
     <para>
-      Let us start with an object distinctly different from background, not 
-      needing to be refined.
+      Let us start with an object that is easy to distinguish from the
+      background and doesn't need to be refined.
     </para>
+    <warning>
+      <para>
+        The foreground select tool needs a lot of memory for its processing,
+        depending of the size of the image. It is known to crash or slow down
+        when using larger images.
+      </para>
+      <para>
+        One way to improve this is to use <guilabel>Matting Global</guilabel>
+        instead of <guilabel>Matting Levin</guilabel>. The slow processing
+        speed can be improved by increasing the number of downsampled
+        <guilabel>Levels</guilabel>, at the cost of using more memory. Both of
+        these options also come with the disadvantage of being less accurate.
+      </para>
+    </warning>
     <procedure>
       <step>
         <para>
-          <emphasis>Roughly select the foreground</emphasis> you want
-          to extract. When you select this tool, the mouse pointer goes with
-          the lasso icon. It actually works like the Free Select tool.
-          Select as little as possible from the background.
+          The way it works is similar to the
+          <link linkend="gimp-tool-free-select">Free Select tool</link>.
+          Roughly select the object you want to extract, with a little bit of
+          background around it.
+          To get a more accurate outline, keep the mouse button pressed while
+          moving. To use straight lines for parts of your selection, click
+          and release the button between the start and end points of the
+          straight section.
         </para>
         <para>
-          When the mouse pointer comes over line beginning, a small yellow 
-          circle appears: release mouse button to close selection. While 
-          selecting, click-and-drag draws a fuzzy line, drag only draws a 
-          straight line.
+          As soon you click to start drawing the selection, a small window pops
+          up:
+          <mediaobject>
+            <imageobject>
+              <imagedata format="PNG"
+                fileref="images/toolbox/FG-select-pop-up.png"/>
+            </imageobject>
+          </mediaobject>
+          Before the selection is finished, only the close button
+          <emphasis>x</emphasis> is active, allowing you to cancel and return
+          to the original image (this can also be done by pressing the
+          <keycap>Esc</keycap> key).
         </para>
         <para>
-          If the mouse pointer doesn't cover start point, double clicking closes 
-          selection with a straight line.
+          To finish the initial selection, it needs to be closed. When the mouse
+          cursor hovers over the dot where you started the selection, it turns
+          yellow. Click this to close the selection. Instead of doing that,
+          you can also double-click to close the selection.
         </para>
         <mediaobject>
           <imageobject>
@@ -116,22 +142,11 @@ xmlns:xi="http://www.w3.org/2001/XInclude" id="gimp-tool-foreground-select">
             </para>
           </caption>
          </mediaobject>
-        <para>
-          As soon you click to start drawing, a small window pops up:
-          <mediaobject>
-            <imageobject>
-              <imagedata format="PNG"
-                fileref="images/toolbox/FG-select-pop-up.png"/>
-            </imageobject>
-          </mediaobject>
-	  For the moment, only a little <emphasis>cross</emphasis> is active, 
-	  allowing to quit: returns to the original image.
-        </para>
       </step>
       <step>
         <para>
-          <emphasis>Press <keycap>Enter</keycap></emphasis> to 
-          create the <emphasis>mask</emphasis>:
+          To create the mask from your selection, press <keycap>Enter</keycap>,
+          or double-click inside the selection:
           <mediaobject>
             <imageobject>
                 <imagedata format="PNG"
@@ -140,21 +155,22 @@ xmlns:xi="http://www.w3.org/2001/XInclude" id="gimp-tool-foreground-select">
           </mediaobject>
         </para>
         <para>
-          The mouse pointer goes now with the Paint-brush icon.
-          The dark blue area (this color can be changed) is for background. The 
-          light blue area covers the zone you have selected, on which you will 
-          paint to extract foreground. It contains the <emphasis>foreground 
-          area</emphasis> and a <emphasis>small part of background</emphasis>. 
-          Outside the selected area, the dark blue area is named 
-          <emphasis>Unknown pixels area</emphasis>.
+          The mouse pointer now changes into a Paintbrush icon with a circle.
+          The dark blue area (this color can be changed) shows the background.
+          The lighter area covers the zone you have selected as foreground and
+          a small part of background.
+          Outside the selected area, the dark blue area is called the
+          <quote>Unknown pixels area</quote>.
         </para>
         <para>
-          Options in the small window become active:
+          The options in the small window on top of the image become active:
           <itemizedlist>
             <listitem>
               <para>
-                A <guilabel>Preview mask</guilabel> checkbox that toggles 
-                displaying a preview of the foreground extraction status. 
+                A <guilabel>Preview mask</guilabel> checkbox that toggles
+                displaying a preview of the foreground extraction status.
+                The same can also be done by pressing the
+                <keycap>Enter</keycap> key.
               </para>
             </listitem>
             <listitem>
@@ -168,16 +184,17 @@ xmlns:xi="http://www.w3.org/2001/XInclude" id="gimp-tool-foreground-select">
       </step>
       <step>
         <para>
-          <emphasis>Draw a line through the foreground</emphasis>: using the
-          default selected paintbrush, whose size can be changed in options, 
-          draw a continuous line in the selected foreground going over colors 
-          which will be kept for the extraction. The color used to draw the 
-          line is of no importance; not using the same color as foreground is 
-          better. Be careful not painting background pixels.
+          Now we start the actual foreground extraction process: draw a line
+          through the foreground. The size of the brush can be changed in the
+          Tool Options area. Draw a continuous line over the selected foreground
+          area moving over colors which will be kept for the extraction. The
+          color used to draw the line is not important, but not using the same
+          color as the foreground makes it easier to see. Be careful not to
+          paint background pixels.
         </para>
         <para>
-          With this one-color object distinctly different from background, a 
-          few strokes are enough:
+          With this one-color object, that is easy to distinguish from the
+          background, a few strokes are enough:
           <mediaobject>
             <imageobject>
                 <imagedata format="PNG"
@@ -188,7 +205,8 @@ xmlns:xi="http://www.w3.org/2001/XInclude" id="gimp-tool-foreground-select">
       </step>
       <step>
         <para>
-          <emphasis>Toggle preview</emphasis> to verify result.
+          <emphasis>Toggle the preview</emphasis> button, or press
+          <keycap>Enter</keycap> to verify the result.
           <mediaobject>
             <imageobject>
                 <imagedata format="PNG"
@@ -198,27 +216,18 @@ xmlns:xi="http://www.w3.org/2001/XInclude" id="gimp-tool-foreground-select">
         </para>
         <note>
           <para>
-            This <guilabel>Preview mask</guilabel> is a mask: you can draw 
-            directly on it and see result immediately.
+            You can draw directly on this <guilabel>Preview mask</guilabel> and
+            see the result immediately.
           </para>
         </note>
       </step>
       <step>
         <para>
-          Try <guilabel>Matting Levin</guilabel> engine that may improve result.
-          <mediaobject>
-            <imageobject>
-                <imagedata format="PNG"
-                  fileref="images/toolbox/FG-select-Levin.png"/>
-            </imageobject>
-          </mediaobject>
-        </para>
-      </step>
-      <step>
-        <para>
-          When you are satisfied with result, click on 
-          <guibutton>Select</guibutton> button to get the selection of the 
-          foreground with its marching ants.
+          When you are satisfied with the result, click the
+          <guibutton>Select</guibutton> button, or press <keycap>Enter</keycap>
+          to finalize the selection and finish the foreground selection
+          operation. You can cancel the operation by pressing
+          <keycap>Esc</keycap>.
         </para>
       </step>
     </procedure>
@@ -249,16 +258,19 @@ xmlns:xi="http://www.w3.org/2001/XInclude" id="gimp-tool-foreground-select">
         <term>Draw mode</term>
         <listitem>
           <para>
-            <guilabel>Draw foreground</guilabel>: to draw what will be 
-            foreground.
+            <guilabel>Draw foreground</guilabel>: when selecting with a brush,
+            what you draw will be considered part of the foreground, i.e.
+            included in the selection.
           </para>
           <para>
-            <guilabel>Draw background</guilabel>: to draw what will be 
-            background.
+            <guilabel>Draw background</guilabel>: when selecting with a brush,
+            what you draw will be considered part of the background, i.e. it
+            will be excluded from the selection.
           </para>
           <para>
-            <guilabel>Draw unknown</guilabel>: to add pixels 
-            that are in background to your selection.
+            <guilabel>Draw unknown</guilabel>: When drawing on the background,
+            outside the initial selection, it marks the drawn pixels as
+            belonging to the foreground.
           </para>
         </listitem>
       </varlistentry>
@@ -266,27 +278,28 @@ xmlns:xi="http://www.w3.org/2001/XInclude" id="gimp-tool-foreground-select">
         <term>Stroke width</term>
         <listitem>
           <para>
-           The size of the brush.
+           The size of the brush to select with.
           </para>
         </listitem>
-      </varlistentry>  
+      </varlistentry>
       <varlistentry>
         <term>Preview mode</term>
         <listitem>
           <itemizedlist>
             <listitem>
               <para>
-                <guilabel>Color</guilabel> (default): you can adapt the color 
-                of the preview to your image, clicking on the color swatch.
+                <guilabel>Color</guilabel> (default): the color of the selection
+                preview mask; the current color is shown in the color swatch.
+                You can change the color by clicking on it.
               </para>
             </listitem>
             <listitem>
               <para>
-                <guilabel>Grayscale</guilabel> : new in GIMP-2.10.14, to see 
-                the resulting mask in black and white. This preview is similar 
-                to a layer mask. It is useful in images where FG color and BG 
-                color are not very different and limit between them nor very 
-                evident.
+                <guilabel>Grayscale</guilabel>: allows you to see the resulting
+                mask in black and white. This preview is similar to a layer
+                mask. It can be useful in images where foreground and background
+                color are similar and difficult to distinguish.
+                Available since GIMP 2.10.14.
               </para>
             </listitem>
           </itemizedlist>
@@ -296,34 +309,57 @@ xmlns:xi="http://www.w3.org/2001/XInclude" id="gimp-tool-foreground-select">
         <term>Engine</term>
         <listitem>
           <para>
-            Work with <guilabel>Matting global</guilabel>(default) and improve 
-            result with <guilabel>Matting Levin</guilabel>.
+            This is the method that will be used to select the forground.
+            The default is <guilabel>Matting Levin</guilabel>, which usually
+            gives the best results, but you can also try
+            <guilabel>Matting global</guilabel>, especially if processing is
+            slow and you are using larger images.
           </para>
         </listitem>
       </varlistentry>
       <varlistentry>
-        <term>Iterations</term>
+        <term>Levels (Matting Levin only)</term>
         <listitem>
           <para>
-            Default is 1. Repeating algorithm may improve result.
+            The number of downsampled levels to use.
+            The default is 2 levels.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Active levels (Matting Levin only)</term>
+        <listitem>
+          <para>
+            The number of levels to perform solving.
+            The default is 2 active levels.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Iterations (Matting Global only)</term>
+        <listitem>
+          <para>
+            Higher values may improve the result at the cost of being slower.
+            The default is 2 iterations.
           </para>
         </listitem>
       </varlistentry>
     </variablelist>
   </sect3>
-  
+
   <sect3>
     <title>Refining Foreground Extraction</title>
     <para>
-      In most images, foreground is not distinctly different from background. 
-      Refining selection allows you now to extract these foregrounds. 
-      Procedure steps are the same as above, but, during drawing foreground, 
-      you will often toggle Preview, use Zoom (<keycap>+</keycap> key), 
-      <guilabel>Draw background</guilabel> to delete unwanted background 
-      extraction areas. You can also work directly on Preview mask.
+      In a lot of images, distinguishing what is foreground or background can be
+      difficult. Refining the selection allows you to extract these foregrounds.
+      The procedure steps are the same as above, but, while drawing the
+      foreground, you will often toggle Preview, use Zoom (<keycap>+</keycap>
+      key), switch to <guilabel>Draw background</guilabel> to delete unwanted
+      background areas, and switch between <guilabel>Grayscale</guilabel> and
+      <guilabel>Color</guilabel> preview mode.
     </para>
     <figure>
-      <title>Example for Draw background</title>
+      <title><quote>Draw background</quote> Example</title>
       <mediaobject>
         <imageobject>
           <imagedata format="PNG"
@@ -331,22 +367,23 @@ xmlns:xi="http://www.w3.org/2001/XInclude" id="gimp-tool-foreground-select">
         </imageobject>
         <caption>
           <para>
-            On the left: drawing foreground ill-advisedly went over background 
-            area: a part of background will be included in foreground selection!
+            On the left: drawing foreground by mistake went over the background
+            area: a part of the background will be included in the foreground
+            selection!
           </para>
           <para>
-            In middle: <guilabel>Draw background</guilabel> option is checked: 
-            draw on inclusion and unwanted pixels. 
+            In the middle: <guilabel>Draw background</guilabel> option is
+            checked: draw on the unwanted background pixels.
           </para>
           <para>
-            On the right: unwanted selected pixels in background are no longer 
-            in foreground selection.
+            On the right: unwanted selected pixels in the background are no
+            longer in the foreground selection.
           </para>
         </caption>
       </mediaobject>
     </figure>
     <figure>
-      <title>Example for Draw unknown</title>
+      <title><quote>Draw unknown</quote> Example</title>
       <mediaobject>
         <imageobject>
           <imagedata format="PNG"
@@ -354,12 +391,13 @@ xmlns:xi="http://www.w3.org/2001/XInclude" id="gimp-tool-foreground-select">
         </imageobject>
         <caption>
           <para>
-            On the left: the selection left a small part of foreground 
-            unselected, in unknown pixels area.
+            On the left: the selection left a small part of the foreground
+            unselected, in the unknown pixels area.
           </para>
           <para>
-            On the right: with <guilabel>Draw unknown</guilabel> option 
-            checked, draw on unselected pixels. They are now selected.
+            On the right: with <guilabel>Draw unknown</guilabel> option
+            checked, draw on the unselected pixels to select them. This shows
+            that they are now selected.
           </para>
         </caption>
       </mediaobject>
