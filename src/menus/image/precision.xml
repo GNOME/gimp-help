@@ -72,6 +72,15 @@
                   <para>
                     <guimenuitem>8-bit integer</guimenuitem>
                   </para>
+                  <note>
+                    <para>
+                      When choosing to convert an image which has a 32-bit
+                      floating point precision to 8-bit integer, a
+                      <link linkend="gimp-image-convert-precision">conversion
+                      dialog</link> will open that will ask you to choose
+                      dithering settings.
+                    </para>
+                  </note>
                 </listitem>
                 <listitem>
                   <anchor id="gimp-image-convert-u16"/>
@@ -351,6 +360,69 @@
         </itemizedlist>
       </listitem>
     </orderedlist>
+  </sect3>
+
+  <sect3 id="gimp-image-convert-precision">
+    <title>The Image Precision Conversion Dialog</title>
+    <para>
+      For most precision conversions this dialog will only ask how
+      <guilabel>Gamma</guilabel> should be set. However, for conversion
+      from 32-bit float precision to 8-bit integer, the below dialog will
+      be shown that also asks for <guilabel>Dithering</guilabel>.
+    </para>
+    <figure>
+      <title>
+        The <quote>Precision</quote> conversion dialog for 32-bit float to
+        8-bit integer
+      </title>
+      <mediaobject>
+        <imageobject>
+          <imagedata format="PNG"
+            fileref="images/menus/image/precision-conversion-dialog.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+    <variablelist>
+      <varlistentry>
+        <term>Gamma</term>
+        <listitem>
+          <para>
+            The <guilabel>Gamma</guilabel> setting is explained
+            <link linkend="gimp-image-choosing-precision-encoding">above</link>.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>Dithering</term>
+        <listitem>
+          <para>
+            When reducing the precision from 32-bit floating point to 8-bit
+            integer, you will lose some details. This can cause color banding,
+            where there is an obvious jump from one color to another where
+            there shouldn't be. Using dithering can be a way to reduce this.
+            Dithering is a way of adding noise to an image to prevent banding
+            and other unwanted patterns. The different dithering methods use
+            different ways to add the noise.
+          </para>
+          <para>
+            There are three <guilabel>Dithering</guilabel> settings: for normal
+            Layers, Text Layers, and Channels and Masks.
+            For each you can set the type of dithering to use. The different
+            dithering modes are explained in the
+            <link linkend="gimp-filter-dither-method">Dithering Method</link>
+            option of the Dither filter.
+          </para>
+          <para>
+            In general, you probably won't use dithering for Text layers,
+            since that will cause the text information to be lost, meaning
+            it becomes a normal layer. I would first try conversion without
+            any dithering, and if there are any noticeable artifacts, you
+            can try using dithering on normal layers.
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
   </sect3>
 
 </sect2>
