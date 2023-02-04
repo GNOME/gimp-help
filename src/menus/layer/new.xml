@@ -49,10 +49,11 @@
       </mediaobject>
     </figure>
     <para>
-      Under the title <quote>Create a new layer</quote> you can see the name
-      of the image for that you create this new layer and next to the title
-      a thumbnail of it. That is interesting to see if you have selected the
-      good image when there is more than one image open.
+      Below the title <quote>Create a new layer</quote>, the name of the image
+      that this new layer will belong to, is displayed. To the right of the
+      title a thumbnail of that image is shown. This will enable you to check
+      that you are adding the layer to the correct image when there is more than
+       one image open.
     </para>
     <variablelist>
       <varlistentry>
@@ -61,67 +62,85 @@
           <para>
             The name of the new layer. It does not have any functional
             significance; it is simply a convenient way for you to remember
-            the purpose of the layer. The default name is <quote>New
-            Layer</quote>. If a layer with the name you choose already
-            exists, a number is automatically appended to it to make it
-            unique (e.g., <quote>New Layer#1</quote>) when you click on the
-            <guibutton>OK</guibutton> button.
+            the purpose of the layer. The default name is <quote>Layer</quote>,
+            but it remembers the last name you used. If a layer with the name
+            you chose already exists, a number is automatically appended to it
+            to make the name unique (e.g., <quote>Layer #1</quote>) when you
+            click <guibutton>OK</guibutton> to create the layer.
           </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term>Color tag</term>
         <listitem>
           <anchor id="gimp-layer-color-tag"/>
           <para>
-            If you click on one of these color buttons, the "Eye" icon box 
-            of the created layer will have this color. This is interesting 
-            when you have many layers in the image.
+            If you click on one of these color buttons, the "Eye" icon box
+            of the created layer will have this color. This can help you
+            identify or group layers to make them easier to spot when you
+            have a lot of layers in your image.
           </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term>Mode</term>
         <listitem>
           <para>
-            Default is <quote>Normal</quote>. The drop-down list offers all 
-            layer blend modes. On the right, another drop-down list to select 
-            between <quote>Default</quote> or <quote>Legacy</quote> group 
-            of modes.
+            A layer's mode determines how the layer is combined with the layers
+            below it. The default is <quote>Normal</quote>. The drop-down list
+            offers a wide choice of layer modes, also known as blend modes.
+            On the right, there is another drop-down list to select between
+            <quote>Default</quote> or <quote>Legacy</quote> layer modes.
           </para>
           <para>
-            Layer blend modes are described in 
-              <link linkend="gimp-concepts-layer-modes">Layer Modes</link>.
+            Layer modes are described in more detail in
+            <link linkend="gimp-concepts-layer-modes">Layer Modes</link> and
+            <link linkend="gimp-concepts-layer-modes-legacy">Legacy Layer
+            Modes</link>.
           </para>
         </listitem>
       </varlistentry>
 
       <varlistentry id="gimp-layer-blend-space">
         <term>Blend space</term>
+        <term>
+          <anchor id="gimp-layer-composite-space"/>
+          Composite space
+        </term>
         <listitem>
           <para>
-            The space used for blending the layer. This setting always seems to
-            be disabled.
-          </para>
-        </listitem>
-      </varlistentry>
-
-      <varlistentry id="gimp-layer-composite-space">
-        <term>Composite space</term>
-        <listitem>
-          <para>
-            Default is <quote>Auto</quote>. In the drop-down list, you can
-            choose between <quote>RGB linear</quote> and <quote>RGB
-            perceptual</quote>.
+            The color space used for blending or compositing the layer with the
+            layers below it. <quote>Blending</quote> determines how the colors
+            of the upper and lower layer are mixed together, and
+            <quote>compositing</quote> how the upper and lower layer are merged
+            together with respect to the transparency of each pixel.
           </para>
           <para>
-            Channel encodings are described in
+            Depending on the layer mode (see above) one or both of these
+            settings may be disabled. It is only enabled for layer modes where
+            setting this has any effect. When enabled, the default is
+            <guilabel>Auto</guilabel>. The other choices are <guilabel>RGB
+            (linear)</guilabel> and <guilabel>RGB (perceptual)</guilabel>.
+            Note that what <guilabel>Auto</guilabel> translates to, depends on
+            the chosen layer mode. It is not the same for all modes. Some use
+            linear, others use perceptual.
+          </para>
+          <para>
+            The linear and perceptual encodings are described in
             <link linkend="gimp-image-choosing-precision-encoding">choosing
             precision and encoding</link> and in the
             <link linkend="glossary-channel-encoding">Glossary</link>.
           </para>
+          <note>
+            <para>
+              When changing the layer mode, both <guilabel>Blend space</guilabel>
+              and <guilabel>Composite space</guilabel> are always reset to
+              <guilabel>Auto</guilabel> to make sure the settings make sense
+              for that particular layer mode.
+            </para>
+          </note>
         </listitem>
       </varlistentry>
 
@@ -129,31 +148,33 @@
         <term>Composite mode</term>
         <listitem>
           <para>
-            The <emphasis role="bold">layer's mode</emphasis> (sometimes
-            referred to as its <quote>blend mode</quote>: Normal, Multiply,
-            etc.) determines how the <emphasis>color values</emphasis> of the
-            layer and its backdrop are combined, while the <emphasis
-            role="bold">layer's composite mode</emphasis> determines how the
-            <emphasis>alpha values</emphasis> of the layer and its backdrop
-            are combined. (The layer's backdrop is the content against which
+            The layer <guilabel>Mode</guilabel>, sometimes referred to as its
+            <quote>blend mode</quote> (Normal, Multiply, etc.), determines how
+            the <emphasis>color values</emphasis> of the layer and its backdrop
+            are combined (together with the <guilabel>Blend space</guilabel>
+            setting).
+            The <guilabel>composite mode</guilabel> of a layer determines how
+            the <emphasis>alpha values</emphasis> of the layer and its backdrop
+            are combined (together with the <guilabel>Composite space</guilabel>
+            setting). The layer's backdrop is the content against which
             the layer is composited; namely, it's the combination of the layers
-            below it.)
+            below it.
           </para>
           <para>
             There are two regions of interest when compositing the layer
             against its backdrop: the opaque region of the backdrop, and the
-            opaque region of the layer.  The layer's blend mode determines how
+            opaque region of the layer. The layer's blend mode determines how
             to combine the colors of the <emphasis>intersection</emphasis> of
-            these two regions: i.e., the common opaque region of both
-            the backdrop and the layer (pixels belonging to only one of these
+            these two regions: i.e., the common opaque region of both the
+            backdrop and the layer (pixels belonging to only one of these
             regions don't need to be combined with anything, and retain their
-            original color.). The layer's composite mode determines which part
+            original color). The layer's composite mode determines which part
             of these regions to keep, and which to discard.
           </para>
           <para>
-            The example images below show the composition of two layers -- the
-            bottom layer containing a red feathered circle, and the top layer
-            containing a green feathered circle -- using
+            The example images below show the composition of two layers &mdash;
+            the bottom layer containing a red feathered circle, and the top
+            layer containing a green feathered circle &mdash; using
             <quote>Addition</quote> mode, and different composite modes
             (applied to the top layer).
           </para>
@@ -249,9 +270,9 @@ format="PNG" fileref="images/menus/layer/composite-mode-union.png"/>
           </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
-        <term>Width; Height</term>
+        <term>Width, Height</term>
         <listitem>
           <para>
             The dimensions of the new layer. When the dialog appears, the
@@ -261,37 +282,43 @@ format="PNG" fileref="images/menus/layer/composite-mode-union.png"/>
           </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
-        <term>Offset X; Y</term>
+        <term>Offset X, Offset Y</term>
         <listitem>
           <para>
-            The origin of the new layer is the upper left corner of the 
-            image. Here, you can set precisely the position of layers smaller 
-            than the canvas, especially text layers.
+            The default origin of the new layer is the upper left corner of the
+            image canvas. Here, you can set the exact position of the layer. By
+            choosing a negative offset, you can set the layer to be partially
+            outside the image canvas.
           </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term>Fill With</term>
         <listitem>
           <para>
-            There are five options for the solid color that fills the layer:
-            the current <guilabel>Foreground color</guilabel>,
-            the current <guilabel>Background color</guilabel>,
-            <guilabel>White</guilabel>, <guilabel>Transparency</guilabel>, and 
+            There are five options for filling the new layer:
+            the current <guilabel>Foreground color</guilabel>, the current
+            <guilabel>Background color</guilabel>, <guilabel>White</guilabel>,
+            <guilabel>Transparency</guilabel>, and the current
             <guilabel>Pattern</guilabel>.
           </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term>Switches</term>
         <listitem>
           <para>
-            These switches reproduce options described in the 
-              <link linkend="gimp-layer-characteristics">Layer Dialog</link>.
+            These switches on the right side of this dialog are described in the
+            Layer Dialog documentation. See
+            <link linkend="gimp-layer-attributes">Layer Attributes</link>
+            (Visible and Linked), and
+            <link linkend="gimp-layer-characteristics">Layer
+            Characteristics</link> (Lock pixels, Lock position and size,
+            Lock alpha).
           </para>
         </listitem>
       </varlistentry>
