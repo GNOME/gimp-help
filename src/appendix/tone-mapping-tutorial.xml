@@ -8,52 +8,52 @@
   </title>
 
   <para>
-    This tutorial comes from www.gimp.org/tutorials and was created by Elle 
+    This tutorial comes from www.gimp.org/tutorials and was created by Elle
     Stone. It is presented here for translations.
   </para>
 
   <para>
-    A very common editing problem is how to lighten the shadows and midtones of 
-    an image while retaining highlight details, a task sometimes referred to as 
-    “shadow recovery” and more generally speaking as “tone mapping”. This 
-    step-by-step tutorial shows you how to use high bit depth GIMP’s floating 
-    point “Colors/Exposure” operation to add one or more stops of positive 
-    exposure compensation to an image’s shadows and midtones while retaining 
+    A very common editing problem is how to lighten the shadows and midtones of
+    an image while retaining highlight details, a task sometimes referred to as
+    “shadow recovery” and more generally speaking as “tone mapping”. This
+    step-by-step tutorial shows you how to use high bit depth GIMP’s floating
+    point “Colors/Exposure” operation to add one or more stops of positive
+    exposure compensation to an image’s shadows and midtones while retaining
     highlight details.
   </para>
 
-  
+
   <sect1 id="tone-mapping-introduction">
     <title>
-      High bit depth GIMP’s floating point “Colors/Exposure”: much better than 
-      Curves for lightening the shadows and midtones of an image without 
+      High bit depth GIMP’s floating point “Colors/Exposure”: much better than
+      Curves for lightening the shadows and midtones of an image without
       blowing the highlights
     </title>
     <para>
-      A very common editing problem is how to lighten the shadows and midtones 
-      of an image without blowing out the highlights, which problem is very 
-      often encountered when dealing with photographs of scenes lit by direct 
-      sunlight. Precanned algorithms for accomplishing this task are often 
-      referred to as “shadow recovery” algorithms. But really these algorithms 
-      are special-purpose tone-mapping algorithms, which sometimes work pretty 
-      well, and sometimes not so well, depending on the algorithm, the image, 
+      A very common editing problem is how to lighten the shadows and midtones
+      of an image without blowing out the highlights, which problem is very
+      often encountered when dealing with photographs of scenes lit by direct
+      sunlight. Precanned algorithms for accomplishing this task are often
+      referred to as “shadow recovery” algorithms. But really these algorithms
+      are special-purpose tone-mapping algorithms, which sometimes work pretty
+      well, and sometimes not so well, depending on the algorithm, the image,
       and your artistic intentions for the image.
     </para>
     <para>
-      This step-by-step tutorial shows you how to use GIMP’s unbounded floating 
-      point “Colors/Exposure” operation to recover shadow information—that is, 
-      add one or more stops of positive exposure compensation to an image’s 
-      shadows and midtones—without blowing out or unduly compressing the image 
-      highlights. The procedure is completely “hand-tunable” using masks and 
-      layers, and is as close as you can get to non-destructive image editing 
+      This step-by-step tutorial shows you how to use GIMP’s unbounded floating
+      point “Colors/Exposure” operation to recover shadow information—that is,
+      add one or more stops of positive exposure compensation to an image’s
+      shadows and midtones—without blowing out or unduly compressing the image
+      highlights. The procedure is completely “hand-tunable” using masks and
+      layers, and is as close as you can get to non-destructive image editing
       using high bit depth GIMP 2.9/2.10.
     </para>
-    
+
     <para>
       <emphasis role="bold">Figure 1:</emphasis> power lines at noon
     </para>
     <para>
-      Before and after tone mapping (aka “shadow recovery”) using high bit 
+      Before and after tone mapping (aka “shadow recovery”) using high bit
       depth GIMP’s floating point “Colors/Exposure”.
     </para>
     <mediaobject>
@@ -73,27 +73,27 @@ fileref="images/tutorials/tone-mapping/before-auto-stretch-contrast.jpg"
       </imageobject>
     </mediaobject>
     <para>
-        <emphasis>After tone mapping/shadow recovery using GIMP unbounded 
+        <emphasis>After tone mapping/shadow recovery using GIMP unbounded
         Levels.</emphasis>
       </para>
     <para>
-      High bit depth GIMP is my primary image editor, and I’ve used the 
-      procedure described below for the last couple of years as my “go to”  
-      way to modify image tonality. The same general procedure can be used to   
- 
-      darken as well as lighten portions of an image, again controlling the 
-      effect using a layer mask. This isn’t exactly nondestructive editing 
-      because at some point you need to make a “New from Visible” layer. But 
-      unlike using Curves, using high bit depth GIMP’s floating point 
-      “Colors/Exposure” doesn’t clip RGB channel values and allows you to 
-      fine-tune the results by modifying and re-modifying the layer mask 
+      High bit depth GIMP is my primary image editor, and I’ve used the
+      procedure described below for the last couple of years as my “go to”
+      way to modify image tonality. The same general procedure can be used to
+
+      darken as well as lighten portions of an image, again controlling the
+      effect using a layer mask. This isn’t exactly nondestructive editing
+      because at some point you need to make a “New from Visible” layer. But
+      unlike using Curves, using high bit depth GIMP’s floating point
+      “Colors/Exposure” doesn’t clip RGB channel values and allows you to
+      fine-tune the results by modifying and re-modifying the layer mask
       until you are completely happy with the resulting tonality.
     </para>
   </sect1>
-  
+
   <sect1 id="tone-mapping-example">
     <title>
-      A step-by-step example showing how to recover shadow information using 
+      A step-by-step example showing how to recover shadow information using
       high bit depth GIMP’s floating point “Colors/Exposure”
     </title>
     <para>
@@ -101,40 +101,40 @@ fileref="images/tutorials/tone-mapping/before-auto-stretch-contrast.jpg"
     </para>
     <mediaobject>
       <imageobject>
-        <imagedata 
+        <imagedata
 fileref="images/tutorials/tone-mapping/tree-exposed-for-sky-ground-is-dark.jpg"
           format="JPG"/>
       </imageobject>
     </mediaobject>
     <para>
-      Using high bit depth GIMP’s “Colors/Exposure” to lighten the ground 
-      by one stop without blowing out portions of the sky. 
+      Using high bit depth GIMP’s “Colors/Exposure” to lighten the ground
+      by one stop without blowing out portions of the sky.
     </para>
     <itemizedlist>
       <listitem>
         <para>
-          <emphasis>Left</emphasis>: The original image, an 
-          interpolated camera raw file that was deliberately 
-          underexposed in camera to avoid blowing out the sky. It might 
-          not appear to be the case, but this image is already very 
-          close to having out of gamut RGB channel values in the sky, 
-          and a simple Auto Stretch Contrast won’t lighten the image at 
+          <emphasis>Left</emphasis>: The original image, an
+          interpolated camera raw file that was deliberately
+          underexposed in camera to avoid blowing out the sky. It might
+          not appear to be the case, but this image is already very
+          close to having out of gamut RGB channel values in the sky,
+          and a simple Auto Stretch Contrast won’t lighten the image at
           all.
         </para>
       </listitem>
       <listitem>
         <para>
-          <emphasis>Right</emphasis>: The same image after using high 
-          bit depth GIMP’s “Colors/Exposure” at 32-bit floating point 
-          linear precision to add one stop of positive exposure 
-          compensation. An inverse grayscale mask was used to keep the 
+          <emphasis>Right</emphasis>: The same image after using high
+          bit depth GIMP’s “Colors/Exposure” at 32-bit floating point
+          linear precision to add one stop of positive exposure
+          compensation. An inverse grayscale mask was used to keep the
           highlights from blowing out.
         </para>
       </listitem>
      </itemizedlist>
     <para>
-      This step-by-step example provides a sample image and is broken down into 
-      five steps, starting with downloading the image. Steps 3, 4, and 5 
+      This step-by-step example provides a sample image and is broken down into
+      five steps, starting with downloading the image. Steps 3, 4, and 5
       describe the actual procedure.
     </para>
     <procedure>
@@ -142,28 +142,28 @@ fileref="images/tutorials/tone-mapping/tree-exposed-for-sky-ground-is-dark.jpg"
         <para>
           <emphasis role="bold">Download</emphasis> <ulink
 url="https://www.gimp.org/tutorials/Tone_Mapping_Using_GIMP_Levels/tree.png">
-tree.png</ulink>, 
-          which is a 16-bit integer sRGB image. High bit depth GIMP really is 
-          an “sRGB only” image editor, so it’s best if you don’t even try to 
+tree.png</ulink>,
+          which is a 16-bit integer sRGB image. High bit depth GIMP really is
+          an “sRGB only” image editor, so it’s best if you don’t even try to
           edit in other RGB working spaces.
         </para>
       </step>
       <step>
         <para>
-          <emphasis role="bold">Open tree.png with GIMP and assign the GIMP 
-          built-in sRGB profile (the image colors won’t change a bit). Then 
-          convert the image to 32-bit floating point linear 
-          precision</emphasis>: Go to “Image/Precision”, select “32-bit 
-          floating point”, and when the Dither dialog pops up, select “Linear 
-          light” (this ensures that the Normal blend mode produces 
+          <emphasis role="bold">Open tree.png with GIMP and assign the GIMP
+          built-in sRGB profile (the image colors won’t change a bit). Then
+          convert the image to 32-bit floating point linear
+          precision</emphasis>: Go to “Image/Precision”, select “32-bit
+          floating point”, and when the Dither dialog pops up, select “Linear
+          light” (this ensures that the Normal blend mode produces
           radiometrically correct results).
         </para>
       </step>
       <step>
         <para>
-          Make a copy of the “tree.png” layer, and label it “+1 stop exposure 
-          comp”. Then use “Colors/Exposure” to add one stop of positive 
-          exposure compensation—Figure 3 below shows the proper settings for 
+          Make a copy of the “tree.png” layer, and label it “+1 stop exposure
+          comp”. Then use “Colors/Exposure” to add one stop of positive
+          exposure compensation—Figure 3 below shows the proper settings for
           the “Colors/Exposure” dialog, and Figure 4 shows the result:
         </para>
         <para><emphasis role="bold">Figure 3</emphasis></para>
@@ -176,12 +176,12 @@ tree.png</ulink>,
             </imageobject>
         </mediaobject>
         <para>
-          <emphasis>Using “Colors/Exposure” to add one stop of positive 
+          <emphasis>Using “Colors/Exposure” to add one stop of positive
             exposure compensation.</emphasis>
         </para>
         <para>
-          When using “Colors/Exposure” to add one stop of positive exposure 
-          compensation, make sure the image really is at floating point 
+          When using “Colors/Exposure” to add one stop of positive exposure
+          compensation, make sure the image really is at floating point
           precision, because integer precision will clip the highlights.
         </para>
         <para>
@@ -196,45 +196,45 @@ tree.png</ulink>,
             </imageobject>
         </mediaobject>
         <para>
-          At floating point precision, GIMP’s “Colors/Exposure” 
-          operation is unbounded. This means you can use 
-          “Colors/Exposure” to add positive exposure compensation 
+          At floating point precision, GIMP’s “Colors/Exposure”
+          operation is unbounded. This means you can use
+          “Colors/Exposure” to add positive exposure compensation
           without blowing out the highlights.
         </para>
         <para>
-          Notice the RGB channel values for the four sample points: 
-          the channel information that would have been clipped using 
-          integer precision is encoded using channel values that are 
+          Notice the RGB channel values for the four sample points:
+          the channel information that would have been clipped using
+          integer precision is encoded using channel values that are
           greater than 1.0 floating point.
         </para>
         <para>
-          The image in Figure 4 clearly has “blown” highlights in the sky. 
-          But the highlights aren’t really blown (that is, clipped to 1.0 in 
-          one or more channels). Instead the highlight information is still 
+          The image in Figure 4 clearly has “blown” highlights in the sky.
+          But the highlights aren’t really blown (that is, clipped to 1.0 in
+          one or more channels). Instead the highlight information is still
           there, but the RGB channel values fall outside the RGB <ulink url=
-"http://ninedegreesbelow.com/photography/display-referred-scene-referred.html"> 
- 
-          display channel value</ulink> range of 0.0f to 1.0f. The sample 
-          points dialog in Figure 4 above shows four sample points that have 
-RGB 
-          channel values that are greater than 1.0. As shown in Figure 5 below, 
-          adding a mask allows you to recover these highlights by bringing 
+"http://ninedegreesbelow.com/photography/display-referred-scene-referred.html">
+
+          display channel value</ulink> range of 0.0f to 1.0f. The sample
+          points dialog in Figure 4 above shows four sample points that have
+RGB
+          channel values that are greater than 1.0. As shown in Figure 5 below,
+          adding a mask allows you to recover these highlights by bringing
           them back down into the display range.
         </para>
         <para>
-          If you had used integer precision instead of floating point, the 
-          highlights really would be blown: The sample points would have a 
-          maximum channel values of 255, 65535 or 4294967295, depending on 
-          the bit depth. And masking would only “recover” a solid expanse of 
-          gray, completely lacking any details (try for yourself and see what 
+          If you had used integer precision instead of floating point, the
+          highlights really would be blown: The sample points would have a
+          maximum channel values of 255, 65535 or 4294967295, depending on
+          the bit depth. And masking would only “recover” a solid expanse of
+          gray, completely lacking any details (try for yourself and see what
           happens).
         </para>
       </step>
       <step>
         <para>
-          <emphasis role="bold">Add an inverse grayscale layer mask</emphasis>: 
-          Right-click on the layer and select “Layer/Mask/Add Layer Mask”, and 
-          when the “Add a mask to the Layer” dialog pops up, choose “Grayscale 
+          <emphasis role="bold">Add an inverse grayscale layer mask</emphasis>:
+          Right-click on the layer and select “Layer/Mask/Add Layer Mask”, and
+          when the “Add a mask to the Layer” dialog pops up, choose “Grayscale
           copy of layer” and check the “Invert mask” box.
         </para>
         <mediaobject>
@@ -245,11 +245,11 @@ fileref="images/tutorials/tone-mapping/add-inverse-grayscale-mask.jpg"
           </imageobject>
         </mediaobject>
         <para>
-          As shown in Figure 5 below, at this point the highlights will be 
-          brought back into the display range, meaning all RGB channel values 
-          are between 0.0f and 1.0f. But the image will probably look a little 
-          odd (sort of cloudy and flat), and depending on the image, the 
-          brightest highlights might actually have dark splotches—don’t worry! 
+          As shown in Figure 5 below, at this point the highlights will be
+          brought back into the display range, meaning all RGB channel values
+          are between 0.0f and 1.0f. But the image will probably look a little
+          odd (sort of cloudy and flat), and depending on the image, the
+          brightest highlights might actually have dark splotches—don’t worry!
           this is temporary.
         </para>
         <para>
@@ -263,21 +263,21 @@ fileref="images/tutorials/tone-mapping/add-inverse-grayscale-mask.jpg"
             </imageobject>
          </mediaobject>
         <para>
-          Result of adding an inverse grayscale layer mask to bring the 
+          Result of adding an inverse grayscale layer mask to bring the
           highlights back into the display range.
         </para>
         <para>
-          Adding an inverse grayscale layer mask brings the highlights 
-          back into the display range, but at this point most images will 
-          look flat and cloudy, and some images will have dark splotches 
-          in the highlights. The next step—“Auto Stretch Contrast” 
+          Adding an inverse grayscale layer mask brings the highlights
+          back into the display range, but at this point most images will
+          look flat and cloudy, and some images will have dark splotches
+          in the highlights. The next step—“Auto Stretch Contrast”
           performed on the mask—will take care of this problem.
         </para>
       </step>
       <step>
         <para>
-          <emphasis role="bold">Click on the layer mask to select it for 
-          editing, and then select “Colors/Auto/Stretch Contrast”</emphasis>: 
+          <emphasis role="bold">Click on the layer mask to select it for
+          editing, and then select “Colors/Auto/Stretch Contrast”</emphasis>:
           <mediaobject>
             <imageobject>
               <imagedata
@@ -287,11 +287,11 @@ fileref="images/tutorials/tone-mapping/auto-stretch-contrast-mask.jpg"
           </mediaobject>
         </para>
         <para><emphasis>
-          “Keep Colors” should be checked (though it doesn’t really 
+          “Keep Colors” should be checked (though it doesn’t really
           matter on grayscale images such as layer masks).</emphasis>
         </para>
         <para>
-          <emphasis role="bold">Figure 6</emphasis> below shows the final 
+          <emphasis role="bold">Figure 6</emphasis> below shows the final
           result:
           <mediaobject>
             <imageobject>
@@ -302,33 +302,33 @@ fileref="images/tutorials/tone-mapping/gegl-exposure-mask-auto-stretched.jpg"
           </mediaobject>
         </para>
         <para><emphasis>
-          Doing “Auto/Stretch Contrast” on the layer mask removes the 
-          “cloudy” appearance, leaving a nicely brightened image with 
+          Doing “Auto/Stretch Contrast” on the layer mask removes the
+          “cloudy” appearance, leaving a nicely brightened image with
           intact highlights.</emphasis>
         </para>
         <para>
-          “Auto/Stretch Contrast” on the mask is necessary because just like 
-          the image layer has out of gamut RGB channel values, the inverted 
-          grayscale mask contains out of gamut grayscale values. 
-          “Auto/Stretch Contrast” brings all the mask grayscale values back 
-          into the display range, allowing the mask to proportionately 
-          compensate for the layer’s otherwise out-of-gamut RGB channel 
-          values, masking more in the layer highlights and less/not at all in 
+          “Auto/Stretch Contrast” on the mask is necessary because just like
+          the image layer has out of gamut RGB channel values, the inverted
+          grayscale mask contains out of gamut grayscale values.
+          “Auto/Stretch Contrast” brings all the mask grayscale values back
+          into the display range, allowing the mask to proportionately
+          compensate for the layer’s otherwise out-of-gamut RGB channel
+          values, masking more in the layer highlights and less/not at all in
           the image’s shadows and midtones.
         </para>
         <para>
-          <emphasis role="small">Notice that one of the sample points still 
-          has a blue RGB channel value that is slightly out of gamut. The 
-          easiest way to deal with this is to “Colors/Exposure” to make a 
-          Gamma adjustment of 0.45 on the mask, not on the actual image 
-          layer. You can make this Gamma adjustment either on the entire mask 
-          (works well, less effort). Or else you can make the adjustment just 
-          on the mask shadows (which correspond to the layer highlights), in 
-          which case you’d load the mask as a selection, invert the 
-          selection, and make the Gamma adjustment. Or if the remaining out 
-          of gamut channel values are only very slightly out of gamut, make a 
-          “New from Visible” layer and then “Auto/Stretch Contrast” the 
-          result to bring the remaining channel values back into 
+          <emphasis role="small">Notice that one of the sample points still
+          has a blue RGB channel value that is slightly out of gamut. The
+          easiest way to deal with this is to “Colors/Exposure” to make a
+          Gamma adjustment of 0.45 on the mask, not on the actual image
+          layer. You can make this Gamma adjustment either on the entire mask
+          (works well, less effort). Or else you can make the adjustment just
+          on the mask shadows (which correspond to the layer highlights), in
+          which case you’d load the mask as a selection, invert the
+          selection, and make the Gamma adjustment. Or if the remaining out
+          of gamut channel values are only very slightly out of gamut, make a
+          “New from Visible” layer and then “Auto/Stretch Contrast” the
+          result to bring the remaining channel values back into
           gamut.</emphasis>
         </para>
         <para>
@@ -347,52 +347,51 @@ fileref="images/tutorials/tone-mapping/gegl-exposure-mask-auto-stretched.jpg"
       </step>
     </procedure>
   </sect1>
-    
+
   <sect1 id="tone-mapping-notes">
     <title>Use Notes</title>
     <orderedlist>
       <listitem><!--1-->
         <para>
-          Depending on your particular artistic intentions for an image, some 
-          images are more likely than others to benefit from being tone 
-          mapped using floating point “Colors/Exposure”. Your mileage may 
-          vary, but typically the procedure described on this page works best 
-          for photographs of scenes with a pronounced tonal difference 
-          between the highlights and shadows, as per typical sunny day 
+          Depending on your particular artistic intentions for an image, some
+          images are more likely than others to benefit from being tone
+          mapped using floating point “Colors/Exposure”. Your mileage may
+          vary, but typically the procedure described on this page works best
+          for photographs of scenes with a pronounced tonal difference
+          between the highlights and shadows, as per typical sunny day
           “sky-ground” photographs.
         </para>
       </listitem>
       <listitem><!--2-->
         <para>
-          <emphasis role="bold">For adding just one stop of positive exposure 
-          compensation, the procedure described on this page works really 
-          well</emphasis>. Depending on the image you might want to blur the 
-          mask using an edge-respecting blur algorithm, and/or tweak the mask 
-          using “Colors/Exposure”, Curves, etc. But only modify the mask 
-          after using Auto Stretch Contrast on the mask. Otherwise results 
-          will be unpredictable: 
-<ulink 
-url="http://ninedegreesbelow.com/photography/unbounded-srgb-levels-gamma-slider.html">
-Gamma adjustments produce odd results when operating on out of gamut 
-values</ulink>, 
-	  and Curves will summarily clip out of gamut values.
+          <emphasis role="bold">For adding just one stop of positive exposure
+          compensation, the procedure described on this page works really
+          well</emphasis>. Depending on the image you might want to blur the
+          mask using an edge-respecting blur algorithm, and/or tweak the mask
+          using “Colors/Exposure”, Curves, etc. But only modify the mask
+          after using Auto Stretch Contrast on the mask. Otherwise results
+          will be unpredictable:
+          <ulink
+          url="http://ninedegreesbelow.com/photography/unbounded-srgb-levels-gamma-slider.html">
+          Gamma adjustments produce odd results when operating on out of gamut
+          values</ulink>, and Curves will summarily clip out of gamut values.
         </para>
       </listitem>
       <listitem>
         <para><!--3-->
-          <emphasis role="bold">For adding more than one stop of exposure 
-          compensation, you can use one or more than one 
-          positive-exposure-compensation layers</emphasis>. Either way the 
-          layer mask(s) will need careful tweaking that’s very 
-          image-specific and also specific to your intended result. Figure 7 
-          shows an example of using two exposure compensation layers to add 
-          two and a half stops of exposure compensation to the shadows and 
-          midtones of an image: 
+          <emphasis role="bold">For adding more than one stop of exposure
+          compensation, you can use one or more than one
+          positive-exposure-compensation layers</emphasis>. Either way the
+          layer mask(s) will need careful tweaking that’s very
+          image-specific and also specific to your intended result. Figure 7
+          shows an example of using two exposure compensation layers to add
+          two and a half stops of exposure compensation to the shadows and
+          midtones of an image:
         </para>
         <para>
-          Using GIMP’s floating point unbounded Levels plus layer masks 
-          to add two stops of positive exposure compensation to the 
-          shadows and midtones of a photograph of an apple orchard truck 
+          Using GIMP’s floating point unbounded Levels plus layer masks
+          to add two stops of positive exposure compensation to the
+          shadows and midtones of a photograph of an apple orchard truck
           that was taken in bright sunshine.
         </para>
         <para><emphasis role="bold">Figure 7</emphasis></para>
@@ -404,7 +403,7 @@ fileref="images/tutorials/tone-mapping/apple-orchard-truck-from-camera.jpg"
           </imageobject>
         </mediaobject>
         <para><emphasis>
-          Image from the camera, underexposed to avoid blowing out 
+          Image from the camera, underexposed to avoid blowing out
           highlights.</emphasis>
         </para>
         <mediaobject>
@@ -416,7 +415,7 @@ fileref=
           </imageobject>
         </mediaobject>
         <para><emphasis>
-          After tone mapping/shadow recovery using high bit depth 
+          After tone mapping/shadow recovery using high bit depth
           GIMP's floating point "Color/Exposure".</emphasis>
         </para>
         <mediaobject>
@@ -427,13 +426,13 @@ fileref="images/tutorials/tone-mapping/truck-tone-mapped-using-gegl-mantuik.jpg"
           </imageobject>
         </mediaobject>
         <para><emphasis>
-          For comparison, Mantuik tone mapping using the GEGL default 
+          For comparison, Mantuik tone mapping using the GEGL default
           settings.</emphasis>
         </para>
         <para>
-          Using GIMP’s floating point “Colors/Exposure” plus layer masks to 
-          add two and a half stops of positive exposure compensation to the 
-          shadows and midtones of a “bright sun” photograph of an apple 
+          Using GIMP’s floating point “Colors/Exposure” plus layer masks to
+          add two and a half stops of positive exposure compensation to the
+          shadows and midtones of a “bright sun” photograph of an apple
           orchard truck.
         </para>
         <mediaobject>
@@ -444,35 +443,35 @@ fileref="images/tutorials/tone-mapping/truck-tone-mapped-using-gegl-mantuik.jpg"
           </imageobject>
         </mediaobject>
         <para><emphasis>
-          A screenshot of the layer stack that I used to tone-map the 
-          photograph of the apple orchard truck. Tone-mapping by hand 
-          gives you complete control over the resulting image. Mantuik 
-          and other “automagic” tone-mapping algorithms are 
-          CPU-intensive, unpredictable, and often produce 
+          A screenshot of the layer stack that I used to tone-map the
+          photograph of the apple orchard truck. Tone-mapping by hand
+          gives you complete control over the resulting image. Mantuik
+          and other “automagic” tone-mapping algorithms are
+          CPU-intensive, unpredictable, and often produce
           unnatural-looking results.
           </emphasis>
         </para>
       </listitem>
-      
+
       <listitem><!--4-->
         <para>
-          Before using “Colors/Exposure” to add positive exposure 
-          compensation, <emphasis>the base layer should already be stretched 
-          to its maximum dynamic range</emphasis>. The easiest way to stretch 
-          the base layer to its maximum dynamic range is to do 
-          “Colors/Auto/Stretch Contrast” and make sure that “Keep colors” is 
-          checked. 
+          Before using “Colors/Exposure” to add positive exposure
+          compensation, <emphasis>the base layer should already be stretched
+          to its maximum dynamic range</emphasis>. The easiest way to stretch
+          the base layer to its maximum dynamic range is to do
+          “Colors/Auto/Stretch Contrast” and make sure that “Keep colors” is
+          checked.
         </para>
         <para>
-          If you’ve never used an unbounded floating point image editor 
-          before, “Colors/Auto/Stretch Contrast” can produce an unexpected 
-          result: The image might actually end up with a severely reduced 
-          dynamic range, having either lighter shadows or darker highlights 
+          If you’ve never used an unbounded floating point image editor
+          before, “Colors/Auto/Stretch Contrast” can produce an unexpected
+          result: The image might actually end up with a severely reduced
+          dynamic range, having either lighter shadows or darker highlights
           or both:
         </para>
         <para>
-          Before and after doing “Colors/Auto/Stretch Contrast” on the base 
-          layer, plus the final image after tone mapping using 
+          Before and after doing “Colors/Auto/Stretch Contrast” on the base
+          layer, plus the final image after tone mapping using
           “Colors/Exposure”:
         </para>
         <para><emphasis role="bold">Figure 8</emphasis></para>
@@ -507,70 +506,70 @@ fileref="images/tutorials/tone-mapping/truck-tone-mapped-using-gegl-mantuik.jpg"
         <orderedlist>
           <listitem>
             <para>
-              This scene-referred interpolated raw file from the PhotoFlow 
-              raw processor (which provides a GIMP plug-in for easy opening 
-              of raw files) has out-of-display-range RGB channel values that 
-              will be brought back into the display range by doing 
+              This scene-referred interpolated raw file from the PhotoFlow
+              raw processor (which provides a GIMP plug-in for easy opening
+              of raw files) has out-of-display-range RGB channel values that
+              will be brought back into the display range by doing
               “Colors/Auto/Stretch Contrast”.
             </para>
           </listitem>
           <listitem>
             <para>
-              After doing “Colors/Auto/Stretch Contrast”, shadows are lighter 
-              and highlights are darker because the dynamic range has been 
-              compressed to fit within the display range. This looks like an 
-              editing step in the wrong direction! but actually it’s 
+              After doing “Colors/Auto/Stretch Contrast”, shadows are lighter
+              and highlights are darker because the dynamic range has been
+              compressed to fit within the display range. This looks like an
+              editing step in the wrong direction! but actually it’s
               necessary.
             </para>
           </listitem>
           <listitem>
             <para>
-              Here’s the final “Power lines” image after tone mapping the 
-              scene-referred interpolated raw file using the procedure 
+              Here’s the final “Power lines” image after tone mapping the
+              scene-referred interpolated raw file using the procedure
               described in this tutorial.
             </para>
           </listitem>
         </orderedlist>
         <para>
-          As captured by the raw file, this picture of power lines marching 
-          into the distance is a typical result of taking a photograph at 
-          noon on a bright sunny day: The sky and clouds looked pretty good 
-          right out of the camera, but the ground was far too dark. So the 
-          image could benefit from some tone mapping to raise the shadows and 
-          midtones. The first step is to do “Colors/Auto/Stretch Contrast” to 
-          bring any channel values that are less than 0.0f or greater than 
+          As captured by the raw file, this picture of power lines marching
+          into the distance is a typical result of taking a photograph at
+          noon on a bright sunny day: The sky and clouds looked pretty good
+          right out of the camera, but the ground was far too dark. So the
+          image could benefit from some tone mapping to raise the shadows and
+          midtones. The first step is to do “Colors/Auto/Stretch Contrast” to
+          bring any channel values that are less than 0.0f or greater than
           1.0f back within the display range of 0.0 to 1.0 floating point.
         </para>
         <para>
-          Performing “Auto/Stretch Contrast” to bring the channel values back 
-          inside the display range doesn’t exactly look like an editing step 
-          in the right direction for tone-mapping this particular image! but 
-          really it is. Using “Colors/Exposure” to add positive exposure 
-          compensation to the shadows and midtones won’t work if the image 
+          Performing “Auto/Stretch Contrast” to bring the channel values back
+          inside the display range doesn’t exactly look like an editing step
+          in the right direction for tone-mapping this particular image! but
+          really it is. Using “Colors/Exposure” to add positive exposure
+          compensation to the shadows and midtones won’t work if the image
           has channel values that fall outside the display range.
         </para>
       </listitem>
       <listitem><!--5-->
         <para>
-          <emphasis role="bold">Dispensing with “useless” shadow and 
-          highlight information:</emphasis> Sometimes interpolated raw 
-          files of photographs of high dynamic range scenes end up with a 
-          sprinkling of highlight and shadow pixels that contains 
-          essentially no useful information. The easiest thing to do with 
-          such pixels is to use “Colors/Exposure” to set the desired black 
-          and white points, and then clip the resulting out of gamut 
-          channel information. 
+          <emphasis role="bold">Dispensing with “useless” shadow and
+          highlight information:</emphasis> Sometimes interpolated raw
+          files of photographs of high dynamic range scenes end up with a
+          sprinkling of highlight and shadow pixels that contains
+          essentially no useful information. The easiest thing to do with
+          such pixels is to use “Colors/Exposure” to set the desired black
+          and white points, and then clip the resulting out of gamut
+          channel information.
         </para>
         <itemizedlist mark="bullet">
           <listitem>
             <para>
               <emphasis role="bold">Useless highlight information:</emphasis>
-              For the “Power lines” picture shown in Figure 8 above, after 
-              doing “Color/Auto/Stretch Contrast”, a measly 48 pixels 
-              occupied nearly half the tonal range (see the histogram to the 
-              right). A little investigation with GIMP’s Threshold tool 
-              revealed that all 48 pixels are the peak values of specular 
-              highlights on the ceramic insulators on the power line pole in 
+              For the “Power lines” picture shown in Figure 8 above, after
+              doing “Color/Auto/Stretch Contrast”, a measly 48 pixels
+              occupied nearly half the tonal range (see the histogram to the
+              right). A little investigation with GIMP’s Threshold tool
+              revealed that all 48 pixels are the peak values of specular
+              highlights on the ceramic insulators on the power line pole in
               the foreground.
             </para>
             <mediaobject>
@@ -581,40 +580,40 @@ fileref="images/tutorials/tone-mapping/truck-tone-mapped-using-gegl-mantuik.jpg"
               </imageobject>
             </mediaobject>
             <para>
-              In cases where nearly half the histogram is occupied by a 
-              sprinkling of specular highlights, clipping the pixels is often 
-              the best and easiest solution. For the “Power lines” image, the 
-              48 pixels in question carried essentially zero information. So 
-              I used “Colors/Exposure” to raise the white point, and then 
-              used “Colors/Clip RGB” to actually clip the 
-              channel information in the highlights (this time making sure 
+              In cases where nearly half the histogram is occupied by a
+              sprinkling of specular highlights, clipping the pixels is often
+              the best and easiest solution. For the “Power lines” image, the
+              48 pixels in question carried essentially zero information. So
+              I used “Colors/Exposure” to raise the white point, and then
+              used “Colors/Clip RGB” to actually clip the
+              channel information in the highlights (this time making sure
               the “Clip high pixel values” box was checked).
             </para>
           </listitem>
           <listitem>
             <para>
               <emphasis role="bold">Useless shadow information:</emphasis>
-              Some raw processors can output images with negative channel 
-              values. And previous edits using high bit depth GIMP might have 
-              produced negative channel values. If doing an “Auto/Stretch 
-              Contrast” on your base image layer makes the image a whole lot 
-              lighter in the shadows, the problem is negative RGB channel 
-              values. One solution is to use “Colors/Exposure” to move the 
-              black point to where you want it to be, and then clip the 
-              negative channel values. Here are two ways to clip negative 
+              Some raw processors can output images with negative channel
+              values. And previous edits using high bit depth GIMP might have
+              produced negative channel values. If doing an “Auto/Stretch
+              Contrast” on your base image layer makes the image a whole lot
+              lighter in the shadows, the problem is negative RGB channel
+              values. One solution is to use “Colors/Exposure” to move the
+              black point to where you want it to be, and then clip the
+              negative channel values. Here are two ways to clip negative
               channel values:
             </para>
             <itemizedlist mark="opencircle">
               <listitem>
                 <para>
-                  Use “Colors/Clip RGB...”, making sure to 
-                  uncheck the “Clip high pixel values” box. 
+                  Use “Colors/Clip RGB...”, making sure to
+                  uncheck the “Clip high pixel values” box.
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  Or else create a solid black layer above your base image 
-                  layer, set the blend mode to “Lighten only”, and make a 
+                  Or else create a solid black layer above your base image
+                  layer, set the blend mode to “Lighten only”, and make a
                   “New from Visible” layer.
                 </para>
               </listitem>
@@ -624,22 +623,22 @@ fileref="images/tutorials/tone-mapping/truck-tone-mapped-using-gegl-mantuik.jpg"
       </listitem>
       <listitem id="restore-micro-contrast"><!--6-->
         <para>
-          <emphasis role="bold">Blurring the mask to restore micro 
-          contrast:</emphasis> Putting an inverse mask on a layer that’s 
-          used to add positive exposure compensation necessarily slightly 
-          flattens micro contrast. Depending on your artistic intentions 
-          for the image, you might want to blur the mask to restore micro 
-          contrast. The trick is how to blur the mask without introducing 
-          “halos” around the edges of objects in the image. Small radius 
-          Gaussian blurs produce small but distressingly obvious halos 
-          around dark edges. A large radius gaussian blur sometimes works 
-          but just as often produces a large obvious halo separating the 
-          brighter and darker portions of the image. For many images a 
-          better solution is to blur the mask use an edge-respecting filter 
-          such as the GIMP G’MIC bilateral smooth filter: 
+          <emphasis role="bold">Blurring the mask to restore micro
+          contrast:</emphasis> Putting an inverse mask on a layer that’s
+          used to add positive exposure compensation necessarily slightly
+          flattens micro contrast. Depending on your artistic intentions
+          for the image, you might want to blur the mask to restore micro
+          contrast. The trick is how to blur the mask without introducing
+          “halos” around the edges of objects in the image. Small radius
+          Gaussian blurs produce small but distressingly obvious halos
+          around dark edges. A large radius gaussian blur sometimes works
+          but just as often produces a large obvious halo separating the
+          brighter and darker portions of the image. For many images a
+          better solution is to blur the mask use an edge-respecting filter
+          such as the GIMP G’MIC bilateral smooth filter:
         </para>
         <para>
-          Adding exposure compensation with and without bilateral 
+          Adding exposure compensation with and without bilateral
           smoothing of the mask.
         </para>
         <para><emphasis role="bold">Figure 9</emphasis></para>
@@ -651,7 +650,7 @@ fileref="images/tutorials/tone-mapping/without-bilateral-smoothing-of-mask.jpg"
           </imageobject>
         </mediaobject>
         <para><emphasis>
-          Without applying bilateral smoothing to the mask, micro 
+          Without applying bilateral smoothing to the mask, micro
           contrast is flattened.</emphasis>
         </para>
         <mediaobject>
@@ -662,7 +661,7 @@ fileref="images/tutorials/tone-mapping/with-bilateral-smoothing-of-mask.jpg"
           </imageobject>
         </mediaobject>
         <para><emphasis>
-          After applying bilateral smoothing to the mask, micro 
+          After applying bilateral smoothing to the mask, micro
           contrast is restored.</emphasis>
         </para>
         <para>
@@ -678,17 +677,17 @@ fileref="images/tutorials/tone-mapping/with-bilateral-smoothing-of-mask.jpg"
       </listitem>
       <listitem><!--7-->
         <para>
-          An essential component of the procedure for using “Colors/Exposure” 
-          to add positive exposure compensation to images with dark shadows 
-          and midtones needs to be explicitly mentioned: Not only is the high 
-          bit depth GIMP’s “Colors/Exposure” operation unbounded at floating 
+          An essential component of the procedure for using “Colors/Exposure”
+          to add positive exposure compensation to images with dark shadows
+          and midtones needs to be explicitly mentioned: Not only is the high
+          bit depth GIMP’s “Colors/Exposure” operation unbounded at floating
           point precision —
-  <ulink url="https://bugzilla.gnome.org/show_bug.cgi?id=737925">layer masks 
+  <ulink url="https://bugzilla.gnome.org/show_bug.cgi?id=737925">layer masks
 are also unbounded</ulink>.
         </para>
         <para>
-          If the inverted grayscale masks were summarily clipped (as is the 
-          case when editing at integer precision), then the procedure 
+          If the inverted grayscale masks were summarily clipped (as is the
+          case when editing at integer precision), then the procedure
           described in this tutorial wouldn’t work.
         </para>
       </listitem>
@@ -697,47 +696,45 @@ are also unbounded</ulink>.
   <sect1 id="tone-mapping-conclusion">
     <title>Conclusion</title>
     <para>
-      Photographs taken in bright direct sunlight typically are of high 
-      dynamic range scenes, and the resulting camera file usually requires 
-      careful tone mapping to produce a satisfactory final image. High bit 
-      depth GIMP’s floating point “Colors/Exposure” provides a 
-      very useful tool for dealing with this type of image, and of course is 
-      equally useful for any image where the goal is to raise the shadows and 
+      Photographs taken in bright direct sunlight typically are of high
+      dynamic range scenes, and the resulting camera file usually requires
+      careful tone mapping to produce a satisfactory final image. High bit
+      depth GIMP’s floating point “Colors/Exposure” provides a
+      very useful tool for dealing with this type of image, and of course is
+      equally useful for any image where the goal is to raise the shadows and
       midtones without blowing out the highlights.
     </para>
     <para>
-      High bit depth GIMP’s floating point “Colors/Exposure” combined with a 
-      suitable layer mask can also be used to darken portions of the image, 
-      either by moving the upper left Value slider to the right (darkens the 
-      image by increasing contrast and also increases saturation; requires 
-      careful masking to avoid producing regions of solid black), or moving 
-      the lower right Value slider to the left (darkens the image by 
+      High bit depth GIMP’s floating point “Colors/Exposure” combined with a
+      suitable layer mask can also be used to darken portions of the image,
+      either by moving the upper left Value slider to the right (darkens the
+      image by increasing contrast and also increases saturation; requires
+      careful masking to avoid producing regions of solid black), or moving
+      the lower right Value slider to the left (darkens the image by
       decreasing contrast, useful for de-emphasizing portions of the image).
     </para>
     <para>
-      This is a GIMP-specific tutorial. However, the same technique can be 
-      employed using the PhotoFlow raw processor and possibly other image 
-      editors that allow for 32-bit floating point processing using unbounded 
-      RGB channel values. The neat thing about using this technique in 
-      PhotoFlow is that PhotoFlow uses nodes, which allows for completely 
-      non-destructive editing of the inverted grayscale mask that’s used to 
-      recover the highlight detail after applying positive exposure 
-      compensation to raise the tonality of the shadows and midtones (even if 
+      This is a GIMP-specific tutorial. However, the same technique can be
+      employed using the PhotoFlow raw processor and possibly other image
+      editors that allow for 32-bit floating point processing using unbounded
+      RGB channel values. The neat thing about using this technique in
+      PhotoFlow is that PhotoFlow uses nodes, which allows for completely
+      non-destructive editing of the inverted grayscale mask that’s used to
+      recover the highlight detail after applying positive exposure
+      compensation to raise the tonality of the shadows and midtones (even if
       you close and reopen the image, if you save the image’s PFI file).
     </para>
     <para>
       <subscript>
-      The original tutorial this was adapted from can be <!--linkfound 
-      here--> and is         reproduced courtesy of Elle Stone 
+      The original tutorial this was adapted from can be <!--linkfound
+      here--> and is         reproduced courtesy of Elle Stone
         <!--link>(http://ninedegreesbelow.com).--></subscript>
     </para>
     <para>
       <subscript>
-      GIMP Tutorial - Tone Mapping Using GIMP Levels (text and images) by Elle 
-      Stone is licensed under a Creative Commons Attribution-ShareAlike 3.0 
+      GIMP Tutorial - Tone Mapping Using GIMP Levels (text and images) by Elle
+      Stone is licensed under a Creative Commons Attribution-ShareAlike 3.0
         Unported License.</subscript>
     </para>
   </sect1>
 </appendix>
-
-
