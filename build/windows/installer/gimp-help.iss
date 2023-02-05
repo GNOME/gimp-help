@@ -108,7 +108,7 @@
 #endif
 
 [Setup]
-AppName={cm:GimpHelp} {#VERSION}
+AppName=GIMP Help {#VERSION}
 AppID=GIMP-Help-{#MAJORVERSION}
 AppVerName=GIMP Help {#VERSION}
 AppPublisherURL=https://www.gimp.org/
