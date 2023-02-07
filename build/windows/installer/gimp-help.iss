@@ -109,9 +109,10 @@
 AppName=GIMP Help {#VERSION}
 AppID=GIMP-Help-{#MAJORVERSION}
 AppVerName=GIMP Help {#VERSION}
-AppPublisherURL=https://www.gimp.org/
-AppSupportURL=https://www.gimp.org/
-AppUpdatesURL=https://www.gimp.org/
+AppPublisherURL=https://docs.gimp.org/
+AppSupportURL=https://docs.gimp.org/
+AppUpdatesURL=https://docs.gimp.org/download.html
+AppPublisher=The GIMP Team
 DefaultDirName={autopf}\GIMP Help {#MAJORVERSION}
 DirExistsWarning=no
 DisableProgramGroupPage=yes
