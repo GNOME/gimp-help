@@ -47,10 +47,14 @@ po-validate:
     - "${HELP_DIR}"
     - "${PDF_DIR}"
   script:
+    - cd src
+    # Mark all source files as updated. Needed to get up-to-date translations
+    - find . -type f -exec touch {} +
+    - cd ..
     - mkdir _build
     - cd _build
     - ../autogen.sh --prefix=${INSTALL_PREFIX} --without-gimp
-    - make && make install
+    - make && make validate-all && make install
     - mv ${INSTALL_PREFIX}/share/gimp/2.0/help/ ../${HELP_DIR}
     - mv ../${HELP_DIR}/pdf/ ../${PDF_DIR}
   timeout: 2 hours 30 minutes
@@ -107,10 +111,17 @@ www-debian:
     - make
     - cd ../../../..
     - mv build/windows/installer/lang/help*isl ../build/windows/installer/lang/
+    # Mark all source files as updated. Needed to get up-to-date translation percentages
+    - cd ../src
+    - find . -type f -exec touch {} +
+    # update the po files or translation percentages will be incorrect
+    - cd ..
+    - make po
     # build the landing pages.
-    - cd ../web
+    - cd web
     - make
     - cd ..
+    - echo "$(pwd)"
     - mv /html/ htdocs/
     # Move all PDF quickreferences
     - mkdir -p htdocs/2.10/pdf

@@ -9,6 +9,7 @@ FOR /F "usebackq tokens=5,* skip=2" %%A IN (`REG QUERY "HKEY_CURRENT_USER\Softwa
 FOR /F "usebackq tokens=5,* skip=2" %%A IN (`REG QUERY "HKLM\Software\Microsoft\Windows\CurrentVersion\Uninstall\Inno Setup 6_is1" /v "Inno Setup: App Path" /reg:32`) DO set INNOPATH=%%B
 ))
 if not exist "%INNOPATH%\iscc.exe" goto noinno
+if not exist "..\..\..\htdocs\2.10\en\" noendoc
 
 echo "%INNOPATH%"
 FOR /D %%l in (..\..\..\htdocs\2.10\*) DO if not "%%l"=="..\..\..\htdocs\2.10\." (
@@ -28,6 +29,10 @@ goto end
 :noinno
 echo Inno Setup path could not be read from Registry - install Inno Setup or set INNOPATH environment variable pointing at it's
 echo install directory
+goto :end
+
+:noendoc
+echo No English documentation files available! Something went wrong in the previous CI step or there was a Runner error.
 goto :end
 
 :end
