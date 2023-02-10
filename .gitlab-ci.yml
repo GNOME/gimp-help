@@ -90,6 +90,8 @@ build-debian-4:
 
 www-debian:
   stage: www
+  variables:
+    BUILD_DIR: "."
   image: $CI_REGISTRY_IMAGE:build-debian-latest
   dependencies:
     - build-debian-1
@@ -115,14 +117,22 @@ www-debian:
     - cd ../src
     - find . -type f -exec touch {} +
     # update the po files or translation percentages will be incorrect
-    - cd ..
+    - cd ../_build
     - make po
     # build the landing pages.
-    - cd web
+    - cd ../web
     - make
+    - cd html
+    - ls
+    - cd ..
+    - ls
     - cd ..
     - echo "$(pwd)"
-    - mv /html/ htdocs/
+    - ls
+    #- cd html
+    #- ls
+    #- cd ..
+    - mv web/html/ htdocs/
     # Move all PDF quickreferences
     - mkdir -p htdocs/2.10/pdf
     - mv _pdf1/*.pdf htdocs/2.10/pdf/

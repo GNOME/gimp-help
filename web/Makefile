@@ -32,16 +32,23 @@ qrstats.xml:
 
 dirs: autolayout.xml
 	@echo "-- Creating directories"; \
-	mkdir -p $(BUILD_DIR)/html;
+	mkdir -p -v $(BUILD_DIR)/html;
 	@if ! test -e $(BUILD_DIR)/html/Layout; then \
 	  mkdir $(BUILD_DIR)/html/Layout && cp -r layout/* $(BUILD_DIR)/html/Layout; \
 	fi
 
 %.html: autolayout.xml
+	@if ! test -e $(BUILD_DIR)/html; then \
+	  @echo "Missing html dir!"; \
+	fi
+	@echo "Build html in: $(pwd)"
 	@echo "-- Building " $@; \
 	$(PROC) $(STYLEDIR)/createHTML.xsl $(filter-out $(HTMLIGNORE), $^) $(TIDY) > $@
 
 built: website
+	@if ! test -e $(BUILD_DIR)/html; then \
+	  @echo "Missing html dir!"; \
+	fi
 	@echo "-- Copying html to $(BUILD_DIR)/html/"; \
 	mv *.html $(BUILD_DIR)/html/
 
