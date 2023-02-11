@@ -46,6 +46,7 @@ po-validate:
     paths:
     - "${HELP_DIR}"
     - "${PDF_DIR}"
+    - _build/log
   script:
     - cd src
     # Mark all source files as updated. Needed to get up-to-date translations
@@ -54,7 +55,12 @@ po-validate:
     - mkdir _build
     - cd _build
     - ../autogen.sh --prefix=${INSTALL_PREFIX} --without-gimp
-    - make && make validate-all && make install
+    # Make po first, hopefully that will stop plain make from redoing the xml
+    - make po
+    - make validate-all
+    # Test if any xml is present in logs, which means failed validation
+    - if [ `ls -1 log/*.xml 2>/dev/null | wc -l ` -gt 0 ]; then echo 'Validation failed!' && false; exit 2; else rm -f log/*.log; fi
+    - make && make install
     - mv ${INSTALL_PREFIX}/share/gimp/2.0/help/ ../${HELP_DIR}
     - mv ../${HELP_DIR}/pdf/ ../${PDF_DIR}
   timeout: 2 hours 30 minutes
