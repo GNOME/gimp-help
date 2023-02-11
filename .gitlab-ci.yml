@@ -25,7 +25,7 @@ build-image:
     - echo "FROM debian:testing" > Dockerfile
     - echo "RUN apt-get update" >> Dockerfile
     - echo "RUN apt-get install -y --no-install-recommends \\" >> Dockerfile
-    - echo "automake build-essential docbook-website docbook-xml docbook-xsl fonts-noto-cjk gettext intltool librsvg2-2 librsvg2-bin pkg-config pngcrush python3 python3-libxml2 python3-polib xsltproc" >> Dockerfile
+    - echo "automake build-essential docbook-website docbook-xml docbook-xsl fonts-noto-cjk gettext intltool librsvg2-2 librsvg2-bin pkg-config pngcrush python3 python3-libxml2 python3-polib xsltproc libxml2-utils" >> Dockerfile
 
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:build-debian-latest --cache=true --cache-ttl=120h
 
@@ -54,7 +54,7 @@ po-validate:
     - mkdir _build
     - cd _build
     - ../autogen.sh --prefix=${INSTALL_PREFIX} --without-gimp
-    - make && make install
+    - make && make validate-all && make install
     - mv ${INSTALL_PREFIX}/share/gimp/3.0/help/ ../${HELP_DIR}
     - mv ../${HELP_DIR}/pdf/ ../${PDF_DIR}
   timeout: 2 hours 30 minutes
