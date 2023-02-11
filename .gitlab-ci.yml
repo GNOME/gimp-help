@@ -47,6 +47,10 @@ po-validate:
     - "${HELP_DIR}"
     - "${PDF_DIR}"
   script:
+    - cd src
+    # Mark all source files as updated. Needed to get up-to-date translations
+    - find . -type f -exec touch {} +
+    - cd ..
     - mkdir _build
     - cd _build
     - ../autogen.sh --prefix=${INSTALL_PREFIX} --without-gimp
@@ -109,6 +113,12 @@ www-debian:
     - make
     - cd ../../../..
     - mv build/windows/installer/lang/help*isl ../build/windows/installer/lang/
+    # Mark all source files as updated. Needed to get up-to-date translation percentages
+    - cd ../src
+    - find . -type f -exec touch {} +
+    # update the po files or translation percentages will be incorrect
+    - cd ../_build
+    - make po
     # build the landing pages.
     - cd ../web
     - make
