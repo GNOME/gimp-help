@@ -86,6 +86,8 @@ build-debian-4:
 
 www-debian:
   stage: www
+  variables:
+    BUILD_DIR: "."
   image: $CI_REGISTRY_IMAGE:build-debian-latest
   dependencies:
     - build-debian-1
@@ -111,7 +113,7 @@ www-debian:
     - cd ../web
     - make
     - cd ..
-    - mv /html/ htdocs/
+    - mv web/html/ htdocs/
     # Move all PDF quickreferences
     - mkdir -p htdocs/2.10/pdf
     - mv _pdf1/*.pdf htdocs/2.10/pdf/
