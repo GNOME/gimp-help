@@ -162,3 +162,31 @@ win-installer:
   script:
     - C:\msys64\usr\bin\pacman --noconfirm -Syyuu
     - C:\msys64\usr\bin\bash -lc "bash -x ./build/windows/installer/installer-gimp-help-msys2.sh > installer.log 2>&1"
+
+source-dist:
+  #rules:
+    # On releases.
+    #- if: '$CI_COMMIT_TAG != null'
+    # Custom builds though web GUI, API or schedules.
+    #- if: '$GIMP_CI_MAKE_DIST != null'
+    # Merge requests with appropriate label.
+    #- if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Make Distribution.*/'
+  stage: distribution
+  image: $CI_REGISTRY_IMAGE:build-debian-latest
+  artifacts:
+    expire_in: 1 week
+    when: always
+    paths:
+    - _build
+    - dist-tarball
+  script:
+    - cd src
+    # Mark all source files as updated. Needed to get up-to-date translations
+    - find . -type f -exec touch {} +
+    - cd ..
+    #- mkdir _build
+    - cd _build
+    - ../autogen.sh --prefix=${INSTALL_PREFIX} --without-gimp
+    - make dist
+    - mv gimp-help-2.10.0.tar.bz2 ../dist-tarball/
+  needs: ["build-image"]
