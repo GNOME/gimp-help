@@ -111,10 +111,11 @@ uninstall-local:
 	@echo "*** Uninstalling PDF:"
 	@for file in $(PDF_FILES); do \
 		rm -rf $(DESTDIR)$(helpdir)/pdf/$${file}; \
+		echo "Removed $(DESTDIR)$(helpdir)/pdf/$${file}"; \
 	done; \
 	echo .
-	@test -z "$(DESTDIR)" || cd $(DESTDIR) && \
-	rmdir $(helpdir)/pdf \
+	@test -z "$(DESTDIR)${helpdir}" || cd $(DESTDIR)${helpdir} && \
+	rmdir pdf \
 	&& echo "Removed $(DESTDIR)${helpdir}/pdf"
 
 clean-local:
