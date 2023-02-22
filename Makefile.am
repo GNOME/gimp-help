@@ -892,10 +892,14 @@ uninstall-local:
 	$(cmd) test -z "$(DESTDIR)" || cd $(DESTDIR) && \
 	dir="$(helpdir)" && \
 	while [ -d "$${dir}" ]; do \
-		rmdir $${dir} 2>/dev/null \
-		&& echo removed $(DESTDIR)$${dir} \
-		&& dir=$${dir%/*} \
-		|| break; \
+		if [[ "$${dir}" == "${prefix}" ]]; then \
+			break; \
+		else \
+			rmdir $${dir} 2>/dev/null \
+			&& echo removed $(DESTDIR)$${dir} \
+			&& dir=$${dir%/*} \
+			|| break; \
+		fi \
 	done
 
 
