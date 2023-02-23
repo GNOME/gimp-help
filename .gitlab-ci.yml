@@ -37,6 +37,16 @@ po-validate:
     - find . -type f -print0 | xargs -0 ../tools/validate_po.py $1 $2
   needs: ["build-image"]
 
+check-broken-images:
+  stage: test
+  image: $CI_REGISTRY_IMAGE:build-debian-latest
+  script:
+    # We need a src/preface/authors.xml or validate_references will fail.
+    # Since it doesn't contain images, its real contents are not important.
+    - cat src/help-missing.xml > src/preface/authors.xml
+    - if ./tools/validate_references.py -b | grep 'BROKEN:'; then echo "ERROR missing images found!" && false; exit 2; fi;
+  needs: ["build-image"]
+
 .build-debian-base:
   stage: build
   image: $CI_REGISTRY_IMAGE:build-debian-latest
