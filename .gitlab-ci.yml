@@ -44,7 +44,7 @@ check-broken-images:
     # We need a src/preface/authors.xml or validate_references will fail.
     # Since it doesn't contain images, its real contents are not important.
     - cat src/help-missing.xml > src/preface/authors.xml
-    - if ./tools/validate_references.py -b | grep 'BROKEN:'; then echo "ERROR missing images found!" || exit 1; fi;
+    - if ./tools/validate_references.py -b | grep 'BROKEN:'; then echo "ERROR missing images found!" && false; exit 2; fi;
   needs: ["build-image"]
 
 .build-debian-base:
