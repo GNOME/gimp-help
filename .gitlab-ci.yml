@@ -41,6 +41,9 @@ check-broken-images:
   stage: test
   image: $CI_REGISTRY_IMAGE:build-debian-latest
   script:
+    # We need a src/preface/authors.xml or validate_references will fail.
+    # Since it doesn't contain images, its real contents are not important.
+    - cat src/help-missing.xml > src/preface/authors.xml
     - if ./tools/validate_references.py -b | grep 'BROKEN:'; then echo "ERROR missing images found!" || exit 1; fi;
   needs: ["build-image"]
 
