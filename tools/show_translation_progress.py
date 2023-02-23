@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # This file is part of the gimp-help project and is
 # Copyright 2004, 2005, 2006, 2007 Roman Joost
 #
