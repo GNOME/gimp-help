@@ -2,7 +2,6 @@ image: debian:testing
 
 stages:
   - prepare
-  - validatepo
   - test
   - build
   - www
@@ -31,7 +30,7 @@ build-image:
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:build-debian-latest --cache=true --cache-ttl=120h
 
 po-validate:
-  stage: validatepo
+  stage: test
   image: $CI_REGISTRY_IMAGE:build-debian-latest
   script:
     - cd po
@@ -163,16 +162,13 @@ win-installer:
     - C:\msys64\usr\bin\bash -lc "bash -x ./build/windows/installer/installer-gimp-help-msys2.sh > installer.log 2>&1"
 
 distcheck:
-  #variables:
-    # FOR testing purposes start with a limited set of languages
-    #LINGUAS: "en ja nl"
-  #rules:
+  rules:
     # On releases.
-    #- if: '$CI_COMMIT_TAG != null'
+    - if: '$CI_COMMIT_TAG != null'
     # Custom builds though web GUI, API or schedules.
-    #- if: '$GIMP_CI_MAKE_DIST != null'
+    - if: '$GIMP_HELP_CI_MAKE_DIST != null'
     # Merge requests with appropriate label.
-    #- if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Make Distribution.*/'
+    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Source Distribution.*/'
   stage: test
   image: $CI_REGISTRY_IMAGE:build-debian-latest
   script:
@@ -180,28 +176,25 @@ distcheck:
     # Mark all source files as updated. Needed to get up-to-date translations
     - find . -type f -exec touch {} +
     - cd ..
-    - mkdir _dist
     - mkdir _build
     - cd _build
-    - echo ${INSTALL_PREFIX}
     - ../autogen.sh --prefix=${INSTALL_PREFIX} --without-gimp
     - make distcheck
 
   needs: ["build-image"]
 
 source-dist:
-  #rules:
+  rules:
     # On releases.
-    #- if: '$CI_COMMIT_TAG != null'
+    - if: '$CI_COMMIT_TAG != null'
     # Custom builds though web GUI, API or schedules.
-    #- if: '$GIMP_CI_MAKE_DIST != null'
+    - if: '$GIMP_HELP_CI_MAKE_DIST != null'
     # Merge requests with appropriate label.
-    #- if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Make Distribution.*/'
+    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Source Distribution.*/'
   stage: distribution
   image: $CI_REGISTRY_IMAGE:build-debian-latest
   artifacts:
-    ## FOR TESTING: EXPIRE IN 1 DAY! ###########################################
-    expire_in: 1 day
+    expire_in: 1 week
     when: always
     paths:
     #- _build
@@ -214,7 +207,6 @@ source-dist:
     - mkdir _dist
     - mkdir _build
     - cd _build
-    - echo ${INSTALL_PREFIX}
     - ../autogen.sh --prefix=${INSTALL_PREFIX} --without-gimp
     - make dist
     - FILENAME=`ls gimp-help-*.tar.bz2`                               &&
