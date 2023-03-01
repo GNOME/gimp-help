@@ -77,6 +77,7 @@ To get started, here is a checklist of things you should do:
     - Enable `Container registry` (any visibility level)
   + `Settings > CI/CD > General pipelines`:
     - Enable `Public pipelines`
+- Make sure to read our [documentation guidelines](documentation-guidelines.md).
 - For relatively small and simple edits you can use the web-ide
   if you don't want to set up a build environment on your computer.
   + On the left under Repository click Files, then navigate to the
@@ -166,6 +167,7 @@ https://gitlab.gnome.org/GNOME/gimp-help/issues
   You should know a bit about Docbook and XML, or be smart enough to learn
   the syntax yourself. You can get more information about Docbook and XML
   by using your preferred search engine.
+  Also make sure you read our [documentation guidelines](documentation-guidelines.md).
 
   ### Editors, Programs and Setups
 
