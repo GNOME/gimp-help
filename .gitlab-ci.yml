@@ -171,7 +171,7 @@ win-installer:
     - C:\msys64\usr\bin\pacman --noconfirm -Syyuu
     - C:\msys64\usr\bin\bash -lc "bash -x ./build/windows/installer/installer-gimp-help-msys2.sh > installer.log 2>&1"
 
-distcheck:
+.distcheck-base:
   rules:
     # On releases.
     - if: '$CI_COMMIT_TAG != null'
@@ -192,6 +192,19 @@ distcheck:
     - make distcheck
 
   needs: ["build-image"]
+
+# One make distcheck would be ideal, but the reality is that on certain runners
+# we don't finish within the 2 hour timeout. Let's split it into two jobs.
+
+distcheck-1:
+  extends: .distcheck-base
+  variables:
+    LINGUAS: "ca cs da de el en en_GB es fa fi fr hr hu it ja"
+
+distcheck-2:
+  extends: .distcheck-base
+  variables:
+    LINGUAS: "ko lt nl nn pt pt_BR ro ru sl sv uk zh_CN"
 
 source-dist:
   rules:
