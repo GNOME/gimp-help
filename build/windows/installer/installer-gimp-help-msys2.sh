@@ -78,10 +78,11 @@ cd _Output/
 for dir in ../../../../po/*/
 do
   code=`basename $dir`
-  INSTALLER="gimp-help-${MAJOR_VERSION}.${MINOR_VERSION}.${MICRO_VERSION}-$code-setup.exe"
+  INSTALLER_BASE="gimp-help-${MAJOR_VERSION}.${MINOR_VERSION}.${MICRO_VERSION}"
+  INSTALLER="$INSTALLER_BASE-$code-setup.exe"
   if [ -f "$INSTALLER" ]; then
-    sha256sum $INSTALLER >> SHA256SUMS
-    sha512sum $INSTALLER >> SHA512SUMS
+    sha256sum $INSTALLER >> ${INSTALLER_BASE}.SHA256SUMS
+    sha512sum $INSTALLER >> ${INSTALLER_BASE}.SHA512SUMS
   else
     MISSING_INSTALLER=1
     echo "Missing installer: $INSTALLER"
