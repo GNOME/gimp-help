@@ -2,7 +2,7 @@
 ;
 ;.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,
 ;                                                                       ;
-;Copyright (c) 2002-2012 Jernej SimonŸiŸ                                ;
+;Copyright (c) 2002-2012 Jernej Simonï¿½iï¿½                                ;
 ;                                                                       ;
 ;This software is provided 'as-is', without any express or implied      ;
 ;warranty. In no event will the authors be held liable for any damages  ;
@@ -49,6 +49,8 @@
 ;for picking up the correct Inno Setup language file
 #if LANG=='en'
 	#define LANGFILE='Default.isl'
+#elif LANG=='bg'
+	#define LANGFILE='Languages\Bulgarian.isl'
 #elif LANG=='ca'
 	#define LANGFILE='Languages\Catalan.isl'
 #elif LANG=='cs'
@@ -264,7 +266,7 @@ begin
 	SetArrayLength(verA,GetArrayLength(tmp));
 	for i := 0 to GetArrayLength(tmp) - 1 do
 		verA[i] := StrToIntDef(tmp[i],0);
-		
+
 	Explode(tmp,vB,'.');
 	SetArrayLength(verB,GetArrayLength(tmp));
 	for i := 0 to GetArrayLength(tmp) - 1 do
@@ -570,11 +572,11 @@ begin
 			end;
 
 		WizardForm.Show;
-		
+
 		if not WizardSilent then
 			Result := 'Abort'; //nothing to install in this session, abuse this to abort the setup, and show "finished" page
 	                           //(only in non-silent mode, to not show an error dialog; in silent mode, abort in ssInstall)
-	end;	
+	end;
 end;
 
 

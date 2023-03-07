@@ -52,6 +52,7 @@ use File::Find;
 my $VERSION = 0.05;
 
 my %Languages = (
+	bg => "Bulgarian",
 	ca => "Catalan",
 	cs => "Czech",
 	da => "Danish",
