@@ -47,6 +47,8 @@
 ;for picking up the correct Inno Setup language file
 #if LANG=='en'
 	#define LANGFILE='Default.isl'
+#elif LANG=='bg'
+	#define LANGFILE='Languages\Bulgarian.isl'
 #elif LANG=='ca'
 	#define LANGFILE='Languages\Catalan.isl'
 #elif LANG=='cs'

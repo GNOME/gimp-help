@@ -43,6 +43,7 @@
     <!-- use underscores for spaces within languages,
          e.g. xx:Pidgin_English -->
     <xsl:variable name="languages">
+      bg:Bulgarian
       ca:Catalan
       cs:Czech
       da:Danish
