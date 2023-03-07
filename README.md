@@ -344,6 +344,7 @@ of languages needs to be updated in the following files:
     - Update list of online user manuals and quickreference PDF's
   - [.gitlab-ci.yml](.gitlab-ci.yml)
     - Update LINGUAS in the relevant build-debian-[number].
+    - Update LINGUAS in the relevant distcheck-[number].
     - Note: after committing make sure that the build job doesn't take too
       long. When it takes more than 50 minutes, it might be time to split
       the build job because we don't want time-outs.
