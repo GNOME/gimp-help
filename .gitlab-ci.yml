@@ -211,18 +211,18 @@ distcheck-2:
 source-dist:
   rules:
     # On releases.
-    - if: '$CI_COMMIT_TAG != null'
+    #- if: '$CI_COMMIT_TAG != null'
     # Custom builds though web GUI, API or schedules.
-    - if: '$GIMP_HELP_CI_MAKE_DIST != null'
+    #- if: '$GIMP_HELP_CI_MAKE_DIST != null'
     # Merge requests with appropriate label.
-    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Source Distribution.*/'
+    #- if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Source Distribution.*/'
   stage: distribution
   image: $CI_REGISTRY_IMAGE:build-debian-latest
   artifacts:
-    expire_in: 1 week
+    expire_in: 1 day
     when: always
     paths:
-    #- _build
+    - _build
     - _dist
   script:
     - cd src
