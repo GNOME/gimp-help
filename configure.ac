@@ -40,7 +40,7 @@ AC_CONFIG_COMMANDS(
 #    cp -f $srcdir/stylesheets/*.xsl $srcdir/stylesheets/*.dtd $srcdir/stylesheets/languageVocab.xml stylesheets/
 #])
 
-AM_INIT_AUTOMAKE([1.10 foreign tar-pax dist-bzip2 -Wall -Wno-portability])
+AM_INIT_AUTOMAKE([1.16 tar-pax dist-bzip2 -Wall -Wno-portability])
 
 AM_MAINTAINER_MODE
 

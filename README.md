@@ -242,6 +242,10 @@ See our Gnome Gitlab issue tracker:
 
 **Note:** this section needs to be updated.
 
+**Note2:** For make dist and make dist-check automake 1.16.4 or newer is
+required. Older versions will not recognize README.md as a valid version
+instead of README.
+
 Before you create a release you'll need:
 
     * be a maintainer
