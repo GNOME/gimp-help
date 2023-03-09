@@ -36,11 +36,45 @@ they are a lot more outdated.
 ### How to help translating the manual
 
 If you are interested in translating the manual the best way to
-start is going to https://l10n.gnome.org/module/gimp-help/,
-register an account and apply to be a member of the language team
-for the language you want to translate.  
-You can then start translating the po files of GIMP's manual found
-on that website.
+start is going to the [DamnedLies translation platform](https://l10n.gnome.org/).
+Register an account there, if you don't have one yet, and apply to be a member
+of the language team for the language you want to translate.  
+
+All our translations are done through DamnedLies. To start translating the
+manual go to the [translatable po files](https://l10n.gnome.org/module/gimp-help/)
+for the manual. After you finish translating, you upload it to DamnedLies.
+Your language team will be able to give you more details on this procedure.
+
+**Note:** If your language does not have any po files listed there, your
+language first needs to be added to our repository. In that case, please open
+[an issue](https://gitlab.gnome.org/GNOME/gimp-help/issues) stating which
+language and languagecode you would like to have added.
+
+#### How to test your translation
+
+If you have set up a build environment for gimp-help you can test the
+translation by running `make html-LANG`, where LANG is your two/four-letter
+language code. This will generate an HTML version of the user manual,
+e.g. `make html-nl` to make the HTML for the Dutch language.
+When that is successful, you can find the index.html file in the `/html/LANG/`
+folder under your gimp-help build folder.
+
+#### How to add localized screenshots
+
+As far as I am aware localized images can't be handled directly through
+DamnedLies. Discuss with your language team what to do first, but in the end
+they need to be committed to the gimp-help repository, by your language team.
+
+All images are stored in the top-level 'images' folder. Original
+screenshots in English are in the 'C' subfolder. Localized screenshots
+are in 'LANG' folders, where LANG is your two/four-letter language code.
+
+It is important to preserve both paths and names when saving localized
+versions of the screenshots. Otherwise documentation won't build properly,
+or the localized images will not be used.
+
+More in general, also follow the relevant [guidelines](documentation-guidelines.md)
+regarding image handling.
 
 ### How to help writing the manual
 
@@ -362,10 +396,6 @@ of languages needs to be updated in the following files:
     - If no translation is available `Default.isl` can be used.
   - [build/windows/installer/gimp-help.iss](build/windows/installer/gimp-help.iss)
     - Add a if LANG test and define LANGFILE for you language.
-  - [TRANSLATING](.TRANSLATING)
-    - Update ALL_LINGUAS
-    - TODO: Decide if we want to move this whole chapter to TRANSLATING,
-      or the reverse, or ...
 
 Note: If your build directory is not a child of the source directory, then
 `msginit` will not fill in PACKAGE_VERSION in the header of the po files.  
