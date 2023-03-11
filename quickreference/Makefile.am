@@ -1,13 +1,13 @@
 ## Process this file with automake to produce Makefile.in
 
-QUICKREFERENCE_ALL_LINGUAS ?= bg ca cs da de el en es fa fi fr hu it ja ko nl nn pl pt pt_BR ro ru sl sv uk zh_CN
-QUICKREFERENCE_LINGUAS = $(if $(LINGUAS),$(filter $(QUICKREFERENCE_ALL_LINGUAS),$(LINGUAS)),$(QUICKREFERENCE_ALL_LINGUAS))
+# Select languages that are both in LINGUAS and ALL_LINGUAS
+LANGUAGES = $(if $(LINGUAS),$(filter $(ALL_LINGUAS),$(LINGUAS)),$(ALL_LINGUAS))
 
 POT_FILES = $(srcdir)/po/gimp-keys.pot
 
-PO_FILES = $(foreach lang,$(filter-out en,$(QUICKREFERENCE_ALL_LINGUAS)),$(srcdir)/po/$(lang).po)
+PO_FILES = $(foreach lang,$(filter-out en,$(ALL_LINGUAS)),$(srcdir)/po/$(lang).po)
 
-PDF_FILES = $(foreach lang,$(QUICKREFERENCE_LINGUAS),gimp-keys-$(lang).pdf)
+PDF_FILES = $(foreach lang,$(LANGUAGES),gimp-keys-$(lang).pdf)
 
 XSL_FILES = \
 	stylesheets/keys-svg.xsl	\
@@ -48,7 +48,7 @@ $(srcdir)/po/%.po: $(srcdir)/po/gimp-keys.pot
 .PHONY: pot po-% po
 pot: $(srcdir)/po/gimp-keys.pot ;
 po-%: $(srcdir)/po/%.po ;
-po: $(foreach lang,$(filter-out en,$(QUICKREFERENCE_LINGUAS)),po-$(lang)) ;
+po: $(foreach lang,$(filter-out en,$(LANGUAGES)),po-$(lang)) ;
 
 xml/gimp-keys-%.xml: $(srcdir)/po/%.po $(srcdir)/gimp-keys.xml
 	@$(MKDIR_P) xml
@@ -69,7 +69,7 @@ svg/gimp-keys-%.svg: xml/gimp-keys-%.xml stylesheets/keys-svg.xsl
 	  $< \
 	  > $@
 
-svg: $(foreach lang,$(QUICKREFERENCE_LINGUAS),svg/gimp-keys-$(lang).svg)
+svg: $(foreach lang,$(LANGUAGES),svg/gimp-keys-$(lang).svg)
 
 # Quickreference PDF generation
 
@@ -81,7 +81,7 @@ pdf/gimp-keys-%.pdf: svg/gimp-keys-%.svg
 	@echo "*** Making Quickreference PDF ($*) ..."
 	@$(SVG2PDF) $(SVG2PDF_FLAGS) -o $@ $<
 
-pdf-local: $(foreach lang,$(QUICKREFERENCE_LINGUAS),pdf/gimp-keys-$(lang).pdf)
+pdf-local: $(foreach lang,$(LANGUAGES),pdf/gimp-keys-$(lang).pdf)
 
 endif
 
@@ -93,7 +93,7 @@ docbook/gimp-keys-%.xml: xml/gimp-keys-%.xml stylesheets/keys-docbook.xsl
 	  $< \
 	  > $@
 
-docbook: $(foreach lang,$(QUICKREFERENCE_LINGUAS),docbook/gimp-keys-$(lang).xml)
+docbook: $(foreach lang,$(LANGUAGES),docbook/gimp-keys-$(lang).xml)
 
 all-local: svg pdf-local docbook
 
