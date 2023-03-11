@@ -35,6 +35,11 @@ Style guide
   text of the link will be, which makes it more difficult for them to put it
   in the correct order in the translated sentence.
   Use `<link linkend="id">link text</link>` instead.
+- The use of "image menu" or "image window menu" should be avoided. It can be
+  confusing and is ambiguous since there is an "Image" submenu in the main menu.
+  Historically, when GIMP was multi-window only, it may have made more sense to
+  call it that, but that is no longer the case. I suggest to call it
+  "main menu", but we are open to better suggestions.
 - More technical Docbook related info can be found in [HACKING](HACKING).
 
 Image handling
@@ -56,9 +61,19 @@ Image handling
 - Images that show the interface should use the default theme and icon theme.
   A lot of people using image editors seem to prefer a dark theme over a light
   theme, but we accept both. Just try to be consistent inside the same section
-  of the documentation.
+  of the documentation with other recently added images. Changes to images only
+  to make them consistent should first be discussed in an issue or MR.
+- Where possible, exclude the window decorations from screenshots. The window
+  borders are often the most notable differences between Platforms. We should
+  not distract users with this when we can, e.g. most filter options dialogs.
+- Similarly, if we need multiple screenshots where one part always stays the
+  same, we should only show the relevant part.
 - Images that mostly show our interface can often be exported as indexed png,
   without losing much in quality. This saves storage space and keeps downloads
-  smaller for our users, which can be important in certain parts of the world
-  that have limited bandwidth. If you decide to use indexed, make sure that
-  it doesn't degrade the image quality too much.
+  smaller for our users. If you decide to use indexed, make sure that it doesn't
+  degrade the image quality too much.
+- File sizes, download speeds and bandwidth are still relevant in certain parts
+  of the world. On top of that, git without large file support is not very well
+  suited for many large binary blobs like images. It can degrade the performance
+  of repository cloning and updating. All reasons, to try to keep the image
+  sizes down and not to update images too often.
