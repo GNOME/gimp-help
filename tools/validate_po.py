@@ -242,7 +242,12 @@ class Validate(object):
                 if text[idx] != "\n" and text[idx] != "\t":
                     result += 1
                     self.printErrorHeader(entry, self.log)
-                    print(f"ERROR: Found illegal character in text: {ord(text[idx])}.", file=self.log)
+                    if text[idx] == "\v":
+                        print(f"ERROR: vertical tab \\v not allowed in text: {ord(text[idx])}.", file=self.log)
+                    elif text[idx] == "\r":
+                        print(f"ERROR: \\r not allowed in text: {ord(text[idx])}.", file=self.log)
+                    else:
+                        print(f"ERROR: Found illegal character in text: {ord(text[idx])}.", file=self.log)
 
             idx += 1
 
