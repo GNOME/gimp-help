@@ -367,11 +367,9 @@ updated. It's the intention to simplify this, but for now the list
 of languages needs to be updated in the following files:
 
   - [configure.ac](configure.ac)
-    - Update ALL_LINGUAS and QUICKREFERENCE_ALL_LINGUAS
+    - Update ALL_LINGUAS
   - [Makefile.GNU](Makefile.GNU)
     - Update ALL_LINGUAS
-  - [quickreference/makefile.am](quickreference/makefile.am)
-    - Update QUICKREFERENCE_ALL_LINGUAS
   - [stylesheets/languageVocab.xml](stylesheets/languageVocab.xml)
     - Update vocab
   - [stylesheets/authors_common.xsl](stylesheets/authors_common.xsl)
