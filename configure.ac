@@ -52,24 +52,18 @@ AC_PROG_SED
 
 
 #  You can set the LINGUAS or LANGUAGES environment variable to
-#  control what languages are build:
+#  control what languages are built:
 #      LINGUAS   will be re restricted to languages in ALL_LINGUAS
 #      LANGUAGES will override ALL_LINGUAS
 #
-#  Quickreference files are built for languages in
-#  QUICKREFERENCE_ALL_LINGUAS *and* (intersection) ALL_LINGUAS
 
 if test "x$ALL_LINGUAS" = "x"; then
 	ALL_LINGUAS="bg ca cs da de el en en_GB es fa fi fr hr hu it ja ko lt nl nn pl pt pt_BR ro ru sl sv uk zh_CN"
 else
   ALL_LINGUAS=`echo "$ALL_LINGUAS" | $SED -e 's/[,] */ /g'`
 fi
-if test "x$QUICKREFERENCE_ALL_LINGUAS" = "x"; then
-  QUICKREFERENCE_ALL_LINGUAS="bg ca cs da de el en en_GB es fa fi fr hr hu it ja ko lt nl nn pl pt pt_BR ro ru sl sv uk zh_CN"
-fi
 
 AC_SUBST(ALL_LINGUAS)
-AC_SUBST(QUICKREFERENCE_ALL_LINGUAS)
 
 
 #  It doesn't make sense to disable HTML build.
