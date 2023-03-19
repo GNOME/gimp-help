@@ -228,6 +228,7 @@ class Validate(object):
         # msgfmt doesn't like vertical tab (\v) so detect it here...
         # See: https://gitlab.gnome.org/GNOME/gimp-help/-/commit/6b661af55bc6dc90bb198c59702d9b6cfc42f94f
         # Problem is that polib unescapes all strings, but doesn't handle \v
+        # Starting with v. 1.2.0 it does handle \v.
         vert_tab = text.find("\\v")
         if vert_tab > -1:
             #result += 1
@@ -243,9 +244,9 @@ class Validate(object):
                     result += 1
                     self.printErrorHeader(entry, self.log)
                     if text[idx] == "\v":
-                        print(f"ERROR: vertical tab \\v not allowed in text: {ord(text[idx])}.", file=self.log)
+                        print(f"ERROR: vertical tab \\v not allowed in text.", file=self.log)
                     elif text[idx] == "\r":
-                        print(f"ERROR: \\r not allowed in text: {ord(text[idx])}.", file=self.log)
+                        print(f"ERROR: \\r not allowed in text.", file=self.log)
                     else:
                         print(f"ERROR: Found illegal character in text: {ord(text[idx])}.", file=self.log)
 
