@@ -122,10 +122,21 @@ class Validate(object):
                         space = tag.find(' ')
                         if space > -1:
                             #err += 1
+                            ending = tag[space+1:]
                             tag = tag[: space]
-                            if self.warnings:
+                            elen = len(ending)
+                            ei = 0
+                            while elen > ei and ending[ei] == ' ':
+                                ei += 1
+                            ending = ending[ei:]
+                            if elen > ei and ending[0] != '>':
                                 self.printErrorHeader(entry, self.log)
-                                print(f"WARNING: Unnecessary space between tag and closing bracket, see [{tag}].", file=self.log)
+                                err +=1
+                                print(f"ERROR: Closing tag [/{tag}] cannot not have a space except at the end.", file=self.log)
+                            else:
+                                if self.warnings:
+                                    self.printErrorHeader(entry, self.log)
+                                    print(f"WARNING: Unnecessary space between tag and closing bracket, see [{tag}].", file=self.log)
                         # no uppercase allowed in tag
                         lo_tag = tag.lower()
                         if tag != lo_tag:
