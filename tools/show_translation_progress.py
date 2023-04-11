@@ -52,11 +52,18 @@ class GIMPHelpHeaderParser(object):
     """Parses gimphelp-ids.h and indexes the ids"""
 
     helpid = re.compile('gimp-.[a-z-0-9]+')
+    pluginid = re.compile('(plug-in|file|extension)-.[a-z-0-9]+')
 
     def __init__(self, filepath):
         assert filepath != ""
         self.filepath = filepath
+        self.regex = self.helpid
         self.ids = []
+
+    def set_filepath(self, filepath, regex):
+        """Allows you to set a different file and regex for parsing ids"""
+        self.filepath = filepath
+        self.regex = regex
 
     def parse(self, be_verbose):
         h_file = open(self.filepath, "r")
@@ -65,7 +72,7 @@ class GIMPHelpHeaderParser(object):
         # XXX do a read() and match with a regexp
         for line in h_file.readlines():
             try:
-                str = self.helpid.search(line).group()
+                str = self.regex.search(line).group()
                 if str in self.ids:
                     print(f"Duplicate help id found: {str}")
                 else:
@@ -79,12 +86,16 @@ class GIMPHelpHeaderParser(object):
 class Statistics(object):
     """Creates statistics output."""
 
-    def __init__(self, headerpath, helproot, buildroot, be_verbose, print_missing):
+    def __init__(self, headerpath, helproot, buildroot, plugin_ids_path, be_verbose, print_missing):
         self.helproot = helproot
         self.buildroot = buildroot
+        self.plugin_ids_path = plugin_ids_path
         self.be_verbose = be_verbose
         self.hp = GIMPHelpHeaderParser(headerpath)
         self.hp.parse(be_verbose)
+        if (self.plugin_ids_path is not None):
+            self.hp.set_filepath(self.plugin_ids_path, self.hp.pluginid)
+            self.hp.parse(be_verbose)
         self.totals = len(self.hp.ids)
         self.docs = self.getDocuments(buildroot)
         self.statistics = self._generateStatistics(print_missing)
@@ -369,6 +380,7 @@ def main():
     gimp = None
     helppath = "."
     buildpath = '.'
+    plugin_ids_path = None
     print_invalid = 0
     print_missing = 0
     gimpheaderfile = "gimphelp-ids.h"
@@ -377,7 +389,7 @@ def main():
     be_verbose = False
 
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "hb:x:g:imv")
+        opts, args = getopt.getopt(sys.argv[1:], "hb:x:g:p:imv")
     except getopt.GetoptError:
         usage()
         sys.exit(2)
@@ -392,6 +404,8 @@ def main():
             helppath = a
         if o == "-b":
             buildpath = a
+        if o == "-p":
+            plugin_ids_path = a
         if o == "-g":
             gimp = os.path.join(a, "app", "widgets", gimpheaderfile)
         if o == "-i":
@@ -424,7 +438,7 @@ def main():
             errormsg = "Path to gimp-help build root is invalid"
 
     if not errormsg:
-        st = Statistics(gimp, helppath, buildpath, be_verbose, print_missing)
+        st = Statistics(gimp, helppath, buildpath, plugin_ids_path, be_verbose, print_missing)
         st.printTextStatistics(print_invalid)
         sys.exit(1)
     else:
@@ -443,6 +457,7 @@ usage: show_translation_progress.py [options]
         -g      path to the GIMP sources (eg. /opt/gimp)
         -x      path to the gimp-help sources (eg. /opt/gimp-help)
         -b      path to the gimp-help build root (eg. /opt/gimp-help/build)
+        -p      path to the file with plug-in help-ids (generated using collect_plugin_ids.sh)
         -i      print ids which are invalid or have inconsistencies
         -m      print help-ids that are missing from gimp-help
         -v      be more verbose
