@@ -4,49 +4,53 @@
 <!-- section history:
   2017-04-01 elle stone: add enable-color-management.xml
 -->
-<sect2 id="gimp-image-color-management-enabled">
-  <title>Enable Color Management</title>
+<sect2 id="gimp-image-color-profile-use-srgb">
+  <title>Use sRGB Profile</title>
 
   <indexterm>
     <primary>Image</primary>
     <secondary>Color Management</secondary>
-    <tertiary>Enable Color Management</tertiary>
+    <tertiary>Use sRGB Profile</tertiary>
   </indexterm>
   <indexterm>
     <primary>Color Management</primary>
-    <secondary>Enable Color Management</secondary>
+    <secondary>Use sRGB Profile</secondary>
   </indexterm>
   <indexterm>
-    <primary>Enable Color Management</primary>
+    <primary>Use sRGB Profile</primary>
   </indexterm>
 
   <para>
-    If unchecked, <guimenuitem>Enable Color Management</guimenuitem>
+    When checked, <guimenuitem>Use sRGB Profile</guimenuitem>
     assigns a GIMP built-in sRGB color space to your image.
   </para>
 
   <para>
-    Also, if you've selected to
-    display the image's assigned ICC color profile on the title or status bar,
-    unchecking Enable Color Management prints
-    the phrase "not color managed" to the title or status bar in place
-    of the previously assigned color profile.
+    Also, if you've selected to display the image's assigned ICC color profile
+    in the window title (which is the default) or status bar (see 
+    <link linkend="gimp-prefs-image-window-title">Image Title &amp; Statusbar
+    Format</link> preferences), checking <guimenuitem>Use sRGB
+    Profile</guimenuitem> will show <quote>GIMP built-in sRGB</quote> in
+    the title or status bar in place of the image's assigned color profile.
   </para>
 
   <note>
-    <para>Enable Color Management is checked by default. It's best to leave
-    this option checked.
+    <para>For images without color profile, or that have a sRGB profile
+    <guimenuitem>Use sRGB Profile</guimenuitem> is disabled and checked by
+    default. For images that have a different color profile this option will be
+    enabled and unchecked. It's best to leave it that way unless you know what
+    you are doing.
     </para>
   </note>
 
   <sect3>
     <title>Activating the Command</title>
         <para>
-          You can access this command from the image menubar through
+          You can access this command from the main menu through
           <menuchoice>
             <guimenu>Image</guimenu>
             <guisubmenu>Color Management</guisubmenu>
-            <guimenuitem>Enable Color Management</guimenuitem>
+            <guimenuitem>Use sRGB Profile</guimenuitem>
           </menuchoice>.
         </para>
   </sect3>
@@ -54,11 +58,12 @@
 
   <sect3>
     <title>
-      Use Notes regarding unchecking
-      <guimenuitem>Enable Color Management</guimenuitem>
+      Usage Notes regarding <guimenuitem>Use sRGB Profile</guimenuitem>
     </title>
     <para>
-      The best possible advice is to <emphasis role="bold">never uncheck <guimenuitem>Enable Color Management</guimenuitem></emphasis>.
+      The best possible advice is to <emphasis role="bold">never check
+      <guimenuitem>Use sRGB Profile</guimenuitem></emphasis> when you are using
+      a different color profile.
     </para>
   </sect3>
 <!--    <para>
@@ -97,31 +102,29 @@
   <sect3>
       <title>
         What does GIMP do when
-        <guimenuitem>Enable Color Management</guimenuitem> is unchecked?
+        <guimenuitem>Use sRGB Profile</guimenuitem> is checked?
       </title>
       <para>
-        When you uncheck the option to
-        <guimenuitem>Enable Color Management</guimenuitem>, GIMP does
-        two things:
+        When you check the option to
+        <guimenuitem>Use sRGB Profile</guimenuitem>, GIMP does two things:
       </para>
       <orderedlist>
         <listitem>
           <para>
-            Whatever ICC profile is currently assigned to the image
-            file is at least temporarily stored (pending subsequent editing,
-            Precision, and Color Management actions), but isn't used.
-            And then a built-in GIMP profile is assigned in place of the previously
-            assigned ICC profile:
+            Whatever ICC profile is currently assigned to the image, is stored
+            (pending subsequent editing, Encoding, and Color Management
+            actions), but isn't used. And then a built-in GIMP sRGB profile is
+            assigned in place of the previously assigned ICC profile:
           </para>
           <itemizedlist>
             <listitem>
-              <para>If the image is at Non-linear precision,
+              <para>If the image is in Non-linear encoding,
                 the ICC profile "GIMP built-in sRGB" is assigned.
               </para>
             </listitem>
             <listitem>
               <para>
-                If the image is at Linear light precision, the ICC
+                If the image is in Linear light encoding, the ICC
                 profile "GIMP built-in Linear sRGB" is assigned.
               </para>
             </listitem>
@@ -133,68 +136,57 @@
             the <guilabel>Color Profile</guilabel>.
           </para>
         </listitem>
-        <listitem>
-          <para>
-            If you have set up the title or status bar to show the
-        image's color space, then the title or status bar will display a message
-        that the image is "not color managed". <emphasis>In reality the image is
-        still color managed</emphasis>, but now the image is color managed
-        "as if" it were in one of GIMP's built-in sRGB color spaces instead of
-        whatever color space it's actually in.
-            </para>
-        </listitem>
       </orderedlist>
   </sect3>
 
   <sect3>
     <title>
-      When <guimenuitem>Enable Color Management</guimenuitem>
-      is unchecked, what happens to the image
-      and the image appearance?
+      When <guimenuitem>Use sRGB Profile</guimenuitem> is checked, what happens
+      to the image and the image appearance?
     </title>
     <note>
       <para>
-        Assigning a new profile to an image doesn't change the image's
-      actual channel values. Assigning a new ICC profile only changes the meaning
-      of the channel values, which means the image appearance will change (unless
-      the original and new profile are functionally equivalent).
+        Assigning a new profile to an image doesn't change the image's actual
+        channel values. Assigning a new ICC profile only changes the meaning
+        of these values, which means the image appearance will change
+        (unless the original and new profile are functionally equivalent).
       </para>
     </note>
     <para>
-      When <guimenuitem>Enable Color Management</guimenuitem> is unchecked,
-      GIMP assigns one of GIMP's
-      built-in sRGB profiles to the image. Assigning a new ICC profile to an image
-      doesn't change the image's channel values, but it does more or less
-      drastically change the image's appearance:
+      When <guimenuitem>Use sRGB Profile</guimenuitem> is checked, one of GIMP's
+      built-in sRGB profiles is assigned to the image. Assigning a new ICC
+      profile to an image doesn't change the image's channel values, but it does
+      more or less drastically change the image's appearance:
     </para>
     <orderedlist>
       <listitem>
-        <para>If the image was already in one of GIMP's built-in color
-          spaces (or if the assigned ICC profile is a profile that is functionally
-          equivalent to the assigned GIMP built-in sRGB profile) then the image's
+        <para>
+          If the image was already in one of GIMP's built-in color spaces (or if
+          the assigned ICC profile is a profile that is functionally equivalent
+          to the assigned GIMP built-in sRGB profile) then the image's
           appearance will not change.
         </para>
       </listitem>
       <listitem>
         <para>
-          If the image was not already in one of GIMP's built-in
-          color spaces (and is not in a color space that is functionally
-          equivalent to the assigned GIMP built-in sRGB profile),
-          the image's appearance will change more
-          or less drastically depending on three things:
+          If the image was not already in one of GIMP's built-in color spaces
+          (and is not in a color space that is functionally equivalent to the
+          assigned GIMP built-in sRGB profile), the image's appearance will
+          change more or less drastically depending on three things:
         </para>
         <itemizedlist>
           <listitem>
             <para>
-              What GIMP Precision channel encoding &mdash;
-              Linear light or Non-linear &mdash; the image was in
-              before the <guimenuitem>Enable Color Management</guimenuitem> box was unchecked.
+              What GIMP <link linkend="gimp-image-convert-gamma">channel
+              encoding</link> &mdash; Linear light or Non-linear &mdash; the
+              image was in before the <guimenuitem>Use sRGB
+              Profile</guimenuitem> box was checked.
             </para>
           </listitem>
           <listitem>
             <para>
-              How far the image's originally assigned ICC profile's
-              channel encoding ("TRC") is from the GIMP Precision channel encoding.
+              How far the image's originally assigned ICC profile's channel
+              encoding ("TRC") is from the GIMP channel encoding.
             </para>
           </listitem>
           <listitem>
@@ -211,69 +203,56 @@
 
   <sect3>
     <title>
-      Two screenshots showing examples of correct and incorrect image
-      appearances after unchecking
-      <guimenuitem>Enable Color Management</guimenuitem>
+      A screenshot showing an example of incorrect image appearance after
+      checking <guimenuitem>Use sRGB Profile</guimenuitem>
     </title>
     <para>
-      In both screenshots shown below, the image is color
-      managed: An ICC profile is assigned to the image, and that profile is being
-      used to send the image colors to the screen.
+      The image is color managed: An ICC profile is assigned to the image, and
+      that profile is being used to send the image colors to the screen. After
+      checking <guimenuitem>Use sRGB Profile</guimenuitem>, one of GIMP's
+      built-in sRGB profiles has been incorrectly assigned to the image, so the
+      colors look wrong.
     </para>
-    <para>
-      But in the second screenshot, after unchecking Enable Color
-      Management, one of GIMP's built-in sRGB profiles has been incorrectly
-      assigned to the image, so the colors look wrong.
-    </para>
-    <para>
-      In screenshot 1 below, the image is already in a GIMP built-in sRGB
-      color space. So unchecking <guimenuitem>Enable Color Management</guimenuitem>
-      makes no difference in the appearance of the image. In this
-      particular case unchecking <guimenuitem>Enable Color Management</guimenuitem> actually makes
-      no difference at all, except that if you've selected to show the
-      image's assigned ICC profile in the title or status bar, then instead
-      of showing the assigned ICC profile, the title or status bar will
-      show the words "not color managed". But in reality the image is still
-      color managed:
-    </para>
-    <mediaobject>
-      <imageobject>
-        <imagedata fileref="images/menus/image/color-management/enable-cm-gimp-built-in-perceptual-srgb-color-space-enabled-disabled.png" format="PNG"/>
-      </imageobject>
-    </mediaobject>
 
     <para>
-      In screenshot 2 below, the channel encoding of the original profile
+      In the screenshot below, the channel encoding of the original profile
       matches the GIMP channel encoding (both are linear), but the
-      LargeRGB-elle-V4-g10.icc profile chromaticities don't match the GIMP built-in
-      sRGB chromaticities. So after unchecking
-      <guimenuitem>Enable Color Management</guimenuitem>, the tonality
-      is correct but the colors are wrong. The image is still color managed,
-      but it's color managed using the wrong ICC profile:
+      <quote>LargeRGB-elle-V4-g10.icc</quote> profile chromaticities don't match
+      the GIMP built-in sRGB chromaticities. So after checking
+      <guimenuitem>Use sRGB Profile</guimenuitem>, the tonality is correct but
+      the colors are wrong. The image is still color managed, but it's color
+      managed using the wrong ICC profile:
     </para>
     <mediaobject>
       <imageobject>
         <imagedata fileref="images/menus/image/color-management/enable-cm-linear-precision-mismatched-chromaticities.png" format="PNG"/>
       </imageobject>
+      <caption>
+        <para>
+          This needs to be updated for the current situation. The text on
+          the images should be ignored, only compare the images themselves.
+        </para>
+      </caption>
     </mediaobject>
     <caution>
       <para>
         If your image's originally assigned ICC profile doesn't have the same
-        channel encoding and chromaticities as the GIMP built-in sRGB profile, and
-        you uncheck and then immediately change your mind
-        and recheck <guimenuitem>Enable Color Management</guimenuitem>,
-        the originally assigned ICC profile
-        will be reassigned to your image and your image channel values will be
-        unchanged.
+        channel encoding and chromaticities as the GIMP built-in sRGB profile,
+        and you check and then immediately change your mind and uncheck
+        <guimenuitem>Use sRGB Profile</guimenuitem>, the originally assigned
+        ICC profile will be reassigned to your image and your image channel
+        values will be unchanged.
       </para>
       <para>
-        Otherwise, whether or not you can recover the originally
-        assigned ICC profile and correct colors for your image depends on what
-        else you've done between the unchecking and rechecking of
-        <guimenuitem>Enable Color Management</guimenuitem>.
+        Otherwise, whether or not you can recover the originally assigned ICC
+        profile and correct colors for your image depends on what else you've
+        done between the checking and unchecking of
+        <guimenuitem>Use sRGB Profile</guimenuitem>.
       </para>
       <para>
-        Again, the best possible advice is to <emphasis role="bold">never uncheck <guimenuitem>Enable Color Management</guimenuitem></emphasis>.
+        Again, the best possible advice is to
+        <emphasis role="bold">never check <guimenuitem>Use sRGB
+        Profile</guimenuitem></emphasis>.
       </para>
     </caution>
 <!--
