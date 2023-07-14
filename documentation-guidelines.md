@@ -1,8 +1,12 @@
-gimp-help documentation guidelines
-==================================
+# gimp-help documentation guidelines
 
-Style guide
------------
+### Table of Contents
+1. [Style guide](#style-guide)
+2. [Image handling](#image-handling)
+3. [Moving documentation](#moving-documentation)
+
+## Style guide
+
 - Most lines should be no longer than 80 characters, except for long literal
   strings like website links.
 - Do not use TAB characters.
@@ -40,15 +44,30 @@ Style guide
   Historically, when GIMP was multi-window only, it may have made more sense to
   call it that, but that is no longer the case. I suggest to call it
   "main menu", but we are open to better suggestions.
+- Never ever say "self explanatory" or something with a similar meaning. Always
+  use an actual description, even if it means mostly repeating the option
+  label or other relevant text.
+- Certain parts of the documentation are platform specific. We need to be
+  clear about this when this is the case and where necessary explain it for
+  each platform separately, e.g. when mentioning file paths.
+- On macOS different names are used for the Ctrl and Alt keys. We currently
+  do not document this, but we should investigate how to improve this without
+  too much effort. If this could be done inside docbook xml automatic handling,
+  that would be perfect.
 - More technical Docbook related info can be found in [HACKING](HACKING).
 
-Image handling
---------------
+## Image handling
+
 - If you remove the reference to an image from the documentation, don't forget
   to actually delete the image (unless it is used elsewhere in the
   documentation, which should be checked first).
 - You should also check if that image has translated versions. These should be
   removed too.
+- There is a make target to check for unused (orphaned) images:
+  `make check-images-en` to check the original images, replace `en` with
+  your language of choice to check for translated images in that language.
+  At this moment, there is no target to check all languages at once,
+  feel free to contribute this.
 - If you update an image with text where that text has changed considerably,
   e.g. dialogs with new options, you should look at the translated images too.
   If they are too different, it's probably better to remove them to show the
@@ -77,3 +96,151 @@ Image handling
   suited for many large binary blobs like images. It can degrade the performance
   of repository cloning and updating. All reasons, to try to keep the image
   sizes down and not to update images too often.
+- Be aware that some dialogs can differ between platforms or even be only
+  available on some platforms, e.g. the print dialog, debug preferences, etc.
+  This should be clearly mentioned in the documentation.
+
+## Moving documentation
+
+When reorganizing the manual, we may need to move certain parts of our
+documentation to a new location. We need to be aware of the effects of moving
+documentation on translations.
+
+Since translations of our manual are divided in many sections, which each
+have their own po file with translations, moving documentation could mean
+that it now belongs to a different po file.
+
+If we don't take any special action, certain parts that were already translated,
+will have to be translated again. We would prefer not to cause unnecessary
+extra work for translators, so we should try to copy over the translations
+from the old po file to the new one.
+
+The following procedure explains how to do this move:
+
+1. Announce your intent to translators on https://discourse.gnome.org/, make
+   sure to use the i18n and gimp tags, and give them some time (a week?), so
+   they can get pending translations in.
+2. We need up-to-date po-files. Make sure to touch all files in /src first,
+   because `make po` doesn't always work since po files are usually only updated
+   when new translations get in, and thus can get out-of-sync. After that run
+   `make po`.
+   For a script to touch all src files, see [^1].
+3. For all languages, make a copy of the po files that currently contain the
+   translations that are to be moved. See example script [^2] below.
+4. Move the documentation to its new location.
+5. Regenerate all pot and po files (`make pot`, `make po`).
+6. Use msgmerge with the saved old po files as compendium to merge the
+   translations from the old saved po files from step 2.
+   `msgmerge --compendium comp.po new-loc.po new-loc.pot -o new-loc.po`
+   See example script [^3].
+7. Remove the copies of the po files used as compendium, and if any of the
+   old po files are not used anymore, also remove those.
+8. Commit everything in a separate branch.
+9. make validate to make sure everything works. You can let this be done by
+   the MR, since this whole change should be done as an MR anyway. This should
+   not be merged without approval of a maintainer.
+10. A next step, if the above has been finished successfully, is to update
+    the locations of referenced images. Since the move won't break showing
+    images from the old location, we will do this separately.
+    Move the images in /images/C/ used in the old documentation to the new
+    location relevant to where the documentation now resides.
+    Do the same for all translated versions of images.
+    Make sure to check that all images are still found when building. If they
+    are not, our CI should fail.
+11. After the documentation has been moved, check the documentation that
+    references the moved parts to see if parts of it need to be adjusted.
+
+###Footnotes
+The bash scripts in the footnotes are examples. They don't pretend to be
+optimized (my bash knowledge is limited).
+You may need to adjust them to your system and the files that need to be moved.
+Feel free to suggest improvements.
+
+[^1]: Mark all source XML files as updated.
+    ```
+    cd ~/gimp-help/src
+
+    #Mark all source files as updated...
+    find . -type f -exec touch {} +
+    ```
+
+[^2]: Copy po files.
+
+    ```sh
+    # Copy po translations to be used as compendium
+
+    SRCDIR=/home/Jacob/gimp-help/po/
+
+    #1. Go to gimp-help
+    cd $SRCDIR
+
+    #2. For all available po language dirs
+    #3. For the selected po files copy them to compendium-xxx.po
+
+    COPY_FILES="concepts using"
+
+    # Only copying to/from 1 subdir supported atm
+    COPY_FILES_SUB="preferences"
+    SUBDIR=using
+
+    # Only copying to/from 1 subdir supported atm
+    COPY_FILES_SUB2="file"
+    SUBDIR2=menus
+
+
+    for podir in ./*; do
+        echo "Language dir $podir"
+        for file_to_copy in $COPY_FILES; do
+            echo "Copying $file_to_copy.po to compendium-$file_to_copy.po"
+            cp $SRCDIR/$podir/$file_to_copy.po $SRCDIR/$podir/compendium-$file_to_copy.po
+        done
+
+        # same when needing to copy to a subdir (can't be bothered to figure it out in 1 loop)
+        for file_to_copy in $COPY_FILES_SUB; do
+            echo "Copying $file_to_copy.po to compendium-$file_to_copy.po"
+            cp $SRCDIR/$podir/$SUBDIR/$file_to_copy.po $SRCDIR/$podir/$SUBDIR/compendium-$file_to_copy.po
+        done
+
+        # same when needing to copy to a subdir (can't be bothered to figure it out in 1 loop)
+        for file_to_copy in $COPY_FILES_SUB2; do
+            echo "Copying $file_to_copy.po to compendium-$file_to_copy.po"
+            cp $SRCDIR/$podir/$SUBDIR2/$file_to_copy.po $SRCDIR/$podir/$SUBDIR2/compendium-$file_to_copy.po
+        done
+    done
+    ```
+
+[^3]: Merge old translations to the new location.
+    ```sh
+    # Merge compendium translations to destination po files
+
+    SRCDIR=/home/Jacob/gimp-help/po
+    POTDIR=/home/Jacob/build/gimp-help/pot
+
+    #1. Go to gimp-help
+    cd $SRCDIR
+
+    #2. For all available po language dirs
+    #3. For the selected po files copy them to compendium-xxx.po
+
+    COMPENDIUM_FILES="compendium-concepts.po compendium-using.po using/compendium-preferences.po menus/compendium-file.po"
+    comp_array=($COMPENDIUM_FILES)
+    DEST_FILES="dialogs.po dialogs.po dialogs.po dialogs.po"
+    dest_array=($DEST_FILES)
+    POT_FILES="dialogs.pot dialogs.pot dialogs.pot dialogs.pot"
+    pot_array=($POT_FILES)
+
+
+    for podir in ./*; do
+        echo "Language dir $podir"
+
+        #msgmerge --compendium file dest-location.po dest-location.pot -o dest-location.po
+        i=0
+        # BEWARE: the number below needs to be updated to reflect the actual number of files!
+        while [[ i -lt 4 ]]; do
+            echo ${comp_array[$i]}
+            msgmerge --compendium $SRCDIR/$podir/${comp_array[$i]} $SRCDIR/$podir/${dest_array[$i]} $POTDIR/${pot_array[$i]} -o $SRCDIR/$podir/${dest_array[$i]}
+            ((i++))
+        done
+
+    done
+    ```
