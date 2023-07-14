@@ -194,17 +194,27 @@ win-installer:
   needs: ["build-image"]
 
 # One make distcheck would be ideal, but the reality is that on certain runners
-# we don't finish within the 2 hour timeout. Let's split it into two jobs.
+# we don't finish within the 1 hour timeout. Let's split it into several jobs.
 
 distcheck-1:
   extends: .distcheck-base
   variables:
-    LINGUAS: "bg ca cs da de el en en_GB es fa fi fr hr hu"
+    LINGUAS: "bg ca cs da de el en en_GB"
 
 distcheck-2:
   extends: .distcheck-base
   variables:
-    LINGUAS: "it ja ko lt nl nn pl pt pt_BR ro ru sl sv uk zh_CN"
+    LINGUAS: "es fa fi fr hr hu it ja"
+
+distcheck-3:
+  extends: .distcheck-base
+  variables:
+    LINGUAS: "ko lt nl nn pl pt pt_BR"
+
+distcheck-4:
+  extends: .distcheck-base
+  variables:
+    LINGUAS: "ro ru sl sv uk zh_CN"
 
 source-dist:
   rules:
