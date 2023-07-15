@@ -121,15 +121,6 @@
             has been), then it is opened in another window, with the same
             size as the first image.
           </para>
-          <note>
-            <para>
-              Keep in mind that every pixel of an image is stored
-              in memory. If you create large files with a high pixel
-              density, <acronym>GIMP</acronym> will need a lot
-              of time and memory for every function you apply to the
-              image.
-            </para>
-          </note>
         </listitem>
       </varlistentry>
       <varlistentry>
@@ -174,7 +165,8 @@
       The <guilabel>Advanced Options</guilabel>
       are mostly of interest to more advanced <acronym>GIMP</acronym>
       users. You can display these options by clicking on the small triangle
-      on the lower edge of the dialog window.
+      on the lower edge of the dialog window. Note that you will need to scroll
+      down to see all the available options.
     </para>
     <variablelist>
       <indexterm>
@@ -268,15 +260,10 @@
         <!--From www.gimpusers.com/tutorials/whats-new-in gimp-2-10-->
         <listitem>
           <para>
-            A huge step for GIMP: 16-32 bits per channel support is at last 
-            available.
-            You are now able to work with a lot more color information and 
-            detail in your pictures. This support basically gives you the 
-            ability to create super-smooth color transitions on your picture. 
-            Next improvement will be to have RAW files edited with GIMP 
-            <emphasis>directly</emphasis> since there is enough color space to 
-            bring back all the details that are stored inside a RAW file 
-            – however this is not implemented yet.
+            This setting lets you define the encoding used to store pixel
+            information. For more details, please see the
+            <link linkend="gimp-image-choosing-precision-encoding">
+            Image Encoding</link> section.
           </para>
           <para>
             Five options are available:
@@ -311,7 +298,7 @@
           <para>
             If you wonder what the difference is between integer and floating 
             point (in the graphics area): If you have an image with 16-bit 
-            integer precision per channel, then you have 65.536 shades of 
+            integer precision per channel, then you have 65,536 shades of 
             different red, green and blue color tones – all of them equally 
             stepped to each other (equal color distance). If you have it in 
             floating point, then there are no equal-wide steps – so you can 
@@ -373,6 +360,49 @@
       </varlistentry>
 
       <varlistentry>
+        <term>Soft-proofing color profile</term>
+        <listitem>
+          <para>
+            You can attach a CMYK color profile to the image with this option.
+            This profile will be used to create a soft-proofed display of the
+            image when the <guilabel>Proof Colors</guilabel> option is enabled
+            in the <guilabel>View</guilabel> menu.
+            As with the <guilabel>Color Profile</guilabel>, if you prefer to use
+            a different color profile you can select an ICC color profile file
+            from a location on your computer by choosing
+            <guilabel>Select color profile from disk…</guilabel>.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>Soft-proofing rendering intent</term>
+        <listitem>
+          <para>
+            This option lets you select the rendering intent that will be used
+            to convert the colors from the soft-proofed image to your display
+            device when the <guilabel>Proof Colors</guilabel> option is enabled
+            in the <guilabel>View</guilabel> menu. The four intents are
+            <quote>Perceptual</quote>, <quote>Relative colorimetric</quote>,
+            <quote>Saturation</quote> and <quote>Absolute colorimetric</quote>
+            Please see <xref linkend="gimp-prefs-color-management"/> for more 
+            information.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>Use Black Point Compensation</term>
+        <listitem>
+          <para>
+            When enabled, the BPC algorithm attempts to adjusts the display of
+            darker areas in the image when the <guilabel>Proof Colors</guilabel>
+            option is enabled in the <guilabel>View</guilabel> menu.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
         <term>Fill with</term>
         <listitem>
           <para>
@@ -398,6 +428,13 @@
                 Fill the image with the current <guilabel>Background
                 color</guilabel>, shown in the Toolbox. (You can change the
                 background color too, while the dialog window is open.)
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                Fill the image with <guilabel>Middle Gray (CIELAB)</guilabel>.
+                This will create a layer with a gray color that is 50% of perceptual
+                lightness in the selected <link linkend="gimp-image-mode">color mode</link>.
               </para>
             </listitem>
             <listitem>
