@@ -54,6 +54,9 @@
   do not document this, but we should investigate how to improve this without
   too much effort. If this could be done inside docbook xml automatic handling,
   that would be perfect.
+- In the past `section history` comments were added at the top of the source
+  documentation xml files. Don't use or update these sections. Our history
+  can easily be followed by checking the commit log.
 - More technical Docbook related info can be found in [HACKING](HACKING).
 
 ## Image handling
