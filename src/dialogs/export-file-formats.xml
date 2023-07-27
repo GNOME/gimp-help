@@ -465,22 +465,46 @@
           </para>
           <variablelist>
             <varlistentry>
-              <term>Optimize</term>
+              <term>Smoothing</term>
               <listitem>
                 <para>
-                  If you enable this option, the optimization of entropy
-                  encoding parameters will be used. The result is typically
-                  a smaller file, but it takes more time to generate.
+                  JPEG compression creates artifacts. By using this option,
+                  you can smooth the image when saving, reducing them. But
+                  your image becomes somewhat blurred.
                 </para>
               </listitem>
             </varlistentry>
             <varlistentry>
-              <term>Smoothing</term>
+              <term>Progressive</term>
               <listitem>
                 <para>
-                  JPG compression creates artifacts. By using this option,
-                  you can smooth the image when saving, reducing them. But
-                  your image becomes somewhat blurred.
+                  With this option enabled, the image chunks are stored in
+                  the file in an order that allows progressive image
+                  refinement during a slow connection web download.
+                  The progressive option for JPEG has the same purpose as the
+                  interlace option for GIF.
+                  Unfortunately, the progressive option produces slightly
+                  larger JPEG files (than without the progressive option).
+                </para>
+                <note>
+                  <para>
+                    Beware that certain older TVs and photo frames (and maybe
+                    other devices) may not be able to show JPEG images that
+                    have been exported with the progressive setting enabled
+                    (which is the default).
+                  </para>
+                </note>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Export as CMYK</term>
+              <listitem>
+                <para>
+                  If checked, the exported JPEG will be converted to the
+                  CMYK color space for use in printing.
+                  If a CMYK color profile is attached to the image, it will
+                  be used during the conversion and embedded in the exported
+                  image file.
                 </para>
               </listitem>
             </varlistentry>
@@ -493,6 +517,16 @@
                   since GIMP-2.10 can be used in exporting as JPEG. Images
                   using arithmetic encoding can be 5 - 10 % smaller. But older
                   software may have trouble opening these images.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Optimize</term>
+              <listitem>
+                <para>
+                  If you enable this option, the optimization of entropy
+                  encoding parameters will be used. The result is typically
+                  a smaller file, but it takes more time to generate.
                 </para>
               </listitem>
             </varlistentry>
@@ -518,28 +552,6 @@
               </listitem>
             </varlistentry>
             <varlistentry>
-              <term>Progressive</term>
-              <listitem>
-                <para>
-                  With this option enabled, the image chunks are stored in
-                  the file in an order that allows progressive image
-                  refinement during a slow connection web download.
-                  The progressive option for JPG has the same purpose as the
-                  interlace option for GIF.
-                  Unfortunately, the progressive option produces slightly
-                  larger JPG files (than without the progressive option).
-                </para>
-                <note>
-                  <para>
-                    Beware that certain older TVs and photo frames (and maybe
-                    other devices) may not be able to show jpeg images that
-                    have been exported with the progressive setting enabled
-                    (which is the default).
-                  </para>
-                </note>
-              </listitem>
-            </varlistentry>
-            <varlistentry>
               <term>Subsampling</term>
               <listitem>
                 <para>
@@ -561,7 +573,7 @@
                   </listitem>
                   <listitem>
                     <para>
-                      <guilabel>2x1,1x1,1x1 (4:2:2)</guilabel>:
+                      <guilabel>2x1,1x1,1x1 (4:4:0)</guilabel>:
                       This is the standard subsampling, which usually
                       provides a good ratio between image quality and file
                       size. There are situations, however, in which using no
@@ -573,7 +585,7 @@
                   </listitem>
                   <listitem>
                     <para>
-                      <guilabel>1x2,1x1,1x1</guilabel>
+                      <guilabel>1x2,1x1,1x1 (4:2:2)</guilabel>
                       This is similar to
                       (2x1,1x1,1x1), but the chroma sampling is in the
                       horizontal direction rather than the vertical
@@ -583,7 +595,7 @@
                   <listitem>
                     <para>
                       <guilabel>2x2,1x1,1x1 (smallest file)</guilabel>:
-                      Commonly referred to as (4:1:1), this produces
+                      Commonly referred to as (4:2:0), this produces
                       the smallest files. This suits images with weak
                       borders but tends to denature colors.
                     </para>
