@@ -70,6 +70,7 @@
       ru:Russian
       sl:Slovenian
       sv:Swedish
+      tr:Turkish
       uk:Ukrainian
       zh_CN:Simplified_Chinese
     </xsl:variable>
