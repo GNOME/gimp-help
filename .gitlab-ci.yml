@@ -79,30 +79,37 @@ check-broken-images:
 build-debian-1:
   extends: .build-debian-base
   variables:
-    LINGUAS: "bg ca cs da de el en en_GB"
+    LINGUAS: "bg ca cs da de el"
     HELP_DIR: "_html1"
     PDF_DIR: "_pdf1"
 
 build-debian-2:
   extends: .build-debian-base
   variables:
-    LINGUAS: "es fa fi fr hr hu it ja"
+    LINGUAS: "en en_GB es fa fi fr"
     HELP_DIR: "_html2"
     PDF_DIR: "_pdf2"
 
 build-debian-3:
   extends: .build-debian-base
   variables:
-    LINGUAS: "ko lt nl nn pl pt pt_BR"
+    LINGUAS: "hr hu it ja ko lt"
     HELP_DIR: "_html3"
     PDF_DIR: "_pdf3"
 
 build-debian-4:
   extends: .build-debian-base
   variables:
-    LINGUAS: "ro ru sl sv tr uk zh_CN"
+    LINGUAS: "nl nn pl pt pt_BR ro"
     HELP_DIR: "_html4"
     PDF_DIR: "_pdf4"
+
+build-debian-5:
+  extends: .build-debian-base
+  variables:
+    LINGUAS: "ru sl sv tr uk zh_CN"
+    HELP_DIR: "_html5"
+    PDF_DIR: "_pdf5"
 
 www-debian:
   stage: www
@@ -114,6 +121,7 @@ www-debian:
     - build-debian-2
     - build-debian-3
     - build-debian-4
+    - build-debian-5
   artifacts:
     expire_in: 1 week
     when: always
@@ -148,11 +156,13 @@ www-debian:
     - mv _pdf2/*.pdf htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/pdf/
     - mv _pdf3/*.pdf htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/pdf/
     - mv _pdf4/*.pdf htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/pdf/
+    - mv _pdf5/*.pdf htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/pdf/
     # Move all the help html files.
     - mv _html1/* htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/
     - mv _html2/* htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/
     - mv _html3/* htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/
     - mv _html4/* htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/
+    - mv _html5/* htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/
 
 win-installer:
   variables:
@@ -201,22 +211,27 @@ win-installer:
 distcheck-1:
   extends: .distcheck-base
   variables:
-    LINGUAS: "bg ca cs da de el en en_GB"
+    LINGUAS: "bg ca cs da de el"
 
 distcheck-2:
   extends: .distcheck-base
   variables:
-    LINGUAS: "es fa fi fr hr hu it ja"
+    LINGUAS: "en en_GB es fa fi fr"
 
 distcheck-3:
   extends: .distcheck-base
   variables:
-    LINGUAS: "ko lt nl nn pl pt pt_BR"
+    LINGUAS: "hr hu it ja ko lt"
 
 distcheck-4:
   extends: .distcheck-base
   variables:
-    LINGUAS: "ro ru sl sv tr uk zh_CN"
+    LINGUAS: "nl nn pl pt pt_BR ro"
+
+distcheck-5:
+  extends: .distcheck-base
+  variables:
+    LINGUAS: "ru sl sv tr uk zh_CN"
 
 source-dist:
   rules:
