@@ -102,7 +102,7 @@
 #elif LANG=='sv'
 	#define LANGFILE='Languages\Unofficial\Swedish.isl'
 #elif LANG=='tr'
-	#define LANGFILE='Languages\Unofficial\Turkish.isl'
+	#define LANGFILE='Languages\Turkish.isl'
 #elif LANG=='uk'
 	#define LANGFILE='Languages\Ukrainian.isl'
 #elif LANG=='zh_CN'
