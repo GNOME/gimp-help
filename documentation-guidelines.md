@@ -20,6 +20,10 @@
   inside a sentence.
 - Do not add a space before a ':' or other punctuation.
 - Use American English spelling.
+- Titles and Headings should use "Title-style Capitalization" rules,
+  i.e. capitalize major words and the first and last word of the title
+  or heading.
+- Do not put a period at the end of a Title or Heading.
 - Documentation does not need to reference back to anything before the current
   main version (currently 2.10). So, things like "Since GIMP 2.6 you can do ..."
   should be changed to not mention the GIMP version. Changes in a minor version
@@ -39,11 +43,11 @@
   text of the link will be, which makes it more difficult for them to put it
   in the correct order in the translated sentence.
   Use `<link linkend="id">link text</link>` instead.
-- The use of "image menu" or "image window menu" should be avoided. It can be
-  confusing and is ambiguous since there is an "Image" submenu in the main menu.
+- Do not use "image menu" or similar to denote the main menu. Call it
+  "main menu" instead. It can be confusing and is ambiguous since there is an
+  "Image" submenu in the main menu.
   Historically, when GIMP was multi-window only, it may have made more sense to
-  call it that, but that is no longer the case. I suggest to call it
-  "main menu", but we are open to better suggestions.
+  call it that, but that is no longer the case.
 - Never ever say "self explanatory" or something with a similar meaning. Always
   use an actual description, even if it means mostly repeating the option
   label or other relevant text.
