@@ -105,20 +105,14 @@
         </listitem>
       </varlistentry>
       <varlistentry id="gimp-layer-attributes">
-        <term>Layer attributes</term>
+        <term>Layer list</term>
         <listitem>
           <anchor id="gimp-layer-visible" xreflabel="Visible layer"/>
           <anchor id="gimp-layer-linked" xreflabel="Linked layers"/>
           <para>
-            Every layer is shown in the list along with its attributes:
+            Each entry in the list is a layer along with its attributes:
           </para>
           <variablelist>
-            <mediaobject>
-              <imageobject>
-                <imagedata format="PNG"
-                  fileref="images/dialogs/layer-list-entry.png"/>
-              </imageobject>
-            </mediaobject>
             <varlistentry>
               <term>
                 <guiicon>
@@ -133,33 +127,157 @@
               </term>
               <listitem>
                 <para>
-                  In front of the thumbnail is an icon showing an eye. By
-                  clicking on the eye, you toggle whether the layer is visible
-                  or not. (<keycap>Shift</keycap>-clicking on the eye causes
-                  all <emphasis>other</emphasis> to be hidden.)
+                  Clicking this icon toggles whether the layer is visible
+                  or not. (<keycap>Shift</keycap>-clicking on the icon causes
+                  all <emphasis>other</emphasis> layers to be hidden.)
                 </para>
               </listitem>
             </varlistentry>
-            <varlistentry>
+            <varlistentry id="gimp-layer-dialog-lock-alpha-button">
               <term>
                 <guiicon>
                   <inlinemediaobject>
                     <imageobject>
                       <imagedata format="PNG"
-                        fileref="images/dialogs/stock-vchain-24.png"/>
+                        fileref="images/dialogs/lock-icon.png"/>
                     </imageobject>
                   </inlinemediaobject>
                 </guiicon>
-                <phrase>Chain layers</phrase>
+                <phrase>Lock</phrase>
               </term>
               <listitem>
+                <indexterm>
+                  <primary>Lock alpha channel</primary>
+                </indexterm>
+                <indexterm>
+                  <primary>Transparency</primary>
+                  <secondary>Keep Layer Transparency</secondary>
+                </indexterm>
+                <indexterm>
+                  <primary>Transparency</primary>
+                  <secondary>Lock Alpha channel</secondary>
+                </indexterm>
+                <indexterm>
+                  <primary>Lock pixels</primary>
+                </indexterm>
                 <para>
-                  Another icon, showing a chain, allows you to group layers
-                  for operations on more than one layer at a time (for example
-                  with the Move tool).
+                  Clicking on the empty checkbox in the lock column of a layer
+                  opens a menu with the following options:
                 </para>
+                <itemizedlist>
+                  <listitem>
+                    <anchor id="gimp-layer-lock-pixels"/>
+                    <para>
+                      <guiicon>
+                        <inlinemediaobject>
+                          <imageobject>
+                            <imagedata format="PNG"
+                              fileref="images/dialogs/lock-pixels.png"/>
+                          </imageobject>
+                        </inlinemediaobject>
+                      </guiicon>
+                      <emphasis role="bold">Lock pixels</emphasis>:  
+                      When this toggle button is enabled, then you cannot use any 
+                      brush-based tool (Paintbrush, Pencil, Eraser etc.), the 
+                      Airbrush or the Ink tool on the currently selected layer.
+                      This may be necessary to protect them from unwanted 
+                      changes. 
+                    </para>
+                  </listitem>
+                  <listitem>
+                    <anchor id="gimp-layer-lock-position"/>
+                    <para>
+                      <guiicon>
+                        <inlinemediaobject>
+                          <imageobject>
+                            <imagedata format="PNG"
+                              fileref="images/dialogs/lock-position-size.png"/>
+                          </imageobject>
+                        </inlinemediaobject>
+                      </guiicon>
+                      <emphasis role="bold">Lock position and size</emphasis>:
+                      This toggle button enables and disables protection of 
+                      layers from moving them around or transforming them. When 
+                      this is enabled, then you cannot use any transform 
+                      tool (Rotate, Shear, Perspective and others) or move it.
+                    </para>
+                  </listitem>
+                  <listitem>
+                    <para>
+                      <guiicon>
+                        <inlinemediaobject>
+                          <imageobject>
+                            <imagedata format="PNG"
+                              fileref="images/dialogs/lock-visibility.png"/>
+                          </imageobject>
+                        </inlinemediaobject>
+                      </guiicon>
+                      <emphasis role="bold">Lock visibility</emphasis>: 
+                      This toggle button controls the <quote>Lock</quote> 
+                      setting for the visibility of the layer. If this is 
+                      enabled, then the layer visibility cannot be changed.
+                    </para>
+                  </listitem>
+                  <listitem>
+                    <anchor id="gimp-layer-lock-alpha"/>
+                    <para>
+                      <guiicon>
+                        <inlinemediaobject>
+                          <imageobject>
+                            <imagedata format="PNG"
+                              fileref="images/dialogs/lock-alpha.png"/>
+                          </imageobject>
+                        </inlinemediaobject>
+                      </guiicon>
+                      <emphasis role="bold">Lock alpha channel</emphasis>: 
+                      This toggle button controls the <quote>Lock</quote> 
+                      setting for the transparency of the layer. If this is 
+                      enabled, then the alpha channel for the layer is 
+                      locked, and no manipulation has any effect on it. In 
+                      particular, nothing that you do to a transparent part of 
+                      the layer will have any effect.
+                    </para>
+                  </listitem>
+                </itemizedlist>
+                <figure>
+                  <title>Example for Locking Alpha Channel</title>
+                  <mediaobject>
+                    <imageobject>
+                      <imagedata format="PNG"
+                        fileref="images/dialogs/examples/layer-lock-1.png"/>
+                    </imageobject>
+                    <caption>
+                      <para>
+                        The active layer has three horizontal, opaque, green
+                        stripes on a transparent background. We paint a
+                        vertical red stripe. <quote>Lock</quote> unchecked:
+                        Opaque and transparent areas of the active layer are
+                        painted with red.
+                      </para>
+                    </caption>
+                  </mediaobject>
+                  <mediaobject>
+                    <imageobject>
+                      <imagedata format="PNG"
+                        fileref="images/dialogs/examples/layer-lock-2.png"/>
+                    </imageobject>
+                    <caption>
+                      <para><quote>Lock</quote> checked: Only opaque
+                        areas of the active layer are painted with red.
+                        Transparent areas are preserved.
+                      </para>
+                    </caption>
+                  </mediaobject>
+                </figure>
+                <tip>
+                  <para>
+                    If a layer name in the Layer Dialog is in bold, then this
+                    layer has no Alpha channel.
+                  </para>
+                </tip>
               </listitem>
             </varlistentry>
+              <!-- TODO / FIXME Document another column with an icon showing glasses. No tooltip; no idea what it does. cf https://gitlab.gnome.org/GNOME/gimp/-/issues/10701 ? -->
             <varlistentry>
               <term>Layer thumbnail</term>
               <listitem>
@@ -177,11 +295,10 @@
               <term>Layer name</term>
               <listitem>
                 <para>
-                  The main attribute is the name of the layer. You can edit
-                  this by a double-click on the name of the layer. You can
-                  also use the <quote>Edit Layer Attributes</quote> dialog you 
-                  can find in the context menu that you get by through a 
-                  right-click on the layer.
+                  You can change the name of the layer by double-clicking on
+                  it. You can also use the <quote>Edit Layer Attributes</quote>
+                  dialog in the context menu that you get by right-clicking on
+                  the layer.
                 </para>
               </listitem>
             </varlistentry>
@@ -243,126 +360,6 @@
                 </para>
               </listitem>
             </varlistentry>
-            <varlistentry id="gimp-layer-dialog-lock-alpha-button">
-              <term>Lock</term>
-              <listitem>
-                <indexterm>
-                  <primary>Lock alpha channel</primary>
-                </indexterm>
-                <indexterm>
-                  <primary>Transparency</primary>
-                  <secondary>Keep Layer Transparency</secondary>
-                </indexterm>
-                <indexterm>
-                  <primary>Transparency</primary>
-                  <secondary>Lock Alpha channel</secondary>
-                </indexterm>
-                <indexterm>
-                  <primary>Lock pixels</primary>
-                </indexterm>
-                <para>
-                  You have three possibilities:
-                </para>
-                <itemizedlist>
-                  <listitem>
-                    <anchor id="gimp-layer-lock-pixels"/>
-                    <para>
-                      <emphasis role="bold">Lock pixels</emphasis>:  
-                      When the button is pressed down, you cannot use any 
-                      brush-based tool (Paintbrush, Pencil, Eraser etc.), the 
-                      Airbrush or the Ink tool on the currently selected layer.
-                      This may be necessary to protect them from unwanted 
-                      changes. 
-                    </para>
-                    <figure>
-                      <title>Lock pixels</title>
-                      <mediaobject>
-                        <imageobject>
-                          <imagedata format="PNG"
-                            fileref="images/dialogs/lock-pixels.png"/>
-                        </imageobject>
-                      </mediaobject>
-                    </figure>
-                  </listitem>
-                  <listitem>
-                    <anchor id="gimp-layer-lock-position"/>
-                    <para>
-                      <emphasis role="bold">Lock position and size</emphasis>:
-                      This toggle button enables and disables protection of 
-                      layers from moving them around or transforming them. When 
-                      the button is pressed down, you cannot use any transform 
-                      tool (Rotate, Shear, Perspective and others) or move it.
-                    </para>
-                    <figure>
-                      <title>Lock position and size</title>
-                      <mediaobject>
-                        <imageobject>
-                          <imagedata format="PNG"
-                            fileref="images/dialogs/lock-position-size.png"/>
-                        </imageobject>
-                      </mediaobject>
-                    </figure>
-                  </listitem>
-                  <listitem>
-                    <anchor id="gimp-layer-lock-alpha"/>
-                    <para>
-                      <emphasis role="bold">Lock alpha channel</emphasis>: 
-                      This toggle button controls the <quote>Lock</quote> 
-                      setting for the transparency of the layer. If this is 
-                      pressed down, then the alpha channel for the layer is 
-                      locked, and no manipulation has any effect on it. In 
-                      particular, nothing that you do to a transparent part of 
-                      the layer will have any effect.
-                    </para>
-                    <figure>
-                      <title>Lock Alpha channel</title>
-                      <mediaobject>
-                        <imageobject>
-                          <imagedata format="PNG"
-                            fileref="images/dialogs/lock-alpha.png"/>
-                        </imageobject>
-                      </mediaobject>
-                    </figure>
-                  </listitem>
-                </itemizedlist>
-                <figure>
-                  <title>Example for Locking Alpha Channel</title>
-                  <mediaobject>
-                    <imageobject>
-                      <imagedata format="PNG"
-                        fileref="images/dialogs/examples/layer-lock-1.png"/>
-                    </imageobject>
-                    <caption>
-                      <para>
-                        The active layer has three horizontal, opaque, green
-                        stripes on a transparent background. We paint a
-                        vertical red stripe. <quote>Lock</quote> unchecked:
-                        Opaque and transparent areas of the active layer are
-                        painted with red.
-                      </para>
-                    </caption>
-                  </mediaobject>
-                  <mediaobject>
-                    <imageobject>
-                      <imagedata format="PNG"
-                        fileref="images/dialogs/examples/layer-lock-2.png"/>
-                    </imageobject>
-                    <caption>
-                      <para><quote>Lock</quote> checked: Only opaque
-                        areas of the active layer are painted with red.
-                        Transparent areas are preserved.
-                      </para>
-                    </caption>
-                  </mediaobject>
-                </figure>
-                <tip>
-                  <para>
-                    If a layer name in the Layer Dialog is in bold, then this
-                    layer has no Alpha channel.
-                  </para>
-                </tip>
-              </listitem>
-            </varlistentry>
           </variablelist>
         </listitem>
       </varlistentry>
@@ -384,7 +381,7 @@
                     </imageobject>
                   </inlinemediaobject>
                 </guiicon>
-                <phrase>New Layer</phrase>
+                <phrase>Create new layer</phrase>
               </term>
               <listitem>
                 <para>
@@ -409,7 +406,7 @@
                     </imageobject>
                   </inlinemediaobject>
                 </guiicon>
-                <phrase>New Layer Group</phrase>
+                <phrase>Create new layer group</phrase>
               </term>
               <listitem>
                 <para>
@@ -484,12 +481,12 @@
                     </imageobject>
                   </inlinemediaobject>
                 </guiicon>
-                <phrase>Duplicate layer</phrase>
+                <phrase>Duplicate layers</phrase>
               </term>
               <listitem>
                 <para>
-                  Here you can create a copy of the active layer. Name of new
-                  layer is suffixed with a number.
+                  Here you can create a copy of the selected layers. Name of new
+                  layer is suffixed with "copy".
                 </para>
               </listitem>
             </varlistentry>
@@ -534,7 +531,7 @@
                   <itemizedlist>
                     <listitem>
                       <para>
-                        Merge this layer with the first visible layer below it.
+                        Merge these layers with the first visible layer below it.
                       </para>
                     </listitem>
                     <listitem>
@@ -546,7 +543,7 @@
                     <listitem>
                       <para>
                         Pressing <keycap>Ctrl</keycap>: merge all visible layers 
-                        into one normal layer.
+                        into one layer.
                       </para>
                     </listitem>
                     <listitem>
@@ -560,7 +557,47 @@
                 </para>
               </listitem>
             </varlistentry>
-            
+            <varlistentry>
+              <term>
+                <guiicon>
+                  <inlinemediaobject>
+                    <imageobject>
+                      <imagedata format="PNG"
+                        fileref="images/dialogs/layer-mask-icon.png"/>
+                    </imageobject>
+                  </inlinemediaobject>
+                </guiicon>
+                <phrase>Add masks to layers</phrase>
+              </term>
+              <listitem>
+                <!-- TODO FIXME Expand explanation of Add masks to layers -->
+                <para>
+                  Add masks to selected layers.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>
+                <guiicon>
+                  <inlinemediaobject>
+                    <imageobject>
+                      <imagedata format="PNG"
+                        fileref="images/dialogs/stock-vchain-24.png"/>
+                    </imageobject>
+                  </inlinemediaobject>
+                </guiicon>
+                <phrase>Select layers by patterns</phrase>
+              </term>
+              <listitem>
+                <para>
+                  Select layers by patterns and store layer sets.
+                </para>
+                <para>
+                  Allows you to group layers for operations on more than one
+                  layer at a time (for example with the Move tool).
+                </para>
+              </listitem>
+            </varlistentry>
             <varlistentry>
               <term>
                 <guiicon>
@@ -571,10 +608,10 @@
                     </imageobject>
                   </inlinemediaobject>
                 </guiicon>
-                <phrase>Delete layer</phrase>
+                <phrase>Delete layers</phrase>
               </term>
               <listitem>
-                <para>Here you can delete the active layer.</para>
+                <para>Here you can delete the active layers.</para>
               </listitem>
             </varlistentry>
           </variablelist>
@@ -592,8 +629,9 @@
             the main menu.
           </para>
           <para>
-            You will find <emphasis>merging layers functions</emphasis>
-            in the <link linkend="gimp-image-menu">Image menu</link>.
+            You will find <link linkend="gimp-image-merge-layers">
+            <emphasis>merging layers functions</emphasis></link>
+            in the Image main menu.
           </para>
         </listitem>
       </varlistentry>
