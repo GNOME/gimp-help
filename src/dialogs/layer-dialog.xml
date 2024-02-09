@@ -105,20 +105,14 @@
         </listitem>
       </varlistentry>
       <varlistentry id="gimp-layer-attributes">
-        <term>Layer attributes</term>
+        <term>Layer list</term>
         <listitem>
           <anchor id="gimp-layer-visible" xreflabel="Visible layer"/>
           <anchor id="gimp-layer-linked" xreflabel="Linked layers"/>
           <para>
-            Every layer is shown in the list along with its attributes:
+            Each entry in the list is a layer along with its attributes:
           </para>
           <variablelist>
-            <mediaobject>
-              <imageobject>
-                <imagedata format="PNG"
-                  fileref="images/dialogs/layer-list-entry.png"/>
-              </imageobject>
-            </mediaobject>
             <varlistentry>
               <term>
                 <guiicon>
@@ -133,118 +127,24 @@
               </term>
               <listitem>
                 <para>
-                  In front of the thumbnail is an icon showing an eye. By
-                  clicking on the eye, you toggle whether the layer is visible
-                  or not. (<keycap>Shift</keycap>-clicking on the eye causes
-                  all <emphasis>other</emphasis> to be hidden.)
+                  Clicking this icon toggles whether the layer is visible
+                  or not. (<keycap>Shift</keycap>-clicking on the icon causes
+                  all <emphasis>other</emphasis> layers to be hidden.)
                 </para>
               </listitem>
             </varlistentry>
-            <varlistentry>
+            <varlistentry id="gimp-layer-dialog-lock-alpha-button">
               <term>
                 <guiicon>
                   <inlinemediaobject>
                     <imageobject>
                       <imagedata format="PNG"
-                        fileref="images/dialogs/stock-vchain-24.png"/>
+                        fileref="images/dialogs/lock-icon.png"/>
                     </imageobject>
                   </inlinemediaobject>
                 </guiicon>
-                <phrase>Chain layers</phrase>
+                <phrase>Lock</phrase>
               </term>
-              <listitem>
-                <para>
-                  Another icon, showing a chain, allows you to group layers
-                  for operations on more than one layer at a time (for example
-                  with the Move tool).
-                </para>
-              </listitem>
-            </varlistentry>
-            <varlistentry>
-              <term>Layer thumbnail</term>
-              <listitem>
-                <para>
-                  The layer content is represented in a thumbnail. Maintaining
-                  left-click for a second on this thumbnail makes it larger.
-                  When the layer is active, the thumbnail has a white border.
-                  The border is black if the layer is inactive.
-                  When the layer has a mask, the inactive element takes a black
-                  border.
-                </para>
-              </listitem>
-            </varlistentry>
-            <varlistentry>
-              <term>Layer name</term>
-              <listitem>
-                <para>
-                  The main attribute is the name of the layer. You can edit
-                  this by a double-click on the name of the layer. You can
-                  also use the <quote>Edit Layer Attributes</quote> dialog you 
-                  can find in the context menu that you get by through a 
-                  right-click on the layer.
-                </para>
-              </listitem>
-            </varlistentry>
-          </variablelist>
-          <note>
-            <para>
-              In the case of an animation layer (GIF or MNG), the name of the
-              layer can be used to specify certain parameters: Layer_name
-              (delay in ms) (combination mode), for example Frame-1 (100 ms)
-              (replace). The <guilabel>delay</guilabel>
-              sets the time during which the layer is visible in the
-              animation. The combination mode sets whether you combine the
-              layer with the previous layer or replace it: the two modes are
-              (combine) or (replace).
-            </para>
-          </note>
-        </listitem>
-      </varlistentry>
-      <varlistentry id="gimp-layer-characteristics">
-        <term>Layers characteristics</term>
-        <listitem>
-          <para>
-            Above the layer list, it is possible to specify some properties
-            for the active layer. The active layer is the one highlighted in
-            blue. The properties are: <quote>Layer mode</quote>,
-            <quote>Opacity</quote>, <quote>Lock pixels</quote> and
-            <quote>Lock Alpha channel</quote>.
-          </para>
-          <variablelist>
-            <varlistentry id="gimp-layer-dialog-paint-mode-menu">
-              <term>Mode</term>
-              <listitem>
-                <anchor id="gimp-layer-mode"/>
-                <para>
-                  The layer mode determines how the layer interacts with the
-                  other layers. From the combo box you can access all the
-                  modes provided by GIMP. The layer modes are fully detailed
-                  in <xref linkend="gimp-concepts-layer-modes"/>.
-                </para>
-              </listitem>
-            </varlistentry>
-            <varlistentry id="gimp-layer-dialog-opacity-scale">
-              <term>Opacity</term>
-              <listitem>
-                <anchor id="gimp-layer-opacity"/>
-                <indexterm>
-                  <primary>Transparency</primary>
-                  <secondary>Layer opacity</secondary>
-                </indexterm>
-                <indexterm>
-                  <primary>Opacity</primary>
-                  <secondary>Layers dialog</secondary>
-                </indexterm>
-                <para>
-                  By moving the slider you give more or less opacity to the
-                  layer. With a 0 opacity value, the layer is transparent and
-                  completely invisible. Don't confuse this with a Layer Mask,
-                  which sets the transparency pixel by pixel.
-                </para>
-              </listitem>
-            </varlistentry>
-            <varlistentry id="gimp-layer-dialog-lock-alpha-button">
-              <term>Lock</term>
               <listitem>
                 <indexterm>
                   <primary>Lock alpha channel</primary>
@@ -261,68 +161,82 @@
                   <primary>Lock pixels</primary>
                 </indexterm>
                 <para>
-                  You have three possibilities:
+                  Clicking on the empty checkbox in the lock column of a layer
+                  opens a menu with the following options:
                 </para>
                 <itemizedlist>
                   <listitem>
                     <anchor id="gimp-layer-lock-pixels"/>
                     <para>
+                      <guiicon>
+                        <inlinemediaobject>
+                          <imageobject>
+                            <imagedata format="PNG"
+                              fileref="images/dialogs/lock-pixels.png"/>
+                          </imageobject>
+                        </inlinemediaobject>
+                      </guiicon>
                       <emphasis role="bold">Lock pixels</emphasis>:  
-                      When the button is pressed down, you cannot use any 
+                      When this toggle button is enabled, you cannot use any 
                       brush-based tool (Paintbrush, Pencil, Eraser etc.), the 
                       Airbrush or the Ink tool on the currently selected layer.
                       This may be necessary to protect them from unwanted 
                       changes. 
                     </para>
-                    <figure>
-                      <title>Lock pixels</title>
-                      <mediaobject>
-                        <imageobject>
-                          <imagedata format="PNG"
-                            fileref="images/dialogs/lock-pixels.png"/>
-                        </imageobject>
-                      </mediaobject>
-                    </figure>
                   </listitem>
                   <listitem>
                     <anchor id="gimp-layer-lock-position"/>
                     <para>
+                      <guiicon>
+                        <inlinemediaobject>
+                          <imageobject>
+                            <imagedata format="PNG"
+                              fileref="images/dialogs/lock-position-size.png"/>
+                          </imageobject>
+                        </inlinemediaobject>
+                      </guiicon>
                       <emphasis role="bold">Lock position and size</emphasis>:
-                      This toggle button enables and disables protection of 
+                      This toggle button enables or disables protection of 
                       layers from moving them around or transforming them. When 
-                      the button is pressed down, you cannot use any transform 
+                      this is enabled, then you cannot use any transform 
                       tool (Rotate, Shear, Perspective and others) or move it.
                     </para>
-                    <figure>
-                      <title>Lock position and size</title>
-                      <mediaobject>
-                        <imageobject>
-                          <imagedata format="PNG"
-                            fileref="images/dialogs/lock-position-size.png"/>
-                        </imageobject>
-                      </mediaobject>
-                    </figure>
+                  </listitem>
+                  <listitem>
+                    <para>
+                      <guiicon>
+                        <inlinemediaobject>
+                          <imageobject>
+                            <imagedata format="PNG"
+                              fileref="images/dialogs/lock-visibility.png"/>
+                          </imageobject>
+                        </inlinemediaobject>
+                      </guiicon>
+                      <emphasis role="bold">Lock visibility</emphasis>: 
+                      This toggle button controls the <quote>Lock</quote> 
+                      setting for the visibility of the layer. If this is 
+                      enabled, the layer visibility cannot be changed.
+                    </para>
                   </listitem>
                   <listitem>
                     <anchor id="gimp-layer-lock-alpha"/>
                     <para>
+                      <guiicon>
+                        <inlinemediaobject>
+                          <imageobject>
+                            <imagedata format="PNG"
+                              fileref="images/dialogs/lock-alpha.png"/>
+                          </imageobject>
+                        </inlinemediaobject>
+                      </guiicon>
                       <emphasis role="bold">Lock alpha channel</emphasis>: 
                       This toggle button controls the <quote>Lock</quote> 
                       setting for the transparency of the layer. If this is 
-                      pressed down, then the alpha channel for the layer is 
+                      enabled, the alpha channel for the layer is 
                       locked, and no manipulation has any effect on it. In 
                       particular, nothing that you do to a transparent part of 
                       the layer will have any effect.
                     </para>
-                    <figure>
-                      <title>Lock Alpha channel</title>
-                      <mediaobject>
-                        <imageobject>
-                          <imagedata format="PNG"
-                            fileref="images/dialogs/lock-alpha.png"/>
-                        </imageobject>
-                      </mediaobject>
-                    </figure>
                   </listitem>
                 </itemizedlist>
                 <figure>
@@ -363,6 +277,86 @@
                 </tip>
               </listitem>
             </varlistentry>
+              <!-- TODO / FIXME Document another column with an icon showing glasses. No tooltip; no idea what it does. cf https://gitlab.gnome.org/GNOME/gimp/-/issues/10701 ? -->
+            <varlistentry>
+              <term>Layer thumbnail</term>
+              <listitem>
+                <para>
+                  The layer content is represented in a thumbnail. Maintaining
+                  left-click for a second on this thumbnail makes it larger.
+                  The border color of the layer depends on whether the layer is
+                  active or inactive.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Layer name</term>
+              <listitem>
+                <para>
+                  You can change the name of the layer by double-clicking on
+                  it. You can also use the
+                  <link linkend="gimp-layer-dialog-context-menu">Edit Layer Attributes</link>
+                  dialog in the context menu that you get by right-clicking on
+                  the layer.
+                </para>
+              </listitem>
+            </varlistentry>
+          </variablelist>
+          <note>
+            <para>
+              In the case of an animation layer (GIF or MNG), the name of the
+              layer can be used to specify certain parameters: Layer_name
+              (delay in ms) (combination mode), for example Frame-1 (100 ms)
+              (replace). The <guilabel>delay</guilabel>
+              sets the time during which the layer is visible in the
+              animation. The combination mode sets whether you combine the
+              layer with the previous layer or replace it: the two modes are
+              (combine) or (replace).
+            </para>
+          </note>
+        </listitem>
+      </varlistentry>
+      <varlistentry id="gimp-layer-characteristics">
+        <term>Layers characteristics</term>
+        <listitem>
+          <para>
+            Above the layer list, it is possible to specify some properties
+            for the active layers. The active layers are highlighted.
+            The properties are:
+          </para>
+          <variablelist>
+            <varlistentry id="gimp-layer-dialog-paint-mode-menu">
+              <term>Mode</term>
+              <listitem>
+                <anchor id="gimp-layer-mode"/>
+                <para>
+                  The layer mode determines how the layer interacts with the
+                  other layers. From the combo box you can access all the
+                  modes provided by GIMP. The layer modes are fully detailed
+                  in <xref linkend="gimp-concepts-layer-modes"/>.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry id="gimp-layer-dialog-opacity-scale">
+              <term>Opacity</term>
+              <listitem>
+                <anchor id="gimp-layer-opacity"/>
+                <indexterm>
+                  <primary>Transparency</primary>
+                  <secondary>Layer opacity</secondary>
+                </indexterm>
+                <indexterm>
+                  <primary>Opacity</primary>
+                  <secondary>Layers dialog</secondary>
+                </indexterm>
+                <para>
+                  By moving the slider you give more or less opacity to the
+                  layer. With a 0 opacity value, the layer is transparent and
+                  completely invisible. Don't confuse this with a Layer Mask,
+                  which sets the transparency pixel by pixel.
+                </para>
+              </listitem>
+            </varlistentry>
           </variablelist>
         </listitem>
       </varlistentry>
@@ -384,7 +378,7 @@
                     </imageobject>
                   </inlinemediaobject>
                 </guiicon>
-                <phrase>New Layer</phrase>
+                <phrase>Create new layer</phrase>
               </term>
               <listitem>
                 <para>
@@ -409,7 +403,7 @@
                     </imageobject>
                   </inlinemediaobject>
                 </guiicon>
-                <phrase>New Layer Group</phrase>
+                <phrase>Create new layer group</phrase>
               </term>
               <listitem>
                 <para>
@@ -484,12 +478,12 @@
                     </imageobject>
                   </inlinemediaobject>
                 </guiicon>
-                <phrase>Duplicate layer</phrase>
+                <phrase>Duplicate layers</phrase>
               </term>
               <listitem>
                 <para>
-                  Here you can create a copy of the active layer. Name of new
-                  layer is suffixed with a number.
+                  Here you can create a copy of the selected layers. Name of new
+                  layer is suffixed with "copy".
                 </para>
               </listitem>
             </varlistentry>
@@ -534,7 +528,7 @@
                   <itemizedlist>
                     <listitem>
                       <para>
-                        Merge this layer with the first visible layer below it.
+                        Merge these layers with the first visible layer below it.
                       </para>
                     </listitem>
                     <listitem>
@@ -546,7 +540,7 @@
                     <listitem>
                       <para>
                         Pressing <keycap>Ctrl</keycap>: merge all visible layers 
-                        into one normal layer.
+                        into one layer.
                       </para>
                     </listitem>
                     <listitem>
@@ -560,7 +554,47 @@
                 </para>
               </listitem>
             </varlistentry>
-            
+            <varlistentry>
+              <term>
+                <guiicon>
+                  <inlinemediaobject>
+                    <imageobject>
+                      <imagedata format="PNG"
+                        fileref="images/dialogs/layer-mask-icon.png"/>
+                    </imageobject>
+                  </inlinemediaobject>
+                </guiicon>
+                <phrase>Add masks to layers</phrase>
+              </term>
+              <listitem>
+                <!-- TODO FIXME Expand explanation of Add masks to layers -->
+                <para>
+                  Add masks to selected layers.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>
+                <guiicon>
+                  <inlinemediaobject>
+                    <imageobject>
+                      <imagedata format="PNG"
+                        fileref="images/dialogs/stock-vchain-24.png"/>
+                    </imageobject>
+                  </inlinemediaobject>
+                </guiicon>
+                <phrase>Select layers by patterns</phrase>
+              </term>
+              <listitem>
+                <para>
+                  Select layers by patterns and store layer sets.
+                </para>
+                <para>
+                  Allows you to group layers for operations on more than one
+                  layer at a time (for example with the Move tool).
+                </para>
+              </listitem>
+            </varlistentry>
             <varlistentry>
               <term>
                 <guiicon>
@@ -571,10 +605,10 @@
                     </imageobject>
                   </inlinemediaobject>
                 </guiicon>
-                <phrase>Delete layer</phrase>
+                <phrase>Delete layers</phrase>
               </term>
               <listitem>
-                <para>Here you can delete the active layer.</para>
+                <para>Here you can delete the active layers.</para>
               </listitem>
             </varlistentry>
           </variablelist>
@@ -592,8 +626,9 @@
             the main menu.
           </para>
           <para>
-            You will find <emphasis>merging layers functions</emphasis>
-            in the <link linkend="gimp-image-menu">Image menu</link>.
+            You will find <link linkend="gimp-image-merge-layers">
+            <emphasis>merging layers functions</emphasis></link>
+            in the Image main menu.
           </para>
         </listitem>
       </varlistentry>
