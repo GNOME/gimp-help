@@ -41,7 +41,7 @@ Logger = logging.getLogger()
 IMAGE_NODES = ["imagedata", "graphic", "inlinegraphic"]
 
 # Regular expression for image files to be checked (png and jpg files only)
-IMAGEFILE_REGEX = re.compile('[\w.+-]*\.(png|jpg)$')
+IMAGEFILE_REGEX = re.compile('[\w.+-]*\.(png|jpg|svg)$')
 # Regular expression for image files to be skipped
 IGNORE_IMAGE_REGEX = re.compile('callout')
 
