@@ -258,8 +258,11 @@ class Validate(object):
                         print(f"ERROR: vertical tab \\v not allowed in text.", file=self.log)
                     elif text[idx] == "\r":
                         print(f"ERROR: \\r not allowed in text.", file=self.log)
+                    elif text[idx] == "\b":
+                        print(f"ERROR: \\b not allowed in text.", file=self.log)
                     else:
                         print(f"ERROR: Found illegal character in text: {ord(text[idx])}.", file=self.log)
+                    print("Note: this is often caused by not escaping Windows path characters (\\).")
 
             idx += 1
 
