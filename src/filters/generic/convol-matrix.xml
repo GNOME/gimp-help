@@ -173,54 +173,62 @@
         <term>Border</term>
         <listitem>
           <para>
-            When the initial pixel is on a border, a part of kernel is out of
-            image. You have to decide what filter must do:
+            When the initial pixel is on a border, a part of the kernel is
+            outside the image. You have to decide what the filter should do:
           </para>
-          <para>
-            <inlinemediaobject>
+
+          <figure>
+            <title>Border examples</title>
+            <mediaobject>
               <imageobject>
                 <imagedata format="PNG"
                   fileref="images/filters/generic/convolution-milord.png"/>
               </imageobject>
-            </inlinemediaobject>
-            <inlinemediaobject>
+              <caption>
+              <para>
+                Source image
+              </para>
+            </caption>
+            </mediaobject>
+            <mediaobject>
               <imageobject>
                 <imagedata format="PNG"
                   fileref="images/filters/generic/convolution-extend.png"/>
               </imageobject>
-            </inlinemediaobject>
-            <inlinemediaobject>
-              <imageobject>
-                <imagedata format="PNG"
-                  fileref="images/filters/generic/convolution-wrap.png"/>
-              </imageobject>
-            </inlinemediaobject>
-            <inlinemediaobject>
+              <caption>
+                <para>
+                  <guilabel>None</guilabel> border
+                </para>
+              </caption>
+            </mediaobject>
+            <mediaobject>
               <imageobject>
                 <imagedata format="PNG"
                   fileref="images/filters/generic/convolution-crop.png"/>
               </imageobject>
-            </inlinemediaobject>
-          </para>
-          <para>
-            From left: source image, <guilabel>None</guilabel> border,
-            <guilabel>Loop</guilabel> border, <guilabel>Clamp</guilabel> border
-          </para>
+              <caption>
+                <para>
+                  <guilabel>Clamp</guilabel> border
+                </para>
+              </caption>
+            </mediaobject>
+            <mediaobject>
+              <imageobject>
+                <imagedata format="PNG"
+                  fileref="images/filters/generic/convolution-wrap.png"/>
+              </imageobject>
+              <caption>
+                <para>
+                  <guilabel>Loop</guilabel> border
+                </para>
+              </caption>
+            </mediaobject>
+          </figure>
           <variablelist>
             <varlistentry>
               <term><guilabel>None</guilabel></term>
               <listitem>
-                <para>This part of kernel is not taken into account.</para>
-              </listitem>
-            </varlistentry>
-            <varlistentry>
-              <term><guilabel>Loop</guilabel></term>
-              <listitem>
-                <para>
-                  This part of kernel will study pixels of the opposite
-                  border, so pixels disappearing from one side reappear on the
-                  other side.
-                </para>
+                <para>This part of the kernel is not taken into account.</para>
               </listitem>
             </varlistentry>
             <varlistentry>
@@ -228,6 +236,16 @@
               <listitem>
                 <para>
                   Pixels on borders are not modified, but they are cropped.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term><guilabel>Loop</guilabel></term>
+              <listitem>
+                <para>
+                  This part of the kernel will be affected by pixels of the
+                  opposite border, so pixels disappearing from one side
+                  reappear on the other side.
                 </para>
               </listitem>
             </varlistentry>
