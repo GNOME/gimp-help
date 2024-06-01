@@ -137,6 +137,7 @@ OTHER_CSS_FILES = \
 XSL_FILES = \
 	stylesheets/authors.dtd 	\
 	stylesheets/plainhtml.xsl.in	\
+	stylesheets/entities.xml	\
 	stylesheets/languageVocab.xml	\
 	$(shell cd $(srcdir) && $(find_l) stylesheets/ -type f -name '*.xsl')	\
 	gimp-help.doap

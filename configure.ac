@@ -31,13 +31,13 @@ AC_CONFIG_COMMANDS(
     [stylesheets],
     [test "${srcdir:-.}" != "${builddir:-.}" &&
      { test -d stylesheets || mkdir stylesheets; } &&
-     cp -f $srcdir/stylesheets/*.xsl $srcdir/stylesheets/*.dtd $srcdir/stylesheets/languageVocab.xml stylesheets/]
+     cp -f $srcdir/stylesheets/*.xsl $srcdir/stylesheets/*.dtd $srcdir/stylesheets/languageVocab.xml $srcdir/stylesheets/entities.xml stylesheets/]
 )
 # XXX: use this if 'configure' (instead of 'config.status') should do it:
 #AC_CONFIG_COMMANDS_POST([
 #    test "${srcdir:-.}" != "${builddir:-.}" &&
 #    { test -d stylesheets || mkdir stylesheets; } &&
-#    cp -f $srcdir/stylesheets/*.xsl $srcdir/stylesheets/*.dtd $srcdir/stylesheets/languageVocab.xml stylesheets/
+#    cp -f $srcdir/stylesheets/*.xsl $srcdir/stylesheets/*.dtd $srcdir/stylesheets/languageVocab.xml $srcdir/stylesheets/entities.xml stylesheets/
 #])
 
 AM_INIT_AUTOMAKE([1.16 tar-pax dist-bzip2 -Wall -Wno-portability])
