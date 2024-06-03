@@ -143,6 +143,7 @@ msgstr ""
 
 class XMLDocument(object):
     def __init__(self, filename, base_path, app):
+        self.dtd_contents = None
         self.filename = filename
         self.app = app
         self.expand_entities = self.app.options.get('expand_entities')
@@ -322,7 +323,10 @@ class XMLDocument(object):
     def ignoreNode(self, node):
         if self.isFinalNode(node):
             return False
-        if node.name in self.ignored_tags or node.type in ('dtd', 'comment'):
+        if node.type == 'dtd' and self.dtd_contents is None:
+            # We need to parse dtd once to get the declared entities if any
+            return False
+        elif node.name in self.ignored_tags or node.type in ('dtd', 'comment'):
             return True
         return False
 
@@ -650,6 +654,19 @@ class XMLDocument(object):
         tags should be emitted as well.
         """
 
+        if node.type == 'dtd' and self.dtd_contents is None:
+            #node.debugDumpDTD(sys.stderr)
+            if node.children is not None:
+                self.dtd_contents = '[\n' + self.doSerialize(node.children) + ']>'
+            return ''
+        elif node.type == 'entity_decl':
+            # Our parameter entities are not correctly handled. Fix that by
+            # using a hack here to add what we are expecting.
+            # This is called from the dtd node above in doSerialize
+            x = node.serialize('utf-8')
+            # Add the entities parameter
+            return x + '\n%' + node.name + ';\n'
+
         if self.ignoreNode(node):
             return ''
         elif not node.children:
@@ -659,8 +676,6 @@ class XMLDocument(object):
                 return node.serialize('utf-8')
             else:
                 return self.stringForEntity(node)
-        elif node.type == 'entity_decl --> serialize':
-            return node.serialize('utf-8') #'<%s>%s</%s>' % (startTagForNode(node), node.content, node.name)
         elif node.type == 'text':
             nodetext = node.serialize('utf-8')
             return nodetext
@@ -752,7 +767,15 @@ class Main(object):
         tcmsg = self.current_mode.getStringForTranslators()
         outtxt = self.getTranslation(tcmsg)
         self.current_mode.postProcessXmlTranslation(doc.doc, self.options.get('translationlanguage'), outtxt)
-        self.out.write(doc.doc.serialize('utf-8', 1))
+        serialized_doc = doc.doc.serialize('utf-8', 1)
+        # Now we need to hack the results when external parameter entities
+        # are defined, since they are not correctly serialized for our purposes.
+        # Replace the dtd entities with our previously parsed version.
+        if doc.dtd_contents is not None:
+            corrected_doc = re.sub(r'\[.+?\]\>', doc.dtd_contents, serialized_doc, count=1, flags=re.DOTALL)
+        else:
+            corrected_doc = serialized_doc
+        self.out.write(corrected_doc)
 
     def reuse(self, origxml, xmlfile):
         """ Produce a po file from xmlfile pot and using translations from origxml """
