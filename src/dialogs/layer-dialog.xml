@@ -103,9 +103,76 @@
             lowest layer the last visible, the background. Above the list one
             can find characteristics related individually to each layer. Under
             the list one can find management buttons for the layer list. A
-            right-click in a layer thumbnail opens the Layer
+            right-click on a layer thumbnail opens the Layer
             <link linkend="gimp-layer-menu">context menu</link>.
           </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Selecting multiple layers</term>
+        <listitem>
+          <para>
+            <acronym>GIMP</acronym> allows you to select multiple layers and
+            perform actions on them. You can e.g. move them to a different
+            location in the layer stack, scale them, etc.
+            Selecting multiple layers is done by using the mouse and
+            <keycap>Shift</keycap> key, for adding a range of layers, or
+            <keycap>Ctrl</keycap> key, for adding or removing the clicked
+            layer.
+          </para>
+          <para>
+            Be aware that certain actions can only be done on a single layer.
+            If you try to use such an action, e.g. using the paintbrush,
+            a warning message will show up telling you that you can't do that
+            and that you have to select a single layer.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Layer list header</term>
+        <listitem>
+          <para>
+            Directly above the layer list is the header bar. On the left are
+            three icons that show which column is used for visibility, lock,
+            and layer effects. In the middle a text label will tell you how
+            many layers are currently selected if it is more than one.
+            On the right you see a search icon. Clicking in this part opens a
+            search dialog where you can search for layers.
+          </para>
+          <variablelist>
+            <varlistentry>
+              <term>
+                <guiicon>
+                  <inlinemediaobject>
+                    <imageobject>
+                      <imagedata
+                        fileref="images/stock-icons/gimp-tool-zoom.svg" contentwidth="16px"/>
+                    </imageobject>
+                  </inlinemediaobject>
+                </guiicon>
+                <phrase>Search layers and Saved searches</phrase>
+              </term>
+              <listitem>
+                <para>
+                  Searching layers can be useful if you have a lot of layers
+                  in your project.
+                  As soon as you start typing in the search bar, it will start
+                  finding layers that match your search and select them.
+                  Multiple layers will be selected if they all match.
+                </para>
+                <para>
+                  Below the search bar you will see a plus icon. Clicking this
+                  allows you to add the current search as a new named set.
+                  This search, and previously defined ones, will show up below
+                  the search bar.
+                  Clicking one of these saved searches will select all the
+                  layers matching the search term.
+                  Each saved search has an close icon in the right corner,
+                  which can be used to remove that saved search.
+                </para>
+              </listitem>
+            </varlistentry>
+          </variablelist>
         </listitem>
       </varlistentry>
       <varlistentry id="gimp-layer-attributes">
@@ -280,12 +347,171 @@
                 </tip>
               </listitem>
             </varlistentry>
-              <!-- TODO / FIXME Document another column with an icon showing glasses. No tooltip; no idea what it does. cf https://gitlab.gnome.org/GNOME/gimp/-/issues/10701 ? -->
+            <varlistentry id="gimp-layer-effects">
+              <term>
+                <guiicon>
+                  <inlinemediaobject>
+                    <imageobject>
+                      <imagedata
+                        fileref="images/stock-icons/gimp-effects.svg" contentwidth="16px"/>
+                    </imageobject>
+                  </inlinemediaobject>
+                </guiicon>
+                <phrase>Layer Effects</phrase>
+              </term>
+              <listitem>
+                <para>
+                  When this icon is visible, there are Layer Effects present
+                  for this layer. Clicking it will open a dialog where you
+                  will see a list of all effects added to this layer. For
+                  each effect you can change the visibility, the order of the
+                  effects, merge all effects with the layer, or remove them.
+                </para>
+                <para>
+                  Layer Effects are filters that change the layer
+                  non-destructively, that is, they can be added, removed or
+                  changed without changing the layer itself. They instead
+                  add effects on top of the layer.
+                </para>
+                <para>
+                  A lot of the <acronym>GEGL</acronym> filters in the Colors
+                  and Filters menu can be used this way. The layer effects
+                  dialog consists of the following parts:
+                </para>
+                <variablelist>
+                  <varlistentry>
+                    <term>
+                      Layer Effects List
+                    </term>
+                    <listitem>
+                      <para>
+                        At the top there is a list of all layer effects that
+                        have been added to this layer. Note that the effects
+                        are applied on top of the layer starting with the
+                        effect at the bottom of the list.
+                      </para>
+                      <para>
+                        To the left of each effect you can see an eye icon;
+                        which can be clicked to hide or show that specific
+                        effect. Next to that is the Filter effect icon.
+                      </para>
+                    </listitem>
+                  </varlistentry>
+                  <varlistentry>
+                    <term>
+                      Buttons to manage the Layer Effects
+                    </term>
+                    <listitem>
+                      <para>
+                        Below the list of effects you will see a row of
+                        buttons that can be used to manipulate the effects
+                        in the list.
+                      </para>
+                      <itemizedlist>
+                        <listitem>
+                          <para>
+                            <guiicon>
+                              <inlinemediaobject>
+                                <imageobject>
+                                  <imagedata
+                                    fileref="images/stock-icons/gimp-visible.svg" contentwidth="16px"/>
+                                </imageobject>
+                              </inlinemediaobject>
+                            </guiicon>
+                            <emphasis role="bold">Layer Effects Visibility</emphasis>:
+                            This toggle button controls the <quote>visibility</quote>
+                            setting for all the effects of the layer. By default
+                            all effects are visible. Clicking this hides the
+                            effects, allowing you to see the actual pixel
+                            contents of the layer.
+                          </para>
+                        </listitem>
+                        <listitem>
+                          <para>
+                            <guiicon>
+                              <inlinemediaobject>
+                                <imageobject>
+                                  <imagedata
+                                    fileref="images/stock-icons/gtk-edit.svg" contentwidth="16px"/>
+                                </imageobject>
+                              </inlinemediaobject>
+                            </guiicon>
+                            <emphasis role="bold">Edit the selected
+                            filter</emphasis>:
+                            This button allows you to open the dialog of the
+                            selected layer effect to make changes to its
+                            settings. Alternatively you can also double click
+                            on the layer effect in the list to open the dialog.
+                          </para>
+                        </listitem>
+                        <listitem>
+                          <para>
+                            <guiicon>
+                              <inlinemediaobject>
+                                <imageobject>
+                                  <imagedata fileref="images/stock-icons/go-up.svg" contentwidth="16px"/>
+                                </imageobject>
+                              </inlinemediaobject>
+                            </guiicon>
+                            <emphasis role="bold">Raise layer effect</emphasis>:
+                            Here you can move the layer effect up in the list.
+                          </para>
+                        </listitem>
+                        <listitem>
+                          <para>
+                            <guiicon>
+                              <inlinemediaobject>
+                                <imageobject>
+                                  <imagedata fileref="images/stock-icons/go-down.svg" contentwidth="16px"/>
+                                </imageobject>
+                              </inlinemediaobject>
+                            </guiicon>
+                            <emphasis role="bold">Lower layer effect</emphasis>:
+                            Here you can move the layer effect down in the list.
+                          </para>
+                        </listitem>
+                        <listitem>
+                          <para>
+                            <guiicon>
+                              <inlinemediaobject>
+                                <imageobject>
+                                  <imagedata fileref="images/stock-icons/gimp-merge-down.svg" contentwidth="16px"/>
+                                </imageobject>
+                              </inlinemediaobject>
+                            </guiicon>
+                            <emphasis role="bold">Merge all active
+                            filters</emphasis>:
+                            This button lets you merge all active (visible)
+                            layer effects with the contents of the layer. This
+                            removes the layer effects from the layer after the
+                            effects have been applied to the layer.
+                          </para>
+                        </listitem>
+                        <listitem>
+                          <para>
+                            <guiicon>
+                              <inlinemediaobject>
+                                <imageobject>
+                                  <imagedata fileref="images/stock-icons/edit-delete.svg" contentwidth="16px"/>
+                                </imageobject>
+                              </inlinemediaobject>
+                            </guiicon>
+                            <emphasis role="bold">Remove the selected
+                            filter</emphasis>:
+                            This button removes the selected layer effect.
+                          </para>
+                        </listitem>
+                      </itemizedlist>
+                    </listitem>
+                  </varlistentry>
+                </variablelist>
+              </listitem>
+            </varlistentry>
             <varlistentry>
               <term>Layer thumbnail</term>
               <listitem>
                 <para>
-                  The layer content is represented in a thumbnail. Maintaining
+                  The layer content is represented by a thumbnail. Maintaining
                   left-click for a second on this thumbnail makes it larger.
                   The border color of the layer depends on whether the layer is
                   active or inactive.
@@ -578,28 +804,6 @@
                   <inlinemediaobject>
                     <imageobject>
                       <imagedata
-                        fileref="images/stock-icons/gimp-vchain.svg" contentwidth="16px"/>
-                    </imageobject>
-                  </inlinemediaobject>
-                </guiicon>
-                <phrase>Select layers by patterns</phrase>
-              </term>
-              <listitem>
-                <para>
-                  Select layers by patterns and store layer sets.
-                </para>
-                <para>
-                  Allows you to group layers for operations on more than one
-                  layer at a time (for example with the Move tool).
-                </para>
-              </listitem>
-            </varlistentry>
-            <varlistentry>
-              <term>
-                <guiicon>
-                  <inlinemediaobject>
-                    <imageobject>
-                      <imagedata
                         fileref="images/stock-icons/edit-delete.svg" contentwidth="16px"/>
                     </imageobject>
                   </inlinemediaobject>
@@ -636,27 +840,29 @@
         <term>Clicking-and-dragging layers</term>
         <listitem>
           <para>
-            Click and hold on layer thumbnail: it enlarges and you can
-            move it by dragging the mouse.
+            Click and hold on layer thumbnail or layer name: the thumbnail
+            enlarges and you can move it by dragging the mouse. Selecting
+            and moving multiple layers is also possible.
           </para>
           <itemizedlist>
             <listitem>
               <para>
-                So you can put this layer down
+                So you can place this layer or layers
                 <emphasis>somewhere else in the layer list</emphasis>.
               </para>
             </listitem>
             <listitem>
               <para>
                 You can also
-                <emphasis>put the layer down into Toolbox</emphasis>:
+                <emphasis>drop the layer into the Toolbox</emphasis>:
                 a new image is created that contains this layer only.
+                This does not work with multiple selected layers.
               </para>
             </listitem>
             <listitem>
               <para>
                 Finally, you can
-                <emphasis>put the layer down into another image</emphasis>:
+                <emphasis>drop the layer into another image</emphasis>:
                 this layer will be added to the layer list, above existing
                 layers.
               </para>
