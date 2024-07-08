@@ -18,20 +18,46 @@
   </indexterm>
 
   <para>
-    In <acronym>GIMP</acronym>, a layer is not always the same size as the
-    others. This command changes the dimensions of a layer, but it does not
+    In <acronym>GIMP</acronym>, each layer has its own size that can be changed
+    independently of the size of the image.
+    This command changes the dimensions of a layer, but it does not
     <link linkend="gimp-layer-scale">scale</link> its contents.
   </para>
+  <note>
+    <para>
+      By default, painting outside the borders of a layer is ignored. You can,
+      however, enable the <link linkend="gimp-tools-paint-expand-layers">Expand
+      Layers</link> setting in the <link linkend="gimp-tools-paint-options">Paint
+      Tool Options</link>, which will automatically extend the size of
+      the layer when painting near one of its borders up to the size of the
+      canvas.
+    </para>
+  </note>
 
   <sect3>
     <title>Activating the Command</title>
     <para>
-      You can access this command from the main menu through
-      <menuchoice>
-        <guimenu>Layer</guimenu>
-        <guimenuitem>Layer Boundary Size</guimenuitem>
-      </menuchoice>.
+      You can access this command
     </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          From the main menu through
+          <menuchoice>
+            <guimenu>Layer</guimenu>
+            <guimenuitem>Layer Boundary Size…</guimenuitem>
+          </menuchoice>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          From the
+          <link linkend="gimp-layer-dialog">Layers Dialog</link>, you
+          can access it through the <guimenuitem>Layer Boundary Size…</guimenuitem>
+          command of its context menu.
+        </para>
+      </listitem>
+    </itemizedlist>
   </sect3>
 
   <sect3>
@@ -49,6 +75,28 @@
     </figure>
     <variablelist>
       <varlistentry>
+        <term>Template</term>
+        <listitem>
+          <para>
+            This dropdown list allows you to pick a size from one of the
+            available image templates. For more information on templates
+            see <link linkend="gimp-file-new">Create a New Image</link> or
+            the <link linkend="gimp-template-dialog">Templates Dialog</link>.
+          </para>
+          <para>
+            When choosing a template that has a different print resolution
+            (ppi) than your image, two new buttons will appear that ask
+            you how to adjust this.
+          </para>
+          <para>
+            <guibutton>Scale template to … ppi</guibutton> will adjust
+            the template to the ppi of the image; and
+            <guibutton>Scale image to … ppi</guibutton> will adjust
+            the image to the ppi of the template.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
         <term>Layer Size</term>
         <listitem>
           <variablelist>
@@ -63,6 +111,11 @@
                   maintained. If you break the chain by clicking on it, you
                   can set the dimensions independently of each other.
                 </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Unit of Measurement</term>
+              <listitem>
                 <para>
                   The default unit of measurement is pixels. You can change
                   this by using the drop-down menu. For instance, you might
@@ -86,20 +139,36 @@
             </guilabel>, the frame of the resized layer appears in the
             preview.
           </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>A Preview of the layer inside the frame of the canvas</term>
+        <listitem>
           <para>
-            Below the coordinates, a preview represents the layer with
+            Besides the layer dimensions, a preview represents the layer with
             the frame of the resized layer. You can move this frame using the
-            X and Y offsets and also dragging the cross-shaped moving pointer
-            that appears when the mouse pointer overflies the layer area.
+            X and Y offsets and also dragging the cross-shaped cursor
+            that appears when the mouse pointer mover over the layer area.
           </para>
         </listitem>
       </varlistentry>
       <varlistentry>
-        <term>The Center button</term>
+        <term>Center</term>
         <listitem>
           <para>
-            This button allows you to place the frame at the center of the
-            layer.
+            The <guibutton>Center</guibutton> button allows you to place the
+            frame at the center of the layer.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Fill With</term>
+        <listitem>
+          <para>
+            This allows you to select how to fill the background of the layer
+            when you increase its size. The same options are available here
+            as in the <link linkend="gimp-file-new">Create New Image</link>
+            Dialog.
           </para>
         </listitem>
       </varlistentry>
@@ -110,29 +179,27 @@
     <title>Resizing Layer</title>
     <variablelist>
       <varlistentry>
-        <term>Resizing a layer larger</term>
+        <term>Increasing the size of a layer</term>
         <listitem>
           <para>
-            You can't resize a layer to bigger dimensions than that of
-            the image.
+            You can't make the size of a layer larger than the image canvas.
           </para>
           <para>
-            If the layer is smaller than the image, you can enlarge
-            <guilabel>Width</guilabel> and/or <guilabel>Height
-            </guilabel>. There is no good reason to do that, except if you
-            want to enlarge the layer to the size of the image; but, in that
-            case, it's better to use
+            If the layer is smaller than the image, you can enlarge the
+            <guilabel>Width</guilabel> and/or <guilabel>Height</guilabel>.
+            If you want to enlarge the layer to the size of the image, it is
+            easier to use
             <link linkend="gimp-layer-resize-to-image">Layers to Image Size</link>.
           </para>
         </listitem>
       </varlistentry>
 
       <varlistentry>
-        <term>Resizing a layer smaller</term>
+        <term>Reducing the size of a layer</term>
         <listitem>
           <para>
-            You can resize the layer to a smaller dimension to eliminate
-            unwanted parts.
+            If you want to remove unused parts of a layer, you can reduce the
+            size.
           </para>
 
           <figure>
@@ -200,8 +267,8 @@
           </figure>
 
           <para>
-            If the image has only one layer, it's better to use the
-            <link linkend="gimp-tool-crop">Crop tool</link>.
+            If the image has only one layer, it can be more convenient to use
+            the <link linkend="gimp-tool-crop">Crop tool</link>.
           </para>
 
         </listitem>
