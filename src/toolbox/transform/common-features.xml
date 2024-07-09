@@ -244,8 +244,10 @@
         <term>Interpolation</term>
         <listitem>
           <para>
-            This drop-down list lets you choose the method and thus the
-            quality of the transformation:
+            This drop-down list lets you choose the method of the
+            transformation. The chosen method influences the speed and quality,
+            though it also depends on the image and the type of transformation
+            what will work best in each case.
           </para>
           <variablelist>
             <varlistentry>
@@ -278,20 +280,29 @@
                 <para>
                   The color of each pixel is computed as the average color of
                   the eight closest pixels in the original image. This usually
-                  gives a good result, but it naturally takes more time.
+                  gives a good result, although there are some cases where it
+                  can actually look worse than Linear and it is also slower.
                   Sometimes this method is called <quote>Bicubic</quote>.
                 </para>
               </listitem>
             </varlistentry>
             <varlistentry>
-              <term>LoHalo, NoHalo</term>
+              <term>LoHalo</term>
+              <term>NoHalo</term>
               <listitem>
                 <para>
-                  Halo is an artifact that can be created by interpolation. It 
-                  remembers the halo you can get when using <xref 
-                  linkend="gimp-filter-unsharp-mask"/>. Here is a note from 
-                  Nicolas Robidoux, the creator of the new quality samplers for 
-                  GEGL and GIMP:
+                  These methods perform a high quality interpolation. Use the
+                  <guilabel>NoHalo</guilabel> method when you downscale an image
+                  to less than a half of the original size and the
+                  <guilabel>LoHalo</guilabel> method when you do not reduce the
+                  size much (rotate, shear).
+                </para>
+                <para>
+                  A <quote>Halo</quote> is an artifact that can be created by
+                  interpolation. It reminds of the halo you can get when using
+                  <xref linkend="gimp-filter-unsharp-mask"/>.
+                  Here is a note from Nicolas Robidoux, the creator of these
+                  quality samplers for GEGL and GIMP:
                 </para>
                 <literallayout>
                   "If haloing is not an issue with your content and use case, 
@@ -328,11 +339,13 @@
               </listitem>
             </varlistentry>
           </variablelist>
-          <para>
-            You can set the default interpolation method in the
-            <link linkend="gimp-prefs-tool-options">Tools Options
-            Preferences</link> dialog.
-          </para>
+          <note>
+            <para>
+              You can set the default interpolation method in the
+              <link linkend="gimp-prefs-tool-options">Tools Options
+              Preferences</link> dialog.
+            </para>
+          </note>
         </listitem>
       </varlistentry>
       
