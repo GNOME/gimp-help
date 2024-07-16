@@ -61,7 +61,7 @@
       </listitem>
       <listitem>
         <para>
-          from the Tab menu in any dockable dialog by clicking on
+          From the Tab menu in any dockable dialog by clicking on
           <guiicon>
             <inlinemediaobject>
               <imageobject>
@@ -90,140 +90,225 @@
   </sect3>
 
   <sect3 id="gimp-path-dialog-using">
-    <title>Using the Paths dialog</title>
-    <para>
-      Each path belongs to one image: paths are components of images just
-      like layers. The Paths dialog shows you a list of all paths belonging
-      to the currently active image: switching images causes the dialog to
-      show a different list of paths. In multi-window mode, you can show the
-      name of the active image at the top of the dock by choosing
-      <quote>Show Image Selection</quote> from the Tab menu.
-    </para>
-    <para>
-      If you are familiar with the Layers dialog, you have a head start,
-      because the Paths dialog is in several ways similar.
-    </para>
-    <para>
-      At the top, there are two <quote>Lock</quote> icons:
-    </para>
+    <title>Using the Paths Dialog</title>
     <variablelist>
       <varlistentry>
-        <term>
-          Lock Path
-        </term>
+        <term>Overview</term>
         <listitem>
-          <anchor id="gimp-path-lock-strokes"/>
           <para>
-            A <quote>path</quote> icon tells us whether editing the current
-            path is locked (disabled) or not. Clicking the icon toggles between
-            enabled and disabled.
+            This dialog shows a list of all paths present in the current image.
+            For each path you can set their attributes, as explained below, and
+            perform certain actions using the
+            <link linkend="gimp-path-dialog-buttons">buttons</link> at the
+            bottom of the dialog, or using the
+            <link linkend="gimp-paths-menu">context menu</link>.
           </para>
-          <note>
-            <para>
-              Until <acronym>GIMP</acronym> 2.10.32 this was called
-              <guilabel>Lock Path Strokes</guilabel>. That name was considered
-              ambiguous, because the term strokes is also used for stroking
-              lines along a path, which this option does not change.
-            </para>
-          </note>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>
-          Lock Path Position
-        </term>
-        <listitem>
-          <anchor id="gimp-path-lock-position"/>
           <para>
-            A <quote>cross with arrows</quote> icon tells us whether the current
-            path position is locked (disabled) or not. When the path position
-            is locked, the path can't be moved. Clicking the icon toggles
-            between enabled and disabled.
+            In multi-window mode, you can show the name of the active image at
+            the top of the dock by choosing <quote>Show Image Selection</quote>
+            from the Tab menu. This allows you to see at a glance to which
+            image the paths you are working on belong.
           </para>
         </listitem>
       </varlistentry>
-    </variablelist>
-    <para>
-      The Paths dialog itself shows a list of all paths that exist in the
-      image, with four items for each path:
-    </para>
-    <variablelist>
-      <mediaobject>
-        <imageobject>
-          <imagedata fileref="images/dialogs/path-list-entry.png" format="PNG"/>
-        </imageobject>
-      </mediaobject>
+
       <varlistentry>
-        <term>
-          <guiicon>
-            <inlinemediaobject>
-              <imageobject>
-                <imagedata fileref="images/stock-icons/gimp-visible.svg" contentwidth="16px"/>
-              </imageobject>
-            </inlinemediaobject>
-          </guiicon>
-          <phrase condition="tag-is-required">Path visibility</phrase>
-        </term>
+        <term>Selecting multiple paths</term>
         <listitem>
-          <anchor id="gimp-path-visible"/>
           <para>
-            An <quote>open eye</quote> icon if the path is visible, or a
-            blank space if it is not. <quote>Visible</quote> means that a
-            trace of the path is drawn on the image display. The path is not
-            actually shown in the image pixel data unless it has been stroked
-            or otherwise rendered.  Clicking in the eye-symbol-space
-            toggles the visibility of the path.
-          </para>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>
-          <guiicon>
-            <inlinemediaobject>
-              <imageobject>
-                <imagedata fileref="images/stock-icons/gimp-vchain.svg" contentwidth="16px"/>
-              </imageobject>
-            </inlinemediaobject>
-          </guiicon>
-          <phrase condition="tag-is-required">Chain paths</phrase>
-        </term>
-        <listitem>
-          <anchor id="gimp-path-linked"/>
-          <para>
-            A <quote>chain</quote> symbol is shown to the right of the
-            eye-symbol-space if the path is transform-locked, or a blank
-            space if it is not. <quote>Transform-locked</quote> means that
-            it forms
-            part of a set of elements (layers, channels, etc) that are
-            all affected in the same way by transformations (scaling,
-            rotation, etc) applied to any one of them.  Clicking in the
-            chain-symbol-space toggles the transform-lock status of the
+            <acronym>GIMP</acronym> allows you to select multiple paths
+            and perform actions on them, like stroking or filling.
+            Selecting multiple paths is done by using the mouse and
+            <keycap>Shift</keycap> key, for adding a range of paths, or
+            <keycap>Ctrl</keycap> key, for adding or removing the clicked
             path.
           </para>
         </listitem>
       </varlistentry>
+
       <varlistentry>
-        <term>Preview image</term>
+        <term>Path list header</term>
         <listitem>
           <para>
-            A small preview-icon showing a sketch of the path. If you click
-            on the icon and drag it into an image, this will create a copy of
-            the path in that image.
+            Directly above the list of paths is the header bar. On
+            the left you see the icons that identify the visibility and lock
+            columns. In the middle a text label will tell you how many paths
+            are currently selected if it is more than one.
+          </para>
+          <para>
+            On the right you see the search entry. Clicking here will allow you
+            to search for and select one or more paths. You will also be
+            able to save this search for future use.
+          </para>
+          <para>
+            For more details about searching see
+            <link linkend="gimp-layer-search">Search layers and Saved searches</link>.
           </para>
         </listitem>
       </varlistentry>
-      <varlistentry>
-        <term>Path Name</term>
+
+      <varlistentry id="gimp-path-dialog-using-attributes">
+        <term>
+          <!-- Old anchor which is probably not used anymore -->
+          <anchor id="gimp-path-linked"/>
+          <phrase>Path attributes</phrase>
+        </term>
         <listitem>
           <para>
-            The name of the path, which must be unique within the image.
-            Double-clicking on the name will allow you to edit it. If the
-            name you create already exists, a number will be appended (e.g.,
-            <quote>#1</quote>) to make it unique.
+            Every path is shown in the list with its own attributes, which are
+            very similar to the <link linkend="gimp-layer-attributes">layer
+            attributes</link>:
           </para>
+
+          <variablelist id="path-attributes">
+
+            <varlistentry id="gimp-path-visible">
+              <term>
+                <guiicon>
+                  <inlinemediaobject>
+                    <imageobject>
+                      <imagedata fileref="images/stock-icons/gimp-visible.svg" contentwidth="16px"/>
+                    </imageobject>
+                  </inlinemediaobject>
+                </guiicon>
+                <phrase condition="tag-is-required">Path visibility</phrase>
+              </term>
+              <listitem>
+                <para>
+                  By default, paths are not visible. This icon is shown when
+                  the path is visible. Clicking this toggles between visible
+                  and invisible.
+                  When a path is <quote>visible</quote>, a border is drawn
+                  over each path segment on the image display. This does not
+                  change the actual pixel data of the image.
+                  <keycap>Shift</keycap>-clicking on the icon causes
+                  all <emphasis>other</emphasis> paths to be hidden.
+                </para>
+              </listitem>
+            </varlistentry>
+
+            <varlistentry id="gimp-path-dialog-using-locks">
+              <term>
+                <guiicon>
+                  <inlinemediaobject>
+                    <imageobject>
+                      <imagedata fileref="images/stock-icons/gimp-lock.svg" contentwidth="16px"/>
+                    </imageobject>
+                  </inlinemediaobject>
+                </guiicon>
+                <phrase>Path lock attributes</phrase>
+              </term>
+              <listitem>
+                <para>
+                  Each path has lock attributes. If one of its attributes is set,
+                  the respective lock icon will show up in front of the thumbnail.
+                </para>
+                <para>
+                  When multiple attributes are set, a double lock icon will
+                  show here. Clicking in this column allows you to change
+                  these attributes.
+                </para>
+
+                <variablelist>
+                  <varlistentry id="gimp-path-lock-strokes">
+                    <term>
+                      <guiicon>
+                        <inlinemediaobject>
+                          <imageobject>
+                            <imagedata
+                              fileref="images/stock-icons/gimp-lock-content.svg" contentwidth="16px"/>
+                          </imageobject>
+                        </inlinemediaobject>
+                      </guiicon>
+                      <phrase>Lock path</phrase>
+                    </term>
+                    <listitem>
+                      <para>
+                        This icon shows when <quote>lock path</quote> is
+                        enabled for the current path. When this is enabled,
+                        the path is locked for any action that changes it,
+                        meaning there will be no changes done to this path.
+                        Clicking the icon toggles between enabled and disabled.
+                      </para>
+                    </listitem>
+                  </varlistentry>
+
+                  <varlistentry id="gimp-path-lock-position">
+                    <term>
+                      <guiicon>
+                        <inlinemediaobject>
+                          <imageobject>
+                            <imagedata
+                              fileref="images/stock-icons/gimp-lock-position.svg" contentwidth="16px"/>
+                          </imageobject>
+                        </inlinemediaobject>
+                      </guiicon>
+                      <phrase>Lock path position</phrase>
+                    </term>
+                    <listitem>
+                      <para>
+                        This icon shows when <quote>lock path position</quote>
+                        is enabled for the current path. When this is enabled,
+                        the path is locked for any action that changes its
+                        position.
+                        Clicking the icon toggles between enabled and disabled.
+                      </para>
+                    </listitem>
+                  </varlistentry>
+
+                  <varlistentry id="gimp-path-lock-visibility">
+                    <term>
+                      <guiicon>
+                        <inlinemediaobject>
+                          <imageobject>
+                            <imagedata
+                              fileref="images/stock-icons/gimp-lock-visibility.svg" contentwidth="16px"/>
+                          </imageobject>
+                        </inlinemediaobject>
+                      </guiicon>
+                      <phrase>Lock visibility</phrase>
+                    </term>
+                    <listitem>
+                      <para>
+                        This toggle button controls the <quote>Lock</quote>
+                        setting for the visibility of the path. If this is
+                        enabled, the path visibility cannot be changed until
+                        you disable the lock.
+                      </para>
+                    </listitem>
+                  </varlistentry>
+                </variablelist>
+              </listitem>
+            </varlistentry>
+
+            <varlistentry>
+              <term>Thumbnail</term>
+              <listitem>
+                <para>
+                  A small preview icon represents the effect of the path. This
+                  preview can be enlarged by holding down the left mouse button
+                  on it.
+                  If you drag the thumbnail into the Layers dialog, it will
+                  create a new layer with a rasterized copy of the path.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Path Name</term>
+              <listitem>
+                <para>
+                  The name of the path, which must be unique within the image.
+                  Double-clicking on the name will allow you to edit it. If the
+                  name you create already exists, a number will be appended (e.g.,
+                  <quote>#1</quote>) to make it unique.
+                </para>
+              </listitem>
+            </varlistentry>
+          </variablelist>
         </listitem>
       </varlistentry>
     </variablelist>
+
     <para>
       If the list is non-empty, at any given moment one of the members is the
       image's <emphasis>active path</emphasis>,
@@ -234,16 +319,16 @@
     </para>
     <para>
       Right-clicking on any entry in the list brings up the
-      <link linkend="gimp-concepts-paths-menu">Paths Menu</link>.
+      <link linkend="gimp-paths-menu">Paths Menu</link>.
       You can also access the Paths Menu from the dialog Tab menu.
     </para>
   </sect3>
 
   <sect3 id="gimp-path-dialog-buttons">
-    <title>Buttons</title>
+    <title>Path Buttons</title>
     <para>
       The buttons at the bottom of the Paths dialog all correspond to entries
-      in the Paths menu (accessed by right-clicking on a path list entry),
+      in the Paths context menu (accessed by right-clicking on a path list entry),
       but some of them have extra options obtainable by holding down modifier
       keys while you press the button.
     </para>
@@ -259,20 +344,20 @@
         </listitem>
       </varlistentry>
       <varlistentry>
-        <term>Raise Path</term>
+        <term>Raise Paths</term>
         <listitem>
           <para>
-            See <link linkend="gimp-path-raise">Raise Path</link>. Holding down
-            <keycap>Shift</keycap> moves the path to the top of the list.
+            See <link linkend="gimp-path-raise">Raise Paths</link>. Holding down
+            <keycap>Shift</keycap> moves the selected paths to the top of the list.
           </para>
         </listitem>
       </varlistentry>
       <varlistentry>
-        <term>Lower Path</term>
+        <term>Lower Paths</term>
         <listitem>
           <para>
-            See <link linkend="gimp-path-lower">Lower Path</link>. Holding down
-            <keycap>Shift</keycap> moves the path to the bottom of the list.
+            See <link linkend="gimp-path-lower">Lower Paths</link>. Holding down
+            <keycap>Shift</keycap> moves the selected paths to the bottom of the list.
           </para>
         </listitem>
       </varlistentry>
@@ -328,9 +413,10 @@
         <term>Selection to Path</term>
         <listitem>
           <para>
-            Holding down <keycap>Shift</keycap> brings up the
-            <guilabel>Advanced Options</guilabel> dialog, which
-            probably is only useful to GIMP developers.
+            <keycap>Shift</keycap>-clicking this button brings up the
+            <link linkend="advanced-settings-for-selection-to-path">Advanced
+            Settings</link> dialog that allows you to adjust how the selection
+            is converted to a path.
           </para>
         </listitem>
       </varlistentry>
@@ -339,24 +425,24 @@
         <listitem>
           <para>
             See <link linkend="gimp-path-stroke">Stroke Paths</link>. Holding
-            down <keycap>Shift</keycap> strokes the path based on the
+            down <keycap>Shift</keycap> strokes the paths based on the
             last used values without opening the Stroke Paths dialog.
           </para>
         </listitem>
       </varlistentry>
       <varlistentry>
-        <term>Delete Path</term>
+        <term>Delete Paths</term>
         <listitem>
           <para>
-            <guilabel>Delete Path</guilabel> deletes the currently selected
-            path.
+            <guilabel>Delete Paths</guilabel> deletes the currently selected
+            paths.
           </para>
         </listitem>
       </varlistentry>
     </variablelist>
   </sect3>
 
-  <sect3 id="gimp-concepts-paths-menu">
+  <sect3 id="gimp-paths-menu">
     <title>The <quote>Paths</quote> context menu</title>
     <figure>
       <title>The <quote>Paths</quote> context menu</title>
@@ -392,20 +478,20 @@
           <anchor id="gimp-path-edit"/>
           <para>
             <guilabel>Edit Path Attributes</guilabel> brings up a small
-            dialog that allows you to change the name of the path.  You
+            dialog that allows you to change the name of the path. You
             can also do this by double-clicking on the name in the list in
             the Paths dialog.
           </para>
         </listitem>
       </varlistentry>
       <varlistentry>
-        <term>Color Tag</term>
+        <term>Color Tags</term>
         <listitem>
           <anchor id="gimp-path-color-tag"/>
           <para>
-            <guilabel>Color Tag</guilabel> brings up a sub menu, similar to
+            <guilabel>Color Tags</guilabel> brings up a sub menu, similar to
             the one in the Layers Dialog, that allows you to select a color
-            tag for the selected path.
+            tag for the selected paths.
           </para>
         </listitem>
       </varlistentry>
@@ -416,56 +502,60 @@
           <para>
             <guilabel>New Path</guilabel>creates a new path, adds it to
             the list in the Paths dialog, and makes it the active path
-            for the image.  It brings up a dialog that allows you to
-            give a name to the path.  The new path is created with no
+            for the image. It brings up a dialog that allows you to
+            give a name to the path. The new path is created with no
             anchor points, so you will need to use the Path tool to give
             it some before you can use it for anything.
           </para>
         </listitem>
       </varlistentry>
       <varlistentry>
-        <term>Raise Path</term>
+        <term>Raise Paths</term>
         <listitem>
           <anchor id="gimp-path-raise"/>
           <para>
-            <guilabel>Raise Path</guilabel> moves the path one slot higher
-            in the list in the Paths dialog.  The position of a path in
-            the list has no functional significance, so this is simply a
-            convenience to help you keep things organized.
+            <guilabel>Raise Paths</guilabel> moves the selected paths one slot
+            higher in the list in the Paths dialog.
+          </para>
+          <para>
+            The position of a path in the list has no functional significance,
+            so this is simply a convenience to help you keep things organized.
           </para>
         </listitem>
       </varlistentry>
       <varlistentry>
-        <term>Lower Path</term>
+        <term>Lower Paths</term>
         <listitem>
           <anchor id="gimp-path-lower"/>
           <para>
-            <guilabel>Lower Path</guilabel>moves the path one slot lower
-            in the list in the Paths dialog.  The position of a path in
-            the list has no functional significance, so this is simply a
-            convenience to help you keep things organized.
+            <guilabel>Lower Paths</guilabel>moves the selected paths one slot lower
+            in the list in the Paths dialog.
+          </para>
+          <para>
+            The position of a path in the list has no functional significance,
+            so this is simply a convenience to help you keep things organized.
           </para>
         </listitem>
       </varlistentry>
       <varlistentry>
-        <term>Duplicate Path</term>
+        <term>Duplicate Paths</term>
         <listitem>
           <anchor id="gimp-path-duplicate"/>
           <para>
-            <guilabel>Duplicate Path</guilabel> creates a copy of the active path,
-            assigns it a unique name, adds it to the list in the Paths dialog,
-            and makes it the active path for the image.  The copy will
-            be visible only if the original path was visible.
+            <guilabel>Duplicate Paths</guilabel> creates a copy of the selected
+            paths, assigns unique names, adds it to the list in the Paths dialog,
+            and makes it the selected paths for the image. The copies will
+            be visible only if the original paths were visible.
           </para>
         </listitem>
       </varlistentry>
       <varlistentry>
-        <term>Delete Path</term>
+        <term>Delete Paths</term>
         <listitem>
           <anchor id="gimp-path-delete"/>
           <para>
-            <guilabel>Delete Path</guilabel> deletes the current selected
-            path.
+            <guilabel>Delete Paths</guilabel> deletes the currently selected
+            paths.
           </para>
         </listitem>
       </varlistentry>
@@ -566,14 +656,12 @@
                 </imageobject>
               </inlinemediaobject>
             </guiicon>
-            at the bottom of the Paths dialog.  This brings up the Advanced
-            Options dialog, which allows you to set 20 different options
-            and variables, all with cryptic names.  The Advanced Options
-            are really intended for developers only, and help with them
-            goes beyond the scope of this documentation.  Generally
-            speaking, <guilabel>Selection to Path</guilabel> will do
-            what you expect it to, and you don't need to worry about how
-            it is done (unless you want to).
+            at the bottom of the Paths dialog. This brings up the
+            <link linkend="advanced-settings-for-selection-to-path">Advanced
+            Settings</link> dialog, which allows you to set a lot of different
+            options. In general, <guilabel>Selection to Path</guilabel> will do
+            what you expect it to, without the need to adjust the advanced
+            settings.
           </para>
         </listitem>
       </varlistentry>
@@ -602,16 +690,17 @@
             </listitem>
             <listitem>
               <para>
-                From the <guilabel>Fill Path</guilabel> button in the
+                From the <guilabel>Fill Paths</guilabel> button in the
                 Tool Options for the Paths tool.
               </para>
             </listitem>
           </itemizedlist>
           <para>
-            <guilabel>Fill Path</guilabel> fills all areas delimited by the path with
-            the current foreground color or currently selected pattern.
+            <guilabel>Fill Paths</guilabel> fills all areas delimited by the
+            selected paths with the current foreground color or currently
+            selected pattern.
             See the section about
-            <link linkend="gimp-path-fill">Fill Path</link> for more
+            <link linkend="gimp-path-fill">Fill Paths</link> for more
             information.
           </para>
         </listitem>
@@ -655,16 +744,16 @@
             </listitem>
             <listitem>
               <para>
-                From the <guilabel>Stroke Path</guilabel> button in the
+                From the <guilabel>Stroke Paths</guilabel> button in the
                 Tool Options for the Paths tool.
               </para>
             </listitem>
           </itemizedlist>
           <para>
-            <guilabel>Stroke Path</guilabel> renders the active path on the active
-            layer of the image, permitting a wide variety of line styles and
-            stroking options. See the sections about
-            <link linkend="gimp-path-stroke">Stroke Path</link> and
+            <guilabel>Stroke Paths</guilabel> renders the selected paths on the
+            active layer of the image, permitting a wide variety of line styles
+            and stroking options. See the sections about
+            <link linkend="gimp-path-stroke">Stroke Paths</link> and
             <link linkend="gimp-selection-stroke">Stroking</link> for more
             information.
           </para>
@@ -675,12 +764,12 @@
         <listitem>
           <anchor id="gimp-path-copy"/>
           <para>
-            <guilabel>Copy Paths</guilabel> copies the active path to the
+            <guilabel>Copy Paths</guilabel> copies the selected paths to the
             Paths Clipboard, enabling you to paste it into a different image.
           </para>
           <tip>
             <para>
-              You can also copy and paste a path by dragging its icon
+              You can also copy and paste paths by dragging their icon
               from the Paths dialog into the target image's display.
             </para>
           </tip>
@@ -716,7 +805,6 @@
             path to any GIMP image using the <guilabel>Import
             Path</guilabel> command. The format used for saving paths is
             SVG: this means that vector-graphics programs such as
-            <application>Sodipodi</application> or
             <application>Inkscape</application> will also be able to
             import the paths you save. See the
             <link linkend="gimp-concepts-paths">Paths</link> section for more
