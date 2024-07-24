@@ -14,8 +14,8 @@
    <xsl:output method="xml"
             encoding="utf-8" 
             indent="yes"
-            doctype-public="-//OASIS//DTD DocBook XML V4.3//EN"
-            doctype-system="http://www.docbook.org/xml/4.3/docbookx.dtd"
+            doctype-public="-//OASIS//DTD DocBook XML V4.5//EN"
+            doctype-system="http://www.docbook.org/xml/4.5/docbookx.dtd"
             />
 
   <xsl:template match="k:root">
