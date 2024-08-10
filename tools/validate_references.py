@@ -41,7 +41,7 @@ Logger = logging.getLogger()
 IMAGE_NODES = ["imagedata", "graphic", "inlinegraphic"]
 
 # Regular expression for image files to be checked (png and jpg files only)
-IMAGEFILE_REGEX = re.compile('[\w.+-]*\.(png|jpg|svg)$')
+IMAGEFILE_REGEX = re.compile(r'[\w.+-]*\.(png|jpg|svg)$')
 # Regular expression for image files to be skipped
 IGNORE_IMAGE_REGEX = re.compile('callout')
 
@@ -290,7 +290,7 @@ class XMLHandler(xml.sax.handler.ContentHandler):
 
 
 def main():
-    """The main program (hmm, what did you expect?).
+    r"""The main program (hmm, what did you expect?).
 
        The algorithm for validating image files and references is
        very simple:
