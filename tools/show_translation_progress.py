@@ -83,6 +83,34 @@ class GIMPHelpHeaderParser(object):
                 pass
 
 
+class ExceptionListReader(object):
+    """Reads a list of exceptions from a file"""
+
+    def __init__(self, filepath):
+        assert filepath != ""
+        self.filepath = filepath
+        self.exception_list = []
+
+    def read_list(self, be_verbose=None):
+        h_file = open(self.filepath, "r")
+        if be_verbose:
+            print("Exceptions:")
+
+        for line in h_file.readlines():
+            try:
+                str = line.rstrip()
+                if str in self.exception_list:
+                    print(f"Duplicate exception entry found: '{str}'.")
+                else:
+                    self.exception_list.append(str)
+                if be_verbose:
+                    print(f"Ignoring: '{str}'.")
+            except AttributeError:
+                pass
+
+        return self.exception_list
+
+
 class Statistics(object):
     """Creates statistics output."""
 
@@ -96,6 +124,19 @@ class Statistics(object):
         if (self.plugin_ids_path is not None):
             self.hp.set_filepath(self.plugin_ids_path, self.hp.pluginid)
             self.hp.parse(be_verbose)
+
+        ignorelist = os.path.join(helproot, 'tools', 'ignore-ids.txt')
+        ignore_list = ExceptionListReader(ignorelist)
+        self.ignore_ids = ignore_list.read_list()
+        if self.ignore_ids:
+            for id in self.ignore_ids:
+                if not id in self.hp.ids:
+                    print(f"Ignore id not found in list of known help ids: '{id}'.")
+                else:
+                    self.hp.ids.remove(id)
+                    if be_verbose:
+                        print(f"Ignoring id '{id}'")
+
         self.totals = len(self.hp.ids)
         self.docs = self.getDocuments(buildroot)
         self.statistics = self._generateStatistics(print_missing)
