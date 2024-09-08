@@ -36,5 +36,5 @@ for prog in $programs; do
     type $prog >/dev/null 2>&1 || die 69 "Missing program: $prog"
 done
 
-# We consider every define that ends in _PROC as a plug-in id definition
-grep -Rh '^#define[[:space:]].*[A-Z_].*_PROC[[:space:]].*\"[a-z_].*\"' $1 >$2
+# We consider every define that has _PROC in it as a plug-in id definition
+grep -Rh '^#define[[:space:]].*[A-Z_0-9].*_PROC[A-Z_0-9]*[[:space:]].*\"[a-z_].*\"' $1 >$2
