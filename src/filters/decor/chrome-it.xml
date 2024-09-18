@@ -38,15 +38,15 @@
       </mediaobject>
     </figure>
     <para>
-      This filter provides a state of the art chrome effect. The source image
-      must be an image in grayscale mode, containing a single layer without
-      alpha channel. This layer is used as mask (<quote>stencil</quote>) for
+      This filter provides a chrome effect. The source image must be an image
+      containing a single layer. This layer is used as mask (<quote>stencil</quote>) for
       the chrome effect.
     </para>
     <para>
       The filter creates a new image with the chrome effect applied to the
       source image or, if a selection exists, to the selection of the source
-      image (a nice background is added too).
+      image (a nice background is added too). If no environment map image is
+      specified, a copy of the source image will be used.
     </para>
   </sect3>
 
@@ -60,12 +60,6 @@
         <guimenuitem>Stencil Chrome…</guimenuitem>
       </menuchoice>.
     </para>
-    <tip>
-      <para>
-        If this command remains disabled although the image is in grayscale
-        mode, check for an Alpha channel and delete it.
-      </para>
-    </tip>
   </sect3>
 
   <sect3>
@@ -114,8 +108,12 @@
         <listitem>
           <para>
             The environment map is an image that is added as some kind of
-            <quote>noise</quote> to the source. The effect is best to see if
-            you use a simple map with some obvious shapes:
+            <quote>noise</quote> to the source. If no image is selected here,
+            the source image will be used.
+          </para>
+          <para>
+            The effect is best to see if you use a simple map with some obvious
+            shapes:
           </para>
           <mediaobject>
             <imageobject>
@@ -127,9 +125,8 @@
             </caption>
           </mediaobject>
           <para>
-            The environment map must be an image in grayscale mode too. Size
-            doesn't matter, the environment map is scaled to the size of the
-            source image.
+            The size of the environment map image doesn't matter, it is scaled
+            to the size of the source image.
           </para>
         </listitem>
       </varlistentry>
