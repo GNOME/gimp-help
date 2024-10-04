@@ -15,17 +15,29 @@ build-image:
   stage: prepare
   variables:
     GIT_STRATEGY: none
+    LIBXML2: libxml2-2.13.4
   cache: {}
   image:
     name: gcr.io/kaniko-project/executor:debug
     entrypoint: [""]
+  artifacts:
+    expire_in: 1 day
+    when: always
+    paths:
+    - _libxml2build/meson-logs
   script:
     - mkdir -p /kaniko/.docker
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
     - echo "FROM debian:unstable" > Dockerfile
     - echo "RUN apt-get update" >> Dockerfile
     - echo "RUN apt-get install -y --no-install-recommends \\" >> Dockerfile
-    - echo "automake build-essential docbook-website docbook-xml docbook-xsl fonts-noto-cjk fonts-noto-core gettext git intltool librsvg2-2 librsvg2-bin pkg-config pngcrush python3 python3-libxml2 python3-polib xsltproc libxml2-utils" >> Dockerfile
+    - echo "automake build-essential docbook-website docbook-xml docbook-xsl fonts-noto-cjk fonts-noto-core gettext git intltool librsvg2-2 librsvg2-bin pkg-config pngcrush python3 python3-libxml2 python3-polib xsltproc libxml2-utils meson tar wget python3-dev" >> Dockerfile
+    # Let's see if we can figure out how to install an updated libxml2
+    ##- echo "RUN wget -P/builds/GNOME/gimp-help https://download.gnome.org/sources/libxml2/2.13/$LIBXML2.tar.xz && ls && \\" >> Dockerfile
+    - echo "RUN wget https://download.gnome.org/sources/libxml2/2.13/$LIBXML2.tar.xz && ls && \\" >> Dockerfile
+    - echo "tar -xf $LIBXML2.tar.xz && ls && which python3 && ls /usr/lib/x86_64-linux-gnu/pkgconfig" >> Dockerfile
+    - echo "RUN cd /builds/GNOME/gimp-help && pwd && ls && mkdir _libxml2build && cd /$LIBXML2 && \\" >> Dockerfile
+    - echo "meson setup -Dprefix=/builds/GNOME/gimp-help/_install /builds/GNOME/gimp-help/_libxml2build && ninja -C /builds/GNOME/gimp-help/_libxml2build && ninja -C /builds/GNOME/gimp-help/_libxml2build install" >> Dockerfile
 
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:build-debian-latest --cache=true --cache-ttl=120h
 
@@ -51,12 +63,13 @@ check-broken-images:
   stage: build
   image: $CI_REGISTRY_IMAGE:build-debian-latest
   artifacts:
-    expire_in: 1 week
+    expire_in: 1 day
     when: always
     paths:
     - "${HELP_DIR}"
     - "${PDF_DIR}"
     - _log
+    - _build/meson-logs
   script:
     - cd src
     # Mark all source files as updated. Needed to get up-to-date translations
