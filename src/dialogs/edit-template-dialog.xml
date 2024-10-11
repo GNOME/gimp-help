@@ -64,12 +64,15 @@
       <term>Image size</term>
       <listitem>
         <para>
-          Here you set the width and height of the new image. The default
-          units are pixels, but you can switch to another unit using the
-          adjoining menu. If you do, note that the resulting pixel size will be
-          determined by the X and Y resolution (which you can change in the
-          Advanced Options), and by the setting of <quote>Dot for Dot</quote>,
-          which you can change in the <guimenu>View</guimenu> menu.
+          Here you set the <guilabel>Width</guilabel> and
+          <guilabel>Height</guilabel> of the new image.  The
+          default units are pixels, but you can choose a different
+          unit if you prefer, using the adjoining menu. If you do,
+          note that the resulting pixel size is determined by
+          the X and Y resolution (which you can change in the
+          <guilabel>Advanced Options</guilabel>), and by setting
+          <quote>Dot for Dot</quote> in the
+          <guimenu>View</guimenu> menu.
         </para>
       </listitem>
     </varlistentry>
@@ -97,29 +100,76 @@
       <term>X and Y resolution</term>
       <listitem>
         <para>
-          These values come into play mainly in relation to printing: they do
-          not affect the size of the image in pixels, but they determine its
-          size on paper when printed. They can also affect the way the image is
-          displayed on the monitor: if <quote>Dot for Dot</quote> is
-          switched off in the <guimenu>View</guimenu> menu, then at 100% zoom,
-          GIMP attempts to display the image on the monitor at the correct
-          physical size, as calculated from the pixel dimensions and the
-          resolution. The display may not be accurate, however, unless the
-          monitor has been calibrated.
-          This can be done either when GIMP is installed, or from
-          the <link linkend="gimp-prefs-display">Display tab</link> of
-          the Preferences dialog.
+          The values in the <guilabel>X resolution</guilabel> and
+          <guilabel>Y resolution</guilabel>
+          fields relate mainly to printing: they do not affect the size of
+          the image in pixels, but they may determine its physical size when
+          it is printed. The X and Y resolution values can determine how
+          pixels are translated into other measurement units, such as
+          millimeters or inches.
         </para>
+        <tip>
+          <para>
+            If you want to display the image on the screen at the
+            correct dimensions, select
+            <menuchoice>
+              <guimenu>View</guimenu>
+              <guimenuitem>Dot for Dot</guimenuitem>
+            </menuchoice>
+            Set the zoom factor to 100% to see the image at its true
+            screen size. The calibration of the screen size is normally
+            done when <acronym>GIMP</acronym> is installed,
+            but if the image does not display at the correct size,
+            you may have to adjust the screen parameters in
+            <acronym>GIMP</acronym>. You can do this in
+            the <link linkend="gimp-prefs-display">Preferences</link>
+            dialog.
+          </para>
+        </tip>
       </listitem>
     </varlistentry>
     <varlistentry>
       <term>Color space</term>
       <listitem>
+          <para>
+            You can create the new image in different
+            <link linkend="gimp-image-mode">color modes</link>, as either an
+            <link linkend="glossary-rgb">RGB</link> image or a grayscale image.
+          </para>
+          <variablelist>
+            <varlistentry>
+            <term>RGB color</term>
+            <listitem>
+              <para>
+                The image is created in the Red, Green, Blue color system,
+                which is the one used by your monitor or your television
+                screen.
+              </para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>Grayscale</term>
+            <listitem>
+              <para>
+                The image is created in black and white, with various shades
+                of gray. Aside from your artistic interests, this type of
+                image may be necessary for some plug-ins. Nevertheless,
+                <acronym>GIMP</acronym> allows you to
+                <link linkend="gimp-image-convert-grayscale">change an RGB
+                image into grayscale</link>, if you would like.
+              </para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
         <para>
-          You can create the new image as either an RGB image or a grayscale
-          image. You cannot create an indexed image directly in this way, but
-          of course nothing prevents you from converting the image to indexed
-          mode after it has been created.
+          You cannot create an indexed image directly with this menu, but of
+          course you can always convert the image to indexed mode after it
+          has been created. To do that, use the
+          <menuchoice>
+            <guimenu>Image</guimenu>
+            <guisubmenu>Mode</guisubmenu>
+            <guimenuitem>Indexed</guimenuitem>
+          </menuchoice> command.
         </para>
       </listitem>
     </varlistentry>
@@ -127,22 +177,85 @@
       <term>Precision</term>
       <listitem>
         <para>
-          You can select the precision that GIMP will use for this image. For
-          more information see the
-          <link linkend="gimp-image-encoding">Encoding</link>
-          menu documentation.
+          This setting lets you define the encoding used to store pixel
+          information. For more details, please see the
+          <link linkend="gimp-image-choosing-precision-encoding">
+          Image Encoding</link> section.
         </para>
+        <para>
+          Five options are available:
+          <itemizedlist>
+            <listitem>
+              <para>
+                8-bit integer
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                16-bit integer
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                32-bit integer
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                16-bit floating point
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                32-bit floating point
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+        <para>
+          If you wonder what the difference is between integer and floating
+          point (in the graphics area): If you have an image with 16-bit
+          integer precision per channel, then you have 65,536 shades of
+          different red, green and blue color tones – all of them equally
+          stepped to each other (equal color distance). If you have it in
+          floating point, then there are no equal-wide steps – so you can
+          distribute the possible color values over selected ranges. For
+          example: if you know that you have a very dark image with many
+          shades of dark red color tones then you would benefit from floating
+          point because you can decrease the importance of the brighter color
+          tones and get most color detail out of only the darker reds.
+        </para>
+        <figure>
+          <title>Precision example</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata format="PNG"
+                fileref="images/menus/file/new/precision.png"/>
+            </imageobject>
+            <caption>
+              <para>
+                Left image is 8-bit, right is 32-bit. You can see that there
+                are much more available colors between color transitions on
+                the right image.
+              </para>
+            </caption>
+          </mediaobject>
+        </figure>
       </listitem>
     </varlistentry>
     <varlistentry>
       <term>Gamma</term>
       <listitem>
         <para>
-          You can select whether to use <guilabel>Non-linear</guilabel>,
-          or <guilabel>linear light</guilabel>. For more information see also
-          the
-          <link linkend="gimp-image-encoding">Encoding</link>
-          menu documentation.
+          Here you can choose the
+          <link linkend="glossary-channel-encoding">channel encoding</link>
+          for your image. Choices are <guilabel>Non-linear</guilabel> and
+          <guilabel>Linear light</guilabel>.
+          For 8-bit integer precision the default is Non-linear, and for
+          32-bit floating point precision it is Linear light. For more
+          information see
+          <link linkend="gimp-image-choosing-precision-encoding">which
+          precision options should you choose</link>.
         </para>
       </listitem>
     </varlistentry>
@@ -150,9 +263,13 @@
       <term>Color profile</term>
       <listitem>
         <para>
-          Here you can select the color profile for this image. The default
-          is the built-in sRGB color profile, but you can also select your
-          own color profile from a file on your computer.
+          Here you can choose a color profile to be used for your image.
+          The default is GIMP's standard color profile based on
+          <guilabel>Color space</guilabel>, <guilabel>Precision</guilabel>,
+          and <guilabel>Gamma</guilabel>.
+          If you prefer to use a different color profile you can select an
+          ICC color profile file from a location on your computer by
+          choosing <guilabel>Select color profile from disk…</guilabel>.
         </para>
       </listitem>
     </varlistentry>
@@ -205,37 +322,57 @@
       <term>Fill with</term>
       <listitem>
         <para>
-          You have five choices for filling the new image's background layer:
+          Here, you specify the background color that is used for your new
+          image. It is certainly possible to change the background of an
+          image later, too. You can find more information about doing that
+          in the <link linkend="gimp-layer-dialog">Layers Dialog</link>.
         </para>
         <itemizedlist>
+          <para>There are several choices:</para>
           <listitem>
             <para>
-              <guilabel>Foreground color</guilabel>, uses the current foreground
-              color as shown in the Toolbox.
+              Fill the image with the current <guilabel>Foreground
+              color</guilabel>, shown in the Toolbox.
+            </para>
+            <para>
+              Note that you can change the foreground color while the
+              <quote>New Image</quote> dialog window is open.
             </para>
           </listitem>
           <listitem>
             <para>
-              <guilabel>Background color</guilabel>, uses the current background
-              color as shown in the Toolbox.
+              Fill the image with the current <guilabel>Background
+              color</guilabel>, shown in the Toolbox. (You can change the
+              background color too, while the dialog window is open.)
             </para>
           </listitem>
           <listitem>
             <para>
-              <guilabel>White</guilabel>, uses white for the background layer.
-            </para>
-          </listitem>
-          <listitem>
-            <para><guilabel>Transparency</guilabel>. If this option is chosen,
-              then the Background layer in the new image will be created
-              with an alpha channel; otherwise not. The background layer
-              will be transparent.
+              Fill the image with <guilabel>Middle Gray (CIELAB)</guilabel>.
+              This will create a layer with a gray color that is 50% of perceptual
+              lightness in the selected <link linkend="gimp-image-mode">color mode</link>.
             </para>
           </listitem>
           <listitem>
             <para>
-              <guilabel>Pattern</guilabel>, uses the active pattern at the time
-              of creating the image to fill the background layer.
+              Fill the image with <guilabel>White</guilabel>.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              Fill the image with <guilabel>Transparency</guilabel>. If you
+              choose this option, the image is created with an <link
+              linkend="glossary-alpha-channel">alpha&nbsp;channel</link> and
+              the background is transparent. The transparent parts of the
+              image are then displayed with a checkered pattern, to indicate
+              the transparency.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              Fill the image with a <guilabel>Pattern</guilabel>. If you
+              choose this option, the image is filled with the currently
+              active pattern (which you can change while this dialog is open).
             </para>
           </listitem>
         </itemizedlist>
@@ -245,11 +382,18 @@
       <term>Comment</term>
       <listitem>
         <para>
-          You can add a default comment here that will be attached to the image.
-          When exporting this image, the comment will be added too for file
-          formats that support comments. You will still be able to change this
-          comment in the export dialog.
+          You can write a descriptive comment here. The text is
+          attached to the image as a
+          <link linkend="glossary-parasite">parasite</link>, and is saved
+          with the image by some file formats (PNG, JPEG, GIF).
         </para>
+        <note>
+          <para>
+            You can view and edit this comment in the
+            <link linkend="gimp-image-properties">Image Properties</link>
+            dialog.
+          </para>
+        </note>
       </listitem>
     </varlistentry>
   </variablelist>
