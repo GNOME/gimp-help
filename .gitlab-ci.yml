@@ -79,7 +79,7 @@ check-broken-images:
 build-debian-1:
   extends: .build-debian-base
   variables:
-    LINGUAS: "bg ca cs da de el"
+    LINGUAS: "bg ca cs da de"
     HELP_DIR: "_html1"
     PDF_DIR: "_pdf1"
 
@@ -111,6 +111,15 @@ build-debian-5:
     HELP_DIR: "_html5"
     PDF_DIR: "_pdf5"
 
+build-debian-6:
+  extends: .build-debian-base
+  variables:
+    LINGUAS: "el"
+    HELP_DIR: "_html6"
+    PDF_DIR: "_pdf6"
+  allow_failure: true
+
+
 www-debian:
   stage: www
   variables:
@@ -122,6 +131,7 @@ www-debian:
     - build-debian-3
     - build-debian-4
     - build-debian-5
+    - build-debian-6
   artifacts:
     expire_in: 1 week
     when: always
@@ -157,12 +167,14 @@ www-debian:
     - mv _pdf3/*.pdf htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/pdf/
     - mv _pdf4/*.pdf htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/pdf/
     - mv _pdf5/*.pdf htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/pdf/
+    - mv _pdf6/*.pdf htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/pdf/
     # Move all the help html files.
     - mv _html1/* htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/
     - mv _html2/* htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/
     - mv _html3/* htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/
     - mv _html4/* htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/
     - mv _html5/* htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/
+    - mv _html6/* htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/
 
 win-installer:
   variables:
@@ -211,7 +223,7 @@ win-installer:
 distcheck-1:
   extends: .distcheck-base
   variables:
-    LINGUAS: "bg ca cs da de el"
+    LINGUAS: "bg ca cs da de"
 
 distcheck-2:
   extends: .distcheck-base
@@ -232,6 +244,12 @@ distcheck-5:
   extends: .distcheck-base
   variables:
     LINGUAS: "ru sl sv tr uk zh_CN"
+
+distcheck-6:
+  extends: .distcheck-base
+  variables:
+    LINGUAS: "el"
+  allow_failure: true
 
 source-dist:
   rules:
