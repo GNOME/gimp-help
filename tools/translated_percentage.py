@@ -140,6 +140,7 @@ class WriteStats(object):
         f.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n")
 
         basecode = "invalid"
+        langcode = "invalid"
 
         # add entities
         for stats in self.collected_stats.languages:
