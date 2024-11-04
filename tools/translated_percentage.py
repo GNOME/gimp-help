@@ -45,11 +45,13 @@ class GetStats(object):
     def run(self):
         # -o output is very picky on Windows
         out_param = f"-o{self.outfile}"
+        # On Windows msgfmt from MINGW64 often seems to crash.
+        # You may have to use the one from MSYS and adjust the path accordingly.
         cmd = subprocess.Popen(["msgfmt", "--statistics", out_param, self.pofile],
                                stdin=self.out, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         cmdout, cmderr = cmd.communicate()
         if cmd.returncode:
-             raise Exception("Error during msgfmt command.")
+            raise Exception("Error during msgfmt command: " + cmderr.decode())
 
         match_pattern = "(\d+)\stranslated\D+(?:(\d+)\sfuzzy\D+)?(?:(\d+)\suntranslated\D+)?"
         rex = re.compile(match_pattern)
