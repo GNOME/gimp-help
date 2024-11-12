@@ -1133,19 +1133,19 @@
         color:
       </para>
       <programlisting>
-        (gimp-drawable-fill theLayer BACKGROUND-FILL)
+        (gimp-drawable-fill theLayer FILL-BACKGROUND)
       </programlisting>
       <para>With the image cleared, we're ready to add some text:</para>
       <programlisting>
         (set! theText
                       (car
-                           (gimp-text-fontname
+                           (gimp-text-font
                             theImage theLayer
                             0 0
                             inText
                             0
                             TRUE
-                            inFontSize PIXELS
+                            inFontSize
                             inFont)
                        )
         )
@@ -1162,8 +1162,8 @@
         the image and the image's layer to the text's size:
       </para>
       <programlisting>
-        (set! theImageWidth   (car (gimp-drawable-width  theText) ) )
-        (set! theImageHeight  (car (gimp-drawable-height theText) ) )
+        (set! theImageWidth   (car (gimp-drawable-get-width  theText) ) )
+        (set! theImageHeight  (car (gimp-drawable-get-height theText) ) )
 
         (gimp-image-resize theImage theImageWidth theImageHeight 0 0)
 
@@ -1477,21 +1477,21 @@
       (gimp-image-insert-layer theImage theLayer 0 0)
       (gimp-context-set-background '(255 255 255) )
       (gimp-context-set-foreground inTextColor)
-      (gimp-drawable-fill theLayer BACKGROUND-FILL)
+      (gimp-drawable-fill theLayer FILL-BACKGROUND)
       (set! theText
                     (car
-                          (gimp-text-fontname
+                          (gimp-text-font
                           theImage theLayer
                           0 0
                           inText
                           0
                           TRUE
-                          inFontSize PIXELS
+                          inFontSize
                           inFont)
                       )
         )
-      (set! theImageWidth   (car (gimp-drawable-width  theText) ) )
-      (set! theImageHeight  (car (gimp-drawable-height theText) ) )
+      (set! theImageWidth   (car (gimp-drawable-get-width  theText) ) )
+      (set! theImageHeight  (car (gimp-drawable-get-height theText) ) )
       (set! theBuffer (* theImageHeight (/ inBufferAmount 100) ) )
       (set! theImageHeight (+ theImageHeight theBuffer theBuffer) )
       (set! theImageWidth  (+ theImageWidth  theBuffer theBuffer) )
