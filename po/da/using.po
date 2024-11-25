@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-Help 2.6.0\n"
-"POT-Creation-Date: 2024-10-26 18:09+0000\n"
-"PO-Revision-Date: 2024-11-07 19:35+0100\n"
+"POT-Creation-Date: 2024-11-24 21:32+0000\n"
+"PO-Revision-Date: 2024-11-25 17:18+0100\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: none\n"
 "Language: da\n"
@@ -1571,8 +1571,16 @@ msgstr "[Strengen bruges ikke]"
 #. It doesn't matter what you translate it to: it's not used at all.
 #: src/using/script-fu-tutorial.xml:1516(None)
 msgid ""
-"@@image: 'images/using/script-fu-screen.png'; "
-"md5=67ea87d7bba780963438781008e4ec49"
+"@@image: 'images/using/script-fu-example-dialog.png'; "
+"md5=55cc97b623ba14ed31251e3e1be7b5fb"
+msgstr "[Strengen bruges ikke]"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: src/using/script-fu-tutorial.xml:1525(None)
+msgid ""
+"@@image: 'images/using/script-fu-example-result.png'; "
+"md5=494b221e5019e3ea9bf133f22f607d23"
 msgstr "[Strengen bruges ikke]"
 
 #: src/using/script-fu-tutorial.xml:11(title)
@@ -3014,7 +3022,7 @@ msgstr ""
 #, no-wrap
 msgid ""
 "\n"
-"        (gimp-drawable-fill theLayer BACKGROUND-FILL)\n"
+"        (gimp-drawable-fill theLayer FILL-BACKGROUND)\n"
 "      "
 msgstr ""
 
@@ -3028,13 +3036,13 @@ msgid ""
 "\n"
 "        (set! theText\n"
 "                      (car\n"
-"                           (gimp-text-fontname\n"
+"                           (gimp-text-font\n"
 "                            theImage theLayer\n"
 "                            0 0\n"
 "                            inText\n"
 "                            0\n"
 "                            TRUE\n"
-"                            inFontSize PIXELS\n"
+"                            inFontSize\n"
 "                            inFont)\n"
 "                       )\n"
 "        )\n"
@@ -3059,8 +3067,8 @@ msgstr ""
 #, no-wrap
 msgid ""
 "\n"
-"        (set! theImageWidth   (car (gimp-drawable-width  theText) ) )\n"
-"        (set! theImageHeight  (car (gimp-drawable-height theText) ) )\n"
+"        (set! theImageWidth   (car (gimp-drawable-get-width  theText) ) )\n"
+"        (set! theImageHeight  (car (gimp-drawable-get-height theText) ) )\n"
 "\n"
 "        (gimp-image-resize theImage theImageWidth theImageHeight 0 0)\n"
 "\n"
@@ -3365,8 +3373,12 @@ msgid "What you obtain"
 msgstr ""
 
 #: src/using/script-fu-tutorial.xml:1512(title)
-msgid "The result on the screen"
-msgstr ""
+msgid "The dialog"
+msgstr "Dialogen"
+
+#: src/using/script-fu-tutorial.xml:1521(title)
+msgid "The resulting image"
+msgstr "Det resulterende billede"
 
 #: src/using/script-fu-gui-api.xml:10(para)
 msgid "This section is not part of the original tutorial."
@@ -3831,29 +3843,31 @@ msgstr ""
 
 #: src/using/python-plug-in-tutorial.xml:35(para)
 msgid ""
-"Not required, but common practice, is to start with a hashbang, an encoding, "
-"and copyright notice. The first line is usually a hashbang, which specifies "
-"how this script can be executed. The next line specifies the encoding of the "
-"Python file. We recommend utf-8. Usually this is followed by several lines "
-"specifying the license under which you publish the script and a short "
-"description of what the script does. We will not go deeper into this, since "
-"this is common to Python in general."
+"Required on Linux and macOS, and common practice on Windows, is to start "
+"with a so-called shebang or hashbang, an encoding, and a copyright notice. "
+"The first line is a <ulink url=\"https://en.wikipedia.org/wiki/"
+"Shebang_(Unix)\">shebang</ulink>, which specifies how this script can be "
+"executed. The next line specifies the encoding of the Python file. We "
+"recommend utf-8. Usually this is followed by several lines specifying the "
+"license under which you publish the script and a short description of what "
+"the script does. We will not go deeper into this, since this is common to "
+"Python in general."
 msgstr ""
 
-#: src/using/python-plug-in-tutorial.xml:47(para)
+#: src/using/python-plug-in-tutorial.xml:50(para)
 msgid ""
 "Importing required modules to get access to GIMP and optionally GEGL "
 "functions."
 msgstr ""
 
-#: src/using/python-plug-in-tutorial.xml:53(para)
+#: src/using/python-plug-in-tutorial.xml:56(para)
 msgid ""
 "Declare a class with several pre-defined functions that you need to adjust, "
 "so that GIMP knows what functions are available in your plug-in, and what "
 "functionality they support. We will go into more detail about this below."
 msgstr ""
 
-#: src/using/python-plug-in-tutorial.xml:61(para)
+#: src/using/python-plug-in-tutorial.xml:64(para)
 msgid ""
 "A call that starts your plug-in, or queries its capabilities, depending on "
 "the arguments sent to it by GIMP."
@@ -3865,11 +3879,11 @@ msgid ""
 "very common for working with GIMP. <placeholder-1/>"
 msgstr ""
 
-#: src/using/python-plug-in-tutorial.xml:70(title)
+#: src/using/python-plug-in-tutorial.xml:73(title)
 msgid "Required modules"
 msgstr ""
 
-#: src/using/python-plug-in-tutorial.xml:71(para)
+#: src/using/python-plug-in-tutorial.xml:74(para)
 msgid ""
 "To be able to access GIMP functions, we start with <function>import gi</"
 "function>. This module can figure out what functions are available in each "
@@ -3878,14 +3892,14 @@ msgid ""
 "calls to <function>gi.repository</function>."
 msgstr ""
 
-#: src/using/python-plug-in-tutorial.xml:79(para)
+#: src/using/python-plug-in-tutorial.xml:82(para)
 msgid ""
 "For basic functionality, only the Gimp and GimpUi modules may be enough. If "
 "you want to run your plug-in from the command line, you don't even need "
 "GimpUi. Let's start with an example."
 msgstr ""
 
-#: src/using/python-plug-in-tutorial.xml:117(para)
+#: src/using/python-plug-in-tutorial.xml:120(para)
 msgid ""
 "We start with importing sys, which we need at the end for access to "
 "<function>sys.argv</function>, following that <function>import gi</function> "
@@ -3894,14 +3908,14 @@ msgid ""
 "quote>."
 msgstr ""
 
-#: src/using/python-plug-in-tutorial.xml:124(para)
+#: src/using/python-plug-in-tutorial.xml:127(para)
 msgid ""
 "In the next line we tell gi that we require GIMP's API version to be version "
 "3.0. (This plug-in won't work with older versions of GIMP.) The following "
 "line requests to import all functions, classes, etc. from the Gimp module."
 msgstr ""
 
-#: src/using/python-plug-in-tutorial.xml:130(para)
+#: src/using/python-plug-in-tutorial.xml:133(para)
 msgid ""
 "The next two lines, do the same thing for GimpUi. GimpUi contains all the "
 "interface related elements for GIMP. If you plan to make a plug-in that is "
@@ -3909,36 +3923,36 @@ msgid ""
 "finish with importing GLib, which we need later for access to GLib.Error."
 msgstr ""
 
-#: src/using/python-plug-in-tutorial.xml:137(para)
+#: src/using/python-plug-in-tutorial.xml:140(para)
 msgid ""
 "There are other optional modules that you can use too, like Gegl and Glib "
 "among many others, but we won't go into that here."
 msgstr ""
 
-#: src/using/python-plug-in-tutorial.xml:144(title)
+#: src/using/python-plug-in-tutorial.xml:147(title)
 msgid "Define your plug-in class"
 msgstr ""
 
-#: src/using/python-plug-in-tutorial.xml:145(para)
+#: src/using/python-plug-in-tutorial.xml:148(para)
 msgid ""
 "GIMP needs to knows what functions are available, what functionality they "
 "support, and what menu location to use. For that we define a class that is "
 "derived from the <function>Gimp.PlugIn</function> class."
 msgstr ""
 
-#: src/using/python-plug-in-tutorial.xml:156(para)
+#: src/using/python-plug-in-tutorial.xml:159(para)
 msgid ""
 "A <function>do_query_procedure</function> method, that GIMP calls to find "
 "out the names of the procedures that can be called in this plug-in."
 msgstr ""
 
-#: src/using/python-plug-in-tutorial.xml:163(para)
+#: src/using/python-plug-in-tutorial.xml:166(para)
 msgid ""
 "A <function>do_set_i18n</function> method, that GIMP calls to find out if "
 "your plug-in supports translations."
 msgstr ""
 
-#: src/using/python-plug-in-tutorial.xml:169(para)
+#: src/using/python-plug-in-tutorial.xml:172(para)
 msgid ""
 "A <function>do_create_procedure</function> method, which GIMP calls to start "
 "one of your plug-ins functions. When this is called you should initialize "
@@ -3949,7 +3963,7 @@ msgid ""
 "settings."
 msgstr ""
 
-#: src/using/python-plug-in-tutorial.xml:181(para)
+#: src/using/python-plug-in-tutorial.xml:184(para)
 msgid ""
 "The actual function (called procedure by GIMP) that you specified above. We "
 "often call this <function>run</function>, but it can have any name allowed "
@@ -3957,20 +3971,20 @@ msgid ""
 "desired effects."
 msgstr ""
 
-#: src/using/python-plug-in-tutorial.xml:151(para)
+#: src/using/python-plug-in-tutorial.xml:154(para)
 msgid ""
 "A minimal plug-in need at least the following functions defined in this "
 "class: <placeholder-1/>"
 msgstr ""
 
-#: src/using/python-plug-in-tutorial.xml:190(para)
+#: src/using/python-plug-in-tutorial.xml:193(para)
 msgid ""
 "We will go into a little more detail now. Not included below is the first "
 "part of the Python code that was shown above. This only shows the basic "
 "layout of your class."
 msgstr ""
 
-#: src/using/python-plug-in-tutorial.xml:226(para)
+#: src/using/python-plug-in-tutorial.xml:229(para)
 msgid ""
 "Let's take a closer look at <function>do_create_procedures</function>. In "
 "the line <function>return [ \"jb-plug-in-first-try\" ]</function> we tell "
@@ -3979,13 +3993,13 @@ msgid ""
 "dbbrowser\">Procedure Browser</link>."
 msgstr ""
 
-#: src/using/python-plug-in-tutorial.xml:233(para)
+#: src/using/python-plug-in-tutorial.xml:236(para)
 msgid ""
 "You can have more than one procedure defined in a plug-in. In that case, you "
 "would list all names, separated by a comma."
 msgstr ""
 
-#: src/using/python-plug-in-tutorial.xml:237(para)
+#: src/using/python-plug-in-tutorial.xml:240(para)
 msgid ""
 "It is good practice to start all your procedures with your initials or some "
 "other recognizable and unique tag. This way, it is less likely that your "
@@ -3993,31 +4007,31 @@ msgid ""
 "Besides that, you are free to name it the way you like."
 msgstr ""
 
-#: src/using/python-plug-in-tutorial.xml:244(para)
+#: src/using/python-plug-in-tutorial.xml:247(para)
 msgid ""
 "Next we tell GIMP that we don't support translations by returning False in "
 "the call to <function>do_set_i18n</function>. What to do when you want your "
 "plug-in to be translated is beyond the scope of this tutorial."
 msgstr ""
 
-#: src/using/python-plug-in-tutorial.xml:250(para)
+#: src/using/python-plug-in-tutorial.xml:253(para)
 msgid ""
 "The <function>do_create_procedure</function> method is where most of the "
 "initializing for GIMP is done."
 msgstr ""
 
-#: src/using/python-plug-in-tutorial.xml:255(title)
+#: src/using/python-plug-in-tutorial.xml:258(title)
 msgid "Setting up do_create_procedure"
 msgstr ""
 
-#: src/using/python-plug-in-tutorial.xml:257(para)
+#: src/using/python-plug-in-tutorial.xml:260(para)
 msgid ""
 "If you define more than one procedure in your plug-in, you first need to "
 "check the \"name\" parameter to see which procedure is being called by GIMP. "
 "We won't go into that here."
 msgstr ""
 
-#: src/using/python-plug-in-tutorial.xml:262(para)
+#: src/using/python-plug-in-tutorial.xml:265(para)
 msgid ""
 "To initialize your plug-in procedure, we first need to create it and fill in "
 "the name of our Python function that will do the actual work. We do that by "
@@ -4025,7 +4039,7 @@ msgid ""
 "ImageProcedure.new.html\">Gimp.ImageProcedure.new</ulink>."
 msgstr ""
 
-#: src/using/python-plug-in-tutorial.xml:273(para)
+#: src/using/python-plug-in-tutorial.xml:276(para)
 msgid ""
 "In this case we define the name of our plug-in as <function>self.run</"
 "function>. When we qualify our function with \"self.\", it means that it is "
@@ -4035,7 +4049,7 @@ msgid ""
 "accepts."
 msgstr ""
 
-#: src/using/python-plug-in-tutorial.xml:284(para)
+#: src/using/python-plug-in-tutorial.xml:287(para)
 msgid ""
 "Next we will tell GIMP what types of images this plug-in can work with by "
 "calling <ulink url=\"https://developer.gimp.org/api/3.0/libgimp/method."
@@ -4044,22 +4058,22 @@ msgid ""
 "supported by GIMP. Other examples:"
 msgstr ""
 
-#: src/using/python-plug-in-tutorial.xml:294(para)
+#: src/using/python-plug-in-tutorial.xml:297(para)
 msgid ""
 "\"RGB*,GRAY*\", where the \"*\" here means we support both the versions with "
 "and without A(lpha) channel."
 msgstr ""
 
-#: src/using/python-plug-in-tutorial.xml:300(para)
+#: src/using/python-plug-in-tutorial.xml:303(para)
 msgid ""
 "\"INDEXED\", plug-in only works on indexed images, without alpha channel."
 msgstr ""
 
-#: src/using/python-plug-in-tutorial.xml:306(para)
+#: src/using/python-plug-in-tutorial.xml:309(para)
 msgid "\"RGBA\", plug-in only works on RGB image with alpha channel."
 msgstr ""
 
-#: src/using/python-plug-in-tutorial.xml:313(para)
+#: src/using/python-plug-in-tutorial.xml:316(para)
 msgid ""
 "Being able to start your plug-in from GIMP's menu is usually a good idea. We "
 "start by defining a descriptive label for the menu entry: <ulink "
@@ -4067,7 +4081,7 @@ msgid ""
 "set_menu_label.html\">procedure.set_menu_label</ulink>."
 msgstr ""
 
-#: src/using/python-plug-in-tutorial.xml:320(para)
+#: src/using/python-plug-in-tutorial.xml:323(para)
 msgid ""
 "Followed by specifying where in the menu it should appear: <ulink "
 "url=\"https://developer.gimp.org/api/3.0/libgimp/method.Procedure."
@@ -4076,7 +4090,7 @@ msgid ""
 "(submenu)."
 msgstr ""
 
-#: src/using/python-plug-in-tutorial.xml:328(para)
+#: src/using/python-plug-in-tutorial.xml:331(para)
 msgid ""
 "If you like you can also add an extra help tip, by using <ulink "
 "url=\"https://developer.gimp.org/api/3.0/libgimp/method.Procedure."
@@ -4086,32 +4100,32 @@ msgid ""
 "html\">procedure.set_attribution</ulink>."
 msgstr ""
 
-#: src/using/python-plug-in-tutorial.xml:336(para)
+#: src/using/python-plug-in-tutorial.xml:339(para)
 msgid ""
 "The last line in create procedure is <function>return procedure</function>, "
 "which sends the information added above back to GIMP. Following this, GIMP "
 "will call your run procedure."
 msgstr ""
 
-#: src/using/python-plug-in-tutorial.xml:346(title)
+#: src/using/python-plug-in-tutorial.xml:349(title)
 msgid "Adding the main entry point to your plug-in"
 msgstr ""
 
-#: src/using/python-plug-in-tutorial.xml:347(para)
+#: src/using/python-plug-in-tutorial.xml:350(para)
 msgid "Every plug-in gets started by a call to <function>Gimp.main</function>."
 msgstr ""
 
-#: src/using/python-plug-in-tutorial.xml:353(para)
+#: src/using/python-plug-in-tutorial.xml:356(para)
 msgid ""
 "The only thing you need to change in this line for your plug-in, is the name "
 "of your plug-in class, here called <quote>MyFirstPlugin</quote>."
 msgstr ""
 
-#: src/using/python-plug-in-tutorial.xml:359(title)
+#: src/using/python-plug-in-tutorial.xml:362(title)
 msgid "The complete Python plug-in"
 msgstr ""
 
-#: src/using/python-plug-in-tutorial.xml:360(para)
+#: src/using/python-plug-in-tutorial.xml:363(para)
 msgid ""
 "Below we present the entire python script, which should run, provided it is "
 "given the correct name in a directory with the same name in a location that "
@@ -5396,7 +5410,31 @@ msgstr "[Strengen bruges ikke]"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
-#: src/using/paths.xml:322(None)
+#: src/using/paths.xml:297(None)
+msgid ""
+"@@image: 'images/stock-icons/gimp-layer.svg'; "
+"md5=945d0361b811ae318f690032f3cb105e"
+msgstr "[Strengen bruges ikke]"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: src/using/paths.xml:306(None)
+msgid ""
+"@@image: 'images/stock-icons/gimp-selection.svg'; "
+"md5=037e0db3cd91b6fa7d98ad87dc8896b7"
+msgstr "[Strengen bruges ikke]"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: src/using/paths.xml:315(None)
+msgid ""
+"@@image: 'images/stock-icons/gimp-path.svg'; "
+"md5=45f8d04a403dce33d85a04d6a27e234f"
+msgstr "[Strengen bruges ikke]"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: src/using/paths.xml:351(None)
 msgid ""
 "@@image: 'images/using/path-stroking-examples.png'; "
 "md5=c49284748ddac775cc702987fec34e06"
@@ -5404,7 +5442,7 @@ msgstr "[Strengen bruges ikke]"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
-#: src/using/paths.xml:358(None)
+#: src/using/paths.xml:387(None)
 msgid ""
 "@@image: 'images/menus/edit/stroke-path.png'; "
 "md5=ee63fcbc800d5f8d3867b9dc5d66ca9d"
@@ -5412,7 +5450,7 @@ msgstr "[Strengen bruges ikke]"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
-#: src/using/paths.xml:376(None)
+#: src/using/paths.xml:408(None)
 msgid ""
 "@@image: 'images/using/path-from-text.png'; "
 "md5=7bf70fcbfd90eb571bdff45c229e1a3d"
@@ -5420,7 +5458,7 @@ msgstr "[Strengen bruges ikke]"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
-#: src/using/paths.xml:388(None)
+#: src/using/paths.xml:420(None)
 msgid ""
 "@@image: 'images/using/path-text-stroked.png'; "
 "md5=1fe33d8a8a4f73e8b6fe5c3f1c889223"
@@ -5806,8 +5844,8 @@ msgid ""
 "path without losing information. In fact, any information about partially "
 "selected areas (i.e., feathering) are lost when a selection is turned into a "
 "path. If the path is transformed back into a selection, the result is an all-"
-"or-none selection, similar to what is obtained by executing \"Sharpen\" from "
-"the Select menu."
+"or-none selection, similar to what is obtained by executing <link "
+"linkend=\"gimp-selection-sharpen\">Sharpen</link> from the Select menu."
 msgstr ""
 "Transformerer du en markering til en kurve, vil kurven følge de <link "
 "linkend=\"glossary-marching-ants\"><quote>marcherende myrer</quote></link>. "
@@ -5816,29 +5854,32 @@ msgstr ""
 "Enhver information om delvist markerede områder (f.eks. ved udtynding) "
 "mistes, når en markering ændres til en kurve. Transformeres kurven til en "
 "markering igen, er resultatet en alt eller intet-markering, lig resultatet "
-"af “Gør skarpere” i markeringsmenuen."
+"af <link linkend=\"gimp-selection-sharpen\">Gør skarpere</link> i "
+"markeringsmenuen."
 
-#: src/using/paths.xml:286(title)
+#: src/using/paths.xml:287(title)
 msgid "Transforming Paths"
 msgstr "Transformér kurver"
 
-#: src/using/paths.xml:287(para)
+#: src/using/paths.xml:288(para)
 msgid ""
-"Each of the Transform tools (Rotate, Scale, Perspective, etc) can be set to "
-"act on a layer, selection, or path. Select the transform tool in the "
-"toolbox, then select layer, selection, or path for the <quote>Transform:</"
-"quote> option in the tool's Tool Options dialog. This gives you a powerful "
-"set of methods for altering the shapes of paths without affecting other "
-"elements of the image."
+"Each of the <link linkend=\"gimp-tools-transform\">Transform tools</link> "
+"(Rotate, Scale, Perspective, etc) can be set to act on a layer, selection, "
+"or path. Select the transform tool in the toolbox, then select "
+"<placeholder-1/> layer, <placeholder-2/> selection, or <placeholder-3/> path "
+"for the <guilabel>Transform</guilabel> option in the tool's Tool Options "
+"dialog. This gives you a powerful set of methods for altering the shapes of "
+"paths without affecting other elements of the image."
 msgstr ""
-"Alle transformeringsværktøjerne (rotation, skalering, perspektiv osv.) kan "
-"indstilles til at virke på et lag, en markering eller en kurve. Vælg "
-"transformeringsværktøjet i værktøjskassen, og vælg så lag, markering eller "
-"kurve i indstillingen <quote>Transformering:</quote> i værktøjets dialog. "
-"Dermed har man en række stærke værktøjer til at ændre kurvers form uden at "
-"påvirke andre elementer i billedet."
+"Alle <link linkend=\"gimp-tools-transform\">transformeringsværktøjerne</"
+"link> (rotation, skalering, perspektiv osv.) kan indstilles til at virke på "
+"et lag, en markering eller en kurve. Vælg transformeringsværktøjet i "
+"værktøjskassen, og vælg så <placeholder-1/> lag, <placeholder-2/> markering "
+"eller <placeholder-3/> kurve i indstillingen <quote>Transformering:</quote> "
+"i værktøjets dialog. Dermed har man en række stærke værktøjer til at ændre "
+"kurvers form uden at påvirke andre elementer i billedet."
 
-#: src/using/paths.xml:296(para)
+#: src/using/paths.xml:325(para)
 msgid ""
 "By default a Transform tool, when it is set to affect paths, acts on only "
 "one path: the <emphasis>active path</emphasis> for the image, which is shown "
@@ -5867,21 +5908,21 @@ msgstr ""
 "Kurver. Anvend værktøjet Skalering på enten laget eller kurven, og den anden "
 "vil automatisk skaleres tilsvarende."
 
-#: src/using/paths.xml:316(title)
+#: src/using/paths.xml:345(title)
 msgid "Stroking a Path"
 msgstr "Optegn en kurve"
 
-#: src/using/paths.xml:318(title)
+#: src/using/paths.xml:347(title)
 msgid "Stroking paths"
 msgstr "Optegn kurver"
 
 # De fire kurver optræder tidligere i et andet underafsnit.
-#: src/using/paths.xml:325(para)
+#: src/using/paths.xml:354(para)
 msgid ""
 "The four paths from the top illustration, each stroked in a different way."
 msgstr "De fire kurver vist tidligere hver optegnet på en forskellig måde."
 
-#: src/using/paths.xml:332(para)
+#: src/using/paths.xml:361(para)
 msgid ""
 "Paths do not alter the appearance of the image pixel data unless they are "
 "<emphasis>stroked</emphasis>, using <menuchoice><guimenu>Edit</"
@@ -5897,7 +5938,7 @@ msgstr ""
 "genvejsmenu eller knappen <quote>Optegn kurve</quote> i værktøjet <link "
 "linkend=\"gimp-tool-path\">Kurvers</link> dialog til indstillinger."
 
-#: src/using/paths.xml:344(para)
+#: src/using/paths.xml:373(para)
 msgid ""
 "Choosing <quote>Stroke Path</quote> by any of these means brings up a dialog "
 "that allows you to control the way the stroking is done. You can choose from "
@@ -5911,11 +5952,15 @@ msgstr ""
 "inkl. de mere usædvanlige såsom værktøjerne Kloning, Udtværing, Viskelæder "
 "osv."
 
-#: src/using/paths.xml:352(title)
+#: src/using/paths.xml:381(title)
 msgid "The <guilabel>Stroke Path</guilabel> dialog"
 msgstr "Dialogen <guilabel>Optegn kurve</guilabel>"
 
-#: src/using/paths.xml:362(para)
+#: src/using/paths.xml:390(para)
+msgid "See <xref linkend=\"gimp-path-stroke\"/> for more information."
+msgstr "Se <xref linkend=\"gimp-path-stroke\"/> for yderligere information."
+
+#: src/using/paths.xml:394(para)
 msgid ""
 "You can further increase the range of stroking effects by stroking a path "
 "multiple times, or by using lines or brushes of different widths. The "
@@ -5926,15 +5971,15 @@ msgstr ""
 "flere gange eller ved at bruge linjer eller pensler med forskellige bredder. "
 "Udvalget af interessante effekter er på denne måde næsten uendelig."
 
-#: src/using/paths.xml:371(title)
+#: src/using/paths.xml:403(title)
 msgid "Paths and Text"
 msgstr "Kurver og tekst"
 
-#: src/using/paths.xml:373(title)
+#: src/using/paths.xml:405(title)
 msgid "Text converted to a path"
 msgstr "Tekst konverteret til en kurve"
 
-#: src/using/paths.xml:379(para)
+#: src/using/paths.xml:411(para)
 msgid ""
 "Text converted to a path and then transformed using the Perspective tool."
 msgstr ""
@@ -5942,7 +5987,7 @@ msgstr ""
 "Perspektiv."
 
 # På websiden er figuren ikke ovenfor, men ved siden af.
-#: src/using/paths.xml:391(para)
+#: src/using/paths.xml:423(para)
 msgid ""
 "The path shown above, stroked with a fuzzy brush and then gradient-mapped "
 "using the Gradient Map filter with the <quote>Yellow Contrast</quote> "
@@ -5952,7 +5997,7 @@ msgstr ""
 "farveovergangsafbildet med brug af filteret Farveovergangsafbildning med en "
 "<quote>gul kontrast</quote>-farveovergang."
 
-#: src/using/paths.xml:399(para)
+#: src/using/paths.xml:431(para)
 msgid ""
 "A text item created using the <link linkend=\"gimp-tool-text\">Text</link> "
 "tool can be transformed into a path using the <command>Path from Text</"
@@ -5964,11 +6009,11 @@ msgstr ""
 "<command>Kurve fra tekst</command> i tekstværktøjets genvejsmenu. Det kan "
 "være nyttigt til mange formål inklusive:"
 
-#: src/using/paths.xml:407(para)
+#: src/using/paths.xml:439(para)
 msgid "Stroking the path, which gives you many possibilities for fancy text."
 msgstr "Optegning af kurven, hvilket giver mange muligheder for smart tekst."
 
-#: src/using/paths.xml:413(para)
+#: src/using/paths.xml:445(para)
 msgid ""
 "More importantly, transforming the text. Converting text into a path, then "
 "transforming the path, and finally either stroking the path or converting it "
@@ -5980,11 +6025,11 @@ msgstr ""
 "til en markering og udfyldt, fører det tit til resultater af højere kvalitet "
 "end gengivelse af teksten som et lag og transformering af pixeldata."
 
-#: src/using/paths.xml:425(title)
+#: src/using/paths.xml:457(title)
 msgid "Paths and <acronym>SVG</acronym> files"
 msgstr "Kurver og <acronym>SVG</acronym>-filer"
 
-#: src/using/paths.xml:426(para)
+#: src/using/paths.xml:458(para)
 msgid ""
 "<acronym>SVG</acronym>, standing for <quote>Scalable Vector Graphics</"
 "quote>, is an increasingly popular file format for <emphasis>vector "
@@ -6000,7 +6045,7 @@ msgstr ""
 "repræsenteret ved en samling pixels. GIMP er hovedsageligt et "
 "rastergrafikprogram, men kurver er vektorbaserede."
 
-#: src/using/paths.xml:435(para)
+#: src/using/paths.xml:467(para)
 msgid ""
 "Fortunately, paths are represented in <acronym>SVG</acronym> files in almost "
 "exactly the same way they are represented in GIMP. This compatibility makes "
@@ -6014,7 +6059,7 @@ msgstr ""
 "information. Du har adgang til denne funktion i dialogen <link "
 "linkend=\"gimp-path-dialog\">Kurver</link>."
 
-#: src/using/paths.xml:443(para)
+#: src/using/paths.xml:475(para)
 msgid ""
 "It also means that GIMP can create paths from <acronym>SVG</acronym> files "
 "saved in other programs, such as <application>Inkscape</application>, a "
@@ -6030,7 +6075,7 @@ msgstr ""
 "kurver, end GIMP har. Du kan importere en kurve fra en<acronym> SVG</"
 "acronym>-fil med dialogen Kurver."
 
-#: src/using/paths.xml:452(para)
+#: src/using/paths.xml:484(para)
 msgid ""
 "The <acronym>SVG</acronym> format handles many other graphical elements than "
 "just paths: among other things, it handles figures such as squares, "
@@ -6041,7 +6086,7 @@ msgstr ""
 "bare kurver f.eks. kvadrater, cirkler, ellipser, regulære polygoner osv. "
 "GIMP kan ikke gøre noget ved disse elementer, men de kan indlæses som kurver."
 
-#: src/using/paths.xml:460(para)
+#: src/using/paths.xml:492(para)
 msgid ""
 "Creating paths is not the only thing GIMP can do with <acronym>SVG</acronym> "
 "files. It can also open <acronym>SVG</acronym> files as GIMP images, in the "
@@ -8786,6 +8831,11 @@ msgstr ""
 "E-mail <dansk@dansk-gruppen.dk>"
 
 #~ msgid ""
+#~ "@@image: 'images/using/script-fu-screen.png'; "
+#~ "md5=67ea87d7bba780963438781008e4ec49"
+#~ msgstr "[Strengen bruges ikke]"
+
+#~ msgid ""
 #~ "First, open the image as usual. I have opened our Wilber as an example "
 #~ "image."
 #~ msgstr ""
@@ -9018,9 +9068,6 @@ msgstr ""
 
 #~ msgid ".gif"
 #~ msgstr ".gif"
-
-#~ msgid "The GIF Export dialog"
-#~ msgstr "Dialogen Eksportér billede som GIF"
 
 #~ msgid ""
 #~ "The GIF file format does not support some basic image properties such as "
