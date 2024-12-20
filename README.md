@@ -4,9 +4,10 @@ GIMP-Help is a help system designed for use with the internal GIMP help
 browser, external web browser and HTML renderers.  
 [DocBook](https://docbook.org/) is used to create a highly customizable documentation system.
 
-The current manual documents features for the 2.99 development branch of
-GIMP which is a moving target for the future GIMP 3.0.  
-The manual for GIMP 2.10 is also still being maintained in a separate branch
+The current manual documents features for the 3.0 development branch of
+GIMP which is a moving target for the near future release of GIMP 3.0.  
+The manual for GIMP 2.10 is not being maintained anymore, but translations are
+still accepted until the release of 3.0. It is available in a separate branch
 called `gimp-help-2-10`.
 
 ## Contents
@@ -26,7 +27,7 @@ called `gimp-help-2-10`.
 The online, daily updated, manuals for all supported languages are available at:
 
 - [GIMP 2.10 manuals](https://docs.gimp.org/)
-- [GIMP 2.99 manuals (temporary location for testing purposes)](https://testing.docs.gimp.org/)
+- [GIMP 3.0 manuals (temporary location for testing purposes)](https://testing.docs.gimp.org/)
 
 The offline manuals are available for download from the same location. However,
 they are a lot more outdated.
