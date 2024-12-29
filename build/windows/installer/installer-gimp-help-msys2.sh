@@ -57,7 +57,7 @@ cd -
 # Any language not in a release yet, but moved from Unofficial, should be added here
 cd "${ISCCDIR}/Languages/"
 download_lang_official Korean.isl
-download_lang Swedish.isl
+download_lang_official Swedish.isl
 cd -
 
 # Copy generated language files into the source directory.
