@@ -52,12 +52,12 @@ download_lang Greek.isl
 download_lang Lithuanian.isl
 download_lang NorwegianNynorsk.isl
 download_lang Romanian.isl
-download_lang Swedish.isl
 cd -
 
 # Any language not in a release yet, but moved from Unofficial, should be added here
 cd "${ISCCDIR}/Languages/"
 download_lang_official Korean.isl
+download_lang_official Swedish.isl
 cd -
 
 # Copy generated language files into the source directory.
