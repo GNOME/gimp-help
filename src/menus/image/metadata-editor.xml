@@ -11,9 +11,37 @@
     <primary>Metadata</primary>
     <secondary>Metadata Editor</secondary>
   </indexterm>
-  
+
   <para>
-    Edit Exif, IPTC, XMP metadata.
+    The metadata editor allows you to edit the most common XMP metadata tags.
+    Tags that have a corresponding IPTC tag are synchronized when writing the
+    metadata. When opening the editor, the IPTC metadata is also checked. When
+    only IPTC is available, the values of those tags are used to fill in the
+    XMP metadata fields. If both are available, but different, they are in
+    most cases concatenated.
+  </para>
+  <para>
+    It is currently not possible to edit Exif metadata.
+  </para>
+  <para>
+    When you are finished editing the metadata press the
+    <guibutton>Write Metadata</guibutton> button to update the metadata in
+    the image, or use <guibutton>Cancel</guibutton> if you don't want your
+    changes to be added to the image. <guibutton>Write Metadata</guibutton>
+    does not save the metadata to a file. Do that the usual way by saving or
+    exporting your image.
+  </para>
+  <para>
+    The metadata editor currently consists of the following tabs:
+    <link linkend="gimp-metadata-editor-description">Description</link>,
+    <link linkend="gimp-metadata-editor-iptc">IPTC</link>,
+    <link linkend="gimp-metadata-editor-iptc-extension">IPTC Extension</link>,
+    <link linkend="gimp-metadata-editor-categories">Categories</link>,
+    <link linkend="gimp-metadata-editor-gps">GPS</link>, and
+    <link linkend="gimp-metadata-editor-dicom">DICOM</link>. We will explain these in more detail below.
+    At the bottom of the editor there is also a <guilabel>Select:</guilabel>
+    drop-down button, where you can choose to <guilabel>Import
+    metadata</guilabel> or <guilabel>Export metadata</guilabel>.
   </para>
 
   <figure>
@@ -22,8 +50,8 @@
     </title>
     <mediaobject>
       <imageobject>
-        <imagedata fileref="images/menus/image/metadata-editor-dialog.png" 
-format="PNG"/>
+        <imagedata fileref="images/menus/image/metadata-editor-dialog.png"
+          format="PNG"/>
       </imageobject>
     </mediaobject>
   </figure>
@@ -39,4 +67,1238 @@ format="PNG"/>
       </menuchoice>.
     </para>
   </sect3>
+
+  <sect3>
+    <title>General considerations when adding metadata to an image</title>
+    <para>
+      Adding metadata to an image is a good way to give others some general
+      information about your image, like a description what the image is about,
+      where it was taken if it is a photo, the creator and more specific
+      Copyright information.
+    </para>
+    <para>
+      It is good to realize that certain kinds of information can also be used
+      to reveal personal information about you or others in the image. You have
+      to make your own decision about what you are comfortable with in sharing
+      with others.
+    </para>
+    <para>
+      More specific, things like a GPS location, your name, an address, or
+      recognizable people or buildings in an image may be used to identify
+      you or others.
+    </para>
+  </sect3>
+
+  <sect3 id="gimp-metadata-editor-description">
+    <title>Description</title>
+    <para>
+      The <guilabel>Description</guilabel> tab allows you to edit metadata
+      that relates to general information about the image, such as the image
+      creator, a description of the image, Copyright, etc.
+    </para>
+    <variablelist>
+      <varlistentry>
+        <term>Document Title</term>
+        <listitem>
+          <para>
+            The <guilabel>Document Title</guilabel> field is used to give a
+            short name consisting of text and/or numbers to reference your image.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Author</term>
+        <listitem>
+          <para>
+            The <guilabel>Author</guilabel> field is used to tell who made
+            the image. Multiple names, one per line, can be entere here.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Author Title</term>
+        <listitem>
+          <para>
+            The <guilabel>Author Title</guilabel> field is used to tell the
+            job title of the creator of the image. This will generally only
+            be useful if you created this image as part of your job.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Description</term>
+        <listitem>
+          <para>
+            The <guilabel>Description</guilabel> field is used to give a longer
+            description of your image. Sometimes this is also used to add
+            Copyright information.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Description Writer</term>
+        <listitem>
+          <para>
+            The <guilabel>Description Writer</guilabel> field is used to
+            identify the person who wrote or edited the description metadata.
+            Multiple names can be entered, separated by a comma.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Rating</term>
+        <listitem>
+          <para>
+            The <guilabel>Rating</guilabel> field is used to give a quality
+            rating to this image. The drop-down list allows you to select a
+            value from 1 to 5, or leave it unrated.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Keywords</term>
+        <listitem>
+          <para>
+            The <guilabel>Keywords</guilabel> field allows you to add keywords
+            to the image. Keywords are words or sentences that describe your
+            image. Multiple keywords can be added; each keyword should be
+            entered on its own line.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Copyright Status</term>
+        <listitem>
+          <para>
+            The <guilabel>Copyright Status</guilabel> field is used to tell
+            what sort of Copyright the image has. You can choose between
+            <guilabel>Unknown</guilabel> (default),
+            <guilabel>Copyrighted</guilabel> (someone owns or claims the
+            copyright for this image), or <guilabel>Public Domain</guilabel>
+            (the rights to this image have been released to the Public Domain).
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Copyright Notice</term>
+        <listitem>
+          <para>
+            The <guilabel>Copyright Notice</guilabel> field allows you to
+            write a text specifying what Copyright is attached to this image.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Copyright URL</term>
+        <listitem>
+          <para>
+            The <guilabel>Copyright URL</guilabel> field can be used to
+            direct the viewers of this image to an online website where more
+            details can be found about the Copyright on this image.
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </sect3>
+
+  <sect3 id="gimp-metadata-editor-iptc">
+    <title>IPTC</title>
+
+    <figure>
+      <title>IPTC tab</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/menus/image/metadata-editor-dialog-iptc.png"
+            format="PNG"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+
+    <para>
+      The <guilabel>IPTC</guilabel> tab allows you to edit more detailed
+      creator, location and credits information, based on the IPTC metadata.
+      As explained above, you have to decide what information you want to share.
+    </para>
+
+    <variablelist>
+
+      <varlistentry>
+        <term>Contact Information</term>
+        <listitem>
+          <para>
+            These fields serve as contact information for the person or
+            organization this image belongs to.
+          </para>
+          <variablelist>
+            <varlistentry>
+              <term>Address</term>
+              <listitem>
+                <para>
+                  This field is used to enter the address.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>City</term>
+              <listitem>
+                <para>
+                  This field is used to enter the city.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>State / Province</term>
+              <listitem>
+                <para>
+                  This field is used to enter the state or province.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Postal Code</term>
+              <listitem>
+                <para>
+                  This field is used to enter the postal code or zip code.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Country</term>
+              <listitem>
+                <para>
+                  This field is used to enter the country.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Phone(s)</term>
+              <listitem>
+                <para>
+                  This field is used to enter the phone number(s).
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Email(s)</term>
+              <listitem>
+                <para>
+                  This field is used to enter the email address(es).
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Website(s)</term>
+              <listitem>
+                <para>
+                  This field is used to enter the website(s).
+                </para>
+              </listitem>
+            </varlistentry>
+          </variablelist>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>Creation Date</term>
+        <listitem>
+          <para>
+            This field is used to enter the date and optionally the time this
+            image was created. This is not necessarily the same as the date and
+            time a photo was taken.
+          </para>
+          <para>
+            The button next to this field allows you to select a date. However,
+            this does not let you to pick a time. You will have to enter that
+            manually.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Intellectual Genre</term>
+        <listitem>
+          <para>
+            Describes the nature, intellectual, artistic or journalistic
+            characteristic of an image.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>IPTC Scene Code</term>
+        <listitem>
+          <para>
+            Describes the scene of an image. Specifies one ore more terms from
+            the IPTC "Scene-NewsCodes". Each Scene Code should be on a separate
+            line and consists of a string of 6 digits.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>Image Location Information</term>
+        <listitem>
+          <para>
+            These fields serve to identify the image location.
+            All of the fields in this section are considered legacy, meaning
+            you usually would not use these to add new information.
+          </para>
+          <para>
+            We recommend instead to use similar named fields in the
+            <guilabel>IPTC Extensions</guilabel> tab for better compatibility
+            with other apps using metadata.
+          </para>
+          <variablelist>
+            <varlistentry>
+              <term>Sublocation</term>
+              <listitem>
+                <para>
+                  This field is used to enter the location shown in the image.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>City</term>
+              <listitem>
+                <para>
+                  This field is used to enter the city.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>State / Province</term>
+              <listitem>
+                <para>
+                  This field is used to enter the state or province.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Country</term>
+              <listitem>
+                <para>
+                  This field is used to enter the name of the country.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Country ISO-Code</term>
+              <listitem>
+                <para>
+                  This field is used to enter the ISO code of a country.
+                </para>
+              </listitem>
+            </varlistentry>
+          </variablelist>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>Urgency</term>
+        <listitem>
+          <para>
+            A field originally defined by Photoshop and nowadays considered
+            deprecated and mostly left alone.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Headline</term>
+        <listitem>
+          <para>
+            A brief synopsis of the caption. According to the IPTC
+            <guilabel>Headline</guilabel> is not the same as
+            <guilabel>Document Title</guilabel>.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry id="metadata-editor-iptc-subject-code">
+        <term>IPTC Subject Code</term>
+        <listitem>
+          <para>
+            Specifies one or more subjects from the
+            <ulink url="">IPTC Subject-NewsCodes</ulink> to
+            categorize the image. Each subject is represented as a string of
+            8 digits; each subject should be on a separate line.
+            This field is also considered deprecated and rarely used.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>Job Identifier</term>
+        <listitem>
+          <para>
+            A field used to identify the job this image belongs to in a
+            business environment.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Instructions</term>
+        <listitem>
+          <para>
+            A field with instructions from the creator of the image to the
+            receiver.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>Credit Line</term>
+        <listitem>
+          <para>
+            A field that specifies who to give credit when using this image.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Source</term>
+        <listitem>
+          <para>
+            A field that specifies the name of a person or party who had a role
+            in the content supply chain of making the image. This can be
+            someone else than the creator.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Usage Terms</term>
+        <listitem>
+          <para>
+            A field specifying the license for using this image.
+          </para>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+  </sect3>
+
+  <sect3 id="gimp-metadata-editor-iptc-extension">
+    <title>IPTC Extension</title>
+
+    <figure>
+      <title>IPTC Extension tab</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/menus/image/metadata-editor-dialog-iptc-extension.png"
+            format="PNG"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+
+    <para>
+      The <guilabel>IPTC Extension</guilabel> is an extension of the original
+      IPTC metadata specification that allows more detailed information.
+      In most cases it is recommended to enter your information here instead
+      of similar fields in the IPTC tab.
+    </para>
+    <para>
+      A lot of the metadata fields here are specifically targeted at
+      professional use cases in organizations. There is no need to fill in all
+      fields. You can limit yourself to what is relevant for you.
+    </para>
+
+    <variablelist>
+      <varlistentry>
+        <term>Person Shown</term>
+        <listitem>
+          <para>
+            This field can be used to list the names of persons in an image.
+            Each name should be listed on a separate line.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>Information about the location the image was created</term>
+        <listitem>
+          <variablelist>
+            <varlistentry>
+              <term>Sublocation</term>
+              <listitem>
+                <para>
+                  This field is used to enter the location.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>City</term>
+              <listitem>
+                <para>
+                  This field is used to enter the city.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>State / Province</term>
+              <listitem>
+                <para>
+                  This field is used to enter the state or province.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Country</term>
+              <listitem>
+                <para>
+                  This field is used to enter the name of the country.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Country ISO-Code</term>
+              <listitem>
+                <para>
+                  This field is used to enter the ISO code of a country.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>World Region</term>
+              <listitem>
+                <para>
+                  This field is used to enter the name of the region of the
+                  world.
+                </para>
+              </listitem>
+            </varlistentry>
+          </variablelist>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry id="metadata-editor-editing-tables">
+        <term>Editing metadata information in tables</term>
+        <listitem>
+          <para>
+            We us tables to show and edit certain types of metadata. This is a
+            short overview of how to edit data in a table.
+          </para>
+          <para>
+            In a table, each row lists information about one specific event or
+            occurrence, where each column pertains to one specific part of that
+            information. Multiple rows can be added when needed.
+          </para>
+          <para>
+            Below each table you see two buttons, one with a plus sign, to
+            add a new row, and another with a minus sign, to remove an
+            existing row.
+          </para>
+          <para>
+            To edit the metadata in one of the columns, first select the
+            corresponding row by clicking on it. Then double-click on the
+            column you want to edit. You will see an edit cursor in that field
+            that will allow you to add and change the text in that field.
+          </para>
+          <para>
+            If you make a mistake while editing, you can use the
+            <keycap>Esc</keycap> key to cancel your changes. If you are content
+            with your text, use <keycap>Enter</keycap> or click somewhere else
+            inside the tableto finalize the change. If you click outside the
+            table, the changes are cancelled.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>Location Shown</term>
+        <listitem>
+          <para>
+            This table allows you to specify one or more locations that are
+            shown in your image. The columns use the same basic data as that
+            for the location created shown at the top of this tab page.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>Featured Organization</term>
+        <listitem>
+          <para>
+            This table allows you to specify one or more names of organizations
+            that are shown in your image, one per row.
+          </para>
+          <para>
+            For information about editing metadata in a table, see
+            <link linkend="metadata-editor-editing-tables">here</link>.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>Organization Code</term>
+        <listitem>
+          <para>
+            This table allows you to specify one or more organization codes
+            related to the organizations that are shown in your image,
+            one per row.
+          </para>
+          <para>
+            For information about editing metadata in a table, see
+            <link linkend="metadata-editor-editing-tables">here</link>.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>Event</term>
+        <listitem>
+          <para>
+            This field allows you to enter the name or description of the event
+            at which this image was taken.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>Artwork or Object</term>
+        <listitem>
+          <para>
+            This table allows you to specify one or more pieces of artwork or
+            objects that are shown in your image, one per row.
+          </para>
+          <para>
+            For information about editing metadata in a table, see
+            <link linkend="metadata-editor-editing-tables">here</link>.
+          </para>
+          <para>
+            The following types of metadata can be entered in the respective
+            columns.
+          </para>
+          <variablelist>
+            <varlistentry>
+              <term>Title</term>
+              <listitem>
+                <para>
+                  The title of the artwork or object.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Date Created</term>
+              <listitem>
+                <para>
+                  The date and optionally the time the artwork or object was
+                  created.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Creator</term>
+              <listitem>
+                <para>
+                  The name of the artist that created the artwork or object.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Source</term>
+              <listitem>
+                <para>
+                  The organization registering the artwork or object in the
+                  image for inventory purposes.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Source Inventory ID</term>
+              <listitem>
+                <para>
+                  The inventory identification issued by the source organization
+                  for the artwork or object in the image.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Copyright Notice</term>
+              <listitem>
+                <para>
+                  The copyright notice for claiming the intellectual property
+                  for the artwork or an object in the image.
+                </para>
+              </listitem>
+            </varlistentry>
+          </variablelist>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>Additional Model Info</term>
+        <listitem>
+          <para>
+            Information about the model(s) in the image.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Model Age</term>
+        <listitem>
+          <para>
+            List the age(s) of the models shown in the image, one per line.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Minor Model Age Disclosure</term>
+        <listitem>
+          <para>
+            Age of the youngest model pictured in the image, at the time that
+            the image was taken. Select one of the options from the
+            drop-down list.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Model Release Status</term>
+        <listitem>
+          <para>
+            Enter information about the model releases, that authorize usage.
+            Select one of the options from the drop-down list.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Model Release Identifier</term>
+        <listitem>
+          <para>
+            This table allows you to specify one or more model release
+            identifiers that identify model relase documents of models shown
+            in your image, one per row.
+          </para>
+          <para>
+            For information about editing metadata in a table, see
+            <link linkend="metadata-editor-editing-tables">here</link>.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Image Supplier Name</term>
+        <listitem>
+          <para>
+            The name of the supplier of the image, which is not necessarily
+            the owner or creator.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Image Supplier ID</term>
+        <listitem>
+          <para>
+            The ID that identifies the supplier of the image.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Supplier's Image ID</term>
+        <listitem>
+          <para>
+            The ID by which the supplier identifies the image.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Registry Entry</term>
+        <listitem>
+          <para>
+            This table allows you to specify a Registry Organization identifier
+            and an Item identifier to record any registration of this image
+            with a registry.
+          </para>
+          <para>
+            For information about editing metadata in a table, see
+            <link linkend="metadata-editor-editing-tables">here</link>.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>Max Available Width</term>
+        <listitem>
+          <para>
+            The maximum width in pixels of the original photo from which this
+            image has been derived.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Max Available Heigth</term>
+        <listitem>
+          <para>
+            The maximum heigth in pixels of the original photo from which this
+            image has been derived.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Digital Source Type</term>
+        <listitem>
+          <para>
+            The type of the source of this digital image. Select one of the
+            values from the drop-down list. This lists the values from the
+            official <ulink
+              url="https://cv.iptc.org/newscodes/digitalsourcetype/">Digital
+            Source Type NewsCodes vocabulary</ulink>.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Image Creator</term>
+        <listitem>
+          <para>
+            This table allows you to enter the names and optionally
+            identifiers of the creator(s) of the image, one creator per line.
+          </para>
+          <para>
+            For information about editing metadata in a table, see
+            <link linkend="metadata-editor-editing-tables">here</link>.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Copyright Owner</term>
+        <listitem>
+          <para>
+            This table allows you to enter the names and optionally
+            identifiers of the copyright owner(s) of the image, one per line.
+          </para>
+          <para>
+            For information about editing metadata in a table, see
+            <link linkend="metadata-editor-editing-tables">here</link>.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>Licensor</term>
+        <listitem>
+          <para>
+            This table allows you to specify details about the persons or
+            organizations that can be contacted for obtaining a license to
+            use this image, one per row.
+          </para>
+          <para>
+            For information about editing metadata in a table, see
+            <link linkend="metadata-editor-editing-tables">here</link>.
+          </para>
+          <para>
+            The following types of metadata can be entered in the respective
+            columns.
+          </para>
+          <variablelist>
+            <varlistentry>
+              <term>Name</term>
+              <listitem>
+                <para>
+                  The name of a licensor.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Identifier</term>
+              <listitem>
+                <para>
+                  The identifier with which the licensor can be identified.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Phone number 1</term>
+              <listitem>
+                <para>
+                  The phone number at which the licensor can be reached.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Phone type 1</term>
+              <listitem>
+                <para>
+                  The type of phone number can be selected from a drop-down
+                  list.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Phone number 2</term>
+              <listitem>
+                <para>
+                  The phone number at which the licensor can be reached.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Phone type 2</term>
+              <listitem>
+                <para>
+                  The type of phone number can be selected from a drop-down
+                  list.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Email address</term>
+              <listitem>
+                <para>
+                  The email address at which the licensor can be reached.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Web address</term>
+              <listitem>
+                <para>
+                  The website at which the licensor can be reached.
+                </para>
+              </listitem>
+            </varlistentry>
+          </variablelist>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>Property Release Status</term>
+        <listitem>
+          <para>
+            Enter information about the property releases, that authorize usage
+            of the properties appearing in the image.
+            Select one of the options from the drop-down list.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Property Release Identifier</term>
+        <listitem>
+          <para>
+            This table allows you to specify one or more property release
+            identifiers that identify property relase documents of properties
+            shown in your image, one per row.
+          </para>
+          <para>
+            For information about editing metadata in a table, see
+            <link linkend="metadata-editor-editing-tables">here</link>.
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </sect3>
+
+  <sect3 id="gimp-metadata-editor-categories">
+    <title>Categories</title>
+
+    <figure>
+      <title>Categories tab</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/menus/image/metadata-editor-dialog-categories.png"
+            format="PNG"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+
+    <para>
+      The <guilabel>Categories</guilabel> tab allows you to edit metadata
+      that indicates what categories an image belongs to.
+    </para>
+
+    <variablelist>
+      <varlistentry>
+        <term>Category</term>
+        <listitem>
+          <para>
+            The category this image belongs to, usually a three-letter code.
+          </para>
+          <para>
+            This is a deprecated field and should generally not be used to add
+            new information. Use
+            <link linkend="metadata-editor-iptc-subject-code">IPTC
+            Subject Code</link> on the IPTC tab instead.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Supplemental Category</term>
+        <listitem>
+          <para>
+            The supplemental category this image belongs to, consisting of
+            free-form text. This is a deprecated field and should generally not
+            be used to add new information.
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </sect3>
+
+  <sect3 id="gimp-metadata-editor-gps">
+    <title>GPS</title>
+
+    <figure>
+      <title>GPS tab</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/menus/image/metadata-editor-dialog-gps.png"
+            format="PNG"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+
+    <para>
+      The <guilabel>GPS</guilabel> tab allows you to edit metadata
+      related to GPS information, the information that shows you at what
+      exact location the image was taken.
+    </para>
+
+    <variablelist>
+      <varlistentry>
+        <term>Longitude</term>
+        <listitem>
+          <para>
+            The longitude part of the GPS location information. Note that
+            this will only be valid and saved when the Longitude Reference
+            is also set and not Unknown.
+          </para>
+          <para>
+            This information is usually already set when taking an image with
+            a digital camera.
+          </para>
+          <para>
+            Valid values consist of 1, 2 or 3 numbers that specify the degrees,
+            minutes, and seconds of the longitude.
+          </para>
+          <para>
+            See the following examples:
+            <literal>10deg 15' 20"</literal>, or
+            <literal>10\u00b0 15' 20"</literal>, or
+            <literal>10:15:20.45</literal>, or
+            <literal>10 15 20</literal>, or <literal>10 15.30</literal>, or
+            <literal>10.45</literal>.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Longitude Reference</term>
+        <listitem>
+          <para>
+            The longitude reference part of the GPS location information.
+            This is required to be set for a valid longitude.
+            Choose either <guilabel>East</guilabel> or <guilabel>West</guilabel>
+            from the drop-down list.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Latitude</term>
+        <listitem>
+          <para>
+            The latitude part of the GPS location information. Note that
+            this will only be valid and saved when the Latitude Reference
+            is also set and not Unknown. See longitude for information on
+            how to enter this information.
+          </para>
+          <para>
+            This information is usually already set when taking an image with
+            a digital camera.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Latitude Reference</term>
+        <listitem>
+          <para>
+            The latitude reference part of the GPS location information.
+            This is required to be set for a valid latitude.
+            Choose either <guilabel>North</guilabel> or <guilabel>South</guilabel>
+            from the drop-down list.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Altitude</term>
+        <listitem>
+          <para>
+            The altitude part of the GPS location information, which
+            is the height above, or below sea level.. Note that
+            this will only be valid and saved when the Altitude Reference
+            is also set and not Unknown.
+            The button to the right of this field let's you choose whether
+            the altitude is specified in meters (m) or feet (ft).
+            A valid value consists of one number, e.g. 100, or 12.24.
+          </para>
+          <para>
+            This information is sometimes already set when taking an image with
+            a digital camera.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Altitude Reference</term>
+        <listitem>
+          <para>
+            The altitude reference part of the GPS location information.
+            This is required to be set for a valid altitude.
+            Choose either <guilabel>Above sea level</guilabel> or
+            <guilabel>Below sea level</guilabel> from the drop-down list.
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </sect3>
+
+  <sect3 id="gimp-metadata-editor-dicom">
+    <title>DICOM</title>
+
+    <figure>
+      <title>DICOM tab</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/menus/image/metadata-editor-dialog-dicom.png"
+            format="PNG"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+
+    <para>
+      The <guilabel>DICOM</guilabel> tab allows you to edit metadata
+      that relates to so-called DICOM metadata. That is medical information,
+      usually related to x-ray images.
+    </para>
+    <para>
+      Most images usually don't have this kind of information, these fields
+      are empty most of the time. Even if you have images that contain this
+      information, you should consider removing most if not all of this
+      metadata when you intend to share it, since it can be highly sensitive
+      personal health information.
+    </para>
+
+    <variablelist>
+      <varlistentry>
+        <term>Patient</term>
+        <listitem>
+          <para>
+            The name of the patient.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Patient ID</term>
+        <listitem>
+          <para>
+            The ID of the patient.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Date of birth</term>
+        <listitem>
+          <para>
+            The birth date of the patient.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Patient Sex</term>
+        <listitem>
+          <para>
+            Select the sex of the patient from the drop-down list.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>Study ID</term>
+        <listitem>
+          <para>
+            The Study ID that identifies the specific study for which this
+            image was used.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Referring Physician</term>
+        <listitem>
+          <para>
+            The physician that referred the patient.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Study Date</term>
+        <listitem>
+          <para>
+            The date that the study took place.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Study Description</term>
+        <listitem>
+          <para>
+            A description of the study that was performed.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Series number</term>
+        <listitem>
+          <para>
+            The series number of this image.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Modality</term>
+        <listitem>
+          <para>
+            The date that the study took place.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Series date</term>
+        <listitem>
+          <para>
+            The date this series images was taken.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Series Description</term>
+        <listitem>
+          <para>
+            A description of this series.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Equipment Institution</term>
+        <listitem>
+          <para>
+            The institution that owns the equipment.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Equipment Manufacturer</term>
+        <listitem>
+          <para>
+            The maker of the equipment.
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </sect3>
+
+  <sect3>
+    <title>Importing and Exporting metadata</title>
+    <para>
+      The <guilabel>Select:</guilabel> drop-down button at the bottom of the
+      dialog, is where you can choose to Import or Export metadata.
+      A good way to have your metadata filled with pre-defined information,
+      is to open a new image without metadata, then in the metadata editor
+      fill in all fields that you care about.
+      You then choose <guilabel>Export metadata</guilabel> here and save it
+      under a name you can remember. Next time you need to fill in your
+      information, you choose <guilabel>Import metadata</guilabel>, then select
+      the file to read that information from, and all metadata fields will be
+      overwritten or filled with the information you saved previously.
+    </para>
+  </sect3>
+
 </sect2>
