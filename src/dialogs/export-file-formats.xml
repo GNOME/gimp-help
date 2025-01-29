@@ -20,4 +20,85 @@
     certain formats may not be able to show transparency (like jpeg), while
     only a few formats support exporting an animation (like webp and gif).
   </para>
+
+  <sect3 id="gimp-exporting-animations">
+    <title>Exporting Animations</title>
+
+    <para>
+      Some file formats supported by <acronym>GIMP</acronym> allow you to
+      export an animation, most notably
+      <link linkend="file-webp-export">webp</link> and
+      <link linkend="file-gif-export">gif</link>, but also
+      <link linkend="file-mng-export">mng</link>, however this last format
+      isn't supported very well by most applications.
+    </para>
+    <para>
+      There is limited support in <acronym>GIMP</acronym> for creating
+      animations. When exporting it is assumed that each layer in your image
+      represents a frame in your animation. Exporting to animations usually
+      doesn't support layer groups, so it's best not to use those if you
+      want to make an animation.
+    </para>
+    <para>
+      You can adjust the name of a layer, by adding some parameters in
+      parenthesis, to let the animation export know how that layer needs to
+      be animated and for how long it should be shown before going to the
+      next frame. When both these things are set a name usually looks like this:
+      <quote><literal>My layer name (delay in ms)(animation command)</literal></quote>.
+    </para>
+    <para>
+      The delay sets the amount of time the frame will be visible, e.g.
+      <literal>(200 ms)</literal> to set it to 200 milliseconds.
+    </para>
+    <para>
+      The animation command specifies how the frame is combined with the
+      previous one. You can only choose one animation command for each layer.
+      The available commands are:
+    </para>
+    <variablelist>
+      <varlistentry>
+        <term>replace</term>
+        <listitem>
+          <para>
+            The <literal>(replace)</literal> command means that this layer (frame)
+            will completely replace the previous one.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>combine</term>
+        <listitem>
+          <para>
+            The <literal>(combine)</literal> command means that this layer (frame)
+            will be combined with the previous one. Only the visible parts in
+            this layer will replace that of the previous layer.
+            Using <literal>(combine)</literal> can reduce the size of the animation
+            and may improve playback speed for large size animations.
+          </para>
+          <para>
+            You can use the
+            <link linkend="plug-in-animationoptimize">optimize (for GIF)</link>
+            command to change your <literal>(replace)</literal> layers to
+            <literal>(combine)</literal>.
+            This adjusts the layer to only contain what is different from the
+            previous one and then sets it to <literal>(replace)</literal>.
+            Don't hesitate to use this, even if you plan to export to
+            a different format than GIF. This command was named at a time that
+            there were not many other animation options than GIF, but can be
+            used for any animation format that supports combining.
+          </para>
+          <para>
+            Note that you can also do the reverse and
+            <link linkend="plug-in-animationunoptimize">unoptimize</link> the
+            animation, setting each layer to <literal>(replace)</literal>.
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+    <para>
+      <acronym>GIMP</acronym> has a limited
+      <link linkend="plug-in-animationplay">animation playback</link> ability
+      that you can use to preview your animation.
+    </para>
+  </sect3>
 </sect2>
