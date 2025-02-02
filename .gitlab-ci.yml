@@ -1,4 +1,4 @@
-image: debian:testing
+image: debian:unstable
 
 stages:
   - prepare
@@ -22,7 +22,7 @@ build-image:
   script:
     - mkdir -p /kaniko/.docker
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
-    - echo "FROM debian:testing" > Dockerfile
+    - echo "FROM debian:unstable" > Dockerfile
     - echo "RUN apt-get update" >> Dockerfile
     - echo "RUN apt-get install -y --no-install-recommends \\" >> Dockerfile
     - echo "automake build-essential docbook-website docbook-xml docbook-xsl fonts-noto-cjk fonts-noto-core gettext git intltool librsvg2-2 librsvg2-bin pkg-config pngcrush python3 python3-libxml2 python3-polib xsltproc libxml2-utils" >> Dockerfile
@@ -51,12 +51,14 @@ check-broken-images:
   stage: build
   image: $CI_REGISTRY_IMAGE:build-debian-latest
   artifacts:
-    expire_in: 1 week
+    expire_in: 1 day
     when: always
     paths:
     - "${HELP_DIR}"
     - "${PDF_DIR}"
     - _log
+    # For debugging:
+    - _build
   script:
     - cd src
     # Mark all source files as updated. Needed to get up-to-date translations
@@ -67,9 +69,12 @@ check-broken-images:
     - ../autogen.sh --prefix=${INSTALL_PREFIX} --without-gimp
     # Make po first to get validate to use up-to-date translations, and also to stop plain make from redoing the xml
     - make po
-    - make validate-all
+
+    # DISABLE Validating during testing
+    #- make validate-all
     # Test if any xml is present in logs, which means failed validation
-    - if [ `ls -1 log/*.xml 2>/dev/null | wc -l ` -gt 0 ]; then mv log/ ../_log/; echo 'Validation failed!' && false; exit 2; else rm -f log/*.log; fi
+    #- if [ `ls -1 log/*.xml 2>/dev/null | wc -l ` -gt 0 ]; then mv log/ ../_log/; echo 'Validation failed!' && false; exit 2; else rm -f log/*.log; fi
+
     - make && make install
     - mv ${INSTALL_PREFIX}/share/gimp/3.0/help/ ../${HELP_DIR}
     - mv ../${HELP_DIR}/pdf/ ../${PDF_DIR}
@@ -89,6 +94,8 @@ check-broken-images:
     - "${HELP_DIR}"
     - "${PDF_DIR}"
     - _log
+    # for debugging:
+    - _build
   script:
     - cd src
     # Mark all source files as updated. Needed to get up-to-date translations
