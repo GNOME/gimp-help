@@ -73,10 +73,9 @@ check-broken-images:
     # Make po first to get validate to use up-to-date translations, and also to stop plain make from redoing the xml
     - make po
 
-    # DISABLE Validating during testing
-    #- make validate-all
+    - make validate-all
     # Test if any xml is present in logs, which means failed validation
-    #- if [ `ls -1 log/*.xml 2>/dev/null | wc -l ` -gt 0 ]; then mv log/ ../_log/; echo 'Validation failed!' && false; exit 2; else rm -f log/*.log; fi
+    - if [ `ls -1 log/*.xml 2>/dev/null | wc -l ` -gt 0 ]; then mv log/ ../_log/; echo 'Validation failed!' && false; exit 2; else rm -f log/*.log; fi
 
     - make && make install
     - mv ${INSTALL_PREFIX}/share/gimp/3.0/help/ ../${HELP_DIR}
@@ -111,7 +110,7 @@ check-broken-images:
     - mv ${INSTALL_PREFIX}/share/gimp/3.0/help/ ../${HELP_DIR}
     - mv ../${HELP_DIR}/pdf/ ../${PDF_DIR}
     # Validate last for known problematic languages
-    #- make validate-all
+    - make validate-all
     # Test if any xml is present in logs, which means failed validation
     #- if [ `ls -1 log/*.xml 2>/dev/null | wc -l ` -gt 0 ]; then mv log/ ../_log/; echo 'Validation failed!' && false; exit 2; else rm -f log/*.log; fi
   timeout: 2 hours 30 minutes
