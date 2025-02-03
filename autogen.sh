@@ -21,7 +21,8 @@ DIE=0
 
 echo -n "Looking for latest automake version ... "
 required_automake_minor=10
-minor=16
+# Highest automake minor version to look for
+minor=17
 while [ $minor -ge $required_automake_minor ]; do
     ver=1.$minor
     if (automake-$ver --version) < /dev/null > /dev/null 2>&1; then
@@ -36,7 +37,8 @@ done
 if [ -z "$AUTOMAKE" ]; then
     echo
     echo "  You must have automake 1.$required_automake_minor or newer" \
-            "installed to compile $PROJECT."
+            "installed to compile $PROJECT. Highest version of automake " \
+            "known by this script is 1.$minor and may need to be adjusted."
     echo "  Download the appropriate package for your distribution,"
     echo "  or get the source tarball at ftp://ftp.gnu.org/pub/gnu/automake/"
     DIE=1
