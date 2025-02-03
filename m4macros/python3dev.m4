@@ -38,7 +38,7 @@ AC_DEFUN([AM_PATH_PYTHON3],
  [
   dnl Find a Python3 interpreter.
   m4_define_default([_AM_PYTHON_INTERPRETER_LIST],
-[python3 python python3.10 python3.9 python3.8 python3.7 python3.6])
+[python3 python python3.13 python3.12 python3.11 python3.10 python3.9 python3.8 python3.7 python3.6])
 
   AC_ARG_VAR([PYTHON], [the Python interpreter])
 
