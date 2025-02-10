@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+                       "http://www.docbook.org/xml/4.3/docbookx.dtd">
+
+<sect1 id="gimp-using-layer-effects">
+  <title>Layer Effects</title>
+  <!-- We don't want each sect2 on a separate page here -->
+  <?dbhtml stop-chunking?>
+
+  <indexterm>
+    <primary>Layer Effects</primary>
+  </indexterm>
+  <indexterm>
+    <primary>NDE</primary>
+  </indexterm>
+  <indexterm>
+    <primary>Layer</primary>
+    <secondary>Effects</secondary>
+  </indexterm>
+
+  <!-- We might want an introductory image here ??? -->
+
+  <sect2>
+    <title>Introduction</title>
+    <para>
+      A layer effect is a filter that you can tweak at any time,
+      that doesn't immediately and more-or-less permanently affect a layer.
+    </para>
+    <para>
+      The advantage is that after many more intervening operations,
+      you can still go back and tweak the layer effect.
+      Unlike Undo, where you might need to Undo and Redo many operations.
+    </para>
+    <para>
+      Also, after saving an image,
+      you can still tweak its layer effect.
+      And when you open an image, you can still its tweak layer effects.
+    </para>
+    <para>
+      You add a layer effect just like other filters,
+      by selecting a layer and then
+      choosing a command (a menu item or keyboard shortcut.)
+    </para>
+    <para>
+      A layer effect is a class of filters.
+      You may not know a menu item creates a layer effect until you choose the menu item
+      and see the
+      <guiicon>
+        <inlinemediaobject>
+          <imageobject>
+            <imagedata
+              fileref="images/stock-icons/gimp-effects.svg" contentwidth="16px"/>
+          </imageobject>
+        </inlinemediaobject>
+      </guiicon> icon in the Layers dialog.
+      Also, when you are adding a filter to an image,
+      when the filter will create a layer effect
+      (versus creating a destructive effect)
+      the Filter dialog will have an Merge Filter button.
+      <!-- We might want an image of the Merge Filter button/icon here ??? -->
+    </para>
+    <para>
+      Most Gegl filters can be layer effects.
+      No non-Gegl filters can be layer effects.
+    </para>
+    <para>
+      Layer effects only apply to  a single layer,
+      while other filters may apply to channels, layers, or entire images.
+    </para>
+    <para>
+      You can't choose whether a filter <emphasis>can be</emphasis> a layer effect.
+      But you can choose to use a filter that <emphasis>can be</emphasis> a layer effect
+      in a non-tweakable way: see <link linkend="gimp-merging-layer-effects">Merging."</link>
+    </para>
+  </sect2>
+
+  <sect2>
+    <title>Terminology</title>
+    <para>
+      Gimp represents layer effects with an icon:
+      <guiicon>
+        <inlinemediaobject>
+          <imageobject>
+            <imagedata
+              fileref="images/stock-icons/gimp-effects.svg" contentwidth="16px"/>
+          </imageobject>
+        </inlinemediaobject>
+      </guiicon>.
+      The icon appears in the Layer dialog,
+      in the row of the layer the layer effect applies to,
+      when you add a layer effect to the layer.
+    </para>
+    <para>
+      The term <emphasis>fx</emphasis> is an abbreviation for <emphasis>effect.</emphasis>
+    </para>
+    <para>
+      Layer effects are also known as "non-destructive edits (NDE)."
+      They don't permanently change their layer.
+    </para>
+    <para>
+      This means they have parameters which you can much later change.
+      Changes to parameters immediately cascade into their layer
+      and the entire image.
+    </para>
+    <para>
+      Compare with "parametric design" in CAD (Computer Aided Design)
+      where you can also tweak a model's parameters.
+    </para>
+    <para>
+      While all filters have an effect on layers, in the sense of a result,
+      here we intend the words "layer effect" to mean a certain use of
+      certain eligible filters.
+    </para>
+  </sect2>
+
+  <sect2>
+    <title>Adding a Layer Effect to a Layer</title>
+    <para>
+      You create a layer effect by selecting a layer,
+      then choosing a command
+      that is backed by a filter that can be a layer effect.
+      Then the
+      <guiicon>
+        <inlinemediaobject>
+          <imageobject>
+            <imagedata
+              fileref="images/stock-icons/gimp-effects.svg" contentwidth="16px"/>
+          </imageobject>
+        </inlinemediaobject>
+      </guiicon>
+      icon appears next to the layer name in the <link linkend="gimp-layer-dialog">Layers dialog.</link>
+    </para>
+    <para>
+      A layer effect belongs to a layer.
+      A layer may have many layer effects, in a stack.
+      When you add a layer effect, it adds to the top of any stack of existing layer effects.
+      You can later move it, using the <link linkend="gimp-layer-effects-dialog">Layer Effects dialog.
+    </para>
+    <para>
+      Creating a layer effect is undoable.
+    </para>
+  </sect2>
+
+  <sect2>
+    <title>Order Matters</title>
+    <para>
+      The order of layer effects matters.
+      Layer effects are stacked above their layer.
+      The result of a layer effect propagates down to the layer effect underneath it,
+      ultimately to the layer.
+    </para>
+    <para>
+      You can rearrange the order of layer effects on a layer
+      by choosing a layer effect
+      and then clicking the Up Arrow or Down Arrow buttons
+      in the <link linkend="gimp-layer-effects-dialog">Layer Effects dialog.</link>
+    </para>
+    <para>
+      Some changes in order might appear invisible,
+      it depends on the actual layer effects and their parameters.
+    </para>
+    <para>
+      Reordering layer effects is undoable.
+    </para>
+  </sect2>
+
+  <sect2 id="gimp-layer-effects-dialog">
+    <title>The Layer Effects Dialog</title>
+    <para>
+      Use this dialog to edit, reorder, remove, or change the visibility of layer effects.
+      You can also use this dialog to merge down all effects on a layer.
+    </para>
+    <para>
+      You open this dialog by clicking on the fx icon in a row of the Layers dialog.
+      <!-- TODO icon image -->
+    </para>
+    <!-- TODO image somewhere is this section -->
+    <para>
+      As you use this dialog, you immediately see the changes to the image.
+    </para>
+      <sect3>
+      <title>Selecting a Layer Effect</title>
+      <para>
+      Click on a row in the Layer Effects dialog to select the effect.
+      </para>
+      </sect3>
+      <sect3>
+      <title>Editing a Layer Effect</title>
+      <para>
+      Choose the Edit Layer Effects button/icon after you select an effect.
+      <!-- TODO icon image -->
+      The dialog for the filter will appear.
+      Change its parameters.
+      You will immediately see any changes to the image.
+      When you are done, choose the OK button.
+      After you choose OK, the tweaks are not undoable,
+      but you can tweak them again later.
+      </para>
+      <para>
+      When you choose the Cancel button/icon of the filter's dialog,
+      any tweaks you have made are reverted.
+      </para>
+      </sect3>
+      <sect3>
+      <title>Removing a Layer Effect</title>
+      <para>
+      Select a layer effect row.
+      Then choose the Remove Layer Effects button/icon.
+      <!-- TODO icon image -->
+      The layer effect row will disappear.
+      When it is the last effect on the layer, the dialog will also close.
+      </para>
+      <para>
+      Removing a layer effect is undoable.
+      </para>
+      </sect3>
+      <sect3>
+      <title>Reordering Layer Effects</title>
+      <para>
+      Choose the Move Up or Move Down button/icon.
+      <!-- TODO icon image -->
+      The layer effect row will move up or down.
+      </para>
+      <para>
+      Reordering a layer effect is undoable.
+      </para>
+      </sect3>
+      <sect3>
+      <title>Changing the Visibility of a Layer Effect</title>
+      <para>
+      Choose the Visibility button/icon.
+      <!-- TODO icon image -->
+      The effect on the image will show or hide.
+      </para>
+      </para>
+      Changing the visibility of a layer effect is not undoable,
+      like changing the parameters of the effect.
+      <para>
+      </sect3>
+      <sect3>
+      <title>Merging All Layer Effects</title>
+      <para>
+      Choose the Merge Down button/icon.
+      <!-- TODO icon image -->
+      The rows in the dialog will disappear.
+      The Layer Effects dialog will close.
+      </para>
+      <para>
+      You can undo Merging Down.
+      Choose the "Undo Rasterizing filters" item from the Undo menu.
+      That will restore the layer effects on the layer.
+      But it will not undo the changes to the image!
+      <!-- TODO is that correct? seems like bug, you can edit a fx, and cancel, then see effect.-->
+      </para>
+      </sect3>
+      <sect3>
+      <title>Closing the Layer Effects Dialog</title>
+      <para>
+      Just click outside the dialog.
+      </para>
+      <para>
+      There is no Cancel button to cancel any changes you have made,
+      but while the dialog is open you can reverse some changes ,
+      and after you close the dialog you can undo some changes.
+      </para>
+      </sect3>
+  </sect2>
+
+  <sect2 id="gimp-merging-layer-effects">
+    <title>Merging</title>
+    <para>
+      When you choose a menu item that <emphasis>can be</emphasis> a layer effect,
+      you can choose to use the filter in a non-tweakable way.
+      This is called "Merging", similar to the way you merge layers.
+    </para>
+    <para>
+      To use a filter in a non-tweakable way,
+      when you see the filter's dialog,
+      choose the "Merge Filter" checkbox.
+      Then, after choosing "OK",
+      the filter has a non-tweakable result on the layer,
+      and no new layer effect is pushed atop the stack of layer effects.
+    </para>
+    <para>
+      You can still Undo what you did, or do it again with different choices.
+      But it won't appear in the stack of layer effects.
+      And if you subsequently do other operations,
+      it will be harder to undo than if you use the filter as a layer effect.
+    </para>
+  </sect2>
+
+  <sect2>
+    <title>Merging and Auxiliary Other Images</title>
+    <para>
+      Some filters take two images, the active image and another "auxiliary" image,
+      which you must separately choose in the filter's dialog.
+      The auxiliary image may be called for example a "bump map" or a "mask."
+    </para>
+    <para>
+      Such a filter's dialog will have "Merge Filter" checkbox checked and disabled.
+      This means that the filter won't become a layer effect.
+    </para>
+    <para>
+      We anticipate that in the future, filters that take auxiliary other images might be tweakable and appear as layer effects.
+    </para>
+  </sect2>
+
+  <sect2>
+    <title>Undo and Layer Effects</title>
+    <para>
+      You can undo adding or removing a layer effect.
+    </para>
+    <para>
+      You cannot use the Undo menu item to revert changing the parameters of a layer effect.
+      Instead, just keep changing the parameters from your own memory.
+      To record a set of parameter values, you can save them as a preset,
+      the same as for other filters.
+      See <link linkend="gimp-filter-presets-dialog">Filter Presets.</link>
+    </para>
+  </sect2>
+
+  <sect2>
+    <title>Persistence of Layer Effects</title>
+    <para>
+      Layer effects are saved when you save an image in the XCF format.
+      All the presets for a layer effect are also saved.
+    </para>
+    <para>
+      Layer effects are <emphasis>NOT</emphasis> saved, but "merged",
+      when you export an image to another format.
+      You don't have a choice in the matter when exporting.
+    </para>
+    <para>
+      For now, layer effects are not saved even in formats
+      which also support layer effects, such as the PSD format.
+    </para>
+  </sect2>
+
+  <sect2 id="gimp-filter-presets-dialog">
+    <!-- TODO image here -->
+    <!-- TODO this separate concept should be in a separate file. -->
+    <title>Filter Presets Dialog</title>
+    <para>
+      <!-- TODO is this even correct? -->
+      A preset is a template.
+      You apply a preset to an application, or instance, of the filter.
+      That initializes the filter instance.
+      Thereafter you may change the instance settings,
+      but that does not change the preset.
+      Thereafter, you may edit the preset,
+      but that does not change any prior uses of the preset
+      (doesn't change any existing instances.)
+    </para>
+    <para>
+      A filter preset is for a particular filter.
+      Each filter may have a set of presets.
+    </para>
+    <para>
+      A filter preset belongs to a filter, not to its instances.
+      You apply, or reapply, a filter preset to an instance of a filter.
+    </para>
+    <para>
+      Each filter has defaults.
+      But defaults are not the same as presets.
+      A filter may have no presets, until you add them.
+    </para>
+    <para>
+      You use this dialog to choose and apply an existing preset,
+      or to add a new one,
+      or to edit a preset,
+      or to remove a preset.
+    </para>
+    <!-- TODO sections for choose, add, edit, remove preset -->
+    <para>
+      Filter presets are named.
+    </para>
+  </sect2>
+</sect1>
