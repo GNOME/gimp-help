@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+                       "http://www.docbook.org/xml/4.3/docbookx.dtd">
+
+<sect1 id="gimp-using-layer-effects">
+  <title>Layer Effects</title>
+  <!-- We don't want each sect2 on a separate page here -->
+  <?dbhtml stop-chunking?>
+
+  <indexterm>
+    <primary>Layer Effects</primary>
+  </indexterm>
+  <indexterm>
+    <primary>NDE</primary>
+  </indexterm>
+  <indexterm>
+    <primary>Layer</primary>
+    <secondary>Effects</secondary>
+  </indexterm>
+
+  <mediaobject>
+    <imageobject>
+      <imagedata format="PNG"
+        fileref="images/dialogs/layer-group.png"/>
+    </imageobject>
+  </mediaobject>
+
+  <sect2>
+    <title>Introduction</title>
+    <para>
+      A layer effect is a filter that can much later be tweaked,
+      that doesn't immediately and more-or-less permanently affect a layer.
+    </para>
+    <para>
+      The advantage is that after many more intervening operations,
+      you can still go back and tweak the layer effect.
+      Unlike Undo, where you might need to Undo and Redo many operations.
+    </para>
+    <para>
+      You add a layer effect just like other filters,
+      by selecting a layer and then
+      choosing a menu item.
+    </para>
+    <para>
+      A layer effect is a class of filters.
+      You may not know a menu item creates a layer effect until you choose the menu item
+      and see the
+      <guiicon>
+        <inlinemediaobject>
+          <imageobject>
+            <imagedata
+              fileref="images/stock-icons/gimp-effects.svg" contentwidth="16px"/>
+          </imageobject>
+        </inlinemediaobject>
+      </guiicon> icon.
+    </para>
+    <para>
+      All Gegl filters can be layer effects.
+      No non-Gegl filters can be layer effects.
+    </para>
+    <para>
+      Layer effects always apply to layers,
+      while other filters may apply to channels, layers, or entire images.
+    </para>
+    <para>
+      You can't choose whether a filter <emphasis>can be</emphasis> a layer effect.
+      But you can choose to use a filter that <emphasis>can be</emphasis> a layer effect
+      in a non-tweakable way: see "Merging."
+    </para>
+  </sect2>
+
+  <sect2>
+    <title>Terminology</title>
+    <para>
+      A layer effect is also known as an <emphasis>fx</emphasis>.
+      "fx" is the slang term for "effects."
+      Gimp represents layer effects with an icon:
+      <guiicon>
+        <inlinemediaobject>
+          <imageobject>
+            <imagedata
+              fileref="images/stock-icons/gimp-effects.svg" contentwidth="16px"/>
+          </imageobject>
+        </inlinemediaobject>
+      </guiicon>.
+    </para>
+    <para>
+      Layer effects are also known as "non-destructive edits (NDE)."
+      They don't permanently change their layer.
+    </para>
+    <para>
+      Layer effects may also be called "parametric."
+      This means they have parameters which you can much later tweak.
+      Changes to parameters immediately cascade into their layer
+      and the entire image.
+      Compare with "parametric design" in CAD (Computer Aided Design.)
+    </para>
+    <para>
+      While all filters have an effect on layers, in the sense of a result,
+      here we intend the words "layer effect" to mean a certain use of
+      certain eligible filters.
+    </para>
+  </sect2>
+
+  <sect2>
+    <title>Association with Layers</title>
+    <para>
+      A layer effect belongs to a layer.
+      A layer may have many layer effects, in a stack.
+    </para>
+    <para>
+      You create a layer effect by selecting a layer,
+      then choosing a menu item
+      that is backed by filter that can be a layer effect.
+      Then the
+      <guiicon>
+        <inlinemediaobject>
+          <imageobject>
+            <imagedata
+              fileref="images/stock-icons/gimp-effects.svg" contentwidth="16px"/>
+          </imageobject>
+        </inlinemediaobject>
+      </guiicon>
+      icon appear next to the layer name in the Layers dialog.
+    </para>
+    <para>
+      Creating a layer effect is undoable.
+    </para>
+  </sect2>
+
+  <sect2>
+    <title>Order Matters</title>
+    <para>
+      The order of layer effects matters.
+      Layer effects are stacked above their layer.
+      The result of a layer effect propagates down to the layer effect underneath it,
+      ultimately to the layer.
+    </para>
+    <para>
+      You can rearrange the order of layer effects on a layer
+      by choosing a layer effect
+      and then clicking the Up Arrow or Down Arrow buttons
+      in the Layer Effects dialog.
+    </para>
+    <para>
+      Some changes in order might not seem to have any visible effect,
+      it depends on the actual layer effects and their parameters.
+    </para>
+    <para>
+      Reordering layer effects is undoable.
+    </para>
+  </sect2>
+
+  <sect2>
+    <title>Merging</title>
+    <para>
+      When you choose a menu item that <emphasis>can be</emphasis> a layer effect,
+      you can choose to use the filter in a non-tweakable way.
+      This is called "Merging", similar to the way you merge layers.
+    </para>
+    <para>
+      To use a filter in a non-tweakable way,
+      when you see the filter's dialog,
+      choose the "Merge Filter" checkbox.
+      Then, after choosing "OK",
+      the filter has a non-tweakable result on the layer,
+      and no new layer effect is pushed atop the stack of layer effects.
+    </para>
+    <para>
+      You can still Undo what you did, or do it again with different choices.
+      But it won't appear in the stack of layer effects.
+      And if you subsequently do other operations,
+      it will be harder to undo than if you use the filter as a layer effect.
+    </para>
+  </sect2>
+
+  <sect2>
+    <title>Merging and Auxiliary Other Images</title>
+    <para>
+      Some filters take two images, the active image and another "auxiliary" image,
+      which you must separately choose in the filter's dialog.
+      The auxiliary image may be called for example a "bump map" or a "mask."
+    </para>
+    <para>
+      Such a filter's dialog will have "Merge Filter" checkbox checked and disabled.
+      This means that the filter won't appear as a layer effect in the stack of layer effects.
+    </para>
+    <para>
+      We anticipate that in the future, filters that take auxiliary other images might be tweakable and appear as layer effects.
+    </para>
+  </sect2>
+
+  <sect2>
+    <title>Undo and Layer Effects</title>
+    <para>
+      You can undo adding or removing a layer effect.
+    </para>
+    <para>
+      You cannot use the Undo menu item to revert tweaking the parameters of a layer effect.
+      Instead, just keep tweaking the parameters from your own memory.
+      To record a set of parameter values, you can save them as a preset of the layer effect.
+    </para>
+  </sect2>
+
+  <sect2>
+    <title>Persistence of Layer Effects</title>
+    <para>
+      Layer effects are saved when you save an image in the XCF format.
+      All the presets for a layer effect are also saved.
+    </para>
+    <para>
+      Layer effects are *NOT* saved, but "merged",
+      when you export an image to another format.
+      You don't have a choice in the matter when exporting.
+    </para>
+    <para>
+      For now, layer effects are not saved even in formats
+      which also support layer effects, such as the PSD format.
+    </para>
+  </sect2>
+</sect1>
