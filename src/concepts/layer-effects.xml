@@ -18,17 +18,12 @@
     <secondary>Effects</secondary>
   </indexterm>
 
-  <mediaobject>
-    <imageobject>
-      <imagedata format="PNG"
-        fileref="images/dialogs/layer-group.png"/>
-    </imageobject>
-  </mediaobject>
+  <!-- We might want an introductory image here ??? -->
 
   <sect2>
     <title>Introduction</title>
     <para>
-      A layer effect is a filter that can much later be tweaked,
+      A layer effect is a filter that you can tweak at any time,
       that doesn't immediately and more-or-less permanently affect a layer.
     </para>
     <para>
@@ -37,9 +32,14 @@
       Unlike Undo, where you might need to Undo and Redo many operations.
     </para>
     <para>
+      Also, after saving an image,
+      you can still tweak its layer effect.
+      And when you open an image, you can still its tweak layer effects.
+    </para>
+    <para>
       You add a layer effect just like other filters,
       by selecting a layer and then
-      choosing a menu item.
+      choosing a command (a menu item or keyboard shortcut.)
     </para>
     <para>
       A layer effect is a class of filters.
@@ -52,28 +52,31 @@
               fileref="images/stock-icons/gimp-effects.svg" contentwidth="16px"/>
           </imageobject>
         </inlinemediaobject>
-      </guiicon> icon.
+      </guiicon> icon in the Layers dialog.
+      Also, when you are adding a filter to an image,
+      when the filter will create a layer effect
+      (versus creating a destructive effect)
+      the Filter dialog will have an Merge Filter button.
+      <!-- We might want an image of the Merge Filter button/icon here ??? -->
     </para>
     <para>
-      All Gegl filters can be layer effects.
+      Most Gegl filters can be layer effects.
       No non-Gegl filters can be layer effects.
     </para>
     <para>
-      Layer effects always apply to layers,
+      Layer effects only apply to  a single layer,
       while other filters may apply to channels, layers, or entire images.
     </para>
     <para>
       You can't choose whether a filter <emphasis>can be</emphasis> a layer effect.
       But you can choose to use a filter that <emphasis>can be</emphasis> a layer effect
-      in a non-tweakable way: see "Merging."
+      in a non-tweakable way: see <link linkend="gimp-merging-layer-effects">Merging."</link>
     </para>
   </sect2>
 
   <sect2>
     <title>Terminology</title>
     <para>
-      A layer effect is also known as an <emphasis>fx</emphasis>.
-      "fx" is the slang term for "effects."
       Gimp represents layer effects with an icon:
       <guiicon>
         <inlinemediaobject>
@@ -83,17 +86,20 @@
           </imageobject>
         </inlinemediaobject>
       </guiicon>.
+      The term <emphasis>fx</emphasis> is an abbreviation for <emphasis>effect.</emphasis>
     </para>
     <para>
       Layer effects are also known as "non-destructive edits (NDE)."
       They don't permanently change their layer.
     </para>
     <para>
-      Layer effects may also be called "parametric."
-      This means they have parameters which you can much later tweak.
+      This means they have parameters which you can much later change.
       Changes to parameters immediately cascade into their layer
       and the entire image.
-      Compare with "parametric design" in CAD (Computer Aided Design.)
+    </para>
+    <para>
+      Compare with "parametric design" in CAD (Computer Aided Design)
+      where you can also tweak a model's parameters.
     </para>
     <para>
       While all filters have an effect on layers, in the sense of a result,
@@ -110,8 +116,8 @@
     </para>
     <para>
       You create a layer effect by selecting a layer,
-      then choosing a menu item
-      that is backed by filter that can be a layer effect.
+      then choosing a command
+      that is backed by a filter that can be a layer effect.
       Then the
       <guiicon>
         <inlinemediaobject>
@@ -121,7 +127,7 @@
           </imageobject>
         </inlinemediaobject>
       </guiicon>
-      icon appear next to the layer name in the Layers dialog.
+      icon appears next to the layer name in the <link linkend="gimp-layer-dialog">Layers dialog.</link>
     </para>
     <para>
       Creating a layer effect is undoable.
@@ -140,7 +146,7 @@
       You can rearrange the order of layer effects on a layer
       by choosing a layer effect
       and then clicking the Up Arrow or Down Arrow buttons
-      in the Layer Effects dialog.
+      in the <link linkend="gimp-layer-effects-dialog">Layer Effects dialog.</link>
     </para>
     <para>
       Some changes in order might not seem to have any visible effect,
@@ -151,7 +157,7 @@
     </para>
   </sect2>
 
-  <sect2>
+  <sect2 id="gimp-merging-layer-effects">
     <title>Merging</title>
     <para>
       When you choose a menu item that <emphasis>can be</emphasis> a layer effect,
@@ -196,9 +202,11 @@
       You can undo adding or removing a layer effect.
     </para>
     <para>
-      You cannot use the Undo menu item to revert tweaking the parameters of a layer effect.
-      Instead, just keep tweaking the parameters from your own memory.
-      To record a set of parameter values, you can save them as a preset of the layer effect.
+      You cannot use the Undo menu item to revert changing the parameters of a layer effect.
+      Instead, just keep changing the parameters from your own memory.
+      To record a set of parameter values, you can save them as a preset,
+      the same way you can do for other filters.
+      See <link linkend="gimp-filter-presets">Filter Presets.</link>
     </para>
   </sect2>
 
@@ -209,7 +217,7 @@
       All the presets for a layer effect are also saved.
     </para>
     <para>
-      Layer effects are *NOT* saved, but "merged",
+      Layer effects are <emphasis>NOT</emphasis> saved, but "merged",
       when you export an image to another format.
       You don't have a choice in the matter when exporting.
     </para>
