@@ -32,11 +32,10 @@ VERSION = 0.1
 
 class GetStats(object):
     def __init__(self, pofile, outfile):
-        self.pofile = pofile
-        self.outfile= outfile
-        self.percentage = 0
-        #self.out = sys.stdout # todo: write to file maybe...
-        self.out = sys.stderr
+        self.pofile       = pofile
+        self.outfile      = outfile
+        self.out          = sys.stderr
+        self.percentage   = 0
         self.translated   = 0
         self.fuzzy        = 0
         self.untranslated = 0
@@ -49,18 +48,18 @@ class GetStats(object):
         # You may have to use the one from MSYS and adjust the path accordingly.
         cmd = subprocess.Popen(["msgfmt", "--statistics", out_param, self.pofile],
                                stdin=self.out, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        cmdout, cmderr = cmd.communicate()
+        _cmdout, cmderr = cmd.communicate()
         if cmd.returncode:
             raise Exception("Error during msgfmt command: " + cmderr.decode())
 
         match_pattern = r"(\d+)\stranslated\D+(?:(\d+)\sfuzzy\D+)?(?:(\d+)\suntranslated\D+)?"
         rex = re.compile(match_pattern)
         m = rex.match(cmderr.decode())
-        if m.group(1) != None:
+        if m.group(1) is not None:
             self.translated = int(m.group(1))
-        if m.group(2) != None:
+        if m.group(2) is not None:
             self.fuzzy = int(m.group(2))
-        if m.group(3) != None:
+        if m.group(3) is not None:
             self.untranslated = int(m.group(3))
         self.total = self.translated + self.fuzzy + self.untranslated
 
@@ -75,7 +74,7 @@ class GetFolderStats(object):
 
     def run(self, verbose, mofile):
         root_folder = os.path.join(self.base_folder, self.lang_dir)
-        for root, dirs, files in os.walk(root_folder):
+        for root, _dirs, files in os.walk(root_folder):
             for file in files:
                 filepath = os.path.join(root, file)
                 gs = GetStats(filepath, mofile)
@@ -184,11 +183,11 @@ def main(argv):
     outfile   = "../web/langstats.xml"
 
     try:
-        opts, remaining_args = getopt.getopt(argv, "hvqo:p:",
+        opts, _remaining_args = getopt.getopt(argv, "hvqo:p:",
             [
                 "help", "verbose", "podir", "output", "quickreference"
             ])
-    except getopt.GetoptError as err:
+    except getopt.GetoptError:
         usage()
         sys.exit(0)
 
@@ -217,8 +216,8 @@ def main(argv):
     if lang_dirs:
         messages = "./pomessages.mo"
         list_langdirs = [f.name for f in os.scandir(path) if f.is_dir()]
-        for dir in list_langdirs:
-            gfs = GetFolderStats(path, dir)
+        for mydir in list_langdirs:
+            gfs = GetFolderStats(path, mydir)
             gfs.run(verbose, messages)
             languages.addStats(gfs)
 
