@@ -210,6 +210,12 @@ www-debian:
     - mv _html6/* htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/
 
 win-installer:
+  retry:
+    max: 2
+    when:
+      - runner_system_failure
+      - scheduler_failure
+      - stuck_or_timeout_failure
   variables:
     CHERE_INVOKING: "yes"
   tags:
