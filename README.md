@@ -1,11 +1,11 @@
 # GIMP-Help
 
-GIMP-Help is a help system designed for use with the internal GIMP help
-browser, external web browser and HTML renderers.  
-[DocBook](https://docbook.org/) is used to create a highly customizable documentation system.
+GIMP-Help is a help system designed to display GIMP's User Manual using
+a browser or HTML renderers.  
+Our documentation is written in [DocBook XML](https://docbook.org/), which
+allows us to create a highly customizable documentation system.
 
-The current manual documents features for the 3.0 development branch of
-GIMP which is a moving target for the near future release of GIMP 3.0.  
+The current user manual documents version 3.0 of GIMP.  
 The manual for GIMP 2.10 is not being maintained anymore, but translations are
 still accepted until the release of 3.0. It is available in a separate branch
 called `gimp-help-2-10`.
@@ -26,11 +26,10 @@ called `gimp-help-2-10`.
 
 The online, daily updated, manuals for all supported languages are available at:
 
-- [GIMP 2.10 manuals](https://docs.gimp.org/)
-- [GIMP 3.0 manuals (temporary location for testing purposes)](https://testing.docs.gimp.org/)
+- [GIMP 3.0 manuals](https://docs.gimp.org/index.html#gimp-online)
+- [GIMP 2.10 manuals](https://docs.gimp.org/online.html#gimp210)
 
-The offline manuals are available for download from the same location. However,
-they are a lot more outdated.
+The offline manuals are available for download from [Releases page](https://docs.gimp.org/download.html).
 
 ## Tips for contribution
 
@@ -177,7 +176,7 @@ To get started, here is a checklist of things you should do:
   team working on this. A review can sometimes take weeks or
   even months, although we try to get back to you sooner.
 - Some additional info can also be read in the manual, see
-  https://docs.gimp.org/2.10/en/gimp-contributing.html
+  https://docs.gimp.org/3.0/en/gimp-contributing.html
   (although some parts there need to be revised).
 
 TODO
@@ -188,7 +187,7 @@ TODO
 - Add style guide and add link to it here.
 
 Preferably build the most up to date manual yourself or check
-the latest uploaded version at https://docs.gimp.org/2.10/en/.
+the latest uploaded version at https://docs.gimp.org/3.0/en/.
 
 The source of the manual can be found in XML files in the /src
 directory of this repository. Find a topic that interests you
