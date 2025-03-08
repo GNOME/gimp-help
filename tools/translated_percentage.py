@@ -53,7 +53,7 @@ class GetStats(object):
         if cmd.returncode:
             raise Exception("Error during msgfmt command: " + cmderr.decode())
 
-        match_pattern = "(\d+)\stranslated\D+(?:(\d+)\sfuzzy\D+)?(?:(\d+)\suntranslated\D+)?"
+        match_pattern = r"(\d+)\stranslated\D+(?:(\d+)\sfuzzy\D+)?(?:(\d+)\suntranslated\D+)?"
         rex = re.compile(match_pattern)
         m = rex.match(cmderr.decode())
         if m.group(1) != None:
