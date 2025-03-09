@@ -18,25 +18,28 @@
   <link linkend="gimp-prefs-system-resources">System Resources</link>.
   </para>
   <para>
-    During the data processing and manipulation of pictures, GIMP can use
+    During the data processing and manipulation of images, GIMP can use
     a lot of memory. The more you have available, the better.
-    <acronym>GIMP</acronym> uses the operating system memory available
-    resources as effectively as possible, striving to maintain the work on
-    the pictures fast and comfortable for the user. That Data memory,
-    during the treatment, is organized in buffered blocks of graphic data,
-    which could exist in two different forms of data memory: in the slow not
-    removable disk or in the fast main RAM memory. GIMP uses preferably the
-    RAM, and when it runs short of this memory, it uses the hard disk for the
-    remaining data. These chunks of graphic data are commonly referred to as
-    "tiles" and the entire system is called "tile cache".
+    <acronym>GIMP</acronym> uses available memory and other resources
+    as effectively as possible, striving to let you work on your images
+    without more slowdowns than necessary.
+   </para>
+   <para>
+     If GIMP needs more (RAM) memory than you have, it starts storing parts
+     of the image data needed to work on your image on a hard disk. These
+     parts are called tiles. Access to disk is slower, but at least it allows
+     you to keep working. The disk storage is called a cache and the entire
+     system is called <quote>tile cache</quote>.
   </para>
   <para>
-    A low value for tile cache means that GIMP sends data to the disk very
-    quickly, not making real use of the available RAM, and making the disks
-    work for no real reason. Too high a value for tile cache, and other
-    applications start to have less system resources, forcing them to use swap
-    space, which also makes the disks work too hard; some of them may even
-    terminate or start to malfunction due to lack of RAM.
+    The tile cache value determines when GIMP starts using cache instead
+    of faster RAM memory.
+    A low value for the tile cache means that GIMP sends data to disk more
+    quickly then needed, not making good use of the available RAM. Too high a
+    value for tile cache, and other applications start to have less system
+    resources, forcing them to use swap space and thus slow down, or it may
+    cause some of them to start to malfunction or even terminate due to lack
+    of RAM.
   </para>
   <para>
     How do you choose a number for the Tile Cache size? Here are some tips to
@@ -87,20 +90,22 @@
     store the operating system's swap and the directory used for GIMP's swap.
     You do not need to do disk tests, nor check the RPM of the disks, the
     thing is to see which one seems clearly faster or slower, or whether all
-    are similar. You can change GIMP's swap directory in the Folders page of
-    the Preferences dialog.
+    are similar. You can change GIMP's swap directory in the
+    <link linkend="gimp-prefs-folders">Folders</link> page of the
+    Preferences dialog.
   </para>
   <para>
     The next thing to do is to see how much resources you require for other
     apps you want to run at the same time as GIMP. So start all your tools
     and do some work with them, except GIMP of course, and check the usage.
-    You can use applications like free or top, depending in what OS and what
-    environment you use. The numbers you want is the memory left, including
-    file cache. Modern Unix keeps a very small area free, in order to be able
-    to keep large file and buffer caches. Linux's <emphasis>free</emphasis>
-    command does the maths for you: check the column that says
-    <quote>free</quote>, and the line <quote>-/+ buffers/cache</quote>.
-    Note down also the free swap.
+    You can use applications like free, top, or Process Explorer, depending on
+    what OS and what environment you use. The numbers you want is the memory
+    left, including file cache.
+  </para>
+  <para>
+    Linux's <emphasis>free</emphasis> command does the maths for you: check
+    the column that says <quote>free</quote>, and the line
+    <quote>-/+ buffers/cache</quote>. Note down also the free swap.
   </para>
   <para>
     Now time for decisions and a bit of simple math. Basically the concept is
@@ -176,7 +181,7 @@
   </para>
   <para>
     You can also check what memory requirements your images have. The larger
-    the images, and the number of undoes, the more resources you need. This
+    the images, and the number of undo steps, the more resources you need. This
     is another way to choose a number, but it is only good if you always work
     with the same kind of images, and thus the real requirements do not vary.
     It is also helpful to know if you will require more RAM and/or disk space.
