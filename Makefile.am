@@ -3,7 +3,7 @@
 SUBDIRS = quickreference m4macros po-windows-installer build
 
 # used for creating the ChangeLog
-LAST_RELEASE_TAG = GIMP_HELP_2_10_0
+LAST_RELEASE_TAG = GIMP_HELP_3_0_0
 
 
 ########################################################################
