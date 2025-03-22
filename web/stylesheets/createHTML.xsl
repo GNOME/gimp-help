@@ -27,7 +27,7 @@
       </a>
     </div>
       <div id="Searchform">
-          <form method="get" action="http://www.google.com/custom">
+          <form method="get" action="https://www.google.com/custom">
               <input type="text" name="q" size="25" maxlength="255"
                      value=""
                      class="searchinput"
