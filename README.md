@@ -61,9 +61,13 @@ folder under your gimp-help build folder.
 
 #### How to add localized screenshots
 
-As far as I am aware localized images can't be handled directly through
-DamnedLies. Discuss with your language team what to do first, but in the end
-they need to be committed to the gimp-help repository, by your language team.
+Localized images also need to be reviewed first by your language team through
+DamnedLies. Discuss with your language team how to do that, after review
+they need to be committed to the gimp-help repository by opening a
+Merge Request (MR).
+Either your language team leader opens the MR with the localized images, or
+at the very least the team leader needs to comment on the MR that
+the changes are vetted and reviewed by your team.
 
 All images are stored in the top-level 'images' folder. Original
 screenshots in English are in the 'C' subfolder. Localized screenshots
