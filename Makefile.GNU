@@ -559,7 +559,7 @@ log/$(1)-xmllint.log: $$($(1)_XML_FILES)
 	$$(cmd) $$(call make_target_dir,$$(@))
 	$$(cmd) if type $$(XMLLINT) >/dev/null 2>&1; then \
 		echo "*** Validating XML ($(1)) ... "; \
-		$$(XMLLINT) $$(XMLLINTFLAGS) --xinclude xml/$(1)/gimp.xml \
+		$$(XMLLINT) $$(XMLLINTFLAGS) --noent --xinclude xml/$(1)/gimp.xml \
 		| $$(SED) -e 's,xmlns:xi="http://www.w3.org/2001/XInclude",,' \
 		| $$(XMLLINT) $$(XMLLINTFLAGS) --valid \
 			--output log/$(1).xml - 2>$$(@); \

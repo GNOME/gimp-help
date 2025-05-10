@@ -630,7 +630,7 @@ xmllint-%: log/%-xmllint.log
 # HIDE FROM AUTOMAKE #	$$(cmd) $$(call make_target_dir,$$(@))
 # HIDE FROM AUTOMAKE #	$$(cmd) if type $$(XMLLINT) >/dev/null 2>&1; then \
 # HIDE FROM AUTOMAKE #		echo "*** Validating XML ($(1)) ... "; \
-# HIDE FROM AUTOMAKE #		$$(XMLLINT) $$(XMLLINTFLAGS) --xinclude xml/$(1)/gimp.xml \
+# HIDE FROM AUTOMAKE #		$$(XMLLINT) $$(XMLLINTFLAGS) --noent --xinclude xml/$(1)/gimp.xml \
 # HIDE FROM AUTOMAKE #		| $(SED) -e 's,xmlns:xi="http://www.w3.org/2001/XInclude",,' \
 # HIDE FROM AUTOMAKE #		| $$(XMLLINT) $$(XMLLINTFLAGS) --valid \
 # HIDE FROM AUTOMAKE #			--output log/$(1).xml - 2>$$(@); \
