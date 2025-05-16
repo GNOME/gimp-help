@@ -68,6 +68,7 @@
       pt_BR:Brazilian_Portuguese
       ro:Romanian
       ru:Russian
+      sk:Slovak
       sl:Slovenian
       sv:Swedish
       tr:Turkish

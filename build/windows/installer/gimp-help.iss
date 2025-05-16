@@ -99,6 +99,8 @@
 	#define LANGFILE='Languages\Unofficial\Romanian.isl'
 #elif LANG=='ru'
 	#define LANGFILE='Languages\Russian.isl'
+#elif LANG=='sk'
+	#define LANGFILE='Languages\Slovak.isl'
 #elif LANG=='sl'
 	#define LANGFILE='Languages\Slovenian.isl'
 #elif LANG=='sv'
