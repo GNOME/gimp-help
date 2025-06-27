@@ -20,8 +20,21 @@
 # Basic default class; inherit from it to construct other special-handling classes
 #
 
+import sys
+import re
+from lxml import etree
+
 class basicXmlMode:
     """Abstract class for special handling of document types."""
+
+    def xml_qname (self, node):
+        qname = "<tag is not a string>"
+        if isinstance(node.tag, str):
+            qname = etree.QName(node.tag).localname
+        if node.prefix is not None:
+            qname = node.prefix + ':' + qname
+        return qname
+
     def getIgnoredTags(self):
         "Returns array of tags to be ignored."
         return ['itemizedlist', 'orderedlist', 'variablelist', 'varlistentry']
@@ -34,17 +47,63 @@ class basicXmlMode:
 
     def isFinalNode(self, node):
         #node.type =='text' or not node.children or
-        if node.type == 'element' and node.name in self.getFinalTags():
+        ###if node.type == 'element' and node.name in self.getFinalTags():
+        qname = self.xml_qname(node)
+        text = "<not a text object>"
+        if isinstance(node.text, str):
+            text = node.text.strip()
+        print(f"IsFinalNode for {qname}, tag: {node.tag} attrib: {node.attrib}, text: [{text}]", file=sys.stderr)
+
+        if etree.iselement(node) and self.xml_qname(node) in self.getFinalTags():
+            print("\t--> Element is present in list of final tags...", file=sys.stderr)
             return True
-        elif node.children:
+        ###elif node.children:
+        ###else: ###elif len(node) > 0 or node.text:
+        elif len(node) > 0 or node.text:
             final_children = True
-            child = node.children
-            while child and final_children:
-                if not child.isBlankNode() and child.type != 'comment' and not self.isFinalNode(child):
+            has_children   = False
+            ###child = node.children
+            ###while child and final_children:
+            ###    if not child.isBlankNode() and child.type != 'comment' and not self.isFinalNode(child):
+            ###        final_children = False
+            ###    child = child.next
+            for child in node.iterchildren():
+                name = self.xml_qname(child)
+                text = "<not a text object>"
+                if isinstance(node.text, str):
+                    text = node.text.strip()
+                print(f"\t--> handle child {name}... with text [{text}]", file=sys.stderr)
+                has_children = True
+                ###if not child.isBlankNode() and child.type != 'comment' and not self.isFinalNode(child):
+                empty_text = node.text is None or re.fullmatch(r'\s+', node.text) is not None
+                empty_tail = node.tail is None or re.fullmatch(r'\s+', node.tail) is not None
+                #print(f"\t empty text: {empty_text}, tail: {empty_tail}", file=sys.stderr)
+                ###if not (node.text is None or not re.fullmatch(r'\s+', node.text)) and not node.tail is None and not self.isFinalNode(child):
+                ###if not self.isFinalNode(child):
+                ###    print(f"\t--> Text of not final child: [{node.text}]...", file=sys.stderr)
+                ###    final_children = False
+                ###    break
+                if not empty_text or not empty_tail or not self.isFinalNode(child):
+                    #print(f"\t--> Text of not final child: [{node.text}]...", file=sys.stderr)
                     final_children = False
-                child = child.next
+                    break
+                elif empty_text:
+                    print("\t--> no text...", file=sys.stderr)
+                elif empty_tail:
+                    print(f"\t--> no tail..., text is [[{node.text}]]", file=sys.stderr)
+                else:
+                    print("\t--> no final node...", file=sys.stderr)
+            if not has_children:
+                #print("\t--> NO children...", file=sys.stderr)
+                return False
             if final_children:
+                #print("\t--> final child...", file=sys.stderr)
                 return True
+            else:
+                print("\t--> NOT final child...", file=sys.stderr)
+        else:
+            print("\t--> empty node...", file=sys.stderr)
+        #print("\t--> XXX...", file=sys.stderr)
         return False
 
     def getSpacePreserveTags(self):
@@ -57,6 +116,7 @@ class basicXmlMode:
 
     def preProcessXml(self, doc, msg):
         "Preprocess a document and perhaps adds some messages."
+        print("<no preprocessing done for basic mode>", file=sys.stderr)
         pass
 
     def postProcessXmlTranslation(self, doc, language, translators):
