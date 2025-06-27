@@ -24,11 +24,21 @@ import re
 import subprocess
 import tempfile
 import gettext
-import libxml2
+from lxml import etree
+#import lxml
+#import lxml.etree
 
 DEBUG_VERBOSITY = 0
 NULL_STRING = '/dev/null'
 if not os.path.exists('/dev/null'): NULL_STRING = 'NUL'
+
+
+def xml_qname (node):
+    qname = etree.QName(node.tag).localname
+    if node.prefix is not None:
+        qname = node.prefix + ':' + qname
+    return qname
+
 
 # Utility functions
 def escapePoString(text):
@@ -143,6 +153,7 @@ msgstr ""
 
 class XMLDocument(object):
     def __init__(self, filename, base_path, app):
+        print(f"\nInitialize XmlDocument for {filename}...", file=sys.stderr)
         self.dtd_contents = None
         self.filename = filename
         self.app = app
@@ -157,29 +168,43 @@ class XMLDocument(object):
         if self.source_filename.startswith(self.base_path):
             self.source_filename = self.source_filename[len(self.base_path):]
 
-        ctxt = libxml2.createFileParserCtxt(filename)
-        ctxt.lineNumbers(1)
-        if self.app.options.get('expand_all_entities'):
-            ctxt.replaceEntities(1)
+        load_dtd      = True
+        keep_entities = not self.app.options.get('expand_all_entities')
 
-        try:
-            ctxt.parseDocument()
-        except Exception as e:
-            print("Error parsing XML file '%s': %s" % (filename, str(e)), file=sys.stderr)
-            sys.exit(1)
+        parser = etree.XMLParser(load_dtd = load_dtd or keep_entities,
+                                 resolve_entities = not(keep_entities))
+        doc = etree.parse(filename, parser)
+        doc.xinclude()
+        self.doc = doc
 
-        self.doc = ctxt.doc()
-        if self.doc.name != filename:
-            raise Exception("Error: I tried to open '%s' but got '%s' -- how did that happen?" % (filename, self.doc.name))
+        ###ctxt = libxml2.createFileParserCtxt(filename)
+        ###ctxt.lineNumbers(1)
+        ###if self.app.options.get('expand_all_entities'):
+        ###    ctxt.replaceEntities(1)
+
+        ###try:
+        ###    ctxt.parseDocument()
+        ###except Exception as e:
+        ###    print("Error parsing XML file '%s': %s" % (filename, str(e)), file=sys.stderr)
+        ###    sys.exit(1)
+
+        ###self.doc = ctxt.doc()
+
+        ###if self.doc.name != filename:
+        ###    raise Exception("Error: I tried to open '%s' but got '%s' -- how did that happen?" % (filename, self.doc.name))
+
         if self.app.msg:
             self.app.msg.setFilename(self.source_filename)
         self.isFinalNode = self.app.current_mode.isFinalNode
+        print("XmlDocument init finished...\n", file=sys.stderr)
 
     def generate_messages(self):
+        print("XmlDocument generate_messages...", file=sys.stderr)
         self.app.msg.setFilename(self.source_filename)
-        self.doSerialize(self.doc)
+        self.doSerialize(self.doc.getroot())
 
     def normalizeNode(self, node):
+        print("XmlDocument normalizeNode...", file=sys.stderr)
         #print >>sys.stderr, "<%s> (%s) [%s]" % (node.name, node.type, node.serialize('utf-8'))
         if not node:
             return
@@ -204,6 +229,7 @@ class XMLDocument(object):
         """Normalizes string to be used as key for gettext lookup.
 
         Removes all unnecessary whitespace."""
+        print(f"XmlDocument normalizeString for text [{text}] ...", file=sys.stderr)
         mytext = text
         if spacepreserve:
             return text
@@ -213,6 +239,7 @@ class XMLDocument(object):
             tmp = dtd.serialize('utf-8')
             tmp = tmp + '<norm>%s</norm>' % text
         except:
+            print(f"Error serializing DTD.", file=sys.stderr)
             tmp = '<norm>%s</norm>' % text
 
         try:
@@ -249,6 +276,7 @@ class XMLDocument(object):
 
     def stringForEntity(self, node):
         """Replaces entities in the node."""
+        print("XmlDocument stringForEntity...", file=sys.stderr)
         text = node.serialize('utf-8')
         try:
             # Lets add document DTD so entities are resolved
@@ -280,6 +308,7 @@ class XMLDocument(object):
 
 
     def myAttributeSerialize(self, node):
+        print("XmlDocument myAttributeSerialize...", file=sys.stderr)
         result = ''
         if node.children:
             child = node.children
@@ -300,14 +329,19 @@ class XMLDocument(object):
         return result
 
     def startTagForNode(self, node):
-        if not node:
+        print("XmlDocument startTagForNode...", file=sys.stderr)
+        if node is None:
             return 0
 
-        result = node.name
+###        result = node.name
+        result = xml_qname(node)
         params = ''
-        if node.properties:
-            for p in node.properties:
-                if p.type == 'attribute':
+###        if node.properties:
+###            for p in node.properties:
+        print(f"\tNode {result} --> Attributes: [{node.attrib}].", file=sys.stderr)
+        if len(node.items()) > 0:
+            for name, atval in node.items():
+                if name == 'attribute':
                     try:
                         nsprop = p.ns().name + ":" + p.name
                     except:
@@ -316,17 +350,21 @@ class XMLDocument(object):
         return result+params
 
     def endTagForNode(self, node):
-        if not node:
+        print("XmlDocument endTagForNode...", file=sys.stderr)
+        if node is None:
             return False
-        return node.name
+###        return node.name
+        return xml_qname(node)
 
     def ignoreNode(self, node):
+        print("XmlDocument ignoreNode...", file=sys.stderr)
         if self.isFinalNode(node):
             return False
-        if node.type == 'dtd' and self.dtd_contents is None:
+###        if node.type == 'dtd' and self.dtd_contents is None:
             # We need to parse dtd once to get the declared entities if any
-            return False
-        elif node.name in self.ignored_tags or node.type in ('dtd', 'comment'):
+###            return False
+###        elif node.name in self.ignored_tags or node.type in ('dtd', 'comment'):
+        elif xml_qname(node) in self.ignored_tags: ### or node.type in ('dtd', 'comment'):
             return True
         return False
 
@@ -334,15 +372,30 @@ class XMLDocument(object):
         """Walk through previous siblings until a comment is found, or other element.
 
         Only whitespace is allowed between comment and current node."""
-        prev = node.prev
-        while prev and prev.type == 'text' and prev.content.strip() == '':
-            prev = prev.prev
-        if prev and prev.type == 'comment':
-            return prev.content.strip()
+        print("XmlDocument getCommentForNode...", file=sys.stderr)
+###        prev = node.prev
+        parent = node.getparent()
+        firstchild = None
+        if parent is not None:
+            firstchild = parent[0]
+        prev = node.getprevious()
+###        while prev and prev.type == 'text' and prev.content.strip() == '':
+###            prev = prev.prev
+        while prev is not None and self.isTextNode(prev):
+            print(f"prev: {prev.tag}, first: {firstchild.tag}", file=sys.stderr)
+            if prev == firstchild:
+                prev = None
+            else:
+                prev = prev.getprevious()
+###        if prev and prev.type == 'comment':
+###            return prev.content.strip()
+        if prev and prev.tail is not None:
+            return prev.tail.strip()
         else:
             return None
 
     def replaceAttributeContentsWithText(self, node, text):
+        print("XmlDocument replaceAttributeContentsWithText...", file=sys.stderr)
         try:
             node.setContent(text.decode('utf-8'))
         except TypeError:
@@ -350,12 +403,15 @@ class XMLDocument(object):
             sys.exit(1)
 
     def printErrorHeader(self, text, log):
+        print("XmlDocument printErrorHeader...", file=sys.stderr)
+
         print(f"\n========================", file=log)
         print(f"Source xml: {self.filename}", file=log)
         print(f"Source po : {self.app.pofile}", file=log)
         print(f"\nTranslated msgstr:\n{text}", file=log)
 
     def CheckMatchedTags(self, text):
+        print("XmlDocument CheckMatchedTags...", file=sys.stderr)
         stack = []
         textblock = text
 
@@ -445,6 +501,7 @@ class XMLDocument(object):
     def replaceNodeContentsWithText(self, node, text):
         """Replaces all subnodes of a node with contents of text treated as XML."""
 
+        print("XmlDocument replaceNodeContentsWithText...", file=sys.stderr)
         if not self.CheckMatchedTags(text):
             return
 
@@ -498,23 +555,31 @@ class XMLDocument(object):
         else:
             node.setContent(text)
 
+    def isTextNode(self, node):
+        text = node.text.strip()
+        return text != ''
+
     def hasText(self, node):
         """Whether or not a node contains text
 
         A node "contains text" if the node itself or one of its children
         is a text node containing non-empty text.
         """
-        if node.name in self.ignored_tags:
+        print("XmlDocument hasText...", file=sys.stderr)
+###        if node.name in self.ignored_tags:
+        if node.tag in self.ignored_tags:
             return False
-        if node.isText() and node.content.strip() != '':
+###        if node.isText() and node.content.strip() != '':
+        if self.isTextNode(node):
             return True
-        child = node.children
-        while child:
-            nextchild = child.next
-            if child.isText() and child.content.strip() != '':
+###        child = node.children
+###        while child:
+###            nextchild = child.next
+        for child in node.iterchildren():
+###            if child.isText() and child.content.strip() != '':
+            if self.isTextNode(child ):
                 return True
-            else:
-                child = nextchild
+
         return False
 
 
@@ -525,17 +590,22 @@ class XMLDocument(object):
         children is a text node -- unless the node is not final and there
         is a parent node which is already worth outputting.
         """
+        print("XmlDocument worthOutputting...", file=sys.stderr)
         worth = self.hasText(node)	# is or has non-empty text node
-        if not (self.isFinalNode(node) or node.get_name() in self.ignored_tags):
-            parent = node.get_parent()
-            while worth and parent:
+###        if not (self.isFinalNode(node) or node.get_name() in self.ignored_tags):
+###            parent = node.get_parent()
+        if not (self.isFinalNode(node) or xml_qname(node) in self.ignored_tags):
+            parent = node.getparent()
+            while worth and parent is not None:
                 if self.worthOutputting(parent):
                     worth = False
                 else:
-                    parent = parent.get_parent()
+###                    parent = parent.get_parent()
+                    parent = parent.getparent()
         return worth
 
     def processAttribute(self, node, attr):
+        print("XmlDocument processAttribute...", file=sys.stderr)
         assert node and attr
 
         outtxt = self.normalizeString(attr.content)
@@ -550,11 +620,18 @@ class XMLDocument(object):
 
     def processElementTag(self, node, replacements, restart = False):
         """Process node with node.type == 'element'."""
-        if node.type != 'element':
-            raise Exception("You must pass node with node.type=='element'.")
+        print("XmlDocument processElementTag...", file=sys.stderr)
+###        if node.type != 'element':
+        if not etree.iselement(node):
+            raise Exception("Invalid node: only element nodes allowed here!")
 
         # Translate attributes if needed
-        if node.properties and self.app.current_mode.getTreatedAttributes():
+        print(f"\tNode: {node.tag} --> Attributes: [{node.attrib}].", file=sys.stderr)
+###        if node.properties and self.app.current_mode.getTreatedAttributes():
+        if len(node.items()) > 0 and self.app.current_mode.getTreatedAttributes():
+            for name, atval in node.items():
+                if name in self.app.current_mode.getTreatedAttributes():
+                    self.processAttribute(node, name)
             # DamnedLies has an older python3 libxml2 without an iterator for XmlAttr, try to work around it
             # Version using iterator
             #for p in node.properties:
@@ -562,16 +639,16 @@ class XMLDocument(object):
             #        self.processAttribute(node, p)
 
             # ugly hack to iterate node.properties without iterator
-            p = node.properties
-            while p:
-                prev = p
-                if p.name in self.app.current_mode.getTreatedAttributes():
-                    self.processAttribute(node, p)
-                p = node.properties.next
+###            p = node.properties
+###            while p:
+###                prev = p
+###                if p.name in self.app.current_mode.getTreatedAttributes():
+###                    self.processAttribute(node, p)
+###                p = node.properties.next
                 # It looks like we can't count on p.last
                 # Apparently last node in list points to itself (prev)
-                if p == prev:
-                    break
+###                if p == prev:
+###                    break
 
         outtxt = ''
         if restart:
@@ -581,22 +658,32 @@ class XMLDocument(object):
 
         submsgs = []
 
-        child = node.children
-        while child:
+##        child = node.children
+##        while child:
             # Although I do not know why, child or child.next gets changed inside the if part below.
             # This makes child.next fail when it shouldn't. That's why we store nextchild here
             # before going into the if and use that at the end of the loop
-            nextchild = child.next
-            if (self.isFinalNode(child)) or (child.type == 'element' and self.worthOutputting(child)):
+##            nextchild = child.next
+        print(f"\tIterate over children of element node.", file=sys.stderr)
+        for child in node.iterchildren():
+###            if (self.isFinalNode(child)) or (child.type == 'element' and self.worthOutputting(child)):
+            print(f"\tChild: <{child.tag}>", file=sys.stderr)
+            if (self.isFinalNode(child)) or (etree.iselement(child) and self.worthOutputting(child)):
+                print(f"\tAppend child as placeholder.", file=sys.stderr)
                 myrepl.append(self.processElementTag(child, myrepl, True))
                 outtxt += '<placeholder-%d/>' % (len(myrepl))
             else:
-                if child.type == 'element':
+                print(f"\tAppend child.", file=sys.stderr)
+###                if child.type == 'element':
+                if etree.iselement(child):
+                    print(f"\tAppend child element.", file=sys.stderr)
                     (starttag, content, endtag, translation) = self.processElementTag(child, myrepl, False)
                     outtxt += '<%s>%s</%s>' % (starttag, content, endtag)
                 else:
+                    print(f"\tAppend serialized child.", file=sys.stderr)
                     outtxt += self.doSerialize(child)
-            child = nextchild
+            print(f"\tOuttext: {outtxt}", file=sys.stderr)
+###            child = nextchild
 
         if self.app.operation == 'merge':
             norm_outtxt = self.normalizeString(outtxt, self.app.isSpacePreserveNode(node))
@@ -604,9 +691,11 @@ class XMLDocument(object):
         else:
             translation = outtxt
 
+        print(f"\tGet start and end tag.", file=sys.stderr)
         starttag = self.startTagForNode(node)
         endtag = self.endTagForNode(node)
 
+        print(f"\tIs it worth outputting.", file=sys.stderr)
         worth = self.worthOutputting(node)
         if not translation:
             translation = outtxt
@@ -614,6 +703,7 @@ class XMLDocument(object):
                 node.setLang('C')
 
         if restart or worth:
+            print(f"\trestart {restart} or worth {worth}...", file=sys.stderr)
             for i, repl in enumerate(myrepl):
                 # repl[0] may contain translated attributes with
                 # non-ASCII chars, so implicit conversion to <str> may fail
@@ -625,13 +715,17 @@ class XMLDocument(object):
                 if self.app.operation == 'merge':
                     self.replaceNodeContentsWithText(node, translation)
                 else:
+                    print(f"\tNormalize outtxt {outtxt}.", file=sys.stderr)
                     norm_outtxt = self.normalizeString(outtxt, self.app.isSpacePreserveNode(node))
-                    self.app.msg.outputMessage(norm_outtxt, node.lineNo(), self.getCommentForNode(node), self.app.isSpacePreserveNode(node), tag = node.name)
+###                    self.app.msg.outputMessage(norm_outtxt, node.lineNo(), self.getCommentForNode(node), self.app.isSpacePreserveNode(node), tag = node.name)
+                    self.app.msg.outputMessage(norm_outtxt, node.sourceline, self.getCommentForNode(node), self.app.isSpacePreserveNode(node), tag = node.tag)
 
+        print(f"\treturn processElementTag result: <{starttag}> '{outtxt}' <{endtag}>, translation: [{translation}].", file=sys.stderr)
         return (starttag, outtxt, endtag, translation)
 
 
     def isExternalGeneralParsedEntity(self, node):
+        print("XmlDocument isExternalGeneralParsedEntity...", file=sys.stderr)
         try:
             # it would be nice if debugDumpNode could use StringIO, but it apparently cannot
             tmp = tempfile.TemporaryFile(encoding='utf-8')
@@ -654,44 +748,64 @@ class XMLDocument(object):
         tags should be emitted as well.
         """
 
-        if node.type == 'dtd' and self.dtd_contents is None:
+        print("XmlDocument doSerialize...", file=sys.stderr)
+        #FIXME - See https://github.com/itstool/itstool/pull/57/files line 972 etc (ugly hack...)
+###        if node.type == 'dtd' and self.dtd_contents is None:
             #node.debugDumpDTD(sys.stderr)
-            if node.children is not None:
-                self.dtd_contents = '[\n' + self.doSerialize(node.children) + ']>'
-            return ''
-        elif node.type == 'entity_decl':
+###            if node.children is not None:
+###                self.dtd_contents = '[\n' + self.doSerialize(node.children) + ']>'
+###            return ''
+###        elif node.type == 'entity_decl':
             # Our parameter entities are not correctly handled. Fix that by
             # using a hack here to add what we are expecting.
             # This is called from the dtd node above in doSerialize
-            x = node.serialize('utf-8')
+###            x = node.serialize('utf-8')
             # Add the entities parameter
-            return x + '\n%' + node.name + ';\n'
+###            return x + '\n%' + node.name + ';\n'
 
         if self.ignoreNode(node):
+            print(f"\t--> ignore node", file=sys.stderr)
             return ''
-        elif not node.children:
-            return node.serialize("utf-8")
-        elif node.type == 'entity_ref':
-            if self.isExternalGeneralParsedEntity(node):
-                return node.serialize('utf-8')
-            else:
-                return self.stringForEntity(node)
-        elif node.type == 'text':
-            nodetext = node.serialize('utf-8')
-            return nodetext
-        elif node.type == 'element':
+###        elif not node.children:
+        elif len(node) == 0: ### Also check for comment? (tail)
+            ###return node.serialize("utf-8")
+            ser = etree.tostring(node, encoding="utf-8")
+            print(f"\t--> serialized node: {ser}", file=sys.stderr)
+            return etree.tostring(node, encoding="utf-8")
+###        elif node.type == 'entity_ref':
+###            if self.isExternalGeneralParsedEntity(node):
+###                return node.serialize('utf-8')
+###            else:
+###                return self.stringForEntity(node)
+###        elif node.type == 'text':
+        elif isinstance(node.text, str) and not node.text.strip() == '':
+            print(f"\t--> text node {node.tag} - [{node.text.strip()}]", file=sys.stderr)
+###            nodetext = node.serialize('utf-8')
+            nodetext = etree.tostring(node, encoding="utf-8")
+            return nodetext.strip
+###        elif node.type == 'element':
+        elif etree.iselement(node):
+            print(f"\t--> element node, text: {node.text}", file=sys.stderr)
             repl = []
             (starttag, content, endtag, translation) = self.processElementTag(node, repl, True)
             return '<%s>%s</%s>' % (starttag, content.encode('utf-8'), endtag)
         else:
-            child = node.children
             outtxt = ''
-            while child:
+            print(f"\t--> Process children of node", file=sys.stderr)
+            for child in node.iterchildren():
+                print(f"\t--> serialize child: [{child.tag}]", file=sys.stderr)
+                outtxt += self.doSerialize(child)
+                #if isinstance(child, str):
+                #    self._output_images(child,msg)
+
+###            child = node.children
+###            outtxt = ''
+###            while child:
                 # Not sure if the same problem with using next.child happens here too
                 # but we will use nextchild here too just to be sure
-                nextchild = child.next
-                outtxt += self.doSerialize(child)
-                child = nextchild
+###                nextchild = child.next
+###                outtxt += self.doSerialize(child)
+###                child = nextchild
             return outtxt
 
 def xml_error_handler(ctxt, error):
@@ -702,7 +816,7 @@ def xml_error_handler(ctxt, error):
 
 class Main(object):
     def __init__(self, mode, operation, output, base_path, options):
-        libxml2.registerErrorHandler(xml_error_handler, None)
+        ###libxml2.registerErrorHandler(xml_error_handler, None)
         self.operation = operation
         self.options = options
         self.msg = None
@@ -731,6 +845,7 @@ class Main(object):
 
     def to_pot(self, xmlfiles):
         """ Produce a pot file from the list of 'xmlfiles' """
+        print("Start to_pot...", file=sys.stderr)
         self.msg = MessageOutput(self)
         for xmlfile in xmlfiles:
             if not os.access(xmlfile, os.R_OK):
@@ -746,6 +861,7 @@ class Main(object):
 
     def merge(self, mofile, xmlfile):
         """ Merge translations from mofile into xmlfile to generate a translated XML file """
+        print("Start merge...", file=sys.stderr)
         if not os.access(xmlfile, os.R_OK):
             raise IOError("Unable to read file '%s'" % xmlfile)
         try:
@@ -837,6 +953,7 @@ class Main(object):
 
     def output_po(self):
         """ Write the resulting po/pot file to specified output """
+        print(f"Write po file", file=sys.stderr)
         tcmsg = self.current_mode.getStringForTranslators()
         tccom = self.current_mode.getCommentForTranslators()
         if tcmsg:
@@ -846,8 +963,10 @@ class Main(object):
 
     # **** XML utility functions ****
     def isSpacePreserveNode(self, node):
-        if node.getSpacePreserve() == 1:
+        ### FIXME if node.getSpacePreserve() == 1:
+        if False:
             return True
         else:
-            return node.name in self.current_mode.getSpacePreserveTags()
+###            return node.name in self.current_mode.getSpacePreserveTags()
+            return node.tag in self.current_mode.getSpacePreserveTags()
 

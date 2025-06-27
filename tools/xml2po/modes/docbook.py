@@ -34,7 +34,7 @@
 #     than one document type at the same time
 #
 import re
-import libxml2
+import lxml
 import os
 import sys
 try:
