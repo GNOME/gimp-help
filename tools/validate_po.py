@@ -271,7 +271,7 @@ class Validate(object):
 
     def run(self):
         errcnt = 0
-        valid_entries = [e for e in self.po if not e.obsolete]
+        valid_entries = [e for e in self.po if not (e.obsolete or e.fuzzy)]
         for entry in valid_entries:
             skip_parse = False
             self.headerPrinted = False
