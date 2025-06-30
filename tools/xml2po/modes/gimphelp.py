@@ -21,17 +21,10 @@
 # (c) 2009 The GIMP Documentation Team
 #
 
-import re
 import os
 import sys
+from hashlib import md5 as md5_new
 from lxml import etree
-
-try:
-    # Hashlib is new in Python 2.5
-    from hashlib import md5 as md5_new
-except ImportError:
-    from md5 import new as md5_new
-
 from .docbook import docbookXmlMode
 
 

@@ -67,16 +67,19 @@ class basicXmlMode:
             ###    if not child.isBlankNode() and child.type != 'comment' and not self.isFinalNode(child):
             ###        final_children = False
             ###    child = child.next
+            print(f"IsFinalNode: check children", file=sys.stderr)
             for child in node.iterchildren():
                 name = self.xml_qname(child)
                 text = "<not a text object>"
                 if isinstance(node.text, str):
                     text = node.text.strip()
-                print(f"\t--> handle child {name}... with text [{text}]", file=sys.stderr)
+                print(f"\t--> isFinalNode: handle child {name}... with text [{text}]", file=sys.stderr)
                 has_children = True
                 ###if not child.isBlankNode() and child.type != 'comment' and not self.isFinalNode(child):
-                empty_text = node.text is None or re.fullmatch(r'\s+', node.text) is not None
-                empty_tail = node.tail is None or re.fullmatch(r'\s+', node.tail) is not None
+                #empty_text = node.text is None or re.fullmatch(r'\s+', node.text) is not None
+                #empty_tail = node.tail is None or re.fullmatch(r'\s+', node.tail) is not None
+                empty_text = node.text is None or node.text.strip() == ""
+                empty_tail = node.tail is None or node.tail.strip() == ""
                 #print(f"\t empty text: {empty_text}, tail: {empty_tail}", file=sys.stderr)
                 ###if not (node.text is None or not re.fullmatch(r'\s+', node.text)) and not node.tail is None and not self.isFinalNode(child):
                 ###if not self.isFinalNode(child):
@@ -84,25 +87,26 @@ class basicXmlMode:
                 ###    final_children = False
                 ###    break
                 if not empty_text or not empty_tail or not self.isFinalNode(child):
-                    #print(f"\t--> Text of not final child: [{node.text}]...", file=sys.stderr)
+                    print(f"\t--> Text of not final child: [{node.text.strip()}]...", file=sys.stderr)
                     final_children = False
                     break
                 elif empty_text:
-                    print("\t--> no text...", file=sys.stderr)
+                    print("\t--> isFinalNode: no text...", file=sys.stderr)
                 elif empty_tail:
-                    print(f"\t--> no tail..., text is [[{node.text}]]", file=sys.stderr)
+                    print(f"\t--> isFinalNode: no tail..., text is [[{node.text.strip()}]]", file=sys.stderr)
                 else:
-                    print("\t--> no final node...", file=sys.stderr)
+                    print("\t--> isFinalNode: no final node...", file=sys.stderr)
+            print(f"IsFinalNode: children of {qname} DONE", file=sys.stderr)
             if not has_children:
                 #print("\t--> NO children...", file=sys.stderr)
                 return False
             if final_children:
-                #print("\t--> final child...", file=sys.stderr)
+                print("\t--> isFinalNode: final child YES.", file=sys.stderr)
                 return True
             else:
-                print("\t--> NOT final child...", file=sys.stderr)
+                print("\t--> isFinalNode: NOT final child...", file=sys.stderr)
         else:
-            print("\t--> empty node...", file=sys.stderr)
+            print("\t--> isFinalNode: empty node...", file=sys.stderr)
         #print("\t--> XXX...", file=sys.stderr)
         return False
 
