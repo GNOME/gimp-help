@@ -357,7 +357,7 @@ class XMLDocument(object):
         return xml_qname(node)
 
     def ignoreNode(self, node):
-        print("XmlDocument ignoreNode...", file=sys.stderr)
+        #print("XmlDocument ignoreNode...", file=sys.stderr)
         if self.isFinalNode(node):
             return False
 ###        if node.type == 'dtd' and self.dtd_contents is None:
@@ -365,6 +365,7 @@ class XMLDocument(object):
 ###            return False
 ###        elif node.name in self.ignored_tags or node.type in ('dtd', 'comment'):
         elif xml_qname(node) in self.ignored_tags: ### or node.type in ('dtd', 'comment'):
+            print("XmlDocument ignoreNode: YES", file=sys.stderr)
             return True
         return False
 
@@ -650,7 +651,8 @@ class XMLDocument(object):
 ###                if p == prev:
 ###                    break
 
-        outtxt = ''
+        #outtxt = ''
+        outtxt = node.text.strip()
         if restart:
             myrepl = []
         else:
@@ -666,9 +668,19 @@ class XMLDocument(object):
 ##            nextchild = child.next
         print(f"\tIterate over children of element node.", file=sys.stderr)
         for child in node.iterchildren():
-###            if (self.isFinalNode(child)) or (child.type == 'element' and self.worthOutputting(child)):
             print(f"\tChild: <{child.tag}>", file=sys.stderr)
-            if (self.isFinalNode(child)) or (etree.iselement(child) and self.worthOutputting(child)):
+            if self.isFinalNode(child):
+                if len(child) == 0:
+                    # No children: serialize Text (and tail?)
+                    #outtxt += self.doSerialize(child)
+                    (starttag, content, endtag, translation) = self.processElementTag(child, myrepl, False)
+                    outtxt += '<%s>%s</%s>' % (starttag, content, endtag)
+                    #continue
+                else:
+                    myrepl.append(self.processElementTag(child, myrepl, True))
+                    outtxt += '<placeholder-%d/>' % (len(myrepl))
+###            if (self.isFinalNode(child)) or (child.type == 'element' and self.worthOutputting(child)):
+            elif (etree.iselement(child) and self.worthOutputting(child)):
                 print(f"\tAppend child as placeholder.", file=sys.stderr)
                 myrepl.append(self.processElementTag(child, myrepl, True))
                 outtxt += '<placeholder-%d/>' % (len(myrepl))
@@ -682,7 +694,7 @@ class XMLDocument(object):
                 else:
                     print(f"\tAppend serialized child.", file=sys.stderr)
                     outtxt += self.doSerialize(child)
-            print(f"\tOuttext: {outtxt}", file=sys.stderr)
+            print(f"\tOuttext: [{outtxt}]", file=sys.stderr)
 ###            child = nextchild
 
         if self.app.operation == 'merge':
@@ -695,6 +707,10 @@ class XMLDocument(object):
         starttag = self.startTagForNode(node)
         endtag = self.endTagForNode(node)
 
+        # FIXME Tail needs to go AFTER endtag, but is not part of endtag!
+        if node.tail is not None:
+            outtxt += node.tail.strip()
+
         print(f"\tIs it worth outputting.", file=sys.stderr)
         worth = self.worthOutputting(node)
         if not translation:
@@ -702,8 +718,8 @@ class XMLDocument(object):
             if worth and self.app.options.get('mark_untranslated'):
                 node.setLang('C')
 
+        print(f"\trestart {restart} - worth {worth}...", file=sys.stderr)
         if restart or worth:
-            print(f"\trestart {restart} or worth {worth}...", file=sys.stderr)
             for i, repl in enumerate(myrepl):
                 # repl[0] may contain translated attributes with
                 # non-ASCII chars, so implicit conversion to <str> may fail
@@ -768,10 +784,11 @@ class XMLDocument(object):
             return ''
 ###        elif not node.children:
         elif len(node) == 0: ### Also check for comment? (tail)
+            print(f"\t--> Use etree to serialize node", file=sys.stderr)
             ###return node.serialize("utf-8")
-            ser = etree.tostring(node, encoding="utf-8")
-            print(f"\t--> serialized node: {ser}", file=sys.stderr)
-            return etree.tostring(node, encoding="utf-8")
+            ser = etree.tostring(node, encoding="unicode", method="text").strip()
+            print(f"\t--> serialized node: [{ser}]", file=sys.stderr)
+            return etree.tostring(node, encoding="unicode", method="text").strip()
 ###        elif node.type == 'entity_ref':
 ###            if self.isExternalGeneralParsedEntity(node):
 ###                return node.serialize('utf-8')
@@ -807,6 +824,42 @@ class XMLDocument(object):
 ###                outtxt += self.doSerialize(child)
 ###                child = nextchild
             return outtxt
+
+    def debug_output_node(self, node, level, childnum):
+        skipstr = ''
+        lvl = 0
+        while lvl <= level:
+            skipstr += '  '
+            lvl += 1
+
+        childtxt = ''
+        if childnum > 0:
+            childtxt = f"Child {childnum} "
+
+        nodetext = ''
+        if isinstance(node.text, str):
+            nodetext = node.text.strip()
+        nodetail = ''
+        if node.tail is not None and isinstance(node.tail, str):
+            nodetail = node.tail.strip()
+
+        print(f"{skipstr}{childtxt}Node <{node.tag}>, attrib: {node.attrib}\n{skipstr}Text: [{nodetext}]\n{skipstr}Tail: [{nodetail}]", file=sys.stderr)
+
+        if len(node) > 0:
+            self.debug_output_children(node, level+1)
+
+    def debug_output_children(self, node, level):
+        knum = 1
+        for child in node.iterchildren():
+            self.debug_output_node(child, level, knum)
+            knum += 1
+
+    def debug_output_all(self, node):
+        print(f"\nOutput lxml structure\n", file=sys.stderr)
+        level = 0
+        self.debug_output_node(node, level, -1)
+        print(f"\n---------------------\n", file=sys.stderr)
+
 
 def xml_error_handler(ctxt, error):
     #deactivate error messages from the validation
@@ -857,6 +910,7 @@ class Main(object):
                 sys.exit(1)
             self.current_mode.preProcessXml(doc.doc, self.msg)
             doc.generate_messages()
+            doc.debug_output_all(doc.doc.getroot())
         self.output_po()
 
     def merge(self, mofile, xmlfile):
