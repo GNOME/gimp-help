@@ -34,6 +34,9 @@ if not os.path.exists('/dev/null'): NULL_STRING = 'NUL'
 
 
 def xml_qname (node):
+    assert(node is not None)
+    if not isinstance(node.tag, str):
+        return '<invalid node: tag is not a string>'
     qname = etree.QName(node.tag).localname
     if node.prefix is not None:
         qname = node.prefix + ':' + qname
@@ -379,11 +382,14 @@ class XMLDocument(object):
         firstchild = None
         if parent is not None:
             firstchild = parent[0]
+            firsttag   = firstchild.tag
+        else:
+            firsttag = ''
         prev = node.getprevious()
 ###        while prev and prev.type == 'text' and prev.content.strip() == '':
 ###            prev = prev.prev
         while prev is not None and self.isTextNode(prev):
-            print(f"prev: {prev.tag}, first: {firstchild.tag}", file=sys.stderr)
+            print(f"prev: {prev.tag}, first: {firsttag}", file=sys.stderr)
             if prev == firstchild:
                 prev = None
             else:
@@ -557,7 +563,11 @@ class XMLDocument(object):
             node.setContent(text)
 
     def isTextNode(self, node):
-        text = node.text.strip()
+        text = node.text
+        if text is not None:
+            text = text.strip()
+        else:
+            return False
         return text != ''
 
     def hasText(self, node):
@@ -651,8 +661,9 @@ class XMLDocument(object):
 ###                if p == prev:
 ###                    break
 
-        #outtxt = ''
-        outtxt = node.text.strip()
+        outtxt = ''
+        if node.text is not None:
+            outtxt = node.text.strip()
         if restart:
             myrepl = []
         else:
@@ -708,8 +719,8 @@ class XMLDocument(object):
         endtag = self.endTagForNode(node)
 
         # FIXME Tail needs to go AFTER endtag, but is not part of endtag!
-        if node.tail is not None:
-            outtxt += node.tail.strip()
+        #if node.tail is not None:
+        #    outtxt += node.tail.strip()
 
         print(f"\tIs it worth outputting.", file=sys.stderr)
         worth = self.worthOutputting(node)
@@ -735,6 +746,11 @@ class XMLDocument(object):
                     norm_outtxt = self.normalizeString(outtxt, self.app.isSpacePreserveNode(node))
 ###                    self.app.msg.outputMessage(norm_outtxt, node.lineNo(), self.getCommentForNode(node), self.app.isSpacePreserveNode(node), tag = node.name)
                     self.app.msg.outputMessage(norm_outtxt, node.sourceline, self.getCommentForNode(node), self.app.isSpacePreserveNode(node), tag = node.tag)
+                    if node.tail is not None:
+                        tailtxt = node.tail.strip()
+                        norm_tailtxt = self.normalizeString(tailtxt, self.app.isSpacePreserveNode(node))
+                        self.app.msg.outputMessage(norm_tailtxt, node.sourceline, self.getCommentForNode(node), self.app.isSpacePreserveNode(node), tag = node.tag)
+
 
         print(f"\treturn processElementTag result: <{starttag}> '{outtxt}' <{endtag}>, translation: [{translation}].", file=sys.stderr)
         return (starttag, outtxt, endtag, translation)

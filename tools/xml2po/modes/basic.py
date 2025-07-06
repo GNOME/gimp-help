@@ -87,7 +87,7 @@ class basicXmlMode:
                 ###    final_children = False
                 ###    break
                 if not empty_text or not empty_tail or not self.isFinalNode(child):
-                    print(f"\t--> Text of not final child: [{node.text.strip()}]...", file=sys.stderr)
+                    #print(f"\t--> Text of not final child: [{node.text.strip()}]...", file=sys.stderr)
                     final_children = False
                     break
                 elif empty_text:
