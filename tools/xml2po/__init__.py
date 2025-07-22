@@ -733,6 +733,7 @@ class Main(object):
         """ Produce a pot file from the list of 'xmlfiles' """
         self.msg = MessageOutput(self)
         for xmlfile in xmlfiles:
+            print("Parsing XML file '%s'" % (xmlfile), file=sys.stderr)
             if not os.access(xmlfile, os.R_OK):
                 raise IOError("Unable to read file '%s'" % xmlfile)
             try:
