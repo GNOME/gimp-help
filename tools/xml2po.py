@@ -37,6 +37,8 @@ import os
 import getopt
 import tempfile
 
+import time
+
 DEBUG_VERBOSITY = 0
 
 NULL_STRING = '/dev/null'
@@ -150,7 +152,23 @@ def main(argv):
                 options['translationlanguage'] = os.path.split(os.path.splitext(pofile)[0])[1]
             if DEBUG_VERBOSITY > 0:
                 print(f"Converting {pofile} to {mofile_tmppath} using msgfmt")
-            os.system("msgfmt -o %s %s >%s" % (mofile_tmppath, pofile, NULL_STRING)) and sys.exit(7)
+            result = 1
+            max_cnt = 15
+            counter = 0
+            # When using meson it apparently happens that msgfmt is called when
+            # the pofile is already in use by another process.
+            # We will try it again 15 times and sleep for 4 seconds in between.
+            while result != 0 and counter < max_cnt:
+                result = os.system("msgfmt -o %s %s >%s" % (mofile_tmppath, pofile, NULL_STRING))
+                counter += 1
+                if (result):
+                    time.sleep(5)
+                    if DEBUG_VERBOSITY > 0 and counter == 1:
+                        print(f"Msgfmt failed, trying again...", file=sys.stderr)
+            if result:
+                sys.exit(7)
+            elif counter > 1:
+                print(f"Succeeded after {counter} times")
             mofile = mofile_tmppath
         elif opt in ('-o', '--output'):
             output = arg
