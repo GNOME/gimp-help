@@ -214,6 +214,8 @@ custom_target('validate-references',
 
 #### Build/copy stylesheets ####
 
+# Stylesheets needs to be done first: it is required to generate authors and
+# maintainers files.
 subdir('stylesheets')
 
 ########################################################################
@@ -235,33 +237,41 @@ authors_file = custom_target('AUTHORS',
 msgtext = 'Common: @0@'.format(authors_common_ss.full_path())
 message(msgtext)
 
-# authors_doc_dir = custom_target('authors-doc-dir',
-#   input: [],
-#   output: ['authors-doc-dir'],
-#   command: [
-#     'mkdir', '-p',
-#     '@OUTDIR@' + '/src/preface'
-#   ],
-#   #build_by_default: true,
-# )
+# We have a circular dependency: src/preface/authors.xml needs to be created
+# and moved to src first, so we need to be in /src first. However, before
+# we can make translated xml (based on the files in /src), we need pot files
+# created first, for which /pot needs to be entered first.
+# Trying to circumvent that by exiting /src early the first time does not
+# work: ERROR: Tried to enter directory "src", which has already been visited.
+# So, we have no other choice than generating authors.xml first without
+# going to /src/preface first.
 
-##authors_doc = custom_target('authors-doc',
-# authors_xml = custom_target('authors.xml',
-#   depends: [ authors_doc_dir ],
-#   # input: [meson.project_source_root() + '/stylesheets/authors_docbook.xsl',
-#   #         meson.project_source_root() + '/stylesheets/authors_common.xsl'],
-#   input: [authors_common_ss, authors_docbook_ss],
-#   output: [AUTHORS_DOCBOOK_XML],
-#   command: [
-#     xsltproc,
-#     '-o', AUTHORS_DOCBOOK_XML,
-# #    '-o', '/src/preface/'+'@OUTPUT@',
-#     '@INPUT@',
-#     ##'stylesheets/authors_docbook.xsl stylesheets/authors_common.xsl',
-#   ],
-#   build_by_default: true,
-#   #build_by_default: false,
-# )
+authors_file_xml = 'authors.xml'
+authors_subdir   = '/src/preface/'
+
+preface_authors_xml = custom_target('preface-authors-xml',
+    input: [authors_docbook_ss, authors_data],
+    output: authors_file_xml,
+    command: [
+        xsltproc,
+        '-o', meson.current_build_dir() + '/authors.xml',
+        '@INPUT@',
+    ],
+    #build_by_default: true,
+)
+
+copy_authors_to_src = custom_target('copy-to-src-authors',
+    input: preface_authors_xml,
+    output: ['dummy'],
+    command: [
+        'cp',
+        # Special case here since authors.xml is only available
+        # in the build dir!
+        meson.project_build_root()  + '/' + authors_file_xml,
+        meson.project_source_root() + authors_subdir + authors_file_xml,
+    ],
+)
+
 
 # Maintainers doap resides in the root
 MAINTAINERS_DOAP       = ['gimp-help.doap']
@@ -285,75 +295,26 @@ maintainers_file = custom_target('MAINTAINERS',
 ####            Make pot files:  XML(en) --> POT                    ####
 ########################################################################
 
-appendix_pot = [
-  'bibliography.xml',
-  'bugs.xml',
-  'contributing.xml',
-  'fdl.xml',
-  'history.xml',
-  'history-2.10.xml',
-  'history-20.xml',
-  'history-22.xml',
-  'history-24.xml',
-  'history-26.xml',
-  'history-28.xml',
-  'tone-mapping-tutorial.xml',
-]
-
-concepts_pot = [
-  'basic-setup.xml',
-  'brushes.xml',
-  'color-management.xml',
-  'concepts.xml',
-  'docks.xml',
-  'fonts-and-text.xml',
-  'gradients.xml',
-  'grid-and-guides.xml',
-  'image-types.xml',
-  'images-loading.xml',
-  'images.xml',
-  'imagewindow.xml',
-  'intro.xml',
-  'layer-groups.xml',
-  'layer-modes.xml',
-  'layers.xml',
-  'palettes.xml',
-  'patterns.xml',
-  'plugins.xml',
-  'qmask.xml',
-  'script-fu.xml',
-  'selection.xml',
-  'setup.xml',
-  'text-management.xml',
-  'toolbox.xml',
-  'tools-presets.xml',
-  'undo.xml',
-]
-
-pot_list = [
-  {'dir': 'appendix', 'files': appendix_pot, 'target': 'appendix.pot'},
-  {'dir': 'concepts', 'files': concepts_pot, 'target': 'concepts.pot'},
-]
 
 #xml2po_env = environment()
 #xml2po_env.append('XML2PO',  XML2PO.full_path())
 #xml2po_env.append('MSGUNIQ', MSGUNIQ.full_path())
 
-# Make pot directory if not existing
-run_command (
-    'mkdir', '-p', meson.project_build_root() + '/pot',
-    check: false
-)
-# Make xml directory if not existing
-run_command (
-    'mkdir', '-p', meson.project_build_root() + '/xml',
-    check: false
-)
-# Make html directory if not existing
-run_command (
-    'mkdir', '-p', meson.project_build_root() + '/html',
-    check: false
-)
+# # Make pot directory if not existing
+# run_command (
+#     'mkdir', '-p', meson.project_build_root() + '/pot',
+#     check: false
+# )
+# # Make xml directory if not existing
+# run_command (
+#     'mkdir', '-p', meson.project_build_root() + '/xml',
+#     check: false
+# )
+# # Make html directory if not existing
+# run_command (
+#     'mkdir', '-p', meson.project_build_root() + '/html',
+#     check: false
+# )
 
 # Seems currently these subdir pot targets always get built if
 # I add: build_by_default: true
@@ -372,73 +333,68 @@ run_command (
 #     files() command.
 
 pot_base = 'pot/'
+
+# pot needs generated authors.xml in src/preface
+subdir('pot')
+
+# Generate translated xml files...
 subdir('src')
 
 xml2pot_targets = []
 
-foreach pot_action : pot_list
-  xmlsubdir = pot_action.get('dir')
-  srcdir    = 'src/'+ xmlsubdir + '/'
-  targetdir = 'pot/'
-  srcfiles  = []
-  foreach srcfile : pot_action.get('files')
-    srcfiles += srcdir + srcfile
-  endforeach
+# foreach pot_action : pot_list
+#   xmlsubdir = pot_action.get('dir')
+#   srcdir    = 'src/'+ xmlsubdir + '/'
+#   targetdir = 'pot/'
+#   srcfiles  = []
+#   foreach srcfile : pot_action.get('files')
+#     srcfiles += srcdir + srcfile
+#   endforeach
 
-  #message('Creating target for ' + pot_action.get('target'))
+#   #message('Creating target for ' + pot_action.get('target'))
 
-#   xml2pot_target = custom_target(pot_action.get('target'),
-#     input: srcfiles,
-#     output: [pot_action.get('target')],
-#     command: [
-# #      xml2pot, pot_action.get('target'), srcfiles,
-#       xml2pot, '@OUTPUT@', '@INPUT@',
-#     ],
-#     build_by_default: true,
-#   )
-  # xml2pot_target = run_target(pot_action.get('target'),
-  #   command: [
-  #     xml2pot, [pot_action.get('target')], srcfiles,
-  #   ],
-  #   # apparently env was only added in meson 0.57 while we are using 0.55...
-  #   #env: xml2po_env,
-  #   # env: {
-  #   #   'XML2PO' : XML2PO.full_path(),
-  #   #   'MSGUNIQ': MSGUNIQ.full_path(),
-  #   # }
-  #   # env: [
-  #   #   'XML2PO=test/',
-  #   #   'MSGUNIQ=msguniq',
-  #   # ]
-  # )
-#  xml2pot_targets += pot_action.get('target') #xml2pot_target
-#  xml2pot_targets += xml2pot_target
-
-#   xml2pot_target = custom_target('xml2pot-' + xmlsubdir,
-#     input: srcfiles,
-# #    output: ['xml2pot-' + xmlsubdir],
-#     output: [pot_action.get('target')],
-#     command: [
-#       xml2pot, '@OUTPUT@', '@INPUT@',
-# #      XML2PO, XML2POFLAGS, '--output=-',
-# #      '@INPUT@',
-#     #capture: [xml2po_result]
-#     ]
-#   )
-#   # msg_uniq = run_command(
-#   #   MSGUNIQ, MSGUNIQFLAGS
+# #   xml2pot_target = custom_target(pot_action.get('target'),
+# #     input: srcfiles,
+# #     output: [pot_action.get('target')],
+# #     command: [
+# # #      xml2pot, pot_action.get('target'), srcfiles,
+# #       xml2pot, '@OUTPUT@', '@INPUT@',
+# #     ],
+# #     build_by_default: true,
+# #   )
+#   # xml2pot_target = run_target(pot_action.get('target'),
+#   #   command: [
+#   #     xml2pot, [pot_action.get('target')], srcfiles,
+#   #   ],
+#   #   # apparently env was only added in meson 0.57 while we are using 0.55...
+#   #   #env: xml2po_env,
+#   #   # env: {
+#   #   #   'XML2PO' : XML2PO.full_path(),
+#   #   #   'MSGUNIQ': MSGUNIQ.full_path(),
+#   #   # }
+#   #   # env: [
+#   #   #   'XML2PO=test/',
+#   #   #   'MSGUNIQ=msguniq',
+#   #   # ]
 #   # )
-endforeach
+# #  xml2pot_targets += pot_action.get('target') #xml2pot_target
+# #  xml2pot_targets += xml2pot_target
 
-# xml2pot = custom_target('xml2pot-all',
-#   output: 'xml2pot-all',
-#   command: xml2pot_targets,
-#   build_by_default: true,
-# )
-
-# pot_files = custom_target('potfiles',
-#   input: [],
-#   output:
+# #   xml2pot_target = custom_target('xml2pot-' + xmlsubdir,
+# #     input: srcfiles,
+# # #    output: ['xml2pot-' + xmlsubdir],
+# #     output: [pot_action.get('target')],
+# #     command: [
+# #       xml2pot, '@OUTPUT@', '@INPUT@',
+# # #      XML2PO, XML2POFLAGS, '--output=-',
+# # #      '@INPUT@',
+# #     #capture: [xml2po_result]
+# #     ]
+# #   )
+# #   # msg_uniq = run_command(
+# #   #   MSGUNIQ, MSGUNIQFLAGS
+# #   # )
+# endforeach
 
 # )
 

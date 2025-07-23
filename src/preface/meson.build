@@ -1,21 +1,8 @@
-# Create preface.pot
+# src/preface
 message('preface submenu')
 
-### Generate authors.xml ###
-
-authors_file_xml = 'authors.xml'
-authors_subdir = '/src/preface/'
-
-preface_authors_xml = custom_target('preface-authors-xml',
-  input: [authors_docbook_ss, authors_data],
-  output: authors_file_xml,
-  command: [
-    xsltproc,
-    '-o', meson.current_build_dir() + '/authors.xml',
-    '@INPUT@',
-  ],
-  #build_by_default: true,
-)
+# Due to circular reference src -> pot -> src we can't create authors.xml here.
+# It is created instead in our root meson.build file.
 
 
 # list of source files to make a pot from
@@ -35,19 +22,8 @@ target_po   = target_base + '.po'
 # Debugging help...
 message('Creating target for ' + target_pot)
 
-xmltarget = xmltarget_base + xmlfile
+#xmltarget = xmltarget_base + xmlfile
 
-copy_authors_to_src = custom_target('copy-to-src-authors',
-    input: preface_authors_xml,
-    output: ['dummy'],
-    command: [
-        'cp',
-        # Special case here since authors.xml is only available
-        # in the build dir!
-        meson.project_build_root()  + authors_subdir + authors_file_xml,
-        meson.project_source_root() + authors_subdir + authors_file_xml,
-    ],
-)
 
 authors_path = meson.project_source_root() + authors_subdir + authors_file_xml
 
