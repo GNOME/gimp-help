@@ -130,6 +130,27 @@ pot_source_files_root = [
 #     endif
 # endforeach
 
+pot_dependencies = [
+    gimp_pot, appendix_pot, concepts_pot, dialogs_pot, filters_pot,
+    glossary_pot, introduction_pot, menus_pot, preface_pot,
+    toolbox_pot, tutorial_pot, using_pot,
+    # filters
+    filters_animation_pot, filters_artistic_pot, filters_blur_pot,
+    filters_combine_pot, filters_decor_pot, filters_distort_pot,
+    filters_edge_detect_pot, filters_enhance_pot, filters_generic_pot,
+    filters_light_and_shadow_pot, filters_map_pot, filters_noise_pot,
+    filters_render_pot, filters_web_pot,
+    # menus
+    menus_colors_pot, menus_edit_pot, menus_file_pot, menus_filters_pot,
+    menus_help_pot, menus_image_pot, menus_layer_pot, menus_select_pot,
+    menus_view_pot,
+    # menus/colors
+    colors_auto_pot, colors_components_pot, colors_desaturate_pot,
+    colors_info_pot, colors_map_pot, colors_tone_mapping_pot,
+    # toolbox
+    toolbox_paint_pot, toolbox_selection_pot, toolbox_transform_pot,
+    ]
+
 xml_lang_base = meson.project_build_root() + '/xml'
 po_source     = 'gimp.po'
 # for each enabled language create a xml/lang/... target
@@ -150,7 +171,7 @@ foreach lang : target_linguas
             target = target_base + xmlfile
             #message(target)
             gimp_xml = custom_target(target,
-                depends: [gimp_pot],
+                depends: pot_dependencies,
                 output: [target],
                 command: [
                     xml2po,
