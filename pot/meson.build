@@ -9,7 +9,7 @@ xml_sources_root = [
     'key-reference.xml',
 ]
 
-pot_gimp_help = 'gimp-help.pot'
+pot_gimp_help = 'gimp.pot'
 
 input_xml  = xml_sources_root
 output_pot = pot_gimp_help
@@ -24,14 +24,19 @@ endforeach
 
 gimp_pot = custom_target(output_pot,
     depends: [copy_authors_to_src],
-    depend_files: [input_files],
+#    depend_files: [input_files],
+    input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, output_pot, output_dir, meson.project_source_root(), input_files,
+#        xml2pot, output_pot, output_dir, meson.project_source_root(), input_files,
+#        xml2pot, '@OUTPUT@', '@OUTDIR@', '@SOURCE_ROOT@', '@INPUT@',
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
     ],
 )
 
 ##############
+
+xml_sources_lists = {}
 
 xml_sources_appendix = [
     'bibliography.xml',
@@ -52,13 +57,17 @@ output_dir     = meson.project_build_root()  + '/pot'
 foreach xml_file: input_xml
     input_files += input_base_dir + xml_file
 endforeach
+appendix_input = input_files
+xml_sources_lists += { 'appendix': input_files}
 
 appendix_pot = custom_target(output_pot,
     depends: [copy_authors_to_src],
-    depend_files: [input_files],
+#    depend_files: [input_files],
+    input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, output_pot, output_dir, meson.project_source_root(), input_files,
+#        xml2pot, output_pot, output_dir, meson.project_source_root(), input_files,
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
     ],
 )
 
@@ -104,13 +113,16 @@ output_dir     = meson.project_build_root()  + '/pot'
 foreach xml_file: input_xml
     input_files += input_base_dir + xml_file
 endforeach
+xml_sources_lists += { 'concepts': input_files}
 
 concepts_pot = custom_target(output_pot,
     depends: [copy_authors_to_src],
-    depend_files: [input_files],
+#    depend_files: [input_files],
+    input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, output_pot, output_dir, meson.project_source_root(), input_files,
+#        xml2pot, output_pot, output_dir, meson.project_source_root(), input_files,
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
     ],
 )
 
@@ -210,14 +222,17 @@ output_dir     = meson.project_build_root()  + '/pot'
 foreach xml_file: input_xml
     input_files += input_base_dir + xml_file
 endforeach
+xml_sources_lists += { 'dialogs': input_files}
 
 dialogs_pot = custom_target(output_pot,
     depends: [copy_authors_to_src],
-    depend_files: [input_files],
+#    depend_files: [input_files],
+    input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, output_pot, output_dir, meson.project_source_root(), input_files,
-    ],
+#        xml2pot, output_pot, output_dir, meson.project_source_root(), input_files,
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
+   ],
 )
 
 ##############
@@ -253,13 +268,16 @@ output_dir     = meson.project_build_root()  + '/pot'
 foreach xml_file: input_xml
     input_files += input_base_dir + xml_file
 endforeach
+xml_sources_lists += { 'filters': input_files}
 
 filters_pot = custom_target(output_pot,
     depends: [copy_authors_to_src],
-    depend_files: [input_files],
+#    depend_files: [input_files],
+    input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, output_pot, output_dir, meson.project_source_root(), input_files,
+#        xml2pot, output_pot, output_dir, meson.project_source_root(), input_files,
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
     ],
 )
 
@@ -280,13 +298,17 @@ output_dir     = meson.project_build_root()  + '/pot'
 foreach xml_file: input_xml
     input_files += input_base_dir + xml_file
 endforeach
+glossary_input = input_files
+xml_sources_lists += { 'glossary': input_files}
 
 glossary_pot = custom_target(output_pot,
     depends: [copy_authors_to_src],
-    depend_files: [input_files],
+#    depend_files: [input_files],
+    input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, output_pot, output_dir, meson.project_source_root(), input_files,
+#        xml2pot, output_pot, output_dir, meson.project_source_root(), input_files,
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
     ],
 )
 
@@ -307,13 +329,16 @@ output_dir     = meson.project_build_root()  + '/pot'
 foreach xml_file: input_xml
     input_files += input_base_dir + xml_file
 endforeach
+xml_sources_lists += { 'introduction': input_files}
 
 introduction_pot = custom_target(output_pot,
     depends: [copy_authors_to_src],
-    depend_files: [input_files],
+#    depend_files: [input_files],
+    input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, output_pot, output_dir, meson.project_source_root(), input_files,
+#        xml2pot, output_pot, output_dir, meson.project_source_root(), input_files,
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
     ],
 )
 
@@ -347,13 +372,16 @@ output_dir     = meson.project_build_root()  + '/pot'
 foreach xml_file: input_xml
     input_files += input_base_dir + xml_file
 endforeach
+xml_sources_lists += { 'menus': input_files}
 
 menus_pot = custom_target(output_pot,
     depends: [copy_authors_to_src],
-    depend_files: [input_files],
+#    depend_files: [input_files],
+    input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, output_pot, output_dir, meson.project_source_root(), input_files,
+#        xml2pot, output_pot, output_dir, meson.project_source_root(), input_files,
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
     ],
 )
 
@@ -374,13 +402,16 @@ output_dir     = meson.project_build_root()  + '/pot'
 foreach xml_file: input_xml
     input_files += input_base_dir + xml_file
 endforeach
+xml_sources_lists += { 'preface': input_files}
 
 preface_pot = custom_target(output_pot,
     depends: [copy_authors_to_src],
-    depend_files: [input_files],
+#    depend_files: [input_files],
+    input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, output_pot, output_dir, meson.project_source_root(), input_files,
+#        xml2pot, output_pot, output_dir, meson.project_source_root(), input_files,
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
     ],
 )
 
@@ -413,13 +444,16 @@ output_dir     = meson.project_build_root()  + '/pot'
 foreach xml_file: input_xml
     input_files += input_base_dir + xml_file
 endforeach
+xml_sources_lists += { 'toolbox': input_files}
 
 toolbox_pot = custom_target(output_pot,
     depends: [copy_authors_to_src],
-    depend_files: [input_files],
+#    depend_files: [input_files],
+    input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, output_pot, output_dir, meson.project_source_root(), input_files,
+#        xml2pot, output_pot, output_dir, meson.project_source_root(), input_files,
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
     ],
 )
 
@@ -440,13 +474,16 @@ output_dir     = meson.project_build_root()  + '/pot'
 foreach xml_file: input_xml
     input_files += input_base_dir + xml_file
 endforeach
+xml_sources_lists += { 'tutorial': input_files}
 
 tutorial_pot = custom_target(output_pot,
     depends: [copy_authors_to_src],
-    depend_files: [input_files],
+#    depend_files: [input_files],
+    input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, output_pot, output_dir, meson.project_source_root(), input_files,
+#        xml2pot, output_pot, output_dir, meson.project_source_root(), input_files,
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
     ],
 )
 
@@ -489,13 +526,16 @@ output_dir     = meson.project_build_root()  + '/pot'
 foreach xml_file: input_xml
     input_files += input_base_dir + xml_file
 endforeach
+xml_sources_lists += { 'using': input_files}
 
 using_pot = custom_target(output_pot,
     depends: [copy_authors_to_src],
-    depend_files: [input_files],
+#    depend_files: [input_files],
+    input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, output_pot, output_dir, meson.project_source_root(), input_files,
+#        xml2pot, output_pot, output_dir, meson.project_source_root(), input_files,
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
     ],
 )
 

@@ -21,6 +21,7 @@ output_dir     = meson.project_build_root()  + '/pot/menus/colors'
 foreach xml_file: input_xml
     input_files += input_base_dir + xml_file
 endforeach
+xml_sources_lists += { 'menus/colors/auto': input_files}
 
 colors_auto_pot = custom_target(output_pot,
     depends: [copy_authors_to_src],
@@ -53,6 +54,7 @@ output_dir     = meson.project_build_root()  + '/pot/menus/colors'
 foreach xml_file: input_xml
     input_files += input_base_dir + xml_file
 endforeach
+xml_sources_lists += { 'menus/colors/components': input_files}
 
 colors_components_pot = custom_target(output_pot,
     depends: [copy_authors_to_src],
@@ -83,6 +85,7 @@ output_dir     = meson.project_build_root()  + '/pot/menus/colors'
 foreach xml_file: input_xml
     input_files += input_base_dir + xml_file
 endforeach
+xml_sources_lists += { 'menus/colors/desaturate': input_files}
 
 colors_desaturate_pot = custom_target(output_pot,
     depends: [copy_authors_to_src],
@@ -113,6 +116,7 @@ output_dir     = meson.project_build_root()  + '/pot/menus/colors'
 foreach xml_file: input_xml
     input_files += input_base_dir + xml_file
 endforeach
+xml_sources_lists += { 'menus/colors/info': input_files}
 
 colors_info_pot = custom_target(output_pot,
     depends: [copy_authors_to_src],
@@ -147,6 +151,7 @@ output_dir     = meson.project_build_root()  + '/pot/menus/colors'
 foreach xml_file: input_xml
     input_files += input_base_dir + xml_file
 endforeach
+xml_sources_lists += { 'menus/colors/map': input_files}
 
 colors_map_pot = custom_target(output_pot,
     depends: [copy_authors_to_src],
@@ -179,6 +184,7 @@ output_dir     = meson.project_build_root()  + '/pot/menus/colors'
 foreach xml_file: input_xml
     input_files += input_base_dir + xml_file
 endforeach
+xml_sources_lists += { 'menus/colors/tone-mapping': input_files}
 
 colors_tone_mapping_pot = custom_target(output_pot,
     depends: [copy_authors_to_src],

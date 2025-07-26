@@ -23,6 +23,7 @@ output_dir     = meson.project_build_root()  + '/pot/filters'
 foreach xml_file: input_xml
     input_files += input_base_dir + xml_file
 endforeach
+xml_sources_lists += { 'filters/animation': input_files}
 
 filters_animation_pot = custom_target(output_pot,
     depends: [copy_authors_to_src],
@@ -65,6 +66,7 @@ output_dir     = meson.project_build_root()  + '/pot/filters'
 foreach xml_file: input_xml
     input_files += input_base_dir + xml_file
 endforeach
+xml_sources_lists += { 'filters/artistic': input_files}
 
 filters_artistic_pot = custom_target(output_pot,
     depends: [copy_authors_to_src],
@@ -104,6 +106,7 @@ output_dir     = meson.project_build_root()  + '/pot/filters'
 foreach xml_file: input_xml
     input_files += input_base_dir + xml_file
 endforeach
+xml_sources_lists += { 'filters/blur': input_files}
 
 filters_blur_pot = custom_target(output_pot,
     depends: [copy_authors_to_src],
@@ -133,6 +136,7 @@ output_dir     = meson.project_build_root()  + '/pot/filters'
 foreach xml_file: input_xml
     input_files += input_base_dir + xml_file
 endforeach
+xml_sources_lists += { 'filters/combine': input_files}
 
 filters_combine_pot = custom_target(output_pot,
     depends: [copy_authors_to_src],
@@ -170,6 +174,7 @@ output_dir     = meson.project_build_root()  + '/pot/filters'
 foreach xml_file: input_xml
     input_files += input_base_dir + xml_file
 endforeach
+xml_sources_lists += { 'filters/decor': input_files}
 
 filters_decor_pot = custom_target(output_pot,
     depends: [copy_authors_to_src],
@@ -216,6 +221,7 @@ output_dir     = meson.project_build_root()  + '/pot/filters'
 foreach xml_file: input_xml
     input_files += input_base_dir + xml_file
 endforeach
+xml_sources_lists += { 'filters/distort': input_files}
 
 filters_distort_pot = custom_target(output_pot,
     depends: [copy_authors_to_src],
@@ -249,6 +255,7 @@ output_dir     = meson.project_build_root()  + '/pot/filters'
 foreach xml_file: input_xml
     input_files += input_base_dir + xml_file
 endforeach
+xml_sources_lists += { 'filters/edge-detect': input_files}
 
 filters_edge_detect_pot = custom_target(output_pot,
     depends: [copy_authors_to_src],
@@ -286,6 +293,7 @@ output_dir     = meson.project_build_root()  + '/pot/filters'
 foreach xml_file: input_xml
     input_files += input_base_dir + xml_file
 endforeach
+xml_sources_lists += { 'filters/enhance': input_files}
 
 filters_enhance_pot = custom_target(output_pot,
     depends: [copy_authors_to_src],
@@ -320,6 +328,7 @@ output_dir     = meson.project_build_root()  + '/pot/filters'
 foreach xml_file: input_xml
     input_files += input_base_dir + xml_file
 endforeach
+xml_sources_lists += { 'filters/generic': input_files}
 
 filters_generic_pot = custom_target(output_pot,
     depends: [copy_authors_to_src],
@@ -361,6 +370,7 @@ output_dir     = meson.project_build_root()  + '/pot/filters'
 foreach xml_file: input_xml
     input_files += input_base_dir + xml_file
 endforeach
+xml_sources_lists += { 'filters/light-and-shadow': input_files}
 
 filters_light_and_shadow_pot = custom_target(output_pot,
     depends: [copy_authors_to_src],
@@ -401,6 +411,7 @@ output_dir     = meson.project_build_root()  + '/pot/filters'
 foreach xml_file: input_xml
     input_files += input_base_dir + xml_file
 endforeach
+xml_sources_lists += { 'filters/map': input_files}
 
 filters_map_pot = custom_target(output_pot,
     depends: [copy_authors_to_src],
@@ -435,6 +446,7 @@ output_dir     = meson.project_build_root()  + '/pot/filters'
 foreach xml_file: input_xml
     input_files += input_base_dir + xml_file
 endforeach
+xml_sources_lists += { 'filters/noise': input_files}
 
 filters_noise_pot = custom_target(output_pot,
     depends: [copy_authors_to_src],
@@ -490,6 +502,7 @@ output_dir     = meson.project_build_root()  + '/pot/filters'
 foreach xml_file: input_xml
     input_files += input_base_dir + xml_file
 endforeach
+xml_sources_lists += { 'filters/render': input_files}
 
 filters_render_pot = custom_target(output_pot,
     depends: [copy_authors_to_src],
@@ -518,6 +531,7 @@ output_dir     = meson.project_build_root()  + '/pot/filters'
 foreach xml_file: input_xml
     input_files += input_base_dir + xml_file
 endforeach
+xml_sources_lists += { 'filters/web': input_files}
 
 filters_web_pot = custom_target(output_pot,
     depends: [copy_authors_to_src],
