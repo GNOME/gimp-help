@@ -44,6 +44,7 @@ output_dir     = meson.project_build_root()  + '/pot/menus'
 foreach xml_file: input_xml
     input_files += input_base_dir + xml_file
 endforeach
+xml_sources_lists += { 'menus/colors': input_files}
 
 menus_colors_pot = custom_target(output_pot,
     depends: [copy_authors_to_src],
@@ -103,6 +104,7 @@ output_dir     = meson.project_build_root()  + '/pot/menus'
 foreach xml_file: input_xml
     input_files += input_base_dir + xml_file
 endforeach
+xml_sources_lists += { 'menus/edit': input_files}
 
 menus_edit_pot = custom_target(output_pot,
     depends: [copy_authors_to_src],
@@ -149,6 +151,7 @@ output_dir     = meson.project_build_root()  + '/pot/menus'
 foreach xml_file: input_xml
     input_files += input_base_dir + xml_file
 endforeach
+xml_sources_lists += { 'menus/file': input_files}
 
 menus_file_pot = custom_target(output_pot,
     depends: [copy_authors_to_src],
@@ -182,6 +185,7 @@ output_dir     = meson.project_build_root()  + '/pot/menus'
 foreach xml_file: input_xml
     input_files += input_base_dir + xml_file
 endforeach
+xml_sources_lists += { 'menus/filters': input_files}
 
 menus_filters_pot = custom_target(output_pot,
     depends: [copy_authors_to_src],
@@ -218,6 +222,7 @@ output_dir     = meson.project_build_root()  + '/pot/menus'
 foreach xml_file: input_xml
     input_files += input_base_dir + xml_file
 endforeach
+xml_sources_lists += { 'menus/help': input_files}
 
 menus_help_pot = custom_target(output_pot,
     depends: [copy_authors_to_src],
@@ -284,6 +289,7 @@ output_dir     = meson.project_build_root()  + '/pot/menus'
 foreach xml_file: input_xml
     input_files += input_base_dir + xml_file
 endforeach
+xml_sources_lists += { 'menus/image': input_files}
 
 menus_image_pot = custom_target(output_pot,
     depends: [copy_authors_to_src],
@@ -367,6 +373,7 @@ output_dir     = meson.project_build_root()  + '/pot/menus'
 foreach xml_file: input_xml
     input_files += input_base_dir + xml_file
 endforeach
+xml_sources_lists += { 'menus/layer': input_files}
 
 menus_layer_pot = custom_target(output_pot,
     depends: [copy_authors_to_src],
@@ -411,6 +418,7 @@ output_dir     = meson.project_build_root()  + '/pot/menus'
 foreach xml_file: input_xml
     input_files += input_base_dir + xml_file
 endforeach
+xml_sources_lists += { 'menus/select': input_files}
 
 menus_select_pot = custom_target(output_pot,
     depends: [copy_authors_to_src],
@@ -473,6 +481,7 @@ output_dir     = meson.project_build_root()  + '/pot/menus'
 foreach xml_file: input_xml
     input_files += input_base_dir + xml_file
 endforeach
+xml_sources_lists += { 'menus/view': input_files}
 
 menus_view_pot = custom_target(output_pot,
     depends: [copy_authors_to_src],

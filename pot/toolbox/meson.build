@@ -34,6 +34,7 @@ output_dir     = meson.project_build_root()  + '/pot/toolbox'
 foreach xml_file: input_xml
     input_files += input_base_dir + xml_file
 endforeach
+xml_sources_lists += { 'toolbox/paint': input_files}
 
 toolbox_paint_pot = custom_target(output_pot,
     depends: [copy_authors_to_src],
@@ -70,6 +71,7 @@ output_dir     = meson.project_build_root()  + '/pot/toolbox'
 foreach xml_file: input_xml
     input_files += input_base_dir + xml_file
 endforeach
+xml_sources_lists += { 'toolbox/selection': input_files}
 
 toolbox_selection_pot = custom_target(output_pot,
     depends: [copy_authors_to_src],
@@ -111,6 +113,7 @@ output_dir     = meson.project_build_root()  + '/pot/toolbox'
 foreach xml_file: input_xml
     input_files += input_base_dir + xml_file
 endforeach
+xml_sources_lists += { 'toolbox/transform': input_files}
 
 toolbox_transform_pot = custom_target(output_pot,
     depends: [copy_authors_to_src],

@@ -16,24 +16,14 @@ message('src submenu')
 # # #subdir('images') # not a directory with xml files
 #####
 
-# all_pots = custom_target('pot-all',
-#     depends: [appendix_pot],
-#     input:'',
-#     output: 'pot-all',
-#     command: [
-#         'ls',
-#     ],
-#     build_by_default: true,
-# )
-
 # list of source files to make a pot from
-input_base_dir = meson.project_source_root() + '/src/'
-pot_source_files_root = [
-    'gimp.xml',
-    'help-missing.xml',
-    'introduction.xml',
-    'key-reference.xml',
-]
+# input_base_dir = meson.project_source_root() + '/src/'
+# pot_source_files_root = [
+#     'gimp.xml',
+#     'help-missing.xml',
+#     'introduction.xml',
+#     'key-reference.xml',
+# ]
 # pot_source_files_root = [
 #     input_base_dir + 'gimp.xml',
 #     input_base_dir + 'help-missing.xml',
@@ -151,76 +141,239 @@ pot_dependencies = [
     toolbox_paint_pot, toolbox_selection_pot, toolbox_transform_pot,
     ]
 
-xml_lang_base = meson.project_build_root() + '/xml'
+xml_lang_base = meson.project_build_root() + '/src'
 po_source     = 'gimp.po'
 # for each enabled language create a xml/lang/... target
+
+gen = generator(xml2po,
+    depends: [gimp_pot],
+    output: '@PLAINNAME@',
+    arguments : [
+        '--po-file=' + meson.project_source_root() + '/po/' + lang + '/' + po_source,
+        '--language=' + lang,
+#        '--output=@BUILD_DIR@' + '/' + '@OUTPUT@',
+        '--output=@OUTPUT@',
+        '@INPUT@',
+    ])
+
+en_gen = generator(cp,
+    depends: [gimp_pot],
+    output: '@PLAINNAME@',
+    arguments : [
+        '@INPUT@',
+        '@OUTPUT@',
+    ])
+
+lang_generators = []
+all_generators  = {}
+
+idx = 0
 foreach lang : target_linguas
     # Make lang directory if not existing
-    run_command (
-        'mkdir', '-p', xml_lang_base + '/' + lang,
-        check: false
-    )
-
     # target per lang
     target_base = lang + '-'
     htmltarget = 'html-'+lang
 
+    message('language ' + lang + ' index @0@'.format(idx))
+    idx += 1
+
+    lang_xml_gens = []
+
     # en is a special case...
     if lang != 'en'
-        foreach xmlfile : pot_source_files_root
+
+        foreach xmlfile : xml_sources_root
             target = target_base + xmlfile
-            #message(target)
-            gimp_xml = custom_target(target,
-                depends: pot_dependencies,
-                output: [target],
-                command: [
-                    xml2po,
-                    '--po-file=' + meson.project_source_root() + '/po/' + lang + '/' + po_source,
-                    '--language=' + lang,
-                    '--output=' + meson.project_build_root() + '/xml/' + lang + '/' + xmlfile,
-                    meson.project_source_root() + '/src/' + xmlfile,
-                ],
-                build_by_default: true,
+            dest_xml = '/' + lang + '/' + xmlfile
+            message('Destination xml: ' + dest_xml + ' - ' + target)
+            gen_xml = gen.process(
+#                '/' + lang + '/' + xmlfile,
+                xmlfile,
+                #preserve_path_from: meson.current_source_dir(),
             )
+            lang_xml_gens += gen_xml
+            # gimp_xml = custom_target(target,
+            #     #depends: pot_dependencies,
+            #     depends: [gimp_pot],
+            #     output: [target],
+            #     command: [
+            #         xml2po,
+            #         '--po-file=' + meson.project_source_root() + '/po/' + lang + '/' + po_source,
+            #         '--language=' + lang,
+            #         '--output=' + meson.project_build_root() + '/xml/' + lang + '/' + xmlfile,
+            #         meson.project_source_root() + '/src/' + xmlfile,
+            #     ],
+            #     build_by_default: true,
+            # )
         endforeach
     else
         #TODO English has no po files...
-        foreach xmlfile : pot_source_files_root
+
+        # Make lang directory if not existing
+        # run_command (
+        #     'mkdir', '-p', xml_lang_base + '/' + lang,
+        #     check: false
+        # )
+        foreach xmlfile : xml_sources_root
             target = target_base + xmlfile
-            lang_xml = meson.project_build_root()  + '/xml/' + lang + '/' + xmlfile
-            #message(target)
-            gimp_xml = custom_target(target,
-                output: [target],
-                command: [
-                    'cp',
-                    meson.project_source_root() + '/src/' + xmlfile,
-                    #meson.project_build_root()  + '/xml/' + lang + '/' + xmlfile,
-                    lang_xml,
-                ],
-                build_by_default: true,
+            #lang_xml = meson.project_build_root()  + '/src/' + lang + '/' + xmlfile
+            gen_xml = en_gen.process(
+                xmlfile,
+                preserve_path_from: meson.current_source_dir(),
             )
+            lang_xml_gens += gen_xml
+            # gimp_xml = custom_target(target,
+            #     output: [target],
+            #     command: [
+            #         'cp',
+            #         meson.project_source_root() + '/src/' + xmlfile,
+            #         lang_xml,
+            #     ],
+            #     build_by_default: true,
+            # )
 
         endforeach
-        gimp_html = custom_target(htmltarget,
-            ##depends: plainhtml,
-            input: plainhtml,
-            output: [htmltarget],
-            command: [
-                xsltproc,
-                '--verbose',
-                '--timing',
-                '--nonet',
-                '--path', meson.project_build_root(),
-                '--path', meson.project_build_root()+'/xml/images',  # testing if this helps
-                '--xinclude',
-                '--stringparam', 'l10n.gentext.default.language ', lang,
-                '--output', 'html/' + lang + '/',
-                meson.project_build_root() + '/stylesheets/plainhtml.xsl', #TODO refer to source??? or copy first!
-                'xml/' + lang + '/gimp.xml',
-                #meson.project_source_root() + '/src/' + xmlfile,
-                #meson.project_build_root()  + '/xml/' + lang + '/' + xmlfile,
-            ],
-            build_by_default: true,
-        )
+        # gimp_html = custom_target(htmltarget,
+        #     ##depends: plainhtml,
+        #     input: plainhtml,
+        #     output: [htmltarget],
+        #     command: [
+        #         xsltproc,
+        #         '--verbose',
+        #         '--timing',
+        #         '--nonet',
+        #         '--path', meson.project_build_root(),
+        #         '--path', meson.project_build_root()+'/xml/images',  # testing if this helps
+        #         '--xinclude',
+        #         '--stringparam', 'l10n.gentext.default.language ', lang,
+        #         '--output', 'html/' + lang + '/',
+        #         meson.project_build_root() + '/stylesheets/plainhtml.xsl', #TODO refer to source??? or copy first!
+        #         'xml/' + lang + '/gimp.xml',
+        #         #meson.project_source_root() + '/src/' + xmlfile,
+        #         #meson.project_build_root()  + '/xml/' + lang + '/' + xmlfile,
+        #     ],
+        #     build_by_default: true,
+        # )
     endif
+    lang_generators += lang_xml_gens
+    all_generators  += { lang: lang_xml_gens}
+    #lang_generators[lang] = lang_xml_gens
 endforeach
+
+#xml_files_list = xml_sources_glossary
+##xml_files_list = glossary_input
+##xml_sub_dir    = '/glossary/'
+
+foreach folder, file_list: xml_sources_lists
+    xml_files_list = file_list
+    xml_sub_dir    = '/' + folder + '/'
+
+    idx = 0
+    foreach lang : target_linguas
+        message('language ' + lang + ' index @0@'.format(idx))
+        idx += 1
+
+        lang_xml_gens = []
+
+        # en is a special case...
+        if lang != 'en'
+            foreach xmlfile : xml_files_list
+                gen_xml = gen.process(
+                    xmlfile,
+                    preserve_path_from: meson.current_source_dir(),
+                )
+                lang_xml_gens += gen_xml
+            endforeach
+        else
+            # English has no po files, so we just copy the xml files
+            foreach xmlfile : xml_files_list
+                gen_xml = en_gen.process(
+                    xmlfile,
+                    preserve_path_from: meson.current_source_dir(),
+                )
+                lang_xml_gens += gen_xml
+            endforeach
+        endif
+
+        # Update generators for this language
+        mygen  = all_generators.get(lang)
+        mygen += lang_xml_gens
+        all_generators  += { lang: mygen}
+    endforeach
+endforeach
+
+#subdir('glossary')
+
+# xml_lang_base = meson.project_build_root() + '/xml'
+# po_source     = 'gimp.po'
+# # for each enabled language create a xml/lang/... target
+# foreach lang : target_linguas
+#     # Make lang directory if not existing
+#     run_command (
+#         'mkdir', '-p', xml_lang_base + '/' + lang,
+#         check: false
+#     )
+
+#     # target per lang
+#     target_base = lang + '-'
+#     htmltarget = 'html-'+lang
+
+#     # en is a special case...
+#     if lang != 'en'
+#         foreach xmlfile : pot_source_files_root
+#             target = target_base + xmlfile
+#             #message(target)
+#             gimp_xml = custom_target(target,
+#                 depends: pot_dependencies,
+#                 output: [target],
+#                 command: [
+#                     xml2po,
+#                     '--po-file=' + meson.project_source_root() + '/po/' + lang + '/' + po_source,
+#                     '--language=' + lang,
+#                     '--output=' + meson.project_build_root() + '/xml/' + lang + '/' + xmlfile,
+#                     meson.project_source_root() + '/src/' + xmlfile,
+#                 ],
+#                 build_by_default: true,
+#             )
+#         endforeach
+#     else
+#         #TODO English has no po files...
+#         foreach xmlfile : pot_source_files_root
+#             target = target_base + xmlfile
+#             lang_xml = meson.project_build_root()  + '/xml/' + lang + '/' + xmlfile
+#             #message(target)
+#             gimp_xml = custom_target(target,
+#                 output: [target],
+#                 command: [
+#                     'cp',
+#                     meson.project_source_root() + '/src/' + xmlfile,
+#                     #meson.project_build_root()  + '/xml/' + lang + '/' + xmlfile,
+#                     lang_xml,
+#                 ],
+#                 build_by_default: true,
+#             )
+
+#         endforeach
+#         gimp_html = custom_target(htmltarget,
+#             ##depends: plainhtml,
+#             input: plainhtml,
+#             output: [htmltarget],
+#             command: [
+#                 xsltproc,
+#                 '--verbose',
+#                 '--timing',
+#                 '--nonet',
+#                 '--path', meson.project_build_root(),
+#                 '--path', meson.project_build_root()+'/xml/images',  # testing if this helps
+#                 '--xinclude',
+#                 '--stringparam', 'l10n.gentext.default.language ', lang,
+#                 '--output', 'html/' + lang + '/',
+#                 meson.project_build_root() + '/stylesheets/plainhtml.xsl', #TODO refer to source??? or copy first!
+#                 'xml/' + lang + '/gimp.xml',
+#                 #meson.project_source_root() + '/src/' + xmlfile,
+#                 #meson.project_build_root()  + '/xml/' + lang + '/' + xmlfile,
+#             ],
+#             build_by_default: true,
+#         )
+#     endif
+# endforeach

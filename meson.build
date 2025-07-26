@@ -1,6 +1,6 @@
 project('gimp-help',
     version: '3.0.1',
-    meson_version: '>= 0.61.0',
+    meson_version: '>= 1.4.0',
 )
 
 gimp_help_version = '3.0.1'
@@ -14,7 +14,8 @@ GIMP_HELP_LINGUAS = \
 
 ALL_LINGUAS = ''
 
-LINGUAS = ['en', 'nl', 'xy']
+#LINGUAS = ['en', 'nl', 'xy']
+LINGUAS = ['en', 'nl']
 
 SUBDIRS = 'quickreference'
 
@@ -36,6 +37,8 @@ MSGCATFLAGS  = '--width=@0@'.format(MSGWIDTH)
 
 xml2pot      = find_program(meson.project_source_root() / 'tools' / 'xml2pot.sh')
 xml2po       = find_program(meson.project_source_root() / 'tools' / 'xml2po.py')
+
+cp           = find_program('cp')
 
 message('@0@'.format(XML2PO.full_path()))
 #message(MSGUNIQ)
@@ -339,6 +342,7 @@ subdir('pot')
 
 # Generate translated xml files...
 subdir('src')
+subdir('html')
 
 xml2pot_targets = []
 
