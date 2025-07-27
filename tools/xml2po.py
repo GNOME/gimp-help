@@ -153,11 +153,11 @@ def main(argv):
             if DEBUG_VERBOSITY > 0:
                 print(f"Converting {pofile} to {mofile_tmppath} using msgfmt")
             result = 1
-            max_cnt = 15
+            max_cnt = 20
             counter = 0
             # When using meson it apparently happens that msgfmt is called when
             # the pofile is already in use by another process.
-            # We will try it again 15 times and sleep for 4 seconds in between.
+            # We will try it again 20 times and sleep for 5 seconds in between.
             while result != 0 and counter < max_cnt:
                 result = os.system("msgfmt -o %s %s >%s" % (mofile_tmppath, pofile, NULL_STRING))
                 counter += 1
