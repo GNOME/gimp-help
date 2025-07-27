@@ -1,126 +1,8 @@
 message('src submenu')
 
-# subdir('appendix')
-# subdir('concepts')
-# subdir('dialogs')
-# subdir('filters')
-# subdir('glossary')
-# subdir('introduction')
-# subdir('menus')
-# subdir('preface')
-# subdir('toolbox')
-# subdir('tutorial')
-# subdir('using')
-
-#####
-# # #subdir('images') # not a directory with xml files
-#####
-
-# list of source files to make a pot from
-# input_base_dir = meson.project_source_root() + '/src/'
-# pot_source_files_root = [
-#     'gimp.xml',
-#     'help-missing.xml',
-#     'introduction.xml',
-#     'key-reference.xml',
-# ]
-# pot_source_files_root = [
-#     input_base_dir + 'gimp.xml',
-#     input_base_dir + 'help-missing.xml',
-#     input_base_dir + 'introduction.xml',
-#     input_base_dir + 'key-reference.xml',
-# ]
-# target     = 'gimp.pot'
-# target_pot = pot_base + target
-
-# # Debugging help...
-# message('Creating target for ' + target_pot)
-
-# gimp_pot = custom_target(target,
-#     #depends: [authors_doc],
-#     input: pot_source_files_root,
-#     output: [target],
-#     command: [
-#         xml2pot, target_pot, meson.project_build_root(), meson.project_source_root(), '@INPUT@',
-#     ],
-#     build_by_default: true,
-# )
-
-
-# xml_lang_base = meson.project_build_root() + '/xml'
-# po_source     = 'gimp.po'
-# # for each enabled language create a xml/lang/... target
-# foreach lang : target_linguas
-#     # Make lang directory if not existing
-#     run_command (
-#         'mkdir', '-p', xml_lang_base + '/' + lang,
-#         check: false
-#     )
-
-#     # target per lang
-#     target_base = lang + '-'
-#     htmltarget = 'html-'+lang
-
-#     # en is a special case...
-#     if lang != 'en'
-#         foreach xmlfile : pot_source_files_root
-#             target = target_base + xmlfile
-#             #message(target)
-#             gimp_xml = custom_target(target,
-#                 output: [target],
-#                 command: [
-#                     xml2po,
-#                     '--po-file=' + meson.project_source_root() + '/po/' + lang + '/' + po_source,
-#                     '--language=' + lang,
-#                     '--output=' + meson.project_build_root() + '/xml/' + lang + '/' + xmlfile,
-#                     meson.project_source_root() + '/src/' + xmlfile,
-#                 ],
-#                 build_by_default: true,
-#             )
-#         endforeach
-#     else
-#         #TODO English has no po files...
-#         foreach xmlfile : pot_source_files_root
-#             target = target_base + xmlfile
-#             lang_xml = meson.project_build_root()  + '/xml/' + lang + '/' + xmlfile
-#             #message(target)
-#             gimp_xml = custom_target(target,
-#                 output: [target],
-#                 command: [
-#                     'cp',
-#                     meson.project_source_root() + '/src/' + xmlfile,
-#                     #meson.project_build_root()  + '/xml/' + lang + '/' + xmlfile,
-#                     lang_xml,
-#                 ],
-#                 build_by_default: true,
-#             )
-
-#         endforeach
-#         gimp_html = custom_target(htmltarget,
-#             ##depends: plainhtml,
-#             input: plainhtml,
-#             output: [htmltarget],
-#             command: [
-#                 xsltproc,
-#                 '--verbose',
-#                 '--timing',
-#                 '--nonet',
-#                 '--path', meson.project_build_root(),
-#                 '--path', meson.project_build_root()+'/xml/images',  # testing if this helps
-#                 '--xinclude',
-#                 '--stringparam', 'l10n.gentext.default.language ', lang,
-#                 '--output', 'html/' + lang + '/',
-#                 meson.project_build_root() + '/stylesheets/plainhtml.xsl', #TODO refer to source??? or copy first!
-#                 'xml/' + lang + '/gimp.xml',
-#                 #meson.project_source_root() + '/src/' + xmlfile,
-#                 #meson.project_build_root()  + '/xml/' + lang + '/' + xmlfile,
-#             ],
-#             build_by_default: true,
-#         )
-#     endif
-# endforeach
 
 pot_dependencies = [
+    # root folder
     gimp_pot, appendix_pot, concepts_pot, dialogs_pot, filters_pot,
     glossary_pot, introduction_pot, menus_pot, preface_pot,
     toolbox_pot, tutorial_pot, using_pot,
@@ -146,7 +28,8 @@ po_source     = 'gimp.po'
 # for each enabled language create a xml/lang/... target
 
 gen = generator(xml2po,
-    depends: [gimp_pot],
+    #depends: [gimp_pot],
+    depends: pot_dependencies,
     output: '@PLAINNAME@',
     arguments : [
         '--po-file=' + meson.project_source_root() + '/po/' + lang + '/' + po_source,
@@ -157,14 +40,15 @@ gen = generator(xml2po,
     ])
 
 en_gen = generator(cp,
-    depends: [gimp_pot],
+#    depends: [gimp_pot],
+    depends: pot_dependencies,
     output: '@PLAINNAME@',
     arguments : [
         '@INPUT@',
         '@OUTPUT@',
     ])
 
-lang_generators = []
+#lang_generators = []
 all_generators  = {}
 
 idx = 0
@@ -181,88 +65,33 @@ foreach lang : target_linguas
 
     # en is a special case...
     if lang != 'en'
-
         foreach xmlfile : xml_sources_root
-            target = target_base + xmlfile
-            dest_xml = '/' + lang + '/' + xmlfile
-            message('Destination xml: ' + dest_xml + ' - ' + target)
+            #target = target_base + xmlfile
+            #dest_xml = '/' + lang + '/' + xmlfile
+            #message('Destination xml: ' + dest_xml + ' - ' + target)
             gen_xml = gen.process(
-#                '/' + lang + '/' + xmlfile,
                 xmlfile,
                 #preserve_path_from: meson.current_source_dir(),
             )
             lang_xml_gens += gen_xml
-            # gimp_xml = custom_target(target,
-            #     #depends: pot_dependencies,
-            #     depends: [gimp_pot],
-            #     output: [target],
-            #     command: [
-            #         xml2po,
-            #         '--po-file=' + meson.project_source_root() + '/po/' + lang + '/' + po_source,
-            #         '--language=' + lang,
-            #         '--output=' + meson.project_build_root() + '/xml/' + lang + '/' + xmlfile,
-            #         meson.project_source_root() + '/src/' + xmlfile,
-            #     ],
-            #     build_by_default: true,
-            # )
         endforeach
     else
-        #TODO English has no po files...
-
-        # Make lang directory if not existing
-        # run_command (
-        #     'mkdir', '-p', xml_lang_base + '/' + lang,
-        #     check: false
-        # )
+        # English has no po files...
         foreach xmlfile : xml_sources_root
-            target = target_base + xmlfile
+            #target = target_base + xmlfile
             #lang_xml = meson.project_build_root()  + '/src/' + lang + '/' + xmlfile
             gen_xml = en_gen.process(
                 xmlfile,
-                preserve_path_from: meson.current_source_dir(),
+                #preserve_path_from: meson.current_source_dir(),
             )
             lang_xml_gens += gen_xml
-            # gimp_xml = custom_target(target,
-            #     output: [target],
-            #     command: [
-            #         'cp',
-            #         meson.project_source_root() + '/src/' + xmlfile,
-            #         lang_xml,
-            #     ],
-            #     build_by_default: true,
-            # )
 
         endforeach
-        # gimp_html = custom_target(htmltarget,
-        #     ##depends: plainhtml,
-        #     input: plainhtml,
-        #     output: [htmltarget],
-        #     command: [
-        #         xsltproc,
-        #         '--verbose',
-        #         '--timing',
-        #         '--nonet',
-        #         '--path', meson.project_build_root(),
-        #         '--path', meson.project_build_root()+'/xml/images',  # testing if this helps
-        #         '--xinclude',
-        #         '--stringparam', 'l10n.gentext.default.language ', lang,
-        #         '--output', 'html/' + lang + '/',
-        #         meson.project_build_root() + '/stylesheets/plainhtml.xsl', #TODO refer to source??? or copy first!
-        #         'xml/' + lang + '/gimp.xml',
-        #         #meson.project_source_root() + '/src/' + xmlfile,
-        #         #meson.project_build_root()  + '/xml/' + lang + '/' + xmlfile,
-        #     ],
-        #     build_by_default: true,
-        # )
     endif
-    lang_generators += lang_xml_gens
+    #lang_generators += lang_xml_gens
     all_generators  += { lang: lang_xml_gens}
-    #lang_generators[lang] = lang_xml_gens
 endforeach
 
-#xml_files_list = xml_sources_glossary
-##xml_files_list = glossary_input
-##xml_sub_dir    = '/glossary/'
 
 foreach folder, file_list: xml_sources_lists
     xml_files_list = file_list
@@ -270,7 +99,7 @@ foreach folder, file_list: xml_sources_lists
 
     idx = 0
     foreach lang : target_linguas
-        message('language ' + lang + ' index @0@'.format(idx))
+        message('language ' + lang + ' index @0@'.format(idx) + 'folder: ' + xml_sub_dir)
         idx += 1
 
         lang_xml_gens = []
@@ -301,79 +130,3 @@ foreach folder, file_list: xml_sources_lists
         all_generators  += { lang: mygen}
     endforeach
 endforeach
-
-#subdir('glossary')
-
-# xml_lang_base = meson.project_build_root() + '/xml'
-# po_source     = 'gimp.po'
-# # for each enabled language create a xml/lang/... target
-# foreach lang : target_linguas
-#     # Make lang directory if not existing
-#     run_command (
-#         'mkdir', '-p', xml_lang_base + '/' + lang,
-#         check: false
-#     )
-
-#     # target per lang
-#     target_base = lang + '-'
-#     htmltarget = 'html-'+lang
-
-#     # en is a special case...
-#     if lang != 'en'
-#         foreach xmlfile : pot_source_files_root
-#             target = target_base + xmlfile
-#             #message(target)
-#             gimp_xml = custom_target(target,
-#                 depends: pot_dependencies,
-#                 output: [target],
-#                 command: [
-#                     xml2po,
-#                     '--po-file=' + meson.project_source_root() + '/po/' + lang + '/' + po_source,
-#                     '--language=' + lang,
-#                     '--output=' + meson.project_build_root() + '/xml/' + lang + '/' + xmlfile,
-#                     meson.project_source_root() + '/src/' + xmlfile,
-#                 ],
-#                 build_by_default: true,
-#             )
-#         endforeach
-#     else
-#         #TODO English has no po files...
-#         foreach xmlfile : pot_source_files_root
-#             target = target_base + xmlfile
-#             lang_xml = meson.project_build_root()  + '/xml/' + lang + '/' + xmlfile
-#             #message(target)
-#             gimp_xml = custom_target(target,
-#                 output: [target],
-#                 command: [
-#                     'cp',
-#                     meson.project_source_root() + '/src/' + xmlfile,
-#                     #meson.project_build_root()  + '/xml/' + lang + '/' + xmlfile,
-#                     lang_xml,
-#                 ],
-#                 build_by_default: true,
-#             )
-
-#         endforeach
-#         gimp_html = custom_target(htmltarget,
-#             ##depends: plainhtml,
-#             input: plainhtml,
-#             output: [htmltarget],
-#             command: [
-#                 xsltproc,
-#                 '--verbose',
-#                 '--timing',
-#                 '--nonet',
-#                 '--path', meson.project_build_root(),
-#                 '--path', meson.project_build_root()+'/xml/images',  # testing if this helps
-#                 '--xinclude',
-#                 '--stringparam', 'l10n.gentext.default.language ', lang,
-#                 '--output', 'html/' + lang + '/',
-#                 meson.project_build_root() + '/stylesheets/plainhtml.xsl', #TODO refer to source??? or copy first!
-#                 'xml/' + lang + '/gimp.xml',
-#                 #meson.project_source_root() + '/src/' + xmlfile,
-#                 #meson.project_build_root()  + '/xml/' + lang + '/' + xmlfile,
-#             ],
-#             build_by_default: true,
-#         )
-#     endif
-# endforeach
