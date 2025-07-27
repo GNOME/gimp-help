@@ -115,43 +115,91 @@ To get started, here is a checklist of things you should do:
     - Enable `Container registry` (any visibility level)
   + `Settings > CI/CD > General pipelines`:
     - Enable `Public pipelines`
-- Make sure to read our [documentation guidelines](documentation-guidelines.md).
+- Make sure to read our [documentation guidelines](documentation-guidelines.md),
+  which includes the [style guide](documentation-guidelines.md#style-guide).
 - For relatively small and simple edits you can use the web-ide
   if you don't want to set up a build environment on your computer.
-  + On the left under Repository click Files, then navigate to the
-    /src/ folder. Find the file you want to work on then click
-    WEB-IDE.
-  + I have no personal experience with this, so it's difficult
-    to give further details. Anyway, start editing your file
-    and when ready I assume you have to click save or finish
-    or similar.
-  + I assume this will create a new commit. If possible also
-    create a new branch for every change. Make sure you give
-    a descriptivev name to your commit. That way others can
-    understand what your change is about.
+  + In the left-hand menu, expand the `Code` section, and then select
+    `Repository`.
+  + From the `+` list at the top of the page, select `New branch`, and then
+    create a new branch from `master` for your updates.
+  + Back on the Repository page, from the `Edit` menu, select `Web IDE`.
+  + In the web IDE, use the file explorer on the left-hand side to navigate to
+    the `/src/` folder, and then select the file you want to update.
+  + Make the required changes.
+  + From the menu of icons on the left-hand side of the page, select
+    `Source Control`.
+  + In the `Commit message` field, enter a brief description of your changes.
+  + Above the `Commit message` field, select the tick icon to commit your
+    changes.
   + Make sure the CI pipeline succeeds. Otherwise, inspect the pipeline for the
-    cause of failure and fix it.
+    cause of failure and fix it. To view the status of the CI pipeline, select,
+    `Build > Pipelines`.
   + Next you need to create a Merge Request (MR) for the commit.
   + This MR will show up in the main gimp-help repository and
     will be reviewed and evaluated.
 - For more complicated edits, reordering parts of the help,
   or adding screenshots, you should clone the repository to
   your computer and work on it locally.
-  + On your fork of gimp-help click the blue Clone button
-    and choose your preferred method.
+  + On your fork of gimp-help, click the blue `Code` button
+    and choose your preferred method to clone the repository.
   + In case you are on Windows, it is strongly advised to
     set up a MSYS2 environment, so that you can build and
-    test the gimp-help repository.
+    test the gimp-help repository. MSYS2 includes multiple environments, each
+    of which is accessed through its own executable. It is advised that you use
+    UCRT64 or CLANG64. For more information, refer to
+    [Environments](https://www.msys2.org/docs/environments/) in the MSYS2
+    documentation.
   + TODO: Other OS's may need some setting up too. Add
     details here as needed.
-  + TODO: Add details about setting up MSYS2 with required
-    packages for gimp-help.
-  + Try to build the English manual without any changes,
-    to make sure everything is set up correctly.
+  + You need the following packages to build the documentation:
+    + Minimum: autotools, libxslt, python, libxml2-python,
+      docbook-xml, and docbook-xsl. With these packages, you can build the
+      English html help.
+    + Version control: git.
+    + To build quick start PDFs: librsvg2-2. For some laguages, you may also
+      need to install the appropriate [Noto fonts](https://fonts.google.com/noto). 
+      For more information, refer to
+      [#410](https://gitlab.gnome.org/GNOME/gimp-help/-/issues/410)
+      To install librsvg2-2 for MSYS2, refer to 
+      [Base Package: mingw-w64-librsvg](https://packages.msys2.org/base/mingw-w64-librsvg)
+      for information about what package to install. You can use `make pdf` to
+      build quick start PDFs for all languages. 
+    + TODO: Test and confirm requirements to work with localized versions.
+      Assumed gettext as a minimum. Also polib for the validation of po files.
+      To install polib, use a package manager (e.g., pacman) to install pip,
+      and then use pip to install polib. gettext may already be installed in
+      an MSYS2 environment.
+    + To build the installers: intltool and innosetup.
+    + To create an architecture diagram of the build process: dot, which is
+      part of graphviz. For MSYS2, refer to
+      [Base Package: mingw-w64-graphviz](https://packages.msys2.org/base/mingw-w64-graphviz)
+      for information about what package to install. To generate the diagram,
+      use `make dot`.
+    + To build PDF versions of the help: dblatex. Note that PDF versions of
+      help are no longer being created because dblatex doesn't seem to be
+      compatible with more recent versions of Python. Refer to
+      [#138](https://gitlab.gnome.org/GNOME/gimp-help/-/issues/138) for more
+      information. When everything is set up correctly, use `make pdf-xx` to
+      build a PDF for a single language or `make pdf-local` to build PDFs for
+      all languages.
+      + TODO: Test and confirm the process to install dblatex. For more
+        information, refer to the
+        [dblatex SourceForce site](https://dblatex.sourceforge.net/).
+    + Note: the autogen script also checks if pngnq and pngcrush are
+      installed, but they are not used.
   + Assuming you have cloned the git repo on your computer,
     make a build dir inside or outside your tree depending
     on your personal preference, then run from the build dir:
-    `../autogen.sh --prefix=${INSTALL_PREFIX} --without-gimp`,
+    `../autogen.sh --prefix=${INSTALL_PREFIX} --without-gimp`.
+    + Note: If you want to build help for only a specific subset of supported
+      languages, add `ALL_LINGUAS="en xx"`; where the value in quotes is a
+      space separated list of language codes. Then, when you use a `make`
+      command without specifying a language, such as `make html` instead of
+      `make html-en`, you will build outputs for only your chosen languages.
+    + Note: You can rerun the autogen script to rebuild the make files. For
+      example, if you want to change which languages you build help for, or
+      you install a new package.
   + TODO: On Windows you may have to add `--build=mingw64`,
     possibly also `DESTDIR=$BUILD_DIR $SRCDIR`.
   + After running autogen once, you can use the following
@@ -187,8 +235,10 @@ TODO
 - Mention that make sometimes causes certain po translations
   to get updated. They should not be committed together with
   source documentation changes.
-- What packages are required and/or optional to build gimp-help.
-- Add style guide and add link to it here.
+- It may be useful to document the use of virtual environments for python
+  (i.e., [venv](https://docs.python.org/3/library/venv.html)). With MSYS2,
+  a user may encounter an externally-managed-environment error when they
+  attempt to install python packages through pip. 
 
 Preferably build the most up to date manual yourself or check
 the latest uploaded version at https://docs.gimp.org/3.0/en/.
