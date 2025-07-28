@@ -225,6 +225,12 @@ subdir('stylesheets')
 ####            Make AUTHORS and MAINTAINERS file                   ####
 ########################################################################
 
+# FIXME This needs to be changed before meson 2.0!
+#../../gimp-help/meson.build:228: WARNING: Source item 'D:/msys64/home/Jacob/build-clang64/gimp-help-meson/stylesheets/authors_text.xsl' cannot be converted to File object,
+#because it is a generated file. This will become a hard error in meson 2.0.
+#../../gimp-help/meson.build:228: WARNING: Source item 'D:/msys64/home/Jacob/build-clang64/gimp-help-meson/stylesheets/authors.xml' cannot be converted to File object, becau
+#se it is a generated file. This will become a hard error in meson 2.0.
+
 authors_file = custom_target('AUTHORS',
   ##input : AUTHORS_TEXT,
   input : [authors_text_ss.full_path(), authors_data.full_path()],
