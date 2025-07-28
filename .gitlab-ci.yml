@@ -42,6 +42,7 @@ build-image:
             intltool
             librsvg2-2
             librsvg2-bin
+            meson
             pkg-config
             pngcrush
             python3
@@ -96,6 +97,7 @@ branches-check:
     - "${HELP_DIR}"
     - "${PDF_DIR}"
     - _log
+    - _build
   script:
     - cd src
     # Mark all source files as updated. Needed to get up-to-date translations
@@ -103,13 +105,15 @@ branches-check:
     - cd ..
     - mkdir _build
     - cd _build
-    - ../autogen.sh --prefix=${INSTALL_PREFIX} --without-gimp
+    - meson setup -Dprefix=${INSTALL_PREFIX}
+    - ninja && ninja install
+    #- ../autogen.sh --prefix=${INSTALL_PREFIX} --without-gimp
     # Make po first to get validate to use up-to-date translations, and also to stop plain make from redoing the xml
-    - make po
-    - make validate-all
+    #- make po
+    #- make validate-all
     # Test if any xml is present in logs, which means failed validation
-    - if [ `ls -1 log/*.xml 2>/dev/null | wc -l ` -gt 0 ]; then mv log/ ../_log/; echo 'Validation failed!' && false; exit 2; else rm -f log/*.log; fi
-    - make && make install
+    #- if [ `ls -1 log/*.xml 2>/dev/null | wc -l ` -gt 0 ]; then mv log/ ../_log/; echo 'Validation failed!' && false; exit 2; else rm -f log/*.log; fi
+    #- make && make install
     - mv ${INSTALL_PREFIX}/share/gimp/3.0/help/ ../${HELP_DIR}
     - mv ../${HELP_DIR}/pdf/ ../${PDF_DIR}
   timeout: 2 hours 30 minutes
@@ -138,10 +142,12 @@ branches-check:
     - cd ..
     - mkdir _build
     - cd _build
-    - ../autogen.sh --prefix=${INSTALL_PREFIX} --without-gimp
+    - meson setup -Dprefix=${INSTALL_PREFIX}
+    - ninja && ninja install
+    #- ../autogen.sh --prefix=${INSTALL_PREFIX} --without-gimp
     # Make po first to get validate to use up-to-date translations, and also to stop plain make from redoing the xml
-    - make po
-    - make && make install
+    #- make po
+    #- make && make install
     - mv ${INSTALL_PREFIX}/share/gimp/3.0/help/ ../${HELP_DIR}
     - mv ../${HELP_DIR}/pdf/ ../${PDF_DIR}
     # Validate last for known problematic languages
