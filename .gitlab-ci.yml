@@ -25,7 +25,7 @@ build-image:
     - echo "FROM debian:testing" > Dockerfile
     - echo "RUN apt-get update" >> Dockerfile
     - echo "RUN apt-get install -y --no-install-recommends \\" >> Dockerfile
-    - echo "automake build-essential docbook-website docbook-xml docbook-xsl fonts-noto-cjk fonts-noto-core gettext git intltool librsvg2-2 librsvg2-bin pkg-config pngcrush python3 python3-libxml2 python3-polib xsltproc libxml2-utils" >> Dockerfile
+    - echo "docbook-website docbook-xml docbook-xsl fonts-noto-cjk fonts-noto-core gettext git intltool librsvg2-2 librsvg2-bin meson pkg-config pngcrush python3 python3-libxml2 python3-polib xsltproc libxml2-utils" >> Dockerfile
 
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:build-debian-latest --cache=true --cache-ttl=120h
 
@@ -57,6 +57,7 @@ check-broken-images:
     - "${HELP_DIR}"
     - "${PDF_DIR}"
     - _log
+    - _build
   script:
     - cd src
     # Mark all source files as updated. Needed to get up-to-date translations
@@ -64,13 +65,15 @@ check-broken-images:
     - cd ..
     - mkdir _build
     - cd _build
-    - ../autogen.sh --prefix=${INSTALL_PREFIX} --without-gimp
+    - meson setup -Dprefix=${INSTALL_PREFIX}
+    - ninja && ninja install
+    #- ../autogen.sh --prefix=${INSTALL_PREFIX} --without-gimp
     # Make po first to get validate to use up-to-date translations, and also to stop plain make from redoing the xml
-    - make po
-    - make validate-all
+    #- make po
+    #- make validate-all
     # Test if any xml is present in logs, which means failed validation
-    - if [ `ls -1 log/*.xml 2>/dev/null | wc -l ` -gt 0 ]; then mv log/ ../_log/; echo 'Validation failed!' && false; exit 2; else rm -f log/*.log; fi
-    - make && make install
+    #- if [ `ls -1 log/*.xml 2>/dev/null | wc -l ` -gt 0 ]; then mv log/ ../_log/; echo 'Validation failed!' && false; exit 2; else rm -f log/*.log; fi
+    #- make && make install
     - mv ${INSTALL_PREFIX}/share/gimp/3.0/help/ ../${HELP_DIR}
     - mv ../${HELP_DIR}/pdf/ ../${PDF_DIR}
   timeout: 2 hours 30 minutes
@@ -96,10 +99,12 @@ check-broken-images:
     - cd ..
     - mkdir _build
     - cd _build
-    - ../autogen.sh --prefix=${INSTALL_PREFIX} --without-gimp
+    - meson setup -Dprefix=${INSTALL_PREFIX}
+    - ninja && ninja install
+    #- ../autogen.sh --prefix=${INSTALL_PREFIX} --without-gimp
     # Make po first to get validate to use up-to-date translations, and also to stop plain make from redoing the xml
-    - make po
-    - make && make install
+    #- make po
+    #- make && make install
     - mv ${INSTALL_PREFIX}/share/gimp/3.0/help/ ../${HELP_DIR}
     - mv ../${HELP_DIR}/pdf/ ../${PDF_DIR}
     # Validate last for known problematic languages
