@@ -99,7 +99,7 @@ foreach folder, file_list: xml_sources_lists
 
     idx = 0
     foreach lang : target_linguas
-        message('language ' + lang + ' index @0@'.format(idx) + 'folder: ' + xml_sub_dir)
+        message('language ' + lang + ' index @0@'.format(idx) + ' folder: ' + xml_sub_dir)
         idx += 1
 
         lang_xml_gens = []
