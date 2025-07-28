@@ -25,15 +25,15 @@ out_pot=$build_root/$1
 src_files="${@:4}"
 
 # Keeping these debug statments for now...
-# echo Meson source: $MESON_SOURCE_ROOT
-# echo Meson build: $MESON_BUILD_ROOT
+echo Meson source: $MESON_SOURCE_ROOT
+echo Meson build: $MESON_BUILD_ROOT
 
-# echo First argument: $1
-# echo Meson source: $source_root
-# echo Meson build: $build_root
-# echo Source files: ${@:4}
-# #echo Source files: $src_files
-# echo Destination file: $out_pot
+echo First argument: $1
+echo Meson source: $source_root
+echo Meson build: $build_root
+echo Source files: ${@:4}
+echo Source files: $src_files
+echo Destination file: $out_pot
 
 $source_root/tools/xml2po.py --mode=gimphelp --output=- $src_files \
   | msguniq | msgcat - --width=79 -o "$out_pot"
