@@ -16,7 +16,7 @@ foreach css_file: all_css_files
             '@OUTPUT@',
         ],
         install: true,
-        install_dir: install_prefix
+        install_dir: install_prefix,
         #build_by_default: true,
     )
     gimp_css_all += gimp_css
@@ -43,6 +43,6 @@ gimp_html = custom_target(htmltarget,
         '@INPUT0@',
     ],
     install: true,
-    install_dir: install_prefix
+    install_dir: install_prefix,
     build_by_default: true,
 )
