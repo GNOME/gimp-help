@@ -2,9 +2,29 @@
 
 gen_lang = all_generators.get(lang)
 
+idx = 0
+gimp_css_all = []
+foreach css_file: all_css_files
+    css_target = 'css-' + lang + '_@0@'.format(idx)
+
+    gimp_css = custom_target(css_target,
+        input: [lang_css_gens[idx]],
+        output: [css_file],
+        command: [
+            cp,
+            '@INPUT@',
+            '@OUTPUT@',
+        ],
+        #build_by_default: true,
+    )
+    gimp_css_all += gimp_css
+    idx += 1
+endforeach
+
 gimp_html = custom_target(htmltarget,
     # FIXME: Also depend on entities.xml, css, and images
     depend_files: [plainhtml],
+    depends: gimp_css_all,
     input: [gen_lang],
     output: ['index.html'],
     command: [
@@ -19,5 +39,5 @@ gimp_html = custom_target(htmltarget,
         html_stylesheet_path,
         '@INPUT0@',
     ],
-    #build_by_default: true,
+    build_by_default: true,
 )
