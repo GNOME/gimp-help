@@ -225,26 +225,21 @@ subdir('stylesheets')
 ####            Make AUTHORS and MAINTAINERS file                   ####
 ########################################################################
 
-# FIXME This needs to be changed before meson 2.0!
-#../../gimp-help/meson.build:228: WARNING: Source item 'D:/msys64/home/Jacob/build-clang64/gimp-help-meson/stylesheets/authors_text.xsl' cannot be converted to File object,
-#because it is a generated file. This will become a hard error in meson 2.0.
-#../../gimp-help/meson.build:228: WARNING: Source item 'D:/msys64/home/Jacob/build-clang64/gimp-help-meson/stylesheets/authors.xml' cannot be converted to File object, becau
-#se it is a generated file. This will become a hard error in meson 2.0.
+ss_path = meson.project_build_root()  + '/stylesheets/'
 
 authors_file = custom_target('AUTHORS',
-  ##input : AUTHORS_TEXT,
-  input : [authors_text_ss.full_path(), authors_data.full_path()],
+  #input : [authors_text_ss.full_path(), authors_data.full_path()],
+  depend_files: [authors_text_ss, authors_data],
   output: 'AUTHORS',
   command: [
     xsltproc,
     '--verbose',
     '-o', '@OUTPUT@',
-    '@INPUT@',
+    ss_path + AUTHORS_TEXT_STYLESHEETS,
+    ss_path + AUTHORS_DATA_XML
   ],
   build_by_default: true,
 )
-msgtext = 'Common: @0@'.format(authors_common_ss.full_path())
-message(msgtext)
 
 # We have a circular dependency: src/preface/authors.xml needs to be created
 # and moved to src first, so we need to be in /src first. However, before
@@ -259,6 +254,7 @@ authors_file_xml = 'authors.xml'
 authors_subdir   = '/src/preface/'
 
 preface_authors_xml = custom_target('preface-authors-xml',
+    #depends: [authors_file],
     input: [authors_docbook_ss, authors_data],
     output: authors_file_xml,
     command: [
@@ -271,7 +267,7 @@ preface_authors_xml = custom_target('preface-authors-xml',
 
 copy_authors_to_src = custom_target('copy-to-src-authors',
     input: preface_authors_xml,
-    output: ['dummy'],
+    output: ['authors-copy-to-source.xml'],
     command: [
         'cp',
         # Special case here since authors.xml is only available
@@ -279,6 +275,7 @@ copy_authors_to_src = custom_target('copy-to-src-authors',
         meson.project_build_root()  + '/' + authors_file_xml,
         meson.project_source_root() + authors_subdir + authors_file_xml,
     ],
+    build_by_default: true,
 )
 
 
