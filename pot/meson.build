@@ -31,6 +31,7 @@ gimp_pot = custom_target(output_pot,
 #        xml2pot, output_pot, output_dir, meson.project_source_root(), input_files,
 #        xml2pot, '@OUTPUT@', '@OUTDIR@', '@SOURCE_ROOT@', '@INPUT@',
         xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
+#        xml2pot, '@OUTPUT@', meson.project_build_root(), meson.project_source_root(), '@INPUT@',
     ],
 )
 
