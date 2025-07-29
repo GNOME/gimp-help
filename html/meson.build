@@ -1,7 +1,7 @@
 html_stylesheet_path = meson.project_build_root() + '/stylesheets/plainhtml.xsl'
 
 prefix = get_option('prefix')
-install_prefix = prefix + '/share/gimp/3.0/help/'
+install_prefix = prefix + '/share/gimp/3.0/help'
 
 css_gen = generator(cp,
     output: '@PLAINNAME@',
