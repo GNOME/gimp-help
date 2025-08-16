@@ -1,0 +1,18 @@
+images_filters_examples_light_and_shadow = [
+    'long-shadow-ex-angle.png',
+    'long-shadow-ex-default.png',
+    'long-shadow-ex-fading.png',
+    'long-shadow-ex-fixlength.png',
+    'long-shadow-ex-infinite.png',
+    'long-shadow-ex-length.png',
+    'long-shadow-ex-orig.png',
+    'long-shadow-ex-shadminus.png',
+    'long-shadow-ex-shadonly.png',
+    'vignette-ex-default.jpg',
+    'vignette-ex-gamma.jpg',
+    'vignette-ex-oncanvas.jpg',
+    'vignette-ex-orig.jpg',
+    'vignette-ex-radius.jpg',
+    'vignette-ex-softness.jpg',
+    'vignette-ex-squeeze05.jpg',
+]

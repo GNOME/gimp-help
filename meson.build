@@ -21,6 +21,27 @@ SUBDIRS = 'quickreference'
 
 
 ################################################################################
+# Host system detection
+
+host_os = host_machine.system().to_lower()
+
+platform_linux = (
+  host_os.contains('linux')
+)
+
+platform_windows = (
+  host_os.contains('mingw') or
+  host_os.contains('cygwin') or
+  host_os.contains('windows')
+)
+
+platform_osx = (
+  host_os.contains('machten') or
+  host_os.contains('rhapsody') or
+  host_os.contains('darwin')
+)
+
+################################################################################
 # Define xml2po related stuff
 
 MSGWIDTH = 79
@@ -38,7 +59,18 @@ MSGCATFLAGS  = '--width=@0@'.format(MSGWIDTH)
 xml2pot      = find_program(meson.project_source_root() / 'tools' / 'xml2pot.sh')
 xml2po       = find_program(meson.project_source_root() / 'tools' / 'xml2po.py')
 
+# Image handling
+MAKE_IMAGE_LINKS = find_program(meson.project_source_root() / 'make.d' / 'make_image_links.pl')
+MAKE_IMAGE_LINKS_FLAGS = '-v'
+
+if platform_windows
+#    MAKE_IMAGE_LINKS_FLAGS += '--mode=hardlink,copy'
+    MAKE_IMAGE_LINKS_FLAGS += '-m=hardlink,copy'
+endif
+
+# FIXME: Don't depend on sh, use Python?
 cp           = find_program('cp')
+dummy_ls     = find_program('ls')
 
 message('@0@'.format(XML2PO.full_path()))
 #message(MSGUNIQ)
@@ -126,27 +158,6 @@ gimp_dir   = '~/gimp'
 
 message(top_srcdir)
 
-
-################################################################################
-# Host system detection
-
-host_os = host_machine.system().to_lower()
-
-platform_linux = (
-  host_os.contains('linux')
-)
-
-platform_windows = (
-  host_os.contains('mingw') or
-  host_os.contains('cygwin') or
-  host_os.contains('windows')
-)
-
-platform_osx = (
-  host_os.contains('machten') or
-  host_os.contains('rhapsody') or
-  host_os.contains('darwin')
-)
 
 ########################################################################
 ####            The GIMP manual languages                           ####
@@ -345,6 +356,7 @@ subdir('pot')
 
 # Generate translated xml files...
 subdir('src')
+subdir('images')
 subdir('html')
 
 xml2pot_targets = []

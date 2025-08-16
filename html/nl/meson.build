@@ -35,7 +35,7 @@ gimp_html = custom_target(htmltarget,
         #'--verbose',
         '--timing',
         '--nonet',
-        '--path', meson.current_build_dir()+'/images',  # testing if this helps
+        # '--path', meson.current_build_dir()+'/images',  # testing if this helps
         '--xinclude',
         '--stringparam', 'l10n.gentext.default.language ', lang,
         '--output', meson.current_build_dir() + '/',
