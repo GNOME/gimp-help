@@ -1,0 +1,17 @@
+images_filters_blur = [
+    'circular-options.png',
+    'clip-0.png',
+    'clip-1.png',
+    'clip-orig.png',
+    'focus-blur-dialog.png',
+    'gauss-options.png',
+    'gaussian-selective-options.png',
+    'lens-blur-dialog.png',
+    'linear-options.png',
+    'mean_curvature-dialog.png',
+    'median-dialog.png',
+    'pixelize-options.png',
+    'tileable-options.png',
+    'variable-blur-dialog.png',
+    'zoom-options.png',
+]

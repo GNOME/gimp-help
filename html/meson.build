@@ -32,6 +32,8 @@ css_nn_files = [
     'gimp-help-custom.css',
 ]
 
+subdir('images')
+
 foreach lang : target_linguas
 
     all_css_path_files = css_path_files

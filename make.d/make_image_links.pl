@@ -78,7 +78,7 @@ my @Srcdirs = @ARGV;
 
 # assuming destination = (x|ht)ml/LANG[/images]
 my $locale_re = qr/[a-z]{2}(?:_[A-Z]{2})?/;
-if ($Destdir =~ s!((?:x|ht)ml)/($locale_re)(?:/images/?)?$!$1/$2!) {
+if ($Destdir =~ s!((?:x|ht)ml)/($locale_re)(?:/images?)?!$1/$2!) {
     $Language = $2;
 } else {
     die "Error: invalid destination directory: $Destdir\n" .
