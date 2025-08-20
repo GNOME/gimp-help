@@ -22,7 +22,7 @@
 
   <xsl:template name="allpages.banner">
     <div id="Header">
-      <a href="http://docs.gimp.org" title="Home">
+      <a href="https://docs.gimp.org" title="Home">
           <img src='Layout/202010-wilber-and-co.jpg' alt='Logo' class='logo' />
       </a>
     </div>
@@ -32,14 +32,11 @@
                      value=""
                      class="searchinput"
                      title="Search performed by google.com" />
-              <input type="submit" name="sa" value="Search docs.gimp.org" 
+              <input type="submit" name="sa" value="Search docs.gimp.org"
                      title="Search performed by google.com" />
-              <input type="hidden" name="cof"
-              value="S:http://www.gimp.org;AH:center;LH:80px;LC:#17457c;L:http://docs.gimp.org/wilber.png;ALC:#991e1e;LW:80px;AWFID:5ab3786d3aacbee0;"
-              />
-              <input type="hidden" name="domains" value="docs.gimp.org" />
               <br/>
-              <input type="hidden" name="sitesearch" value="docs.gimp.org" /> 
+              <!-- FIXME: Instead of hardcoding the number use a variable! -->
+              <input type="hidden" name="sitesearch" value="docs.gimp.org/3.0/" />
           </form>
       </div>
   </xsl:template>
