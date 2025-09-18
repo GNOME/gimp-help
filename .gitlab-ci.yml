@@ -47,6 +47,17 @@ check-broken-images:
     - if ./tools/validate_references.py -b | grep 'BROKEN:'; then echo "ERROR missing images found!" && false; exit 2; fi;
   needs: ["build-image"]
 
+branches-check:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_OPEN_MERGE_REQUESTS == null && $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH'
+  stage: test
+  image: $CI_REGISTRY_IMAGE:build-debian-latest
+  variables:
+    GIT_DEPTH: "0"
+  script:
+    - sh .gitlab/check_dead_branches.sh
+  allow_failure: true
+
 .build-debian-base:
   stage: build
   image: $CI_REGISTRY_IMAGE:build-debian-latest
