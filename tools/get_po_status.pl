@@ -59,6 +59,7 @@ my %Languages = (
 	de => "German",
 	el => "Greek",
 	en_GB => "British English",
+	eo => "Esperanto",
 	es => "Spanish",
 	fa => "Persian",
 	fi => "Finnish",

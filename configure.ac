@@ -58,7 +58,7 @@ AC_PROG_SED
 #
 
 if test "x$ALL_LINGUAS" = "x"; then
-	ALL_LINGUAS="bg ca cs da de el en en_GB es fa fi fr hr hu it ja ko lt nl nn pl pt pt_BR ro ru sk sl sv tr uk zh_CN"
+	ALL_LINGUAS="bg ca cs da de el en en_GB eo es fa fi fr hr hu it ja ko lt nl nn pl pt pt_BR ro ru sk sl sv tr uk zh_CN"
 else
   ALL_LINGUAS=`echo "$ALL_LINGUAS" | $SED -e 's/[,] */ /g'`
 fi

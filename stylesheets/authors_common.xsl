@@ -51,6 +51,7 @@
       el:Greek
       en:English
       en_GB:British_English
+      eo:Esperanto
       es:Spanish
       fa:Persian
       fi:Finnish

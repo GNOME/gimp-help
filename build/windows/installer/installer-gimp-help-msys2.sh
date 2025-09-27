@@ -47,6 +47,7 @@ add_bom ()
 download_lang ChineseSimplified.isl
 download_lang Croatian.isl
 download_lang EnglishBritish.isl
+download_lang Esperanto.isl
 download_lang Farsi.isl
 download_lang Greek.isl
 download_lang Lithuanian.isl
