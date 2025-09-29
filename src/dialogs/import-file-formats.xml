@@ -44,12 +44,23 @@
     </figure>
 
     <para>
-      If you select a PDF file to open, GIMP will show an extra dialog with
-      options specific to this file type.
+      If you open a PDF file in <acronym>GIMP</acronym>, a dialog opens where
+      you can set how the PDF should be loaded.
     </para>
     <variablelist>
       <varlistentry>
-        <term>Page selection</term>
+        <term>Open pages as</term>
+        <listitem>
+          <para>
+            If this is set to <guilabel>Images</guilabel>, then GIMP will open
+            each of the selected pages as a separate image. If it is set to
+            <guilabel>Layers</guilabel>, then GIMP will create one image with
+            each of the selected pages in its own layer.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Select range</term>
         <listitem>
           <para>
             You can select pages by typing one or more page numbers or
@@ -60,13 +71,27 @@
         </listitem>
       </varlistentry>
       <varlistentry>
-        <term>Open pages as</term>
+        <term>Select All</term>
         <listitem>
           <para>
-            If this is set to <guilabel>Images</guilabel>, then GIMP will open
-            each of the selected pages as a separate image. If it is set to
-            <guilabel>Layers</guilabel>, then GIMP will create one image with
-            each of the selected pages in its own layer.
+            Use this button to select all pages in the document.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Width</term>
+        <term>Height</term>
+        <term>Resolution</term>
+        <listitem>
+          <para>
+            The size of the image created is controlled by the
+            <guilabel>Width</guilabel>, <guilabel>Height</guilabel>,
+            and <guilabel>Resolution</guilabel> settings. Each document
+            contains information about its width and height in units
+            of physical length so it is meaningful to set the width or
+            height of the image in pixels or its resolution in pixels
+            per physical unit of length: as you set any of these three
+            parameters, the other two will automatically adjust to match.
           </para>
         </listitem>
       </varlistentry>
@@ -81,26 +106,11 @@
         </listitem>
       </varlistentry>
       <varlistentry>
-        <term>Image size</term>
-        <listitem>
-          <para>
-            The size of the image created is controlled by the
-            <guilabel>Width</guilabel>, <guilabel>Height</guilabel>,
-            and <guilabel>Resolution</guilabel> settings. A PDF document
-            contains information about its width and height in units
-            of physical length so it is meaningful to set the width or
-            height of the image in pixels or its resolution in pixels
-            per physical unit of length: as you set any of these three
-            parameters, the other two will automatically adjust to match.
-          </para>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
         <term>Use Anti-aliasing</term>
         <listitem>
           <para>
             Check this box to apply
-            <link linkend="glossary-antialiasing">antialiasing</link>
+            <link linkend="glossary-antialiasing">anti-aliasing</link>
             to text in the image.
           </para>
         </listitem>
@@ -136,6 +146,10 @@
       <primary>Formats</primary>
       <secondary>PS</secondary>
     </indexterm>
+    <indexterm>
+      <primary>Formats</primary>
+      <secondary>EPS</secondary>
+    </indexterm>
 
     <figure>
       <title>The Postscript Import dialog</title>
@@ -148,22 +162,68 @@
     </figure>
 
     <para>
-      If you select a PostScript file to open, GIMP will show an extra dialog with
-      options specific to this file type.
+      If you open a PostScript file in <acronym>GIMP</acronym>, a dialog opens
+      where you can set how the file should be loaded. Note: the page selection
+      settings only appear when there are at least two pages in the document.
     </para>
     <variablelist>
       <varlistentry>
-        <term>Rendering</term>
+        <term>Open pages as</term>
+        <listitem>
+          <para>
+            If this is set to <guilabel>Images</guilabel>, then GIMP will open
+            each of the selected pages as a separate image. If it is set to
+            <guilabel>Layers</guilabel>, then GIMP will create one image with
+            each of the selected pages in its own layer.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Select range</term>
+        <listitem>
+          <para>
+            You can select pages by typing one or more page numbers or
+            ranges, separated by commas. For example, <userinput>4-7,9</userinput>
+            selects pages 4, 5, 6, 7, and 9 of the document. The default is to
+            select all of the pages in the document.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Select All</term>
+        <listitem>
+          <para>
+            Use this button to select all pages in the document.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Width</term>
+        <term>Height</term>
+        <term>Resolution</term>
         <listitem>
           <para>
             The size of the image created is controlled by the
             <guilabel>Width</guilabel>, <guilabel>Height</guilabel>,
-            and <guilabel>Resolution</guilabel> settings. A PostScript
+            and <guilabel>Resolution</guilabel> settings. Each
             document contains information about its width and height in
             units of physical length so it is meaningful to set the width
             or height of the image in pixels or its resolution in pixels
             per physical unit of length: as you set any of these three
             parameters, the other two will automatically adjust to match.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Try Bounding Box</term>
+        <listitem>
+          <para>
+            If this is checked, GIMP will use the bounding box information
+            in the PostScript file to determine how much of the page to use:
+            effectively, this is equivalent to cropping whitespace from the
+            edges of the image. It is possible for a PostScript file to contain
+            no bounding box information, in which case this option will be
+            ignored.
           </para>
         </listitem>
       </varlistentry>
@@ -183,52 +243,16 @@
         </listitem>
       </varlistentry>
       <varlistentry>
-        <term>Try Bounding Box</term>
-        <listitem>
-          <para>
-            If this is checked, GIMP will use the bounding box information
-            in the PostScript file to determine how much of the page to use:
-            effectively, this is equivalent to cropping whitespace from the
-            edges of the image. It is possible for a PostScript file to contain
-            no bounding box information, in which case this option will be
-            ignored.
-          </para>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>Pages</term>
-        <listitem>
-          <para>
-            You can select pages by typing one or more page numbers or
-            ranges, separated by commas. For example, <userinput>4-7,9</userinput>
-            selects pages 4, 5, 6, 7, and 9 of the document. The default is to
-            select all of the pages in the document.
-            Note: this is only visible if there is more than one page.
-          </para>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>Open as</term>
-        <listitem>
-          <para>
-            If this is set to <guilabel>Images</guilabel>, then GIMP will open
-            each of the selected pages as a separate image. If it is set to
-            <guilabel>Layers</guilabel>, then GIMP will create one image with
-            each of the selected pages in its own layer.
-            Note: this is only visible if there is more than one page.
-          </para>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>Antialiasing</term>
+        <term>Text anti-aliasing</term>
+        <term>Graphic anti-aliasing</term>
         <listitem>
           <para>
             You can choose to have GIMP apply
-            <link linkend="glossary-antialiasing">antialiasing</link>
-            separately for text and for graphics in the imported image. Either
-            <guilabel>Weak</guilabel> or <guilabel>Strong</guilabel>
-            antialiasing may be applied: usually you should select <guilabel>
-            Strong</guilabel>.
+            <link linkend="glossary-antialiasing">anti-aliasing</link>
+            separately for text and for graphics in the imported image. Choices
+            are <guilabel>None</guilabel>, <guilabel>Weak</guilabel> and
+            <guilabel>Strong</guilabel>. It determines how much anti-aliasing
+            is applied: usually you should select <guilabel>Strong</guilabel>.
           </para>
         </listitem>
       </varlistentry>
