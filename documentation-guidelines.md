@@ -25,9 +25,9 @@
   or heading.
 - Do not put a period at the end of a Title or Heading.
 - Documentation does not need to reference back to anything before the current
-  main version (currently 2.10). So, things like "Since GIMP 2.6 you can do ..."
+  main version (currently 3.0). So, things like "Since GIMP 2.6 you can do ..."
   should be changed to not mention the GIMP version. Changes in a minor version
-  can be added ("this option was added in 2.10.20"), but should probably only
+  can be added ("this option was added in 3.0.4"), but should probably only
   be done sparingly, since these remarks become obsolete in the next major
   version.
 - Don't use "grayed out" or similar to denote a disabled item. The color depends
@@ -51,6 +51,12 @@
 - Never ever say "self explanatory" or something with a similar meaning. Always
   use an actual description, even if it means mostly repeating the option
   label or other relevant text.
+- Most documentation pages are structured the same way. Try to use the same
+  sentences where possible to reduce work for translators.
+- Strings to be translated are in general divided per paragraph. Sometimes it
+  can be advantagous to split a paragraph in two if it means that one part
+  can be reused in other parts of the documentation and thus reducing work
+  for translators.
 - Certain parts of the documentation are platform specific. We need to be
   clear about this when this is the case and where necessary explain it for
   each platform separately, e.g. when mentioning file paths.
@@ -106,6 +112,18 @@
 - Be aware that some dialogs can differ between platforms or even be only
   available on some platforms, e.g. the print dialog, debug preferences, etc.
   This should be clearly mentioned in the documentation.
+- When creating a new image please:
+  + Make the name all lowercase.
+  + Use a dash/minus sign to connect words; do not use underscores.
+  + Use complete words, not abbreviations, e.g. `rectangle-select` instead
+    of `rectsel`, except when naming stock icons (in which case we keep the
+    same name as used in GIMP).
+  + Start the name with the generic part, that way images about the same
+    subject will be sorted together, e.g. start with `tool-options` followed
+    by the specific subject of the image, instead of ending with it.
+  + All stock icons as used by GIMP should be added in the `stock-icons` folder,
+    and use the same name as used by GIMP. These images do not need to be
+    localized.
 
 ## Moving documentation
 
