@@ -222,177 +222,218 @@
       a slider bar or a text box. There is also one check box. These
       options are mostly used by advanced users. They are:
     </para>
-    <itemizedlist>
-      <listitem>
-        <para>
-          <emphasis>Align Threshold</emphasis>:
-          If two endpoints are closer than this value, they are made to be
-          equal.
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          <emphasis>Corner Always Threshold</emphasis>:
-          If the angle defined by a point and its predecessors
-          and successors is smaller than this, it is a corner,
-          even if it is within <emphasis>Corner Surround</emphasis>
-          pixels of a point with a smaller angle.
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          <emphasis>Corner Surround</emphasis>:
-          Number of points to consider when determining if a
-          point is a corner or not.
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          <emphasis>Corner Threshold</emphasis>:
-          If a point, its predecessors, and its successors
-          define an angle smaller than this, it is a corner.
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          <emphasis>Error Threshold</emphasis>:
-          Amount of error at which a fitted spline<footnote><para>
-            <quote>Spline</quote> is a mathematical term for a
-            function which defines a curve by using a series of control
-            points, such as a Bézier curve.
-            <mediaobject>
-              <imageobject>
-                <imagedata format="PNG"
-                  fileref="images/menus/select/250px-Bezier.png"/>
-              </imageobject>
-            </mediaobject>
-            See <ulink url="https://en.wikipedia.org/wiki/Spline_(mathematics)">Wikipedia</ulink>
-            for more information.
-          </para></footnote>
-          is unacceptable. If any pixel is further away than this from the
-          fitted curve, the algorithm tries again.
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          <emphasis>Filter Alternative Surround</emphasis>:
-          A second number of adjacent points to consider
-          when filtering.
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          <emphasis>Filter Epsilon</emphasis>:
-          If the angles between the vectors produced by
-          <emphasis>Filter Surround</emphasis> and
-          <emphasis>Filter Alternative Surround</emphasis>
-          points differ by more than this, use the one from
-          <emphasis>Filter Alternative Surround</emphasis>.
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          <emphasis>Filter Iteration Count</emphasis>:
-          The number of times to smooth the original data points.
-          Increasing this number dramatically, to 50 or
-          so, can produce vastly better results.  But if
-          any points that <quote>should</quote> be corners aren't found,
-          the curve goes wild around that point.
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          <emphasis>Filter Percent</emphasis>: To produce the new point,
-          use the old point plus this times the neighbors.
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          <emphasis>Filter Secondary Surround</emphasis>:
-          Number of adjacent points to consider if
-          <emphasis>Filter Surround</emphasis> points defines a
-          straight line.
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          <emphasis>Filter Surround</emphasis>:
-          Number of adjacent points to consider when filtering.
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          <emphasis>Keep Knees</emphasis>:
-          This check box says whether or not to remove <quote>knee</quote>
-          points after finding the outline.
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          <emphasis>Line Reversion Threshold</emphasis>:
-          If a spline is closer to a straight line than this value,
-          it remains a straight line, even if it would otherwise
-          be changed back to a curve. This is weighted by the
-          square of the curve length, to make shorter curves
-          more likely to be reverted.
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          <emphasis>Line Threshold</emphasis>:
-          How many pixels (on the average) a spline can
-          diverge from the line determined by its endpoints
-          before it is changed to a straight line.
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          <emphasis>Reparametrize Improvement</emphasis>:
-          If reparameterization doesn't improve the fit by this
-          much percent, the algorithm stops doing it.
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          <emphasis>Reparametrize Threshold</emphasis>:
-          Amount of error at which it is pointless to reparameterize.
-          This happens, for example, when the algorithm is trying to fit the
-          outline of the outside of an <quote>O</quote> with a single spline.
-          The initial fit is not good enough for the Newton-Raphson
-          iteration to improve it.  It may be that it would be better
-          to detect the cases where the algorithm didn't find any corners.
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          <emphasis>Subdivide Search</emphasis>:
-          Percentage of the curve away from the worst point
-          to look for a better place to subdivide.
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          <emphasis>Subdivide Surround</emphasis>:
-          Number of points to consider when deciding whether
-          a given point is a better place to subdivide.
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          <emphasis>Subdivide Threshold</emphasis>:
-          How many pixels a point can diverge from a straight
-          line and still be considered a better place to
-          subdivide.
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          <emphasis>Tangent Surround</emphasis>:
-          Number of points to look at on either side of a
-          point when computing the approximation to the
-          tangent at that point.
-        </para>
-      </listitem>
-    </itemizedlist>
+    <variablelist>
+      <varlistentry>
+        <term>Align Threshold</term>
+        <listitem>
+          <para>
+            If two endpoints are closer than this value, they are made to be
+            equal.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Corner Always Threshold</term>
+        <listitem>
+          <para>
+            If the angle defined by a point and its predecessors
+            and successors is smaller than this, it is a corner,
+            even if it is within <guilabel>Corner Surround</guilabel>
+            pixels of a point with a smaller angle.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Corner Surround</term>
+        <listitem>
+          <para>
+            Number of points to consider when determining if a
+            point is a corner or not.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Corner Threshold</term>
+        <listitem>
+          <para>
+            If a point, its predecessors, and its successors
+            define an angle smaller than this, it is a corner.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Error Threshold</term>
+        <listitem>
+          <para>
+            Amount of error at which a fitted spline<footnote><para>
+              <quote>Spline</quote> is a mathematical term for a
+              function which defines a curve by using a series of control
+              points, such as a Bézier curve.
+              <mediaobject>
+                <imageobject>
+                  <imagedata format="PNG"
+                    fileref="images/menus/select/250px-Bezier.png"/>
+                </imageobject>
+              </mediaobject>
+              See <ulink url="https://en.wikipedia.org/wiki/Spline_(mathematics)">Wikipedia</ulink>
+              for more information.
+            </para></footnote>
+            is unacceptable. If any pixel is further away than this from the
+            fitted curve, the algorithm tries again.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Filter Alternative Surround</term>
+        <listitem>
+          <para>
+            A second number of adjacent points to consider
+            when filtering.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Filter Epsilon</term>
+        <listitem>
+          <para>
+            If the angles between the vectors produced by
+            <guilabel>Filter Surround</guilabel> and
+            <guilabel>Filter Alternative Surround</guilabel>
+            points differ by more than this, use the one from
+            <guilabel>Filter Alternative Surround</guilabel>.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Filter Iteration Count</term>
+        <listitem>
+          <para>
+            The number of times to smooth the original data points.
+            Increasing this number dramatically, to 50 or
+            so, can produce vastly better results.  But if
+            any points that <quote>should</quote> be corners aren't found,
+            the curve goes wild around that point.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Filter Percent</term>
+        <listitem>
+          <para>
+            To produce the new point,
+            use the old point plus this times the neighbors.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Filter Secondary Surround</term>
+        <listitem>
+          <para>
+            Number of adjacent points to consider if
+            <guilabel>Filter Surround</guilabel> points defines a
+            straight line.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Filter Surround</term>
+        <listitem>
+          <para>
+            Number of adjacent points to consider when filtering.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Keep Knees</term>
+        <listitem>
+          <para>
+            This check box says whether or not to remove <quote>knee</quote>
+            points after finding the outline.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Line Reversion Threshold</term>
+        <listitem>
+          <para>
+            If a spline is closer to a straight line than this value,
+            it remains a straight line, even if it would otherwise
+            be changed back to a curve. This is weighted by the
+            square of the curve length, to make shorter curves
+            more likely to be reverted.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Line Threshold</term>
+        <listitem>
+          <para>
+            How many pixels (on the average) a spline can
+            diverge from the line determined by its endpoints
+            before it is changed to a straight line.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Reparametrize Improvement</term>
+        <listitem>
+          <para>
+            If reparameterization doesn't improve the fit by this
+            much percent, the algorithm stops doing it.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Reparametrize Threshold</term>
+        <listitem>
+          <para>
+            Amount of error at which it is pointless to reparameterize.
+            This happens, for example, when the algorithm is trying to fit the
+            outline of the outside of an <quote>O</quote> with a single spline.
+            The initial fit is not good enough for the Newton-Raphson
+            iteration to improve it.  It may be that it would be better
+            to detect the cases where the algorithm didn't find any corners.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Subdivide Search</term>
+        <listitem>
+          <para>
+            Percentage of the curve away from the worst point
+            to look for a better place to subdivide.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Subdivide Surround</term>
+        <listitem>
+          <para>
+            Number of points to consider when deciding whether
+            a given point is a better place to subdivide.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Subdivide Threshold</term>
+        <listitem>
+          <para>
+            How many pixels a point can diverge from a straight
+            line and still be considered a better place to
+            subdivide.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Tangent Surround</term>
+        <listitem>
+          <para>
+            Number of points to look at on either side of a
+            point when computing the approximation to the
+            tangent at that point.
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
   </sect3>
 </sect2>
