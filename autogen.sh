@@ -22,7 +22,7 @@ DIE=0
 echo -n "Looking for latest automake version ... "
 required_automake_minor=10
 # Highest automake minor version to look for
-minor=17
+minor=18
 while [ $minor -ge $required_automake_minor ]; do
     ver=1.$minor
     if (automake-$ver --version) < /dev/null > /dev/null 2>&1; then
