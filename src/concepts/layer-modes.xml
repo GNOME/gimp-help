@@ -327,11 +327,16 @@
           </figure>
           <para>
             <guilabel>Merge</guilabel>
-            mode lays the source layer on top of the destination, the same as
-            normal mode. However, it assumes the source and destination are two
-            parts of an original whole, and are therefore mutually exclusive.
-            This is useful for blending cut and pasted content without
-            artifacts, or for replacing erased content in general.
+            mode sums opacity values during blending and can yield 100% opacity
+            in cases where Normal does not, like when blending cut-and-pasted
+            content with soft edges whose opacities are mutually exclusive from
+            each other.
+          </para>
+          <para>
+            This mode is commutative if (but <emphasis>only if</emphasis>)
+            the total opacity between both layers is 100% or less.
+            Otherwise, especially for content that already has 100% opacity,
+            Merge yields the same result as Normal.
           </para>
         </listitem>
       </varlistentry>
@@ -362,9 +367,10 @@
           </figure>
           <para>
             <guilabel>Split</guilabel>
-            mode subtracts the source layer from the destination, such that
-            recompositing the result with the source using merge mode reproduces
-            the original content.
+            mode is the inverse of Merge: it subtracts the top layer's opacity
+            from the bottom layer. This can yield full transparency in cases
+            where Erase does not, like if erasing a value of 50% opacity from
+            a layer containing 50% opacity.
           </para>
         </listitem>
       </varlistentry>
