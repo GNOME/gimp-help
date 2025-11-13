@@ -17,16 +17,16 @@
   </indexterm>
 
   <para>
-    The Align and Distribute tool is useful to align the image layers with various
-    image objects. When this tool is selected, the mouse pointer turns
-    to a small hand. By clicking on an element of a layer in the
-    image, you choose the layer which will be moved (with <keycap>Shift
-    </keycap> + click, you can choose several layers to be aligned);
-    this focused layer has small squares in corners and is called
-    <emphasis>source</emphasis>. Then buttons in the dialog become active
-    (they remain active during all the GIMP session): they allow you to select
-    the <emphasis>target</emphasis>, i.e other layer, selection, path, the
-    source will be aligned with.
+    The Align and Distribute tool is used to align or distribute layers and
+    paths according to your needs. When this tool is selected, the mouse
+    pointer turns to a small hand.
+    The <guilabel>Align</guilabel> setting determines what the reference object
+    for alignment is. The <guilabel>Targets</guilabel> settings determine which
+    objects will be distributed or aligned.
+  </para>
+  <para>
+    You use the buttons below the settings to select how you want your objects
+    aligned or distributed.
   </para>
 
   <sect3>
@@ -68,35 +68,6 @@
   </sect3>
 
   <sect3>
-    <title>Key modifiers</title>
-    <variablelist>
-      <varlistentry>
-        <term><keycap>Shift</keycap></term>
-        <listitem>
-          <para>
-            You can select several layers by holding <keycap>Shift</keycap>
-            when clicking the layers.
-          </para>
-          <tip>
-            <para>
-              Sometimes it's easier to choose multiple layers using
-              rubber-banding: click somewhere outside an imaginary rectangular
-              region covering the layers you want to choose. Then drag out
-              that region by moving the pointer, and release the mouse button.
-              Now every layer, which is completely inside the dragged
-              rectangle, is selected.
-            </para>
-            <para>
-              Note that now there is no target <quote>first item</quote> the
-              selected layers can be aligned on.
-            </para>
-          </tip>
-        </listitem>
-      </varlistentry>
-    </variablelist>
-  </sect3>
-
-  <sect3>
     <title>Options</title>
     <figure>
       <title>Tool Options Dialog</title>
@@ -112,6 +83,83 @@
 
     <variablelist>
       <varlistentry>
+        <term>Targets</term>
+        <listitem>
+          <variablelist>
+            <varlistentry>
+              <term>Selected layers</term>
+              <listitem>
+                <para>
+                  When enabled, the layers, selected in the
+                  <link linkend="gimp-layer-dialog-using">Layers Dialog</link>,
+                  will be used as targets.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Use extents of layer contents</term>
+              <listitem>
+                <para>
+                  When disabled, aligning and distributing happens based on
+                  the borders of the target layers.
+                  When enabled, it happens based on its content bounding box.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Control point selection</term>
+              <listitem>
+                <para>
+                  The nine little squares display the available control points.
+                  You can change which one is selected by clicking on one of
+                  the squares.
+                  The selected control point determines what location on a
+                  target will be used for alignment or distribution.
+                </para>
+                <para>
+                  By default, the center control point is selected. For
+                  alignment, this means that the center of each target is
+                  aligned with the reference. It depends on the chosen type
+                  of alignment which side of the reference is used to align
+                  with.
+                </para>
+                <para>
+                  Choosing one of the other control points changes the point of
+                  alignment on the targets to one of the corners or edges
+                  instead of the center.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Selected paths</term>
+              <listitem>
+                <para>
+                  When enabled, the paths, selected in the
+                  <link linkend="gimp-path-dialog-using">Paths Dialog</link>,
+                  will be used as targets.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Target guides</term>
+              <listitem>
+                <para>
+                  Guides, when selected, will also be used as targets. To select
+                  a guide as one of the targets, <keycap>Alt</keycap>-click
+                  on the guide. To add another guide, or to unselect a
+                  selected guide, use
+                  <keycombo>
+                    <keycap>Alt</keycap>
+                    <keycap>Shift</keycap>
+                  </keycombo>-click on the guide.
+                  Selected guides are displayed in red instead of blue.
+                </para>
+              </listitem>
+            </varlistentry>
+          </variablelist>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
         <term>Align</term>
         <listitem>
           <variablelist>
@@ -119,25 +167,51 @@
               <term>Relative to:</term>
               <listitem>
                 <para>
-                  In this drop-down list, you select the target, the image
-                  object the layer will be aligned with.
+                  In this drop-down list you select the reference, which is
+                  the object in your image the targets will be aligned with.
                 </para>
                 <itemizedlist>
                   <listitem>
                     <para>
-                      <guilabel>Image</guilabel>: the image is the target.
+                      <guilabel>Image</guilabel>: the image is used as
+                      reference with which the target objects will be aligned.
                     </para>
                   </listitem>
                   <listitem>
                     <para>
-                      <guilabel>Selection</guilabel>: the selection is the
-                      target.
+                      <guilabel>Selection</guilabel>: the selection is used as
+                      reference with which the target objects will be aligned.
+                      If no selection is active, the image will be used instead.
                     </para>
+                    <!-- TODO: Remove this note when issue
+                         https://gitlab.gnome.org/GNOME/gimp/-/issues/14155
+                         is fixed.
+                    -->
+                    <note>
+                      <para>
+                        There is a known issue that choosing
+                        <guilabel>Selection</guilabel> in combination with
+                        <guilabel>Use extents of layer contents</guilabel> is
+                        not working correctly.
+                      </para>
+                    </note>
                   </listitem>
                   <listitem>
                     <para>
                       <guilabel>Picked reference object</guilabel>:
-                      The selected object (layer, path, guide) on the canvas.
+                      The object to be used as source, relative to which the
+                      other chosen objects will be aligned. This can be a
+                      layer, a path or a guide.
+                    </para>
+                    <para>
+                      You choose the reference object by clicking on the
+                      layer, path or guide in the image. It wil subsequently be
+                      shown with small squares in the corners.
+                    </para>
+                    <para>
+                      The name of the active reference object is displayed
+                      below this setting. When no reference object has been
+                      picked yet, the align buttons will be disabled.
                     </para>
                   </listitem>
                 </itemizedlist>
@@ -147,7 +221,8 @@
               <term>Align buttons</term>
               <listitem>
                 <para>
-                  These buttons become active when a target is selected.
+                  These buttons become active when a reference object and one
+                  or more targets are selected.
                   <itemizedlist>
                     <listitem>
                       <para>
@@ -158,8 +233,8 @@
                             </imageobject>
                           </inlinemediaobject>
                         </guiicon>
-                        <guibutton>Align left edge of target</guibutton>: to
-                        align left edge of source with left edge of target.
+                        Align the anchor points of the targets with the left
+                        edge of the reference.
                       </para>
                     </listitem>
                     <listitem>
@@ -171,9 +246,8 @@
                             </imageobject>
                           </inlinemediaobject>
                         </guiicon>
-                        <guibutton>Align center of target</guibutton>: to
-                        align center of source on the
-                        <emphasis>vertical</emphasis> middle line of target.
+                        Align the anchor points of the targets with the
+                        horizontal center of the reference.
                       </para>
                     </listitem>
                     <listitem>
@@ -185,8 +259,8 @@
                             </imageobject>
                           </inlinemediaobject>
                         </guiicon>
-                        <guibutton>Align right edge of target</guibutton>: to
-                        align right edge of source with right edge of target.
+                        Align the anchor points of the targets with the right
+                        edge of the reference.
                       </para>
                     </listitem>
                     <listitem>
@@ -198,8 +272,8 @@
                             </imageobject>
                           </inlinemediaobject>
                         </guiicon>
-                        <guibutton>Align top edge of target</guibutton>: to
-                        align top edge of source with top edge of target.
+                        Align the anchor points of the targets with the top edge
+                        of the reference.
                       </para>
                     </listitem>
                     <listitem>
@@ -211,9 +285,8 @@
                             </imageobject>
                           </inlinemediaobject>
                         </guiicon>
-                        <guibutton>Align middle of target</guibutton>: to
-                        align center of source on the
-                        <emphasis>horizontal</emphasis> middle line of target.
+                        Align the anchor points of the targets with the
+                        vertical center of the reference.
                       </para>
                     </listitem>
                     <listitem>
@@ -225,8 +298,8 @@
                             </imageobject>
                           </inlinemediaobject>
                         </guiicon>
-                        <guibutton>Align bottom edge of target</guibutton>: to
-                        align bottom edge of source with bottom edge of target.
+                        Align the anchor points of the targets with the bottom
+                        edge of the reference.
                       </para>
                     </listitem>
                   </itemizedlist>
@@ -235,67 +308,126 @@
             </varlistentry>
 
             <varlistentry>
-              <term>Example</term>
+              <term>Example 1</term>
+              <!--
+                Uses /src/images/tool-options/align-example.xcf
+              -->
               <listitem>
-                <mediaobject>
-                  <imageobject>
-                    <imagedata fileref="images/toolbox/align-ex-orig-example.png"
-                      format="PNG"/>
-                  </imageobject>
-                  <caption>
-                    <para>
-                      An image with a selection.
-                    </para>
-                  </caption>
-                </mediaobject>
-                <mediaobject>
-                  <imageobject>
-                    <imagedata fileref="images/toolbox/align-ex-orig-dialog.png"
-                      format="PNG"/>
-                  </imageobject>
-                  <caption>
-                    <para>
-                      Layer #1 (background) is active, layer #2 is cropped to
-                      content, layer #3 is a text layer.
-                    </para>
-                  </caption>
-                </mediaobject>
-                <mediaobject>
-                  <imageobject>
-                    <imagedata fileref="images/toolbox/align-ex1.png"
-                      format="PNG"/>
-                  </imageobject>
-                  <caption>
-                    <para>
-                      We click on the yellow circle: layer #2 becomes the
-                      source. We want to send this source to the middle of
-                      the selection: the <guilabel>Relative to</guilabel>
-                      option is set to <quote>Selection</quote>.
-                    </para>
-                  </caption>
-                </mediaobject>
-                <mediaobject>
-                  <imageobject>
-                    <imagedata fileref="images/toolbox/align-ex2.png"
-                      format="PNG"/>
-                  </imageobject>
-                  <caption>
-                    <para>
-                      <guibutton>Align center of target</guibutton> clicked
-                    </para>
-                  </caption>
-                </mediaobject>
-                <mediaobject>
-                  <imageobject>
-                    <imagedata fileref="images/toolbox/align-ex3.png"
-                      format="PNG"/>
-                  </imageobject>
-                  <caption>
-                    <para>
-                      <guibutton>Align middle of target</guibutton> clicked
-                    </para>
-                  </caption>
-                </mediaobject>
+                <figure>
+                  <title>Example of aligning relative to a selection</title>
+                  <mediaobject>
+                    <imageobject>
+                      <imagedata fileref="images/toolbox/align-ex-orig-example.png"
+                        format="PNG"/>
+                    </imageobject>
+                    <caption>
+                      <para>
+                        An image with a transparent background layer, a small
+                        red circle layer, which is selected, and a selection.
+                        The selection is the reference object, as shown by the
+                        squares in the corners.
+                      </para>
+                      <para>
+                        We want the red circle placed in the center of the
+                        selection.
+                      </para>
+                    </caption>
+                  </mediaobject>
+                  <mediaobject>
+                    <imageobject>
+                      <imagedata fileref="images/toolbox/align-ex1.png"
+                        format="PNG"/>
+                    </imageobject>
+                    <caption>
+                      <para>
+                        We click
+                        <guiicon>
+                          <inlinemediaobject>
+                            <imageobject>
+                              <imagedata fileref="images/stock-icons/gimp-hcenter.svg" contentwidth="16px"/>
+                            </imageobject>
+                          </inlinemediaobject>
+                        </guiicon>
+                        to align the layer to the horizontal center of the
+                        selection.
+                      </para>
+                    </caption>
+                  </mediaobject>
+                  <mediaobject>
+                    <imageobject>
+                      <imagedata fileref="images/toolbox/align-ex2.png"
+                        format="PNG"/>
+                    </imageobject>
+                    <caption>
+                      <para>
+                        Then we click
+                        <guiicon>
+                          <inlinemediaobject>
+                            <imageobject>
+                              <imagedata fileref="images/stock-icons/gimp-vcenter.svg" contentwidth="16px"/>
+                            </imageobject>
+                          </inlinemediaobject>
+                        </guiicon>
+                        to align the layer to the vertical center of the
+                        selection.
+                      </para>
+                    </caption>
+                  </mediaobject>
+                </figure>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Example 2</term>
+              <listitem>
+                <figure>
+                  <title>Example of aligning relative to a guide</title>
+                  <mediaobject>
+                    <imageobject>
+                      <imagedata fileref="images/toolbox/align-ex-guide-0.png"
+                        format="PNG"/>
+                    </imageobject>
+                    <caption>
+                      <para>
+                        An image with a transparent background layer, three
+                        small colored layers, which are selected, and a
+                        vertical guide, which is set as reference object, as
+                        shown by the squares at the top and bottom of the guide.
+                      </para>
+                    </caption>
+                  </mediaobject>
+                  <mediaobject>
+                    <imageobject>
+                      <imagedata fileref="images/toolbox/align-ex-guide-1.png"
+                        format="PNG"/>
+                    </imageobject>
+                    <caption>
+                      <para>
+                        We want to align the left edges of the colored layers
+                        with the guide. We set the left edge anchor point as
+                        target location for alignment.
+                      </para>
+                    </caption>
+                  </mediaobject>
+                  <mediaobject>
+                    <imageobject>
+                      <imagedata fileref="images/toolbox/align-ex-guide-2.png"
+                        format="PNG"/>
+                    </imageobject>
+                    <caption>
+                      <para>
+                        We click
+                        <guiicon>
+                          <inlinemediaobject>
+                            <imageobject>
+                              <imagedata fileref="images/stock-icons/gimp-gravity-west.svg" contentwidth="16px"/>
+                            </imageobject>
+                          </inlinemediaobject>
+                        </guiicon>
+                        to align the left side of the layers to the guide.
+                      </para>
+                    </caption>
+                  </mediaobject>
+                </figure>
               </listitem>
             </varlistentry>
           </variablelist>
@@ -310,136 +442,144 @@
               <term>Distribute buttons</term>
               <listitem>
                 <para>
-                  These options are used when you have several targets and want
-                  to arrange them. Here, layers selected with
-                  <keycap>Shift</keycap> + Click are called
-                  <quote>targets</quote>. But they are actually sources.
-                  <quote>Relative to</quote> options are active to set the
-                  target. These transformations are usually relative to
-                  <quote>Image</quote>.
-                </para>
-                <para>
-                  These options work as Align options, but you can distribute sources
-                  evenly.
+                  These buttons allow you to distribute the selected target
+                  objects evenly on your image. Each button uses a different
+                  way to do that distribution. You need a minimum of three
+                  selected targets to enable these buttons.
                 </para>
                 <itemizedlist>
-                    <listitem>
-                      <para>
-                        <guiicon>
-                          <inlinemediaobject>
-                            <imageobject>
-                              <imagedata fileref="images/stock-icons/gimp-hfill.svg" contentwidth="16px"/>
-                            </imageobject>
-                          </inlinemediaobject>
-                        </guiicon>
-                        <guibutton>Distribute targets evenly in the
-                        horizontal</guibutton>: to distribute sources evenly
-                        horizontally.
-                      </para>
-                    </listitem>
-                    <listitem>
-                      <para>
-                        <guiicon>
-                          <inlinemediaobject>
-                            <imageobject>
-                              <imagedata fileref="images/stock-icons/gimp-hcenter.svg" contentwidth="16px"/>
-                            </imageobject>
-                          </inlinemediaobject>
-                        </guiicon>
-                        <guibutton>Distribute horizontal centers of
-                        targets</guibutton>: to distribute centers of sources
-                        with center of the target horizontally.
-                      </para>
-                    </listitem>
-                    <listitem>
-                      <para>
-                        <guiicon>
-                          <inlinemediaobject>
-                            <imageobject>
-                              <imagedata fileref="images/stock-icons/gimp-vfill.svg" contentwidth="16px"/>
-                            </imageobject>
-                          </inlinemediaobject>
-                        </guiicon>
-                        <guibutton>Distribute targets evenly in the
-                        vertical</guibutton>: to distribute sources evenly
-                        vertically.
-                      </para>
-                    </listitem>
-                    <listitem>
-                      <para>
-                        <guiicon>
-                          <inlinemediaobject>
-                            <imageobject>
-                              <imagedata fileref="images/stock-icons/gimp-vcenter.svg" contentwidth="16px"/>
-                            </imageobject>
-                          </inlinemediaobject>
-                        </guiicon>
-                        <guibutton>Distribute vertical centers of
-                        targets</guibutton>: to distribute centers of sources
-                        with center of target.
-                      </para>
-                    </listitem>
+                  <listitem>
+                    <para>
+                      <guiicon>
+                        <inlinemediaobject>
+                          <imageobject>
+                            <imagedata fileref="images/stock-icons/gimp-hfill.svg" contentwidth="16px"/>
+                          </imageobject>
+                        </inlinemediaobject>
+                      </guiicon>
+                      Distribute the targets horizontally, based on the
+                      selected anchor point.
+                    </para>
+                  </listitem>
+                  <listitem>
+                    <para>
+                      <guiicon>
+                        <inlinemediaobject>
+                          <imageobject>
+                            <imagedata fileref="images/stock-icons/gimp-even-horizontal-gap-symbolic.svg" contentwidth="16px"/>
+                          </imageobject>
+                        </inlinemediaobject>
+                      </guiicon>
+                      Distribute the targets horizontally, with equal gaps
+                      between them.
+                    </para>
+                  </listitem>
+                  <listitem>
+                    <para>
+                      <guiicon>
+                        <inlinemediaobject>
+                          <imageobject>
+                            <imagedata fileref="images/stock-icons/gimp-vfill.svg" contentwidth="16px"/>
+                          </imageobject>
+                        </inlinemediaobject>
+                      </guiicon>
+                      Distribute the targets vertically, based on the
+                      selected anchor point.
+                    </para>
+                  </listitem>
+                  <listitem>
+                    <para>
+                      <guiicon>
+                        <inlinemediaobject>
+                          <imageobject>
+                            <imagedata fileref="images/stock-icons/gimp-even-vertical-gap-symbolic.svg" contentwidth="16px"/>
+                          </imageobject>
+                        </inlinemediaobject>
+                      </guiicon>
+                      Distribute the targets vertically, with equal gaps
+                      between them.
+                    </para>
+                  </listitem>
                 </itemizedlist>
               </listitem>
             </varlistentry>
+            <varlistentry>
+              <term>Example 3</term>
+              <listitem>
+                <figure>
+                  <title>Example of distributing three layers with equal gaps</title>
+                  <mediaobject>
+                    <imageobject>
+                      <imagedata fileref="images/toolbox/align-ex-guide-0.png"
+                        format="PNG"/>
+                    </imageobject>
+                    <caption>
+                      <para>
+                        We use the same image as in example 2.
+                      </para>
+                    </caption>
+                  </mediaobject>
+                  <mediaobject>
+                    <imageobject>
+                      <imagedata fileref="images/toolbox/align-ex-distribute-1.png"
+                        format="PNG"/>
+                    </imageobject>
+                    <caption>
+                      <para>
+                        We want to distribute the colored layers with equal
+                        gaps between them, both horizontally and vertically.
+                      </para>
+                      <para>
+                        We click
+                        <guiicon>
+                          <inlinemediaobject>
+                            <imageobject>
+                              <imagedata fileref="images/stock-icons/gimp-even-horizontal-gap-symbolic.svg" contentwidth="16px"/>
+                            </imageobject>
+                          </inlinemediaobject>
+                        </guiicon>
+                        to distribute the layers horizontally, and then
+                        <guiicon>
+                          <inlinemediaobject>
+                            <imageobject>
+                              <imagedata fileref="images/stock-icons/gimp-even-vertical-gap-symbolic.svg" contentwidth="16px"/>
+                            </imageobject>
+                          </inlinemediaobject>
+                        </guiicon>
+                         to do the same vertically.
+                      </para>
+                    </caption>
+                  </mediaobject>
+                </figure>
+              </listitem>
+            </varlistentry>
           </variablelist>
-          <figure>
-            <title>Example for the <quote>Distribute</quote> commands</title>
-            <mediaobject>
-              <imageobject>
-                <imagedata fileref="images/toolbox/align-ex-distrib-orig.png"
-                  format="PNG"/>
-              </imageobject>
-              <caption>
-                <para>
-                  Base image: three layers.
-                  <guiicon>
-                    <inlinemediaobject>
-                      <imageobject>
-                        <imagedata fileref="images/stock-icons/gimp-gravity-east.svg" contentwidth="16px"/>
-                      </imageobject>
-                    </inlinemediaobject>
-                  </guiicon> (Distribute right edges of targets) will be used.
-                </para>
-              </caption>
-            </mediaobject>
-            <mediaobject>
-              <imageobject>
-                <imagedata fileref="images/toolbox/align-ex-distrib-0-yellow.png"
-                  format="PNG"/>
-              </imageobject>
-              <caption>
-                Active layer is yellow (target). All layers are
-                aligned on the right edge of the yellow layer.
-              </caption>
-            </mediaobject>
-          </figure>
         </listitem>
       </varlistentry>
     </variablelist>
   </sect3>
 
   <sect3>
-    <title>Example</title>
+    <title>Combined Align and Distribute Example</title>
+    <!--
+      Uses /src/images/tool-options/align-distribute-example.xcf
+    -->
     <figure>
-      <title>Example</title>
+      <title>Align and Distribute Example</title>
       <mediaobject>
         <imageobject>
           <imagedata fileref="images/toolbox/align-ex-distrib-1-example.png"
             format="PNG"/>
         </imageobject>
         <caption>
-          An image with four text layers and a background color layer.
-        </caption>
-      </mediaobject>
-      <mediaobject>
-        <imageobject>
-          <imagedata fileref="images/toolbox/align-ex-distrib-1-dialog.png"
-            format="PNG"/>
-        </imageobject>
-        <caption>
-          The four text layers have the same vertical size. We want to align
-          them at the vertical center of the image.
+          <para>
+            An image with four text layers and a background color layer. The
+            text layers are all selected in the Layers dialog.
+          </para>
+          <para>
+            We want the text layers to be in the vertical center of the image,
+            with equal space between each.
+          </para>
         </caption>
       </mediaobject>
       <mediaobject>
@@ -449,7 +589,15 @@
         </imageobject>
         <caption>
           <para>
-            We select them as sources with <keycap>Shift</keycap> + Click.
+            We click
+            <guiicon>
+              <inlinemediaobject>
+                <imageobject>
+                  <imagedata fileref="images/stock-icons/gimp-vcenter.svg" contentwidth="16px"/>
+                </imageobject>
+              </inlinemediaobject>
+            </guiicon>
+            to vertically align the text layers relative to the image.
           </para>
         </caption>
       </mediaobject>
@@ -460,74 +608,15 @@
         </imageobject>
         <caption>
           <para>
-            The default target (<guilabel>Relative to</guilabel>) is
-            <quote>Image</quote>. We used the
+            Then we click
             <guiicon>
               <inlinemediaobject>
                 <imageobject>
-                  <imagedata fileref="images/stock-icons/gimp-vfill.svg" contentwidth="16px"/>
-                </imageobject>
-              </inlinemediaobject>
-            </guiicon> (Distribute vertical centers of targets) command.
-          </para>
-        </caption>
-      </mediaobject>
-      <mediaobject>
-        <imageobject>
-          <imagedata fileref="images/toolbox/align-ex-distrib-4.png"
-            format="PNG"/>
-        </imageobject>
-        <caption>
-          <para>
-            After using the
-            <guiicon>
-              <inlinemediaobject>
-                <imageobject>
-                  <imagedata fileref="images/stock-icons/gimp-hfill.svg" contentwidth="16px"/>
-                </imageobject>
-              </inlinemediaobject>
-            </guiicon> (Distribute targets
-            evenly in the horizontal).
-          </para>
-        </caption>
-      </mediaobject>
-    </figure>
-
-  </sect3>
-
-  <sect3>
-    <title>Align using the rubber-band box</title>
-    <figure>
-      <title>Align using the rubber-band box</title>
-      <mediaobject>
-        <imageobject>
-          <imagedata fileref="images/toolbox/align-ex5a.png" format="PNG"/>
-        </imageobject>
-        <caption>
-          <para>
-            We clicked left from and above the red layer, and dragged out a
-            region covering the red and the yellow layer by moving the pointer
-            towards the bottom right corner.
-          </para>
-        </caption>
-      </mediaobject>
-      <mediaobject>
-        <imageobject>
-          <imagedata fileref="images/toolbox/align-ex5b.png" format="PNG"/>
-        </imageobject>
-        <caption>
-          <para>
-            <quote>Selection</quote> is the reference. After a click
-            on the
-            <guiicon>
-              <inlinemediaobject>
-                <imageobject>
-                  <imagedata fileref="images/stock-icons/gimp-gravity-west.svg" contentwidth="16px"/>
+                  <imagedata fileref="images/stock-icons/gimp-even-horizontal-gap-symbolic.svg" contentwidth="16px"/>
                 </imageobject>
               </inlinemediaobject>
             </guiicon>
-            button, both layers align with the left side of the
-            selection.
+            to distribute the text, with equal gaps between them.
           </para>
         </caption>
       </mediaobject>
