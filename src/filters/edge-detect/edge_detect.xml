@@ -35,6 +35,35 @@
   </indexterm>
 
   <sect3>
+    <title>Overview</title>
+    <figure>
+      <title>Applying example for the Edge filter</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata format="JPG"
+            fileref="images/filters/examples/taj_orig.jpg"/>
+        </imageobject>
+        <caption>
+          <para>Original image</para>
+        </caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject>
+          <imagedata format="JPG"
+            fileref="images/filters/examples/edge-taj-edge-sobel.jpg"/>
+        </imageobject>
+        <caption>
+          <para>Filter applied</para>
+        </caption>
+      </mediaobject>
+    </figure>
+    <para>
+      This filter detects edges in an image using the method selected
+      in <guilabel>Algorithm</guilabel>.
+    </para>
+  </sect3>
+
+  <sect3>
     <title>Activating the Filter</title>
     <para>
       This filter is found in the main menu under
@@ -74,37 +103,40 @@
         <term>Algorithm</term>
         <listitem>
           <variablelist>
-            <para>Edge detector offers several detection methods:</para>
+            <para>
+              The algorithm selected here, determines what method is used
+              to detect edges. The following methods are available:
+            </para>
             <varlistentry>
               <term>Sobel</term>
               <listitem>
                 <para>
-                  Here, this method has no options and so is less interesting
-                  than the specific Sobel.
+                  This is an alternative version of the separate
+                  <link linkend="gimp-filter-edge-sobel">Sobel</link> filter.
+                  Contrary to that filter, this one has no additional settings
+                  that can be adjusted. This is the default; an example is
+                  shown at the top of the page.
                 </para>
-                <mediaobject>
-                  <imageobject>
-                    <imagedata format="JPG"
-                      fileref="images/filters/examples/edge-taj-edge-sobel.jpg"/>
-                  </imageobject>
-                  <caption>
-                    <para>After applying the filter (Sobel option)</para>
-                  </caption>
-                </mediaobject>
               </listitem>
             </varlistentry>
             <varlistentry>
               <term>Prewitt compass</term>
               <listitem>
-                <para>Result doesn't look different from Sobel.</para>
+                <para>
+                  The <ulink
+                  url="https://en.wikipedia.org/wiki/Prewitt_operator">Prewitt
+                  operator</ulink> is a relatively fast algorithm, that
+                  can be relatively crude for high frequency variations in
+                  an image.
+                </para>
                 <mediaobject>
                   <imageobject>
                     <imagedata format="JPG"
-fileref="images/filters/examples/edge-taj-edge-prewitt.jpg"/>
+                      fileref="images/filters/examples/edge-taj-edge-prewitt.jpg"/>
                   </imageobject>
                   <caption>
                     <para>
-                      After applying the filter (Prewitt compass option)
+                      Algorithm set to Prewitt compass
                     </para>
                   </caption>
                 </mediaobject>
@@ -114,8 +146,8 @@ fileref="images/filters/examples/edge-taj-edge-prewitt.jpg"/>
               <term>Gradient</term>
               <listitem>
                 <para>
-                  Edges are thinner, less contrasted and more blurred than
-                  Sobel.
+                  When using the Gradient algoritm, edges are thinner, less
+                  contrasted and more blurred than Sobel.
                 </para>
                 <mediaobject>
                   <imageobject>
@@ -123,7 +155,7 @@ fileref="images/filters/examples/edge-taj-edge-prewitt.jpg"/>
                     fileref="images/filters/examples/edge-taj-edge-gradient.jpg"/>
                   </imageobject>
                   <caption>
-                    <para>After applying the filter (Gradient option)</para>
+                    <para>Algorithm set to Gradient</para>
                   </caption>
                 </mediaobject>
               </listitem>
@@ -131,14 +163,20 @@ fileref="images/filters/examples/edge-taj-edge-prewitt.jpg"/>
             <varlistentry>
               <term>Roberts</term>
               <listitem>
-                <para>No evident difference from Sobel.</para>
+                <para>
+                  The <ulink
+                  url="https://en.wikipedia.org/wiki/Roberts_cross">Roberts</ulink>
+                  algorithm will highlight changes in intensity in a diagonal
+                  direction. However, it suffers greatly from sensitivity to
+                  noise.
+                </para>
                 <mediaobject>
                 <imageobject>
                   <imagedata format="JPG"
                     fileref="images/filters/examples/edge-taj-edge-roberts.jpg"/>
                 </imageobject>
                 <caption>
-                  <para>After applying the filter (Roberts option)</para>
+                  <para>Algorithm set to Roberts</para>
                 </caption>
               </mediaobject>
               </listitem>
@@ -146,14 +184,16 @@ fileref="images/filters/examples/edge-taj-edge-prewitt.jpg"/>
             <varlistentry>
               <term>Differential</term>
               <listitem>
-                <para>Edges less bright.</para>
+                <para>
+                  This algorithm often causes edges to be less bright.
+                </para>
                 <mediaobject>
                   <imageobject>
                     <imagedata format="JPG"
                 fileref="images/filters/examples/edge-taj-edge-differential.jpg"/>
                   </imageobject>
                   <caption>
-                    <para>After applying the filter (Differential option)</para>
+                    <para>Algorithm set to Differential</para>
                   </caption>
                 </mediaobject>
               </listitem>
@@ -161,14 +201,18 @@ fileref="images/filters/examples/edge-taj-edge-prewitt.jpg"/>
             <varlistentry>
               <term>Laplace</term>
               <listitem>
-                <para>Less interesting than the specific one.</para>
+                <para>
+                  This is a different implementation of the
+                  <link linkend="gimp-filter-edge-laplace">Laplace</link>
+                  filter, that gives different results.
+                </para>
                 <mediaobject>
                   <imageobject>
                     <imagedata format="JPG"
                     fileref="images/filters/examples/edge-taj-edge-laplace.jpg"/>
                   </imageobject>
                   <caption>
-                    <para>After applying the filter (Laplace option)</para>
+                    <para>Algorithm set to Laplace</para>
                   </caption>
                 </mediaobject>
               </listitem>
@@ -180,7 +224,7 @@ fileref="images/filters/examples/edge-taj-edge-prewitt.jpg"/>
         <term>Amount</term>
         <listitem>
           <para>
-            A low value results in black, high-contrasted image with thin
+            A low value results in a black, high-contrasted image with thin
             edges. A high value results in thick edges with low contrast and
             many colors in dark areas.
           </para>
@@ -190,11 +234,11 @@ fileref="images/filters/examples/edge-taj-edge-prewitt.jpg"/>
         <term>Border behavior</term>
         <listitem>
           <para>
-            Where the edge detector will get adjoining pixels for its
-            calculations when it is working on the image boundaries. This
-            option will only have an effect on the boundaries of the result
-            (if any). <guilabel>Clamp</guilabel> is the default and the best
-            choice.
+            This determines where the edge detector will get adjoining pixels
+            for its calculations when it is working on the image boundaries.
+            This setting will only affect the boundaries of the result
+            (if any). <guilabel>Clamp</guilabel> is the default and
+            the best choice in general.
           </para>
         </listitem>
       </varlistentry>
