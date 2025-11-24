@@ -145,7 +145,7 @@ AC_SUBST(SVG2PDF_FLAGS)
 
 #  Use our customized xml2po
 
-AM_PATH_PYTHON3(python3_required_version, libxml2, ,)
+AM_PATH_PYTHON3(python3_required_version, lxml, ,)
 
 XML2PO='$(PYTHON) $(top_srcdir)/tools/xml2po.py'
 XML2POFLAGS='--mode=gimphelp --base=$(top_srcdir)/'
