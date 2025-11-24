@@ -14,20 +14,47 @@ variables:
 build-image:
   stage: prepare
   variables:
+    DEB_VERSION: "trixie"
+    RUNNER: "x86_64_v3"
     GIT_STRATEGY: none
   cache: {}
   image:
-    name: gcr.io/kaniko-project/executor:debug
-    entrypoint: [""]
+    name: quay.io/buildah/stable
   script:
-    - mkdir -p /kaniko/.docker
-    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
+    - export BUILDAH_FORMAT=docker
+    - export STORAGE_DRIVER=vfs
+    - echo "$CI_REGISTRY_PASSWORD" | buildah login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
+    #- mkdir -p /kaniko/.docker
+    #- echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
     - echo "FROM debian:testing" > Dockerfile
+    - echo "WORKDIR $CI_PROJECT_DIR" >> Dockerfile
     - echo "RUN apt-get update" >> Dockerfile
+    ## GIMP adds ca-certificates package here, not sure if we need it
+    ## Build dependencies
     - echo "RUN apt-get install -y --no-install-recommends \\" >> Dockerfile
-    - echo "automake build-essential docbook-website docbook-xml docbook-xsl fonts-noto-cjk fonts-noto-core gettext git intltool librsvg2-2 librsvg2-bin pkg-config pngcrush python3 python3-libxml2 python3-polib xsltproc libxml2-utils" >> Dockerfile
+    - echo "automake
+            build-essential
+            docbook-website
+            docbook-xml
+            docbook-xsl
+            fonts-noto-cjk
+            fonts-noto-core
+            gettext
+            git
+            intltool
+            librsvg2-2
+            librsvg2-bin
+            pkg-config
+            pngcrush
+            python3
+            python3-libxml2
+            python3-polib
+            xsltproc
+            libxml2-utils" >> Dockerfile
 
-    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:build-debian-latest --cache=true --cache-ttl=120h
+    # Copied from the GIMP version:
+    #FIXME: '2>&1 | grep -v STEP' since buildah is too verbose. See: https://github.com/containers/buildah/issues/6362
+    - buildah build --log-level error --volume $CI_PROJECT_DIR:$CI_PROJECT_DIR:Z --file $CI_PROJECT_DIR/Dockerfile --tag $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER} --layers --cache-from $CI_REGISTRY_IMAGE/cache --cache-to $CI_REGISTRY_IMAGE/cache --cache-ttl=120h 2>&1 | grep -v STEP && buildah push --log-level error $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER} 2>&1 | grep -v STEP
 
 po-validate:
   stage: test
@@ -60,7 +87,10 @@ branches-check:
 
 .build-debian-base:
   stage: build
-  image: $CI_REGISTRY_IMAGE:build-debian-latest
+  image: $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER}
+  variables:
+    DEB_VERSION: "trixie"
+    RUNNER: "x86_64_v3"
   artifacts:
     expire_in: 1 week
     when: always
@@ -92,7 +122,10 @@ branches-check:
 # manual that were generated, so execute validate last
 .build-debian-validate-last:
   stage: build
-  image: $CI_REGISTRY_IMAGE:build-debian-latest
+  image: $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER}
+  variables:
+    DEB_VERSION: "trixie"
+    RUNNER: "x86_64_v3"
   artifacts:
     expire_in: 1 week
     when: always
@@ -168,7 +201,9 @@ www-debian:
   stage: www
   variables:
     BUILD_DIR: "."
-  image: $CI_REGISTRY_IMAGE:build-debian-latest
+    DEB_VERSION: "trixie"
+    RUNNER: "x86_64_v3"
+  image: $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER}
   dependencies:
     - build-debian-1
     - build-debian-2
