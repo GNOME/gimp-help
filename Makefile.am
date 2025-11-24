@@ -130,8 +130,7 @@ COMMON_CSS_FILES = \
 	stylesheets/gimp-help-screen.css
 
 # alternate stylesheets for HTML
-OTHER_CSS_FILES = \
-	stylesheets/gimp22.css
+OTHER_CSS_FILES =
 
 # stylesheets (and more) for XSLT
 XSL_FILES = \
