@@ -1,0 +1,718 @@
+<!DOCTYPE sect2 PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+                       "http://www.docbook.org/xml/4.3/docbookx.dtd">
+
+<sect2 id="file-dds-export">
+  <title>Export Image as DDS</title>
+
+  <indexterm>
+    <primary>Export Image as DDS</primary>
+  </indexterm>
+  <indexterm>
+    <primary>Formats</primary>
+    <secondary>dds</secondary>
+  </indexterm>
+
+  <sect3>
+    <title>Overview</title>
+
+    <figure>
+      <title>The DDS Export dialog</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata format="PNG"
+            fileref="images/dialogs/export-dds-dialog.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+
+    <para>
+      The <ulink url="https://en.wikipedia.org/wiki/DirectDraw_Surface">DDS</ulink>
+      file format is often used in games for storing textures and environment
+      maps. It supports both compressed and uncompressed textures.
+    </para>
+    <para>
+      In most cases game engines require the texture dimensions to be a power
+      of two, but width and height do not need to be the same. Common values
+      are 64, 128, 256, 512, etc.
+    </para>
+  </sect3>
+
+  <sect3>
+    <title>Options</title>
+
+    <variablelist>
+      <varlistentry>
+        <term>Compression</term>
+        <listitem>
+          <para>
+            The type of compression to use. When set to
+            <guilabel>None</guilabel>, the non-compressed format can be
+            selected from <guilabel>Format</guilabel>.
+          </para>
+          <para>
+            Usually games only support some of the compressed and non-compressed
+            formats. Check the game documentation which modes they support.
+          </para>
+          <variablelist>
+            <varlistentry>
+              <term>None</term>
+              <listitem>
+                <para>
+                  The image data is stored uncompressed. The actual format
+                  is determined from the <guilabel>Format</guilabel> setting.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>BC1 / DXT1</term>
+              <listitem>
+                <para>
+                  Stores 5 bits of red, 6 bits of green and 5 bits of blue
+                  per color. If there is an alpha channel, only 1 bit of
+                  alpha (either full transparent or full opaque) is stored,
+                  taking away 1 bit of green.
+                </para>
+                <para>
+                  This format creates the smallest size files. It doesn't
+                  work well on images that have sudden changes in color,
+                  like pixel art.
+                  In general not recommended when you have an alpha channel.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>BC2 / DXT3</term>
+              <listitem>
+                <para>
+                  Stores colors the same as DXT1, except it also stores full
+                  alpha channels. This format is rarely used.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>BC3 / DXT5</term>
+              <listitem>
+                <para>
+                  Stores colors the same as DXT1, but supports full alpha
+                  channels, which it stores pre-multiplied.
+                </para>
+                <para>
+                  In general preferrable over DXT3 and commonly used where
+                  alpha channels are important.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>BC3nm / DXT5nm</term>
+              <listitem>
+                <para>
+                  A variant of DXT5 used for storing normal maps.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>BC4 / ATI1 (3Dc+)</term>
+              <listitem>
+                <para>
+                  This is used for storing one color channel only. Only the
+                  red channel in a color image will be stored. The other
+                  channels will be ignored as well as the alpha channel.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>BC5 / ATI2 (3Dc)</term>
+              <listitem>
+                <para>
+                  This is used for storing two color channels. Only the red
+                  and green channels in a color image will be stored. The
+                  blue channel will be ignored as well as the alpha channel.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>RXGB (DXT5)</term>
+              <listitem>
+                <para>
+                  A variant of DXT5. It is rarely used and requires explicit
+                  support by the game that uses it.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Alpha Exponent (DXT5)</term>
+              <listitem>
+                <para>
+                  A variant of DXT5 that has a highly compressed alpha channel.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>YCoCg (DXT5)</term>
+              <listitem>
+                <para>
+                  A special variant of DXT5 that converts the RGB color
+                  channels to YCoCg, which allows high-quality compression
+                  of images. This requires explicit support by the game
+                  that uses it.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>YCoCg scaled (DXT5)</term>
+              <listitem>
+                <para>
+                  Same as above, but improves pixel quality at the cost of
+                  longer processing time. This requires explicit support by the
+                  game that uses it.
+                </para>
+              </listitem>
+            </varlistentry>
+          </variablelist>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Use perceptual error metric</term>
+        <listitem>
+          <para>
+            This setting is only enabled when compression is not
+            <guilabel>None</guilabel>.
+            Enabling this setting may enhance visual quality in certain cases.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Format</term>
+        <listitem>
+          <para>
+            This setting determines the color format for non-compressed
+            textures. There exist a wide range of formats, but not all of them
+            are equally well supported by games and image viewers.
+          </para>
+          <variablelist>
+            <varlistentry>
+              <term>Default</term>
+              <listitem>
+                <para>
+                  Chooses the best fitting format based on the type of
+                  image.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>RGB8</term>
+              <listitem>
+                <para>
+                  This format stores 8 bits per channel for red, green and
+                  blue.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>RGBA8</term>
+              <listitem>
+                <para>
+                  This format stores 8 bits per channel for red, green, blue
+                  and alpha.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>BGR8</term>
+              <listitem>
+                <para>
+                  This format stores 8 bits per channel in reverse order for
+                  blue, green and red.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>ABGR8</term>
+              <listitem>
+                <para>
+                  This format stores 8 bits per channel in reverse order with
+                  the alpha channel first, then blue, green and red.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>R5G6B5</term>
+              <listitem>
+                <para>
+                  This format stores 5 bits of red, 6 bits of green and 5 bits
+                  of blue.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>RGBA4</term>
+              <listitem>
+                <para>
+                  This format stores 4 bits of red, green, blue and alpha.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>RGB5A1</term>
+              <listitem>
+                <para>
+                  This format stores 5 bits of red, green and blue, with
+                  one bit of alpha.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>RGB10A2</term>
+              <listitem>
+                <para>
+                  This format stores 10 bits of red, green and blue, with
+                  two bits of alpha.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>R3G3B2</term>
+              <listitem>
+                <para>
+                  This format stores three bits of red and green and two bits
+                  of blue.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>A8</term>
+              <listitem>
+                <para>
+                  This format stores a single component of 8 bits. This is
+                  taken from the alpha channel.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>L8</term>
+              <listitem>
+                <para>
+                  This format stores a single component of 8 bits. This is
+                  taken from the red or grayscale channel. This is often used
+                  to enhance luminance.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>L8A8</term>
+              <listitem>
+                <para>
+                  This format stores two components of 8 bits. This is
+                  taken from the red or grayscale and alpha channels.
+                  This is often used to enhance luminance.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>AEXP</term>
+              <listitem>
+                <para>
+                  This stands for <quote>Alpha Exponent</quote> and uses the
+                  same algorithm as the
+                  <guilabel>Alpha Exponent (DXT5)</guilabel> compression.
+                </para>
+                <para>
+                  This is rarely used. Check first if it is supported and
+                  required by your game engine.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>YCOCG</term>
+              <listitem>
+                <para>
+                  This uses the same algorithm as the
+                  <guilabel>YCoCg (DXT5)</guilabel> compression.
+                </para>
+                <para>
+                  This is rarely used. Check first if it is supported and
+                  required by your game engine.
+                </para>
+              </listitem>
+            </varlistentry>
+          </variablelist>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Save type</term>
+        <listitem>
+          <para>
+            This determines how your image will be saved.
+          </para>
+          <variablelist>
+            <varlistentry>
+              <term>Selected layer</term>
+              <listitem>
+                <para>
+                  Only the currently selected layer will be exported.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>All visible layers</term>
+              <listitem>
+                <para>
+                  All visible layers will be merged and then exported.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>As cube map</term>
+              <listitem>
+                <para>
+                  Your selected layer will be exported as a cube map. A cube
+                  map is a special layout of related textures, where each
+                  layer represents one side of a cube.
+                </para>
+                <para>
+                  A Cube Map requires six layers that are all the same size,
+                  with or without transparency. Each layer must have one of the
+                  correct identifers at the end of the layer name.
+                </para>
+                <para>
+                  These identifiers are <quote>Front</quote>, <quote>Back</quote>,
+                  <quote>Left</quote>, <quote>Right</quote>, <quote>Top</quote>,
+                  <quote>Bottom</quote>.
+                  For example your layers could be named: <quote>woodland_front</quote>,
+                  <quote>woodland_back</quote>, etc.
+                </para>
+                <para>
+                  This setting is only enabled when the above conditions are
+                  met.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>As volume map</term>
+              <listitem>
+                <para>
+                  Your selected layer will be exported as a volume map. A volume
+                  map is similar toa cube map, but the textures are not
+                  expected to be part of a cube, so no fixed number of layers
+                  are required.
+                </para>
+                <para>
+                  A Volume Maps also requires all layers to have the same size,
+                  with or without transparency. However, you are not limited to
+                  the number of layers you want to use and no special naming of
+                  layers is required.
+                </para>
+                <para>
+                  This setting is only enabled when the above conditions are
+                  met.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>As texture array</term>
+              <listitem>
+                <para>
+                  Your image will be exported as a texture array. Only layers
+                  that have the same size as the image will be exported.
+                  This stores a collection of textures in one image.
+                </para>
+                <para>
+                  This setting is only enabled when there are at least two
+                  layers.
+                </para>
+              </listitem>
+            </varlistentry>
+          </variablelist>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Flip image vertically on export</term>
+        <listitem>
+          <para>
+            Some game engines require the image to be turned upside down.
+            Enabling this setting will do that for you.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Mipmaps </term>
+        <listitem>
+          <para>
+            Mipmaps are reduced size versions of the same image where each
+            mipmap is half the width and height of the previous one. Often
+            used in game engines to improve loading in scenes where the object
+            is located far away.
+          </para>
+          <variablelist>
+            <varlistentry>
+              <term>No mipmaps</term>
+              <listitem>
+                <para>
+                  No mipmaps are added to the exported image.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Generate mipmaps</term>
+              <listitem>
+                <para>
+                  New mipmaps are created and added to the exported image.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Use existing mipmaps</term>
+              <listitem>
+                <para>
+                  Already available mipmaps in your image wil be reused and
+                  added to the exported image. This will only be enabled if
+                  the correct number of mipmaps using the expected sizes are
+                  available.
+                </para>
+              </listitem>
+            </varlistentry>
+          </variablelist>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Set transparent color</term>
+        <listitem>
+          <para>
+            When checked, this uses the below specified indexed color for
+            setting transparency in the exported image. This setting is only
+            enabled when your image is in indexed mode.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Transparent index</term>
+        <listitem>
+          <para>
+            When the previous setting is checked and enabled, this lets you
+            specify which palette index should be used for transparency in
+            the exported image.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Mipmap Options</term>
+        <listitem>
+          <para>
+            The following options are only enabled when you are adding mipmaps
+            to your image.
+          </para>
+          <variablelist>
+            <varlistentry>
+              <term>Filter</term>
+              <listitem>
+                <para>
+                  This setting determines which filter will be used for
+                  interpolation when downsizing your image to create a mipmap.
+                </para>
+                <variablelist>
+                  <varlistentry>
+                    <term>Default</term>
+                    <listitem>
+                      <para>
+                        No filtering is applied to create the mipmape. This can
+                        cause visual anomalies such as excessively sharp edges
+                        and stair-stepping artifacts.
+                      </para>
+                    </listitem>
+                  </varlistentry>
+                  <varlistentry>
+                    <term>Nearest</term>
+                    <listitem>
+                      <para>
+                        This is a bilinear flter, may enable better
+                        switching between mipmaps.
+                      </para>
+                    </listitem>
+                  </varlistentry>
+                  <varlistentry>
+                    <term>Box</term>
+                    <listitem>
+                      <para>
+                        This is a polyphase box flter. Outside of the
+                        <guilabel>Lanczos</guilabel> and
+                        <guilabel>Kaiser</guilabel> filters, it’s a good choice
+                        for most cases and also much faster than other filters.
+                      </para>
+                    </listitem>
+                  </varlistentry>
+                  <varlistentry>
+                    <term>Triangle</term>
+                    <listitem>
+                      <para>
+                        This uses a triangle filter. The kernel has a larger
+                        width and thus produces blurrier results than the
+                        <guilabel>Box</guilabel> filter.
+                      </para>
+                    </listitem>
+                  </varlistentry>
+                  <varlistentry>
+                    <term>Quadratic</term>
+                    <listitem>
+                      <para>
+                        This is a gaussian type filter.
+                      </para>
+                    </listitem>
+                  </varlistentry>
+                  <varlistentry>
+                    <term>B-Spline</term>
+                    <listitem>
+                      <para>
+                        This is a trilinear filter.
+                      </para>
+                    </listitem>
+                  </varlistentry>
+                  <varlistentry>
+                    <term>Mitchell</term>
+                    <listitem>
+                      <para>
+                        This filter is used primarily to reduce loss of detail
+                        while upsampling.
+                      </para>
+                    </listitem>
+                  </varlistentry>
+                  <varlistentry>
+                    <term>Catmull-Rom</term>
+                    <listitem>
+                      <para>
+                      </para>
+                    </listitem>
+                  </varlistentry>
+                  <varlistentry>
+                    <term>Lanczos</term>
+                    <listitem>
+                      <para>
+                        This is similar to the <guilabel>Kaiser</guilabel>
+                        filter. The results are usually indistinguishable
+                        between the two. Lanczos may handle ringing and
+                        artifacts better.
+                        This filter can be further tweaded using the
+                        <guilabel>Wrap mode</guilabel> setting.
+                      </para>
+                    </listitem>
+                  </varlistentry>
+                  <varlistentry>
+                    <term>Kaiser</term>
+                    <listitem>
+                      <para>
+                        This filter is generally considered the best choice for
+                        downsampling, but in order to obtain best results it is
+                        advisable to experiment with the
+                        <guilabel>Wrap mode</guilabel> setting. Otherwise the
+                        resulting images could suffer from fringing artifacts
+                        or the result may not be as sharp as desired.
+                      </para>
+                    </listitem>
+                  </varlistentry>
+                </variablelist>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Wrap mode</term>
+              <listitem>
+                <para>
+                  When evaluating the color of texels that are near the border,
+                  most of the filters usually sample outside of the texture.
+                  This setting determines how these samples are handled.
+                </para>
+                <variablelist>
+                  <varlistentry>
+                    <term>Default</term>
+                    <listitem>
+                      <para>
+                        This generally looks good enough. Often better results
+                        can be achieved by explicly specifying one of the next
+                        modes.
+                      </para>
+                    </listitem>
+                  </varlistentry>
+                  <varlistentry>
+                    <term>Mirror</term>
+                    <listitem>
+                      <para>
+                        Mirroring is used for many other image processing
+                        operations, like normal map generation, and is
+                        generally considered the best option. It takes the
+                        data from the other side of the image.
+                      </para>
+                    </listitem>
+                  </varlistentry>
+                  <varlistentry>
+                    <term>Repeat</term>
+                    <listitem>
+                      <para>
+                        This takes the data outside the edges from the value
+                        just inside it.
+                      </para>
+                    </listitem>
+                  </varlistentry>
+                  <varlistentry>
+                    <term>Clamp</term>
+                    <listitem>
+                      <para>
+                        This clamps the data outside the edges to the values
+                        at the edges.
+                      </para>
+                    </listitem>
+                  </varlistentry>
+                </variablelist>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Apply gamma correction</term>
+              <listitem>
+                <para>
+                  When checked, uses gamma correction for mipmap filtering.
+                  This adjusts the refectiveness of an object while also
+                  making the the entire image lighter or darker, depending
+                  on the value used below.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Use sRGB colorspace for gamma correction</term>
+              <listitem>
+                <para>
+                  When checked, uses the sRGB color space for gamma correction
+                  of mipmaps.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Gamma</term>
+              <listitem>
+                <para>
+                  You can set the desired <guilabel>Gamma</guilabel> value to
+                  be used for gamma correction here.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Preserve alpha test coverage</term>
+              <listitem>
+                <para>
+                  When checked, this preserves alpha test coverage for alpha
+                  channel maps, based on a threshold set below.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Alpha test threshold</term>
+              <listitem>
+                <para>
+                  The threshold value to be used for preserving test coverage
+                  of alpha channels.
+                </para>
+              </listitem>
+            </varlistentry>
+          </variablelist>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </sect3>
+
+</sect2>
