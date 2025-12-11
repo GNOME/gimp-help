@@ -6,8 +6,13 @@ Our documentation is written in [DocBook XML](https://docbook.org/), which
 allows us to create a highly customizable documentation system.
 
 The current user manual documents version 3.0 of GIMP.  
+
+Work has started on documenting upcoming version 3.2 of GIMP. We accept and
+will review MR's targeting 3.2. These MR's, once approved, will be merged
+after the 3.0 manual has been branched off.
+
 The manual for GIMP 2.10 is not being maintained anymore, but translations are
-still accepted until the release of 3.0. It is available in a separate branch
+still accepted. It is available in a separate branch
 called `gimp-help-2-10`.
 
 ## Contents
@@ -27,9 +32,12 @@ called `gimp-help-2-10`.
 The online, daily updated, manuals for all supported languages are available at:
 
 - [GIMP 3.0 manuals](https://docs.gimp.org/index.html#gimp-online)
-- [GIMP 2.10 manuals](https://docs.gimp.org/online.html#gimp210)
 
-The offline manuals are available for download from [Releases page](https://docs.gimp.org/download.html).
+Manuals for older versions of GIMP are still available:
+
+- [GIMP manuals](https://docs.gimp.org/online.html)
+
+The offline manuals are available for download from our [Releases page](https://docs.gimp.org/download.html).
 
 ## Tips for contribution
 
