@@ -298,12 +298,12 @@ https://gitlab.gnome.org/GNOME/gimp-help/issues
 
 ###  Hints for making good screenshots
 
-  * Please make screenshots only with the system default theme, which
-    is of course just the plain gtk+ default look - FIXME Nowadays
-    dark mode is often used. Using a dark theme is totally ok to me.
-    If we want a unified look that would mean creating all images
-    on one platform with one chosen theme. At this moment that doesn't
-    seem feasible.
+  * When making screenshots, make sure you use the default GIMP theme
+    and Symbolic icons. In most places we use the dark version of our theme,
+    try to follow that.
+    If we want a completely unified look that would mean creating all images
+    on one platform with one chosen theme. That would lock out contributors
+    on other platforms, which is not something we want to do.
   * Use default fonts like Bitstream Vera Sans - FIXME This is not a
     crossplatform default font, we need a better suggestion.
   * Crop the window manager borders; or even more if the image is intended
