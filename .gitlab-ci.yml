@@ -24,8 +24,6 @@ build-image:
     - export BUILDAH_FORMAT=docker
     - export STORAGE_DRIVER=vfs
     - echo "$CI_REGISTRY_PASSWORD" | buildah login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
-    #- mkdir -p /kaniko/.docker
-    #- echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
     - echo "FROM debian:testing" > Dockerfile
     - echo "WORKDIR $CI_PROJECT_DIR" >> Dockerfile
     - echo "RUN apt-get update" >> Dockerfile
