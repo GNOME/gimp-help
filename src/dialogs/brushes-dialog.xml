@@ -28,17 +28,28 @@
     </mediaobject>
   </figure>
   <para>
-    The <quote>Brushes</quote> dialog is used to select a brush, for use with
-    painting tools:
-    see the <link linkend="gimp-concepts-brushes">Brushes</link>
+    The <quote>Brushes</quote> dialog is used to select and manage brushes.
+    These brushes are used by the Paintbrush, Pencil and Airbrush tools.
+    The MyPaint Brush uses its own kind of brushes.
+    <acronym>GIMP</acronym> comes with a wide selection of brushes and more
+    can be added easily. You can also create custom brushes using the
+    <link linkend="gimp-brush-editor-dialog">Brush Editor</link>, or by
+    <link linkend="brushes-file-formats">exporting an image</link> as a brush.
+  </para>
+  <para>
+    See the <link linkend="gimp-concepts-brushes">Brushes</link>
     section for basic information on brushes and how they are used in GIMP.
-    The dialog also gives you access to several functions for manipulating
-    brushes. You can select a brush by clicking on it in the list: it will
-    then be shown in the Brush/Pattern/Gradient area of the Toolbox. GIMP
-    comes with dozens of brushes, different from each other, because the
-    size, the ratio and the angle of every brush can be set in the tool
-    options dialog. You can also create custom brushes using the Brush Editor,
-    or by saving images in a special brush file format.
+  </para>
+  <para>
+    There can be only one brush active at any time. To make a brush active,
+    select it in the list or grid. The name of the currently active brush is
+    shown directly above the list of brushes. The active brush can also be
+    recognized by a selection rectangle around the preview (which can sometimes
+    be difficult to see, depending on your theme).
+    The size, angle, spacing and several other characteristics of a brush can
+    be set in the
+    <link linkend="gimp-tools-paint-options">Tool Options Dialog</link> when
+    one of the relevant paint tools is active.
   </para>
 
   <sect3 id="gimp-brush-dialog-activate">
@@ -48,32 +59,20 @@
       section <xref linkend="gimp-concepts-docks"/> for help on manipulating
       it.
     </para>
-    <para>
-      You can access it:
-    </para>
     <itemizedlist>
       <listitem>
         <para>
-          from the Toolbox, by clicking on the brush symbol in the
-          <link linkend="gimp-toolbox-indicator-area">Brush/Pattern/Gradient area</link>
-          (if you have checked the
-          <quote>Show active brush, pattern and gradient</quote> option in the
-          <link linkend="gimp-prefs-toolbox">toolbox preferences</link>).
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          From the main menu:
+          From the main menu select
           <menuchoice>
             <guimenu>Windows</guimenu>
             <guisubmenu>Dockable Dialogs</guisubmenu>
             <guimenuitem>Brushes</guimenuitem>
-          </menuchoice>;
+          </menuchoice>.
         </para>
       </listitem>
       <listitem>
         <para>
-          from the Tab menu in any dockable dialog by clicking the
+          From the Tab menu in any dockable dialog click the
           <link linkend="tab-menus">tab menu button</link>
           <guiicon>
             <inlinemediaobject>
@@ -82,7 +81,7 @@
                   fileref="images/stock-icons/gimp-menu-left.svg" contentwidth="16px"/>
               </imageobject>
             </inlinemediaobject>
-          </guiicon> and selecting
+          </guiicon> and select
           <menuchoice>
             <guimenu>Add Tab</guimenu>
             <guimenuitem>Brushes</guimenuitem>
@@ -91,12 +90,20 @@
       </listitem>
       <listitem>
         <para>
-          from the Tool Options dialog for any of the
-          <link linkend="gimp-tools-paint">paint tools</link>, by
-          clicking on the Brush icon button, you get a popup with similar
-          functionality that permits you to quickly choose a brush from the
-          list; if you click on the button present on the right bottom of
-          the popup, you open the real brush dialog.
+          If you enabled the <quote>Show active brush, pattern &amp;
+          gradient</quote> option in the
+          <link linkend="gimp-prefs-toolbox">Toolbox Preferences</link>, you
+          can click on the active brush icon in the Brush, Pattern, Gradient
+          area.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          From the Tool Options dialog for the Paintbrush, Pencil and Airbrush
+          tools, by clicking on the Brush icon button. This opens a popup with
+          similar functionality that allows you to quickly choose a brush from
+          the list. To open the actual brush dialog click on the button at
+          the bottom right corner of the popup.
         </para>
         <mediaobject>
           <imageobject>
@@ -174,8 +181,9 @@
         <para>
           Note that, depending on your Preferences, a brush selected with the
           popup may only apply to the currently active tool, not to other
-          paint tools. See the <link linkend="gimp-prefs-tool-options">Tool
-          Option Preferences</link> section for more information.
+          paint tools. See the <link linkend="gimp-prefs-tool-options">Paint
+          Options Shared Between Tools</link> section in the Tool Options
+          Preferences for more information.
         </para>
       </listitem>
     </itemizedlist>
@@ -197,7 +205,7 @@
       </para>
       <para>
         In the Tab menu, the option <guilabel>Preview Size</guilabel> allows
-        you to adapt the size of brush previews to your liking.
+        you to adjust the size of brush previews to your liking.
       </para>
       <figure>
         <title>Grid/List view</title>
@@ -269,43 +277,71 @@
         </mediaobject>
       </figure>
       <para>
-      When you click on a brush preview, it becomes the current brush and
-      it gets selected in the brush area of Toolbox and the Brush option of
-      painting tools. When you double-click on a brush preview, you will
-      activate the
-      <link linkend="gimp-brush-editor-dialog">Brush Editor</link>. You can also
-      click on buttons at the bottom of the dialog to perform various actions.
-    </para>
+        When you click on a brush preview, it becomes the active brush that
+        will be used when using one of the relevant painting tools.
+        Double-clicking a brush preview, activates the
+        <link linkend="gimp-brush-editor-dialog">Brush Editor</link>.
+      </para>
       <para>
-      Meaning of the small symbols at the bottom right corner of every brush
-      preview:
-    </para>
+        Brushes can be managed in several ways using the buttons at the
+        bottom of the dialog or the right-click context menu.
+      </para>
       <itemizedlist>
+        <!-- See /app/widgets/gimpviewrendererbrush.c -->
+        <title>
+          Meaning of the symbols at the bottom right corner of a brush
+          preview
+        </title>
         <listitem>
           <para>
-          A blue corner is for brushes in normal size. You can duplicate them.
+            A plus sign indicates that the brush preview is shown at a reduced
+            size. To preview the normal size, left click and hold the preview.
         </para>
         </listitem>
         <listitem>
           <para>
-          A small cross means that the brush preview is in a reduced size. You
-          can get it in normal size by maintaining left click on it.
+            A blue corner indicates the brush is a parametric brush, created
+            with the Brush Editor.
         </para>
         </listitem>
         <listitem>
           <para>
-          A red corner is for animated brushes. If you maintain left click on
-          the thumbnail, the animation is played.
+            A red corner indicates this is an animated brush. To preview the
+            animation, left click and hold the preview.
         </para>
         </listitem>
       </itemizedlist>
     </sect4>
 
-    <sect4 id="gimp-brush-dialog-tags">
-      <title>Tagging</title>
+    <sect4 id="gimp-brush-dialog-themed-preview">
+      <title>Use theme colors for preview</title>
       <para>
-        You can use tags to reorganize the brushes display.
-        See <xref linkend="gimp-tagging"/>.
+        On the right side, next to the filter selection, there is a
+        <guiicon>
+          <inlinemediaobject>
+            <imageobject>
+              <imagedata fileref="images/stock-icons/gimp-prefs-theme-symbolic.svg" contentwidth="16px"/>
+            </imageobject>
+          </inlinemediaobject>
+        </guiicon>
+        <guilabel>Use theme colors for preview</guilabel> button.
+      </para>
+      <para>
+        By default, brushes and fonts show a white background for each preview.
+        If you prefer the background to be more in line with your theme, you
+        can toggle that by clicking this button.
+        <acronym>GIMP</acronym> will then use the background color as set by
+        your theme.
+      </para>
+    </sect4>
+
+    <sect4 id="gimp-brush-dialog-tags">
+      <title>Filter, Tags</title>
+      <para>
+        The <quote>filter</quote> drop-down allows you to select one or more
+        tags to filter and reduce the number of brushes shown.
+        The <quote>tags</quote> can be managed below the preview area. For more
+        information on tagging see <xref linkend="gimp-tagging"/>.
       </para>
     </sect4>
 
@@ -341,9 +377,10 @@
               This activates the
               <link linkend="gimp-brush-editor-dialog">Brush Editor</link>.
               Pressing the button will open the Editor for any brush. It
-              only works, however, for parametric brushes: for any other type,
-              the Editor will show you the brush but not allow you to do
-              anything with it.
+              only works, however, for parametric brushes, which can be
+              recognized by the blue bottom right corner in the preview.
+              For other types of brushes the Editor will show you a preview,
+              but not allow you to make any changes.
             </para>
           </listitem>
         </varlistentry>
@@ -409,6 +446,8 @@
               This removes all traces of the brush, both from the dialog and
               the folder where its file is stored, if you have permission to
               do so. It asks for confirmation before doing anything.
+              The brushes that come with <acronym>GIMP</acronym> can not be
+              removed.
             </para>
           </listitem>
         </varlistentry>
@@ -449,14 +488,19 @@
           <listitem>
             <anchor id="gimp-brush-open-as-image"/>
             <para>
-              You can edit this image, copy it and
-              select <menuchoice><guimenu>Edit</guimenu>
-              <guisubmenu>Paste as</guisubmenu>
+              Clicking this, opens the selected brush as a regular image that
+              you can edit. It can be turned back into a brush by copying it
+              and selecting
+              <menuchoice>
+                <guimenu>Edit</guimenu>
+                <guisubmenu>Paste as</guisubmenu>
                 <guimenuitem>Paste as New Brush…</guimenuitem>
-              </menuchoice>.
+              </menuchoice>, or by
+              <link linkend="brushes-file-formats">exporting it</link> as a
+              brush.
               This is different from
-              <xref linkend="gimp-brush-editor-dialog"/> that allows to
-              modify an existing brush.
+              <xref linkend="gimp-brush-editor-dialog"/> that allows you to
+              modify an existing parametric brush.
             </para>
           </listitem>
         </varlistentry>
