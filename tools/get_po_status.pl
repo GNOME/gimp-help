@@ -81,6 +81,7 @@ my %Languages = (
 	ru => "Russian",
 	sk => "Slovak",
 	sl => "Slovenian",
+	sr => "Serbian",
 	sv => "Swedish",
 	tr => "Turkish",
 	uk => "Ukrainian",
