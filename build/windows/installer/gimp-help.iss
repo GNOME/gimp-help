@@ -105,6 +105,8 @@
 	#define LANGFILE='Languages\Slovak.isl'
 #elif LANG=='sl'
 	#define LANGFILE='Languages\Slovenian.isl'
+#elif LANG=='sr'
+	#define LANGFILE='Languages\Unofficial\SerbianCyrillic.isl'
 #elif LANG=='sv'
 	#define LANGFILE='Languages\Swedish.isl'
 #elif LANG=='tr'

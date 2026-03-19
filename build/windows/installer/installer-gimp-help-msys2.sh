@@ -53,6 +53,7 @@ download_lang Greek.isl
 download_lang Lithuanian.isl
 download_lang NorwegianNynorsk.isl
 download_lang Romanian.isl
+download_lang SerbianCyrillic.isl
 cd -
 
 # Any language not in a release yet, but moved from Unofficial, should be added here
