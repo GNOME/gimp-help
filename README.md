@@ -425,7 +425,7 @@ Before you create a release you'll need:
 
 ## Updating supported languages
 
-When adding a new language for translation several files need to be
+When adding a new language for translation, several files need to be
 updated. It's the intention to simplify this, but for now the list
 of languages needs to be updated in the following files:
 
@@ -454,12 +454,12 @@ of languages needs to be updated in the following files:
     - If not, check if there is an unofficial translation,
       [here](https://github.com/jrsoftware/issrc/tree/main/Files/Languages/Unofficial).
     - If there is, then add it to the download_lang commands.
-    - If no translation is available `Default.isl` can be used.
+    - If no translation is available, `Default.isl` can be used.
   - [build/windows/installer/gimp-help.iss](build/windows/installer/gimp-help.iss)
-    - Add a if LANG test and define LANGFILE for you language.
+    - Add an if LANG test and define LANGFILE for your language.
 
 Note: If your build directory is not a child of the source directory, then
-`msginit` will not fill in PACKAGE_VERSION in the header of the po files.  
+`msginit` will not fill in PACKAGE_VERSION in the header of the po files.
 Since msginit tries to find `configure`, copying that to your build directory
 can solve that issue. In that case, make sure to update it when switching
 branches.
@@ -467,10 +467,11 @@ branches.
 When all of the above are updated, run:
   - `make po` in the main build directory
   - `make po` in the quickreference directory
-  - `make update-po` in the po-windows-installer directory (make sure that
-    charset is UTF-8 here, it wasn't for me, need to check this sometime)
+    (creates po files for quickreference)
+  - `make update-po` in the po-windows-installer directory
+    (creates po files for Windows installer; ensure charset is UTF-8)
 
-This should create the necessary po files for the newly added language.  
+This should create the necessary po files for the newly added language.
 Note: some po files for other languages may have been updated too, but you
 should only commit the files relevant for the new language.
 
