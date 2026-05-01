@@ -525,21 +525,22 @@ https://gitlab.gnome.org/GNOME/gimp-help/tree/master/docs/xcf images folder-->
     <glossdef>
       <para><!-- Reorganised "color models" to be more like de. There's no need
              to repeat the information again.  scb -->
-        A color model is a way of describing and specifying a color. The term
-        is often used loosely to refer to both a color space system and the
+        A color model is a way of describing and specifying colors. The term
+        is often used loosely, to refer to both a color system and the
         color space on which it is based.
       </para>
       <para>
-        A color space is a set of colors which can be displayed or
-        recognized by an input or output device (such as a scanner, monitor,
-        printer, etc.). The colors of a color space are specified as values
-        in a color space system, which is a coordinate system in which the
-        individual colors are described by coordinate values on various axes.
-        Because of the structure of the human eye, there are three axes in
-        color spaces which are intended for human observers. The practical
-        application of that is that colors are specified with three
-        components (with a few exceptions). There are about 30 to 40 color
-        space systems in use. Some important examples are:
+        A color space is a visualization of the possible range of colors 
+        (or <link linkend="glossary-gamut">gamut</link>) that can be displayed or
+        recognized by an input or output device (scanner, monitor, printer,
+        etc), or defined by a particular color model.
+        Because human vision is structured around three color receptors,
+        the practical application is that (with a few exceptions) most colors
+        can be specified in three components, and each component
+        represented visually as a coordinate axis of a 3-dimensional space
+        (sometimes called a <quote>color cube</quote>).
+        While there are over 30 color models in use, some of the more
+        important examples are:
       </para>
       <itemizedlist>
         <listitem>
@@ -549,7 +550,7 @@ https://gitlab.gnome.org/GNOME/gimp-help/tree/master/docs/xcf images folder-->
         </listitem>
         <listitem>
           <para>
-            <link linkend="glossary-hsv">HSV</link>
+            <link linkend="glossary-hsv">HSV</link> and <link linkend="glossary-hsl">HSL</link>
           </para>
         </listitem>
         <listitem>
@@ -1161,41 +1162,63 @@ https://gitlab.gnome.org/GNOME/gimp-help/tree/master/docs/xcf images folder-->
     </glossdef>
   </glossentry>
 
+  <glossentry id="glossary-hsl">
+    <glossterm>
+      <phrase>HSL</phrase>
+    </glossterm>
+    <glossdef>
+      <para>
+        HSL (Hue, Saturation, Lightness) is a
+        <link linkend="glossary-colormodel">color model</link>
+        which translates RGB colors into terms more intuitive to artists.
+      </para>
+      <para>
+        HSL is closely related to HSV and uses similar terminology; see the 
+        <link linkend="glossary-hsv">HSV section</link> below for more information.
+      </para>
+    </glossdef>
+  </glossentry>
+
   <glossentry id="glossary-hsv">
     <glossterm>
       <phrase>HSV</phrase>
     </glossterm>
     <glossdef>
       <para>
-        HSV is a <link linkend="glossary-colormodel">color model</link>
-        which has components for Hue (the color, such as blue or red),
-        Saturation (how strong the color is) and Value (the brightness).
+        HSV (Hue, Saturation, Value) is a
+        <link linkend="glossary-colormodel">color model</link>
+        which translates RGB colors into terms more intuitive to artists.
       </para>
       <para>
-        The RGB mode is very well suited to computer screens, but it doesn't
-        let us describe what we see in everyday life; a light green, a
-        pale pink, a dazzling red, etc. The HSV model takes these
-        characteristics into account. HSV and RGB are not completely
-        independent of each other. You can see that with the Color Picker
-        tool; when you change a color in one of the color models, the other
-        one also changes. Brave souls can read
-        <emphasis>Grokking the GIMP</emphasis>, which explains their
-        interrelationship.
+        While the RGB model is literally designed to show colors on a screen,
+        it doesn't easily describe how we read them in everyday life: a light
+        green, pale pink, dazzling red, etc. HSV and HSL models allow direct
+        access to these characteristics while also maintaining a quick and
+        easy internal conversion to (and the same overall
+        <link linkend="glossary-gamut">gamut</link> as) the RGB values used to display
+        the image: notice that when you change a color in HSV or HSL terms,
+        the RGB values also change to match.
+      </para>
+      <para>
+        HSV and <link linkend="glossary-hsl">HSL</link> are closely related
+        and use similar terminology; of the two, GIMP primarily uses HSV.
       </para>
       <variablelist>
-        <para>Brief description of the HSV components:</para>
+        <para>Brief description of the HSV and HSL components:</para>
         <varlistentry>
           <term>Hue</term>
           <listitem>
             <para>
-              This is the color itself, which results from the combination of
-              primary colors. All shades (except for the gray levels) are
-              represented in a <emphasis>chromatic circle</emphasis>: yellow,
-              blue, and also purple, orange, etc. The chromatic circle (or
-              <quote>color wheel</quote>) values range between 0° and 360°.
-              (The term <quote>color</quote> is often used instead of
-              <quote>Hue</quote>. The RGB colors are <quote>primary
-              colors</quote>.)
+              Hue is the <emphasis>color family:</emphasis> red, yellow, green,
+              blue, and so on, which collectively forms a <emphasis>chromatic circle</emphasis>
+              (or <quote>color wheel</quote>). Hue measures a specific location
+              on this circle in degrees, starting with red at 0°, then cycling
+              through each pure RGB primary and secondary color every 60°, before
+              looping back to red again at 360°.
+           </para>
+           <para>   
+              Note that the term <quote>color</quote> sometimes gets used as
+              a generic synonym for Hue.
             </para>
           </listitem>
         </varlistentry>
@@ -1203,11 +1226,16 @@ https://gitlab.gnome.org/GNOME/gimp-help/tree/master/docs/xcf images folder-->
           <term>Saturation</term>
           <listitem>
             <para>
-              This value describes how pale the color is. A completely
-              unsaturated color is a shade of gray. As the saturation
-              increases, the color becomes a pastel shade. A completely
-              saturated color is pure. Saturation values go from 0 to 100,
-              from white to the purest color.
+              This attribute describes the intensity or vividness of a color on
+              a scale of 0 to 100, with 0 being completely <quote>desaturated</quote>
+              (grayscale) and 100 being fully saturated, or <quote>pure</quote>.
+            </para>
+            <para>
+              Saturation differs mathematically between the HSV and HSL models.
+              In HSV, lower Saturation may produce tints, tones, or shades of a
+              pure color (depending on its Value); in HSL, lower Saturation
+              produces tones only (with Lightness responsible for producing
+              tints or shades instead).
             </para>
           </listitem>
         </varlistentry>
@@ -1215,14 +1243,34 @@ https://gitlab.gnome.org/GNOME/gimp-help/tree/master/docs/xcf images folder-->
           <term>Value</term>
           <listitem>
             <para>
-              This value describes the luminosity, the luminous intensity. It
-              is the amount of light emitted by a color. You can see a change
-              of luminosity when a colored object is moved from being in the
-              shadow to being in the sun, or when you increase the luminosity
-              of your screen. Values go from 0 to 100. Pixel values in the
-              three channels are also luminosities: <quote>Value</quote> in
-              the HSV color model is the maximum of these elementary values in
-              the RGB space (scaled to 0-100).
+              In the HSV model, Value is roughly the total amount of light
+              emitted by a color, analogous to the <quote>brightness</quote>
+              controls on a screen, with lower Values yielding less illumination
+              generally. Value is measured from 0 (black) to a maximum of 100,
+              and is mathematically equivalent to the brightest RGB component
+              of a color (when scaled to fit a range of 0-100); it is therefore
+              <emphasis>not</emphasis> uniform across differing Hues or Saturations.
+              A pure RGB blue is considered to have the same Value as pure green,
+              yellow, or white, despite the latter appearing brighter generally.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Lightness</term>
+          <listitem>
+            <para>
+              In the HSL model, Lightness (also called Luminosity) also roughly
+              measures the total amount of light emitted by a color, but differs
+              mathematically from Value: it averages the brightest
+              <emphasis>and darkest</emphasis> RGB components of a color
+              (ignoring any third, intermediate component). A pure RGB color is
+              thus measured as a Lightness of 50% (the same as a tone of 50% gray),
+              with higher Lightness producing tints, and lower Lightness producing
+              shades.
+            </para>
+            <para>
+              A Lightness of 0 always yields black, but (unlike Value) a Lightness
+              of 100% always yields white, independent of any Hue or Saturation.
             </para>
           </listitem>
         </varlistentry>
