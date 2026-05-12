@@ -5,11 +5,11 @@ a browser or HTML renderers.
 Our documentation is written in [DocBook XML](https://docbook.org/), which
 allows us to create a highly customizable documentation system.
 
-We currently maintain two versions of the documentation:
-- The manual for version 3.0 of GIMP is available in a branch named
-`gimp-help-3-0`.
-- The work-in-progress manual for upcoming version 3.2 of GIMP is available
+We currently maintain the following versions of the documentation:
+- The work-in-progress manual for version 3.2 of GIMP is available
 on the `master` branch. We accept and will review MR's targeting 3.2.
+- The manual for version 3.0 of GIMP is available in a branch named
+`gimp-help-3-0` and it is doubtful whether there will be new updates.
 
 The manual for GIMP 2.10 is not being maintained anymore, but translations are
 still accepted. It is available in a separate branch
@@ -17,7 +17,7 @@ called `gimp-help-2-10`.
 
 ## Contents
 
-1. [Published manuals](#published-manuals)
+1. [Online manuals](#online-manuals)
 2. [Tips for contribution](#tips-for-contribution)  
   2.1 [Translating](#how-to-help-translating-the-manual)  
   2.2 [Manual writing](#how-to-help-writing-the-manual)
@@ -27,12 +27,14 @@ called `gimp-help-2-10`.
 6. [History of the gimp-help module](#history-of-the-gimp-help-module)
 
 
-## Published manuals
+## Online manuals
 
 The online, daily updated, manuals for all supported languages are available at:
 
-- [GIMP 3.0 manuals](https://docs.gimp.org/index.html#gimp-online)
+- [GIMP 3.2 manuals](https://docs.gimp.org/index.html#gimp-online)
 - [GIMP 3.2 manuals](https://testing.docs.gimp.org/index.html#gimp-online)
+
+(This is not a typo.)
 
 Manuals for older versions of GIMP are still available:
 
@@ -237,7 +239,7 @@ To get started, here is a checklist of things you should do:
   team working on this. A review can sometimes take weeks or
   even months, although we try to get back to you sooner.
 - Some additional info can also be read in the manual, see
-  https://docs.gimp.org/3.0/en/gimp-contributing.html
+  https://docs.gimp.org/en/gimp-contributing.html
   (although some parts there need to be revised).
 
 TODO
@@ -250,7 +252,7 @@ TODO
   attempt to install python packages through pip. 
 
 Preferably build the most up to date manual yourself or check
-the latest uploaded version at https://docs.gimp.org/3.0/en/.
+the latest uploaded version at https://docs.gimp.org/en/.
 
 The source of the manual can be found in XML files in the /src
 directory of this repository. Find a topic that interests you
