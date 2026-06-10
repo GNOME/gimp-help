@@ -36,7 +36,7 @@
                      title="Search performed by google.com" />
               <br/>
               <!-- FIXME: Instead of hardcoding the number use a variable! -->
-              <input type="hidden" name="sitesearch" value="docs.gimp.org/3.0/" />
+              <input type="hidden" name="sitesearch" value="docs.gimp.org/3.2/" />
           </form>
       </div>
   </xsl:template>
