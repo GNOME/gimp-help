@@ -919,13 +919,28 @@
       <para>
       By right-clicking in the Layers dialog, or by opening the
       <guimenuitem>Layers Menu</guimenuitem> from the tab menu, a context
-      menu for the Layers dialog will open.
+      menu for the Layers dialog will open. Some of the commands only appear
+      for specific <link linkend="gimp-layer-types">layer types</link>,
+      or when specific conditions are met.
     </para>
     <para>
       Most of the commands in this menu have already been documented above,
       or elsewhere:
     </para>
     <variablelist>
+      <varlistentry>
+        <term>Edit Text on Canvas</term>
+        <term>Edit Vector on Canvas</term>
+        <listitem>
+          <para>
+            This command only shows up for
+            <link linkend="gimp-layer-type-text-layer">Text</link> and
+            <link linkend="gimp-layer-type-vector-layer">Vector</link> layers.
+            Using this command will active the text and path tool respectively,
+            and allows you to edit the text or vector properties of the layer.
+          </para>
+        </listitem>
+      </varlistentry>
       <varlistentry id="gimp-layer-edit">
         <term>Edit Layer Attributes…</term>
         <listitem>
@@ -936,6 +951,69 @@
             For information about the layer attributes we therefore refer to
             the documentation for that dialog.
           </para>
+          <para>
+            Depending on the type of layer, there may be some extra
+            properties shown at the bottom of the dialog, followed by a list
+            of Layer Effects connected to this layer.
+          </para>
+          <variablelist>
+            <title>Vector Layer</title>
+            <varlistentry>
+              <term>Associated path</term>
+              <listitem>
+                <para>
+                  This shows the name of the path that is used for the
+                  current layer.
+                  If your image has more than one path, you can select a
+                  different path to be used for this vector layer.
+                </para>
+              </listitem>
+            </varlistentry>
+          </variablelist>
+          <variablelist>
+            <title>Link Layer</title>
+            <varlistentry>
+              <term>Linked image</term>
+              <listitem>
+                <para>
+                  This shows the name of the linked image for this link layer.
+                  You can change the linked image by clicking the name. A
+                  regular file open dialog will appear where you can select
+                  an image to be used for the link layer.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Store with absolute path</term>
+              <listitem>
+                <para>
+                  By default, the location of the linked image is stored with a
+                  path relative to the current .XCF image. This allows you to
+                  easily move the main image together with any linked images to
+                  a new location.
+                </para>
+                <para>
+                  When this option is checked, the location of the linked
+                  image will be stored with its absolute path. Unless your
+                  linked image is in a completely separate location, there
+                  usually is no reason to change this setting.
+                </para>
+              </listitem>
+            </varlistentry>
+          </variablelist>
+          <variablelist>
+            <title>Layer Effects</title>
+            <varlistentry>
+              <term>Active Filters</term>
+              <listitem>
+                <para>
+                  This shows the list of Layer Effects that are attached to
+                  the current layer. The only property of the layer effects
+                  you can change here is the visibility.
+                </para>
+              </listitem>
+            </varlistentry>
+          </variablelist>
         </listitem>
       </varlistentry>
       <varlistentry>
@@ -993,6 +1071,19 @@
           <para>
             See the <link linkend="gimp-layer-new-from-visible">New from
             Visible</link> menu command documentation.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Rasterize</term>
+        <listitem>
+          <para>
+            This command turns any special
+            <link linkend="gimp-layer-types">layer type</link> into a regular
+            raster layer. This can be needed when you want to perform an action
+            that cannot be done with the current layer type. However, remember
+            that after rasterizing you cannot use the special abilities of a
+            text, vector or link layer.
           </para>
         </listitem>
       </varlistentry>
