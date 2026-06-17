@@ -22,15 +22,24 @@
     <primary>Bézier curve</primary>
   </indexterm>
   <para>
-    The Paths tool allows to create complex selections called Bézier Curves, a
-    bit like the Free Selection tool but with all the adaptability of vectorial
-    curves. You can edit your curve, you can paint with your curve, or even
-    save, import, and export the curve. You can also use paths to create
-    geometrical figures. Paths have their own dialog box:
-    <link linkend="gimp-path-dialog">Dialog</link>.
+    The Paths tool allows you to create complex geometric shapes called
+    <quote>Bézier Curves</quote>, a bit like the
+    <link linkend="gimp-tool-free-select">Free Selection</link> tool, but with
+    all the adaptability of vectorial curves.
   </para>
   <para>
-    See the <link linkend="gimp-concepts-paths">Path</link> concept.
+    You can edit your curve, you can paint with your curve, or even
+    save, import, and export the curve. You can also use paths to create
+    geometrical figures. Paths have their own dialog box: the
+    <link linkend="gimp-path-dialog">Paths Dialog</link>.
+  </para>
+  <para>
+    See also the <link linkend="gimp-concepts-paths">Paths</link> concept.
+  </para>
+  <para>
+    Paths can be turned into Vector layers. A Vector layer is a special kind of
+    layer that displays a path, possibly consisting of several parts,
+    including their selected fill and stroke attributes.
   </para>
 
   <sect3>
@@ -74,8 +83,8 @@
     <title>Key modifiers</title>
     <note>
       <para>
-        Help messages pop up at the bottom of the image window to help you
-        about all these keys.
+        The status bar at the bottom of the image window will show relevant
+        tips about the possible modifiers you can use when working with paths.
       </para>
     </note>
     <variablelist>
@@ -104,7 +113,7 @@
     </variablelist>
   </sect3>
 
-  <sect3>
+  <sect3 id="gimp-tool-path-options">
     <title>Options</title>
     <figure>
       <title>Tool Options Dialog</title>
@@ -346,22 +355,215 @@
         </listitem>
       </varlistentry>
       <varlistentry>
-        <term>Fill path</term>
+        <term>Create New Vector Layer</term>
         <listitem>
           <para>
-            This lets you fill an enclosed path with a solid color or
-            pattern.
+            This command creates a
+            <link linkend="gimp-layer-type-vector-layer">Vector Layer</link>
+            from the current path. A vector layer remembers its stroke and fill
+            settings and can have
+            <link linkend="gimp-using-layer-effects">Layer Effects</link>
+            applied to it.
           </para>
         </listitem>
       </varlistentry>
       <varlistentry>
-        <term>Stroke path</term>
+        <term>Enable Fill</term>
         <listitem>
           <para>
-            See
-            <xref linkend="gimp-path-stroke"/> and
-            <xref linkend="gimp-using-paths"/>.
+            When checked the current path will be filled based on the settings
+            below.
           </para>
+          <para>
+            This setting only takes effect if the path being edited is attached
+            to a vector layer. For filling paths not connected to a layer
+            use <link linkend="gimp-path-fill">Fill Paths</link>.
+          </para>
+          <variablelist>
+            <varlistentry>
+              <term>Solid color</term>
+              <listitem>
+                <para>
+                  If this is selected, you can choose what color is used to fill
+                  the path by pressing the color button.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Pattern</term>
+              <listitem>
+                <para>
+                  If this is selected, a pattern will be used to fill the path.
+                  You choose another pattern by clicking the resource button or
+                  by typing the name of the pattern.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Antialiasing</term>
+              <listitem>
+                <para>
+                  Enabling this setting allows you to remove or reduce the
+                  aliasing effect that can show up on borders.
+                </para>
+                <para>
+                  For more information, see
+                  <link linkend="glossary-antialiasing">Anti-aliasing</link> in
+                  the Glossary.
+                </para>
+              </listitem>
+            </varlistentry>
+          </variablelist>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Enable Stroke</term>
+        <listitem>
+          <para>
+            When checked the current path will be stroked based on the settings
+            below.
+          </para>
+          <para>
+            This setting only takes effect if the path being edited is attached
+            to a vector layer. For stroking paths not connected to a layer
+            use <link linkend="gimp-path-stroke">Stroke Paths</link>.
+          </para>
+          <variablelist>
+          <!-- FIXME: Most of the below is duplicated from menus/edit/stroke-path.xml -->
+            <varlistentry>
+              <term>Solid color</term>
+              <listitem>
+                <para>
+                  If this is selected, you can choose what color is used to
+                  stroke the path by pressing the color button.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Pattern</term>
+              <listitem>
+                <para>
+                  If this is selected, a pattern will be used to stroke the
+                  path. You choose another pattern by clicking the resource
+                  button or by typing the name of the pattern.
+                </para>
+                <para>
+                  This is distinct from the <guilabel>Dash pattern</guilabel>.
+                  If you select one of the two color options with no dash pattern,
+                  an unbroken line is drawn in the color set in the Toolbox.
+                  If you select Pattern with no dash pattern, an unbroken line
+                  is drawn with the pattern set in the Toolbox. If you select a
+                  line with a dash pattern, the color or pattern is still
+                  determined by the color or pattern set in the Toolbox. That is,
+                  if you have a marbled pattern set in the Toolbox, and select
+                  <guilabel>Pattern</guilabel> and dashed lines as
+                  <guilabel>Dash pattern</guilabel>, the dashes are drawn in the
+                  marbled pattern.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Antialiasing</term>
+              <listitem>
+                <para>
+                  Enabling this setting allows you to remove or reduce the
+                  aliasing effect that can show up on borders.
+                </para>
+                <para>
+                  Curved strokes or strokes drawn at an angle may look jagged
+                  or stair-stepped. The anti-aliasing option smooths them out.
+                </para>
+                <para>
+                  For more information, see
+                  <link linkend="glossary-antialiasing">Anti-aliasing</link> in
+                  the Glossary.
+                </para>
+              </listitem>
+            </varlistentry>
+
+            <varlistentry>
+              <term>Line width</term>
+              <listitem>
+                <para>
+                  You can set the width of the stroke using the text box.
+                  The default unit is pixels, but you can choose another
+                  unit with the drop-down list button.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Cap style</term>
+              <listitem>
+                <para>
+                  Choose the shape of the ends of an unclosed path, which can
+                  be <guilabel>Butt</guilabel>, <guilabel>Round</guilabel>
+                  or <guilabel>Square</guilabel>.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Join style</term>
+              <listitem>
+                <para>
+                  You can choose the shape of the path corners by
+                  clicking on <guilabel>Miter</guilabel>,
+                  <guilabel>Round</guilabel> or <guilabel>Bevel</guilabel>.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Miter limit</term>
+              <listitem>
+                <para>
+                  When two segments of a path come together, the mitering of
+                  the corner is determined by the Miter Limit. If the strokes
+                  were wide, and no mitering were done, there would be pointed
+                  ends sticking out at the corner. The Miter Limit setting
+                  determines how the gap, formed when the outer edges of the
+                  two lines are extended, will be filled. You can set it to a
+                  value between 0.0 and 100.0, by using the slider or the
+                  associated text box and its arrows.
+                </para>
+                <figure>
+                  <title>Example of miter limit</title>
+                  <mediaobject>
+                    <imageobject>
+                      <imagedata format="PNG"
+                        fileref="images/menus/edit/stroke-path-miter.png"/>
+                    </imageobject>
+                    <caption>
+                      <para>Left image: Limit=0. Right image: Limit=5.</para>
+                    </caption>
+                  </mediaobject>
+                </figure>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Dash pattern</term>
+              <listitem>
+                <para>
+                  On the pixel level, a dashed line is drawn as a series of
+                  tiny boxes. You can modify the pattern of these boxes. The
+                  black area with thin vertical lines represents the pixels of
+                  the dash. If you click on a black pixel, you remove it from
+                  the dash. If you click on a white pixel, you add it to the
+                  dash. The gray areas indicate how the pattern will be
+                  repeated when a dashed line is drawn.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Dash preset</term>
+              <listitem>
+                <para>
+                  Instead of making your own dash pattern, you can choose
+                  one from the drop-down box. This pattern will
+                  then be displayed in the <guilabel>Dash pattern</guilabel>
+                  area, so you can get an idea of how it will look.
+                </para>
+              </listitem>
+            </varlistentry>
+          </variablelist>
         </listitem>
       </varlistentry>
     </variablelist>
