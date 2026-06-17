@@ -53,21 +53,36 @@
   </para>
   <indexterm><primary>Drawable</primary></indexterm>
   <para>
-    Each open image has at any time a single
-    <emphasis>active drawable</emphasis>. A <quote>drawable</quote>
-    is a <acronym>GIMP</acronym> concept that includes layers, but also
-    several other items, such as channels, layer masks, and the selection mask.
-    Basically, a <quote>drawable</quote> is anything that can be drawn on with
-    painting tools. If a layer is currently active, it is shown highlighted in
-    the Layers dialog, and its name is shown in the status area of the image
-    window. If not, you can activate it by clicking on it. If none of the
-    layers are highlighted, it means the active drawable is something else than
-    a layer.
+    Each open image can have one or more <emphasis>active drawables</emphasis>.
+    A <quote>drawable</quote> is a <acronym>GIMP</acronym> concept that
+    includes layers, but also several other items, such as channels,
+    layer masks, and the selection mask.
   </para>
   <para>
-    In the menu bar, you can find a menu called <guimenu>Layer</guimenu>,
-    containing a number of commands that affect the active layer of the image.
-    The same menu can be accessed by right-clicking in the Layers dialog.
+    Basically, a <quote>drawable</quote> is anything that can be drawn on with
+    painting tools. If a layer is currently active (i.e. it is selected), it
+    is shown highlighted in the Layers dialog. If only one layer is selected,
+    its name is shown in the status area of the image window.
+  </para>
+  <para>
+    To activate a layer click it. To select multiple layers, use the common
+    key modifiers <keycap>Shift</keycap> for selecting a range, and
+    <keycap>Ctrl</keycap> for adding or removing one layer from the selection.
+    If none of the layers are highlighted, it means the active drawable is
+    something else than a layer.
+  </para>
+  <para>
+    The main menu has a <link linkend="gimp-layer-menu">Layer</link> submenu
+    containing commands that affect the active layer or layers of the image.
+    The <link linkend="gimp-layer-dialog-context-menu">context menu</link> of
+    the Layers Dialog has even more commands. This menu can be accessed by
+    right-clicking on a layer.
+  </para>
+  <para>
+  There are several <link linkend="gimp-layer-types">types of layers</link>.
+  The most common is the raster layer, which is the default. Other layer types
+  are text layers, vector layers and link layers. Each of these have extra
+  properties and commands specific to their purpose.
   </para>
 
   <sect2 id="gimp-layer-properties">
@@ -348,30 +363,23 @@
       </varlistentry>
 
       <varlistentry>
-        <term>Layer type</term>
+        <term>Layer mode</term>
         <listitem>
           <indexterm>
             <primary>Layer</primary>
-            <secondary>Type</secondary>
+            <secondary>Mode</secondary>
           </indexterm>
           <para>
-            The layer type is determined by the image type (see previous
-            section), and the presence or absence of an alpha channel. These
-            are the possible layer types:
+            The layer mode is determined by the image mode (see previous
+            section), and the presence or absence of an alpha channel.
+            <acronym>GIMP</acronym> currently supports RGB, RGBA, Gray, GrayA,
+            Indexed, and IndexedA.
           </para>
-          <itemizedlist>
-            <listitem><para>RGB</para></listitem>
-            <listitem><para>RGBA</para></listitem>
-            <listitem><para>Gray</para></listitem>
-            <listitem><para>GrayA</para></listitem>
-            <listitem><para>Indexed</para></listitem>
-            <listitem><para>IndexedA</para></listitem>
-          </itemizedlist>
           <para>
             The main reason this matters is that some filters (in the
             <guimenu>Filters</guimenu> menu) only accept a subset of layer
-            types, and appear disabled in the menu if the active layer does
-            not have a supported type.
+            modes, and appear disabled in the menu if the active layer does
+            not have a supported mode.
             Often you can rectify this either by changing the mode of the
             image, or by adding or removing an alpha channel.
           </para>
@@ -396,14 +404,15 @@
             <secondary>Icon</secondary>
           </indexterm>
           <para>
-            It is possible to remove a layer from an image,
-            without destroying it, by clicking on the symbol in the Layers
-            dialog. This is called <quote>toggling the visibility</quote>
-            of the layer. Most operations on an image treat toggled-off layers
-            as if they did not exist. When you work with images containing
-            many layers, with varying opacity, you often can get a better
-            picture of the contents of the layer you want to work on by hiding
-            some of the other layers.
+            You can hide a layer from affecting the end result of your image
+            by clicking on the eye symbol in the Layers dialog. This is called
+            <quote>toggling the visibility</quote> of the layer. Most operations
+            on an image treat toggled-off layers as if they do not exist.
+          </para>
+          <para>
+            When you work with images containing many layers, with varying
+            opacities, you often can get a better picture of the contents of
+            the layer you want to work on by hiding some of the other layers.
           </para>
           <tip>
             <para>
@@ -506,10 +515,14 @@
             When you create text, for example, each text item belongs to its
             own separate layer, and the layer size is automatically adjusted to
             contain the text and nothing more.
+          </para>
+          <para>
             Also, when you create a new layer using cut-and-paste, the new
             layer is sized just large enough to contain the pasted item. In
             the image window, the boundaries of the currently active layer are
-            shown outlined with a black-and-yellow dashed line.
+            shown outlined with a black-and-yellow dashed line. When more than
+            one layer is selected, it will show an outline of the square that
+            encloses all the selected layers.
           </para>
           <para>
             The main reason why this matters is that you cannot do anything to
