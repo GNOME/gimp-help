@@ -114,7 +114,7 @@
 #elif LANG=='uk'
 	#define LANGFILE='Languages\Ukrainian.isl'
 #elif LANG=='zh_CN'
-	#define LANGFILE='Languages\Unofficial\ChineseSimplified.isl'
+	#define LANGFILE='Languages\ChineseSimplified.isl'
 #endif
 
 [Setup]

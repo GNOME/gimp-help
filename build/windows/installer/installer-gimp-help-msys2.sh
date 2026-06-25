@@ -44,7 +44,6 @@ add_bom ()
   fi
 }
 
-download_lang ChineseSimplified.isl
 download_lang Croatian.isl
 download_lang EnglishBritish.isl
 download_lang Esperanto.isl
@@ -58,8 +57,7 @@ cd -
 
 # Any language not in a release yet, but moved from Unofficial, should be added here
 cd "${ISCCDIR}/Languages/"
-download_lang_official Korean.isl
-download_lang_official Swedish.isl
+download_lang_official ChineseSimplified.isl
 cd -
 
 # Copy generated language files into the source directory.
