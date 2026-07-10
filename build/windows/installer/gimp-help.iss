@@ -84,7 +84,7 @@
 #elif LANG=='ko'
 	#define LANGFILE='Languages\Korean.isl'
 #elif LANG=='lt'
-	#define LANGFILE='Languages\Unofficial\Lithuanian.isl'
+	#define LANGFILE='Languages\Lithuanian.isl'
 #elif LANG=='nl'
 	#define LANGFILE='Languages\Dutch.isl'
 #elif LANG=='no'
