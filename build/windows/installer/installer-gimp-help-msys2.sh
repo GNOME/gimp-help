@@ -1,12 +1,21 @@
 # Install Inno Setup.
 wget https://jrsoftware.org/download.php/is.exe
 ./is.exe //SILENT //SUPPRESSMSGBOXES //CURRENTUSER //SP- //LOG="innosetup.log"
+installed="$?"
+if [ $installed -ne 0 ]; then
+  echo "Downloading or running installer failed."
+  exit 1
+fi
 
 # Install unofficial language files. These are translations of "unknown
 # translation quality or might not be maintained actively".
 # Cf. https://jrsoftware.org/files/istrans/
 ISCCDIR=`grep "Dest filename:.*ISCC.exe" innosetup.log | sed 's/.*Dest filename: *\|ISCC.exe//g'`
 ISCCDIR=`cygpath -u "$ISCCDIR"`
+if [ "x${ISCCDIR}" = "x" ]; then
+  echo "Installer directory is empty!"
+  exit 1
+fi
 mkdir -p "${ISCCDIR}/Languages/Unofficial"
 cd "${ISCCDIR}/Languages/Unofficial"
 
