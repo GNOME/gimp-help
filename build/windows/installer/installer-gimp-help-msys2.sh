@@ -1,5 +1,5 @@
 # Install Inno Setup.
-wget https://jrsoftware.org/download.php/is.exe
+wget -O is.exe https://github.com/jrsoftware/issrc/releases/download/is-6_7_3/innosetup-6.7.3.exe
 ./is.exe //SILENT //SUPPRESSMSGBOXES //CURRENTUSER //SP- //LOG="innosetup.log"
 installed="$?"
 if [ $installed -ne 0 ]; then
