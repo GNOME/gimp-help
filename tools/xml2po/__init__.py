@@ -149,6 +149,9 @@ class XMLDocument(object):
         self.expand_entities = self.app.options.get('expand_entities')
         self.ignored_tags = self.app.current_mode.getIgnoredTags()
 
+        if self.expand_entities:
+            sys.stderr.write("WARNING: expand_entities is True. Some gimp-help translations involving entities may fail!\n")
+
         # Remove the part of the path that redirects from build dir to
         # source dir since that part depends on personal setup and can
         # cause a lot of unnecessary changes in commits.
@@ -161,6 +164,7 @@ class XMLDocument(object):
         ctxt.lineNumbers(1)
         if self.app.options.get('expand_all_entities'):
             ctxt.replaceEntities(1)
+            sys.stderr.write("WARNING: Some gimp-help translations involving entities may fail!\n")
 
         try:
             ctxt.parseDocument()
