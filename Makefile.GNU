@@ -37,7 +37,7 @@ XMLLINT      = xmllint
 XMLLINTFLAGS = --nonet
 
 XML2PO        = tools/xml2po.py
-XML2POFLAGS   = --mode=gimphelp
+XML2POFLAGS   = -k --mode=gimphelp
 
 MSGWIDTH      = 79
 MSGUNIQ       = msguniq

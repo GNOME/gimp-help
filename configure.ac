@@ -148,7 +148,8 @@ AC_SUBST(SVG2PDF_FLAGS)
 AM_PATH_PYTHON3(python3_required_version, libxml2, ,)
 
 XML2PO='$(PYTHON) $(top_srcdir)/tools/xml2po.py'
-XML2POFLAGS='--mode=gimphelp --base=$(top_srcdir)/'
+# For gimp-help we need -k or some translations involving entities may fail!
+XML2POFLAGS='-k --mode=gimphelp --base=$(top_srcdir)/'
 AC_SUBST(XML2PO)
 AC_SUBST(XML2POFLAGS)
 
