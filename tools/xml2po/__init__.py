@@ -287,8 +287,8 @@ class XMLDocument(object):
         result = ''
         if node.children:
             child = node.children
-            nextchild = child.next
             while child:
+                nextchild = child.next
                 if child.type=='text':
                     result += self.doc.encodeEntitiesReentrant(child.content)
                 elif child.type=='entity_ref':
