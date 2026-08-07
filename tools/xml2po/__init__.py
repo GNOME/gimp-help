@@ -194,6 +194,8 @@ class XMLDocument(object):
                 if self.app.options.get('expand_entities') or \
                   (not (node.prev and not node.prev.isBlankNode() and node.next and not node.next.isBlankNode()) ):
                     node.setContent('')
+                else:
+                    node.setContent(re.sub(r'\s+','', node.content))
             else:
                 node.setContent(re.sub(r'\s+',' ', node.content))
 
