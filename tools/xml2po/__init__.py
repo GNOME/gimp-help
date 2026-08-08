@@ -184,7 +184,7 @@ class XMLDocument(object):
         self.doSerialize(self.doc)
 
     def normalizeNode(self, node):
-        #print >>sys.stderr, "<%s> (%s) [%s]" % (node.name, node.type, node.serialize('utf-8'))
+        #sys.stderr.write("Normalize Node: <%s> (%s) [%s]\n" % (node.name, node.type, node.serialize('utf-8')))
         if not node:
             return
         elif self.app.isSpacePreserveNode(node):
@@ -604,6 +604,7 @@ class XMLDocument(object):
                     outtxt += self.doSerialize(child)
             child = nextchild
 
+        norm_outtxt = ''
         if self.app.operation == 'merge':
             norm_outtxt = self.normalizeString(outtxt, self.app.isSpacePreserveNode(node))
             translation = self.app.getTranslation(norm_outtxt)
@@ -615,6 +616,10 @@ class XMLDocument(object):
 
         worth = self.worthOutputting(node)
         if not translation:
+            # For debugging:
+            #if worth:
+            #    sys.stderr.write("--> Translation missing for:%s\n" % (outtxt))
+            #    sys.stderr.write("--> Normalized outtext for node <%s>:\n%s\n" % (node.name, norm_outtxt))
             translation = outtxt
             if worth and self.app.options.get('mark_untranslated'):
                 node.setLang('C')
@@ -632,6 +637,8 @@ class XMLDocument(object):
                     self.replaceNodeContentsWithText(node, translation)
                 else:
                     norm_outtxt = self.normalizeString(outtxt, self.app.isSpacePreserveNode(node))
+                    #if "<placeholder-" in norm_outtxt:
+                    #    sys.stderr.write("! Non merge: Normalized outtext has placeholder for node <%s> (%s):\n\t%s\n" % (node.name, node.type, norm_outtxt))
                     self.app.msg.outputMessage(norm_outtxt, node.lineNo(), self.getCommentForNode(node), self.app.isSpacePreserveNode(node), tag = node.name)
 
         return (starttag, outtxt, endtag, translation)
