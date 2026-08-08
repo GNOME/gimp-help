@@ -45,6 +45,7 @@ class gimphelpXmlMode(docbookXmlMode):
             self.lists = ['itemizedlist', 'orderedlist', 'variablelist',
                           'segmentedlist', 'simplelist', 'calloutlist', 'varlistentry' ]
             self.objects = [ 'figure', 'textobject', 'imageobject', 'mediaobject',
+                             'guiicon', 'inlinemediaobject', 'imagedata', 'inlineequation',
                              'screenshot', 'author', 'personname', 'firstname', 'surname',
                              'othername', 'email' ]
 
