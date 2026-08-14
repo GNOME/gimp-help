@@ -466,7 +466,12 @@ class XMLDocument(object):
             except libxml2.treeError:
                 pass
 
-            content = '<%s>%s</%s>' % (starttag, text, endtag)
+            # Special handling of keycap to be able to use different translations
+            # for the key Shift and the word Shift.
+            if starttag == 'keycap' and text.startswith('<keycap'):
+                content = text
+            else:
+                content = '<%s>%s</%s>' % (starttag, text, endtag)
             tmp = tmp + content
 
             newnode = None
@@ -604,15 +609,23 @@ class XMLDocument(object):
                     outtxt += self.doSerialize(child)
             child = nextchild
 
+        starttag = self.startTagForNode(node)
+        endtag   = self.endTagForNode(node)
+
         norm_outtxt = ''
         if self.app.operation == 'merge':
-            norm_outtxt = self.normalizeString(outtxt, self.app.isSpacePreserveNode(node))
+            # Names like "Shift" for the Shift key should always be
+            # enclosed in <keycap> tags to differentiate it from
+            # the word Shift. This only really affects cases where
+            # the sentence to translate only consists of one word.
+            transout = outtxt
+            if starttag == 'keycap' and not outtxt.startswith('<keycap'):
+                transout = '<keycap>%s</keycap>' % (outtxt)
+
+            norm_outtxt = self.normalizeString(transout, self.app.isSpacePreserveNode(node))
             translation = self.app.getTranslation(norm_outtxt)
         else:
             translation = outtxt
-
-        starttag = self.startTagForNode(node)
-        endtag = self.endTagForNode(node)
 
         worth = self.worthOutputting(node)
         if not translation:
@@ -636,9 +649,10 @@ class XMLDocument(object):
                 if self.app.operation == 'merge':
                     self.replaceNodeContentsWithText(node, translation)
                 else:
+                    if node.name == 'keycap' and not outtxt.startswith('<keycap'):
+                        outtxt = '<keycap>%s</keycap>' % (outtxt)
                     norm_outtxt = self.normalizeString(outtxt, self.app.isSpacePreserveNode(node))
-                    #if "<placeholder-" in norm_outtxt:
-                    #    sys.stderr.write("! Non merge: Normalized outtext has placeholder for node <%s> (%s):\n\t%s\n" % (node.name, node.type, norm_outtxt))
+
                     self.app.msg.outputMessage(norm_outtxt, node.lineNo(), self.getCommentForNode(node), self.app.isSpacePreserveNode(node), tag = node.name)
 
         return (starttag, outtxt, endtag, translation)
