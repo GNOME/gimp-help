@@ -84,6 +84,7 @@ foreach lang : target_linguas
             #lang_xml = meson.project_build_root()  + '/src/' + lang + '/' + xmlfile
             gen_xml = en_gen.process(
                 xmlfile,
+                env : {'PYTHONPATH' : '$source_root/tools/'},
                 #preserve_path_from: meson.current_source_dir(),
             )
             lang_xml_gens += gen_xml
@@ -111,6 +112,7 @@ foreach folder, file_list: xml_sources_lists
             foreach xmlfile : xml_files_list
                 gen_xml = gen.process(
                     xmlfile,
+                    env : {'PYTHONPATH' : '$source_root/tools/'},
                     preserve_path_from: meson.current_source_dir(),
                 )
                 lang_xml_gens += gen_xml
@@ -120,6 +122,7 @@ foreach folder, file_list: xml_sources_lists
             foreach xmlfile : xml_files_list
                 gen_xml = en_gen.process(
                     xmlfile,
+                    env : {'PYTHONPATH' : '$source_root/tools/'},
                     preserve_path_from: meson.current_source_dir(),
                 )
                 lang_xml_gens += gen_xml

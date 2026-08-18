@@ -37,6 +37,8 @@ src_files="${@:4}"
 #echo Source files: $src_files
 #echo Destination file: $out_pot
 
+export PYTHONPATH="$source_root/tools/"
+
 $source_root/tools/xml2po.py -k --mode=gimphelp --output=- $src_files \
   | msguniq | msgcat - --width=79 -o "$out_pot"
 
