@@ -164,7 +164,7 @@ To get started, here is a checklist of things you should do:
   + TODO: Other OS's may need some setting up too. Add
     details here as needed.
   + You need the following packages to build the documentation:
-    + Minimum: autotools, libxslt, python, libxml2-python,
+    + Minimum: autotools, libxslt, python, libxml2,
       docbook-xml, and docbook-xsl. With these packages, you can build the
       English html help.
     + Version control: git.
@@ -176,8 +176,8 @@ To get started, here is a checklist of things you should do:
       [Base Package: mingw-w64-librsvg](https://packages.msys2.org/base/mingw-w64-librsvg)
       for information about what package to install. You can use `make pdf` to
       build quick start PDFs for all languages. 
-    + TODO: Test and confirm requirements to work with localized versions.
-      Assumed gettext as a minimum. Also polib for the validation of po files.
+    + For localization: gettext, intltool and the polib Python package for
+      validation of po files.
       To install polib, use a package manager (e.g., pacman) to install pip,
       and then use pip to install polib. gettext may already be installed in
       an MSYS2 environment.
