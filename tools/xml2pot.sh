@@ -37,7 +37,7 @@ src_files="${@:4}"
 #echo Source files: $src_files
 #echo Destination file: $out_pot
 
-$source_root/tools/xml2po.py --mode=gimphelp --output=- $src_files \
+$source_root/tools/xml2po.py -k --mode=gimphelp --output=- $src_files \
   | msguniq | msgcat - --width=79 -o "$out_pot"
 
 recent_file="$(ls -t $src_files 2>/dev/null | sed 1q)"

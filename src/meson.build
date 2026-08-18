@@ -32,6 +32,8 @@ gen = generator(xml2po,
     depends: pot_dependencies,
     output: '@PLAINNAME@',
     arguments : [
+        '-k',
+        '--mode=gimp-help',
         '--po-file=' + meson.project_source_root() + '/po/' + lang + '/' + po_source,
         '--language=' + lang,
 #        '--output=@BUILD_DIR@' + '/' + '@OUTPUT@',

@@ -47,7 +47,7 @@ platform_osx = (
 MSGWIDTH = 79
 
 XML2PO       = find_program(meson.project_source_root() / 'tools' / 'xml2po.py')
-XML2POFLAGS  = '--mode=gimphelp'
+#XML2POFLAGS  = '-k --mode=gimphelp'
 
 #MSGUNIQ = /mingw64/bin/msguniq
 MSGUNIQ      = find_program('msguniq')
