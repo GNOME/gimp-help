@@ -14,13 +14,11 @@ css_path_files = [
     './css/gimp-help-plain.css',
     './css/gimp-help-screen.css',
     './css/gimp-help-draft.css',
-    './css/gimp22.css',
 ]
 css_files = [
     'gimp-help-plain.css',
     'gimp-help-screen.css',
     'gimp-help-draft.css',
-    'gimp22.css',
 ]
 
 # custom language specific additional css files
