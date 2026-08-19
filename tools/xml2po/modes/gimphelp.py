@@ -25,11 +25,8 @@ import re
 import libxml2
 import os
 import sys
-try:
-    # Hashlib is new in Python 2.5
-    from hashlib import md5 as md5_new
-except ImportError:
-    from md5 import new as md5_new
+
+from hashlib import md5 as md5_new
 
 from .docbook import docbookXmlMode
 
