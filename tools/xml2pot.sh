@@ -18,8 +18,8 @@
 # xml2po, msguniq, msgcat etc. are located but with current (0.50) meson setting
 # env variables is cumbersome so let's skip that for now
 
-build_root=$2
-source_root=$3
+build_root=`readlink -f $2`
+source_root=`readlink -f $3`
 out_pot=$build_root/$1
 
 # Put input arguments 4 and up into src_files
@@ -37,7 +37,14 @@ src_files="${@:4}"
 #echo Source files: $src_files
 #echo Destination file: $out_pot
 
-export PYTHONPATH="$source_root/tools/"
+#export PYTHONPATH="$source_root/tools/xml2po/modes/"
+#export PYTHONPATH="$source_root/tools/"
+#export PYTHONPATH="/home/jacob/gimp-help/tools/"
+
+#cd "/home/jacob/gimp-help/tools/"
+
+echo "xml2pot: $PYTHONPATH"
+echo "[$PWD]"
 
 $source_root/tools/xml2po.py -k --mode=gimphelp --output=- $src_files \
   | msguniq | msgcat - --width=79 -o "$out_pot"

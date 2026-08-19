@@ -20,6 +20,7 @@
 #
 import os
 import sys
+import importlib
 import re
 import subprocess
 import tempfile
@@ -746,7 +747,17 @@ class Main(object):
 
     def load_mode(self, modename):
         try:
+            #myname='xml2po.modes.%s' % modename, ['%sXmlMode' % modename]
+            #sys.stderr.write("name: %s\n" % (myname))
+            sys.path.append('/home/jacob/gimp-help/tools/xml2po/modes/')
             module = __import__('xml2po.modes.%s' % modename, globals(), locals(), ['%sXmlMode' % modename])
+            #module = importlib.import_module('xml2po.modes.%s' % modename)
+            #modeclass = '%sXmlMode' % modename
+            #sys.stderr.write("try import module: %s\n" % (modeclass))
+            #module = importlib.import_module('xml2po.modes.gimphelp.%s' % modeclass)
+            #tmp = module.getIgnoredTags()
+            #sys.stderr.write("ignored tags: %s\n" % (tmp))
+
             return getattr(module, '%sXmlMode' % modename)
         except (ImportError, AttributeError):
             if modename == 'basic':
