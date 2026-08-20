@@ -78,11 +78,11 @@ my @Srcdirs = @ARGV;
 
 # assuming destination = (x|ht)ml/LANG[/images]
 my $locale_re = qr/[a-z]{2}(?:_[A-Z]{2})?/;
-if ($Destdir =~ s!((?:x|ht)ml)/($locale_re)(?:/images?)?!$1/$2!) {
+if ($Destdir =~ s!(($locale_re)/(?:index\.html\.p))(?:/images?)?!$1!) {
     $Language = $2;
 } else {
     die "Error: invalid destination directory: $Destdir\n" .
-        "  (should be '(x|ht)ml/LANG[/images]')\n";
+        "  (should be 'LANG/index.html.p[/images]')\n";
 }
 if ($Verbose > 1) {
     print STDERR "Destination  = $Destdir\n",
@@ -158,7 +158,7 @@ set_copy_mode();
 foreach my $srcdir (sort @Image_dirs) {
     # Construct corresponding destination directory,
     # assuming source = [.../]images/{C,common}
-    #     destination = (x|ht)ml/LANG
+    #     destination = LANG/index.html.p
     (my $dstdir = $srcdir) =~ s|(.*/)?images/[^/]+|$Destdir/images|o;
     -d $dstdir or mkpath $dstdir
         or die "Error: cannot mkpath $dstdir: $!\n";
@@ -172,29 +172,33 @@ foreach my $srcdir (sort @Image_dirs) {
         next unless -f $imgfile;
         my $basename = (splitpath($imgfile))[2];  # (vol, dir, file)
         my $destfile = catfile($dstdir, $basename);  # the new file/link
-        # Check for existence of localized image:
-        if ($Localize_images) {
-            (my $localized_imgfile = $imgfile) =~ s|/C/|/$Language/|o;
-            $inc_i18n = (-e $localized_imgfile) ? 1 : 0;
-            $imgfile = $localized_imgfile if -e _;  # if $inc_i18n;
+        #skip meson.build files
+        if ($basename ne "meson.build") {
+            # Check for existence of localized image:
+            if ($Localize_images) {
+                (my $localized_imgfile = $imgfile) =~ s|/C/|/$Language/|o;
+                $inc_i18n = (-e $localized_imgfile) ? 1 : 0;
+                $imgfile = $localized_imgfile if -e _;  # if $inc_i18n;
+            }
+            print STDERR "$destfile\n" if $Verbose > 2;
+            # Special case symlinks:
+            if ($Mode[0] eq "symlink") {
+                my $dst_to_src_path = $dst_to_src_symlink_path;
+                # If necessary, change relative path too:
+                $dst_to_src_path =~ s|/C/|/$Language/|o
+                    if ($Localize_images && $imgfile =~ m|/$Language/|o);
+                # Use a relative symlink to image file:
+                $imgfile = catfile($dst_to_src_path, $basename);
+            }
+            my $ok = $exec_copy_command->($imgfile, $destfile);
+            if (!$ok) {
+                set_copy_mode();
+                redo;
+            }
+#            `touch $destfile`;
+            ++$Count_all  if $Verbose;
+            ++$Count_i18n if $Verbose and $inc_i18n;
         }
-        print STDERR "$destfile\n" if $Verbose > 2;
-        # Special case symlinks:
-        if ($Mode[0] eq "symlink") {
-            my $dst_to_src_path = $dst_to_src_symlink_path;
-            # If necessary, change relative path too:
-            $dst_to_src_path =~ s|/C/|/$Language/|o
-                if ($Localize_images && $imgfile =~ m|/$Language/|o);
-            # Use a relative symlink to image file:
-            $imgfile = catfile($dst_to_src_path, $basename);
-        }
-        my $ok = $exec_copy_command->($imgfile, $destfile);
-        if (!$ok) {
-            set_copy_mode();
-            redo;
-        }
-        ++$Count_all  if $Verbose;
-        ++$Count_i18n if $Verbose and $inc_i18n;
     } # foreach imgfile
 } # foreach srcdir
 

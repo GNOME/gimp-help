@@ -59,7 +59,8 @@ MSGCATFLAGS  = '--width=@0@'.format(MSGWIDTH)
 xml2pot      = find_program(meson.project_source_root() / 'tools' / 'xml2pot.sh')
 xml2po       = find_program(meson.project_source_root() / 'tools' / 'xml2po.py')
 
-# Image handling
+# Image handling, needs perl until we are able to convert it
+perl             = find_program('perl')
 MAKE_IMAGE_LINKS = find_program(meson.project_source_root() / 'make.d' / 'make_image_links.pl')
 MAKE_IMAGE_LINKS_FLAGS = '-v'
 
