@@ -46,3 +46,21 @@ gimp_html = custom_target(htmltarget,
     install_dir: install_prefix / lang + '/',
     build_by_default: true,
 )
+
+images_target = htmltarget + '-images'
+gimp_html_images = custom_target(images_target,
+    depends: [gimp_html],
+    output: ['dummy.image'],
+    command: [
+        cp,
+        '-r',       # recursive
+        '-u',       # update if newer, copy if missing
+        meson.current_build_dir() / 'index.html.p' / 'images',
+        meson.current_build_dir() / 'images',
+    ],
+    install: true,
+    install_dir: install_prefix / lang / 'images' + '/',
+    build_by_default: true,
+)
+
+#FIXME: We also need per lang a `gimp-help.xml` file that lists all help ids and what page it links to
