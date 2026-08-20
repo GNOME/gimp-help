@@ -27,7 +27,7 @@ gimp_html = custom_target(htmltarget,
     # FIXME: Also depend on entities.xml, and images
     # Maybe use generator to put entities.xml in the same dir as generated xml?
     #depend_files: [plainhtml],
-    depends: gimp_css_all,
+    depends: [gimp_css_all, gimp_ss_all],
     input: [gen_lang],
     output: ['index.html'],
     command: [
