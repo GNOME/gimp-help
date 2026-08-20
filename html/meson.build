@@ -31,6 +31,7 @@ css_nn_files = [
 ]
 
 subdir('images')
+subdir('stylesheets')
 
 foreach lang : target_linguas
 

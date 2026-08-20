@@ -80,7 +80,7 @@ endforeach
 
 gimp_html = custom_target(htmltarget,
     # FIXME: Also depend on entities.xml, css, and images
-    depends: [gimp_css_all],
+    depends: [gimp_css_all, gimp_ss_all],
     input: [gen_lang],
 
     # depend_files: [plainhtml],
