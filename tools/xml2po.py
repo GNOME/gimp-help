@@ -122,12 +122,12 @@ def main(argv):
 
     for opt, arg in opts:
         if opt in ('-m', '--mode'):
-            print("Mode: %s" % (arg), file=sys.stderr)
+            #print("Mode: %s" % (arg), file=sys.stderr)
             default_mode = arg
         if opt in ('-a', '--automatic-tags'):
             default_mode = 'basic'
         elif opt in ('-k', '--keep-entities'):
-            print("Keep entites", file=sys.stderr)
+            #print("Keep entites", file=sys.stderr)
             options['expand_entities'] = False
         elif opt in ('--mark-untranslated',):
             options['mark_untranslated'] = True
@@ -182,10 +182,6 @@ def main(argv):
             sys.exit(0)
         elif opt in ('-b', '--base'):
             base = arg
-
-    python_env = os.getenv("PYTHONPATH", "<none>")
-    print("PYTHONPATH: %s" % (python_env), file=sys.stderr)
-    #print("sys path: %s" % (sys.path), file=sys.stderr)
 
     if operation == 'update' and output != "-":
         print("Option '-o' is not yet supported when updating translations directly. Ignoring this option.", file=sys.stderr)
