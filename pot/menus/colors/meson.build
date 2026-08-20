@@ -139,7 +139,7 @@ xml_sources_colors_map = [
     'sample-colorize.xml',
     'set-colormap.xml',
 ]
-pot_colors_map = 'map.pot'
+pot_colors_map = 'colors_map.pot'
 
 input_xml  = xml_sources_colors_map
 output_pot = pot_colors_map

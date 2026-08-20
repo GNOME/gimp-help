@@ -176,7 +176,7 @@ xml_sources_menus_filters = [
     'reshow.xml',
     'script-fu.xml',
 ]
-pot_menus_filters = 'filters.pot'
+pot_menus_filters = 'menus_filters.pot'
 
 input_xml  = xml_sources_menus_filters
 output_pot = pot_menus_filters
