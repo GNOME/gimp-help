@@ -33,7 +33,7 @@ gen = generator(xml2po,
     output: '@PLAINNAME@',
     arguments : [
         '-k',
-        '--mode=gimp-help',
+        '--mode=gimphelp',
         '--po-file=' + meson.project_source_root() + '/po/' + lang + '/' + po_source,
         '--language=' + lang,
 #        '--output=@BUILD_DIR@' + '/' + '@OUTPUT@',
