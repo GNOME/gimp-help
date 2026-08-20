@@ -212,8 +212,16 @@ message('Project locale dir: ' + help_po_dir)
 ########################################################################
 
 # Check for XML tools
-xmllint             = find_program('xmllint', required: false)
-xsltproc            = find_program('xsltproc')
+if platform_windows
+  # The /usr/bin/ version usually has less issues on Windows because it
+  # uses the Linux paths IIRC
+  #TODO: find location of MSYS2 instead of hardcoding!!!
+  xmllint  = find_program('xmllint', required: false, dirs: ['c:/msys64/usr/bin/'])
+  xsltproc = find_program('xsltproc', dirs: ['c:/msys64//usr/bin/'])
+else
+  xmllint  = find_program('xmllint', required: false)
+  xsltproc = find_program('xsltproc')
+endif
 
 
 custom_target('validate-references',
