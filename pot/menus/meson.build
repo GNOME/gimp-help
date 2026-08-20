@@ -3,6 +3,7 @@ message('pot/menus submenu')
 ##############
 
 xml_sources_menus_colors = [
+    'about-common-features.xml',
     'auto.xml',
     'brightness-contrast.xml',
     'color-balance.xml',
@@ -125,8 +126,10 @@ xml_sources_menus_file = [
     'create.xml',
     'export-as.xml',
     'export.xml',
+    'introduction.xml',
     'new.xml',
     'open-as-layer.xml',
+    'open-as-link-layer.xml',
     'open-location.xml',
     'open-recent.xml',
     'open.xml',
@@ -203,7 +206,9 @@ xml_sources_menus_help = [
     'context-help.xml',
     'gimp-online.xml',
     'help.xml',
+    'introduction.xml',
     'plug-in-browser.xml',
+    'plug-in-gegl-filter-browser.xml',
     'procedure-browser.xml',
     'search-and-run.xml',
     'tip-of-the-day.xml',
@@ -395,6 +400,7 @@ xml_sources_menus_select = [
     'float.xml',
     'from-path.xml',
     'grow.xml',
+    'introduction.xml',
     'invert.xml',
     'none.xml',
     'qmask-toggle.xml',
