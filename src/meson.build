@@ -53,8 +53,6 @@ en_gen = generator(cp,
 #lang_generators = []
 all_generators  = {}
 
-python_env = {'PYTHONPATH' : meson.project_source_root() + '/tools/'}
-#python_env = {'PYTHONPATH' : meson.project_source_root() + '/tools/xml2po/modes/'}
 
 idx = 0
 foreach lang : target_linguas
@@ -76,7 +74,6 @@ foreach lang : target_linguas
             #message('Destination xml: ' + dest_xml + ' - ' + target)
             gen_xml = gen.process(
                 xmlfile,
-                env : python_env,
                 #preserve_path_from: meson.current_source_dir(),
             )
             lang_xml_gens += gen_xml
@@ -115,7 +112,6 @@ foreach folder, file_list: xml_sources_lists
             foreach xmlfile : xml_files_list
                 gen_xml = gen.process(
                     xmlfile,
-                    env : python_env,
                     preserve_path_from: meson.current_source_dir(),
                 )
                 lang_xml_gens += gen_xml
@@ -125,7 +121,6 @@ foreach folder, file_list: xml_sources_lists
             foreach xmlfile : xml_files_list
                 gen_xml = en_gen.process(
                     xmlfile,
-                    #env : python_env,
                     preserve_path_from: meson.current_source_dir(),
                 )
                 lang_xml_gens += gen_xml
