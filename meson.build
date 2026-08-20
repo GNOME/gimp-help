@@ -1,9 +1,9 @@
 project('gimp-help',
-    version: '3.0.1',
+    version: '3.1.1',
     meson_version: '>= 1.4.0',
 )
 
-gimp_help_version = '3.0.1'
+gimp_help_version = '3.1.1'
 src_dir = 'src'
 po_dir  = 'po'
 
