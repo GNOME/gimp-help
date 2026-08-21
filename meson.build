@@ -19,6 +19,8 @@ LINGUAS = ['en', 'nl']
 
 SUBDIRS = 'quickreference'
 
+## Imports
+fs = import('fs')
 
 ################################################################################
 # Host system detection
