@@ -56,6 +56,17 @@ foreach lang : target_linguas
         lang_css_gens += gen_css
     endforeach
 
+
+    if not fs.is_dir(meson.current_build_dir() / lang / 'index.html.p')
+        # Create dir
+        mkdir_script = 'import os; os.makedirs("@0@", exist_ok=True)'.format(meson.current_build_dir() / lang / 'index.html.p')
+        run_command(python,
+            '-c',
+            mkdir_script,
+            check: true
+        )
+    endif
+
     msg = 'Copying images for @0@'.format(lang)
     message(msg)
 
