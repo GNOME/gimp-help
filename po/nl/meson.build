@@ -31,8 +31,9 @@ foreach pof : po_files_root
             meson.current_build_dir() / pof[0],
         ],
         # Because po files get out of sync with the source, we probably
-        # need build by default set to true.
+        # need build by default and always stale set to true.
         build_by_default: true,
+        build_always_stale: true,
     )
     lang_po_targets += gimp_po_lang
 endforeach
