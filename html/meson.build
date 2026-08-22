@@ -57,6 +57,7 @@ foreach lang : target_linguas
     endforeach
 
 
+    # FIXME: This is a hack, we are not supposed to touch a meson private dir
     if not fs.is_dir(meson.current_build_dir() / lang / 'index.html.p')
         # Create dir
         mkdir_script = 'import os; os.makedirs("@0@", exist_ok=True)'.format(meson.current_build_dir() / lang / 'index.html.p')
@@ -83,21 +84,26 @@ foreach lang : target_linguas
 # 	           $(srcdir)/images/common $(srcdir)/images/C $@
 # 	$(cmd) touch $@
 
-    message('Current: ', meson.current_build_dir())
-
     # FIXME This is a hack: we are copying the images to the meson private
     #       directory used for the xml generation. However, we need the
     #       images available there.
     # FIXME 2 We also don't do symbolic links at this time.
-    run_command(perl,
-        MAKE_IMAGE_LINKS,
-        MAKE_IMAGE_LINKS_FLAGS,
-        SRC_IMAGE_FOLDERS,
-        meson.current_build_dir() / lang / 'index.html.p',
-        check: true
+
+    htmltarget         = 'html-'+lang
+    copy_images_target = 'xml-images-' + lang
+
+    xml_lang_copy_images = custom_target(copy_images_target,
+        output:  [copy_images_target],
+        command: [
+            MAKE_IMAGE_LINKS,
+            MAKE_IMAGE_LINKS_FLAGS,
+            SRC_IMAGE_FOLDERS,
+            meson.current_build_dir() / lang / 'index.html.p',
+        ],
+        install: false,
+        build_by_default: true,
     )
 
-    htmltarget = 'html-'+lang
     subdir(lang)
 
 endforeach
