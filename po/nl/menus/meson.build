@@ -34,3 +34,5 @@ foreach pof : target_po_files
     )
     lang_po_targets += gimp_po_lang
 endforeach
+
+subdir('colors')
