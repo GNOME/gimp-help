@@ -23,13 +23,15 @@ pot_dependencies = [
     toolbox_paint_pot, toolbox_selection_pot, toolbox_transform_pot,
     ]
 
+po_dependencies = all_po_targets
+
 xml_lang_base = meson.project_build_root() + '/src'
 po_source     = 'gimp.po'
 # for each enabled language create a xml/lang/... target
 
 gen = generator(xml2po,
     #depends: [gimp_pot],
-    depends: pot_dependencies,
+    depends: [pot_dependencies, po_dependencies],
     output: '@PLAINNAME@',
     arguments : [
         '-k',
@@ -43,7 +45,7 @@ gen = generator(xml2po,
 
 en_gen = generator(cp,
 #    depends: [gimp_pot],
-    depends: pot_dependencies,
+    depends: [pot_dependencies, po_dependencies],
     output: '@PLAINNAME@',
     arguments : [
         '@INPUT@',
