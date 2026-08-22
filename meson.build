@@ -48,18 +48,29 @@ platform_osx = (
 
 MSGWIDTH = 79
 
-XML2PO       = find_program(meson.project_source_root() / 'tools' / 'xml2po.py')
+XML2PO        = find_program(meson.project_source_root() / 'tools' / 'xml2po.py')
 #XML2POFLAGS  = '-k --mode=gimphelp'
 
 #MSGUNIQ = /mingw64/bin/msguniq
-MSGUNIQ      = find_program('msguniq')
-MSGUNIQFLAGS = ''
+MSGUNIQ       = find_program('msguniq')
+MSGUNIQFLAGS  = ''
 
-MSGCAT       = find_program('msgcat')
-MSGCATFLAGS  = '--width=@0@'.format(MSGWIDTH)
+MSGCAT        = find_program('msgcat')
+MSGCATFLAGS   = '--width=@0@'.format(MSGWIDTH)
+
+MSGFMT        = find_program('msgfmt')
+MSGFMTFLAGS   = '--check --use-fuzzy --statistics'
+
+MSGINIT       = find_program('msginit')
+MSGINITFLAGS  = '--no-translator --width=@0@'.format(MSGWIDTH)
+
+MSGMERGE      = find_program('msgmerge')
+MSGMERGEFLAGS = '--quiet --width=@0@'.format(MSGWIDTH)
+
 
 xml2pot      = find_program(meson.project_source_root() / 'tools' / 'xml2pot.sh')
 xml2po       = find_program(meson.project_source_root() / 'tools' / 'xml2po.py')
+updatepo     = find_program(meson.project_source_root() / 'tools' / 'update_po.py')
 
 # Image handling, needs perl until we are able to convert it
 perl             = find_program('perl')
@@ -364,6 +375,11 @@ pot_base = 'pot/'
 
 # pot needs generated authors.xml in src/preface
 subdir('pot')
+
+# Generate updated po files in build dir
+# FIXME May need discussion with DamnedLies if they can grab the updated
+#       po files from the build dir!
+subdir('po')
 
 # Generate translated xml files...
 subdir('src')
