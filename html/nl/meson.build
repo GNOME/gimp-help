@@ -24,18 +24,13 @@ foreach css_file: all_css_files
 endforeach
 
 gimp_html = custom_target(htmltarget,
-    # FIXME: Also depend on entities.xml, and images
-    # Maybe use generator to put entities.xml in the same dir as generated xml?
-    #depend_files: [plainhtml],
-    depends: [gimp_css_all, gimp_ss_all],
+    depends: [gimp_css_all, gimp_ss_all, xml_lang_copy_images],
     input: [gen_lang],
     output: ['index.html'],
     command: [
         xsltproc,
-        #'--verbose',
         '--timing',
         '--nonet',
-        '--path', meson.current_build_dir()+'/images',  # testing if this helps
         '--xinclude',
         '--stringparam', 'l10n.gentext.default.language ', lang,
         '--output', meson.current_build_dir() + '/',
