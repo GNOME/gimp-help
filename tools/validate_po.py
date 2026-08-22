@@ -349,10 +349,11 @@ def main(argv):
 
     validator = Validate(verbose, warnings)
     for file in filenames:
-        if verbose:
-            print(f"Checking {file}")
-        validator.setFile(file)
-        validator.run()
+        if not file == 'meson.build'
+            if verbose:
+                print(f"Checking {file}")
+            validator.setFile(file)
+            validator.run()
 
     if validator.errors > 0:
         print(f"{validator.files_with_errors} of {validator.filecnt} files contain errors")
