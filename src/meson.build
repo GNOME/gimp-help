@@ -36,9 +36,7 @@ gen = generator(xml2po,
     arguments : [
         '-k',
         '--mode=gimphelp',
-        '--po-file=' + meson.project_build_root() + '/po/' + lang + '/' + po_source,
-        '--language=' + lang,
-#        '--output=@BUILD_DIR@' + '/' + '@OUTPUT@',
+        '@EXTRA_ARGS@',
         '--output=@OUTPUT@',
         '@INPUT@',
     ])
@@ -76,6 +74,10 @@ foreach lang : target_linguas
             #message('Destination xml: ' + dest_xml + ' - ' + target)
             gen_xml = gen.process(
                 xmlfile,
+                extra_args: [
+                    '--po-file=' + meson.project_build_root() + '/po/' + lang + '/' + po_source,
+                    '--language=' + lang,
+                ],
                 #preserve_path_from: meson.current_source_dir(),
             )
             lang_xml_gens += gen_xml
@@ -101,6 +103,7 @@ endforeach
 foreach folder, file_list: xml_sources_lists
     xml_files_list = file_list
     xml_sub_dir    = '/' + folder + '/'
+    po_file        = folder + '.po'
 
     idx = 0
     foreach lang : target_linguas
@@ -111,9 +114,14 @@ foreach folder, file_list: xml_sources_lists
 
         # en is a special case...
         if lang != 'en'
+            po_file_path = meson.project_build_root() + '/po/' + lang + '/' + po_file
             foreach xmlfile : xml_files_list
                 gen_xml = gen.process(
                     xmlfile,
+                    extra_args: [
+                        '--po-file=' + po_file_path,
+                        '--language=' + lang,
+                    ],
                     preserve_path_from: meson.current_source_dir(),
                 )
                 lang_xml_gens += gen_xml
