@@ -38,6 +38,7 @@
 import sys, os
 import subprocess
 import shutil
+import time
 
 build_dir = sys.argv[1]
 pot_file  = sys.argv[1] + '/' + sys.argv[2]
@@ -125,9 +126,37 @@ fmt_cmd = subprocess.Popen(
     stdout=subprocess.PIPE,
     stderr=subprocess.PIPE
 )
-cmdout, cmderr = fmt_cmd.communicate()
-if fmt_cmd.returncode:
-    raise Exception("Error during msgfmt command.")
+
+# When using meson it apparently happens that msgfmt is called when
+# the pofile is already in use by another process.
+# We will try it again 20 times and sleep for 5 seconds in between.
+result  = 1
+max_cnt = 20
+counter = 0
+while result != 0 and counter < max_cnt:
+#    result = os.system("msgfmt -o %s %s >%s" % (mofile_tmppath, pofile, NULL_STRING))
+    # FIXME: Is it even possible to re-run this without calling Popen again?
+    cmdout, cmderr = fmt_cmd.communicate()
+    if not fmt_cmd.returncode:
+        result = 0
+    counter += 1
+    if (result):
+        #print(f"Output: {stdout}")
+        print(f"Errors: {stderr}")
+
+        time.sleep(5)
+        if counter == 1:
+            print(f"Msgfmt failed, trying again...", file=sys.stderr)
+
+if result:
+    print(f"Gave up after {counter} times")
+    sys.exit(7)
+elif counter > 1:
+    print(f"Succeeded after {counter} times")
+
+# cmdout, cmderr = fmt_cmd.communicate()
+# if fmt_cmd.returncode:
+#     raise Exception("Error during msgfmt command.")
 
 #FIXME 4 Remove backup files (extension ~po) and messages.mo
 #        Possibly also change things to not have messages.mo, but unique name per call
