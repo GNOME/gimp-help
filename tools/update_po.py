@@ -128,3 +128,6 @@ fmt_cmd = subprocess.Popen(
 cmdout, cmderr = fmt_cmd.communicate()
 if fmt_cmd.returncode:
     raise Exception("Error during msgfmt command.")
+
+#FIXME 4 Remove backup files (extension ~po) and messages.mo
+#        Possibly also change things to not have messages.mo, but unique name per call

@@ -53,7 +53,7 @@ gimp_html_images = custom_target(images_target,
         meson.current_build_dir() / 'index.html.p' / 'images',
         meson.current_build_dir() / 'images',
     ],
-    install: true,
+    install: false, #FIXME can't install missing dummy.image
     install_dir: install_prefix / lang / 'images' + '/',
     build_by_default: true,
 )
