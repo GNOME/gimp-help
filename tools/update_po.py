@@ -142,7 +142,7 @@ while result != 0 and counter < max_cnt:
     counter += 1
     if (result):
         #print(f"Output: {stdout}")
-        print(f"Errors: {stderr}")
+        print(f"Errors: {cmderr}")
 
         time.sleep(5)
         if counter == 1:
