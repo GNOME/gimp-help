@@ -2,14 +2,14 @@
 #
 # make_image_links.pl
 #
-# This script creates relative symlinks in xml/LANG to images files
+# This script creates relative symlinks in LANG/index.html.p to images files
 # in images/C and images/common.
 #
 # Do not use this script directly, it's meant to be run by 'make'.
 #
 # Usage:
 #     cd <top_srcdir>  # where src/ and tools/ are
-#     tools/make_image_links.pl [-v] images/C images/common xml/LANG
+#     tools/make_image_links.pl [-v] images/C images/common LANG/index.html.p
 #
 
 use warnings;
