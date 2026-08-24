@@ -6,6 +6,10 @@ images_base_examples = [
     'apple-banana.png',
     'sunflower.png',
 ]
+images_base_examples_files = files(
+    'apple-banana.png',
+    'sunflower.png',
+)
 
 img_base_path = meson.project_source_root() + '/images/C/base-examples/'
 images_list = images_base_examples

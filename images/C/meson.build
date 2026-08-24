@@ -16,6 +16,11 @@ subdir('toolbox')
 subdir('tutorials')
 subdir('using')
 
+images_C_files = \
+    images_base_examples_files + \
+    images_contribute_files + \
+    images_dialogs_files
+    # FIXME: All other image files..., including from /common
 
 images_C = \
     images_base_examples + \

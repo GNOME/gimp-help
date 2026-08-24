@@ -73,12 +73,12 @@ xml2po       = find_program(meson.project_source_root() / 'tools' / 'xml2po.py')
 updatepo     = find_program(meson.project_source_root() / 'tools' / 'update_po.py')
 
 # Image handling, needs perl until we are able to convert it
+copy_images      = find_program(meson.project_source_root() / 'tools' / 'copy_images.sh')
 perl             = find_program('perl')
 MAKE_IMAGE_LINKS = find_program(meson.project_source_root() / 'make.d' / 'make_image_links.pl')
 MAKE_IMAGE_LINKS_FLAGS = '-v'
 
 if platform_windows
-#    MAKE_IMAGE_LINKS_FLAGS += '--mode=hardlink,copy'
     MAKE_IMAGE_LINKS_FLAGS += '-m=hardlink,copy'
 endif
 

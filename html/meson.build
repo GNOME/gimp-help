@@ -89,19 +89,45 @@ foreach lang : target_linguas
     #       images available there.
     # FIXME 2 We also don't do symbolic links at this time.
 
+
+    # FIXME: A different idea: maybe we can use a generator to copy relevant
+    #        images to /html/lang/ that way meson can maybe track changes,
+    #        and from there copy images to xml private dir
+    #       That way we may not need to delete all images every run.
+    #       An issue could be that every time a translated image is added,
+    #       our meson files need to be updated too.
+
     htmltarget         = 'html-'+lang
     copy_images_target = 'xml-images-' + lang
+
+    # xml_lang_copy_images = custom_target(copy_images_target,
+    #     output:  [copy_images_target],
+    #     command: [
+    #         MAKE_IMAGE_LINKS,
+    #         MAKE_IMAGE_LINKS_FLAGS,
+    #         SRC_IMAGE_FOLDERS,
+    #         meson.current_build_dir() / lang / 'index.html.p' / images,
+    #     ],
+    #     install: false,
+    #     build_by_default: true,
+    #     build_always_stale: true,
+    # )
 
     xml_lang_copy_images = custom_target(copy_images_target,
         output:  [copy_images_target],
         command: [
-            MAKE_IMAGE_LINKS,
+            copy_images,
+            meson.project_source_root(),
+            meson.current_build_dir(),
             MAKE_IMAGE_LINKS_FLAGS,
-            SRC_IMAGE_FOLDERS,
-            meson.current_build_dir() / lang / 'index.html.p',
+            lang,
+        ],
+        depend_files: [
+            images_C_files,
         ],
         install: false,
         build_by_default: true,
+        build_always_stale: true,   # for now
     )
 
     subdir(lang)
