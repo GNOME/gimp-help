@@ -45,7 +45,7 @@ gimp_html = custom_target(htmltarget,
 images_target = htmltarget + '-images'
 gimp_html_images = custom_target(images_target,
     depends: [gimp_html],
-    output: ['index.html'], # for now so ci doesn't fail
+    output: ['gimp-xrefs.xml'], # for now so ci doesn't fail
     command: [
         cp,
         '-r',       # recursive
