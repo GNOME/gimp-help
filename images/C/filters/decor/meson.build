@@ -1,4 +1,4 @@
-images_filters_decor = [
+images_filters_decor = files(
     'add-bevel.png',
     'addborder.png',
     'carve-it.png',
@@ -15,4 +15,4 @@ images_filters_decor = [
     'round-corners.png',
     'slide.png',
     'stain.png',
-]
+)

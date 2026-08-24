@@ -1,4 +1,4 @@
-images_filters_distort = [
+images_filters_distort = files(
     'apply-lens-dialog.png',
     'blinds.png',
     'curvebend.png',
@@ -18,4 +18,4 @@ images_filters_distort = [
     'waves-dialog.png',
     'whirlpinch-dialog.png',
     'wind-dialog.png',
-]
+)

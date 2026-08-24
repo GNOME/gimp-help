@@ -1,4 +1,4 @@
-images_filters_enhance = [
+images_filters_enhance = files(
     'antialias-applied.png',
     'antialias-orig.png',
     'deinterlace-dialog.png',
@@ -10,4 +10,4 @@ images_filters_enhance = [
     'sharpen-dialog.png',
     'snn-dialog.png',
     'wavelets-options.png',
-]
+)

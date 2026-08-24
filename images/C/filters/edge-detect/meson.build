@@ -1,4 +1,4 @@
-images_filters_edge_detect = [
+images_filters_edge_detect = files(
     'diff_gauss-dialog.png',
     'edge-dialog.png',
     'gradient-calculation-fig.png',
@@ -6,4 +6,4 @@ images_filters_edge_detect = [
     'laplace-dialog.png',
     'neon-dialog.png',
     'sobel-dialog.png',
-]
+)

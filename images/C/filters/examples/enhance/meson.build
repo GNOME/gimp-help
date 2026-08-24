@@ -1,9 +1,11 @@
-images_filters_examples_enhance = [
+images_filters_examples_enhance = files(
     'high-pass-duplicate.png',
-    'high-pass-mode.png',
+    'high-pass-mode-dialog.png',
+    'high-pass-mode-example.png',
     'high-pass-open.png',
     'high-pass-origin.png',
-    'high-pass-setting.png',
+    'high-pass-setting-dialog.png',
+    'high-pass-setting-example.png',
     'noise-reduction-ex1.png',
     'noise-reduction-ex2.png',
     'snn-ex-denoise.jpg',
@@ -11,4 +13,4 @@ images_filters_examples_enhance = [
     'snn-radius.jpg',
     'wavelet-ex-1.png',
     'wavelet-ex-2.png',
-]
+)

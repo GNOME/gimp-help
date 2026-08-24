@@ -1,4 +1,4 @@
-images_filters_light_and_shadow = [
+images_filters_light_and_shadow = files(
     'bevel-dialog.png',
     'bloom-dialog.png',
     'drop-shadow-dialog.png',
@@ -22,5 +22,4 @@ images_filters_light_and_shadow = [
     'supernova-dialog.png',
     'vignette-dialog.png',
     'xach-effect.png',
-]
-
+)

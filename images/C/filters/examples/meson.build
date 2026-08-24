@@ -1,4 +1,4 @@
-images_filters_examples = [
+images_filters_examples = files(
     '2zinnias-c.png',
     '2zinnias-i.png',
     '2zinnias.png',
@@ -12,6 +12,7 @@ images_filters_examples = [
     'artistic-taj-oilify.jpg',
     'artistic-taj-photocopy.jpg',
     'artistic-taj-softglow.jpg',
+    'artistic-taj-waterpixels.jpg',
     'artistic-taj-weave.jpg',
     'artistic-weave-as-lattice.jpg',
     'blast1.png',
@@ -23,6 +24,7 @@ images_filters_examples = [
     'blur-demo-selective.png',
     'blur-demo-zoom.png',
     'blur-taj-circular.jpg',
+    'blur-taj-curvature.jpg',
     'blur-taj-focus.jpg',
     'blur-taj-gauss.jpg',
     'blur-taj-lens.jpg',
@@ -224,9 +226,12 @@ images_filters_examples = [
     'old-photo-defocus.png',
     'old-photo-focus.png',
     'old-photo-mottle.png',
-    'optimize-diff.png',
-    'optimize-gif.png',
-    'optimize-orig.png',
+    'optimize-diff-dialog.png',
+    'optimize-diff-example.png',
+    'optimize-gif-dialog.png',
+    'optimize-gif-example.png',
+    'optimize-orig-dialog.png',
+    'optimize-orig-example.png',
     'perspective-shadow-angle105.png',
     'perspective-shadow-angle15.png',
     'perspective-shadow-applied.jpg',
@@ -302,7 +307,7 @@ images_filters_examples = [
     'wind2.png',
     'wind3.png',
     'xach-effect-layers.png',
-]
+)
 
 subdir('animation')
 subdir('artistic')

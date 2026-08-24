@@ -1,4 +1,4 @@
-images_filters_blur = [
+images_filters_blur = files(
     'circular-options.png',
     'clip-0.png',
     'clip-1.png',
@@ -14,4 +14,4 @@ images_filters_blur = [
     'tileable-options.png',
     'variable-blur-dialog.png',
     'zoom-options.png',
-]
+)

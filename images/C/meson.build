@@ -19,14 +19,8 @@ subdir('using')
 images_C_files = \
     images_base_examples_files + \
     images_contribute_files + \
-    images_dialogs_files
-    # FIXME: All other image files..., including from /common
-
-images_C = \
-    images_base_examples + \
-    images_contribute + \
-    images_dialogs + \
-    images_dialogs_examples + \
+    images_dialogs_files + \
+    images_dialogs_examples_files + \
     images_filters + \
     images_filters_animation + \
     images_filters_artistic + \
@@ -55,7 +49,14 @@ images_C = \
     images_filters_map + \
     images_filters_noise + \
     images_filters_render + \
-    images_filters_web + \
+    images_filters_web
+    # FIXME: All other image files..., including from /common
+
+images_C = \
+    images_base_examples + \
+    images_contribute + \
+    images_dialogs + \
+    images_dialogs_examples + \
     images_glossary + \
     images_math + \
     images_menus + \

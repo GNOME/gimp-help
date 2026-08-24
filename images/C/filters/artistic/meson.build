@@ -1,4 +1,4 @@
-images_filters_artistic = [
+images_filters_artistic = files(
     'apply_canvas-dialog.png',
     'cartoon-dialog.png',
     'clothify.png',
@@ -21,4 +21,4 @@ images_filters_artistic = [
     'vangogh.png',
     'waterpixels-dialog.png',
     'weave.png',
-]
+)
