@@ -84,6 +84,7 @@ endif
 
 # FIXME: Don't depend on sh, use Python?
 cp           = find_program('cp')
+ln           = find_program('ln')
 dummy_ls     = find_program('ls')
 
 message('@0@'.format(XML2PO.full_path()))
