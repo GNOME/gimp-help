@@ -26,7 +26,7 @@ endforeach
 gimp_html = custom_target(htmltarget,
     depends: [gimp_css_all, gimp_ss_all, xml_lang_copy_images],
     input: [gen_lang],
-    output: ['index.html'],
+    output: ['gimp-xrefs.xml'],
     command: [
         xsltproc,
         '--timing',
@@ -34,7 +34,23 @@ gimp_html = custom_target(htmltarget,
         '--xinclude',
         '--stringparam', 'l10n.gentext.default.language ', lang,
         '--output', meson.current_build_dir() + '/',
-        html_stylesheet_path,
+        html_stylesheet_plainhtml,
+        '@INPUT0@',
+    ],
+    install: true,
+    install_dir: install_prefix / lang + '/',
+    build_by_default: true,
+)
+
+gimp_help_xml = custom_target(xmlhelptarget,
+    input: [gimp_html, makeindex],
+    output: ['gimp-help.xml'],
+    command: [
+        xsltproc,
+        '--timing',
+        '--nonet',
+        '--output', '@OUTPUT@',
+        html_stylesheet_path + 'makeindex.xsl',
         '@INPUT0@',
     ],
     install: true,
@@ -46,12 +62,12 @@ images_target = htmltarget + '-images'
 if platform_windows
     gimp_html_images = custom_target(images_target,
         depends: [gimp_html],
-        output: ['gimp-xrefs.xml'], # for now so ci doesn't fail
+        output: ['index.html'], # for now so ci doesn't fail
         command: [
             cp,
             '-r',       # recursive
             '-u',       # update if newer, copy if missing
-            meson.current_build_dir() / 'index.html.p' / 'images',
+            meson.current_build_dir() / xml_private_dir / 'images',
             meson.current_build_dir() / 'images',
         ],
         #install: true,
@@ -71,11 +87,11 @@ else
 
     gimp_html_images = custom_target(images_target,
         depends: [gimp_html],
-        output: ['gimp-xrefs.xml'], # for now so ci doesn't fail
+        output: ['index.html'], # for now so ci doesn't fail
         command: [
             ln,
             '-s',       # symbolic links
-            meson.current_build_dir() / 'index.html.p' / 'images',
+            meson.current_build_dir() / xml_private_dir / 'images',
             meson.current_build_dir() / 'images',
         ],
         #install: true,
@@ -90,5 +106,3 @@ meson.add_install_script(python, '-c',
     meson.current_build_dir(),
     '/' + lang
 )
-
-#FIXME: We also need per lang a `gimp-help.xml` file that lists all help ids and what page it links to
