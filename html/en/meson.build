@@ -154,7 +154,7 @@ else
             ln,
             '-s',       # symbolic links
             meson.current_build_dir() / xml_private_dir / 'images',
-            meson.current_build_dir() / 'images',s
+            meson.current_build_dir() / 'images',
         ],
         #install: true,
         #install_dir: install_prefix / lang / 'images' + '/',
