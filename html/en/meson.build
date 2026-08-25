@@ -70,9 +70,9 @@ foreach css_file: all_css_files
             '@INPUT@',
             '@OUTPUT@',
         ],
-        install: true,
-        install_dir: install_prefix / lang + '/',
-        #build_by_default: true,
+        #install: true,
+        #install_dir: install_prefix / lang + '/',
+        build_by_default: true,
     )
     gimp_css_all += gimp_css
     idx += 1
@@ -98,6 +98,8 @@ gimp_html = custom_target(htmltarget,
     build_by_default: true,
 )
 
+# Call with meson install --no-rebuild, or the above slow target will be run again for each language!
+
 images_target = htmltarget + '-images'
 gimp_html_images = custom_target(images_target,
     depends: [gimp_html],
@@ -109,11 +111,19 @@ gimp_html_images = custom_target(images_target,
         meson.current_build_dir() / 'index.html.p' / 'images',
         meson.current_build_dir() / 'images',
     ],
-    install: true,
-    install_dir: install_prefix / lang / 'images' + '/',
+    #install: true,
+    #install_dir: install_prefix / lang / 'images' + '/',
     build_by_default: true,
 )
 
-#FIXME: Second run it adds an /images folder inside images!!!
+# For now, actual installation means copying all html, css, xml and image files/folders
+# Eventually we may want to extend html output to list all html files, then we should
+# be able to get rid of this script
+# Copies lang folder inside html to install location 
+meson.add_install_script(python, '-c', 
+    'import shutil; import sys, os; dest_dir = os.environ.get("MESON_INSTALL_DESTDIR_PREFIX") + sys.argv[2]; source_dir=sys.argv[1]; os.makedirs(dest_dir, exist_ok=True); shutil.copytree(source_dir, dest_dir, dirs_exist_ok=True, ignore=shutil.ignore_patterns("*.css.p", "*.html.p"))',
+    meson.current_build_dir(),
+    '/' + lang
+)
 
 #FIXME: We also need per lang a `gimp-help.xml` file that lists all help ids and what page it links to
