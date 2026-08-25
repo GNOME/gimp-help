@@ -59,15 +59,15 @@ if platform_windows
         build_by_default: true,
     )
 else
-    if not fs.is_dir(meson.current_build_dir() / 'images')
-        # Create dir
-        mkdir_script = 'import os; os.makedirs("@0@", exist_ok=True)'.format(meson.current_build_dir() / 'images')
-        run_command(python,
-            '-c',
-            mkdir_script,
-            check: true
-        )
-    endif
+    # if not fs.is_dir(meson.current_build_dir() / 'images')
+    #     # Create dir
+    #     mkdir_script = 'import os; os.makedirs("@0@", exist_ok=True)'.format(meson.current_build_dir() / 'images')
+    #     run_command(python,
+    #         '-c',
+    #         mkdir_script,
+    #         check: true
+    #     )
+    # endif
 
     gimp_html_images = custom_target(images_target,
         depends: [gimp_html],
