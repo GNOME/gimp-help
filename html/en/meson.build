@@ -121,7 +121,7 @@ gimp_html_images = custom_target(images_target,
 # be able to get rid of this script
 # Copies lang folder inside html to install location 
 meson.add_install_script(python, '-c', 
-    'import shutil; import sys, os; dest_dir = os.environ.get("MESON_INSTALL_DESTDIR_PREFIX") + sys.argv[2]; source_dir=sys.argv[1]; os.makedirs(dest_dir, exist_ok=True); shutil.copytree(source_dir, dest_dir, dirs_exist_ok=True, ignore=shutil.ignore_patterns("*.css.p", "*.html.p"))',
+    'import shutil; import sys, os; dest_dir = os.environ.get("MESON_INSTALL_DESTDIR_PREFIX") + sys.argv[2]; source_dir=sys.argv[1]; os.makedirs(dest_dir, exist_ok=True); shutil.copytree(source_dir, dest_dir, dirs_exist_ok=True, ignore=shutil.ignore_patterns("*.css.p", "*.html.p"), symlinks=True)',
     meson.current_build_dir(),
     '/' + lang
 )
