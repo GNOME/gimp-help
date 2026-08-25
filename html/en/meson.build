@@ -149,12 +149,12 @@ else
 
     gimp_html_images = custom_target(images_target,
         depends: [gimp_html],
-        output: ['gimp-xrefs.xml'], # for now so ci doesn't fail
+        output: ['index.html'], # for now so ci doesn't fail
         command: [
             ln,
             '-s',       # symbolic links
             meson.current_build_dir() / xml_private_dir / 'images',
-            meson.current_build_dir() / 'images',
+            meson.current_build_dir() / 'images',s
         ],
         #install: true,
         #install_dir: install_prefix / lang / 'images' + '/',
