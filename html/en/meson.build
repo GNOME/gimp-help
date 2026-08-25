@@ -101,20 +101,46 @@ gimp_html = custom_target(htmltarget,
 # Call with meson install --no-rebuild, or the above slow target will be run again for each language!
 
 images_target = htmltarget + '-images'
-gimp_html_images = custom_target(images_target,
-    depends: [gimp_html],
-    output: ['gimp-xrefs.xml'], # for now so ci doesn't fail
-    command: [
-        cp,
-        '-r',       # recursive
-        '-u',       # update if newer, copy if missing
-        meson.current_build_dir() / 'index.html.p' / 'images',
-        meson.current_build_dir() / 'images',
-    ],
-    #install: true,
-    #install_dir: install_prefix / lang / 'images' + '/',
-    build_by_default: true,
-)
+if platform_windows
+    gimp_html_images = custom_target(images_target,
+        depends: [gimp_html],
+        output: ['gimp-xrefs.xml'], # for now so ci doesn't fail
+        command: [
+            cp,
+            '-r',       # recursive
+            '-u',       # update if newer, copy if missing
+            meson.current_build_dir() / 'index.html.p' / 'images',
+            meson.current_build_dir() / 'images',
+        ],
+        #install: true,
+        #install_dir: install_prefix / lang / 'images' + '/',
+        build_by_default: true,
+    )
+else
+    if not fs.is_dir(meson.current_build_dir() / 'images')
+        # Create dir
+        mkdir_script = 'import os; os.makedirs("@0@", exist_ok=True)'.format(meson.current_build_dir() / 'images')
+        run_command(python,
+            '-c',
+            mkdir_script,
+            check: true
+        )
+    endif
+
+    gimp_html_images = custom_target(images_target,
+        depends: [gimp_html],
+        output: ['gimp-xrefs.xml'], # for now so ci doesn't fail
+        command: [
+            ln,
+            '-s',       # symbolic links
+            meson.current_build_dir() / 'index.html.p' / 'images',
+            meson.current_build_dir() / 'images',
+        ],
+        #install: true,
+        #install_dir: install_prefix / lang / 'images' + '/',
+        build_by_default: true,
+    )
+endif
 
 # For now, actual installation means copying all html, css, xml and image files/folders
 # Eventually we may want to extend html output to list all html files, then we should
