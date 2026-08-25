@@ -2,14 +2,14 @@
 #
 # make_image_links.pl
 #
-# This script creates relative symlinks in LANG/index.html.p to images files
+# This script creates relative symlinks in LANG/gimp-help.xml.p to images files
 # in images/C and images/common.
 #
 # Do not use this script directly, it's meant to be run by 'make'.
 #
 # Usage:
 #     cd <top_srcdir>  # where src/ and tools/ are
-#     tools/make_image_links.pl [-v] images/C images/common LANG/index.html.p
+#     tools/make_image_links.pl [-v] images/C images/common LANG/gimp-help.xml.p
 #
 
 use warnings;
@@ -78,11 +78,11 @@ my @Srcdirs = @ARGV;
 
 # assuming destination = (x|ht)ml/LANG[/images]
 my $locale_re = qr/[a-z]{2}(?:_[A-Z]{2})?/;
-if ($Destdir =~ s!(($locale_re)/(?:index\.html\.p))(?:/images?)?!$1!) {
+if ($Destdir =~ s!(($locale_re)/(?:gimp-help\.xml\.p))(?:/images?)?!$1!) {
     $Language = $2;
 } else {
     die "Error: invalid destination directory: $Destdir\n" .
-        "  (should be 'LANG/index.html.p[/images]')\n";
+        "  (should be 'LANG/gimp-help.xml.p[/images]')\n";
 }
 if ($Verbose > 1) {
     print STDERR "Destination  = $Destdir\n",
@@ -158,7 +158,7 @@ set_copy_mode();
 foreach my $srcdir (sort @Image_dirs) {
     # Construct corresponding destination directory,
     # assuming source = [.../]images/{C,common}
-    #     destination = LANG/index.html.p
+    #     destination = LANG/gimp-help.xml.p
     (my $dstdir = $srcdir) =~ s|(.*/)?images/[^/]+|$Destdir/images|o;
     -d $dstdir or mkpath $dstdir
         or die "Error: cannot mkpath $dstdir: $!\n";
