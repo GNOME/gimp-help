@@ -90,13 +90,15 @@ branches-check:
     DEB_VERSION: "trixie"
     RUNNER: "x86_64_v3"
   artifacts:
-    expire_in: 1 week
+    expire_in: 2 days
     when: always
     paths:
     - "${HELP_DIR}"
     - "${PDF_DIR}"
     - _log
-  script:
+    - _build
+    - ${INSTALL_PREFIX}
+script:
     - cd src
     # Mark all source files as updated. Needed to get up-to-date translations
     - find . -type f -exec touch {} +
@@ -125,12 +127,14 @@ branches-check:
     DEB_VERSION: "trixie"
     RUNNER: "x86_64_v3"
   artifacts:
-    expire_in: 1 week
+    expire_in: 2 days
     when: always
     paths:
     - "${HELP_DIR}"
     - "${PDF_DIR}"
     - _log
+    - _build
+    - ${INSTALL_PREFIX}
   script:
     - cd src
     # Mark all source files as updated. Needed to get up-to-date translations
