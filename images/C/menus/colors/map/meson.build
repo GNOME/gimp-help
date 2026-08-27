@@ -1,4 +1,4 @@
-images_menus_colors_map = [
+images_menus_colors_map = files(
     'alien-map-dialog.png',
     'exchange.png',
     'palettemap-ex1.png',
@@ -8,5 +8,4 @@ images_menus_colors_map = [
     'samplecolorize.png',
     'select-palette.png',
     'set-colormap.png',
-]
-
+)

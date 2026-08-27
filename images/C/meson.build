@@ -16,11 +16,15 @@ subdir('toolbox')
 subdir('tutorials')
 subdir('using')
 
+# FIXME Maybe we can add a tool in the future that automatically generates
+# the meson.build files under /images/C/ and have another validation tool
+# that checks for missing images in the meson.build files
+
 images_C_files = \
-    images_base_examples_files + \
-    images_contribute_files + \
-    images_dialogs_files + \
-    images_dialogs_examples_files + \
+    images_base_examples + \
+    images_contribute + \
+    images_dialogs + \
+    images_dialogs_examples + \
     images_filters + \
     images_filters_animation + \
     images_filters_artistic + \
@@ -49,17 +53,29 @@ images_C_files = \
     images_filters_map + \
     images_filters_noise + \
     images_filters_render + \
-    images_filters_web
-    # FIXME: All other image files..., including from /common
-
-images_C = \
-    images_base_examples + \
-    images_contribute + \
-    images_dialogs + \
-    images_dialogs_examples + \
+    images_filters_web + \
     images_glossary + \
     images_math + \
     images_menus + \
+    images_menus_colors + \
+    images_menus_colors_auto + \
+    images_menus_colors_components + \
+    images_menus_colors_desaturate + \
+    images_menus_colors_info + \
+    images_menus_colors_map + \
+    images_menus_colors_tone_mapping + \
+    images_menus_edit + \
+    images_menus_file + \
+    images_menus_file_create + \
+    images_menus_file_new + \
+    images_menus_filters + \
+    images_menus_help + \
+    images_menus_image + \
+    images_menus_image_color_management + \
+    images_menus_layer + \
+    images_menus_select + \
+    images_menus_view + \
+    images_menus_view_display_filters + \
     images_preferences + \
     images_stock_icons + \
     images_tool_options + \
@@ -67,32 +83,34 @@ images_C = \
     images_tutorials + \
     images_tutorials_tone_mapping + \
     images_using
-    # TODO: Add the submenus...
 
-test_images_C = images_base_examples
-test_images_C_path = images_base_examples_path
+    # FIXME: image files from /common
 
 
-img_gen = generator(cp,
-    #depends: pot_dependencies,
-    output: '@PLAINNAME@',
-    arguments : [
-        '@INPUT@',
-        '@OUTPUT@',
-    ])
+# test_images_C = images_base_examples
+# test_images_C_path = images_base_examples_path
 
-# use test_images_C_path for now
 
-all_img_gens = {}
-foreach lang : target_linguas
-  lang_img_gens = []
-  foreach img_file: test_images_C_path
-    gen_imgs = img_gen.process(
-        img_file,
-        preserve_path_from: meson.current_source_dir(),
-    )
-    lang_img_gens += gen_imgs
-    img_gens = {lang: lang_img_gens}
-    all_img_gens += img_gens
-  endforeach
-endforeach
+# img_gen = generator(cp,
+#     #depends: pot_dependencies,
+#     output: '@PLAINNAME@',
+#     arguments : [
+#         '@INPUT@',
+#         '@OUTPUT@',
+#     ])
+
+# # use test_images_C_path for now
+
+# all_img_gens = {}
+# foreach lang : target_linguas
+#   lang_img_gens = []
+#   foreach img_file: test_images_C_path
+#     gen_imgs = img_gen.process(
+#         img_file,
+#         preserve_path_from: meson.current_source_dir(),
+#     )
+#     lang_img_gens += gen_imgs
+#     img_gens = {lang: lang_img_gens}
+#     all_img_gens += img_gens
+#   endforeach
+# endforeach

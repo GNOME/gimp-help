@@ -1,4 +1,4 @@
-images_tutorials = [
+images_tutorials = files(
     'quickie-background-color-result.png',
     'quickie-background-desaturate-result.png',
     'quickie-background-foreground-select.jpg',
@@ -27,6 +27,6 @@ images_tutorials = [
     'straight-lines-example3.png',
     'straight-lines-example4.png',
     'straight-lines-example5.png',
-]
+)
 
 subdir('tone-mapping')

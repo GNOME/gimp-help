@@ -1,4 +1,4 @@
-images_tool_options = [
+images_tool_options = files(
     'brush-gradient-none.png',
     'brush-gradient-normal.png',
     'brush-gradient-sawtooth.png',
@@ -50,4 +50,4 @@ images_tool_options = [
     'smooth-stroke-example-straight-default.png',
     'smooth-stroke-example-straight-maximum.png',
     'smooth-stroke-example-straight-unchecked.png',
-]
+)

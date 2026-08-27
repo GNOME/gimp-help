@@ -1,7 +1,3 @@
-images_contribute = [
-    'xml-tags.png',
-]
-
-images_contribute_files = files(
+images_contribute = files(
     'xml-tags.png',
 )

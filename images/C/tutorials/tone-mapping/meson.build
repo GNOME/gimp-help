@@ -1,4 +1,4 @@
-images_tutorials_tone_mapping = [
+images_tutorials_tone_mapping = files(
     '1-stop-positive-exposure-compensation-added.jpg',
     'add-inverse-grayscale-mask.png',
     'add-one-stop-positive-exposure-compensation.png',
@@ -16,4 +16,4 @@ images_tutorials_tone_mapping = [
     'truck-tone-mapped-using-gegl-mantuik.jpg',
     'with-bilateral-smoothing-of-mask.jpg',
     'without-bilateral-smoothing-of-mask.jpg',
-]
+)

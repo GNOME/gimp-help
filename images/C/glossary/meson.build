@@ -1,10 +1,20 @@
-images_glossary = [
+images_glossary = files(
     'alias.png',
-    'alpha-channel-0.png',
-    'alpha-channel-1.png',
-    'alpha-channel-2.png',
-    'alpha-channel-3a.png',
-    'alpha-channel-3b.png',
+    'alpha-channel-0-dialog-channels.png',
+    'alpha-channel-0-dialog-layers.png',
+    'alpha-channel-0-example.png',
+    'alpha-channel-1-dialog-channels.png',
+    'alpha-channel-1-dialog-layers.png',
+    'alpha-channel-1-example.png',
+    'alpha-channel-2-dialog-channels.png',
+    'alpha-channel-2-dialog-layers.png',
+    'alpha-channel-2-example.png',
+    'alpha-channel-3a-dialog-channels.png',
+    'alpha-channel-3a-dialog-layers.png',
+    'alpha-channel-3a-example.png',
+    'alpha-channel-3b-dialog-channels.png',
+    'alpha-channel-3b-dialog-layers.png',
+    'alpha-channel-3b-example.png',
     'antialias.png',
     'bezier-curve.png',
     'color-model-additive.png',
@@ -17,4 +27,4 @@ images_glossary = [
     'modes-normal2.png',
     'tool-opt-increment.png',
     'tool-opt-nonincrement.png',
-]
+)

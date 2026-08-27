@@ -1,4 +1,4 @@
-images_menus_view = [
+images_menus_view = files(
     'display-filters.png',
     'example-snap-bbox.png',
     'example-snap-equidistance.png',
@@ -8,6 +8,6 @@ images_menus_view = [
     'show_all-ex-no.jpg',
     'show_all-ex-with.jpg',
     'view-out-of-gamut.png',
-]
+)
 
 subdir('display-filters')
