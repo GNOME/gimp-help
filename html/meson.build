@@ -1,4 +1,3 @@
-#html_stylesheet_path = meson.project_build_root() + '/stylesheets/plainhtml.xsl'
 html_stylesheet_path = meson.project_build_root() + '/stylesheets/'
 html_stylesheet_plainhtml = html_stylesheet_path  + 'plainhtml.xsl'
 
@@ -6,7 +5,7 @@ xml_base_file   = 'gimp-help.xml'
 xml_private_dir = xml_base_file + '.p'
 
 
-# install prefix should point to the location in side GIMP's prefix 
+# install prefix should point to the location inside GIMP's prefix 
 # where the language folders should be added that contain html
 # e.g. HELP_PREFIX=$GIMP_PREFIX/share/gimp/3.0/help
 install_prefix = get_option('prefix')
@@ -38,7 +37,6 @@ css_nn_files = [
     'gimp-help-custom.css',
 ]
 
-#subdir('images')
 subdir('stylesheets')
 
 SRC_IMAGE_FOLDERS = [
@@ -122,6 +120,7 @@ foreach lang : target_linguas
     #     build_always_stale: true,
     # )
 
+    # This should do the same as the make target xml/%/images
     xml_lang_copy_images = custom_target(copy_images_target,
         output:  [copy_images_target],
         command: [

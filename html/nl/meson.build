@@ -43,16 +43,12 @@ gimp_html = custom_target(htmltarget,
 )
 
 gimp_help_xml = custom_target(xmlhelptarget,
-    #depends: [gimp_html],
     input: [gimp_html, makeindex],
-
     output: ['gimp-help.xml'],
     command: [
         xsltproc,
         '--timing',
         '--nonet',
-        #'--xinclude',
-        #'--stringparam', 'l10n.gentext.default.language ', lang,
         '--output', '@OUTPUT@',
         html_stylesheet_path + 'makeindex.xsl',
         '@INPUT0@',
@@ -110,5 +106,3 @@ meson.add_install_script(python, '-c',
     meson.current_build_dir(),
     '/' + lang
 )
-
-#FIXME: We also need per lang a `gimp-help.xml` file that lists all help ids and what page it links to

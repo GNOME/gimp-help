@@ -62,6 +62,9 @@ gimp_css_all = []
 foreach css_file: all_css_files
     css_target = 'css-' + lang + '_@0@'.format(idx)
 
+    # FIXME Check if there is a simpler way to copy the css files
+    # for install we maybe can use install_data, but we also want
+    # it in /html/lang/ build dirs.
     gimp_css = custom_target(css_target,
         input: [lang_css_gens[idx]],
         output: [css_file],
@@ -107,8 +110,6 @@ gimp_help_xml = custom_target(xmlhelptarget,
         xsltproc,
         '--timing',
         '--nonet',
-        #'--xinclude',
-        #'--stringparam', 'l10n.gentext.default.language ', lang,
         '--output', '@OUTPUT@',
         html_stylesheet_path + 'makeindex.xsl',
         '@INPUT0@',
@@ -171,5 +172,3 @@ meson.add_install_script(python, '-c',
     meson.current_build_dir(),
     '/' + lang
 )
-
-#FIXME: We also need per lang a `gimp-help.xml` file that lists all help ids and what page it links to
