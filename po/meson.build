@@ -1,5 +1,14 @@
 # po files with one subdir for each supported language
 
+########################################################################
+####            The GIMP manual languages                           ####
+########################################################################
+
+# LINGUAS is read in the main meson.build because we need it in /stylesheets/
+# which needs to be done before /po/
+po_additional_files = files('LINGUAS')
+
+
 all_po_targets = []
 
 foreach lang : target_linguas
