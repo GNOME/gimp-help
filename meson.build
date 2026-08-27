@@ -7,15 +7,14 @@ gimp_help_version = '3.1.1'
 src_dir = 'src'
 po_dir  = 'po'
 
-# FIXME: List is incomplete!
-GIMP_HELP_LINGUAS = \
-  ['ca', 'da', 'de', 'el', 'en', 'en_GB', 'es', 'fi', 'fr', 'hr', 'it',
-   'ja', 'ko', 'lt', 'nl', 'nn', 'pt_BR', 'ro', 'ru', 'sl', 'sv', 'zh_CN',]
+# FIXME update readme regarding adding translations after merging meson...
+# GIMP_HELP_LINGUAS = \
+#   ['bg', 'ca', 'cs', 'da', 'de', 'el', 'en', 'en_GB', 'eo', 'es', 'fa', 'fi',
+#    'fr', 'hr', 'hu', 'it', 'ja', 'ko', 'lt', 'nl', 'nn', 'pt', 'pt_BR', 'ro',
+#    'ru', 'sk', 'sl', 'sr', 'sv', 'tr', 'uk', 'zh_CN',]
 
-ALL_LINGUAS = ''
+MY_LINGUAS = ['en', 'nl'] # FIXME Make this a meson option
 
-#LINGUAS = ['en', 'nl', 'xy']
-LINGUAS = ['en', 'nl']
 
 SUBDIRS = 'quickreference'
 
@@ -174,36 +173,6 @@ gimp_dir   = '~/gimp'
 message(top_srcdir)
 
 
-########################################################################
-####            The GIMP manual languages                           ####
-########################################################################
-
-all_linguas = ALL_LINGUAS
-if all_linguas == ''
-  all_linguas = GIMP_HELP_LINGUAS
-endif
-
-target_linguas = []
-foreach lang : LINGUAS
-  if not (lang in all_linguas)
-    lang_warning = 'Language "@0@" not found in all_linguas!'.format(lang)
-    warning(lang_warning)
-    warnings += lang_warning
-  else
-    target_linguas += lang
-  endif
-endforeach
-
-# if doc_linguas != ''
-#   doc_linguas_warning = '''
-#   Do not set the internal variable DOC_LINGUAS.
-#   '''
-#   warning(doc_linguas_warning)
-#   warnings += doc_linguas_warning
-# endif
-
-
-
 #gimpdir = get_option('gimpdir')
 #if gimpdir == ''
   # Default value
@@ -248,6 +217,33 @@ custom_target('validate-references',
   ],
   build_by_default: false,
 )
+
+
+########################################################################
+####            The GIMP manual languages                           ####
+########################################################################
+
+
+LINGUAS  = ['en']
+LINGUAS += fs.read('./po/LINGUAS').strip().split('\n')
+
+
+# ALL_LINGUAS is required in /stylesheets/, which is why we handle reading LINGUAS here
+target_linguas = []
+ALL_LINGUAS = ''
+foreach lang : MY_LINGUAS
+  if not (lang in LINGUAS)
+    if not lang.startswith('#')
+        lang_warning = 'Language "@0@" not found in all_linguas!'.format(lang)
+        warning(lang_warning)
+        warnings += lang_warning
+    endif
+  else
+    target_linguas += lang
+    ALL_LINGUAS += lang
+  endif
+endforeach
+
 
 #### Build/copy stylesheets ####
 
