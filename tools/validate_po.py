@@ -349,7 +349,7 @@ def main(argv):
 
     validator = Validate(verbose, warnings)
     for file in filenames:
-        if not file.endswith('meson.build'):
+        if not (file.endswith('meson.build') or file.endswith('LINGUAS')):
             if verbose:
                 print(f"Checking {file}")
             validator.setFile(file)
