@@ -132,6 +132,7 @@ foreach lang : target_linguas
         ],
         depend_files: [
             images_C_files,
+            images_common_files,
         ],
         install: false,
         build_by_default: true,
