@@ -200,8 +200,9 @@ if platform_windows
   # The /usr/bin/ version usually has less issues on Windows because it
   # uses the Linux paths IIRC
   #TODO: find location of MSYS2 instead of hardcoding!!!
+  # Maybe find a program that only exists in msys2 and use that location?
   xmllint  = find_program('xmllint', required: false, dirs: ['c:/msys64/usr/bin/'])
-  xsltproc = find_program('xsltproc', dirs: ['c:/msys64//usr/bin/'])
+  xsltproc = find_program('xsltproc', dirs: ['c:/msys64/usr/bin/'])
 else
   xmllint  = find_program('xmllint', required: false)
   xsltproc = find_program('xsltproc')
