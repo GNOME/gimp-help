@@ -179,12 +179,12 @@ class docbookXmlMode(basicXmlMode):
                 line = line.strip()
                 match = re.match(r"^([^<,]+)\s*(?:<([^>,]+)>)?,\s*(.*)$", line)
                 last = self._find_lastcopyright(ai)
-                copy = libxml2.newNode("copyright")
-                if last:
-                    copy = last.addNextSibling(copy)
-                else:
-                    ai.addChild(copy)
                 if match:
+                    copy = libxml2.newNode("copyright")
+                    if last:
+                        copy = last.addNextSibling(copy)
+                    else:
+                        ai.addChild(copy)
                     if match.group(3):
                         copy.newChild(None, "year", match.group(3))
                     if match.group(1) and match.group(2):
@@ -198,6 +198,11 @@ class docbookXmlMode(basicXmlMode):
                         holder = "???"
                     copy.newChild(None, "holder", holder)
                 elif not line == "":
+                    copy = libxml2.newNode("copyright")
+                    if last:
+                        copy = last.addNextSibling(copy)
+                    else:
+                        ai.addChild(copy)
                     # Translators without email and copyright year
                     # DTD requires a year, so add an empty one...
                     copy.newChild(None, "year", "")
