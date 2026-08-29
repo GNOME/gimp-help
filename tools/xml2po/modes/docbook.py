@@ -199,6 +199,8 @@ class docbookXmlMode(basicXmlMode):
                     copy.newChild(None, "holder", holder)
                 elif not line == "":
                     # Translators without email and copyright year
+                    # DTD requires a year, so add an empty one...
+                    copy.newChild(None, "year", "")
                     copy.newChild(None, "holder", line)
 
 # Perform some tests when ran standalone
