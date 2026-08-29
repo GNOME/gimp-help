@@ -178,17 +178,18 @@ class docbookXmlMode(basicXmlMode):
             for line in lines:
                 line = line.strip()
                 match = re.match(r"^([^<,]+)\s*(?:<([^>,]+)>)?,\s*(.*)$", line)
+                last = self._find_lastcopyright(ai)
+                copy = libxml2.newNode("copyright")
+                if last:
+                    copy = last.addNextSibling(copy)
+                else:
+                    ai.addChild(copy)
                 if match:
-                    last = self._find_lastcopyright(ai)
-                    copy = libxml2.newNode("copyright")
-                    if last:
-                        copy = last.addNextSibling(copy)
-                    else:
-                        ai.addChild(copy)
                     if match.group(3):
                         copy.newChild(None, "year", match.group(3))
                     if match.group(1) and match.group(2):
-                        holder = match.group(1)+"(%s)" % match.group(2)
+                        # Let's not add e-mail publicly
+                        holder = match.group(1)#+"(%s)" % match.group(2)
                     elif match.group(1):
                         holder = match.group(1)
                     elif match.group(2):
@@ -196,6 +197,9 @@ class docbookXmlMode(basicXmlMode):
                     else:
                         holder = "???"
                     copy.newChild(None, "holder", holder)
+                elif not line == "":
+                    # Translators without email and copyright year
+                    copy.newChild(None, "holder", line)
 
 # Perform some tests when ran standalone
 if __name__ == '__main__':
