@@ -19,3 +19,4 @@ foreach lang : target_linguas
     endif
 endforeach
 
+po_dependencies = all_po_targets

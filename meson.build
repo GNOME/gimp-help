@@ -1,6 +1,6 @@
 project('gimp-help',
     version: '3.1.1',
-    meson_version: '>= 1.4.0',
+    meson_version: '>= 1.10.0',
 )
 
 gimp_help_version = '3.1.1'
@@ -13,7 +13,7 @@ po_dir  = 'po'
 #    'fr', 'hr', 'hu', 'it', 'ja', 'ko', 'lt', 'nl', 'nn', 'pt', 'pt_BR', 'ro',
 #    'ru', 'sk', 'sl', 'sr', 'sv', 'tr', 'uk', 'zh_CN',]
 
-MY_LINGUAS = ['en', 'nl'] # FIXME Make this a meson option
+MY_LINGUAS = ['en', 'de', 'nl'] # FIXME Make this a meson option
 
 
 SUBDIRS = 'quickreference'
@@ -371,6 +371,9 @@ maintainers_file = custom_target('MAINTAINERS',
 
 pot_base = 'pot/'
 
+# Documentation source files
+subdir('src')
+
 # pot needs generated authors.xml in src/preface
 subdir('pot')
 
@@ -380,7 +383,6 @@ subdir('pot')
 subdir('po')
 
 # Generate translated xml files...
-subdir('src')
 subdir('images')
 subdir('html')
 

@@ -1,7 +1,7 @@
 html_stylesheet_path = meson.project_build_root() + '/stylesheets/'
 html_stylesheet_plainhtml = html_stylesheet_path  + 'plainhtml.xsl'
 
-xml_base_file   = 'gimp-help.xml'
+xml_base_file   = 'gimp-xrefs.xml'
 xml_private_dir = xml_base_file + '.p'
 
 
@@ -39,10 +39,127 @@ css_nn_files = [
 
 subdir('stylesheets')
 
-SRC_IMAGE_FOLDERS = [
-    meson.project_source_root() / 'images' / 'common' ,
-    meson.project_source_root() / 'images' / 'C' ,
-]
+# SRC_IMAGE_FOLDERS = [
+#     meson.project_source_root() / 'images' / 'common' ,
+#     meson.project_source_root() / 'images' / 'C' ,
+# ]
+
+#FIXME: Depending on po below should be enough because po depends on pot
+#FIXME: Should only depend on the po files for the current language
+gen = generator(xml2po,
+    depends: [pot_dependencies, po_dependencies],
+    output: '@PLAINNAME@',
+    arguments : [
+        '-k',
+        '--mode=gimphelp',
+        '@EXTRA_ARGS@',
+        '--output=@OUTPUT@',
+        '@INPUT@',
+    ])
+
+en_gen = generator(cp,
+    depends: [pot_dependencies, po_dependencies],
+    output: '@PLAINNAME@',
+    arguments : [
+        '@INPUT@',
+        '@OUTPUT@',
+    ])
+
+all_generators  = {}
+
+idx = 0
+foreach lang : target_linguas
+    # target per lang
+    target_base = lang + '-'
+    htmltarget = 'html-'+lang
+
+    message('language ' + lang + ' index @0@'.format(idx))
+    idx += 1
+
+    lang_xml_gens = []
+
+    # en is a special case...
+    if lang != 'en'
+        foreach xmlfile : xml_sources_root
+            #target = target_base + xmlfile
+            #dest_xml = '/' + lang + '/' + xmlfile
+            #message('Destination xml: ' + dest_xml + ' - ' + target)
+            gen_xml = gen.process(
+                xmlfile,
+                extra_args: [
+                    '--po-file=' + meson.project_build_root() + '/po/' + lang + '/' + 'gimp.po',
+                    #'--po-file=' + '@INPUT@',
+                    '--language=' + lang,
+                ],
+                #preserve_path_from: meson.current_source_dir(),
+            )
+            lang_xml_gens += gen_xml
+        endforeach
+    else
+        # English has no po files...
+        foreach xmlfile : xml_sources_root
+            #target = target_base + xmlfile
+            #lang_xml = meson.project_build_root()  + '/src/' + lang + '/' + xmlfile
+            gen_xml = en_gen.process(
+                xmlfile,
+                #preserve_path_from: meson.current_source_dir(),
+            )
+            lang_xml_gens += gen_xml
+
+        endforeach
+    endif
+    #lang_generators += lang_xml_gens
+    all_generators  += { lang: lang_xml_gens}
+endforeach
+
+foreach folder, file_list: xml_sources_lists
+    xml_files_list = file_list
+    xml_sub_dir    = '/' + folder + '/'
+    po_file        = folder + '.po'
+
+    idx = 0
+    foreach lang : target_linguas
+        message('language ' + lang + ' index @0@'.format(idx) + ' folder: ' + xml_sub_dir)
+        idx += 1
+
+        lang_xml_gens = []
+
+        # en is a special case...
+        if lang != 'en'
+            po_file_path = meson.project_build_root() + '/po/' + lang + '/' + po_file
+            foreach xmlfile : xml_files_list
+                gen_xml = gen.process(
+                    xmlfile,
+                    extra_args: [
+                        '--po-file=' + po_file_path,
+                        '--language=' + lang,
+                    ],
+                    #preserve_path_from: meson.current_source_dir(),
+                    preserve_path_from: SRC_FOLDER,
+                )
+                lang_xml_gens += gen_xml
+            endforeach
+        else
+            # English has no po files, so we just copy the xml files
+            message('Folder: ', folder, 'first file: ', file_list[0].full_path())
+            foreach xmlfile : xml_files_list
+                gen_xml = en_gen.process(
+                    xmlfile,
+                    #preserve_path_from: meson.current_source_dir(),
+                    preserve_path_from: SRC_FOLDER,
+                )
+                lang_xml_gens += gen_xml
+            endforeach
+        endif
+
+        # Update generators for this language
+        mygen  = all_generators.get(lang)
+        mygen += lang_xml_gens
+        all_generators  += { lang: mygen}
+    endforeach
+endforeach
+
+
 
 foreach lang : target_linguas
 
@@ -120,6 +237,8 @@ foreach lang : target_linguas
     #     build_always_stale: true,
     # )
 
+    # FIXME custom_target has a @PRIVATE_DIR@ variable that we may be able to
+    # use to add images to the private dir, something to investigate later.
     # This should do the same as the make target xml/%/images
     xml_lang_copy_images = custom_target(copy_images_target,
         output:  [copy_images_target],
@@ -139,6 +258,121 @@ foreach lang : target_linguas
         build_always_stale: true,   # for now
     )
 
-    subdir(lang)
+    #subdir(lang)
+
+    ### And now create in a language subdir ###
+    ### This requires meson 1.10, without that, the below code would need
+    ### to be added to a language subdir under html for each language.
+
+    gen_lang = all_generators.get(lang)
+
+    idx = 0
+    gimp_css_all = []
+    foreach css_file: all_css_files
+        css_target = 'css-' + lang + '_@0@'.format(idx)
+
+        # FIXME Check if there is a simpler way to copy the css files
+        # for install we maybe can use install_data, but we also want
+        # it in /html/lang/ build dirs.
+        gimp_css = custom_target(css_target,
+            input: [lang_css_gens[idx]],
+            output: [css_file],
+            command: [
+                cp,
+                '@INPUT@',
+                '@OUTPUT@',
+            ],
+            #install: true,
+            #install_dir: install_prefix / lang + '/',
+            #build_by_default: true,
+            build_subdir: lang,
+        )
+        gimp_css_all += gimp_css
+        idx += 1
+    endforeach
+
+    gimp_html = custom_target(htmltarget,
+        depends: [gimp_css_all, gimp_ss_all, xml_lang_copy_images],
+        input: [gen_lang],
+        output: [xml_base_file], #FIXME: Needs all files to be able to easily install them
+        command: [
+            xsltproc,
+            '--timing',
+            '--nonet',
+            '--xinclude',
+            '--stringparam', 'l10n.gentext.default.language ', lang,
+            '--output', meson.current_build_dir() + '/' + lang + '/',
+            html_stylesheet_plainhtml,
+            '@INPUT0@',
+        ],
+        install: true,
+        install_dir: install_prefix / lang + '/',
+        build_by_default: true,
+        build_subdir: lang,
+    )
+
+    gimp_help_xml = custom_target(xmlhelptarget,
+        input: [gimp_html, makeindex],
+        output: ['gimp-help.xml'],
+        command: [
+            xsltproc,
+            '--timing',
+            '--nonet',
+            '--output', meson.current_build_dir() + '/' + lang + '/' + 'gimp-help.xml',
+            html_stylesheet_path + 'makeindex.xsl',
+            #'@INPUT0@',
+            meson.current_build_dir() / lang / xml_private_dir / 'gimp.xml',
+        ],
+        install: true,
+        install_dir: install_prefix / lang + '/',
+        build_by_default: true,
+        build_subdir: lang,
+    )
+
+    # Call with meson install --no-rebuild, or the above slow target will be run again for each language!
+
+    images_target = htmltarget + '-images'
+    if platform_windows
+        gimp_html_images = custom_target(images_target,
+            depends: [gimp_html],
+            output: ['index.html'], # for now so ci doesn't fail
+            command: [
+                cp,
+                '-r',       # recursive
+                '-u',       # update if newer, copy if missing
+                meson.current_build_dir() / lang / xml_private_dir / 'images',
+                meson.current_build_dir() / lang / 'images',
+            ],
+            #install: true,
+            #install_dir: install_prefix / lang / 'images' + '/',
+            build_by_default: true,
+            build_subdir: lang,
+        )
+    else
+        gimp_html_images = custom_target(images_target,
+            depends: [gimp_html],
+            output: ['index.html'], # for now so ci doesn't fail
+            command: [
+                ln,
+                '-s',       # symbolic links
+                meson.current_build_dir() / lang / xml_private_dir / 'images',
+                meson.current_build_dir() / lang / 'images',
+            ],
+            #install: true,
+            #install_dir: install_prefix / lang / 'images' + '/',
+            build_by_default: true,
+            build_subdir: lang,
+        )
+    endif
+
+    # For now, actual installation means copying all html, css, xml and image files/folders
+    # Eventually we may want to extend html output to list all html files, then we should
+    # be able to get rid of this script
+    # Copies lang folder inside html to install location 
+    meson.add_install_script(python, '-c', 
+        'import shutil; import sys, os; dest_dir = os.environ.get("MESON_INSTALL_DESTDIR_PREFIX") + sys.argv[2]; source_dir=sys.argv[1]; os.makedirs(dest_dir, exist_ok=True); shutil.copytree(source_dir, dest_dir, dirs_exist_ok=True, ignore=shutil.ignore_patterns("*.p"), symlinks=True)',
+        meson.current_build_dir() / lang,
+        '/' + lang
+    )
 
 endforeach
