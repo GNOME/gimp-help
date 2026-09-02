@@ -40,6 +40,8 @@ import subprocess
 import shutil
 import time
 
+VERBOSE=0
+
 build_dir = sys.argv[1]
 pot_file  = sys.argv[1] + '/' + sys.argv[2]
 lang      = sys.argv[3]
@@ -55,12 +57,14 @@ dest_po   = sys.argv[5]
 # print("4: " + sys.argv[4])  # concepts.po in source
 # print("5: " + sys.argv[5])  # concepts.po in build
 
-print("pot: " + pot_file)
-print("src po: " + src_po)
-print("dest po: " + dest_po)
+if VERBOSE > 0:
+    print("pot: " + pot_file)
+    print("src po: " + src_po)
+    print("dest po: " + dest_po)
 
 if not os.path.isfile(src_po):
-    print('Does not exist: ' + src_po)
+    if VERBOSE > 0:
+        print('Initializing missing po file: ' + src_po)
     #FIXME After the first time build/po is initialized, but not src po,
     #      What to do about that?
     init_cmd = subprocess.Popen(
