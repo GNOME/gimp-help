@@ -76,12 +76,14 @@ class GetFolderStats(object):
         root_folder = os.path.join(self.base_folder, self.lang_dir)
         for root, _dirs, files in os.walk(root_folder):
             for file in files:
-                filepath = os.path.join(root, file)
-                gs = GetStats(filepath, mofile)
-                gs.run()
-                self.total_files += 1
-                self.total_messages += gs.total
-                self.translated_messages += gs.translated
+                # ignore non-po files, e.g. meson.build
+                if file.endswith('.po'):
+                    filepath = os.path.join(root, file)
+                    gs = GetStats(filepath, mofile)
+                    gs.run()
+                    self.total_files += 1
+                    self.total_messages += gs.total
+                    self.translated_messages += gs.translated
 
         if verbose:
             pct = 0
