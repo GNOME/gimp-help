@@ -419,6 +419,23 @@ if xmllint.found()
   )
 endif
 
+
+### Quickreference ###
+
+if get_option('quickreference')
+  SVG2PDF       = find_program('rsvg-convert')
+  #SVG2PDF_FLAGS = '-a -f pdf'
+
+  subdir('quickreference')
+endif
+
+
+### Website ###
+if get_option('maintainer')
+  subdir('web')
+endif
+
+
 #custom_target('Changelog',
 #  input : [ ],
 #  output: [ 'Changelog', ],
