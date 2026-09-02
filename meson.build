@@ -162,14 +162,22 @@ warnings = ''
 ####            The GIMP manual languages                           ####
 ########################################################################
 
+# FIXME update readme regarding adding translations after merging meson...
 
 LINGUAS  = ['en']
 LINGUAS += fs.read('./po/LINGUAS').strip().split('\n')
 
+selected_languages = get_option('languages')
 
-if MY_LINGUAS.length() == 0
+if selected_languages.startswith('all')
   MY_LINGUAS = LINGUAS
+elif selected_languages.startswith('none') or selected_languages == ''
+  MY_LINGUAS = 'en'
+else
+  MY_LINGUAS = selected_languages.strip().split(' ')
 endif
+
+message('Selected languages: ', MY_LINGUAS)
 
 # ALL_LINGUAS is required in /stylesheets/, which is why we handle reading LINGUAS here
 target_linguas = []
@@ -188,6 +196,11 @@ foreach lang : MY_LINGUAS
     endif
   endif
 endforeach
+
+if ALL_LINGUAS == ''
+  error('No languages selected or error in configuration')
+  subdir_done()
+endif
 
 
 #### Build/copy stylesheets ####
