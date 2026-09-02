@@ -91,7 +91,7 @@ branches-check:
     DEB_VERSION: "trixie"
     RUNNER: "x86_64_v3"
   artifacts:
-    expire_in: 1 week
+    expire_in: 1 day
     when: always
     paths:
     - "${HELP_DIR}"
@@ -107,7 +107,9 @@ branches-check:
     - mkdir _build
     - cd _build
     - meson setup -Dprefix=${INSTALL_PREFIX}/share/gimp/3.0/help
-    - ninja && meson install --no-rebuild
+    # The xsltproc target building all html files can be a memory hog,
+    # so we limit the system load, hopefully this is enough
+    - ninja -l 4.5 && meson install --no-rebuild
     #- ../autogen.sh --prefix=${INSTALL_PREFIX} --without-gimp
     # Make po first to get validate to use up-to-date translations, and also to stop plain make from redoing the xml
     #- make po
@@ -130,7 +132,7 @@ branches-check:
     DEB_VERSION: "trixie"
     RUNNER: "x86_64_v3"
   artifacts:
-    expire_in: 1 week
+    expire_in: 1 day
     when: always
     paths:
     - "${HELP_DIR}"
@@ -145,7 +147,9 @@ branches-check:
     - mkdir _build
     - cd _build
     - meson setup -Dprefix=${INSTALL_PREFIX}/share/gimp/3.0/help
-    - ninja && meson install --no-rebuild
+    # The xsltproc target building all html files can be a memory hog,
+    # so we limit the system load, hopefully this is enough
+    - ninja -l 4.5 && meson install --no-rebuild
     #- ../autogen.sh --prefix=${INSTALL_PREFIX} --without-gimp
     # Make po first to get validate to use up-to-date translations, and also to stop plain make from redoing the xml
     #- make po
@@ -162,44 +166,37 @@ branches-check:
 build-debian-1:
   extends: .build-debian-base
   variables:
-    LINGUAS: "bg ca cs da de"
+    LINGUAS: "bg ca cs da de en en_GB eo"
     HELP_DIR: "_html1"
     PDF_DIR: "_pdf1"
 
 build-debian-2:
   extends: .build-debian-base
   variables:
-    LINGUAS: "en en_GB eo es fa fi fr"
+    LINGUAS: "es fa fi fr hr hu it ja"
     HELP_DIR: "_html2"
     PDF_DIR: "_pdf2"
 
 build-debian-3:
   extends: .build-debian-base
   variables:
-    LINGUAS: "hr hu it ja ko lt"
+    LINGUAS: "ko lt nl nn pl pt pt_BR ro"
     HELP_DIR: "_html3"
     PDF_DIR: "_pdf3"
 
 build-debian-4:
   extends: .build-debian-base
   variables:
-    LINGUAS: "nl nn pl pt pt_BR ro"
+    LINGUAS: "sk sl sr sv tr uk zh_CN"
     HELP_DIR: "_html4"
     PDF_DIR: "_pdf4"
 
 build-debian-5:
   extends: .build-debian-base
   variables:
-    LINGUAS: "sk sl sr sv tr uk zh_CN"
+    LINGUAS: "el ru"
     HELP_DIR: "_html5"
     PDF_DIR: "_pdf5"
-
-build-debian-6:
-  extends: .build-debian-base
-  variables:
-    LINGUAS: "el ru"
-    HELP_DIR: "_html6"
-    PDF_DIR: "_pdf6"
 
 
 www-debian:
@@ -215,7 +212,7 @@ www-debian:
     - build-debian-3
     - build-debian-4
     - build-debian-5
-    - build-debian-6
+    #- build-debian-6
   artifacts:
     expire_in: 1 week
     when: always
@@ -258,7 +255,7 @@ www-debian:
     - mv _html3/* htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/
     - mv _html4/* htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/
     - mv _html5/* htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/
-    - mv _html6/* htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/
+    #- mv _html6/* htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/
 
 win-installer:
   # This regularly fails with: fatal: unable to access
@@ -321,29 +318,24 @@ win-installer:
 distcheck-1:
   extends: .distcheck-base
   variables:
-    LINGUAS: "bg ca cs da de"
+    LINGUAS: "bg ca cs da de en en_GB eo"
 
 distcheck-2:
   extends: .distcheck-base
   variables:
-    LINGUAS: "en en_GB eo es fa fi fr"
+    LINGUAS: "es fa fi fr hr hu it ja"
 
 distcheck-3:
   extends: .distcheck-base
   variables:
-    LINGUAS: "hr hu it ja ko lt"
+    LINGUAS: "ko lt nl nn pl pt pt_BR ro"
 
 distcheck-4:
   extends: .distcheck-base
   variables:
-    LINGUAS: "nl nn pl pt pt_BR ro"
-
-distcheck-5:
-  extends: .distcheck-base
-  variables:
     LINGUAS: "sk sl sr sv tr uk zh_CN"
 
-distcheck-6:
+distcheck-5:
   extends: .distcheck-base
   variables:
     LINGUAS: "el ru"
