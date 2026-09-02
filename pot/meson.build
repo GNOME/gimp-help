@@ -25,9 +25,9 @@ output_pot = pot_gimp_help
 input_files = xml_sources_root
 
 #test
-foreach testfile : input_files
-    message('File: ', testfile.full_path())
-endforeach
+# foreach testfile : input_files
+#     message('File: ', testfile.full_path())
+# endforeach
 
 gimp_pot = custom_target(output_pot,
     depends: [copy_authors_to_src],

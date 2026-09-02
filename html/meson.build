@@ -119,7 +119,7 @@ foreach folder, file_list: xml_sources_lists
 
     idx = 0
     foreach lang : target_linguas
-        message('language ' + lang + ' index @0@'.format(idx) + ' folder: ' + xml_sub_dir)
+        #message('language ' + lang + ' index @0@'.format(idx) + ' folder: ' + xml_sub_dir)
         idx += 1
 
         lang_xml_gens = []
@@ -141,7 +141,7 @@ foreach folder, file_list: xml_sources_lists
             endforeach
         else
             # English has no po files, so we just copy the xml files
-            message('Folder: ', folder, 'first file: ', file_list[0].full_path())
+            #message('Folder: ', folder, 'first file: ', file_list[0].full_path())
             foreach xmlfile : xml_files_list
                 gen_xml = en_gen.process(
                     xmlfile,
@@ -221,7 +221,7 @@ foreach lang : target_linguas
     #       our meson files need to be updated too.
 
     htmltarget         = 'html-'+lang
-    xmlhelptarget      = 'html-'+lang+'gimp-help-xml'
+    xmlhelptarget      = 'html-'+lang+'-gimp-help-xml'
     copy_images_target = 'xml-images-' + lang
 
     # xml_lang_copy_images = custom_target(copy_images_target,
