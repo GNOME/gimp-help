@@ -225,14 +225,22 @@ custom_target('validate-references',
 ####            The GIMP manual languages                           ####
 ########################################################################
 
-
 LINGUAS  = ['en']
 LINGUAS += fs.read('./po/LINGUAS').strip().split('\n')
 
+selected_languages = get_option('languages')
 
-if MY_LINGUAS.length() == 0
+if selected_languages.startswith('all')
   MY_LINGUAS = LINGUAS
+elif selected_languages.startswith('none') or selected_languages == ''
+  MY_LINGUAS = 'en'
+else
+  MY_LINGUAS = selected_languages.strip().split('\n')
 endif
+
+# if MY_LINGUAS.length() == 0
+#   MY_LINGUAS = LINGUAS
+# endif
 
 # ALL_LINGUAS is required in /stylesheets/, which is why we handle reading LINGUAS here
 target_linguas = []
