@@ -408,63 +408,6 @@ subdir('po')
 subdir('images')
 subdir('html')
 
-xml2pot_targets = []
-
-# foreach pot_action : pot_list
-#   xmlsubdir = pot_action.get('dir')
-#   srcdir    = 'src/'+ xmlsubdir + '/'
-#   targetdir = 'pot/'
-#   srcfiles  = []
-#   foreach srcfile : pot_action.get('files')
-#     srcfiles += srcdir + srcfile
-#   endforeach
-
-#   #message('Creating target for ' + pot_action.get('target'))
-
-# #   xml2pot_target = custom_target(pot_action.get('target'),
-# #     input: srcfiles,
-# #     output: [pot_action.get('target')],
-# #     command: [
-# # #      xml2pot, pot_action.get('target'), srcfiles,
-# #       xml2pot, '@OUTPUT@', '@INPUT@',
-# #     ],
-# #     build_by_default: true,
-# #   )
-#   # xml2pot_target = run_target(pot_action.get('target'),
-#   #   command: [
-#   #     xml2pot, [pot_action.get('target')], srcfiles,
-#   #   ],
-#   #   # apparently env was only added in meson 0.57 while we are using 0.55...
-#   #   #env: xml2po_env,
-#   #   # env: {
-#   #   #   'XML2PO' : XML2PO.full_path(),
-#   #   #   'MSGUNIQ': MSGUNIQ.full_path(),
-#   #   # }
-#   #   # env: [
-#   #   #   'XML2PO=test/',
-#   #   #   'MSGUNIQ=msguniq',
-#   #   # ]
-#   # )
-# #  xml2pot_targets += pot_action.get('target') #xml2pot_target
-# #  xml2pot_targets += xml2pot_target
-
-# #   xml2pot_target = custom_target('xml2pot-' + xmlsubdir,
-# #     input: srcfiles,
-# # #    output: ['xml2pot-' + xmlsubdir],
-# #     output: [pot_action.get('target')],
-# #     command: [
-# #       xml2pot, '@OUTPUT@', '@INPUT@',
-# # #      XML2PO, XML2POFLAGS, '--output=-',
-# # #      '@INPUT@',
-# #     #capture: [xml2po_result]
-# #     ]
-# #   )
-# #   # msg_uniq = run_command(
-# #   #   MSGUNIQ, MSGUNIQFLAGS
-# #   # )
-# endforeach
-
-# )
 
 if xmllint.found()
   run_target('validate-authors',
@@ -486,22 +429,3 @@ endif
 #  ],
 #  build_by_default: false,
 #)
-
-# lang='nl'
-# po_input = ['po/nl/gimp.po']
-# xml_input = ['src/gimp.xml']
-
-# gen = generator(
-#   po2xml_cmd,
-#   output: [
-#     'xml/'+lang+'/'+'@BASENAME@.xml',
-#   ],
-#   arguments: [
-#     '--po-file=' + '@INPUT@',
-#     '--language=' + lang,
-#     'output=@OUTPUT@',
-#     xml_input,
-#   ],
-# )
-
-# gen_xml = gen.process([ 'bugs' ])
