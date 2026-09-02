@@ -235,8 +235,10 @@ if selected_languages.startswith('all')
 elif selected_languages.startswith('none') or selected_languages == ''
   MY_LINGUAS = 'en'
 else
-  MY_LINGUAS = selected_languages.strip().split('\n')
+  MY_LINGUAS = selected_languages.strip().split(' ')
 endif
+
+message('Selected languages: ', MY_LINGUAS)
 
 # if MY_LINGUAS.length() == 0
 #   MY_LINGUAS = LINGUAS
@@ -259,6 +261,11 @@ foreach lang : MY_LINGUAS
     endif
   endif
 endforeach
+
+if ALL_LINGUAS == ''
+  message('No languages selected or error in configuration')
+  subdir_done()
+endif
 
 
 #### Build/copy stylesheets ####
