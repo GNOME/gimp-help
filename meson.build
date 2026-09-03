@@ -167,6 +167,7 @@ warnings = ''
 
 LINGUAS  = ['en']
 LINGUAS += fs.read('./po/LINGUAS').strip().split('\n')
+message('LINGUAS: ', LINGUAS)
 
 selected_languages = get_option('languages')
 
@@ -197,6 +198,19 @@ foreach lang : MY_LINGUAS
     endif
   endif
 endforeach
+
+if get_option('maintainer')
+  # For the website we need stats of all languages we support, which we
+  # get from the po files. So we need po files updated for ALL languages.
+  po_target_linguas = []
+  foreach lang : LINGUAS
+    if not lang.startswith('#')
+      po_target_linguas += lang
+    endif
+  endforeach
+else
+  po_target_linguas = target_linguas
+endif
 
 if ALL_LINGUAS == ''
   error('No languages selected or error in configuration')
@@ -323,7 +337,7 @@ endif
 ###############################################################################
 ### Website ###
 if get_option('maintainer')
-  subdir('web')
+  #subdir('web')
 endif
 
 
