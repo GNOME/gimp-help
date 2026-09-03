@@ -106,7 +106,7 @@ branches-check:
     - cd ..
     - mkdir _build
     - cd _build
-    - meson setup -Dprefix=${INSTALL_PREFIX}/share/gimp/3.0/help -Dlanguages="${LINGUAS}"
+    - meson setup -Dprefix=${INSTALL_PREFIX}/share/gimp/3.0/help -Dlanguages="${LINGUAS}" -Dquickreference=true
     # The xsltproc target building all html files can be a memory hog,
     # so we limit the system load, hopefully this is enough
     - ninja -l 4.5 && meson install --no-rebuild
@@ -146,7 +146,7 @@ branches-check:
     - cd ..
     - mkdir _build
     - cd _build
-    - meson setup -Dprefix=${INSTALL_PREFIX}/share/gimp/3.0/help -Dlanguages="${LINGUAS}"
+    - meson setup -Dprefix=${INSTALL_PREFIX}/share/gimp/3.0/help -Dlanguages="${LINGUAS}" -Dquickreference=true
     # The xsltproc target building all html files can be a memory hog,
     # so we limit the system load, hopefully this is enough
     - ninja -l 4.5 && meson install --no-rebuild
@@ -243,11 +243,11 @@ www-debian:
     - MAJOR_VERSION=`grep 'm4_define(\[help_major_version' configure.ac |sed 's/m4_define(\[help_major_version.*\[\([0-9]*\)\].*/\1/'`
     - MINOR_VERSION=`grep 'm4_define(\[help_minor_version' configure.ac |sed 's/m4_define(\[help_minor_version.*\[\([0-9]*\)\].*/\1/'`
     - mkdir -p htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/pdf
-    #- mv _pdf1/*.pdf htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/pdf/
-    #- mv _pdf2/*.pdf htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/pdf/
-    #- mv _pdf3/*.pdf htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/pdf/
-    #- mv _pdf4/*.pdf htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/pdf/
-    #- mv _pdf5/*.pdf htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/pdf/
+    - mv _pdf1/*.pdf htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/pdf/
+    - mv _pdf2/*.pdf htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/pdf/
+    - mv _pdf3/*.pdf htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/pdf/
+    - mv _pdf4/*.pdf htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/pdf/
+    - mv _pdf5/*.pdf htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/pdf/
     #- mv _pdf6/*.pdf htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/pdf/
     # Move all the help html files.
     - mv _html1/* htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/
