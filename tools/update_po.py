@@ -102,7 +102,7 @@ dest_po = dest_base
 
 #2 Merge po with pot
 
-outfile="dummy.po"
+#outfile="dummy.po"
 merge_cmd = subprocess.Popen(
     ["msgmerge",
         "--quiet",
@@ -119,18 +119,6 @@ if merge_cmd.returncode:
 
 #3 fmt po
 
-fmt_cmd = subprocess.Popen(
-    ["msgfmt",
-        "--check",
-        "--use-fuzzy",
-        "--statistics",
-        dest_po,
-    ],
-    stdin=sys.stdout,
-    stdout=subprocess.PIPE,
-    stderr=subprocess.PIPE
-)
-
 # When using meson it apparently happens that msgfmt is called when
 # the pofile is already in use by another process.
 # We will try it again 20 times and sleep for 5 seconds in between.
@@ -138,22 +126,31 @@ result  = 1
 max_cnt = 20
 counter = 0
 while result != 0 and counter < max_cnt:
-#    result = os.system("msgfmt -o %s %s >%s" % (mofile_tmppath, pofile, NULL_STRING))
-    # FIXME: Is it even possible to re-run this without calling Popen again?
+    fmt_cmd = subprocess.Popen(
+        ["msgfmt",
+            "--check",
+            "--use-fuzzy",
+            "--statistics",
+            dest_po,
+        ],
+        stdin=sys.stdout,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE
+    )
+
     cmdout, cmderr = fmt_cmd.communicate()
     if not fmt_cmd.returncode:
         result = 0
     counter += 1
     if (result):
-        #print(f"Output: {stdout}")
-        print(f"Errors: {cmderr}")
-
-        time.sleep(5)
         if counter == 1:
             print(f"Msgfmt failed, trying again...", file=sys.stderr)
+        #print(f"Errors: {cmderr}")
+
+        time.sleep(5)
 
 if result:
-    print(f"Gave up after {counter} times")
+    print(f"Gave up after {counter} times`. Last error: {cmderr.decode("utf-8")}")
     sys.exit(7)
 elif counter > 1:
     print(f"Succeeded after {counter} times")
