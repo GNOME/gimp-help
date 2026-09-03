@@ -2,6 +2,23 @@ message('quickreference: xml subdir')
 
 qr_xml_targets = {}
 
+# We always need the English xml available
+lang = 'en'
+qr_target = 'qr-xml-' + lang
+qr_output = 'gimp-keys-' + lang + '.xml'
+
+# Copy the base xml to the build dir
+xml_lang = custom_target(qr_target,
+    input: [keys_xml],
+    output: [qr_output],
+    command: [
+        cp,
+        '@INPUT@',
+        '@OUTPUT@',
+    ],
+)
+qr_en_xml_target = xml_lang
+
 foreach lang : target_linguas
     qr_target = 'qr-xml-' + lang
     qr_output = 'gimp-keys-' + lang + '.xml'
@@ -22,17 +39,6 @@ foreach lang : target_linguas
             ],
         )
     else
-        # Copy the base xml to the build dir
-        xml_lang = custom_target(qr_target,
-            input: [keys_xml],
-            output: [qr_output],
-            command: [
-                cp,
-                '@INPUT@',
-                '@OUTPUT@',
-            ],
-        )
-        qr_en_xml_target = xml_lang
     endif
     qr_xml_targets += {lang: xml_lang}
 endforeach
