@@ -111,8 +111,6 @@ if platform_windows
     MAKE_IMAGE_LINKS_FLAGS += '-m=hardlink,copy'
 endif
 
-message('Path of xml2po: @0@'.format(XML2PO.full_path()))
-
 ################################################################################
 # Define authors and maintainers sources
 
