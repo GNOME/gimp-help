@@ -4,23 +4,7 @@ project('gimp-help',
 )
 
 gimp_help_version = '3.1.1'
-src_dir = 'src'
-po_dir  = 'po'
 
-# FIXME update readme regarding adding translations after merging meson...
-# GIMP_HELP_LINGUAS = \
-#   ['bg', 'ca', 'cs', 'da', 'de', 'el', 'en', 'en_GB', 'eo', 'es', 'fa', 'fi',
-#    'fr', 'hr', 'hu', 'it', 'ja', 'ko', 'lt', 'nl', 'nn', 'pt', 'pt_BR', 'ro',
-#    'ru', 'sk', 'sl', 'sr', 'sv', 'tr', 'uk', 'zh_CN',]
-
-#MY_LINGUAS = ['en', 'de', 'nl'] # FIXME Make this a meson option
-MY_LINGUAS = []
-
-
-SUBDIRS = 'quickreference'
-
-## Imports
-fs = import('fs')
 
 ################################################################################
 # Host system detection
@@ -44,29 +28,75 @@ platform_osx = (
 )
 
 ################################################################################
+# Get Meson modules
+
+pythonmod = import('python')
+fs        = import('fs')
+
+###############################################################################
+# Check for python...
+
+python3_minver = '>=3.6'
+
+python = pythonmod.find_installation('python3', required: true)
+message('Found Python @0@'.format(python.language_version()))
+
+python_found = (
+  python.found() and
+  python.language_version().version_compare(python3_minver)
+)
+if not python_found
+  python_warning = '''
+  Python @0@ was not found or version was too old.
+  '''.format(python3_minver)
+  warning(python_warning)
+  warnings += python_warning
+endif
+
+########################################################################
+####            External programs                                   ####
+########################################################################
+
+# Check for XML tools
+if platform_windows
+  # The /usr/bin/ version usually has less issues on Windows because it
+  # uses the Linux paths IIRC
+  #TODO: find location of MSYS2 instead of hardcoding!!!
+  # Maybe find a program that only exists in msys2 and use that location?
+  xmllint  = find_program('xmllint', required: false, dirs: ['c:/msys64/usr/bin/'])
+  xsltproc = find_program('xsltproc', dirs: ['c:/msys64/usr/bin/'])
+else
+  xmllint  = find_program('xmllint', required: false)
+  xsltproc = find_program('xsltproc')
+endif
+
+# Check for gettext tools
+#FIXME For now width is hardcoded in our tools
+#MSGWIDTH      = 79
+
+MSGUNIQ    = find_program('msguniq')
+
+MSGCAT     = find_program('msgcat')
+
+MSGFMT     = find_program('msgfmt')
+
+MSGINIT    = find_program('msginit')
+
+MSGMERGE   = find_program('msgmerge')
+
+# Check other external tools
+perl       = find_program('perl')   # image handling
+
+# Shell tools
+# FIXME: Don't depend on sh, use Python?
+cp         = find_program('cp')
+ln         = find_program('ln')
+
+################################################################################
+# Internal tools
+
 # Define xml2po related stuff
-
-MSGWIDTH = 79
-
 XML2PO        = find_program(meson.project_source_root() / 'tools' / 'xml2po.py')
-#XML2POFLAGS  = '-k --mode=gimphelp'
-
-#MSGUNIQ = /mingw64/bin/msguniq
-MSGUNIQ       = find_program('msguniq')
-MSGUNIQFLAGS  = ''
-
-MSGCAT        = find_program('msgcat')
-MSGCATFLAGS   = '--width=@0@'.format(MSGWIDTH)
-
-MSGFMT        = find_program('msgfmt')
-MSGFMTFLAGS   = '--check --use-fuzzy --statistics'
-
-MSGINIT       = find_program('msginit')
-MSGINITFLAGS  = '--no-translator --width=@0@'.format(MSGWIDTH)
-
-MSGMERGE      = find_program('msgmerge')
-MSGMERGEFLAGS = '--quiet --width=@0@'.format(MSGWIDTH)
-
 
 xml2pot      = find_program(meson.project_source_root() / 'tools' / 'xml2pot.sh')
 xml2po       = find_program(meson.project_source_root() / 'tools' / 'xml2po.py')
@@ -74,7 +104,6 @@ updatepo     = find_program(meson.project_source_root() / 'tools' / 'update_po.p
 
 # Image handling, needs perl until we are able to convert it
 copy_images      = find_program(meson.project_source_root() / 'tools' / 'copy_images.sh')
-perl             = find_program('perl')
 MAKE_IMAGE_LINKS = find_program(meson.project_source_root() / 'make.d' / 'make_image_links.pl')
 MAKE_IMAGE_LINKS_FLAGS = '-v'
 
@@ -82,13 +111,7 @@ if platform_windows
     MAKE_IMAGE_LINKS_FLAGS += '-m=hardlink,copy'
 endif
 
-# FIXME: Don't depend on sh, use Python?
-cp           = find_program('cp')
-ln           = find_program('ln')
-dummy_ls     = find_program('ls')
-
-message('@0@'.format(XML2PO.full_path()))
-#message(MSGUNIQ)
+message('Path of xml2po: @0@'.format(XML2PO.full_path()))
 
 ################################################################################
 # Define authors and maintainers sources
@@ -129,101 +152,18 @@ LAST_RELEASE_TAG = 'GIMP_HELP_3_0_0'
 
 warnings = ''
 
-################################################################################
-# Get Meson modules
-
-#pkgconfig = import('pkgconfig')
-#i18n      = import('i18n')
-#gnome     = import('gnome')
-pythonmod = import('python')
-
-###############################################################################
-# Check for python...
-
-python3_minver = '>=3.6'
-
-python = pythonmod.find_installation('python3', required: true)
-message('Found Python @0@'.format(python.language_version()))
-
-python_found = (
-  python.found() and
-  python.language_version().version_compare(python3_minver)
-)
-if not python_found
-  python_warning = '''
-  Python @0@ was not found or version was too old.
-  '''.format(python3_minver)
-  warning(python_warning)
-  warnings += python_warning
-endif
-
 
 ###############################################################################
 # Configuration
 
-#python3 = import('python3')
-#conf = configuration_data()
-#conf.set('PYTHON', python.full_path())
-#conf.set('top_srcdir', meson.project_source_root())
-#conf.set('gimpdir', '~/gimp-2.10')
 
-top_srcdir = meson.project_source_root()
-# FIXME gimp_dir needs to be user configurable...
-gimp_dir   = '~/gimp'
-
-message(top_srcdir)
-
-
-#gimpdir = get_option('gimpdir')
-#if gimpdir == ''
-  # Default value
-#  gimpdir = '../../gimp-2.10'
-#endif
-
-help_src_dir = meson.project_name() / src_dir
-help_po_dir  = meson.project_name() / po_dir
-#gimpdatadir    = get_option('datadir')    / project_subdir
-#gimpplugindir  = get_option('libdir')     / project_subdir
-#gimpsysconfdir = get_option('sysconfdir') / project_subdir
-#gimpmanpagedir = gimpdir
-#localedir      = get_option('datadir') / 'locale'
-
-message('Project source dir: ' + help_src_dir)
-message('Project locale dir: ' + help_po_dir)
-
-
-########################################################################
-####            External programs                                   ####
-########################################################################
-
-# Check for XML tools
-if platform_windows
-  # The /usr/bin/ version usually has less issues on Windows because it
-  # uses the Linux paths IIRC
-  #TODO: find location of MSYS2 instead of hardcoding!!!
-  # Maybe find a program that only exists in msys2 and use that location?
-  xmllint  = find_program('xmllint', required: false, dirs: ['c:/msys64/usr/bin/'])
-  xsltproc = find_program('xsltproc', dirs: ['c:/msys64/usr/bin/'])
-else
-  xmllint  = find_program('xmllint', required: false)
-  xsltproc = find_program('xsltproc')
-endif
-
-
-custom_target('validate-references',
-  input : [ ],
-  output: [ 'validate-references', ],
-  command: [
-    find_program(meson.project_source_root() / 'tools' / 'validate_references.py'),
-    meson.project_source_root(),
-  ],
-  build_by_default: false,
-)
 
 
 ########################################################################
 ####            The GIMP manual languages                           ####
 ########################################################################
+
+# FIXME update readme regarding adding translations after merging meson...
 
 LINGUAS  = ['en']
 LINGUAS += fs.read('./po/LINGUAS').strip().split('\n')
@@ -239,10 +179,6 @@ else
 endif
 
 message('Selected languages: ', MY_LINGUAS)
-
-# if MY_LINGUAS.length() == 0
-#   MY_LINGUAS = LINGUAS
-# endif
 
 # ALL_LINGUAS is required in /stylesheets/, which is why we handle reading LINGUAS here
 target_linguas = []
@@ -263,7 +199,7 @@ foreach lang : MY_LINGUAS
 endforeach
 
 if ALL_LINGUAS == ''
-  message('No languages selected or error in configuration')
+  error('No languages selected or error in configuration')
   subdir_done()
 endif
 
@@ -298,8 +234,6 @@ authors_file = custom_target('AUTHORS',
 # and moved to src first, so we need to be in /src first. However, before
 # we can make translated xml (based on the files in /src), we need pot files
 # created first, for which /pot needs to be entered first.
-# Trying to circumvent that by exiting /src early the first time does not
-# work: ERROR: Tried to enter directory "src", which has already been visited.
 # So, we have no other choice than generating authors.xml first without
 # going to /src/preface first.
 
@@ -351,63 +285,50 @@ maintainers_file = custom_target('MAINTAINERS',
 
 
 ########################################################################
-####            Make pot files:  XML(en) --> POT                    ####
-########################################################################
-
 
 #xml2po_env = environment()
 #xml2po_env.append('XML2PO',  XML2PO.full_path())
 #xml2po_env.append('MSGUNIQ', MSGUNIQ.full_path())
 
-# # Make pot directory if not existing
-# run_command (
-#     'mkdir', '-p', meson.project_build_root() + '/pot',
-#     check: false
-# )
-# # Make xml directory if not existing
-# run_command (
-#     'mkdir', '-p', meson.project_build_root() + '/xml',
-#     check: false
-# )
-# # Make html directory if not existing
-# run_command (
-#     'mkdir', '-p', meson.project_build_root() + '/html',
-#     check: false
-# )
-
-# Seems currently these subdir pot targets always get built if
-# I add: build_by_default: true
-# However, if I don't add that, they do not get built at all
-# Probably because of the differing output directories from
-# the sources (pot versus src) it doesn't pick up that things
-# have changed and need to be rebuilt.
-# I do not know enough about meson to figure out how to fix
-# this, ideas are welcome
-# Maybe it could work if the meson.build files were located
-# in pot/ directories in the source instead of inside src/
-# since currently meson is also adding subdirs under src
-# where we have meson.build files.
-
-# --> Looks like you have to do it like explained in the
-#     files() command.
-
-pot_base = 'pot/'
 
 # Documentation source files
 subdir('src')
 
-# pot needs generated authors.xml in src/preface
+# Generate pot files, which needs generated authors.xml in src/preface, generated above
 subdir('pot')
 
 # Generate updated po files in build dir
 # FIXME May need discussion with DamnedLies if they can grab the updated
 #       po files from the build dir!
+#       (I think that maybe they only need pot and generate po themselves; Check!)
 subdir('po')
 
-# Generate translated xml files...
+# Define English images
 subdir('images')
+
+# Copy images; generate translated xml files; then generate html etc...
 subdir('html')
 
+
+###############################################################################
+### Quickreference ###
+
+if get_option('quickreference')
+  SVG2PDF = find_program('rsvg-convert')
+
+  subdir('quickreference')
+endif
+
+
+###############################################################################
+### Website ###
+if get_option('maintainer')
+  subdir('web')
+endif
+
+
+###############################################################################
+# Validation / Testing
 
 if xmllint.found()
   run_target('validate-authors',
@@ -419,23 +340,18 @@ if xmllint.found()
   )
 endif
 
+# Should be run-target?
+custom_target('validate-references',
+  input : [ ],
+  output: [ 'validate-references', ],
+  command: [
+    find_program(meson.project_source_root() / 'tools' / 'validate_references.py'),
+    meson.project_source_root(),
+  ],
+  build_by_default: false,
+)
 
-### Quickreference ###
-
-if get_option('quickreference')
-  SVG2PDF       = find_program('rsvg-convert')
-  #SVG2PDF_FLAGS = '-a -f pdf'
-
-  subdir('quickreference')
-endif
-
-
-### Website ###
-if get_option('maintainer')
-  subdir('web')
-endif
-
-
+###############################################################################
 #custom_target('Changelog',
 #  input : [ ],
 #  output: [ 'Changelog', ],
