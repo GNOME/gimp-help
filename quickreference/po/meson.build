@@ -48,8 +48,8 @@ gimp_pot = custom_target('gimp-keys.pot',
 )
 
 qr_po_targets = {}
-
-foreach lang : target_linguas
+qr_po_dependencies = []
+foreach lang : po_target_linguas
     if lang != 'en'
         # Update keys po file
         po_target = 'update-qr-po-' + lang
@@ -72,7 +72,6 @@ foreach lang : target_linguas
             #build_always_stale: true,
         )
         qr_po_targets += {lang: gimp_po_lang}
+        qr_po_dependencies += gimp_po_lang
     endif
 endforeach
-
-qr_po_dependencies = qr_po_targets
