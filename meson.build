@@ -156,7 +156,21 @@ warnings = ''
 ###############################################################################
 # Configuration
 
+if get_option('quickreference')
+  qr_enabled = true
+else
+  qr_enabled = false
+endif
 
+if get_option('maintainer')
+  if not qr_enabled
+    warning('When maintainer is enabled, quickreference needs to be enabled too. Setting qr_enabled to true.')
+    qr_enabled = true
+  endif
+  maintainer_enabled = true
+else
+  maintainer_enabled = false
+endif
 
 
 ########################################################################
@@ -199,7 +213,7 @@ foreach lang : MY_LINGUAS
   endif
 endforeach
 
-if get_option('maintainer')
+if maintainer_enabled
   # For the website we need stats of all languages we support, which we
   # get from the po files. So we need po files updated for ALL languages.
   po_target_linguas = []
@@ -327,7 +341,7 @@ subdir('html')
 ###############################################################################
 ### Quickreference ###
 
-if get_option('quickreference')
+if qr_enabled
   SVG2PDF = find_program('rsvg-convert')
 
   subdir('quickreference')
@@ -336,8 +350,11 @@ endif
 
 ###############################################################################
 ### Website ###
-if get_option('maintainer')
-  #subdir('web')
+
+if maintainer_enabled
+  PCTPROC = find_program(meson.project_source_root() / 'tools' / 'translated_percentage.py')
+
+  subdir('web')
 endif
 
 
