@@ -11,7 +11,7 @@ po_additional_files = files('LINGUAS')
 
 all_po_targets = []
 
-foreach lang : target_linguas
+foreach lang : po_target_linguas
     if lang != 'en'
         message('Update po files for ', lang)
         subdir(lang)
