@@ -3,7 +3,8 @@ project('gimp-help',
     meson_version: '>= 1.10.0',
 )
 
-gimp_help_version = '3.1.1'
+#gimp_help_version = '3.1.1'
+gimp_help_version = meson.project_version()
 
 
 ################################################################################
