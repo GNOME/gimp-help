@@ -33,8 +33,8 @@ qrstats.xml:
 dirs: autolayout.xml
 	@echo "-- Creating directories"; \
 	mkdir -p $(BUILD_DIR)/html;
-	@if ! test -e $(BUILD_DIR)/html/Layout; then \
-	  mkdir $(BUILD_DIR)/html/Layout && cp -r layout/* $(BUILD_DIR)/html/Layout; \
+	@if ! test -e $(BUILD_DIR)/html/layout; then \
+	  mkdir $(BUILD_DIR)/html/layout && cp -r layout/* $(BUILD_DIR)/html/layout; \
 	fi
 
 %.html: autolayout.xml
