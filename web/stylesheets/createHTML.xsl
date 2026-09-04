@@ -23,7 +23,7 @@
   <xsl:template name="allpages.banner">
     <div id="Header">
       <a href="https://docs.gimp.org" title="Home">
-          <img src='Layout/202010-wilber-and-co.jpg' alt='Logo' class='logo' />
+          <img src='layout/202010-wilber-and-co.jpg' alt='Logo' class='logo' />
       </a>
     </div>
       <div id="Searchform">
