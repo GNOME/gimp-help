@@ -1,6 +1,6 @@
 message('web subdir')
 
-web_xml = files(
+web_xml = [
     # Website
     'about.xml',
     'download.xml',
@@ -8,13 +8,14 @@ web_xml = files(
     'layout.xml',
     'online.xml',
     'website.xml',
+]
+xml_data = [
     # Data used for generating html
     'entities.xml',
     'langstats-static.xml',
     'qrstats-static.xml',
-    # css
-    'style.css',
-)
+]
+web_total = web_xml + xml_data
 
 stats_xml_manual = 'langstats.xml'
 stats_xml_qr     = 'qrstats.xml'
@@ -27,10 +28,10 @@ langstats = custom_target('update-langstats',
     command: [
         PCTPROC,
         '-v',
-        '-p' + meson.project_build_root() / 'po',
+        '-p' + meson.project_build_root() / 'po/',
         '-o' + meson.current_build_dir() / stats_xml_manual,
     ],
-    build_by_default: true,
+    #build_by_default: true,
 )
 
 qrstats = custom_target('update-qrstats',
@@ -39,16 +40,27 @@ qrstats = custom_target('update-qrstats',
     command: [
         PCTPROC,
         '-v',
-        '-p' + meson.project_build_root() / 'po',
+        '-p' + meson.project_build_root() / 'po/',
         '-o' + meson.current_build_dir() / stats_xml_qr,
     ],
-    build_by_default: true,
+    #build_by_default: true,
 )
 
 subdir('stylesheets')
 
+webxml_targets = []
+foreach file : web_total
+    webxml = configure_file(
+        input : file,
+        output: file,
+        copy: true,
+    )
+    webxml_targets += webxml
+endforeach
+
 autolayout_xml = custom_target(autolayout,
     depends: [langstats, qrstats],
+    depend_files: [webxml_targets],
     input: [layout],
     output: [autolayout],
     command: [
@@ -62,8 +74,5 @@ autolayout_xml = custom_target(autolayout,
     ],
     build_by_default: true,
 )
-
-subdir('layout')
-
 
 subdir('html')
