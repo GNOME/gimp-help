@@ -23,7 +23,7 @@ foreach file : web_xml
     input_xml_files += meson.project_build_root() / 'web' / file
 endforeach
 
-autolayout_xml = custom_target(autolayout,
+autolayout_html = custom_target('html-website',
     depends: [autolayout_xml],
     depend_files: [html_files],
     #input: [layout],
