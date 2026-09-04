@@ -27,6 +27,7 @@ import sys
 import subprocess
 import getopt
 import re
+import time
 
 VERSION = 0.1
 
@@ -46,11 +47,27 @@ class GetStats(object):
         out_param = f"-o{self.outfile}"
         # On Windows msgfmt from MINGW64 often seems to crash.
         # You may have to use the one from MSYS and adjust the path accordingly.
-        cmd = subprocess.Popen(["msgfmt", "--statistics", out_param, self.pofile],
-                               stdin=self.out, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        _cmdout, cmderr = cmd.communicate()
-        if cmd.returncode:
-            raise Exception("Error during msgfmt command: " + cmderr.decode())
+        # On Windows when using meson, multiple threads could be calling this,
+        # causing failure to access the mo file. Let's retry a few times before giving up.
+        result  = 1
+        max_cnt = 5
+        counter = 0
+        while result != 0 and counter < max_cnt:
+            cmd = subprocess.Popen(["msgfmt", "--statistics", out_param, self.pofile],
+                                stdin=self.out, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            _cmdout, cmderr = cmd.communicate()
+            if not cmd.returncode:
+                result = 0
+            counter += 1
+            if (result):
+                if counter == 1:
+                    print(f"Msgfmt failed, trying again...", file=sys.stderr)
+
+                time.sleep(5)
+
+        if result:
+            print(f"Gave up after {counter} times`. Last error: {cmderr.decode("utf-8")}", file=sys.stderr)
+            sys.exit(7)
 
         match_pattern = r"(\d+)\stranslated\D+(?:(\d+)\sfuzzy\D+)?(?:(\d+)\suntranslated\D+)?"
         rex = re.compile(match_pattern)
