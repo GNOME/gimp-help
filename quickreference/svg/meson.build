@@ -7,7 +7,7 @@ foreach lang : target_linguas
     qr_svg_output = 'gimp-keys-' + lang + '.svg'
 
     svg_lang = custom_target(qr_svg_target,
-        depend_files: [keys_svg],
+        depend_files: [keys_svg, templatefiles],
         input: [qr_xml_targets.get(lang)],
         output: [qr_svg_output],
         command: [

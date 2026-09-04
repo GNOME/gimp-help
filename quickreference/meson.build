@@ -3,6 +3,7 @@ message('quickreference subdir')
 keys_xml = files('gimp-keys.xml')
 
 subdir('stylesheets')
+subdir('templates')
 subdir('po')
 
 # Generate translated xml files
