@@ -38,7 +38,6 @@ foreach lang : target_linguas
                 '@INPUT@',
             ],
         )
-    else
     endif
     qr_xml_targets += {lang: xml_lang}
 endforeach

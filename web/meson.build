@@ -31,7 +31,6 @@ langstats = custom_target('update-langstats',
         '-p' + meson.project_build_root() / 'po/',
         '-o' + meson.current_build_dir() / stats_xml_manual,
     ],
-    #build_by_default: true,
 )
 
 qrstats = custom_target('update-qrstats',
@@ -44,7 +43,6 @@ qrstats = custom_target('update-qrstats',
         '-p' + meson.project_build_root() / 'quickreference/po/',
         '-o' + meson.current_build_dir() / stats_xml_qr,
     ],
-    #build_by_default: true,
 )
 
 subdir('stylesheets')
@@ -62,16 +60,13 @@ endforeach
 autolayout_xml = custom_target(autolayout,
     depends: [langstats, qrstats],
     depend_files: [webxml_targets],
-    #input: [layout],
     output: [autolayout],
     command: [
         xsltproc,
         '--timing',
         '--nonet',
-        #'--path', meson.project_build_root() + '/web/', 
         '--output', meson.project_build_root() + '/web/' + autolayout, 
         web_stylesheets[0],
-        #'@INPUT0@',
         meson.project_build_root() + '/web/' + layout,
     ],
     build_by_default: true,

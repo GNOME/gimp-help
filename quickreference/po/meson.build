@@ -47,6 +47,9 @@ gimp_pot = custom_target('gimp-keys.pot',
     ],
 )
 
+# FIXME We may need an optional target to copy an updated
+# pot file to the source so we can commit it.
+
 qr_po_targets = {}
 qr_po_dependencies = []
 foreach lang : po_target_linguas
