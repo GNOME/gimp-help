@@ -6,6 +6,9 @@ project('gimp-help',
 # FIXME: Update release info to mention to update version and last release tag here too
 gimp_help_version = meson.project_version()
 
+# used for creating the ChangeLog
+LAST_RELEASE_TAG = 'GIMP_HELP_3_2_0'
+
 
 ################################################################################
 # Host system detection
@@ -146,8 +149,6 @@ MAINTAINERS_DOAP = ['gimp-help.doap']
 MAINTAINERS_TEXT = DOAP_STYLESHEET + MAINTAINERS_DOAP
 
 
-# used for creating the ChangeLog
-LAST_RELEASE_TAG = 'GIMP_HELP_3_0_0'
 
 warnings = ''
 
