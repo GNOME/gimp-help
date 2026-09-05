@@ -58,6 +58,7 @@ download_lang EnglishBritish.isl
 download_lang Esperanto.isl
 download_lang Farsi.isl
 download_lang Greek.isl
+download_lang Kazakh.isl
 download_lang NorwegianNynorsk.isl
 download_lang Romanian.isl
 download_lang SerbianCyrillic.isl

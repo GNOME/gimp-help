@@ -60,6 +60,7 @@
       hu:Hungarian
       it:Italian
       ja:Japanese
+      kk:Kazakh
       ko:Korean
       lt:Lithuanian
       nl:Dutch
