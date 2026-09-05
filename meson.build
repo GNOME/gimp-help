@@ -178,18 +178,25 @@ endif
 
 # FIXME update readme regarding adding translations after merging meson...
 
-LINGUAS  = ['en']
-LINGUAS += fs.read('./po/LINGUAS').strip().split('\n')
-message('LINGUAS: ', LINGUAS)
+LINGUAS      = ['en']
+LINGUAS_file = fs.read('./po/LINGUAS').strip().split('\n')
+
+# Remove comments
+foreach lang : LINGUAS_file
+    if not lang.startswith('#')
+        LINGUAS += lang
+    endif
+endforeach
+message('Available languages: ', LINGUAS)
 
 selected_languages = get_option('languages')
 
 if selected_languages.startswith('all')
-  MY_LINGUAS = LINGUAS
+    MY_LINGUAS = LINGUAS
 elif selected_languages.startswith('none') or selected_languages == ''
-  MY_LINGUAS = 'en'
+    MY_LINGUAS = 'en'
 else
-  MY_LINGUAS = selected_languages.strip().split(' ')
+    MY_LINGUAS = selected_languages.strip().split(' ')
 endif
 
 message('Selected languages: ', MY_LINGUAS)
@@ -198,36 +205,31 @@ message('Selected languages: ', MY_LINGUAS)
 target_linguas = []
 ALL_LINGUAS = ''
 foreach lang : MY_LINGUAS
-  if not lang.startswith('#')
     if not (lang in LINGUAS)
-      if not lang.startswith('#')
-          lang_warning = 'Language "@0@" not found in all_linguas!'.format(lang)
-          warning(lang_warning)
-          warnings += lang_warning
-      endif
+        lang_warning = 'Language "@0@" not found in LINGUAS! Translated manual for @0@ will not be built.'.format(lang)
+        warning(lang_warning)
+        warnings += lang_warning
     else
-      target_linguas += lang
-      ALL_LINGUAS += lang
+        target_linguas += lang
+        ALL_LINGUAS += lang
     endif
-  endif
 endforeach
 
 if maintainer_enabled
-  # For the website we need stats of all languages we support, which we
-  # get from the po files. So we need po files updated for ALL languages.
-  po_target_linguas = []
-  foreach lang : LINGUAS
-    if not lang.startswith('#')
-      po_target_linguas += lang
-    endif
-  endforeach
+    # For the website we need stats of all languages we support, which we
+    # get from the po files. So we need po files updated for ALL languages.
+    po_target_linguas = []
+    foreach lang : LINGUAS
+        if not lang.startswith('#')
+            po_target_linguas += lang
+        endif
+    endforeach
 else
-  po_target_linguas = target_linguas
+    po_target_linguas = target_linguas
 endif
 
 if ALL_LINGUAS == ''
-  error('No languages selected or error in configuration')
-  subdir_done()
+    error('No languages selected or error in configuration')
 endif
 
 
