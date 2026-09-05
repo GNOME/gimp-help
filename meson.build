@@ -3,8 +3,11 @@ project('gimp-help',
     meson_version: '>= 1.10.0',
 )
 
-#gimp_help_version = '3.1.1'
+# FIXME: Update release info to mention to update version and last release tag here too
 gimp_help_version = meson.project_version()
+
+# used for creating the ChangeLog
+LAST_RELEASE_TAG = 'GIMP_HELP_3_0_0'
 
 
 ################################################################################
@@ -13,19 +16,19 @@ gimp_help_version = meson.project_version()
 host_os = host_machine.system().to_lower()
 
 platform_linux = (
-  host_os.contains('linux')
+    host_os.contains('linux')
 )
 
 platform_windows = (
-  host_os.contains('mingw') or
-  host_os.contains('cygwin') or
-  host_os.contains('windows')
+    host_os.contains('mingw') or
+    host_os.contains('cygwin') or
+    host_os.contains('windows')
 )
 
 platform_osx = (
-  host_os.contains('machten') or
-  host_os.contains('rhapsody') or
-  host_os.contains('darwin')
+    host_os.contains('machten') or
+    host_os.contains('rhapsody') or
+    host_os.contains('darwin')
 )
 
 ################################################################################
@@ -43,15 +46,15 @@ python = pythonmod.find_installation('python3', required: true)
 message('Found Python @0@'.format(python.language_version()))
 
 python_found = (
-  python.found() and
-  python.language_version().version_compare(python3_minver)
+    python.found() and
+    python.language_version().version_compare(python3_minver)
 )
 if not python_found
-  python_warning = '''
-  Python @0@ was not found or version was too old.
-  '''.format(python3_minver)
-  warning(python_warning)
-  warnings += python_warning
+    python_warning = '''
+    Python @0@ was not found or version was too old.
+    '''.format(python3_minver)
+    warning(python_warning)
+    warnings += python_warning
 endif
 
 ########################################################################
@@ -60,15 +63,16 @@ endif
 
 # Check for XML tools
 if platform_windows
-  # The /usr/bin/ version usually has less issues on Windows because it
-  # uses the Linux paths IIRC
-  #TODO: find location of MSYS2 instead of hardcoding!!!
-  # Maybe find a program that only exists in msys2 and use that location?
-  xmllint  = find_program('xmllint', required: false, dirs: ['c:/msys64/usr/bin/'])
-  xsltproc = find_program('xsltproc', dirs: ['c:/msys64/usr/bin/'])
+    # The /usr/bin/ version usually has less issues on Windows because it
+    # uses the Linux paths IIRC. MAYBE can be worked around setting XSLTPROC path?
+    # FIXME: find location of MSYS2 instead of hardcoding!!!
+    # Maybe find a program that only exists in msys2 and use that location?
+    # What about CYGWIN?
+    xmllint  = find_program('xmllint', required: false, dirs: ['c:/msys64/usr/bin/'])
+    xsltproc = find_program('xsltproc', dirs: ['c:/msys64/usr/bin/'])
 else
-  xmllint  = find_program('xmllint', required: false)
-  xsltproc = find_program('xsltproc')
+    xmllint  = find_program('xmllint', required: false)
+    xsltproc = find_program('xsltproc')
 endif
 
 # Check for gettext tools
@@ -97,11 +101,11 @@ ln         = find_program('ln')
 # Internal tools
 
 # Define xml2po related stuff
-XML2PO        = find_program(meson.project_source_root() / 'tools' / 'xml2po.py')
+XML2PO     = find_program(meson.project_source_root() / 'tools' / 'xml2po.py')
 
-xml2pot      = find_program(meson.project_source_root() / 'tools' / 'xml2pot.sh')
-xml2po       = find_program(meson.project_source_root() / 'tools' / 'xml2po.py')
-updatepo     = find_program(meson.project_source_root() / 'tools' / 'update_po.py')
+xml2pot    = find_program(meson.project_source_root() / 'tools' / 'xml2pot.sh')
+xml2po     = find_program(meson.project_source_root() / 'tools' / 'xml2po.py')
+updatepo   = find_program(meson.project_source_root() / 'tools' / 'update_po.py')
 
 # Image handling, needs perl until we are able to convert it
 copy_images      = find_program(meson.project_source_root() / 'tools' / 'copy_images.sh')
@@ -111,6 +115,9 @@ MAKE_IMAGE_LINKS_FLAGS = '-v'
 if platform_windows
     MAKE_IMAGE_LINKS_FLAGS += '-m=hardlink,copy'
 endif
+
+# Validation
+validate_references = find_program(meson.project_source_root() / 'tools' / 'validate_references.py')
 
 ################################################################################
 # Define authors and maintainers sources
@@ -124,21 +131,25 @@ AUTHORS_DOCBOOK_XML = 'authors.xml'
 #AUTHORS_DOCBOOK_DIRNAME = $(dir $(AUTHORS_DOCBOOK_XML))
 #AUTHORS_DOCBOOK_FILENAME = $(notdir $(AUTHORS_DOCBOOK_XML))
 
+#FIXME: Below stylesheet definition should go into /stylesheets/meson.build
+
 # Stylesheets generating AUTHORS
-AUTHORS_TEXT_STYLESHEETS = \
-  ['stylesheets/authors_text.xsl',
-  'stylesheets/authors_common.xsl',]
+AUTHORS_TEXT_STYLESHEETS = [
+    'stylesheets/authors_text.xsl',
+    'stylesheets/authors_common.xsl',
+]
 
 # Stylesheets generating src/preface/authors.xml
-AUTHORS_DOCBOOK_STYLESHEETS = \
-  ['stylesheets/authors_docbook.xsl',
-  'stylesheets/authors_common.xsl']
-
-AUTHORS_TEXT    = AUTHORS_TEXT_STYLESHEETS + AUTHORS_DATA_XML
-AUTHORS_DOCBOOK = AUTHORS_DOCBOOK_STYLESHEETS + AUTHORS_DATA_XML
+AUTHORS_DOCBOOK_STYLESHEETS = [
+    'stylesheets/authors_docbook.xsl',
+    'stylesheets/authors_common.xsl',
+]
 
 # Stylesheet generating MAINTAINERS
 DOAP_STYLESHEET = ['stylesheets/doap2text.xsl']
+
+AUTHORS_TEXT    = AUTHORS_TEXT_STYLESHEETS + AUTHORS_DATA_XML
+AUTHORS_DOCBOOK = AUTHORS_DOCBOOK_STYLESHEETS + AUTHORS_DATA_XML
 
 # Maintainers doap
 MAINTAINERS_DOAP = ['gimp-help.doap']
@@ -146,29 +157,26 @@ MAINTAINERS_DOAP = ['gimp-help.doap']
 MAINTAINERS_TEXT = DOAP_STYLESHEET + MAINTAINERS_DOAP
 
 
-# used for creating the ChangeLog
-LAST_RELEASE_TAG = 'GIMP_HELP_3_0_0'
-
-warnings = ''
-
-
 ###############################################################################
 # Configuration
 
+warnings = ''
+
 if get_option('quickreference')
-  qr_enabled = true
+    qr_enabled = true
 else
-  qr_enabled = false
+    qr_enabled = false
 endif
 
 if get_option('maintainer')
-  if not qr_enabled
-    warning('When maintainer is enabled, quickreference needs to be enabled too. Setting qr_enabled to true.')
-    qr_enabled = true
-  endif
-  maintainer_enabled = true
+    if not qr_enabled
+        warning('When maintainer is enabled, quickreference needs to be enabled too. Setting qr_enabled to true.')
+        qr_enabled = true
+    endif
+    maintainer_enabled = true
+    message('Maintainer is enabled. Extra targets will be selected and po files for all languages will be built.')
 else
-  maintainer_enabled = false
+    maintainer_enabled = false
 endif
 
 
@@ -246,17 +254,17 @@ subdir('stylesheets')
 ss_path = meson.project_build_root()  + '/stylesheets/'
 
 authors_file = custom_target('AUTHORS',
-  #input : [authors_text_ss.full_path(), authors_data.full_path()],
-  depend_files: [authors_text_ss, authors_data],
-  output: 'AUTHORS',
-  command: [
-    xsltproc,
-    '--verbose',
-    '-o', '@OUTPUT@',
-    ss_path + AUTHORS_TEXT_STYLESHEETS,
-    ss_path + AUTHORS_DATA_XML
-  ],
-  build_by_default: true,
+    #input : [authors_text_ss.full_path(), authors_data.full_path()],
+    depend_files: [authors_text_ss, authors_data],
+    output: 'AUTHORS',
+    command: [
+        xsltproc,
+        '--verbose',
+        '-o', '@OUTPUT@',
+        ss_path + AUTHORS_TEXT_STYLESHEETS,
+        ss_path + AUTHORS_DATA_XML
+    ],
+    build_by_default: true,
 )
 
 # We have a circular dependency: src/preface/authors.xml needs to be created
@@ -278,7 +286,6 @@ preface_authors_xml = custom_target('preface-authors-xml',
         '-o', meson.current_build_dir() + '/authors.xml',
         '@INPUT@',
     ],
-    #build_by_default: true,
 )
 
 copy_authors_to_src = custom_target('copy-to-src-authors',
@@ -305,9 +312,9 @@ maintainers_file = custom_target('MAINTAINERS',
   input : MAINTAINERS_TEXT,
   output: 'MAINTAINERS',
   command: [
-    xsltproc,
-    '-o', '@OUTPUT@',
-    '@INPUT@',
+      xsltproc,
+      '-o', '@OUTPUT@',
+      '@INPUT@',
   ],
   build_by_default: true,
 )
@@ -343,9 +350,9 @@ subdir('html')
 ### Quickreference ###
 
 if qr_enabled
-  SVG2PDF = find_program('rsvg-convert')
+    SVG2PDF = find_program('rsvg-convert')
 
-  subdir('quickreference')
+    subdir('quickreference')
 endif
 
 
@@ -353,9 +360,9 @@ endif
 ### Website ###
 
 if maintainer_enabled
-  PCTPROC = find_program(meson.project_source_root() / 'tools' / 'translated_percentage.py')
+    PCTPROC = find_program(meson.project_source_root() / 'tools' / 'translated_percentage.py')
 
-  subdir('web')
+    subdir('web')
 endif
 
 
@@ -363,24 +370,25 @@ endif
 # Validation / Testing
 
 if xmllint.found()
-  run_target('validate-authors',
-    command: [
-      xmllint,
-      '--noout',
-      '--valid', 'authors.xml',
-    ],
-  )
+    run_target('validate-authors',
+        command: [
+            xmllint,
+            '--noout',
+            '--valid',
+            'authors.xml',
+        ],
+    )
 endif
 
 # Should be run-target?
 custom_target('validate-references',
-  input : [ ],
-  output: [ 'validate-references', ],
-  command: [
-    find_program(meson.project_source_root() / 'tools' / 'validate_references.py'),
-    meson.project_source_root(),
-  ],
-  build_by_default: false,
+    #input : [ ],
+    output: [ 'validate-references', ],
+    command: [
+        validate_references,
+        meson.project_source_root(),
+    ],
+    build_by_default: false,
 )
 
 ###############################################################################

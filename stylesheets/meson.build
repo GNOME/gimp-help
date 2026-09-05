@@ -37,28 +37,24 @@ authors_common_ss = configure_file(
     input : AUTHORS_COMMON,
     output: AUTHORS_COMMON,
     copy: true,
-    #install: true,
 )
 
 authors_text_ss = configure_file(
     input : AUTHORS_TEXT_STYLESHEETS,
     output: AUTHORS_TEXT_STYLESHEETS,
     copy: true,
-    #install: true,
 )
 
 authors_text_dtd = configure_file(
     input : AUTHORS_DTD,
     output: AUTHORS_DTD,
     copy: true,
-    #install: true,
 )
 
 authors_docbook_ss = configure_file(
     input : AUTHORS_DOCBOOK_STYLESHEETS,
     output: AUTHORS_DOCBOOK_STYLESHEETS,
     copy: true,
-    #install: true,
 )
 
 # --- MAINTAINERS ---
@@ -77,15 +73,6 @@ MAINTAINERS_ALL  = DOAP_STYLESHEET
 
 STYLESHEET_ALL  = AUTHORS_ALL + MAINTAINERS_ALL
 
-# foreach ss_file: STYLESHEET_ALL
-#     stylesheet_file = configure_file(
-#       input : ss_file,
-#       output: ss_file,
-#       copy: true,
-#       #install: true,
-#     )
-# endforeach
-
 
 ### Taken from configure.ac ###
 #  Default to the correct way of identifying stylesheets.
@@ -102,72 +89,57 @@ plainhtml = configure_file(
   input : 'plainhtml.xsl.in',
   output: 'plainhtml.xsl',
   configuration: xslconfig,
-  #install: true,
 )
-# plainhtml_target = custom_target(
-#   input: plainhtml,
-#   output: 'dummy',
-
-# )
 
 # There seem to be no strings that need replacing! (Just remove the ".in" version?)
 htmlalternate = configure_file(
   input : 'htmlalternate.xsl.in',
   output: 'htmlalternate.xsl',
   configuration: xslconfig,
-  #install: true,
 )
 
 drafthtml = configure_file(
   input : 'drafthtml.xsl',
   output: 'drafthtml.xsl',
   copy: true,
-  #install: true,
 )
 
 plainprint = configure_file(
   input : 'plainprint.xsl',
   output: 'plainprint.xsl',
   copy: true,
-  #install: true,
 )
 
 lang_menu = configure_file(
   input : 'languageMenu.xsl',
   output: 'languageMenu.xsl',
   copy: true,
-  #install: true,
 )
 
 lang_vocab = configure_file(
   input : 'languageVocab.xml',
   output: 'languageVocab.xml',
   copy: true,
-  #install: true,
 )
 
 makeindex = configure_file(
   input : 'makeindex.xsl',
   output: 'makeindex.xsl',
   copy: true,
-  #install: true,
 )
 floatimages = configure_file(
   input : 'float-images.xsl',
   output: 'float-images.xsl',
   copy: true,
-  #install: true,
 )
 
 getsortkey = configure_file(
   input : 'getsortkey.xsl',
   output: 'getsortkey.xsl',
   copy: true,
-  #install: true,
 )
 entities = configure_file(
   input : 'entities.xml',
   output: 'entities.xml',
   copy: true,
-  #install: true,
 )
