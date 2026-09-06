@@ -32,6 +32,8 @@ src_files="${@:4}"
 #echo Source files: $src_files
 #echo Destination file: $out_pot
 
+#FIXME Start in XML Root folder (either /src/, or /quickreference/)
+#FIXME Use env vars for MSGUNIQ, MSGCAT and set an env in the custom_target
 
 $source_root/tools/xml2po.py -k --mode=gimphelp --output=- $src_files \
   | msguniq | msgcat - --width=79 -o "$out_pot"
