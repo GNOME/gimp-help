@@ -126,8 +126,8 @@ PO_FILES = $(shell cd $(srcdir) && $(find_l) po/ -type f)
 
 # stylesheets for HTML
 COMMON_CSS_FILES = \
-	stylesheets/gimp-help-plain.css	\
-	stylesheets/gimp-help-screen.css
+	html/css/gimp-help-plain.css	\
+	html/css/gimp-help-screen.css
 
 # alternate stylesheets for HTML
 OTHER_CSS_FILES =
@@ -672,8 +672,8 @@ html/%/index.html: xml/% $(HTML_STYLESHEETS) | html/%/images
 	  xml/$*/gimp.xml
 
 	$(msg) "Copying stylesheets ... "
-	$(cmd) for file in $(srcdir)/stylesheets/*.css \
-	                   $(srcdir)/stylesheets/$*/*.css; do \
+	$(cmd) for file in $(srcdir)/html/css/*.css \
+	                   $(srcdir)/html/css/$*/*.css; do \
 		if [ -f $${file} ]; then cp -f $${file} html/$*; fi; \
 	done
 
@@ -730,7 +730,7 @@ preview-xml/%.xml: xml/%.xml stylesheets/drafthtml.xsl
 	lang=$(shell echo $< | $(SED) -e 's,^xml/,,; s,/.*,,'); \
 	destdir=html/$${lang}; \
 	test -d $${destdir}/images || $(RMAKE) $${destdir}/images; \
-	cp -f $(srcdir)/stylesheets/*.css $(srcdir)/stylesheets/$${lang}/*.css\
+	cp -f $(srcdir)/html/css/*.css $(srcdir)/html/css/$${lang}/*.css\
 	    $${destdir} 2>/dev/null; \
 	destfile="$${destdir}/$${id}-draft.html"; \
 	echo "Making $${destfile} (ignore any XSLT complaints) ..."; \
