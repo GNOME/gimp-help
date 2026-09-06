@@ -1,7 +1,7 @@
-images_filters = [
+images_filters = files(
     'use_entire_layer.jpg',
     'use_selection_only.jpg',
-]
+)
 
 subdir('animation')
 subdir('artistic')

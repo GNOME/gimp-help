@@ -1,3 +1,3 @@
-images_contribute = [
+images_contribute = files(
     'xml-tags.png',
-]
+)

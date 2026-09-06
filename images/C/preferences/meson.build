@@ -1,4 +1,4 @@
-images_preferences = [
+images_preferences = files(
     'input-controllers-action.png',
     'input-controllers-keyboard.png',
     'input-controllers-wheel.png',
@@ -34,4 +34,4 @@ images_preferences = [
     'prefs-toolbox.png',
     'prefs-window-management.png',
     'utility-title-bar.png',
-]
+)

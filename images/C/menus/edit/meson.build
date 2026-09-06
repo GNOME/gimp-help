@@ -1,4 +1,4 @@
-images_menus_edit = [
+images_menus_edit = files(
     'fill-path-ex1.png',
     'fill-path-ex2.png',
     'fill-selection-outline.png',
@@ -11,4 +11,4 @@ images_menus_edit = [
     'stroke-path.png',
     'units-add-new.png',
     'units.png',
-]
+)

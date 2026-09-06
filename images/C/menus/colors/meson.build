@@ -1,4 +1,4 @@
-images_menus_colors = [
+images_menus_colors = files(
     'brightness-contrast-dialog.png',
     'color-balance-dialog.png',
     'color-temperature.png',
@@ -10,7 +10,8 @@ images_menus_colors = [
     'ColorToAlpha-ex5.png',
     'ColorToAlpha-ex6.png',
     'ColorToAlpha-ex7.png',
-    'ColorToAlpha-ex8.png',
+    'ColorToAlpha-ex8-dialog.png',
+    'ColorToAlpha-ex8-example.png',
     'colortoalpha.png',
     'curves-dialog.png',
     'dither-dialog.png',
@@ -31,7 +32,7 @@ images_menus_colors = [
     'saturation-dialog.png',
     'shadows-highlights-dialog.png',
     'threshold-dialog.png',
-]
+)
 
 subdir('auto')
 subdir('components')

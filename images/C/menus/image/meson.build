@@ -1,6 +1,7 @@
-images_menus_image = [
+images_menus_image = files(
+    'align-demo-dialog.png',
+    'align-demo-example.png',
     'align-demo-grid.png',
-    'align-demo.png',
     'align-layers.png',
     'aligngrid.png',
     'alignHCLB+.png',
@@ -8,15 +9,20 @@ images_menus_image = [
     'alignHFLB+.png',
     'alignHFLB-.png',
     'alignVFBB+.png',
-    'canvas-size-ex1.png',
-    'canvas-size-ex2.png',
-    'canvas-size-ex3.png',
+    'canvas-size-ex1-dialog.png',
+    'canvas-size-ex1-example.png',
+    'canvas-size-ex2-dialog.png',
+    'canvas-size-ex2-example.png',
+    'canvas-size-ex3-dialog.png',
+    'canvas-size-ex3-example.png',
     'canvas-size-ex4.png',
     'canvas-size-ex5.png',
     'canvas-size.png',
     'configure-grid.png',
-    'crop-to-content-after.png',
-    'crop-to-content-before.png',
+    'crop-to-content-after-dialog.png',
+    'crop-to-content-after-example.png',
+    'crop-to-content-before-dialog.png',
+    'crop-to-content-before-example.png',
     'merge-visible-ex-image.png',
     'merge-visible-ex1.png',
     'merge-visible-ex2.png',
@@ -35,6 +41,6 @@ images_menus_image = [
     'print-size.png',
     'properties.png',
     'scale-image.png',
-]
+)
 
 subdir('color-management')

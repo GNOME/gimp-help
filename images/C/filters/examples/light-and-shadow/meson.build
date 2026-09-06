@@ -1,11 +1,12 @@
-images_filters_examples_light_and_shadow = [
+images_filters_examples_light_and_shadow = files(
     'long-shadow-ex-angle.png',
     'long-shadow-ex-default.png',
     'long-shadow-ex-fading.png',
     'long-shadow-ex-fixlength.png',
     'long-shadow-ex-infinite.png',
     'long-shadow-ex-length.png',
-    'long-shadow-ex-orig.png',
+    'long-shadow-ex-orig-dialog.png',
+    'long-shadow-ex-orig-example.png',
     'long-shadow-ex-shadminus.png',
     'long-shadow-ex-shadonly.png',
     'vignette-ex-default.jpg',
@@ -15,4 +16,4 @@ images_filters_examples_light_and_shadow = [
     'vignette-ex-radius.jpg',
     'vignette-ex-softness.jpg',
     'vignette-ex-squeeze05.jpg',
-]
+)
