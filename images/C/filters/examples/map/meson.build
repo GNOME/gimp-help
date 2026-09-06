@@ -1,4 +1,4 @@
-images_filters_examples_map = [
+images_filters_examples_map = files(
     'bumpmap-ex-1.png',
     'bumpmap-ex-2.png',
     'displace-ex-1.png',
@@ -23,4 +23,4 @@ images_filters_examples_map = [
     'recursive_transform-scale-no.png',
     'recursive_transform-scale.png',
     'recursive_transform-shear.png',
-]
+)

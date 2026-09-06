@@ -1,4 +1,4 @@
-images_filters_examples_blur = [
+images_filters_examples_blur = files(
     'mean_curvature-denoise.jpg',
     'mean_curvature-ex-1.jpg',
     'mean_curvature-ex-2.jpg',
@@ -11,4 +11,4 @@ images_filters_examples_blur = [
     'median-radius-100.png',
     'median-scratch.png',
     'median-vs-gaussian.png',
-]
+)

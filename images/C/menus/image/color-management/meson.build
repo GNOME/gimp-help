@@ -1,4 +1,4 @@
-images_menus_image_color_management = [
+images_menus_image_color_management = files(
     'apple-banana-linear-precision-mismatched-chromaticities.png',
     'assign-1.png',
     'assign-4.png',
@@ -14,4 +14,4 @@ images_menus_image_color_management = [
     'convert-after.png',
     'convert-before.png',
     'save-profile-2.png',
-]
+)

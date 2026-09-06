@@ -1,4 +1,4 @@
-images_filters_map = [
+images_filters_map = files(
     'bumpmap-dialog.png',
     'displace-cartesian.png',
     'displace-dialog.png',
@@ -21,5 +21,4 @@ images_filters_map = [
     'tile.png',
     'tile_seamless-dialog.png',
     'warp.png',
-]
-
+)

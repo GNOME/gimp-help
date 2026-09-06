@@ -1,4 +1,4 @@
-images_filters_examples_generic = [
+images_filters_examples_generic = files(
     'dist_map-low-0.png',
     'dist_map-low-1.png',
     'dist_map-low-2.png',
@@ -8,6 +8,5 @@ images_filters_examples_generic = [
     'normal_map-defaults.jpg',
     'normal_map-flip.jpg',
     'normal_map-GG+Z.jpg',
-    'normal_map-none.png',
     'normal_map-scale.jpg',
-]
+)

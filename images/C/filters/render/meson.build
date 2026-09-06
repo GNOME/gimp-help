@@ -1,4 +1,4 @@
-images_filters_render = [
+images_filters_render = files(
     'bayer_matrix-dialog.png',
     'cell_noise-dialog.png',
     'checkerboard-dialog.png',
@@ -11,6 +11,7 @@ images_filters_render = [
     'cmlexplorer4.png',
     'cmlexplorer5.png',
     'cmlexplorer6.png',
+    'difference-clouds-dialog.png',
     'diffraction-dialog.png',
     'flame-edit.png',
     'flame.png',
@@ -48,5 +49,4 @@ images_filters_render = [
     'spyrogimp1a.png',
     'spyrogimp2.png',
     'spyrogimp3.png',
-]
-
+)

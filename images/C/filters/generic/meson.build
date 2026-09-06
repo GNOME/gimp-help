@@ -1,4 +1,4 @@
-images_filters_generic = [
+images_filters_generic = files(
     'convolution-crop.png',
     'convolution-extend.png',
     'convolution-milord.png',
@@ -13,5 +13,4 @@ images_filters_generic = [
     'text-styling-dialog-1.png',
     'text-styling-dialog-2.png',
     'text-styling-dialog-3.png',
-]
-
+)

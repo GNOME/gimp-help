@@ -1,18 +1,8 @@
-images_menus = [
-    'colors.png',
-    'edit.png',
-    'file.png',
-    'filters.png',
-    'help.png',
+images_menus = files(
     'image-menu-bar.png',
-    'image.png',
-    'layer.png',
     'select.png',
     'taj_orig_2.png',
-    'tools.png',
-    'view.png',
-    'windows.png',
-]
+)
 
 subdir('colors')
 subdir('edit')
@@ -23,4 +13,3 @@ subdir('image')
 subdir('layer')
 subdir('select')
 subdir('view')
-subdir('windows')

@@ -1,8 +1,7 @@
-images_menus_colors_tone_mapping = [
+images_menus_colors_tone_mapping = files(
     'destripe.png',
     'fattal-dialog.png',
     'mantiuk-dialog.png',
     'reinhard-dialog.png',
     'stress-dialog.png',
-]
-
+)

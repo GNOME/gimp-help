@@ -1,4 +1,4 @@
-images_filters_web = [
+images_filters_web = files(
     'imagemap-area.png',
     'imagemap-draw.png',
     'imagemap-grid.png',
@@ -6,5 +6,4 @@ images_filters_web = [
     'imagemap-info.png',
     'imagemap.png',
     'semi-flatten-dialog.png',
-]
-
+)

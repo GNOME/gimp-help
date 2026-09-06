@@ -1,4 +1,4 @@
-images_menus_colors_desaturate = [
+images_menus_colors_desaturate = files(
     'color-to-gray-dialog.png',
     'colors-desaturate-average-red-globe.png',
     'colors-desaturate-average-sunflower.png',
@@ -14,5 +14,4 @@ images_menus_colors_desaturate = [
     'colors-desaturate-value-sunflower.png',
     'desaturate.png',
     'sepia.png',
-]
-
+)

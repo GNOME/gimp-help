@@ -1,4 +1,4 @@
-images_filters_noise = [
+images_filters_noise = files(
     'CIE_lch_noise-dialog.png',
     'hsv-noise-dialog.png',
     'hurl-dialog.png',
@@ -6,5 +6,4 @@ images_filters_noise = [
     'RGB_Noise-dialog.png',
     'slur-dialog.png',
     'spread-dialog.png',
-]
-
+)

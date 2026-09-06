@@ -1,4 +1,4 @@
-images_menus_colors_components = [
+images_menus_colors_components = files(
     'channel-mixer-ex1.png',
     'channel-mixer-ex2.png',
     'channel-mixer-ex3.png',
@@ -9,7 +9,8 @@ images_menus_colors_components = [
     'compose-channels-ex4.jpg',
     'compose.png',
     'decompose-ex1.png',
-    'decompose-ex2.png',
+    'decompose-ex2-dialog.png',
+    'decompose-ex2-example.png',
     'decompose.png',
     'extract_component-dialog.png',
     'extract_component-ex.png',
@@ -18,5 +19,4 @@ images_menus_colors_components = [
     'regcolor-black.png',
     'regcolor-cyan.png',
     'regcolor.png',
-]
-
+)

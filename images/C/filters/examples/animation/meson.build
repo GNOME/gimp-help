@@ -1,4 +1,4 @@
-images_filters_examples_animation = [
+images_filters_examples_animation = files(
     'blend-applied.png',
     'blend-orig.png',
     'burn-in-applied.png',
@@ -6,4 +6,4 @@ images_filters_examples_animation = [
     'spinning-globe.jpg',
     'taj-rippling.jpg',
     'taj-waves.jpg',
-]
+)
