@@ -1,4 +1,4 @@
-images_math = [
+images_math = files(
     'displace0.png',
     'displace1.png',
     'displace2.png',
@@ -24,4 +24,4 @@ images_math = [
     'layer-mode-soft-light1.png',
     'layer-mode-soft-light2.png',
     'layer-mode-subtract.png',
-]
+)

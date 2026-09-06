@@ -1,4 +1,4 @@
-images_filters_examples_render = [
+images_filters_examples_render = files(
     'bayer_matrix-ex.jpg',
     'cell_noise-applied.jpg',
     'cell_noise-palette.jpg',
@@ -18,4 +18,4 @@ images_filters_examples_render = [
     'taj-lava.jpg',
     'taj-line-nova.jpg',
     'taj-spyrogimp.jpg',
-]
+)

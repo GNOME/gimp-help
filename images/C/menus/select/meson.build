@@ -1,4 +1,4 @@
-images_menus_select = [
+images_menus_select = files(
     '250px-Bezier.png',
     'border-feathered.png',
     'border-hard.png',
@@ -29,4 +29,4 @@ images_menus_select = [
     'selection-editor-click-example-2.png',
     'selection-to-path-adv.png',
     'shrink.png',
-]
+)

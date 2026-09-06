@@ -1,4 +1,4 @@
-images_dialogs_examples = [
+images_dialogs_examples = files(
     'cosmos-6.png',
     'dither1.png',
     'dither2.png',
@@ -12,11 +12,13 @@ images_dialogs_examples = [
     'layer-groups-pass-through-ex6.png',
     'layer-lock-1.png',
     'layer-lock-2.png',
-    'layer-mask-1.png',
-    'layer-mask-2.png',
+    'layer-mask-1-dialog.png',
+    'layer-mask-1-example.png',
+    'layer-mask-2-dialog.png',
+    'layer-mask-2-example.png',
     'new-gradient-1.png',
     'new-gradient-2.png',
     'new-gradient-3.png',
     'palettes-offset.png',
     'palettes-repeat-gradient.png',
-]
+)

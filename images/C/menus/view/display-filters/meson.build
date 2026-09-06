@@ -1,4 +1,4 @@
-images_menus_view_display_filters = [
+images_menus_view_display_filters = files(
     'aces-rrt.png',
     'clip-warning.png',
     'color-deficient-vision.png',
@@ -10,4 +10,4 @@ images_menus_view_display_filters = [
     'sight-defects_normal-view.png',
     'sight-defects_protanopia.png',
     'sight-defects_tritanopia.png',
-]
+)

@@ -1,4 +1,4 @@
-images_filters_examples_distort = [
+images_filters_examples_distort = files(
     'ripple-ex-ampl.png',
     'ripple-ex-angle.png',
     'ripple-ex-black.png',
@@ -15,4 +15,4 @@ images_filters_examples_distort = [
     'spherize-ex-orig.jpg',
     'spherize-ex-sphere.jpg',
     'vpropag-ex-b-w.jpg',
-]
+)
