@@ -20,7 +20,7 @@ lang=$4
 source_image_folders=("$source_root/images/common" "$source_root/images/C")
 # and destination
 dest_lang_folder=$build_folder/$lang
-dest_image_folder=$build_folder/$lang/gimp-help.xml.p/images
+dest_image_folder=$build_folder/$lang/gimp-xrefs.xml.p/images
 
 # DEBUG
 #echo "Dest: $dest_image_folder"
