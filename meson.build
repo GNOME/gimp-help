@@ -6,14 +6,6 @@ project('gimp-help',
 # FIXME: Update release info to mention to update version and last release tag here too
 gimp_help_version = meson.project_version()
 
-# FIXME update readme regarding adding translations after merging meson...
-# GIMP_HELP_LINGUAS = \
-#   ['bg', 'ca', 'cs', 'da', 'de', 'el', 'en', 'en_GB', 'eo', 'es', 'fa', 'fi',
-#    'fr', 'hr', 'hu', 'it', 'ja', 'ko', 'lt', 'nl', 'nn', 'pt', 'pt_BR', 'ro',
-#    'ru', 'sk', 'sl', 'sr', 'sv', 'tr', 'uk', 'zh_CN',]
-
-MY_LINGUAS = ['en', 'de', 'nl'] # FIXME Make this a meson option
-
 
 ################################################################################
 # Host system detection
@@ -175,19 +167,25 @@ LINGUAS  = ['en']
 LINGUAS += fs.read('./po/LINGUAS').strip().split('\n')
 
 
+if MY_LINGUAS.length() == 0
+  MY_LINGUAS = LINGUAS
+endif
+
 # ALL_LINGUAS is required in /stylesheets/, which is why we handle reading LINGUAS here
 target_linguas = []
 ALL_LINGUAS = ''
 foreach lang : MY_LINGUAS
-  if not (lang in LINGUAS)
-    if not lang.startswith('#')
-        lang_warning = 'Language "@0@" not found in all_linguas!'.format(lang)
-        warning(lang_warning)
-        warnings += lang_warning
+  if not lang.startswith('#')
+    if not (lang in LINGUAS)
+      if not lang.startswith('#')
+          lang_warning = 'Language "@0@" not found in all_linguas!'.format(lang)
+          warning(lang_warning)
+          warnings += lang_warning
+      endif
+    else
+      target_linguas += lang
+      ALL_LINGUAS += lang
     endif
-  else
-    target_linguas += lang
-    ALL_LINGUAS += lang
   endif
 endforeach
 
