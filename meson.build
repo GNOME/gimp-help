@@ -377,6 +377,11 @@ pot_base = 'pot/'
 # pot needs generated authors.xml in src/preface
 subdir('pot')
 
+# Generate updated po files in build dir
+# FIXME May need discussion with DamnedLies if they can grab the updated
+#       po files from the build dir!
+subdir('po')
+
 # Generate translated xml files...
 subdir('src')
 subdir('images')
