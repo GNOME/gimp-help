@@ -47,7 +47,7 @@ built: website
 
 style: website
 	@echo "-- Copying stylesheet"; \
-	cp style.css $(BUILD_DIR)/html/
+	cp html/style.css $(BUILD_DIR)/html/
 
 clean: Makefile
 	@echo "-- Cleaning html and autolayout"
