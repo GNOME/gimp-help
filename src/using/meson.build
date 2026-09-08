@@ -1,0 +1,27 @@
+# /src/using/ xml files
+
+xml_sources_using = files(
+    'animated-brushes.xml',
+    'brushes.xml',
+    'creating-brush-quickly.xml',
+    'customize-splashscreen.xml',
+    'fileformats.xml',
+    'fonts-and-text.xml',
+    'getting-unstuck-export.xml',
+    'getting-unstuck-gui.xml',
+    'getting-unstuck-intro.xml',
+    'getting-unstuck.xml',
+    'layers.xml',
+    'paths.xml',
+    'photography.xml',
+    'python-plug-in-tutorial.xml',
+    'qmask.xml',
+    'script-fu-gui-api.xml',
+    'script-fu-tutorial.xml',
+    'selections.xml',
+    'setup-tile-cache.xml',
+    'shortcuts.xml',
+    'simpleobjects.xml',
+    'variable-size-brush.xml',
+    'web.xml',
+)

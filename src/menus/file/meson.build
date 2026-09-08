@@ -1,0 +1,26 @@
+# /src/menus/file/ xml files
+
+xml_sources_menus_file = files(
+    'close-all.xml',
+    'close.xml',
+    'copy-location.xml',
+    'create-template.xml',
+    'create.xml',
+    'export-as.xml',
+    'export.xml',
+    'introduction.xml',
+    'new.xml',
+    'open-as-layer.xml',
+    'open-as-link-layer.xml',
+    'open-location.xml',
+    'open-recent.xml',
+    'open.xml',
+    'print.xml',
+    'quit.xml',
+    'revert.xml',
+    'save-as-copy.xml',
+    'save-as.xml',
+    'save.xml',
+    'send-by-email.xml',
+    'show-in-file-manager.xml',
+)
