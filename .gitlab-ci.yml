@@ -97,6 +97,9 @@ branches-check:
     - "${PDF_DIR}"
     - _log
   script:
+    # There is no Kazakh (kk) localization available for docbook-xsl stylesheets.
+    # Make sure it can pick en_us as default language.
+    - export LC_ALL=en_US.UTF-8
     - cd src
     # Mark all source files as updated. Needed to get up-to-date translations
     - find . -type f -exec touch {} +
@@ -132,6 +135,9 @@ branches-check:
     - "${PDF_DIR}"
     - _log
   script:
+    # There is no Kazakh (kk) localization available for docbook-xsl stylesheets.
+    # Make sure it can pick en_us as default language.
+    - export LC_ALL=en_US.UTF-8
     - cd src
     # Mark all source files as updated. Needed to get up-to-date translations
     - find . -type f -exec touch {} +
@@ -296,6 +302,9 @@ win-installer:
   stage: test
   image: $CI_REGISTRY_IMAGE:build-debian-latest
   script:
+    # There is no Kazakh (kk) localization available for docbook-xsl stylesheets.
+    # Make sure it can pick en_us as default language.
+    - export LC_ALL=en_US.UTF-8
     - cd src
     # Mark all source files as updated. Needed to get up-to-date translations
     - find . -type f -exec touch {} +
