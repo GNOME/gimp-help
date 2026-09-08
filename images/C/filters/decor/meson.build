@@ -1,0 +1,18 @@
+images_filters_decor = [
+    'add-bevel.png',
+    'addborder.png',
+    'carve-it.png',
+    'chrome-it-env-example.png',
+    'chrome-it-step1.png',
+    'chrome-it-step2.png',
+    'chrome-it-step3.png',
+    'chrome-it-step4.png',
+    'chrome-it-step5.png',
+    'chrome-it.png',
+    'fog-dialog.png',
+    'fuzzyborder.png',
+    'old-photo.png',
+    'round-corners.png',
+    'slide.png',
+    'stain.png',
+]
