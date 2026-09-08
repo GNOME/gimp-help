@@ -1,0 +1,18 @@
+images_filters_examples_distort = [
+    'ripple-ex-ampl.png',
+    'ripple-ex-angle.png',
+    'ripple-ex-black.png',
+    'ripple-ex-default.png',
+    'ripple-ex-orig.png',
+    'ripple-ex-periode.png',
+    'ripple-ex-phase.png',
+    'shift-ex-100.png',
+    'spherize-defaults.jpg',
+    'spherize-ex-amount.jpg',
+    'spherize-ex-angle.jpg',
+    'spherize-ex-curvature.jpg',
+    'spherize-ex-horizontal.jpg',
+    'spherize-ex-orig.jpg',
+    'spherize-ex-sphere.jpg',
+    'vpropag-ex-b-w.jpg',
+]

@@ -1,0 +1,17 @@
+images_menus_image_color_management = [
+    'apple-banana-linear-precision-mismatched-chromaticities.png',
+    'assign-1.png',
+    'assign-4.png',
+    'assign-5.png',
+    'assign-6.png',
+    'assign-after.png',
+    'assign-before.png',
+    'convert-1.png',
+    'convert-4.png',
+    'convert-5.png',
+    'convert-6.png',
+    'convert-7.png',
+    'convert-after.png',
+    'convert-before.png',
+    'save-profile-2.png',
+]

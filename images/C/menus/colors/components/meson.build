@@ -1,0 +1,22 @@
+images_menus_colors_components = [
+    'channel-mixer-ex1.png',
+    'channel-mixer-ex2.png',
+    'channel-mixer-ex3.png',
+    'channel-mixer-ex4.png',
+    'channelmixer.png',
+    'compose-channels-ex1.jpg',
+    'compose-channels-ex2.png',
+    'compose-channels-ex4.jpg',
+    'compose.png',
+    'decompose-ex1.png',
+    'decompose-ex2.png',
+    'decompose.png',
+    'extract_component-dialog.png',
+    'extract_component-ex.png',
+    'mono_mixer-dialog.png',
+    'mono_mixer-ex.png',
+    'regcolor-black.png',
+    'regcolor-cyan.png',
+    'regcolor.png',
+]
+

@@ -1,0 +1,41 @@
+images_menus_colors = [
+    'brightness-contrast-dialog.png',
+    'color-balance-dialog.png',
+    'color-temperature.png',
+    'colorize-dialog.png',
+    'ColorToAlpha-ex1.png',
+    'ColorToAlpha-ex2.png',
+    'ColorToAlpha-ex3.png',
+    'ColorToAlpha-ex4.png',
+    'ColorToAlpha-ex5.png',
+    'ColorToAlpha-ex6.png',
+    'ColorToAlpha-ex7.png',
+    'ColorToAlpha-ex8.png',
+    'colortoalpha.png',
+    'curves-dialog.png',
+    'dither-dialog.png',
+    'exposure-dialog.png',
+    'hot.png',
+    'hue-chroma-dialog.png',
+    'hue-saturation-dialog.png',
+    'invert-1.png',
+    'invert-2.png',
+    'levels-dialog.png',
+    'linear-invert-1.png',
+    'local-threshold-dialog.png',
+    'posterize-ex.png',
+    'posterize.png',
+    'preset-widget.png',
+    'retinex.png',
+    'rgb-clip-dialog.png',
+    'saturation-dialog.png',
+    'shadows-highlights-dialog.png',
+    'threshold-dialog.png',
+]
+
+subdir('auto')
+subdir('components')
+subdir('desaturate')
+subdir('info')
+subdir('map')
+subdir('tone-mapping')
