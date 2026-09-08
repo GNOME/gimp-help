@@ -309,6 +309,22 @@ subdir('images')
 subdir('html')
 
 
+###############################################################################
+### Quickreference ###
+
+if get_option('quickreference')
+  SVG2PDF = find_program('rsvg-convert')
+
+  subdir('quickreference')
+endif
+
+
+###############################################################################
+### Website ###
+if get_option('maintainer')
+  subdir('web')
+endif
+
 
 ###############################################################################
 # Validation / Testing
