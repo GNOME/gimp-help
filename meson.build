@@ -309,6 +309,10 @@ subdir('images')
 subdir('html')
 
 
+
+###############################################################################
+# Validation / Testing
+
 if xmllint.found()
   run_target('validate-authors',
     command: [
@@ -319,6 +323,18 @@ if xmllint.found()
   )
 endif
 
+# Should be run-target?
+custom_target('validate-references',
+  input : [ ],
+  output: [ 'validate-references', ],
+  command: [
+    find_program(meson.project_source_root() / 'tools' / 'validate_references.py'),
+    meson.project_source_root(),
+  ],
+  build_by_default: false,
+)
+
+###############################################################################
 #custom_target('Changelog',
 #  input : [ ],
 #  output: [ 'Changelog', ],
