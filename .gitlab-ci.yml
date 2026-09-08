@@ -42,6 +42,8 @@ build-image:
             intltool
             librsvg2-2
             librsvg2-bin
+            locales
+            meson
             pkg-config
             pngcrush
             python3
@@ -49,6 +51,7 @@ build-image:
             python3-polib
             xsltproc
             libxml2-utils" >> Dockerfile
+    - echo "RUN echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen && locale-gen" >> Dockerfile
 
     # Copied from the GIMP version:
     #FIXME: '2>&1 | grep -v STEP' since buildah is too verbose. See: https://github.com/containers/buildah/issues/6362
@@ -90,29 +93,35 @@ branches-check:
     DEB_VERSION: "trixie"
     RUNNER: "x86_64_v3"
   artifacts:
-    expire_in: 1 week
+    expire_in: 1 day
     when: always
     paths:
     - "${HELP_DIR}"
     - "${PDF_DIR}"
     - _log
+    - _build
+    - ${INSTALL_PREFIX}
   script:
     # There is no Kazakh (kk) localization available for docbook-xsl stylesheets.
     # Make sure it can pick en_us as default language.
-    - export LC_ALL=en_US.UTF-8
-    - cd src
+    #- export LC_ALL=en_US.UTF-8
+    #- cd src
     # Mark all source files as updated. Needed to get up-to-date translations
-    - find . -type f -exec touch {} +
-    - cd ..
+    #- find . -type f -exec touch {} +
+    #- cd ..
     - mkdir _build
     - cd _build
-    - ../autogen.sh --prefix=${INSTALL_PREFIX} --without-gimp
+    - meson setup -Dprefix=${INSTALL_PREFIX}/share/gimp/3.0/help -Dlanguages="${LINGUAS}" -Dquickreference=true
+    # The xsltproc target building all html files can be a memory hog,
+    # so we limit the system load, hopefully this is enough
+    - ninja -l 4.5 && meson install --no-rebuild
+    #- ../autogen.sh --prefix=${INSTALL_PREFIX} --without-gimp
     # Make po first to get validate to use up-to-date translations, and also to stop plain make from redoing the xml
-    - make po
-    - make validate-all
+    #- make po
+    #- make validate-all
     # Test if any xml is present in logs, which means failed validation
-    - if [ `ls -1 log/*.xml 2>/dev/null | wc -l ` -gt 0 ]; then mv log/ ../_log/; echo 'Validation failed!' && false; exit 2; else rm -f log/*.log; fi
-    - make && make install
+    #- if [ `ls -1 log/*.xml 2>/dev/null | wc -l ` -gt 0 ]; then mv log/ ../_log/; echo 'Validation failed!' && false; exit 2; else rm -f log/*.log; fi
+    #- make && make install
     - mv ${INSTALL_PREFIX}/share/gimp/3.0/help/ ../${HELP_DIR}
     - mv ../${HELP_DIR}/pdf/ ../${PDF_DIR}
   timeout: 2 hours 30 minutes
@@ -128,27 +137,38 @@ branches-check:
     DEB_VERSION: "trixie"
     RUNNER: "x86_64_v3"
   artifacts:
-    expire_in: 1 week
+    expire_in: 1 day
     when: always
     paths:
     - "${HELP_DIR}"
     - "${PDF_DIR}"
+    - "${WEB_DIR}"
     - _log
+    - _build
+    - ${INSTALL_PREFIX}
   script:
     # There is no Kazakh (kk) localization available for docbook-xsl stylesheets.
     # Make sure it can pick en_us as default language.
-    - export LC_ALL=en_US.UTF-8
-    - cd src
+    #- export LC_ALL=en_US.UTF-8
+    #- cd src
     # Mark all source files as updated. Needed to get up-to-date translations
-    - find . -type f -exec touch {} +
-    - cd ..
+    #- find . -type f -exec touch {} +
+    #- cd ..
+    - mkdir _web
     - mkdir _build
     - cd _build
-    - ../autogen.sh --prefix=${INSTALL_PREFIX} --without-gimp
+    # Note: even though language-menu=true here, only the languages built in the same job
+    # will be shown on each page. This is only for testing that it works.
+    - meson setup -Dprefix=${INSTALL_PREFIX}/share/gimp/3.0/help -Dlanguages="${LINGUAS}" -Dquickreference=true -Dmaintainer=true -Dlanguage-menu=true
+    # The xsltproc target building all html files can be a memory hog,
+    # so we limit the system load, hopefully this is enough
+    - ninja -l 4.5 && meson install --no-rebuild
+    #- ../autogen.sh --prefix=${INSTALL_PREFIX} --without-gimp
     # Make po first to get validate to use up-to-date translations, and also to stop plain make from redoing the xml
-    - make po
-    - make && make install
+    #- make po
+    #- make && make install
     - mv ${INSTALL_PREFIX}/share/gimp/3.0/help/ ../${HELP_DIR}
+    - mv web/html/* ../${WEB_DIR}
     - mv ../${HELP_DIR}/pdf/ ../${PDF_DIR}
     # Validate last for known problematic languages
     #- make validate-all
@@ -160,44 +180,38 @@ branches-check:
 build-debian-1:
   extends: .build-debian-base
   variables:
-    LINGUAS: "bg ca cs da de"
+    LINGUAS: "bg ca cs da de en en_GB eo"
     HELP_DIR: "_html1"
     PDF_DIR: "_pdf1"
 
 build-debian-2:
   extends: .build-debian-base
   variables:
-    LINGUAS: "en en_GB eo es fa fi fr"
+    LINGUAS: "es fa fi fr hr hu it ja kk"
     HELP_DIR: "_html2"
     PDF_DIR: "_pdf2"
 
 build-debian-3:
   extends: .build-debian-base
   variables:
-    LINGUAS: "hr hu it ja kk ko lt"
+    LINGUAS: "ko lt nl nn pl pt pt_BR ro"
     HELP_DIR: "_html3"
     PDF_DIR: "_pdf3"
 
 build-debian-4:
   extends: .build-debian-base
   variables:
-    LINGUAS: "nl nn pl pt pt_BR ro"
+    LINGUAS: "sk sl sr sv tr uk zh_CN"
     HELP_DIR: "_html4"
     PDF_DIR: "_pdf4"
 
 build-debian-5:
-  extends: .build-debian-base
-  variables:
-    LINGUAS: "sk sl sr sv tr uk zh_CN"
-    HELP_DIR: "_html5"
-    PDF_DIR: "_pdf5"
-
-build-debian-6:
-  extends: .build-debian-base
+  extends: .build-debian-validate-last
   variables:
     LINGUAS: "el ru"
-    HELP_DIR: "_html6"
-    PDF_DIR: "_pdf6"
+    HELP_DIR: "_html5"
+    PDF_DIR: "_pdf5"
+    WEB_DIR: "_web"
 
 
 www-debian:
@@ -213,7 +227,7 @@ www-debian:
     - build-debian-3
     - build-debian-4
     - build-debian-5
-    - build-debian-6
+    #- build-debian-6
   artifacts:
     expire_in: 1 week
     when: always
@@ -222,7 +236,7 @@ www-debian:
     - htdocs/
   script:
     # build the installer language files only.
-    - mkdir _build
+    - mkdir -p _build
     - cd _build
     - ../autogen.sh --prefix=${INSTALL_PREFIX} --without-gimp --enable-windows-installer
     - cd build/windows/installer/lang
@@ -230,33 +244,38 @@ www-debian:
     - cd ../../../..
     - mv build/windows/installer/lang/help*isl ../build/windows/installer/lang/
     # Mark all source files as updated. Needed to get up-to-date translation percentages
-    - cd ../src
-    - find . -type f -exec touch {} +
+    # Hopefully not needed after change to meson so disable it now
+    #- cd ../src
+    #- find . -type f -exec touch {} +
     # update the po files or translation percentages will be incorrect
-    - cd ../_build
-    - make po
+    # With our meson build update po should be available in the build dir
+    #- cd ../_build
+    #- make po
     # build the landing pages.
-    - cd ../web
-    - make
-    - cd ..
-    - mv web/html/ htdocs/
+    #- cd ../web
+    #- make
+    #- cd ..
+    #- mv web/html/ htdocs/
     # Move all PDF quickreferences
-    - MAJOR_VERSION=`grep 'm4_define(\[help_major_version' configure.ac |sed 's/m4_define(\[help_major_version.*\[\([0-9]*\)\].*/\1/'`
-    - MINOR_VERSION=`grep 'm4_define(\[help_minor_version' configure.ac |sed 's/m4_define(\[help_minor_version.*\[\([0-9]*\)\].*/\1/'`
+    - cd ..
+    - MAJOR_VERSION=`grep -w 'version\:' meson.build |sed -E "s/[^0-9]*([0-9]+).*/\1/"`
+    - MINOR_VERSION=`grep -w 'version\:' meson.build |sed -E "s/[^0-9]*([0-9]+)\.([0-9]+).*/\2/"`
     - mkdir -p htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/pdf
     - mv _pdf1/*.pdf htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/pdf/
     - mv _pdf2/*.pdf htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/pdf/
     - mv _pdf3/*.pdf htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/pdf/
     - mv _pdf4/*.pdf htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/pdf/
     - mv _pdf5/*.pdf htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/pdf/
-    - mv _pdf6/*.pdf htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/pdf/
+    #- mv _pdf6/*.pdf htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/pdf/
     # Move all the help html files.
     - mv _html1/* htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/
     - mv _html2/* htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/
     - mv _html3/* htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/
     - mv _html4/* htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/
     - mv _html5/* htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/
-    - mv _html6/* htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/
+    #- mv _html6/* htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/
+    # Move website files to root of htdocs
+    - mv _web/* htdocs/
 
 win-installer:
   # This regularly fails with: fatal: unable to access
@@ -304,7 +323,7 @@ win-installer:
   script:
     # There is no Kazakh (kk) localization available for docbook-xsl stylesheets.
     # Make sure it can pick en_us as default language.
-    - export LC_ALL=en_US.UTF-8
+    #- export LC_ALL=en_US.UTF-8
     - cd src
     # Mark all source files as updated. Needed to get up-to-date translations
     - find . -type f -exec touch {} +
@@ -322,29 +341,24 @@ win-installer:
 distcheck-1:
   extends: .distcheck-base
   variables:
-    LINGUAS: "bg ca cs da de"
+    LINGUAS: "bg ca cs da de en en_GB eo"
 
 distcheck-2:
   extends: .distcheck-base
   variables:
-    LINGUAS: "en en_GB eo es fa fi fr"
+    LINGUAS: "es fa fi fr hr hu it ja kk"
 
 distcheck-3:
   extends: .distcheck-base
   variables:
-    LINGUAS: "hr hu it ja kk ko lt"
+    LINGUAS: "ko lt nl nn pl pt pt_BR ro"
 
 distcheck-4:
   extends: .distcheck-base
   variables:
-    LINGUAS: "nl nn pl pt pt_BR ro"
-
-distcheck-5:
-  extends: .distcheck-base
-  variables:
     LINGUAS: "sk sl sr sv tr uk zh_CN"
 
-distcheck-6:
+distcheck-5:
   extends: .distcheck-base
   variables:
     LINGUAS: "el ru"
