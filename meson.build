@@ -112,6 +112,10 @@ MAKE_IMAGE_LINKS_FLAGS = '-v'
 
 if platform_windows
     MAKE_IMAGE_LINKS_FLAGS += '-m=hardlink,copy'
+else
+    # FIXME: Until we figure out the issue with symbolic links
+    #        on Linux, just do a plain copy...
+    MAKE_IMAGE_LINKS_FLAGS += '-m=hardlink,copy'
 endif
 
 # Validation

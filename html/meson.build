@@ -298,7 +298,10 @@ foreach lang : target_linguas
     # Call with meson install --no-rebuild, or the above slow target will be run again for each language!
 
     images_target = htmltarget + '-images'
-    if platform_windows
+    # FIXME: Copying with ln -s is failing on Linux
+    # Work around it by using the same as for Windows for now
+    #if platform_windows
+    if true
         gimp_html_images = custom_target(images_target,
             depends: [gimp_html],
             output: ['index.html'], # for now so ci doesn't fail
