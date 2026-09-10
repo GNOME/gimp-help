@@ -258,6 +258,7 @@ foreach lang : target_linguas
 
     gimp_html = custom_target(htmltarget,
         depends: [gimp_css_all, gimp_ss_all, xml_lang_copy_images],
+        depend_files: [plainhtml, lang_menu],
         input: [gen_lang],
         output: [xml_base_file], #FIXME: Needs all files to be able to easily install them
         command: [
@@ -266,6 +267,7 @@ foreach lang : target_linguas
             '--nonet',
             '--xinclude',
             '--stringparam', 'l10n.gentext.default.language ', lang,
+            '--stringparam', 'gimp.help.languageselector', lang_menu_enabled,
             '--output', meson.current_build_dir() + '/' + lang + '/',
             html_stylesheet_plainhtml,
             '@INPUT0@',
