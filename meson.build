@@ -177,6 +177,11 @@ else
     maintainer_enabled = false
 endif
 
+if get_option('language-menu')
+    lang_menu_enabled = '1'
+else
+    lang_menu_enabled = '0'
+endif
 
 ########################################################################
 ####            The GIMP manual languages                           ####
