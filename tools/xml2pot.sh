@@ -3,44 +3,36 @@
 #
 # Create a PO-template (POT)
 # Since meson can't do piped commands we use a script
-# Copyright (C) 2021 The GIMP Documentation Team.
+# Copyright (C) 2021, 2026 The GIMP Documentation Team.
 # License: GPL
-#
-# Assumptions: this script is in the same directory as xml2po
 #
 # Arguments (starting at 1)
 # $1 - name of output.pot (including subdir)
 # $2 - build root (added to output.pot)
 # $3 - source root (to find xml2po.py)
-# $4 and up ... - xml input files (already including full path)
-#
-# Ideally we would want to be able to set where
-# xml2po, msguniq, msgcat etc. are located but with current (0.50) meson setting
-# env variables is cumbersome so let's skip that for now
+# $4 and up ... - xml input files (each with relative path from source root)
 
 build_root=$2
 source_root=$3
-out_pot=$build_root/$1
+# Because we change directory below, we need the actual absolute path here
+out_pot=`realpath $build_root/$1`
 
 # Put input arguments 4 and up into src_files
 src_files="${@:4}"
 
-#echo First argument: $1
-#echo Meson source: $source_root
-#echo Meson build: $build_root
-#echo Source files: "${@:4}"
-#echo Source files: $src_files
-#echo Destination file: $out_pot
+#FIXME Use env vars for actual locations of MSGUNIQ, MSGCAT?
 
-#FIXME Start in XML Root folder (either /src/, or /quickreference/)
-#FIXME Use env vars for MSGUNIQ, MSGCAT and set an env in the custom_target
+# We work in the source root. Source files have paths relative to that.
+# This is to make sure we don't get ugly paths in the source locations
+# shown in the comments of the po files.
+cd $source_root
 
-$source_root/tools/xml2po.py -k --mode=gimphelp --output=- $src_files \
+# Combines the strings from input xml files into a pot file
+# with all translatable strings
+./tools/xml2po.py -k --mode=gimphelp --output=- $src_files \
   | msguniq | msgcat - --width=79 -o "$out_pot"
 
 recent_file="$(ls -t $src_files 2>/dev/null | sed 1q)"
-
-#echo "Most recently updated: $recent_file"
 
 # test -s file - Returns true if file exists, and is not empty.
 test -s "$out_pot" || rm -f "$out_pot"; \
