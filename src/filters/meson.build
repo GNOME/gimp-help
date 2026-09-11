@@ -1,6 +1,6 @@
 # /src/filters/ xml files
 
-xml_sources_filters = files(
+xml_sources_filters_files = [
     'about-common-features.xml',
     'animation.xml',
     'artistic.xml',
@@ -19,7 +19,9 @@ xml_sources_filters = files(
     'noise.xml',
     'render.xml',
     'web.xml',
-)
+]
+xml_sources_filters = files(xml_sources_filters_files)
+
 
 subdir('animation')
 subdir('artistic')

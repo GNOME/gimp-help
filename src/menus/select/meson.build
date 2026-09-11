@@ -1,6 +1,6 @@
 # /src/menus/select/ xml files
 
-xml_sources_menus_select = files(
+xml_sources_menus_select_files = [
     'all.xml',
     'border.xml',
     'by_color.xml',
@@ -20,4 +20,5 @@ xml_sources_menus_select = files(
     'shrink.xml',
     'to-channel.xml',
     'to-path.xml',
-)
+]
+xml_sources_menus_select = files(xml_sources_menus_select_files)

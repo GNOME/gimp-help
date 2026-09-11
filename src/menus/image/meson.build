@@ -1,6 +1,6 @@
 # /src/menus/image/ xml files
 
-xml_sources_menus_image = files(
+xml_sources_menus_image_files = [
     'align-layers.xml',
     'assign-color-profile.xml',
     'canvas-size.xml',
@@ -41,4 +41,5 @@ xml_sources_menus_image = files(
     'transform.xml',
     'use-srgb-profile.xml',
     'zealous-crop.xml',
-)
+]
+xml_sources_menus_image = files(xml_sources_menus_image_files)

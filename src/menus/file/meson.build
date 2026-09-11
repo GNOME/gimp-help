@@ -1,6 +1,6 @@
 # /src/menus/file/ xml files
 
-xml_sources_menus_file = files(
+xml_sources_menus_file_files = [
     'close-all.xml',
     'close.xml',
     'copy-location.xml',
@@ -23,4 +23,5 @@ xml_sources_menus_file = files(
     'save.xml',
     'send-by-email.xml',
     'show-in-file-manager.xml',
-)
+]
+xml_sources_menus_file = files(xml_sources_menus_file_files)

@@ -1,6 +1,6 @@
 # /src/using/ xml files
 
-xml_sources_using = files(
+xml_sources_using_files = [
     'animated-brushes.xml',
     'brushes.xml',
     'creating-brush-quickly.xml',
@@ -24,4 +24,5 @@ xml_sources_using = files(
     'simpleobjects.xml',
     'variable-size-brush.xml',
     'web.xml',
-)
+]
+xml_sources_using = files(xml_sources_using_files)

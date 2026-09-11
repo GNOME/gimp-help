@@ -1,6 +1,6 @@
 # /src/filters/animation/ xml files
 
-xml_sources_filters_animation = files(
+xml_sources_filters_animation_files = [
     'blend.xml',
     'burn-in.xml',
     'optimize.xml',
@@ -8,4 +8,5 @@ xml_sources_filters_animation = files(
     'rippling.xml',
     'spinning-globe.xml',
     'waves.xml',
-)
+]
+xml_sources_filters_animation = files(xml_sources_filters_animation_files)

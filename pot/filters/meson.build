@@ -23,6 +23,14 @@ output_pot = pot_filters_animation
 # foreach xml_file: input_xml
 #     input_files += input_base_dir + xml_file
 # endforeach
+plain_input  = xml_sources_filters_animation_files
+
+pot_folder     = 'src/filters/animation/'
+relative_input = []
+foreach file : plain_input
+    relative_input += pot_folder + file
+endforeach
+
 xml_sources_lists += { 'filters/animation': input_files}
 
 filters_animation_pot = custom_target(output_pot,
@@ -30,7 +38,7 @@ filters_animation_pot = custom_target(output_pot,
     input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
 )
 
@@ -66,6 +74,14 @@ output_pot = pot_filters_artistic
 # foreach xml_file: input_xml
 #     input_files += input_base_dir + xml_file
 # endforeach
+plain_input  = xml_sources_filters_artistic_files
+
+pot_folder     = 'src/filters/artistic/'
+relative_input = []
+foreach file : plain_input
+    relative_input += pot_folder + file
+endforeach
+
 xml_sources_lists += { 'filters/artistic': input_files}
 
 filters_artistic_pot = custom_target(output_pot,
@@ -73,7 +89,7 @@ filters_artistic_pot = custom_target(output_pot,
     input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
 )
 
@@ -106,6 +122,14 @@ output_pot = pot_filters_blur
 # foreach xml_file: input_xml
 #     input_files += input_base_dir + xml_file
 # endforeach
+plain_input  = xml_sources_filters_blur_files
+
+pot_folder     = 'src/filters/blur/'
+relative_input = []
+foreach file : plain_input
+    relative_input += pot_folder + file
+endforeach
+
 xml_sources_lists += { 'filters/blur': input_files}
 
 filters_blur_pot = custom_target(output_pot,
@@ -113,7 +137,7 @@ filters_blur_pot = custom_target(output_pot,
     input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
 )
 
@@ -136,6 +160,14 @@ output_pot = pot_filters_combine
 # foreach xml_file: input_xml
 #     input_files += input_base_dir + xml_file
 # endforeach
+plain_input  = xml_sources_filters_combine_files
+
+pot_folder     = 'src/filters/combine/'
+relative_input = []
+foreach file : plain_input
+    relative_input += pot_folder + file
+endforeach
+
 xml_sources_lists += { 'filters/combine': input_files}
 
 filters_combine_pot = custom_target(output_pot,
@@ -143,7 +175,7 @@ filters_combine_pot = custom_target(output_pot,
     input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
 )
 
@@ -174,6 +206,14 @@ output_pot = pot_filters_decor
 # foreach xml_file: input_xml
 #     input_files += input_base_dir + xml_file
 # endforeach
+plain_input  = xml_sources_filters_decor_files
+
+pot_folder     = 'src/filters/decor/'
+relative_input = []
+foreach file : plain_input
+    relative_input += pot_folder + file
+endforeach
+
 xml_sources_lists += { 'filters/decor': input_files}
 
 filters_decor_pot = custom_target(output_pot,
@@ -181,7 +221,7 @@ filters_decor_pot = custom_target(output_pot,
     input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
 )
 
@@ -221,6 +261,14 @@ output_pot = pot_filters_distort
 # foreach xml_file: input_xml
 #     input_files += input_base_dir + xml_file
 # endforeach
+plain_input  = xml_sources_filters_distort_files
+
+pot_folder     = 'src/filters/distort/'
+relative_input = []
+foreach file : plain_input
+    relative_input += pot_folder + file
+endforeach
+
 xml_sources_lists += { 'filters/distort': input_files}
 
 filters_distort_pot = custom_target(output_pot,
@@ -228,7 +276,7 @@ filters_distort_pot = custom_target(output_pot,
     input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
 )
 
@@ -255,6 +303,14 @@ output_pot = pot_filters_edge
 # foreach xml_file: input_xml
 #     input_files += input_base_dir + xml_file
 # endforeach
+plain_input  = xml_sources_filters_edge_files
+
+pot_folder     = 'src/filters/edge-detect/'
+relative_input = []
+foreach file : plain_input
+    relative_input += pot_folder + file
+endforeach
+
 xml_sources_lists += { 'filters/edge-detect': input_files}
 
 filters_edge_detect_pot = custom_target(output_pot,
@@ -262,7 +318,7 @@ filters_edge_detect_pot = custom_target(output_pot,
     input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
 )
 
@@ -293,6 +349,14 @@ output_pot = pot_filters_enhance
 # foreach xml_file: input_xml
 #     input_files += input_base_dir + xml_file
 # endforeach
+plain_input  = xml_sources_filters_enhance_files
+
+pot_folder     = 'src/filters/enhance/'
+relative_input = []
+foreach file : plain_input
+    relative_input += pot_folder + file
+endforeach
+
 xml_sources_lists += { 'filters/enhance': input_files}
 
 filters_enhance_pot = custom_target(output_pot,
@@ -300,7 +364,7 @@ filters_enhance_pot = custom_target(output_pot,
     input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
 )
 
@@ -328,6 +392,14 @@ output_pot = pot_filters_generic
 # foreach xml_file: input_xml
 #     input_files += input_base_dir + xml_file
 # endforeach
+plain_input  = xml_sources_filters_generic_files
+
+pot_folder     = 'src/filters/generic/'
+relative_input = []
+foreach file : plain_input
+    relative_input += pot_folder + file
+endforeach
+
 xml_sources_lists += { 'filters/generic': input_files}
 
 filters_generic_pot = custom_target(output_pot,
@@ -335,7 +407,7 @@ filters_generic_pot = custom_target(output_pot,
     input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
 )
 
@@ -370,6 +442,14 @@ output_pot = pot_filters_light
 # foreach xml_file: input_xml
 #     input_files += input_base_dir + xml_file
 # endforeach
+plain_input  = xml_sources_filters_light_files
+
+pot_folder     = 'src/filters/light-and-shadow/'
+relative_input = []
+foreach file : plain_input
+    relative_input += pot_folder + file
+endforeach
+
 xml_sources_lists += { 'filters/light-and-shadow': input_files}
 
 filters_light_and_shadow_pot = custom_target(output_pot,
@@ -377,7 +457,7 @@ filters_light_and_shadow_pot = custom_target(output_pot,
     input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
 )
 
@@ -411,6 +491,14 @@ output_pot = pot_filters_map
 # foreach xml_file: input_xml
 #     input_files += input_base_dir + xml_file
 # endforeach
+plain_input  = xml_sources_filters_map_files
+
+pot_folder     = 'src/filters/map/'
+relative_input = []
+foreach file : plain_input
+    relative_input += pot_folder + file
+endforeach
+
 xml_sources_lists += { 'filters/map': input_files}
 
 filters_map_pot = custom_target(output_pot,
@@ -418,7 +506,7 @@ filters_map_pot = custom_target(output_pot,
     input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
 )
 
@@ -446,6 +534,14 @@ output_pot = pot_filters_noise
 # foreach xml_file: input_xml
 #     input_files += input_base_dir + xml_file
 # endforeach
+plain_input  = xml_sources_filters_noise_files
+
+pot_folder     = 'src/filters/noise/'
+relative_input = []
+foreach file : plain_input
+    relative_input += pot_folder + file
+endforeach
+
 xml_sources_lists += { 'filters/noise': input_files}
 
 filters_noise_pot = custom_target(output_pot,
@@ -453,7 +549,7 @@ filters_noise_pot = custom_target(output_pot,
     input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
 )
 
@@ -502,6 +598,14 @@ output_pot = pot_filters_render
 # foreach xml_file: input_xml
 #     input_files += input_base_dir + xml_file
 # endforeach
+plain_input  = xml_sources_filters_render_files
+
+pot_folder     = 'src/filters/render/'
+relative_input = []
+foreach file : plain_input
+    relative_input += pot_folder + file
+endforeach
+
 xml_sources_lists += { 'filters/render': input_files}
 
 filters_render_pot = custom_target(output_pot,
@@ -509,7 +613,7 @@ filters_render_pot = custom_target(output_pot,
     input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
 )
 
@@ -531,6 +635,14 @@ output_pot = pot_filters_web
 # foreach xml_file: input_xml
 #     input_files += input_base_dir + xml_file
 # endforeach
+plain_input  = xml_sources_filters_web_files
+
+pot_folder     = 'src/filters/web/'
+relative_input = []
+foreach file : plain_input
+    relative_input += pot_folder + file
+endforeach
+
 xml_sources_lists += { 'filters/web': input_files}
 
 filters_web_pot = custom_target(output_pot,
@@ -538,6 +650,6 @@ filters_web_pot = custom_target(output_pot,
     input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
 )
