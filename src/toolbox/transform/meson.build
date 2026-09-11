@@ -1,6 +1,6 @@
 # /src/toolbox/transform/ xml files
 
-xml_sources_toolbox_transform = files(
+xml_sources_toolbox_transform_files = [
     'about-common-transform-options.xml',
     'align.xml',
     'cage.xml',
@@ -16,4 +16,5 @@ xml_sources_toolbox_transform = files(
     'transform-3d.xml',
     'unified-transform.xml',
     'warp-transform.xml',
-)
+]
+xml_sources_toolbox_transform = files(xml_sources_toolbox_transform_files)

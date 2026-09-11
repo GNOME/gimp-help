@@ -21,6 +21,14 @@ output_pot = pot_colors_auto
 # foreach xml_file: input_xml
 #     input_files += input_base_dir + xml_file
 # endforeach
+plain_input  = xml_sources_colors_auto_files
+
+pot_folder     = 'src/menus/colors/auto/'
+relative_input = []
+foreach file : plain_input
+    relative_input += pot_folder + file
+endforeach
+
 xml_sources_lists += { 'menus/colors/auto': input_files}
 
 colors_auto_pot = custom_target(output_pot,
@@ -28,7 +36,7 @@ colors_auto_pot = custom_target(output_pot,
     input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
 )
 
@@ -54,6 +62,14 @@ output_pot = pot_colors_components
 # foreach xml_file: input_xml
 #     input_files += input_base_dir + xml_file
 # endforeach
+plain_input  = xml_sources_colors_components_files
+
+pot_folder     = 'src/menus/colors/components/'
+relative_input = []
+foreach file : plain_input
+    relative_input += pot_folder + file
+endforeach
+
 xml_sources_lists += { 'menus/colors/components': input_files}
 
 colors_components_pot = custom_target(output_pot,
@@ -61,7 +77,7 @@ colors_components_pot = custom_target(output_pot,
     input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
 )
 
@@ -85,6 +101,14 @@ output_pot = pot_colors_desaturate
 # foreach xml_file: input_xml
 #     input_files += input_base_dir + xml_file
 # endforeach
+plain_input  = xml_sources_colors_desaturate_files
+
+pot_folder     = 'src/menus/colors/desaturate/'
+relative_input = []
+foreach file : plain_input
+    relative_input += pot_folder + file
+endforeach
+
 xml_sources_lists += { 'menus/colors/desaturate': input_files}
 
 colors_desaturate_pot = custom_target(output_pot,
@@ -92,7 +116,7 @@ colors_desaturate_pot = custom_target(output_pot,
     input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
 )
 
@@ -116,6 +140,14 @@ output_pot = pot_colors_info
 # foreach xml_file: input_xml
 #     input_files += input_base_dir + xml_file
 # endforeach
+plain_input  = xml_sources_colors_info_files
+
+pot_folder     = 'src/menus/colors/info/'
+relative_input = []
+foreach file : plain_input
+    relative_input += pot_folder + file
+endforeach
+
 xml_sources_lists += { 'menus/colors/info': input_files}
 
 colors_info_pot = custom_target(output_pot,
@@ -123,7 +155,7 @@ colors_info_pot = custom_target(output_pot,
     input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
 )
 
@@ -151,6 +183,14 @@ output_pot = pot_colors_map
 # foreach xml_file: input_xml
 #     input_files += input_base_dir + xml_file
 # endforeach
+plain_input  = xml_sources_colors_map_files
+
+pot_folder     = 'src/menus/colors/map/'
+relative_input = []
+foreach file : plain_input
+    relative_input += pot_folder + file
+endforeach
+
 xml_sources_lists += { 'menus/colors/map': input_files}
 
 colors_map_pot = custom_target(output_pot,
@@ -158,7 +198,7 @@ colors_map_pot = custom_target(output_pot,
     input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
 )
 
@@ -184,6 +224,14 @@ output_pot = pot_colors_tone_mapping
 # foreach xml_file: input_xml
 #     input_files += input_base_dir + xml_file
 # endforeach
+plain_input  = xml_sources_colors_tone_mapping_files
+
+pot_folder     = 'src/menus/colors/tone-mapping/'
+relative_input = []
+foreach file : plain_input
+    relative_input += pot_folder + file
+endforeach
+
 xml_sources_lists += { 'menus/colors/tone-mapping': input_files}
 
 colors_tone_mapping_pot = custom_target(output_pot,
@@ -191,7 +239,7 @@ colors_tone_mapping_pot = custom_target(output_pot,
     input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
 )
 

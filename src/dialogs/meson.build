@@ -1,6 +1,6 @@
 # /src/dialogs/ xml files
 
-xml_sources_dialogs = files(
+xml_sources_dialogs_files = [
     'brushes-dialog.xml',
     'buffers-dialog.xml',
     'channel-dialog.xml',
@@ -132,4 +132,5 @@ xml_sources_dialogs = files(
     'tool-presets-dialog.xml',
     'undo-history-dialog.xml',
     'welcome-dialog.xml',
-)
+]
+xml_sources_dialogs = files(xml_sources_dialogs_files)

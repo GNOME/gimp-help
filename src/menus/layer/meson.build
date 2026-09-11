@@ -1,6 +1,6 @@
 # /src/menus/layer/ xml files
 
-xml_sources_menus_layer = files(
+xml_sources_menus_layer_files = [
     'alpha-add.xml',
     'alpha-remove.xml',
     'alpha-selection-add.xml',
@@ -58,4 +58,5 @@ xml_sources_menus_layer = files(
     'top.xml',
     'transform.xml',
     'transparency.xml',
-)
+]
+xml_sources_menus_layer = files(xml_sources_menus_layer_files)

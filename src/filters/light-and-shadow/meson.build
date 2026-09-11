@@ -1,6 +1,6 @@
 # /src/filters/light-and-shadow/ xml files
 
-xml_sources_filters_light = files(
+xml_sources_filters_light_files = [
     'bloom.xml',
     'drop-shadow-legacy.xml',
     'drop-shadow.xml',
@@ -16,4 +16,5 @@ xml_sources_filters_light = files(
     'supernova.xml',
     'vignette.xml',
     'xach-effect.xml',
-)
+]
+xml_sources_filters_light = files(xml_sources_filters_light_files)

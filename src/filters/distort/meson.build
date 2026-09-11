@@ -1,6 +1,6 @@
 # /src/filters/distort/ xml files
 
-xml_sources_filters_distort = files(
+xml_sources_filters_distort_files = [
     'apply_lens.xml',
     'blinds.xml',
     'curve_bend.xml',
@@ -21,4 +21,5 @@ xml_sources_filters_distort = files(
     'waves.xml',
     'whirlpinch.xml',
     'wind.xml',
-)
+]
+xml_sources_filters_distort = files(xml_sources_filters_distort_files)

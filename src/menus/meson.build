@@ -1,6 +1,6 @@
 # /src/menus/ xml files
 
-xml_sources_menus = files(
+xml_sources_menus_files = [
     'about-plugin-menuitems.xml',
     'colors.xml',
     'edit.xml',
@@ -15,7 +15,8 @@ xml_sources_menus = files(
     'view.xml',
     'windows-open-recent-docks.xml',
     'windows.xml',
-)
+]
+xml_sources_menus = files(xml_sources_menus_files)
 
 subdir('colors')
 subdir('edit')

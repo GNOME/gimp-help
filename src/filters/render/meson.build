@@ -1,6 +1,6 @@
 # /src/filters/render/ xml files
 
-xml_sources_filters_render = files(
+xml_sources_filters_render_files = [
     'bayer-matrix.xml',
     'cell-noise.xml',
     'checkerboard-legacy.xml',
@@ -30,4 +30,5 @@ xml_sources_filters_render = files(
     'spheredesigner.xml',
     'spiral.xml',
     'spyrogimp.xml',
-)
+]
+xml_sources_filters_render = files(xml_sources_filters_render_files)

@@ -1,6 +1,6 @@
 # /src/toolbox/selection/ xml files
 
-xml_sources_toolbox_selection = files(
+xml_sources_toolbox_selection_files = [
     'about-common-select-modifiers.xml',
     'about-common-select-options.xml',
     'by-color.xml',
@@ -11,4 +11,5 @@ xml_sources_toolbox_selection = files(
     'fuzzy.xml',
     'iscissors.xml',
     'rectangle.xml',
-)
+]
+xml_sources_toolbox_selection = files(xml_sources_toolbox_selection_files)

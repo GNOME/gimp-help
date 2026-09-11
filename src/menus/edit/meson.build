@@ -1,6 +1,6 @@
 # /src/menus/edit/ xml files
 
-xml_sources_menus_edit = files(
+xml_sources_menus_edit_files = [
     'buffer.xml',
     'clear.xml',
     'copy-visible.xml',
@@ -34,4 +34,5 @@ xml_sources_menus_edit = files(
     'undo-history.xml',
     'undo.xml',
     'units.xml',
-)
+]
+xml_sources_menus_edit = files(xml_sources_menus_edit_files)

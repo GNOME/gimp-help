@@ -2,12 +2,14 @@ message('src submenu')
 
 SRC_FOLDER = meson.current_source_dir()
 
-xml_sources_root = files(
+# We need access to the plain files without path
+xml_sources_root_files = [
     'gimp.xml',
     'help-missing.xml',
     'introduction.xml',
     'key-reference.xml',
-)
+]
+xml_sources_root = files(xml_sources_root_files)
 
 subdir('appendix')
 subdir('concepts')

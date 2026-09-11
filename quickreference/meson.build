@@ -1,6 +1,10 @@
 message('quickreference subdir')
 
-keys_xml = files('gimp-keys.xml')
+keys_xml_files = [
+    'gimp-keys.xml'
+]
+keys_xml = files(keys_xml_files)
+
 
 subdir('stylesheets')
 subdir('templates')

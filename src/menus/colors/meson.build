@@ -1,6 +1,6 @@
 # /src/menus/colors/ xml files
 
-xml_sources_menus_colors = files(
+xml_sources_menus_colors_files = [
     'about-common-features.xml',
     'auto.xml',
     'brightness-contrast.xml',
@@ -30,7 +30,8 @@ xml_sources_menus_colors = files(
     'threshold.xml',
     'tone-mapping.xml',
     'value-invert.xml',
-)
+]
+xml_sources_menus_colors = files(xml_sources_menus_colors_files)
 
 subdir('auto')
 subdir('components')

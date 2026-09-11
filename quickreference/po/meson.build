@@ -38,12 +38,19 @@ qr_po_files = files(
     'zh_CN.po',
 )
 
+plain_input  = keys_xml_files
+
+src_folder     = 'quickreference/'
+relative_input = []
+foreach file : plain_input
+    relative_input += src_folder + file
+endforeach
 
 gimp_pot = custom_target('gimp-keys.pot',
     input: [keys_xml],
     output: [pot_file],
     command: [
-        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
 )
 

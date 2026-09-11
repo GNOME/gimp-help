@@ -1,6 +1,6 @@
 # /src/filters/noise/ xml files
 
-xml_sources_filters_noise = files(
+xml_sources_filters_noise_files = [
     'cie-lch-noise.xml',
     'hsv-noise.xml',
     'hurl.xml',
@@ -9,4 +9,5 @@ xml_sources_filters_noise = files(
     'rgb-noise.xml',
     'slur.xml',
     'spread.xml',
-)
+]
+xml_sources_filters_noise = files(xml_sources_filters_noise_files)

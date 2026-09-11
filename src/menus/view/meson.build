@@ -1,6 +1,6 @@
 # /src/menus/view/ xml files
 
-xml_sources_menus_view = files(
+xml_sources_menus_view_files = [
     'display-filters.xml',
     'dot-for-dot.xml',
     'flip-rotate.xml',
@@ -37,4 +37,5 @@ xml_sources_menus_view = files(
     'view-rendering-intent.xml',
     'view-soft-proof.xml',
     'zoom.xml',
-)
+]
+xml_sources_menus_view = files(xml_sources_menus_view_files)

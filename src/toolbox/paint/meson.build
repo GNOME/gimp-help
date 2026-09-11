@@ -1,6 +1,6 @@
 # /src/toolbox/paint/ xml files
 
-xml_sources_toolbox_paint = files(
+xml_sources_toolbox_paint_files = [
     'about-common-paint-options.xml',
     'airbrush.xml',
     'blur-sharpen.xml',
@@ -19,4 +19,5 @@ xml_sources_toolbox_paint = files(
     'pencil.xml',
     'perspective-clone.xml',
     'smudge.xml',
-)
+]
+xml_sources_toolbox_paint = files(xml_sources_toolbox_paint_files)

@@ -1,6 +1,6 @@
 # /src/filters/artistic/ xml files
 
-xml_sources_filters_artistic = files(
+xml_sources_filters_artistic_files = [
     'applycanvas.xml',
     'cartoon.xml',
     'clothify.xml',
@@ -17,4 +17,5 @@ xml_sources_filters_artistic = files(
     'vangogh-lic.xml',
     'waterpixels.xml',
     'weave.xml',
-)
+]
+xml_sources_filters_artistic = files(xml_sources_filters_artistic_files)

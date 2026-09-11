@@ -1,6 +1,6 @@
 # /src/concepts/ xml files
 
-xml_sources_concepts = files(
+xml_sources_concepts_files = [
     'basic-setup.xml',
     'brushes.xml',
     'color-management.xml',
@@ -29,4 +29,5 @@ xml_sources_concepts = files(
     'toolbox.xml',
     'tools-presets.xml',
     'undo.xml',
-)
+]
+xml_sources_concepts = files(xml_sources_concepts_files)
