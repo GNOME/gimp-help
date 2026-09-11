@@ -1,6 +1,6 @@
 # /src/filters/enhance/ xml files
 
-xml_sources_filters_enhance = files(
+xml_sources_filters_enhance_files = [
     'antialias.xml',
     'deinterlace.xml',
     'despeckle.xml',
@@ -12,4 +12,5 @@ xml_sources_filters_enhance = files(
     'symmetric-nearest-neighbor.xml',
     'unsharp_mask.xml',
     'wavelet-decompose.xml',
-)
+]
+xml_sources_filters_enhance = files(xml_sources_filters_enhance_files)

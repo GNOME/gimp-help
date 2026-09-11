@@ -1,18 +1,23 @@
 message('pot submenu')
 
-### FIXME: Comments referencing source should be relative but are ABDSOLUTE!!!!!!!!!!!!!
-
 pot_gimp_help = 'gimp.pot'
 
 output_pot = pot_gimp_help
 input_files = xml_sources_root
+plain_input = xml_sources_root_files
+
+pot_folder     = 'src/'
+relative_input = []
+foreach file : plain_input
+    relative_input += pot_folder + file
+endforeach
 
 gimp_pot = custom_target(output_pot,
     depends: [copy_authors_to_src],
     input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
 )
 
@@ -23,6 +28,13 @@ xml_sources_lists = {}
 pot_appendix = 'appendix.pot'
 output_pot   = pot_appendix
 input_files  = xml_sources_appendix
+plain_input  = xml_sources_appendix_files
+
+pot_folder     = 'src/appendix/'
+relative_input = []
+foreach file : plain_input
+    relative_input += pot_folder + file
+endforeach
 
 xml_sources_lists += { 'appendix': input_files}
 
@@ -31,7 +43,7 @@ appendix_pot = custom_target(output_pot,
     input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
 )
 
@@ -41,6 +53,14 @@ pot_concepts = 'concepts.pot'
 input_files  = xml_sources_concepts
 output_pot   = pot_concepts
 
+plain_input  = xml_sources_concepts_files
+
+pot_folder     = 'src/concepts/'
+relative_input = []
+foreach file : plain_input
+    relative_input += pot_folder + file
+endforeach
+
 xml_sources_lists += { 'concepts': input_files}
 
 concepts_pot = custom_target(output_pot,
@@ -48,7 +68,7 @@ concepts_pot = custom_target(output_pot,
     input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
 )
 
@@ -58,6 +78,14 @@ pot_dialogs = 'dialogs.pot'
 input_files = xml_sources_dialogs
 output_pot  = pot_dialogs
 
+plain_input  = xml_sources_dialogs_files
+
+pot_folder     = 'src/dialogs/'
+relative_input = []
+foreach file : plain_input
+    relative_input += pot_folder + file
+endforeach
+
 xml_sources_lists += { 'dialogs': input_files}
 
 dialogs_pot = custom_target(output_pot,
@@ -65,7 +93,7 @@ dialogs_pot = custom_target(output_pot,
     input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
    ],
 )
 
@@ -75,6 +103,14 @@ pot_filters = 'filters.pot'
 input_files = xml_sources_filters
 output_pot  = pot_filters
 
+plain_input  = xml_sources_filters_files
+
+pot_folder     = 'src/filters/'
+relative_input = []
+foreach file : plain_input
+    relative_input += pot_folder + file
+endforeach
+
 xml_sources_lists += { 'filters': input_files}
 
 filters_pot = custom_target(output_pot,
@@ -82,7 +118,7 @@ filters_pot = custom_target(output_pot,
     input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
 )
 
@@ -92,6 +128,14 @@ pot_glossary = 'glossary.pot'
 input_files  = xml_sources_glossary
 output_pot   = pot_glossary
 
+plain_input  = xml_sources_glossary_files
+
+pot_folder     = 'src/glossary/'
+relative_input = []
+foreach file : plain_input
+    relative_input += pot_folder + file
+endforeach
+
 xml_sources_lists += { 'glossary': input_files}
 
 glossary_pot = custom_target(output_pot,
@@ -99,7 +143,7 @@ glossary_pot = custom_target(output_pot,
     input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
 )
 
@@ -109,6 +153,14 @@ pot_introduction = 'introduction.pot'
 input_files  = xml_sources_introduction
 output_pot   = pot_introduction
 
+plain_input  = xml_sources_introduction_files
+
+pot_folder     = 'src/introduction/'
+relative_input = []
+foreach file : plain_input
+    relative_input += pot_folder + file
+endforeach
+
 xml_sources_lists += { 'introduction': input_files}
 
 introduction_pot = custom_target(output_pot,
@@ -116,7 +168,7 @@ introduction_pot = custom_target(output_pot,
     input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
 )
 
@@ -126,6 +178,14 @@ pot_menus   = 'menus.pot'
 input_files = xml_sources_menus
 output_pot  = pot_menus
 
+plain_input  = xml_sources_menus_files
+
+pot_folder     = 'src/menus/'
+relative_input = []
+foreach file : plain_input
+    relative_input += pot_folder + file
+endforeach
+
 xml_sources_lists += { 'menus': input_files}
 
 menus_pot = custom_target(output_pot,
@@ -133,7 +193,7 @@ menus_pot = custom_target(output_pot,
     input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
 )
 
@@ -143,6 +203,14 @@ pot_preface = 'preface.pot'
 input_files = xml_sources_preface
 output_pot  = pot_preface
 
+plain_input  = xml_sources_preface_files
+
+pot_folder     = 'src/preface/'
+relative_input = []
+foreach file : plain_input
+    relative_input += pot_folder + file
+endforeach
+
 xml_sources_lists += { 'preface': input_files}
 
 preface_pot = custom_target(output_pot,
@@ -150,7 +218,7 @@ preface_pot = custom_target(output_pot,
     input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
 )
 
@@ -160,6 +228,14 @@ pot_toolbox = 'toolbox.pot'
 input_files = xml_sources_toolbox
 output_pot  = pot_toolbox
 
+plain_input  = xml_sources_toolbox_files
+
+pot_folder     = 'src/toolbox/'
+relative_input = []
+foreach file : plain_input
+    relative_input += pot_folder + file
+endforeach
+
 xml_sources_lists += { 'toolbox': input_files}
 
 toolbox_pot = custom_target(output_pot,
@@ -167,7 +243,7 @@ toolbox_pot = custom_target(output_pot,
     input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
 )
 
@@ -177,6 +253,14 @@ pot_tutorial = 'tutorial.pot'
 input_files  = xml_sources_tutorial
 output_pot   = pot_tutorial
 
+plain_input  = xml_sources_tutorial_files
+
+pot_folder     = 'src/tutorial/'
+relative_input = []
+foreach file : plain_input
+    relative_input += pot_folder + file
+endforeach
+
 xml_sources_lists += { 'tutorial': input_files}
 
 tutorial_pot = custom_target(output_pot,
@@ -184,7 +268,7 @@ tutorial_pot = custom_target(output_pot,
     input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
 )
 
@@ -194,6 +278,14 @@ pot_using   = 'using.pot'
 input_files = xml_sources_using
 output_pot  = pot_using
 
+plain_input  = xml_sources_using_files
+
+pot_folder     = 'src/using/'
+relative_input = []
+foreach file : plain_input
+    relative_input += pot_folder + file
+endforeach
+
 xml_sources_lists += { 'using': input_files}
 
 using_pot = custom_target(output_pot,
@@ -201,7 +293,7 @@ using_pot = custom_target(output_pot,
     input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
 )
 

@@ -1,6 +1,6 @@
 # /src/menus/help/ xml files
 
-xml_sources_menus_help = files(
+xml_sources_menus_help_files = [
     'about.xml',
     'context-help.xml',
     'gimp-online.xml',
@@ -13,4 +13,5 @@ xml_sources_menus_help = files(
     'tip-of-the-day.xml',
     'user-manual.xml',
     'welcome-dialog.xml',
-)
+]
+xml_sources_menus_help = files(xml_sources_menus_help_files)

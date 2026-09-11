@@ -45,6 +45,14 @@ output_pot = pot_menus_colors
 # foreach xml_file: input_xml
 #     input_files += input_base_dir + xml_file
 # endforeach
+plain_input  = xml_sources_menus_colors_files
+
+pot_folder     = 'src/menus/colors/'
+relative_input = []
+foreach file : plain_input
+    relative_input += pot_folder + file
+endforeach
+
 xml_sources_lists += { 'menus/colors': input_files}
 
 menus_colors_pot = custom_target(output_pot,
@@ -52,7 +60,7 @@ menus_colors_pot = custom_target(output_pot,
     input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
 )
 
@@ -105,6 +113,14 @@ output_pot = pot_menus_edit
 # foreach xml_file: input_xml
 #     input_files += input_base_dir + xml_file
 # endforeach
+plain_input  = xml_sources_menus_edit_files
+
+pot_folder     = 'src/menus/edit/'
+relative_input = []
+foreach file : plain_input
+    relative_input += pot_folder + file
+endforeach
+
 xml_sources_lists += { 'menus/edit': input_files}
 
 menus_edit_pot = custom_target(output_pot,
@@ -112,7 +128,7 @@ menus_edit_pot = custom_target(output_pot,
     input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
 )
 
@@ -154,6 +170,14 @@ output_pot = pot_menus_file
 # foreach xml_file: input_xml
 #     input_files += input_base_dir + xml_file
 # endforeach
+plain_input  = xml_sources_menus_file_files
+
+pot_folder     = 'src/menus/file/'
+relative_input = []
+foreach file : plain_input
+    relative_input += pot_folder + file
+endforeach
+
 xml_sources_lists += { 'menus/file': input_files}
 
 menus_file_pot = custom_target(output_pot,
@@ -161,7 +185,7 @@ menus_file_pot = custom_target(output_pot,
     input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
 )
 
@@ -188,6 +212,14 @@ output_pot = pot_menus_filters
 # foreach xml_file: input_xml
 #     input_files += input_base_dir + xml_file
 # endforeach
+plain_input  = xml_sources_menus_filters_files
+
+pot_folder     = 'src/menus/filters/'
+relative_input = []
+foreach file : plain_input
+    relative_input += pot_folder + file
+endforeach
+
 xml_sources_lists += { 'menus/filters': input_files}
 
 menus_filters_pot = custom_target(output_pot,
@@ -195,7 +227,7 @@ menus_filters_pot = custom_target(output_pot,
     input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
 )
 
@@ -227,6 +259,14 @@ output_pot = pot_menus_help
 # foreach xml_file: input_xml
 #     input_files += input_base_dir + xml_file
 # endforeach
+plain_input  = xml_sources_menus_help_files
+
+pot_folder     = 'src/menus/help/'
+relative_input = []
+foreach file : plain_input
+    relative_input += pot_folder + file
+endforeach
+
 xml_sources_lists += { 'menus/help': input_files}
 
 menus_help_pot = custom_target(output_pot,
@@ -234,7 +274,7 @@ menus_help_pot = custom_target(output_pot,
     input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
 )
 
@@ -294,6 +334,14 @@ output_pot = pot_menus_image
 # foreach xml_file: input_xml
 #     input_files += input_base_dir + xml_file
 # endforeach
+plain_input  = xml_sources_menus_image_files
+
+pot_folder     = 'src/menus/image/'
+relative_input = []
+foreach file : plain_input
+    relative_input += pot_folder + file
+endforeach
+
 xml_sources_lists += { 'menus/image': input_files}
 
 menus_image_pot = custom_target(output_pot,
@@ -301,7 +349,7 @@ menus_image_pot = custom_target(output_pot,
     input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
 )
 
@@ -378,6 +426,14 @@ output_pot = pot_menus_layer
 # foreach xml_file: input_xml
 #     input_files += input_base_dir + xml_file
 # endforeach
+plain_input  = xml_sources_menus_layer_files
+
+pot_folder     = 'src/menus/layer/'
+relative_input = []
+foreach file : plain_input
+    relative_input += pot_folder + file
+endforeach
+
 xml_sources_lists += { 'menus/layer': input_files}
 
 menus_layer_pot = custom_target(output_pot,
@@ -385,7 +441,7 @@ menus_layer_pot = custom_target(output_pot,
     input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
 )
 
@@ -424,6 +480,14 @@ output_pot = pot_menus_select
 # foreach xml_file: input_xml
 #     input_files += input_base_dir + xml_file
 # endforeach
+plain_input  = xml_sources_menus_select_files
+
+pot_folder     = 'src/menus/select/'
+relative_input = []
+foreach file : plain_input
+    relative_input += pot_folder + file
+endforeach
+
 xml_sources_lists += { 'menus/select': input_files}
 
 menus_select_pot = custom_target(output_pot,
@@ -431,7 +495,7 @@ menus_select_pot = custom_target(output_pot,
     input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
 )
 
@@ -487,6 +551,14 @@ output_pot = pot_menus_view
 # foreach xml_file: input_xml
 #     input_files += input_base_dir + xml_file
 # endforeach
+plain_input  = xml_sources_menus_view_files
+
+pot_folder     = 'src/menus/view/'
+relative_input = []
+foreach file : plain_input
+    relative_input += pot_folder + file
+endforeach
+
 xml_sources_lists += { 'menus/view': input_files}
 
 menus_view_pot = custom_target(output_pot,
@@ -494,7 +566,7 @@ menus_view_pot = custom_target(output_pot,
     input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
 )
 

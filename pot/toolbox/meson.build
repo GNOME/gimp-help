@@ -34,6 +34,14 @@ output_pot = pot_toolbox_paint
 # foreach xml_file: input_xml
 #     input_files += input_base_dir + xml_file
 # endforeach
+plain_input  = xml_sources_toolbox_paint_files
+
+pot_folder     = 'src/toolbox/paint/'
+relative_input = []
+foreach file : plain_input
+    relative_input += pot_folder + file
+endforeach
+
 xml_sources_lists += { 'toolbox/paint': input_files}
 
 toolbox_paint_pot = custom_target(output_pot,
@@ -41,7 +49,7 @@ toolbox_paint_pot = custom_target(output_pot,
     input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
 )
 
@@ -71,6 +79,14 @@ output_pot = pot_toolbox_selection
 # foreach xml_file: input_xml
 #     input_files += input_base_dir + xml_file
 # endforeach
+plain_input  = xml_sources_toolbox_selection_files
+
+pot_folder     = 'src/toolbox/selection/'
+relative_input = []
+foreach file : plain_input
+    relative_input += pot_folder + file
+endforeach
+
 xml_sources_lists += { 'toolbox/selection': input_files}
 
 toolbox_selection_pot = custom_target(output_pot,
@@ -78,7 +94,7 @@ toolbox_selection_pot = custom_target(output_pot,
     input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
 )
 
@@ -113,6 +129,14 @@ output_pot = pot_toolbox_transform
 # foreach xml_file: input_xml
 #     input_files += input_base_dir + xml_file
 # endforeach
+plain_input  = xml_sources_toolbox_transform_files
+
+pot_folder     = 'src/toolbox/transform/'
+relative_input = []
+foreach file : plain_input
+    relative_input += pot_folder + file
+endforeach
+
 xml_sources_lists += { 'toolbox/transform': input_files}
 
 toolbox_transform_pot = custom_target(output_pot,
@@ -120,6 +144,6 @@ toolbox_transform_pot = custom_target(output_pot,
     input: [input_files],
     output: [output_pot],
     command: [
-        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', '@INPUT@',
+        xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
 )

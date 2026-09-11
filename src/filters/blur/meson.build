@@ -1,6 +1,6 @@
 # /src/filters/blur/ xml files
 
-xml_sources_filters_blur = files(
+xml_sources_filters_blur_files = [
     'circular-motion.xml',
     'focus-blur.xml',
     'gauss.xml',
@@ -14,4 +14,5 @@ xml_sources_filters_blur = files(
     'tileable.xml',
     'variable-blur.xml',
     'zoom-motion.xml',
-)
+]
+xml_sources_filters_blur = files(xml_sources_filters_blur_files)

@@ -1,6 +1,6 @@
 # /src/filters/map/ xml files
 
-xml_sources_filters_map = files(
+xml_sources_filters_map_files = [
     'bumpmap.xml',
     'displace.xml',
     'fractal-trace.xml',
@@ -15,4 +15,5 @@ xml_sources_filters_map = files(
     'tile-seamless.xml',
     'tile.xml',
     'warp.xml',
-)
+]
+xml_sources_filters_map = files(xml_sources_filters_map_files)

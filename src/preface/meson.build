@@ -5,6 +5,7 @@
 # we are doing while generating localized xml files
 # with gen.process
 
-xml_sources_preface = files(
+xml_sources_preface_files = [
     'authors.xml',
-)
+]
+xml_sources_preface = files(xml_sources_preface_files)
