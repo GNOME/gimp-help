@@ -334,6 +334,82 @@ foreach lang : target_linguas
         )
     endif
 
+    ### Validation ###
+    if xmllint.found()
+        validate_target = 'validate-concat-' + lang
+        validate_input  = meson.current_build_dir() /  lang / 'gimp-xrefs.xml.p' / 'gimp.xml'
+        lint_log        = lang + '-lint.log'
+        validate_concat = custom_target(validate_target,
+            input: [validate_input],
+            depends: [gimp_html],
+            output: [lint_log],
+            command: [
+                xmllint,
+                '--nonet',
+                '--noent',
+                '--xinclude',
+                '@INPUT@',
+            ],
+            capture: true,
+            #build_by_default: true,
+            #build_subdir: lang,
+        )
+        if platform_windows
+            sed_replace = '\'s,xmlns:xi="http://www.w3.org/2001/XInclude",,\''
+        else
+            sed_replace = '''s,xmlns:xi="http://www.w3.org/2001/XInclude",,'''
+        endif
+        validate_target = 'validate-sed-' + lang
+        lint_log2       = lang + '-lint2.log'
+        validate_remove_xinclude = custom_target(validate_target,
+            input: [validate_concat],
+            output: [lint_log2],
+            command: [
+                sed,
+                sed_replace,
+                '@INPUT@',
+            ],
+            capture: true,
+            #build_by_default: true,
+            #build_subdir: lang,
+        )
+        validate_target = 'validate-xml-' + lang
+        lint_xml        = lang + '.xml'
+        lint_log3       = lang + '-xmllint.log'
+        validate_xml = custom_target(validate_target,
+            input: [validate_remove_xinclude],
+            output: [lint_log3],
+            command: [
+                xmllint,
+                '--nonet',
+                '--valid',
+                '--output', lint_xml,
+                '@INPUT@',
+            ],
+            capture: true,
+            #build_by_default: true,
+            #build_subdir: lang,
+        )
+
+        # Replaces the above custom_target with a test.
+        # FIXME: Eventually we want to replace the above targets with one Python script
+        # that calls xmllint
+        validate_xml_test = 'test-' + validate_target
+        test(validate_xml_test,
+            xmllint,
+            args: [
+                '--nonet',
+                '--valid',
+                '--output', lint_xml,
+                meson.project_build_root() / 'html' / lint_log2,
+            ],
+            suite: 'validate-xml',
+            depends: [validate_remove_xinclude],
+        )
+    endif
+
+    ### Install ###
+
     # For now, actual installation means copying all html, css, xml and image files/folders
     # Eventually we may want to extend html output to list all html files, then we should
     # be able to get rid of this script

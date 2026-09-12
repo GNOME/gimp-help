@@ -96,6 +96,7 @@ perl       = find_program('perl')   # image handling
 # FIXME: Don't depend on sh, use Python?
 cp         = find_program('cp')
 ln         = find_program('ln')
+sed        = find_program('sed')
 
 ################################################################################
 # Internal tools
