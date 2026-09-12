@@ -334,6 +334,60 @@ foreach lang : target_linguas
         )
     endif
 
+    ### Validation ###
+    validate_target = 'validate-concat-' + lang
+    validate_input  = meson.current_build_dir() /  lang / 'gimp-xrefs.xml.p' / 'gimp.xml'
+    lint_log        = lang + '-lint.log'
+    validate_concat = custom_target(validate_target,
+        input: [validate_input],
+        depends: [gimp_html],
+        output: [lint_log],
+        command: [
+            xmllint,
+            '--nonet',
+            '--noent',
+            '--xinclude',
+            '@INPUT@',
+        ],
+        capture: true,
+        #build_by_default: true,
+        #build_subdir: lang,
+    )
+    validate_target = 'validate-sed-' + lang
+    lint_log2       = lang + '-lint2.log'
+    validate_remove_xinclude = custom_target(validate_target,
+        input: [validate_concat],
+        output: [lint_log2],
+        command: [
+            sed,
+            #'-i.bak',
+            '-e',
+            '''s,xmlns:xi="http://www.w3.org/2001/XInclude",,''',
+            '@INPUT@',
+        ],
+        capture: true,
+        #build_by_default: true,
+        #build_subdir: lang,
+    )
+    validate_target = 'validate-xml-' + lang
+    lint_log3       = lang + '-xml.log'
+    validate_concat = custom_target(validate_target,
+        input: [validate_remove_xinclude],
+        output: [lint_log3],
+        command: [
+            xmllint,
+            '--nonet',
+            '--valid',
+            '--output', '@OUTPUT@',
+            '@INPUT@',
+        ],
+        #capture: true,
+        build_by_default: true,
+        #build_subdir: lang,
+    )
+
+    ### Install ###
+
     # For now, actual installation means copying all html, css, xml and image files/folders
     # Eventually we may want to extend html output to list all html files, then we should
     # be able to get rid of this script
