@@ -370,7 +370,8 @@ foreach lang : target_linguas
         #build_subdir: lang,
     )
     validate_target = 'validate-xml-' + lang
-    lint_log3       = lang + '-xml.log'
+    lint_xml        = lang + '.xml'
+    lint_log3       = lang + '-xmllint.log'
     validate_concat = custom_target(validate_target,
         input: [validate_remove_xinclude],
         output: [lint_log3],
@@ -378,10 +379,10 @@ foreach lang : target_linguas
             xmllint,
             '--nonet',
             '--valid',
-            '--output', '@OUTPUT@',
+            '--output', lint_xml,
             '@INPUT@',
         ],
-        #capture: true,
+        capture: true,
         build_by_default: true,
         #build_subdir: lang,
     )
