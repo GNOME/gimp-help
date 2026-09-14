@@ -1,5 +1,3 @@
-message('quickreference subdir')
-
 keys_xml_files = [
     'gimp-keys.xml'
 ]

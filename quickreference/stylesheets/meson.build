@@ -1,6 +1,4 @@
-message('quickreference: stylesheets subdir')
-
-qrconfig = configuration_data()
+#qrconfig = configuration_data()
 
 keys_svg = configure_file(
   input : 'keys-svg.xsl',

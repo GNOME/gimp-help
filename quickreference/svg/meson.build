@@ -1,5 +1,3 @@
-message('quickreference: svg subdir')
-
 qr_svg_targets = {}
 
 foreach lang : target_linguas

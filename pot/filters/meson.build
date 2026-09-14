@@ -1,7 +1,3 @@
-message('pot/filters submenu')
-
-##############
-
 pot_filters_animation = 'animation.pot'
 
 input_files  = xml_sources_filters_animation

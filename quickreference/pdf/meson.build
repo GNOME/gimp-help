@@ -1,5 +1,3 @@
-message('quickreference: pdf subdir')
-
 pdf_install_prefix = install_prefix / 'pdf/'
 
 foreach lang : target_linguas

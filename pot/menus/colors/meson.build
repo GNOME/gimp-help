@@ -1,7 +1,3 @@
-message('pot/menus/colors')
-
-##############
-
 pot_colors_auto = 'auto.pot'
 
 input_files  = xml_sources_colors_auto

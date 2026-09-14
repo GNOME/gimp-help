@@ -1,5 +1,3 @@
-message('web subdir')
-
 web_xml = [
     # Website
     'about.xml',

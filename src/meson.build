@@ -1,5 +1,3 @@
-message('src submenu')
-
 SRC_FOLDER = meson.current_source_dir()
 
 # We need access to the plain files without path

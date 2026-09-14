@@ -1,5 +1,3 @@
-message('quickreference: templates subdir')
-
 templates = [
     'svg_template.xml',
     'wilber.svg',

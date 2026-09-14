@@ -1,5 +1,3 @@
-message('pot submenu')
-
 pot_gimp_help = 'gimp.pot'
 
 output_pot = pot_gimp_help

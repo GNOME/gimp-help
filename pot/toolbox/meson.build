@@ -1,7 +1,3 @@
-message('pot/toolbox')
-
-##############
-
 pot_toolbox_paint = 'paint.pot'
 
 input_files  = xml_sources_toolbox_paint

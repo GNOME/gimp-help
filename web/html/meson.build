@@ -1,5 +1,3 @@
-message('web: html subdir')
-
 css_files = [
     'style.css',
 ]
