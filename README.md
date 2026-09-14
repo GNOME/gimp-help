@@ -109,6 +109,31 @@ usually during European evening hours.
 If some of the instructions below are unclear, don't hesitate
 to ask in one of the places mentioned above.
 
+*Experimental meson build instructions*
+The autotools Makefiles are being phased out and will be replaced
+by meson, which is currently in an experimental stage. You are
+encouraged to use that for building the manual. This should
+be faster than building with autotools.
+For required packages see below, in addition you will also need
+the `meson` package.
+
+To build with meson:
+- Start a terminal.
+- cd to your build directory (create if needed)
+- Setup env vars for `$HELP_PREFIX` and `$SRCDIR` or replace
+with actual values below. Replace "en nl" with the language(s)
+you want to build.
+- `meson setup -Dprefix=$HELP_PREFIX $SRCDIR -Dlanguages="en nl"`
+- Alternatively you can start meson from the source and specify
+the build dir. See the meson manual for details.
+- Next run: `ninja`. When specifying multiple languages to build,
+you specify a max load, e.g. `ninja -l 4.5`.
+- If you want to, you can install the languages so that GIMP can
+find the local manual. Run: `ninja install --no-rebuild`.
+- Optionally test if everything is opk with the build by
+running `ninja test`.
+
+
 To get started, here is a checklist of things you should do:
 - If you don't have a Gnome GitLab account yet then create one
   (you can use GitHub credentials to login), see:
@@ -428,13 +453,18 @@ Before you create a release you'll need:
 ## Updating supported languages
 
 When adding a new language for translation, several files need to be
-updated. It's the intention to simplify this, but for now the list
+updated. After the meson build is declared stable, the autotools related
+files will be removed. These are marked *autotools only*.
+It's the intention to simplify this, but for now the list
 of languages needs to be updated in the following files:
 
-  - [configure.ac](configure.ac)
+  - [configure.ac](configure.ac); *autotools only*
     - Update ALL_LINGUAS
-  - [Makefile.GNU](Makefile.GNU)
+  - [Makefile.GNU](Makefile.GNU); *autotools only*
     - Update ALL_LINGUAS
+  - [po/LINGUAS](po/LINGUAS) *meson only*
+    - Add language code on a separate line in the correct
+    alphabetical position.
   - [stylesheets/languageVocab.xml](stylesheets/languageVocab.xml)
     - Update vocab
   - [stylesheets/authors_common.xsl](stylesheets/authors_common.xsl)
@@ -459,7 +489,10 @@ of languages needs to be updated in the following files:
     - If no translation is available, `Default.isl` can be used.
   - [build/windows/installer/gimp-help.iss](build/windows/installer/gimp-help.iss)
     - Add an if LANG test and define LANGFILE for your language.
+  - `po/new langcode` needs `meson.build` files copied from another language
+    to all folders. *meson only*
 
+*autotools only*
 Note: If your build directory is not a child of the source directory, then
 `msginit` will not fill in PACKAGE_VERSION in the header of the po files.
 Since msginit tries to find `configure`, copying that to your build directory
@@ -476,6 +509,16 @@ When all of the above are updated, run:
 This should create the necessary po files for the newly added language.
 Note: some po files for other languages may have been updated too, but you
 should only commit the files relevant for the new language.
+
+*meson only*
+Run meson with the new langcode selected to create the po files. (Does
+that work or will meson complain about missing files?)
+TBD (The po files for the new language will be in the build dir/po/lang/
+folder and will need to be copied top the source. All folders in the source
+should already have a meson.build file.)
+TODO Create a Python script that simplifies adding a language. Needs
+the language code, English name and localized name, then should be able
+to do most parts automatically.
 
 
 ## History of the gimp-help module
