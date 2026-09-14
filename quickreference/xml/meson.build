@@ -1,5 +1,3 @@
-message('quickreference: xml subdir')
-
 qr_xml_targets = {}
 
 # We always need the English xml available

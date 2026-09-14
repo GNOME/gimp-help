@@ -13,7 +13,6 @@ all_po_targets = []
 
 foreach lang : po_target_linguas
     if lang != 'en'
-        message('Update po files for ', lang)
         subdir(lang)
         all_po_targets += lang_po_targets
     endif

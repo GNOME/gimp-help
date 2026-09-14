@@ -1,5 +1,3 @@
-message('quickreference: po subdir')
-
 pot_file  = 'gimp-keys.pot'
 gimp_keys = files(pot_file)
 

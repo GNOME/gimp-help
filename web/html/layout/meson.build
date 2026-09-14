@@ -1,5 +1,3 @@
-message('web: layout subdir')
-
 web_images = [
     '202010-wilber-and-co.jpg',
     'help-system.png',

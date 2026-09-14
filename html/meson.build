@@ -69,7 +69,6 @@ foreach lang : target_linguas
     target_base = lang + '-'
     htmltarget = 'html-'+lang
 
-    message('language ' + lang + ' index @0@'.format(idx))
     idx += 1
 
     lang_xml_gens = []
@@ -172,8 +171,9 @@ foreach lang : target_linguas
         )
     endif
 
-    msg = 'Copying images for @0@'.format(lang)
-    message(msg)
+    # Disabled message here. Should be shown when we actually run the copy target
+    #msg = 'Copying images for @0@'.format(lang)
+    #message(msg)
 
 # xml/%/images: $(IMAGE_PREREQ)
 #   type d in combination with find it stands for directory
