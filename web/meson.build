@@ -67,7 +67,7 @@ autolayout_xml = custom_target(autolayout,
         web_stylesheets[0],
         meson.project_build_root() + '/web/' + layout,
     ],
-    build_by_default: true,
+    #build_by_default: true,
 )
 
 subdir('html')
