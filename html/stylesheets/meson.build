@@ -16,15 +16,8 @@ gimp_ss_all = []
 foreach ss_file: stylesheet_xml_files
     ss_target = 'ss-xml-' + '_@0@'.format(idx)
 
-    gimp_ss = custom_target(ss_target,
-        input: [entities],
-        output: [ss_file],
-        command: [
-            cp,
-            '@INPUT@',
-            '@OUTPUT@',
-        ],
-    )
+    gimp_ss = fs.copyfile(entities, ss_file)
+
     gimp_ss_all += gimp_ss
     idx += 1
 endforeach
