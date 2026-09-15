@@ -20,7 +20,3 @@ images_common = files(
 )
 
 subdir('fonts')
-
-images_common_files = \
-    images_common + \
-    images_common_fonts
