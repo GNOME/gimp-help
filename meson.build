@@ -66,13 +66,16 @@ endif
 if platform_windows
     # The /usr/bin/ version usually has less issues on Windows because it
     # uses the Linux paths IIRC. MAYBE can be worked around setting XSLTPROC path?
-    # What about CYGWIN?
     # mintty should always be available, it's a basic part of msys64
+    # FIXME: Check if this works with CYGWIN
     mintty = find_program('mintty')
     if mintty.found()
         msys_path = fs.parent(mintty.full_path()) + '/'
     else
-        error('Cannot find location of MSYS2!')
+        msys_warning = 'Cannot find location of MSYS2. The version of xsltproc found may not work!'
+        warning(msys_warning)
+        warnings += msys_warning
+        msys_path = ''
     endif
     xmllint  = find_program('xmllint', required: false, dirs: [msys_path])
     xsltproc = find_program('xsltproc', dirs: [msys_path])
