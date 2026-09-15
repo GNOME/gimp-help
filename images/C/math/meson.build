@@ -19,7 +19,6 @@ images_math = files(
     'layer-mode-lighten.png',
     'layer-mode-multiply.png',
     'layer-mode-normal.png',
-    'layer-mode-overlay.png',
     'layer-mode-screen.png',
     'layer-mode-soft-light1.png',
     'layer-mode-soft-light2.png',

@@ -1,5 +1,4 @@
 images_menus_image = files(
-    'align-demo-dialog.png',
     'align-demo-example.png',
     'align-demo-grid.png',
     'align-layers.png',
