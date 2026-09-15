@@ -9,6 +9,7 @@ gimp_help_version = meson.project_version()
 # used for creating the ChangeLog
 LAST_RELEASE_TAG = 'GIMP_HELP_3_2_0'
 
+warnings = []
 
 ################################################################################
 # Host system detection
@@ -167,8 +168,6 @@ MAINTAINERS_TEXT = DOAP_STYLESHEET + MAINTAINERS_DOAP
 
 ###############################################################################
 # Configuration
-
-warnings = ''
 
 if get_option('quickreference')
     qr_enabled = true
@@ -415,3 +414,10 @@ custom_target('validate-references',
 #  ],
 #  build_by_default: false,
 #)
+
+if warnings.length() > 0
+  warning('Warnings occurred during configuration')
+  foreach warning : warnings
+    warning(warning)
+  endforeach
+endif
