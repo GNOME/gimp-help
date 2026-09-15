@@ -154,6 +154,9 @@ class ImageFilesList(FileNameContainer):
         for imagefile in sorted(files):
             print("ORPHANED:", os.path.join(self.imageroot, imagefile))
 
+        # Return number of orphaned images
+        return len(files)
+
 
 class ImageReferencesList(FileNameContainer):
     """A container for image file references.
@@ -229,6 +232,9 @@ class ImageReferencesList(FileNameContainer):
                                  char_if(":", len(files) != 0)))
         for imagefile in sorted(files):
             print("BROKEN: images/%s IN %s" % (imagefile, self.data[imagefile]))
+
+        # Return number of broken images
+        return len(files)
 
     # Internal stack methods to keep track of the opened files
 
@@ -332,7 +338,7 @@ def main():
             gimp_help_root_dir = arg
         elif opt in ["-x", "--xmldir", "-s", "--srcdir"]:
             xml_dir = arg
-            xml_root_file = os.path.join(xml_dir, xml_root_file)
+            xml_root_file = os.path.abspath(os.path.join(xml_dir, xml_root_file))
         elif opt in ["-b", "--broken", "-l", "--links"]:
             find_broken_references = True
         elif opt in ["-o", "--orphaned"]:
@@ -379,6 +385,7 @@ def main():
 
     image_refs  = ImageReferencesList()
     image_files = ImageFilesList()
+    exit_code   = 0
 
     # find all image references.
     image_refs.find(xml_root_file)                         # (1)
@@ -389,19 +396,27 @@ def main():
     if find_broken_references:
         image_files.find("images/C")                       # (2)
         image_refs.sort_out_valid(image_files)             # (3)
-        image_refs.report()
+        if image_refs.report() > 0:
+            exit_code += 1
 
     # find all image files in "images/LANG", then
     # remove intersection of image references and image files;
     # the result is the list of orphaned image files.
     if find_orphaned_images:
         img_dirs = ("images/" + lang for lang in languages)
+        errors = False
         for imgdir in img_dirs:
             # if possible, avoid searching in "images/C" twice
             if not (imgdir == image_files.imageroot):
                 image_files.find(imgdir)                   # (2)
             image_files.sort_out_valid(image_refs)         # (4)
-            image_files.report()
+            err_cnt = image_files.report()
+            if not errors and err_cnt > 0:
+                exit_code += 2
+                errors = True
+
+    if (exit_code > 0):
+        exit(exit_code)
 
 
 def usage(exitcode=0, msg=""):
