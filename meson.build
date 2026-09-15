@@ -303,6 +303,7 @@ preface_authors_xml = custom_target('preface-authors-xml',
     ],
 )
 
+# Can't use fs.copyfile here because we need a dependency on preface_authors_xml
 copy_authors_to_src = custom_target('copy-to-src-authors',
     input: preface_authors_xml,
     output: ['authors-copy-to-source.xml'],
@@ -385,25 +386,31 @@ endif
 # Validation / Testing
 
 if xmllint.found()
-    run_target('validate-authors',
-        command: [
-            xmllint,
+    # Validate the generated authors.xml. Is this really needed?
+    # We already validate the entire generated xml per language.
+    test('validate-authors',
+        xmllint,
+        args: [
             '--noout',
             '--valid',
-            'authors.xml',
+            meson.project_build_root() / 'authors.xml',
         ],
+        suite: 'validate-xml',
+        depends: [preface_authors_xml],
     )
 endif
 
-# Should be run-target?
-custom_target('validate-references',
-    #input : [ ],
-    output: [ 'validate-references', ],
-    command: [
-        validate_references,
-        meson.project_source_root(),
+test('validate-image-references',
+    validate_references,
+    args: [
+        '--verbose',
+        '--broken',
+        '--orphaned',
+        '-r', meson.project_source_root(),
+        target_linguas,
     ],
-    build_by_default: false,
+    suite: 'validate-images',
+    depends: [copy_authors_to_src],
 )
 
 ###############################################################################
