@@ -40,8 +40,8 @@ Logger = logging.getLogger()
 # Nodes containing filereferences in a DocBook XML file
 IMAGE_NODES = ["imagedata", "graphic", "inlinegraphic"]
 
-# Regular expression for image files to be checked (png and jpg files only)
-IMAGEFILE_REGEX = re.compile(r'[\w.+-]*\.(png|jpg|svg)$')
+# Regular expression for image files to be checked
+IMAGEFILE_REGEX = re.compile(r'[\w.+-]*\.(png|jpg|svg|mng|gif|apng|webp)$')
 # Regular expression for image files to be skipped
 IGNORE_IMAGE_REGEX = re.compile('callout')
 
