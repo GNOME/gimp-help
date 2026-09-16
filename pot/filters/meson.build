@@ -156,10 +156,10 @@ filters_distort_pot = custom_target(output_pot,
 
 pot_filters_edge = 'edge-detect.pot'
 
-input_files  = xml_sources_filters_edge
+input_files  = xml_sources_filters_edge_detect
 output_pot = pot_filters_edge
 
-plain_input  = xml_sources_filters_edge_files
+plain_input  = xml_sources_filters_edge_detect_files
 
 pot_folder     = 'src/filters/edge-detect/'
 relative_input = []
@@ -234,10 +234,10 @@ filters_generic_pot = custom_target(output_pot,
 
 pot_filters_light = 'light-and-shadow.pot'
 
-input_files  = xml_sources_filters_light
+input_files  = xml_sources_filters_light_and_shadow
 output_pot = pot_filters_light
 
-plain_input  = xml_sources_filters_light_files
+plain_input  = xml_sources_filters_light_and_shadow_files
 
 pot_folder     = 'src/filters/light-and-shadow/'
 relative_input = []
