@@ -72,6 +72,21 @@ check-broken-images:
     - if ./tools/validate_references.py -b | grep 'BROKEN:'; then echo "ERROR missing images found!" && false; exit 2; fi;
   needs: ["build-image"]
 
+check-outdated-meson-build-files:
+  stage: test
+  image: $CI_REGISTRY_IMAGE:build-debian-latest
+  script:
+    - ./tools/generate_meson_build.py
+    # Check there are no changed files
+    #- git diff-index --quiet HEAD
+    # Check there are no new meson.build files
+    - if [ $(git diff |wc -l) -ne 0 ]; then
+          printf "ERROR. A generated file was updated without the source:\n";
+          git diff;
+          exit 1;
+      fi
+  needs: ["build-image"]
+
 branches-check:
   rules:
     - if: '$CI_PIPELINE_SOURCE == "push" && $CI_OPEN_MERGE_REQUESTS == null && $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH'
