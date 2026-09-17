@@ -200,6 +200,12 @@ else
     lang_menu_enabled = '0'
 endif
 
+if get_option('windows-installer')
+    installer_enabled = true
+else
+    installer_enabled = false
+endif
+
 ########################################################################
 ####            The GIMP manual languages                           ####
 ########################################################################
@@ -358,6 +364,13 @@ subdir('pot')
 subdir('po')
 
 subdir('po-windows-installer')
+
+if installer_enabled
+    generate_isl = find_program(meson.project_source_root() / 'tools' / 'generate_isl.py')
+
+    subdir('build/windows/installer/lang')
+endif
+
 # Define English images
 subdir('images')
 
