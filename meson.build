@@ -98,6 +98,11 @@ MSGINIT    = find_program('msginit')
 
 MSGMERGE   = find_program('msgmerge')
 
+# intltool is used for updating the Windows installer language files
+INTLTOOL_UPDATE  = find_program('intltool-update')
+INTLTOOL_EXTRACT = find_program('intltool-extract')
+INTLTOOL_MERGE   = find_program('intltool-merge')
+
 # Check other external tools
 perl       = find_program('perl')   # image handling
 
@@ -352,6 +357,7 @@ subdir('pot')
 # Generate updated po files in build dir
 subdir('po')
 
+subdir('po-windows-installer')
 # Define English images
 subdir('images')
 
