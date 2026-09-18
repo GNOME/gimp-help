@@ -42,6 +42,7 @@ build-image:
             intltool
             librsvg2-2
             librsvg2-bin
+            locales
             pkg-config
             pngcrush
             python3
@@ -49,6 +50,7 @@ build-image:
             python3-polib
             xsltproc
             libxml2-utils" >> Dockerfile
+    - echo "RUN echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen && locale-gen" >> Dockerfile
 
     # Copied from the GIMP version:
     #FIXME: '2>&1 | grep -v STEP' since buildah is too verbose. See: https://github.com/containers/buildah/issues/6362
