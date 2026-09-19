@@ -58,6 +58,7 @@ build-image:
             librsvg2-2
             librsvg2-bin
             locales
+            meson
             pkg-config
             pngcrush
             python3
@@ -313,6 +314,147 @@ win-installer:
   script:
     - C:\msys64\usr\bin\pacman --noconfirm -Syyuu
     - C:\msys64\usr\bin\bash -lc "bash -x ./build/windows/installer/installer-gimp-help-msys2.sh > installer.log 2>&1"
+
+.build-debian-meson-base:
+  # rules:
+  #     # Custom builds though web GUI, API or schedules.
+  #   - if: '$GIMP_HELP_CI_MESON_BUILD != null'
+  #   # Merge requests with appropriate label.
+  #   - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Build.*/'
+  stage: build
+  image: $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER}
+  variables:
+    DEB_VERSION: "trixie"
+    RUNNER: "x86_64_v3"
+  artifacts:
+    expire_in: 1 day
+    when: always
+    paths:
+    - "${HELP_DIR}"
+    - "${PDF_DIR}"
+    - "${WEB_DIR}"
+    - build/windows/installer/lang/
+    # FIXME Reports need to be written to a unique name
+    reports:
+      junit: "_build/meson-logs/testlog.junit.xml"
+  timeout: 1 hour
+  needs: ["build-image"]
+
+.build-debian-meson-languages-only:
+  extends: .build-debian-meson-base
+  script:
+    - mkdir _build
+    - cd _build
+    - meson setup -Dprefix=${INSTALL_PREFIX}/share/gimp/3.0/help -Dlanguages="${LANGS}" -Dquickreference=true
+    # The xsltproc target building all html files can be a memory hog,
+    # so we limit the system load, hopefully this is enough
+    - ninja -l 4.5 && meson install --no-rebuild
+    # Store html and pdf results
+    - mv ${INSTALL_PREFIX}/share/gimp/3.0/help/ ../${HELP_DIR}
+    - mv ../${HELP_DIR}/pdf/ ../${PDF_DIR}
+    # Perform tests
+    - meson test
+
+.build-debian-meson-languages-website:
+  extends: .build-debian-meson-base
+  script:
+    - mkdir _web
+    - mkdir _build
+    - cd _build
+    # Note: even though language-menu=true here, only the languages built in the same job
+    # will be shown on each page. This is only for testing that it works.
+    - meson setup -Dprefix=${INSTALL_PREFIX}/share/gimp/3.0/help -Dlanguages="${LANGS}" -Dquickreference=true -Dmaintainer=true -Dlanguage-menu=true -Dwindows-installer=true
+    # The xsltproc target building all html files can be a memory hog,
+    # so we limit the system load, hopefully this is enough
+    - ninja -l 4.5 && meson install --no-rebuild
+    # Store html, pdf, website and installer .isl files
+    - mv ${INSTALL_PREFIX}/share/gimp/3.0/help/ ../${HELP_DIR}
+    - mv web/html/* ../${WEB_DIR}
+    - mv ../${HELP_DIR}/pdf/ ../${PDF_DIR}
+    - mv build/windows/installer/lang/help*isl ../build/windows/installer/lang/
+    # Perform tests
+    - meson test
+
+build-debian-meson-1:
+  extends: .build-debian-meson-languages-only
+  variables:
+    # Do not use LINGUAS here. It interferes with help.langcode.isl creation!
+    LANGS: "${MESON_LANGS_1}"
+    HELP_DIR: "_html1"
+    PDF_DIR: "_pdf1"
+
+build-debian-meson-2:
+  extends: .build-debian-meson-languages-only
+  variables:
+    # Do not use LINGUAS here. It interferes with help.langcode.isl creation!
+    LANGS: "${MESON_LANGS_2}"
+    HELP_DIR: "_html2"
+    PDF_DIR: "_pdf2"
+
+build-debian-meson-3:
+  extends: .build-debian-meson-languages-only
+  variables:
+    # Do not use LINGUAS here. It interferes with help.langcode.isl creation!
+    LANGS: "${MESON_LANGS_3}"
+    HELP_DIR: "_html3"
+    PDF_DIR: "_pdf3"
+
+build-debian-meson-4:
+  extends: .build-debian-meson-languages-only
+  variables:
+    # Do not use LINGUAS here. It interferes with help.langcode.isl creation!
+    LANGS: "${MESON_LANGS_4}"
+    HELP_DIR: "_html4"
+    PDF_DIR: "_pdf4"
+
+build-debian-meson-5:
+  extends: .build-debian-meson-languages-website
+  variables:
+    # Do not use LINGUAS here. It interferes with help.langcode.isl creation!
+    LANGS: "${MESON_LANGS_5}"
+    HELP_DIR: "_html5"
+    PDF_DIR: "_pdf5"
+    WEB_DIR: "_web"
+
+www-debian-meson:
+  stage: www
+  variables:
+    BUILD_DIR: "."
+    DEB_VERSION: "trixie"
+    RUNNER: "x86_64_v3"
+  image: $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER}
+  dependencies:
+    - build-debian-meson-1
+    - build-debian-meson-2
+    - build-debian-meson-3
+    - build-debian-meson-4
+    - build-debian-meson-5
+  artifacts:
+    expire_in: 1 week
+    when: always
+    paths:
+    - build/windows/installer/lang/
+    - htdocs/
+  script:
+    # get major and minor version of gimp-help
+    - MAJOR_VERSION=`grep -w 'version\:' meson.build |sed -E "s/[^0-9]*([0-9]+).*/\1/"`
+    - MINOR_VERSION=`grep -w 'version\:' meson.build |sed -E "s/[^0-9]*([0-9]+)\.([0-9]+).*/\2/"`
+    # Move all PDF quickreferences
+    - mkdir -p htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/pdf
+    - mv _pdf1/*.pdf htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/pdf/
+    - mv _pdf2/*.pdf htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/pdf/
+    - mv _pdf3/*.pdf htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/pdf/
+    - mv _pdf4/*.pdf htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/pdf/
+    - mv _pdf5/*.pdf htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/pdf/
+    # Move all the help html files.
+    - mv _html1/* htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/
+    - mv _html2/* htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/
+    - mv _html3/* htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/
+    - mv _html4/* htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/
+    - mv _html5/* htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/
+    # Move website files to root of htdocs
+    - mv _web/* htdocs/
+
 
 .distcheck-base:
   rules:
