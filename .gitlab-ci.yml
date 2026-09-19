@@ -10,6 +10,21 @@ stages:
 variables:
   INSTALL_DIR: "_install"
   INSTALL_PREFIX: "${CI_PROJECT_DIR}/${INSTALL_DIR}"
+  # About 6 languages per job
+  MAKE_LANGS_1: "bg ca cs da de en"
+  MAKE_LANGS_2: "en_GB eo es fa fi fr"
+  MAKE_LANGS_3: "hr hu it ja ko lt"
+  MAKE_LANGS_4: "nl nn pl pt pt_BR ro"
+  MAKE_LANGS_5: "sk sl sr sv tr uk"
+  MAKE_LANGS_6: "el kk ru zh_CN"
+  # meson preparation: about 8 languages per job
+  MESON_LANGS_1: "bg ca cs da de en en_GB eo"
+  MESON_LANGS_2: "es fa fi fr hr hu it ja"
+  MESON_LANGS_3: "ko lt nl nn pl pt pt_BR ro"
+  MESON_LANGS_4: "sk sl sr sv tr uk zh_CN"
+  # Last job should have less: it also builds website
+  # and updates po files for ALL languages
+  MESON_LANGS_5: "el kk ru"
 
 build-image:
   stage: prepare
@@ -168,42 +183,42 @@ branches-check:
 build-debian-1:
   extends: .build-debian-base
   variables:
-    LINGUAS: "bg ca cs da de"
+    LINGUAS: "${MAKE_LANGS_1}"
     HELP_DIR: "_html1"
     PDF_DIR: "_pdf1"
 
 build-debian-2:
   extends: .build-debian-base
   variables:
-    LINGUAS: "en en_GB eo es fa fi fr"
+    LINGUAS: "${MAKE_LANGS_2}"
     HELP_DIR: "_html2"
     PDF_DIR: "_pdf2"
 
 build-debian-3:
   extends: .build-debian-base
   variables:
-    LINGUAS: "hr hu it ja kk ko lt"
+    LINGUAS: "${MAKE_LANGS_3}"
     HELP_DIR: "_html3"
     PDF_DIR: "_pdf3"
 
 build-debian-4:
   extends: .build-debian-base
   variables:
-    LINGUAS: "nl nn pl pt pt_BR ro"
+    LINGUAS: "${MAKE_LANGS_4}"
     HELP_DIR: "_html4"
     PDF_DIR: "_pdf4"
 
 build-debian-5:
   extends: .build-debian-base
   variables:
-    LINGUAS: "sk sl sr sv tr uk zh_CN"
+    LINGUAS: "${MAKE_LANGS_5}"
     HELP_DIR: "_html5"
     PDF_DIR: "_pdf5"
 
 build-debian-6:
   extends: .build-debian-base
   variables:
-    LINGUAS: "el ru"
+    LINGUAS: "${MAKE_LANGS_6}"
     HELP_DIR: "_html6"
     PDF_DIR: "_pdf6"
 
@@ -327,32 +342,32 @@ win-installer:
 distcheck-1:
   extends: .distcheck-base
   variables:
-    LINGUAS: "bg ca cs da de"
+    LINGUAS: "${MAKE_LANGS_1}"
 
 distcheck-2:
   extends: .distcheck-base
   variables:
-    LINGUAS: "en en_GB eo es fa fi fr"
+    LINGUAS: "${MAKE_LANGS_2}"
 
 distcheck-3:
   extends: .distcheck-base
   variables:
-    LINGUAS: "hr hu it ja kk ko lt"
+    LINGUAS: "${MAKE_LANGS_3}"
 
 distcheck-4:
   extends: .distcheck-base
   variables:
-    LINGUAS: "nl nn pl pt pt_BR ro"
+    LINGUAS: "${MAKE_LANGS_4}"
 
 distcheck-5:
   extends: .distcheck-base
   variables:
-    LINGUAS: "sk sl sr sv tr uk zh_CN"
+    LINGUAS: "${MAKE_LANGS_5}"
 
 distcheck-6:
   extends: .distcheck-base
   variables:
-    LINGUAS: "el ru"
+    LINGUAS: "${MAKE_LANGS_6}"
   allow_failure: true
 
 source-dist:
