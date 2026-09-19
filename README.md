@@ -11,14 +11,11 @@ on the `master` branch. We accept and will review MR's targeting 3.2.
 - The manual for version 3.0 of GIMP is available in a branch named
 `gimp-help-3-0` and it is doubtful whether there will be new updates.
 
-The manual for GIMP 2.10 is not being maintained anymore, but translations are
-still accepted. It is available in a separate branch
-called `gimp-help-2-10`.
 
 ## Contents
 
 1. [Online manuals](#online-manuals)
-2. [Tips for contribution](#tips-for-contribution)  
+2. [Tips for contributing](#tips-for-contributing)  
   2.1 [Translating](#how-to-help-translating-the-manual)  
   2.2 [Manual writing](#how-to-help-writing-the-manual)
 3. [Documentation issues](#documentation-issues)
@@ -31,8 +28,8 @@ called `gimp-help-2-10`.
 
 The online, daily updated, manuals for all supported languages are available at:
 
-- [GIMP 3.2 manuals](https://docs.gimp.org/index.html#gimp-online)
-- [GIMP 3.2 manuals](https://testing.docs.gimp.org/index.html#gimp-online)
+- [GIMP 3.2 manuals](https://docs.gimp.org/index.html#gimp-online) (Autotools build)
+- [GIMP 3.2 manuals](https://testing.docs.gimp.org/index.html#gimp-online) (_Experimental meson build)
 
 (This is not a typo.)
 
@@ -42,7 +39,7 @@ Manuals for older versions of GIMP are still available:
 
 The offline manuals are available for download from our [Releases page](https://docs.gimp.org/download.html).
 
-## Tips for contribution
+## Tips for contributing
 
 ### How to help translating the manual
 
@@ -59,7 +56,8 @@ Your language team will be able to give you more details on this procedure.
 **Note:** If your language does not have any po files listed there, your
 language first needs to be added to our repository. In that case, please open
 [an issue](https://gitlab.gnome.org/GNOME/gimp-help/issues) stating which
-language and languagecode you would like to have added.
+language and languagecode you would like to have added. Please also give
+us the native localized name for your language to be used on our website.
 
 #### How to test your translation
 
@@ -126,19 +124,20 @@ you want to build.
 - `meson setup -Dprefix=$HELP_PREFIX $SRCDIR -Dlanguages="en nl"`
 - Alternatively you can start meson from the source and specify
 the build dir. See the meson manual for details.
-- Next run: `ninja`. When specifying multiple languages to build,
-you specify a max load, e.g. `ninja -l 4.5`.
+- Next run: `ninja`. When building multiple languages (say more
+than 4), you can specify a max load, e.g. `ninja -l 4.5`.
 - If you want to, you can install the languages so that GIMP can
 find the local manual. Run: `ninja install --no-rebuild`.
-- Optionally test if everything is opk with the build by
+- Optionally test if everything is ok with the build by
 running `ninja test`.
 
-
+*Continuing with the regular instructions*
 To get started, here is a checklist of things you should do:
-- If you don't have a Gnome GitLab account yet then create one
-  (you can use GitHub credentials to login), see:
-  https://gitlab.gnome.org/
-- Next go to https://gitlab.gnome.org/GNOME/gimp-help and
+- If you don't have a [Gnome GitLab](https://gitlab.gnome.org/)
+  account yet, create one (you can use GitHub credentials to login).
+- Make sure you set up set up an [SSH](https://handbook.gnome.org/infrastructure/ssh-keys.html)
+  key or you won't be able to fork projects.
+- Go to https://gitlab.gnome.org/GNOME/gimp-help and
   create your own fork by clicking on "Fork" on the top
   right of the page.
 - Go to your fork at https://gitlab.gnome.org/YOUR_USERNAME/gimp-help
@@ -182,18 +181,19 @@ To get started, here is a checklist of things you should do:
   + In case you are on Windows, it is strongly advised to
     set up a MSYS2 environment, so that you can build and
     test the gimp-help repository. MSYS2 includes multiple environments, each
-    of which is accessed through its own executable. It is advised that you use
+    of which is accessed through its own executable. We advise that you use
     UCRT64 or CLANG64. For more information, refer to
     [Environments](https://www.msys2.org/docs/environments/) in the MSYS2
     documentation.
   + TODO: Other OS's may need some setting up too. Add
     details here as needed.
   + You need the following packages to build the documentation:
-    + Minimum: autotools, libxslt, python, libxml2,
-      docbook-xml, and docbook-xsl. With these packages, you can build the
-      English html help.
+    + Minimum: autotools or meson [at least version 1.10], libxslt, python,
+      perl, libxml2, python3-libxml2 (on MSYS2 this is included in libxml2),
+      docbook-xml, and docbook-xsl.
+      With these packages, you can build the English html help.
     + Version control: git.
-    + To build quick start PDFs: librsvg2-2. For some laguages, you may also
+    + To build quick start PDFs: librsvg2-2. For some languages, you may also
       need to install the appropriate [Noto fonts](https://fonts.google.com/noto). 
       For more information, refer to
       [#410](https://gitlab.gnome.org/GNOME/gimp-help/-/issues/410)
@@ -206,15 +206,17 @@ To get started, here is a checklist of things you should do:
       To install polib, use a package manager (e.g., pacman) to install pip,
       and then use pip to install polib. gettext may already be installed in
       an MSYS2 environment.
-    + To build the installers: intltool and innosetup.
+    + To build the Windows installers: intltool and innosetup. When using meson
+      InnoSetup will be automatically downloaded and installed when needed.
     + To create an architecture diagram of the build process: dot, which is
-      part of graphviz. For MSYS2, refer to
+      part of graphviz. Not yet available for our meson build. For MSYS2, refer to
       [Base Package: mingw-w64-graphviz](https://packages.msys2.org/base/mingw-w64-graphviz)
       for information about what package to install. To generate the diagram,
       use `make dot`.
-    + To build PDF versions of the help: dblatex. Note that PDF versions of
-      help are no longer being created because dblatex doesn't seem to be
-      compatible with more recent versions of Python. Refer to
+    + To build PDF versions of the help: dblatex (does not work at this time).
+      There currently is no plan to port this to meson. Note that PDF versions
+      of gimp-help are no longer being created because dblatex doesn't seem
+      to be compatible with more recent versions of Python. Refer to
       [#138](https://gitlab.gnome.org/GNOME/gimp-help/-/issues/138) for more
       information. When everything is set up correctly, use `make pdf-xx` to
       build a PDF for a single language or `make pdf-local` to build PDFs for
