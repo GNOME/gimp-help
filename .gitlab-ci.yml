@@ -26,8 +26,34 @@ variables:
   # and updates po files for ALL languages
   MESON_LANGS_5: "el kk ru"
 
+.pipeline_merge: &CI_MERGE
+  if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+  interruptible: true
+  variables: {}
+.pipeline_commit: &CI_COMMIT
+  if: '$CI_PIPELINE_SOURCE == "push" && $CI_OPEN_MERGE_REQUESTS == null && $CI_COMMIT_TAG == null'
+  interruptible: true
+  variables: {}
+
+.default:
+  # Common jobs behavior
+  retry:
+    max: 1
+    when:
+      - 'scheduler_failure'
+  needs: []
+  # Default Docker image (keep variables: DEB_VERSION: consistent with devel-docs/os-support.txt)
+  #image: $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER}
+
 build-image:
+  extends: .default
   stage: prepare
+  rules:
+    - <<: *CI_MERGE
+    - <<: *CI_COMMIT
+      variables: {}
+    # Custom builds though web GUI, API or schedules.
+    - if: '$GIMP_HELP_CI_MESON_BUILD != null'
   variables:
     DEB_VERSION: "trixie"
     RUNNER: "x86_64_v3"
@@ -71,8 +97,13 @@ build-image:
     # Copied from the GIMP version:
     #FIXME: '2>&1 | grep -v STEP' since buildah is too verbose. See: https://github.com/containers/buildah/issues/6362
     - buildah build --log-level error --volume $CI_PROJECT_DIR:$CI_PROJECT_DIR:Z --file $CI_PROJECT_DIR/Dockerfile --tag $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER} --layers --cache-from $CI_REGISTRY_IMAGE/cache --cache-to $CI_REGISTRY_IMAGE/cache --cache-ttl=120h 2>&1 | grep -v STEP && buildah push --log-level error $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER} 2>&1 | grep -v STEP
+  when: always
 
 po-validate:
+  rules:
+    - <<: *CI_MERGE
+    - <<: *CI_COMMIT
+      variables: {}
   stage: test
   image: $CI_REGISTRY_IMAGE:build-debian-latest
   script:
@@ -81,6 +112,10 @@ po-validate:
   needs: ["build-image"]
 
 check-broken-images:
+  rules:
+    - <<: *CI_MERGE
+    - <<: *CI_COMMIT
+      variables: {}
   stage: test
   image: $CI_REGISTRY_IMAGE:build-debian-latest
   script:
@@ -88,8 +123,19 @@ check-broken-images:
   needs: ["build-image"]
 
 check-outdated-meson-build-files:
+  rules:
+    - <<: *CI_MERGE
+    - <<: *CI_COMMIT
+      variables: {}
+    # Custom builds though web GUI, API or schedules.
+    - if: '$GIMP_HELP_CI_MESON_BUILD != null'
+    # Merge requests with appropriate label.
+    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Build.*/'
   stage: test
-  image: $CI_REGISTRY_IMAGE:build-debian-latest
+  image: $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER}
+  variables:
+    DEB_VERSION: "trixie"
+    RUNNER: "x86_64_v3"
   script:
     - ./tools/generate_meson_build.py
     # Check there are no changed files
@@ -114,6 +160,10 @@ branches-check:
   allow_failure: true
 
 .build-debian-base:
+  rules:
+    - <<: *CI_MERGE
+    - <<: *CI_COMMIT
+      variables: {}
   stage: build
   image: $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER}
   variables:
@@ -149,6 +199,10 @@ branches-check:
 # validate can fail. However, we still want at least those parts of the
 # manual that were generated, so execute validate last
 .build-debian-validate-last:
+  rules:
+    - <<: *CI_MERGE
+    - <<: *CI_COMMIT
+      variables: {}
   stage: build
   image: $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER}
   variables:
@@ -225,6 +279,10 @@ build-debian-6:
 
 
 www-debian:
+  rules:
+    - <<: *CI_MERGE
+    - <<: *CI_COMMIT
+      variables: {}
   stage: www
   variables:
     BUILD_DIR: "."
@@ -323,6 +381,8 @@ win-installer:
     - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Build.*/'
   stage: build
   image: $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER}
+  dependencies:
+    - build-image
   variables:
     DEB_VERSION: "trixie"
     RUNNER: "x86_64_v3"
@@ -417,6 +477,11 @@ build-debian-meson-5:
     WEB_DIR: "_web"
 
 www-debian-meson:
+  rules:
+    # Custom builds though web GUI, API or schedules.
+    - if: '$GIMP_HELP_CI_MESON_BUILD != null'
+    # Merge requests with appropriate label.
+    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Build.*/'
   stage: www
   variables:
     BUILD_DIR: "."
@@ -430,7 +495,7 @@ www-debian-meson:
     - build-debian-meson-4
     - build-debian-meson-5
   artifacts:
-    expire_in: 1 week
+    expire_in: 2 days
     when: always
     paths:
     - build/windows/installer/lang/
@@ -542,5 +607,34 @@ source-dist:
       sha256sum gimp-help-*.tar.bz2 > ../_dist/${FILENAME}.SHA256SUMS &&
       sha512sum gimp-help-*.tar.bz2 > ../_dist/${FILENAME}.SHA512SUMS
     - mv gimp-help-*.tar.bz2 ../_dist/
+  needs: ["build-image"]
 
+source-dist-meson:
+  rules:
+    # Custom builds though web GUI, API or schedules.
+    - if: '$GIMP_HELP_CI_MAKE_DIST != null'
+    # Merge requests with appropriate label.
+    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Source Distribution.*/'
+  stage: distribution
+  image: $CI_REGISTRY_IMAGE:build-debian-latest
+  artifacts:
+    expire_in: 1 week
+    when: always
+    paths:
+    #- _build
+    - _dist
+  script:
+    - cd src
+    # Mark all source files as updated. Needed to get up-to-date translations
+    - find . -type f -exec touch {} +
+    - cd ..
+    - mkdir _dist
+    - mkdir _build
+    - cd _build
+    - ../autogen.sh --prefix=${INSTALL_PREFIX} --without-gimp
+    - make dist
+    - FILENAME=`ls gimp-help-*.tar.bz2`                               &&
+      sha256sum gimp-help-*.tar.bz2 > ../_dist/${FILENAME}.SHA256SUMS &&
+      sha512sum gimp-help-*.tar.bz2 > ../_dist/${FILENAME}.SHA512SUMS
+    - mv gimp-help-*.tar.bz2 ../_dist/
   needs: ["build-image"]
