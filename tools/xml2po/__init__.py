@@ -149,7 +149,9 @@ class XMLDocument(object):
         self.expand_entities = self.app.options.get('expand_entities')
         self.ignored_tags = self.app.current_mode.getIgnoredTags()
 
-        if self.expand_entities:
+        # Also check for mode, because quickreference/gimp-keys.xml doesn't need
+        # expand_entities disabled, it's not docbook xml
+        if self.expand_entities and app.mode_name == 'gimphelp':
             sys.stderr.write("WARNING: expand_entities is True. Some gimp-help translations involving entities may fail!\n")
 
         # Remove the part of the path that redirects from build dir to
@@ -162,7 +164,7 @@ class XMLDocument(object):
 
         ctxt = libxml2.createFileParserCtxt(filename)
         ctxt.lineNumbers(1)
-        if self.app.options.get('expand_all_entities'):
+        if self.app.options.get('expand_all_entities') and app.mode_name == 'gimphelp':
             ctxt.replaceEntities(1)
             sys.stderr.write("WARNING: Some gimp-help translations involving entities may fail!\n")
 
@@ -735,6 +737,7 @@ class Main(object):
         self.msg = None
         self.gt = None
         self.current_mode = self.load_mode(mode)()
+        self.mode_name = mode
         self.base_path = base_path
         # Prepare output
         if operation == 'update':
