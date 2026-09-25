@@ -86,7 +86,7 @@ my %Languages = (
 	sv => "Swedish",
 	tr => "Turkish",
 	uk => "Ukrainian",
-	zh_CN => "Simplified Chinese"
+	zh_CN => "Simplified Chinese",
 );
 
 =head1 OPTIONS
