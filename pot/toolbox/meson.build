@@ -20,6 +20,7 @@ toolbox_paint_pot = custom_target(output_pot,
     command: [
         xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
+    env: pot_env,
 )
 
 ##############
@@ -46,6 +47,7 @@ toolbox_selection_pot = custom_target(output_pot,
     command: [
         xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
+    env: pot_env,
 )
 
 ##############
@@ -72,4 +74,5 @@ toolbox_transform_pot = custom_target(output_pot,
     command: [
         xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
+    env: pot_env,
 )

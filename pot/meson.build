@@ -1,5 +1,10 @@
 pot_gimp_help = 'gimp.pot'
 
+pot_env = [
+    'PACKAGE=@0@'.format(meson.project_name()),
+    'VERSION=@0@'.format(meson.project_version()),
+]
+
 output_pot = pot_gimp_help
 input_files = xml_sources_root
 plain_input = xml_sources_root_files
@@ -17,6 +22,7 @@ gimp_pot = custom_target(output_pot,
     command: [
         xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
+    env: pot_env,
 )
 
 ##############
@@ -43,6 +49,7 @@ appendix_pot = custom_target(output_pot,
     command: [
         xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
+    env: pot_env,
 )
 
 ##############
@@ -68,6 +75,7 @@ concepts_pot = custom_target(output_pot,
     command: [
         xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
+    env: pot_env,
 )
 
 ##############
@@ -93,6 +101,7 @@ dialogs_pot = custom_target(output_pot,
     command: [
         xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
    ],
+    env: pot_env,
 )
 
 ##############
@@ -118,6 +127,7 @@ filters_pot = custom_target(output_pot,
     command: [
         xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
+    env: pot_env,
 )
 
 ##############
@@ -143,6 +153,7 @@ glossary_pot = custom_target(output_pot,
     command: [
         xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
+    env: pot_env,
 )
 
 ##############
@@ -168,6 +179,7 @@ introduction_pot = custom_target(output_pot,
     command: [
         xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
+    env: pot_env,
 )
 
 ##############
@@ -193,6 +205,7 @@ menus_pot = custom_target(output_pot,
     command: [
         xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
+    env: pot_env,
 )
 
 ##############
@@ -218,6 +231,7 @@ preface_pot = custom_target(output_pot,
     command: [
         xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
+    env: pot_env,
 )
 
 ##############
@@ -243,6 +257,7 @@ toolbox_pot = custom_target(output_pot,
     command: [
         xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
+    env: pot_env,
 )
 
 ##############
@@ -268,6 +283,7 @@ tutorial_pot = custom_target(output_pot,
     command: [
         xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
+    env: pot_env,
 )
 
 ##############
@@ -293,6 +309,7 @@ using_pot = custom_target(output_pot,
     command: [
         xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
+    env: pot_env,
 )
 
 #########################
