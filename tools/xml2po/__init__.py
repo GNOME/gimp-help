@@ -107,9 +107,12 @@ class MessageOutput:
         # timezone offset a timezone name was added. This fixes it.
         dt = datetime.now()
         tz = dt.astimezone().tzinfo
+        package = os.getenv('PACKAGE', 'PACKAGE')
+        version = os.getenv('VERSION', 'VERSION')
+        package_ver = package + ' ' + version
         out.write("""msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\\n"
+"Project-Id-Version: %s\\n"
 "POT-Creation-Date: %s\\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\\n"
@@ -118,7 +121,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\\n"
 "Content-Transfer-Encoding: 8bit\\n"
 
-""" % (dt.astimezone(tz).strftime("%Y-%m-%d %H:%M%z")))
+""" % (package_ver, dt.astimezone(tz).strftime("%Y-%m-%d %H:%M%z")))
 
     def outputAll(self, out):
         self.outputHeader(out)
