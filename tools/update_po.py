@@ -75,7 +75,7 @@ if not os.path.isfile(src_po):
     )
     cmdout, cmderr = init_cmd.communicate()
     if init_cmd.returncode:
-        raise Exception("Error during msginit command.")
+        raise Exception(f"Error during msginit command: Last error: {cmderr.decode("utf-8")}")
 
 else:
     # For now: just copy to build/po
