@@ -20,6 +20,7 @@ menus_colors_pot = custom_target(output_pot,
     command: [
         xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
+    env: pot_env,
 )
 
 ##############
@@ -46,6 +47,7 @@ menus_edit_pot = custom_target(output_pot,
     command: [
         xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
+    env: pot_env,
 )
 
 ##############
@@ -72,6 +74,7 @@ menus_file_pot = custom_target(output_pot,
     command: [
         xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
+    env: pot_env,
 )
 
 ##############
@@ -98,6 +101,7 @@ menus_filters_pot = custom_target(output_pot,
     command: [
         xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
+    env: pot_env,
 )
 
 ##############
@@ -124,6 +128,7 @@ menus_help_pot = custom_target(output_pot,
     command: [
         xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
+    env: pot_env,
 )
 
 ##############
@@ -150,6 +155,7 @@ menus_image_pot = custom_target(output_pot,
     command: [
         xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
+    env: pot_env,
 )
 
 ##############
@@ -176,6 +182,7 @@ menus_layer_pot = custom_target(output_pot,
     command: [
         xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
+    env: pot_env,
 )
 
 ##############
@@ -202,6 +209,7 @@ menus_select_pot = custom_target(output_pot,
     command: [
         xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
+    env: pot_env,
 )
 
 ##############
@@ -228,6 +236,7 @@ menus_view_pot = custom_target(output_pot,
     command: [
         xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
+    env: pot_env,
 )
 
 

@@ -20,6 +20,7 @@ filters_animation_pot = custom_target(output_pot,
     command: [
         xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
+    env: pot_env,
 )
 
 ##############
@@ -46,6 +47,7 @@ filters_artistic_pot = custom_target(output_pot,
     command: [
         xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
+    env: pot_env,
 )
 
 ##############
@@ -72,6 +74,7 @@ filters_blur_pot = custom_target(output_pot,
     command: [
         xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
+    env: pot_env,
 )
 
 ##############
@@ -98,6 +101,7 @@ filters_combine_pot = custom_target(output_pot,
     command: [
         xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
+    env: pot_env,
 )
 
 ##############
@@ -124,6 +128,7 @@ filters_decor_pot = custom_target(output_pot,
     command: [
         xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
+    env: pot_env,
 )
 
 ##############
@@ -150,6 +155,7 @@ filters_distort_pot = custom_target(output_pot,
     command: [
         xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
+    env: pot_env,
 )
 
 ##############
@@ -176,6 +182,7 @@ filters_edge_detect_pot = custom_target(output_pot,
     command: [
         xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
+    env: pot_env,
 )
 
 ##############
@@ -202,6 +209,7 @@ filters_enhance_pot = custom_target(output_pot,
     command: [
         xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
+    env: pot_env,
 )
 
 ##############
@@ -228,6 +236,7 @@ filters_generic_pot = custom_target(output_pot,
     command: [
         xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
+    env: pot_env,
 )
 
 ##############
@@ -254,6 +263,7 @@ filters_light_and_shadow_pot = custom_target(output_pot,
     command: [
         xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
+    env: pot_env,
 )
 
 ##############
@@ -280,6 +290,7 @@ filters_map_pot = custom_target(output_pot,
     command: [
         xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
+    env: pot_env,
 )
 
 ##############
@@ -306,6 +317,7 @@ filters_noise_pot = custom_target(output_pot,
     command: [
         xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
+    env: pot_env,
 )
 
 ##############
@@ -332,6 +344,7 @@ filters_render_pot = custom_target(output_pot,
     command: [
         xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
+    env: pot_env,
 )
 
 ##############
@@ -358,4 +371,5 @@ filters_web_pot = custom_target(output_pot,
     command: [
         xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
+    env: pot_env,
 )
