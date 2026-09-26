@@ -20,6 +20,7 @@ colors_auto_pot = custom_target(output_pot,
     command: [
         xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
+    env: pot_env,
 )
 
 ##############
@@ -46,6 +47,7 @@ colors_components_pot = custom_target(output_pot,
     command: [
         xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
+    env: pot_env,
 )
 
 ##############
@@ -72,6 +74,7 @@ colors_desaturate_pot = custom_target(output_pot,
     command: [
         xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
+    env: pot_env,
 )
 
 ##############
@@ -98,6 +101,7 @@ colors_info_pot = custom_target(output_pot,
     command: [
         xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
+    env: pot_env,
 )
 
 ##############
@@ -124,6 +128,7 @@ colors_map_pot = custom_target(output_pot,
     command: [
         xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
+    env: pot_env,
 )
 
 ##############
@@ -150,4 +155,5 @@ colors_tone_mapping_pot = custom_target(output_pot,
     command: [
         xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
+    env: pot_env,
 )

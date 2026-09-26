@@ -50,6 +50,7 @@ gimp_pot = custom_target('gimp-keys.pot',
     command: [
         xml2pot, '@OUTPUT@', '@BUILD_ROOT@', '@SOURCE_ROOT@', relative_input,
     ],
+    env: pot_env,
 )
 
 # FIXME We may need an optional target to copy an updated
