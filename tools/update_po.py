@@ -65,7 +65,7 @@ if not os.path.isfile(src_po):
         ["msginit",
             "--no-translator",
             "--width=79",
-            "--input %s"  % pot_file,
+            "--input",  pot_file,
             "--locale=%s" % lang,
             "--output=%s" % dest_po,
         ],
