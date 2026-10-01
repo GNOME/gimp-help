@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- encoding: utf-8 -*-
 #
-# generate_isl_po.py - Generate single language isl file
+# generate_isl.py - Generate single language isl file
 # Copyright (c) 2026 Jacob Boerema.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -28,7 +28,7 @@ VERSION = 0.1
 
 
 def printVersion():
-    print(f"\ngenerate_meson_build.py v {VERSION}")
+    print(f"\ngenerate_isl.py v {VERSION}")
 
 def usage():
     printVersion()
