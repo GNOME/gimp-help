@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- encoding: utf-8 -*-
 #
-# generate_meson_build_po.py - Generates meson.build files for /src and images/
+# generate_meson_build.py - Generates meson.build files for /src and images/
 # Copyright (c) 2026 Jacob Boerema.
 #
 # This program is free software: you can redistribute it and/or modify
