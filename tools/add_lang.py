@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- encoding: utf-8 -*-
 #
-# add_lang.py - Add a new language
+# add_lang.py - Automate adding a new language for translation
 # Copyright (c) 2026 Jacob Boerema.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -22,18 +22,23 @@
 import os, sys
 import re
 import getopt
+import shutil
 from pathlib import Path
 
 VERBOSE = False
 VERSION = 0.1
 
 
+# Note that this script is for the most part quite dumb:
+# it only checks for duplicate langcode-s in LINGUAS.
+# For all other files it presumes it is not present without checking.
+
 def printVersion():
     print(f"\nadd_lang.py v {VERSION}")
 
 def usage():
     printVersion()
-    print("""Adds a new language.
+    print("""Adds a new language for translation.
 
 usage: add_lang.py [options] langcode English Native
 
@@ -91,8 +96,8 @@ def main(argv):
     root_dir  = '.'
     global VERBOSE
 
-    src_file = 'help.isl'
-    langcode = 'en'
+    default_lang = 'en'
+    langcode     = 'en'
 
     try:
         opts, remaining_args = getopt.getopt(argv, "hv",
@@ -176,6 +181,11 @@ def main(argv):
     if not os.path.exists(qr_meson_path):
         print(f"File {qr_meson_path} does not exist!")
         sys.exit(1)
+
+    # Because "en" is not in LINGUAS we need to update prev_code
+    # for certain languages (e.g.en_CA) or sorting will be incorrect
+    if langcode.startswith(default_lang) and prev_code < default_lang:
+        prev_code = default_lang
 
     if prev_code == "":
         # New first language in list!
@@ -392,6 +402,44 @@ def main(argv):
     # 12 .gitlab-ci.yml - add MANUALLY due to split over several jobs
 
     # 13  po/langcode/ + subdirs - copy meson.build files
+
+    po_subdirs = [
+        '',
+        'menus/',
+        'menus/colors/',
+        'filters/',
+        'toolbox/',
+    ]
+    meson = 'meson.build'
+
+    po_path = root_dir + 'po/' + langcode
+    if os.path.exists(po_path):
+        print(f"Po folder already exists. Assuming meson.build files are already initialized!")
+        sys.exit(1)
+
+
+    # Create required folders
+    os.makedirs(po_path + '/menus/colors', exist_ok=True)
+    os.makedirs(po_path + '/filters', exist_ok=True)
+    os.makedirs(po_path + '/toolbox', exist_ok=True)
+    print(f"Folder {po_path} and subdirs created.")
+
+    # Copy meson.build files from a known to exist language
+    copy_from_path = root_dir + 'po/nl'
+    if not os.path.exists(copy_from_path):
+        print(f"Missing path {copy_from_path}. Can't copy meson.build files!")
+        sys.exit(1)
+
+    po_path +=  '/'
+    copy_from_path += '/'
+    for subdir in po_subdirs:
+        shutil.copy(copy_from_path + subdir + meson, po_path + subdir + meson)
+    print(f"Copied meson.build files.")
+
+    # REQUIRED STILL:
+    # - Initialized po-windows-installer/langcode.po
+    # - Initialized quickreference/po/langcode.po
+
     # 14  add empty initialized po files
 
 
