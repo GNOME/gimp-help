@@ -1,10 +1,26 @@
-# Install Inno Setup.
-wget -O is.exe https://github.com/jrsoftware/issrc/releases/download/is-6_7_3/innosetup-6.7.3.exe
-./is.exe //SILENT //SUPPRESSMSGBOXES //CURRENTUSER //SP- //LOG="innosetup.log"
-installed="$?"
-if [ $installed -ne 0 ]; then
-  echo "Downloading or running installer failed."
-  exit 1
+# Check command line arguments
+# $1 any random word will skip downloading
+# $2 path to html files
+if [ -n "$1" ]; then
+  NODOWNLOAD=$1
+else
+  NODOWNLOAD=""
+fi
+if [ -n "$2" ]; then
+  html_path=$2
+else
+  html_path=
+fi
+
+if [ "x${NODOWNLOAD}" = "x" ]; then
+  # Install Inno Setup.
+  wget -O is.exe https://github.com/jrsoftware/issrc/releases/download/is-6_7_3/innosetup-6.7.3.exe
+  ./is.exe //SILENT //SUPPRESSMSGBOXES //CURRENTUSER //SP- //LOG="innosetup.log"
+  installed="$?"
+  if [ $installed -ne 0 ]; then
+    echo "Downloading or running installer failed."
+    exit 1
+  fi
 fi
 
 # Install unofficial language files. These are translations of "unknown
@@ -16,6 +32,7 @@ if [ "x${ISCCDIR}" = "x" ]; then
   echo "Installer directory is empty!"
   exit 1
 fi
+
 mkdir -p "${ISCCDIR}/Languages/Unofficial"
 cd "${ISCCDIR}/Languages/Unofficial"
 
@@ -53,21 +70,23 @@ add_bom ()
   fi
 }
 
-download_lang Croatian.isl
-download_lang EnglishBritish.isl
-download_lang Esperanto.isl
-download_lang Farsi.isl
-download_lang Greek.isl
-download_lang Kazakh.islu
-download_lang NorwegianNynorsk.isl
-download_lang Romanian.isl
-download_lang SerbianCyrillic.isl
-cd -
+if [ "x${NODOWNLOAD}" = "x" ]; then
+  download_lang Croatian.isl
+  download_lang EnglishBritish.isl
+  download_lang Esperanto.isl
+  download_lang Farsi.isl
+  download_lang Greek.isl
+  download_lang Kazakh.islu
+  download_lang NorwegianNynorsk.isl
+  download_lang Romanian.isl
+  download_lang SerbianCyrillic.isl
+  cd -
 
-# Any language not in a release yet, but moved from Unofficial, should be added here
-cd "${ISCCDIR}/Languages/"
-download_lang_official ChineseSimplified.isl
-download_lang_official Lithuanian.isl
+  # Any language not in a release yet, but moved from Unofficial, should be added here
+  cd "${ISCCDIR}/Languages/"
+  download_lang_official ChineseSimplified.isl
+  download_lang_official Lithuanian.isl
+fi
 cd -
 
 # Copy generated language files into the source directory.
@@ -78,7 +97,7 @@ MAJOR_VERSION=`grep 'm4_define(\[help_major_version' configure.ac |sed 's/m4_def
 MINOR_VERSION=`grep 'm4_define(\[help_minor_version' configure.ac |sed 's/m4_define(\[help_minor_version.*\[\([0-9]*\)\].*/\1/'`
 MICRO_VERSION=`grep 'm4_define(\[help_micro_version' configure.ac |sed 's/m4_define(\[help_micro_version.*\[\([0-9]*\)\].*/\1/'`
 cd build/windows/installer
-./build.bat ${MAJOR_VERSION} ${MINOR_VERSION} ${MICRO_VERSION}
+./build.bat ${MAJOR_VERSION} ${MINOR_VERSION} ${MICRO_VERSION} ${html_path}
 
 # Test if the installer was created and return success/failure.
 MISSING_INSTALLER=0
