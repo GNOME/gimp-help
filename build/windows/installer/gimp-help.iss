@@ -41,6 +41,10 @@
 	#error LANG must be defined
 #endif
 
+#ifndef HELPDIR
+    #error Missing HELPDIR variable
+#endif
+
 #define VERSION MAJORVERSION + '.' + MINORVERSION + '.' + MICROVERSION
 #define MIN_VERSION MAJORVERSION + '.' + MINORVERSION
 
@@ -162,7 +166,9 @@ Name: "{#LANG}"; MessagesFile: "compiler:{#LANGFILE},lang\help.en.isl,lang\help.
 
 [Files]
 #ifndef nofiles
-Source: "{#HELPDIR}\{#LANG}\*.*"; DestDir: "{app}\share\gimp\{#DIR_VER}\help\{#LANG}"; Flags: recursesubdirs ignoreversion
+;Source: "{#HELPDIR}\{#LANG}\*.*"; DestDir: "{app}\share\gimp\{#DIR_VER}\help\{#LANG}"; Flags: recursesubdirs ignoreversion
+; Use GIMP user appdata folder because msix doesn't let us install to app dir
+Source: "{#HELPDIR}\{#LANG}\*.*"; DestDir: "{userappdata}\GIMP\{#MIN_VERSION}\help\{#LANG}"; Flags: recursesubdirs ignoreversion
 #endif
 ;Source: "html\{#LANG}\*.jpg"; DestDir: "{app}\share\gimp\2.0\help\{#LANG}"; Flags: recursesubdirs nocompression
 ;Source: "html\{#LANG}\*.png"; DestDir: "{app}\share\gimp\2.0\help\{#LANG}"; Flags: recursesubdirs nocompression
@@ -194,6 +200,10 @@ const
 
 type
 	TGimpInstall = record
+		IsMsix: Boolean;
+		IsBoth: Boolean;
+		Version: String;
+		FullVersion: String;
 		Path: String;
 		RequireAdmin: Boolean;
 		InstallCheckbox: TCheckbox;
@@ -433,33 +443,127 @@ begin
 		Result := '0';
 end;
 
+function GetStrippedVersion(const VerStr: string): String;
+var
+  substr: TArrayOfString;
+  len: LongInt;
+begin
+	result := '';
+	substr := StringSplit(VerStr, ['.'], stExcludeEmpty);
+	len    := GetArrayLength(substr);
+	if len >= 2 then
+	begin
+	  result := substr[0] + '.' + substr[1];
+	end;
+end;
+
+function GetPowerShellOutput(Command: String; out ResultStr: String): Boolean;
+var
+  TmpFileName: String;
+  RunCommand: String;
+  RunArgs: String;
+  ResultCode: Integer;
+  Contents: AnsiString;
+begin
+  Result := False;
+  ResultStr := '';
+  
+  TmpFileName := ExpandConstant('{tmp}\ps_gimp_msix_ver.txt');
+
+  RunCommand := ExpandConstant('{sys}\WindowsPowerShell\v1.0\powershell.exe');
+  RunArgs    := '-NoProfile -NonInteractive -WindowStyle Hidden -Command "' + 
+                Command + ' | Out-File -FilePath ''' + TmpFileName + ''' -Encoding ascii"';
+
+  if Exec(RunCommand, RunArgs, '', SW_HIDE, ewWaitUntilTerminated, ResultCode) then
+  begin
+    if (ResultCode = 0) and FileExists(TmpFileName) then
+    begin
+      if LoadStringFromFile(TmpFileName, Contents) then
+      begin
+        ResultStr := Trim(Contents);
+        Result := True;
+      end;
+    end;
+  end;
+
+  DeleteFile(TmpFileName);
+end;
+
+procedure GetGimpMsixInstall();
+var
+  n: Integer;
+  FullVersion, Version, gimp_user_dir: String;
+begin
+  if GetPowerShellOutput('(Get-AppxPackage -Name "*GIMP*").Version', FullVersion) and (Length(FullVersion) >= 3) then
+  begin
+    Log('Found GIMP Windows Store install: ' + FullVersion);
+	Version := GetStrippedVersion(FullVersion);
+	Log('Stripped version: ' + Version);
+
+	if CompareVersion('{#MIN_VERSION}', Version) >= 0 then
+	begin
+		n := GetArrayLength(GimpInstalls);
+		Inc(n);
+		SetArrayLength(GimpInstalls,n);
+		GimpInstalls[n-1].IsMsix := True;
+		GimpInstalls[n-1].IsBoth := False;
+		GimpInstalls[n-1].Version := Version;
+		GimpInstalls[n-1].FullVersion := FullVersion;
+		gimp_user_dir := '{userappdata}\GIMP\' + Version + '\help\{#LANG}';
+		GimpInstalls[n-1].Path := ExpandConstant(gimp_user_dir);
+		GimpInstalls[n-1].RequireAdmin := False;
+	end;
+  end;
+end;
 
 procedure GetGimpInstall(const RootKey: Integer);
 var n: Integer;
-	Path, Version: String;
+	Path, FullVersion, Version, gimp_user_dir: String;
+	AddInstall: Boolean;
 begin
+	AddInstall := False;
 	if RegQueryStringValue(RootKey, RegGimpUnins, RegGimpUninsPathKey, Path) then
-		if RegQueryStringValue(RootKey, RegGimpUnins, RegGimpUninsDispVerKey, Version) then
+		if RegQueryStringValue(RootKey, RegGimpUnins, RegGimpUninsDispVerKey, FullVersion) then
 		begin
-			Log('Found GIMP install: ' + Path + '; ' + Version);
+			Log('Found GIMP install: ' + Path + '; ' + FullVersion);
+			Version := GetStrippedVersion(FullVersion);
+			Log('Stripped version: ' + Version);
 
 			if CompareVersion('{#MIN_VERSION}', Version) >= 0 then
 			begin
-
 				n := GetArrayLength(GimpInstalls);
-				Inc(n);
-				SetArrayLength(GimpInstalls,n);
-				GimpInstalls[n-1].Path := Path;
-				GimpInstalls[n-1].RequireAdmin := not (RootKey = HKCU);
+				if (n = 0) or (GimpInstalls[0].IsMsix = False) then
+				begin
+					AddInstall := True;
+				end
+				else if (GimpInstalls[0].IsMsix = True) then
+				begin
+					if (GimpInstalls[0].Version <> Version) then
+						AddInstall := True
+					else
+						GimpInstalls[0].IsBoth := True;
+				end;
 
+				if AddInstall then
+				begin
+					Inc(n);
+					SetArrayLength(GimpInstalls,n);
+					GimpInstalls[n-1].IsMsix := False;
+					GimpInstalls[n-1].Version := Version;
+					GimpInstalls[n-1].FullVersion := FullVersion;
+					gimp_user_dir := '{userappdata}\GIMP\' + Version + '\help\{#LANG}';
+					GimpInstalls[n-1].Path := ExpandConstant(gimp_user_dir);
+
+					//GimpInstalls[n-1].RequireAdmin := not (RootKey = HKCU);
+					GimpInstalls[n-1].RequireAdmin := False;
+				end;
 			end;
-
 		end;
 end;
 
-
 function GetGimpInfo(): Boolean;
 begin
+	GetGimpMsixInstall();
 
 	if IsWin64 then
 		GetGimpInstall(HKLM64);
@@ -659,7 +763,7 @@ begin
 				Tag := n;
 
 				Checked := True;
-				Caption := GimpInstalls[n].Path;
+				Caption := GimpInstalls[n].Path + ' (GIMP ' + GimpInstalls[n].Version + ')';
 				OnClick := @CBInstallOnClick;
 
 				Parent := wpInstalls.Surface;
