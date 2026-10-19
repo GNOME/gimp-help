@@ -166,12 +166,8 @@ Name: "{#LANG}"; MessagesFile: "compiler:{#LANGFILE},lang\help.en.isl,lang\help.
 
 [Files]
 #ifndef nofiles
-;Source: "{#HELPDIR}\{#LANG}\*.*"; DestDir: "{app}\share\gimp\{#DIR_VER}\help\{#LANG}"; Flags: recursesubdirs ignoreversion
-; Use GIMP user appdata folder because msix doesn't let us install to app dir
-Source: "{#HELPDIR}\{#LANG}\*.*"; DestDir: "{userappdata}\GIMP\{#MIN_VERSION}\help\{#LANG}"; Flags: recursesubdirs ignoreversion
+Source: "{#HELPDIR}\{#LANG}\*.*"; DestDir: "{app}"; Flags: recursesubdirs ignoreversion
 #endif
-;Source: "html\{#LANG}\*.jpg"; DestDir: "{app}\share\gimp\2.0\help\{#LANG}"; Flags: recursesubdirs nocompression
-;Source: "html\{#LANG}\*.png"; DestDir: "{app}\share\gimp\2.0\help\{#LANG}"; Flags: recursesubdirs nocompression
 
 [Code]
 function WideCharToMultiByte(CodePage: Cardinal; dwFlags: DWORD; lpWideCharStr: String; cchWideCharStr: Integer;
@@ -222,6 +218,7 @@ var
 
 	InstallMode: (imFindInstalls, imInstall);
 
+	DirParameter: String;
 	LogParameter: String;
 	SilentParameter: String;
 
@@ -561,16 +558,32 @@ begin
 		end;
 end;
 
-function GetGimpInfo(): Boolean;
+function GetGimpInfo(InstallDirSet: Boolean): Boolean;
+var Version, gimp_user_dir: String;
 begin
-	GetGimpMsixInstall();
+	if InstallDirSet then
+	begin
+		Version := ExpandConstant('{#MIN_VERSION}');
+		SetArrayLength(GimpInstalls,1);
+		GimpInstalls[0].IsMsix := False;
+		GimpInstalls[0].Version := Version;
+		GimpInstalls[0].FullVersion := Version;
+		gimp_user_dir := DirParameter + 'help\{#LANG}';
+		GimpInstalls[0].Path := ExpandConstant(gimp_user_dir);
 
-	if IsWin64 then
-		GetGimpInstall(HKLM64);
+		GimpInstalls[0].RequireAdmin := False;
+	end
+	else
+	begin
+		GetGimpMsixInstall();
 
-	GetGimpInstall(HKLM);
+		if IsWin64 then
+			GetGimpInstall(HKLM64);
 
-	GetGimpInstall(HKCU);
+		GetGimpInstall(HKLM);
+
+		GetGimpInstall(HKCU);
+	end;
 
 	if GetArrayLength(GimpInstalls) = 0 then
 	begin
@@ -591,8 +604,9 @@ end;
 
 
 function InitializeSetup(): Boolean;
-var i: Integer;
+var i, p, len: Integer;
 	InstallModePreReqs: TInstallModePreReqs;
+	Temp: String;
 begin
 	Result := True;
 	InstallMode := imFindinstalls; //default
@@ -607,7 +621,16 @@ begin
 		if LowerCase(ParamStr(i)) = '/install' then
 			InstallMode := imInstall
 		else if LowerCase(Copy(ParamStr(i),1,5)) = '/dir=' then
-			InstallModePreReqs.Dir := True
+		begin
+			Temp := ParamStr(i);
+			len  := Length(Temp);
+			p := Pos('=', Temp);
+			if (p > 0) and (len > p) then
+			begin
+				InstallModePreReqs.Dir := True;
+				DirParameter := Copy(Temp, p+1, len-p);
+			end;
+		end
 		else if (LowerCase(Copy(ParamStr(i),1,9)) = '/allusers') or (LowerCase(Copy(ParamStr(i),1,12)) = '/currentuser') then
 			InstallModePreReqs.PrivOverride := True
 		else if LowerCase(Copy(ParamStr(i),1,4)) = '/log' then
@@ -638,7 +661,7 @@ begin
 		Log('New LogParameter: ' + LogParameter);
 	end;
 
-	Result := GetGimpInfo();
+	Result := GetGimpInfo(InstallModePreReqs.Dir);
 end;
 
 
