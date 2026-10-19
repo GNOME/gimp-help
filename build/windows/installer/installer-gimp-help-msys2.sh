@@ -103,6 +103,19 @@ cd build/windows/installer
 MISSING_INSTALLER=0
 
 cd _Output/
+
+# Treat en separately, it's not in the po directories
+INSTALLER_BASE="gimp-help-${MAJOR_VERSION}.${MINOR_VERSION}.${MICRO_VERSION}"
+INSTALLER="$INSTALLER_BASE-en-setup.exe"
+if [ -f "$INSTALLER" ]; then
+  sha256sum $INSTALLER >> ${INSTALLER_BASE}.SHA256SUMS
+  sha512sum $INSTALLER >> ${INSTALLER_BASE}.SHA512SUMS
+else
+  MISSING_INSTALLER=1
+  echo "Missing installer: $INSTALLER"
+fi
+
+# And now all the other languages
 for dir in ../../../../po/*/
 do
   code=`basename $dir`
