@@ -79,12 +79,12 @@ class docbookXmlMode(basicXmlMode):
             ]
 
     def getStringForTranslators(self):
-        """Returns string which will be used to credit translators."""
-        return "translator-credits"
+        """Returns string which will be used to credit translator language teams."""
+        return "translator-team-credits"
 
     def getCommentForTranslators(self):
-        """Returns a comment to be added next to string for crediting translators."""
-        return """Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2"""
+        """Returns a comment to be added next to string for crediting translator teams."""
+        return """Add the localized name of your language team"""
 
     def _find_articleinfo(self, node):
         if node.name == 'articleinfo' or node.name == 'bookinfo':
@@ -150,8 +150,11 @@ class docbookXmlMode(basicXmlMode):
     def postProcessXmlTranslation(self, doc, language, translators):
         """Sets a language and translators in "doc" tree.
 
-        "translators" is a string consisted of "Name <email>, years" pairs
-        of each translator, separated by newlines."""
+        "translators" is a string for the language team
+        (previously individual translators).
+        For now we are leaving the code to split up
+        individual translators, emails and years,
+        although that is not necessary anymore."""
 
         root = doc.getRootElement()
         # DocBook documents can be something other than article, handle that as well in the future
@@ -170,38 +173,17 @@ class docbookXmlMode(basicXmlMode):
             if not ai:
                 return
 
-            # Now, lets do one translator at a time
+            # Support multiple lines
             lines = translators.split("\n")
             for line in lines:
                 line = line.strip()
-                match = re.match(r"^([^<,]+)\s*(?:<([^>,]+)>)?,\s*(.*)$", line)
-                last = self._find_lastcopyright(ai)
-                if match:
+                if not line == "":
+                    last = self._find_lastcopyright(ai)
                     copy = libxml2.newNode("copyright")
                     if last:
                         copy = last.addNextSibling(copy)
                     else:
                         ai.addChild(copy)
-                    if match.group(3):
-                        copy.newChild(None, "year", match.group(3))
-                    if match.group(1) and match.group(2):
-                        # Let's not add e-mail publicly
-                        holder = match.group(1)#+"(%s)" % match.group(2)
-                    elif match.group(1):
-                        holder = match.group(1)
-                    elif match.group(2):
-                        holder = match.group(2)
-                    else:
-                        holder = "???"
-                    copy.newChild(None, "holder", holder)
-                elif not line == "":
-                    copy = libxml2.newNode("copyright")
-                    if last:
-                        copy = last.addNextSibling(copy)
-                    else:
-                        ai.addChild(copy)
-                    # Translators without email and copyright year
-                    # DTD requires a year, so add an empty one...
                     copy.newChild(None, "year", "")
                     copy.newChild(None, "holder", line)
 

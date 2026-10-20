@@ -799,9 +799,12 @@ class Main(object):
         #self.current_mode.preProcessXml(doc.doc, self.msg)
 
         doc.doSerialize(doc.doc)
-        tcmsg = self.current_mode.getStringForTranslators()
-        outtxt = self.getTranslation(tcmsg)
-        self.current_mode.postProcessXmlTranslation(doc.doc, self.options.get('translationlanguage'), outtxt)
+
+        if self.mode_name == 'gimphelp' and xmlfile.endswith('gimp.xml'):
+            tcmsg = self.current_mode.getStringForTranslators()
+            outtxt = self.getTranslation(tcmsg)
+            self.current_mode.postProcessXmlTranslation(doc.doc, self.options.get('translationlanguage'), outtxt)
+
         serialized_doc = doc.doc.serialize('utf-8', 1)
         # Now we need to hack the results when external parameter entities
         # are defined, since they are not correctly serialized for our purposes.
@@ -872,10 +875,12 @@ class Main(object):
 
     def output_po(self):
         """ Write the resulting po/pot file to specified output """
-        tcmsg = self.current_mode.getStringForTranslators()
-        tccom = self.current_mode.getCommentForTranslators()
-        if tcmsg:
-            self.msg.outputMessage(tcmsg, lineno=0, comment=tccom)
+        # Only add translator-team-credits to our main file
+        if self.mode_name == 'gimphelp' and self.msg.filename.endswith('gimp.xml'):
+            tcmsg = self.current_mode.getStringForTranslators()
+            tccom = self.current_mode.getCommentForTranslators()
+            if tcmsg:
+                self.msg.outputMessage(tcmsg, lineno=0, comment=tccom)
 
         self.msg.outputAll(self.out)
 
