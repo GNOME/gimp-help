@@ -646,6 +646,9 @@ class XMLDocument(object):
                 replacement = '<%s>%s</%s>' % \
                               (repl[0], repl[3], repl[2])
                 translation = translation.replace('<placeholder-%d/>' % (i+1), replacement)
+                # Translators may add a space before "/>"". There could be more than one
+                # but let's not complicate this too much for a very rare situation.
+                translation = translation.replace('<placeholder-%d />' % (i+1), replacement)
 
             if worth:
                 if self.app.operation == 'merge':
