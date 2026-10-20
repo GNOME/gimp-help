@@ -44,7 +44,7 @@ class gimphelpXmlMode(docbookXmlMode):
             self.objects = [ 'figure', 'textobject', 'imageobject', 'mediaobject',
                              'guiicon', 'inlinemediaobject', 'imagedata', 'inlineequation',
                              'screenshot', 'author', 'personname', 'firstname', 'surname',
-                             'othername', 'email' ]
+                             'othername', 'email', 'anchor' ]
 
     def getTreatedAttributes(self):
         "Return array of tag attributes which content is to be translated"

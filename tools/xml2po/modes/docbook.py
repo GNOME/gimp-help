@@ -53,7 +53,7 @@ class docbookXmlMode(basicXmlMode):
         self.objects = [ 'figure', 'textobject', 'imageobject', 'mediaobject',
                          'guiicon', 'inlinemediaobject', 'imagedata', 'inlineequation',
                          'screenshot', 'author', 'personname', 'firstname', 'surname',
-                         'othername', 'email' ]
+                         'othername', 'email', 'anchor' ]
 
     def getIgnoredTags(self):
         "Returns array of tags to be ignored."
