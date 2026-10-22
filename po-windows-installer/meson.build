@@ -3,9 +3,6 @@
 # same way GIMP does, but start with a more or less literal
 # conversion of our Makefiles.
 
-# FIXME: Missing for now is Makefule "update-po" target
-# that can be used to add a new language!
-
 installer_po_files = files(
     'bg.po',
     'ca.po',
@@ -61,8 +58,9 @@ installer_i18n_ini = [
 # 	fi
 # 	$(GENPOT)
 
-package_name  = 'gimp-help-windows-installer'
-installer_pot = package_name + '.pot'
+package_name         = 'gimp-help-windows-installer'
+installer_pot        = package_name + '.pot'
+installer_pot_in     = installer_pot + '.in'
 installer_po_src_dir = meson.current_source_dir()
 
 # 1. generate potfile
@@ -75,7 +73,7 @@ if INTLTOOL_UPDATE.full_path() == '/bin/true'
 endif
 
 win_installer_pot = custom_target('pot-windows-installer',
-    output: [installer_pot],
+    output: [installer_pot_in],
     depend_files: [
         installer_po_files,
         installer_misc_i18n_files,
@@ -89,8 +87,20 @@ win_installer_pot = custom_target('pot-windows-installer',
     ],
     env: [
         'srcdir=' + installer_po_src_dir,
-        'XGETTEXT_ARGS=--output=./po-windows-installer/gimp-help-windows-installer.pot',
+        'XGETTEXT_ARGS=--output=./po-windows-installer/gimp-help-windows-installer.pot.in --from-code=UTF-8',
     ],
+)
+
+# Force charset to UTF-8 because the above isn't enough (at least on Windows)
+force_utf8_pot = custom_target('force-windows-installer-pot-utf8',
+    input: [win_installer_pot],
+    output: [installer_pot],
+    command: [
+        sed,
+        's/charset=CHARSET/charset=UTF-8/g',
+        '@INPUT@'
+    ],
+    capture: true,
 )
 
 # 2. Update po files
@@ -106,12 +116,12 @@ foreach lang : po_target_linguas
         po_target = 'update-installer-po-' + lang
         po_file   = lang + '.po'
         gimp_po_lang = custom_target(po_target,
-            depends: [win_installer_pot],   # pot file
+            depends: [force_utf8_pot],      # pot file
             output:  [po_file],             # update po
             command: [
                 updatepo,
                 meson.project_build_root(),
-                win_installer_pot,
+                force_utf8_pot,
                 lang,
                 meson.current_source_dir() / po_file,
                 meson.current_build_dir() / po_file,
