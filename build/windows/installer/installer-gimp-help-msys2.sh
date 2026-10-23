@@ -1,13 +1,13 @@
 # Check command line arguments
-# $1 any random word will skip downloading
-# $2 path to html files
-if [ -n "$1" ]; then
-  NODOWNLOAD=$1
+# $1 path to html files
+# $2 any random word will skip downloading
+if [ -n "$2" ]; then
+  NODOWNLOAD=$2
 else
   NODOWNLOAD=""
 fi
-if [ -n "$2" ]; then
-  html_path=$2
+if [ -n "$1" ]; then
+  html_path=$1
 else
   html_path=
 fi
