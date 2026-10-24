@@ -15,6 +15,7 @@ help_isl     = 'help.isl'
 create_help_isl_in = custom_target(help_isl_in,
     input: [help_isl_ini],
     output: [help_isl_in],
+    depends: [installer_files_all],
     command: [
         sed,
         's/^#/;/',

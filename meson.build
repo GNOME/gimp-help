@@ -367,8 +367,9 @@ subdir('po-windows-installer')
 
 if installer_enabled
     generate_isl = find_program(meson.project_source_root() / 'tools' / 'generate_isl.py')
+    create_installers = find_program(meson.project_source_root() / 'build' / 'windows' / 'installer' / 'create_installers.py')
 
-    subdir('build/windows/installer/lang')
+    subdir('build/windows/installer')
 endif
 
 # Define English images
@@ -428,6 +429,20 @@ test('validate-image-references',
     suite: 'validate-images',
     depends: [copy_authors_to_src],
 )
+
+###############################################################################
+# Windows installer creation
+
+if installer_enabled and get_option('create-installers')
+    # Use install script because we need html/images from installed location
+    # for the creation of the Windows installer
+    meson.add_install_script(create_installers,
+        '--lang=' + ALL_LINGUAS,
+        meson.project_version(),
+        # installed html dir:
+        get_option('prefix'),
+    )
+endif
 
 ###############################################################################
 #custom_target('Changelog',
