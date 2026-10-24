@@ -281,13 +281,18 @@ class Validate(object):
                 # But that probably shouldn't be done in the
                 # po validator but in a source xml validator.
                 continue
-            elif entry.msgid.startswith("translator-credits"):
+            elif entry.msgid.startswith("translator-team-credits") or entry.msgid.startswith("translator-credits"):
                 # TODO: Should we check for translators not in AUTHORS?
                 #continue
                 # Parsing would give errors on email address like <a@b.c> because
                 # it considers that a tag without closing tag
                 # However, we do want to check for chars like \v
                 skip_parse = True
+                if '@' in entry.msgstr and entry.msgid.startswith("translator-team-credits"):
+                    self.printErrorHeader(entry, self.log)
+                    print(f"ERROR: Please do not add email addresses in translator-team-credits.", file=self.log)
+                    
+                    errcnt += 1
 
             errcnt += self.check_illegal_chars(entry)
             if not skip_parse:
