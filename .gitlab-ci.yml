@@ -395,7 +395,9 @@ win-installer:
     - "${HELP_DIR}"
     - "${PDF_DIR}"
     - "${WEB_DIR}"
-    - build/windows/installer/lang/
+    - build/windows/installer/
+    - _build/build/windows/installer/
+    - _build/gimp-help.version
     # FIXME Reports need to be written to a unique name
     reports:
       junit: "_build/meson-logs/testlog.junit.xml"
@@ -425,7 +427,7 @@ win-installer:
     - cd _build
     # Note: even though language-menu=true here, only the languages built in the same job
     # will be shown on each page. This is only for testing that it works.
-    - meson setup -Dprefix=${INSTALL_PREFIX}/share/gimp/3.0/help -Dlanguages="${LANGS}" -Dquickreference=true -Dmaintainer=true -Dlanguage-menu=true -Dwindows-installer=true
+    - meson setup -Dprefix=${INSTALL_PREFIX}/share/gimp/3.0/help -Dlanguages="${LANGS}" -Dquickreference=true -Dmaintainer=true -Dlanguage-menu=true -Dwindows-installer=true -Dcreate-installers=false
     # The xsltproc target building all html files can be a memory hog,
     # so we limit the system load, hopefully this is enough
     - ninja -l 4.5 && meson install --no-rebuild
@@ -433,7 +435,6 @@ win-installer:
     - mv ${INSTALL_PREFIX}/share/gimp/3.0/help/ ../${HELP_DIR}
     - mv web/html/* ../${WEB_DIR}
     - mv ../${HELP_DIR}/pdf/ ../${PDF_DIR}
-    - mv build/windows/installer/lang/help*isl ../build/windows/installer/lang/
     # Perform tests
     - meson test
 
@@ -500,7 +501,9 @@ www-debian-meson:
     expire_in: 2 days
     when: always
     paths:
-    - build/windows/installer/lang/
+    - build/windows/installer/
+    - _build/build/windows/installer/
+    - _build/gimp-help.version
     - htdocs/
   script:
     # get major and minor version of gimp-help
@@ -521,6 +524,45 @@ www-debian-meson:
     - mv _html5/* htdocs/${MAJOR_VERSION}.${MINOR_VERSION}/
     # Move website files to root of htdocs
     - mv _web/* htdocs/
+
+
+win-installer-meson:
+  # This regularly fails with: fatal: unable to access
+  # 'https://gitlab.gnome.org/GNOME/gimp-help.git/': error setting certificate
+  # file: C:\_r\_builds\vJWzEqDv\0\GNOME\gimp-help.tmp\CI_SERVER_TLS_CA_FILE
+  # I was unable to figure out which GitLab error this corresponds to,
+  # so let's just always retry 2 times max.
+  retry:
+    max: 2
+    when:
+      - always
+  rules:
+    # On releases.
+    #- if: '$CI_COMMIT_TAG != null'
+    # On Scheduled builds
+    #- if: '$GIMPHELP_CI_WIN_INSTALLER != null'
+    # Custom builds though web GUI, API or schedules.
+    - if: '$GIMP_HELP_CI_MESON_BUILD != null'
+    # Merge requests with appropriate label.
+    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Build.*/'
+  variables:
+    CHERE_INVOKING: "yes"
+  tags:
+    - win32-ps
+  stage: distribution
+  dependencies:
+    - www-debian-meson
+  artifacts:
+    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}"
+    when: always
+    expire_in: 1 week
+    paths:
+    - _build/build/windows/installer/_Output
+    - installer.log
+  script:
+    # TODO Maybe move script to tools/
+    # TODO2 If we need stderr call with "cmd /c", see https://stackoverflow.com/a/16334189
+    - python ./build/windows/installer/create_installers.py --lang="${ALL_LANGUAGES}" htdocs/3.2/ > installer.log
 
 
 .distcheck-base:
