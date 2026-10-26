@@ -20,6 +20,7 @@ qr_po_files = files(
     'ja.po',
     'ko.po',
     'lt.po',
+    'nb.po',
     'nl.po',
     'nn.po',
     'pl.po',

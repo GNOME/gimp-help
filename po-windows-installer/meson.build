@@ -26,6 +26,7 @@ installer_po_files = files(
     'kk.po',
     'ko.po',
     'lt.po',
+    'nb.po',
     'nl.po',
     'nn.po',
     'pl.po',

@@ -63,6 +63,7 @@
       kk:Kazakh
       ko:Korean
       lt:Lithuanian
+      nb:Norwegian_Bokmål
       nl:Dutch
       nn:Norwegian_Nynorsk
       pl:Polish
