@@ -46,18 +46,36 @@ create_help_isl = custom_target('help-isl-multilingual',
 
 
 lang_isls = []
+
+# help.en.isl always needs to be available for other languages
+isl_base = 'help.en.isl'
+create_lang_en_isl = custom_target('help-en-isl',
+    input: [create_help_isl],
+    output: [isl_base],
+    command: [
+        generate_isl,
+        'en',
+        meson.current_build_dir(),
+    ],
+    build_by_default: true,
+)
+lang_isls += create_lang_en_isl
+
 foreach lang : po_target_linguas
 
-    isl_base = 'help.' + lang + '.isl'
-    create_lang_isl = custom_target('help-' + lang + '-isl',
-        input: [create_help_isl],
-        output: [isl_base],
-        command: [
-            generate_isl,
-            lang,
-            meson.current_build_dir(),
-        ],
-        build_by_default: true,
-    )
-    lang_isls += create_lang_isl
+    if lang != 'en'
+        isl_base = 'help.' + lang + '.isl'
+        create_lang_isl = custom_target('help-' + lang + '-isl',
+            input: [create_help_isl],
+            output: [isl_base],
+            depends: [create_lang_en_isl],
+            command: [
+                generate_isl,
+                lang,
+                meson.current_build_dir(),
+            ],
+            build_by_default: true,
+        )
+        lang_isls += create_lang_isl
+    endif
 endforeach
