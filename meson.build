@@ -369,6 +369,18 @@ if installer_enabled
     generate_isl = find_program(meson.project_source_root() / 'tools' / 'generate_isl.py')
     create_installers = find_program(meson.project_source_root() / 'build' / 'windows' / 'installer' / 'create_installers.py')
 
+    version_file = 'gimp-help.version'
+
+    set_ver_script = 'import sys; f=open("@0@", "w", encoding="utf-8");f.write("@1@");f.close()'.format(version_file, meson.project_version())
+
+    gimp_help_version_file = custom_target('set-gimp-version',
+        output: 'gimp-help.version',
+        command: [python, '-c',
+            set_ver_script,
+        ],
+        build_always_stale: true,
+    )
+
     subdir('build/windows/installer')
 endif
 
@@ -438,7 +450,7 @@ if installer_enabled and get_option('create-installers')
     # for the creation of the Windows installer
     meson.add_install_script(create_installers,
         '--lang=' + ALL_LINGUAS,
-        meson.project_version(),
+        '--ver='  + meson.project_version(),
         # installed html dir:
         get_option('prefix'),
     )
