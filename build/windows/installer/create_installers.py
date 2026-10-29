@@ -129,7 +129,7 @@ def get_inno_repo(local_dir):
             print(f"Could not update {repo_url}: {e}")
 
 
-def copy_lang_files (src_path, dest_path, files):
+def copy_lang_files (src_path, dest_path):
     if not os.path.exists(src_path):
         print(f"Source path {src_path} does not exist!")
         sys.exit(1)
@@ -137,8 +137,12 @@ def copy_lang_files (src_path, dest_path, files):
         print(f"Destination {dest_path} does not exist!")
         sys.exit(1)
 
-    for file in files:
-        shutil.copy(src_path + file, dest_path + file)
+    # Copy all official languages
+    shutil.copytree(src_path, dest_path, dirs_exist_ok=True, ignore=shutil.ignore_patterns("Unofficial"))
+
+    # Add  all unofficial languages to same dir, that way
+    # we don't need changes if a lang moves from/to unofficial
+    shutil.copytree(src_path + 'Unofficial/', dest_path, dirs_exist_ok=True, ignore=shutil.ignore_patterns("Unofficial"))
 
 
 def create_inno_installers(selected_languages, inno_dir, build_dir, html_dir, version):
@@ -310,52 +314,14 @@ def main(argv):
     local_inno_dir = root_dir + local_dir_name
     get_inno_repo(local_inno_dir)
 
-    # Copy languages we need to location of installed InnoSetup
+    # Copy all languages to location of installed InnoSetup
 
     lang_dir = local_inno_dir + '/' + inno_lang_dir_repo
     if not os.path.exists(lang_dir):
         print(f"InnoSetup repository languages directory doesn't exist: {lang_dir}")
         sys.exit(1)
 
-    needed_languages = [
-        # Default.isl is stored in the main InnoSetup dir. We leave that alone.
-        #'Default.isl',                     # en
-        'Bulgarian.isl',                    # bg
-        'Catalan.isl',                      # ca
-        'Czech.isl',                        # cs
-        'German.isl',                       # de
-        'Danish.isl',                       # da
-        'Unofficial/Greek.isl',             # el
-        'Unofficial/EnglishBritish.isl',    # en_GB
-        'Unofficial/Esperanto.isl',         # eo
-        'Spanish.isl',                      # es
-        'Unofficial/Farsi.isl',             # fa
-        'Finnish.isl',                      # fi
-        'French.isl',                       # fr
-        'Unofficial/Croatian.isl',          # hr
-        'Hungarian.isl',                    # hu
-        'Italian.isl',                      # it
-        'Japanese.isl',                     # ja
-        'Unofficial/Kazakh.islu',           # kk
-        'Korean.isl',                       # ko
-        'Lithuanian.isl',                   # lt
-        'Dutch.isl',                        # nl
-        'Unofficial/NorwegianNynorsk.isl',  # nn
-        'Polish.isl',                       # pl
-        'Portuguese.isl',                   # pt
-        'BrazilianPortuguese.isl',          # pt_BR
-        'Unofficial/Romanian.isl',          # ro
-        'Russian.isl',                      # ru
-        'Slovak.isl',                       # sk
-        'Slovenian.isl',                    # sl
-        'Unofficial/SerbianCyrillic.isl',   # sr
-        'Swedish.isl',                      # sv
-        'Turkish.isl',                      # tr
-        'Ukrainian.isl',                    # uk
-        'ChineseSimplified.isl',            # zh_CN
-    ]
-
-    copy_lang_files (lang_dir, installed_inno_lang_dir, needed_languages)
+    copy_lang_files (lang_dir, installed_inno_lang_dir)
 
     if not create_inno_installers(languages, inno_dir, root_dir, html_dir, version):
         sys.exit(1)
