@@ -47,6 +47,9 @@ def usage():
 
 usage: add_lang.py [options] langcode English Native build_dir
 
+    For iso codes and localized names see also
+    https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes
+
     langcode                    The code for this language
     English                     The US English name of this language
     Native                      The localized name of this language
@@ -269,7 +272,7 @@ def main(argv):
 
         print(f"Po files have been copied from {from_path} to {to_path}.")
 
-        print(f"Now manually update .gitlab-ci.yml and the Windows installer scripts: installer-gimp-help-msys2.sh and gimp-help.iss")
+        print(f"Now check all changes and commit, then make an MR.")
         exit(0)
 
 
@@ -351,7 +354,7 @@ def main(argv):
     # Due to "en" not having "- &gimphelp.langcode.en;%" in website.xml we will have
     # to manually adjust the added langcode to go directly after en.
     if not prev_code_with_en == prev_code:
-        print(f"WARNING: Manual fixing needed to sort {langcode} directly after en in web/website.xml!")
+        print(f"WARNING: Manual fixing needed to sort {langcode} directly after 'en' in web/website.xml!")
 
     # 7 website.xml - part 2 quickreference pdf
 
@@ -461,7 +464,14 @@ def main(argv):
         print(f"{file_to_update} has been updated.")
 
 
-    # 10+11 Windows installer uses different language names, for now MANUAL
+    # 10+11 Windows installer uses different language names
+    # We added all currently known InnoSetup languages.
+    # We check here if our language is listed:
+    file_to_check = root_dir + 'build/windows/installer/languages.isi'
+    with open(file_to_check, "r", encoding="utf-8") as f:
+        contents = f.read()
+        if contents.find(f"LANG=='{langcode}'", None, None) < 0:
+            print("WARNING: No translation available for InnoSetup. Add manually!")
 
     # 12 .gitlab-ci.yml
     # We add it as first in the last language job for both meson and make
@@ -513,7 +523,7 @@ def main(argv):
     print(f"Copied meson.build files.")
 
     print(f"\nNow meson needs to be called to update po files for quickreference and the windows installer.")
-    print(f"Run from your build dir:\n\t'meson setup -Dprefix=$YOUR_PREFIX $YOUR_SRCDIR -Dlanguages={langcode} -Dquickreference=true -Dwindows-installer=true -Dmaintainer=false -Dlanguage-menu=false'")
+    print(f"Run from your build dir:\n\t'meson setup -Dprefix=$YOUR_PREFIX $YOUR_SRCDIR -Dlanguages={langcode} -Dquickreference=true -Dwindows-installer=true -Dmaintainer=false -Dlanguage-menu=false && ninja'")
     print(f"After that run add_lang.py again and it will finish the addition of {langcode}.")
 
 
