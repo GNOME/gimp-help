@@ -56,17 +56,27 @@ Your language team will be able to give you more details on this procedure.
 **Note:** If your language does not have any po files listed there, your
 language first needs to be added to our repository. In that case, please open
 [an issue](https://gitlab.gnome.org/GNOME/gimp-help/issues) stating which
-language and languagecode you would like to have added. Please also give
+language and iso languagecode you would like to have added. Please also give
 us the native localized name for your language to be used on our website.
 
 #### How to test your translation
 
 If you have set up a build environment for gimp-help you can test the
-translation by running `make html-LANG`, where LANG is your two/four-letter
-language code. This will generate an HTML version of the user manual,
-e.g. `make html-nl` to make the HTML for the Dutch language.
-When that is successful, you can find the index.html file in the `/html/LANG/`
-folder under your gimp-help build folder.
+translation:
+- When using meson (preferred):
+  + Set up your meson build if you haven't done that yet, see [Experimental meson build instructions](#Experimental meson build instructions).
+  + Run `ninja && ninja install`. If you set things up correctly it
+  should find your updated html when opening help from GIMP.
+  + Alternatively only run `ninja`, browse to gimp-help's build folder
+  and open `html/LANG/index.html`, where `LANG` should be replaced by
+  the iso language code of your language.
+- Wen using autotools:
+  + Assuming your autotools build is alread set up, run `make html-LANG`,
+  where LANG is your iso language code. This will generate an HTML version
+  of the user manual. For example use `make html-nl` to make the HTML for
+  the Dutch language.
+  + When that is successful, you can find the index.html file in the
+  `/html/LANG/` folder under your gimp-help build folder.
 
 #### How to add localized screenshots
 
@@ -80,14 +90,15 @@ the changes are vetted and reviewed by your team.
 
 All images are stored in the top-level 'images' folder. Original
 screenshots in English are in the 'C' subfolder. Localized screenshots
-are in 'LANG' folders, where LANG is your two/four-letter language code.
+are in 'LANG' folders, where LANG is your iso language code.
 
 It is important to preserve both paths and names when saving localized
 versions of the screenshots. Otherwise documentation won't build properly,
 or the localized images will not be used.
 
 More in general, also follow the relevant [guidelines](documentation-guidelines.md)
-regarding image handling.
+regarding image handling. In general you should use the same theme and icon theme
+ as the English image.
 
 ### How to help writing the manual
 
@@ -107,7 +118,7 @@ usually during European evening hours.
 If some of the instructions below are unclear, don't hesitate
 to ask in one of the places mentioned above.
 
-*Experimental meson build instructions*
+#### Experimental meson build instructions
 The autotools Makefiles are being phased out and will be replaced
 by meson, which is currently in an experimental stage. You are
 encouraged to use that for building the manual. This should
@@ -457,8 +468,26 @@ Before you create a release you'll need:
 When adding a new language for translation, several files need to be
 updated. After the meson build is declared stable, the autotools related
 files will be removed. These are marked *autotools only*.
-It's the intention to simplify this, but for now the list
-of languages needs to be updated in the following files:
+
+A Python script is available to automate updating all files. This script
+should be used instead of updating manually:
+  - From the `gimp-help` source folder start `../tools/add_lang.py` with
+  the following command line parameters in this order:
+    + iso language code
+    + US English name for the language
+    + Native localized name of the language
+    + Location of the build folder (only needed for the second run)
+  - Pay attention to possible warnings in the terminal and if necessary
+  act on them.
+  - Run the `meson` command shown at the end followed by `ninja` which
+    will create necessary po files that need to be added to our
+    meson.build files.
+  - Run the `add_lang.py` script again with the same parameters.
+  - Unless errors or warnings show up in your terminal you can now
+    create an MR with all changed files.
+
+In case there are issues with the script here is the list of files
+that need to be updated:
 
   - [configure.ac](configure.ac); *autotools only*
     - Update ALL_LINGUAS
@@ -480,12 +509,12 @@ of languages needs to be updated in the following files:
   - [web/website.xml](web/website.xml)
     - Update list of online user manuals and quickreference PDF's
   - [.gitlab-ci.yml](.gitlab-ci.yml)
-    - Update LINGUAS in the relevant build-debian-[number].
-    - Update LINGUAS in the relevant distcheck-[number].
+    - Add language code to the relevant `MAKE_LANGS_` [number]. *autotools only*
+    - Add language code to the relevant `MESON_LANGS_` [number]. *meson only*
     - Note: after committing make sure that the build job doesn't take too
       long. When it takes more than 50 minutes, it might be time to split
       the build job because we don't want time-outs.
-  - [build/windows/installer/installer-gimp-help-msys2.sh](build/windows/installer/installer-gimp-help-msys2.sh)
+  - [build/windows/installer/installer-gimp-help-msys2.sh](build/windows/installer/installer-gimp-help-msys2.sh) *autotools only* **TODO** Not touched by `add_lang.py`!
     - Check if the language is part of the official languages installed
       together with Inno Setup. An up-to-date list can be found at
       [github](https://github.com/jrsoftware/issrc/tree/main/Files/Languages).
@@ -493,7 +522,12 @@ of languages needs to be updated in the following files:
       [here](https://github.com/jrsoftware/issrc/tree/main/Files/Languages/Unofficial).
     - If there is, then add it to the download_lang commands.
     - If no translation is available, `Default.isl` can be used.
-  - [build/windows/installer/gimp-help.iss](build/windows/installer/gimp-help.iss)
+  - [build/windows/installer/languages.isi](build/windows/installer/languages.isi)
+    - All languages with InnoSetup translations are already added. You only
+    need to update this when InnoSetup adds a new language or when the
+    language you are adding does not have an InnoSetup translation. In which
+    case you have to rename a copy of `Default.isl` and update the language
+    name and code. Then:
     - Add an if LANG test and define LANGFILE for your language.
   - `po/new langcode` needs `meson.build` files copied from another language
     to all folders. *meson only*
@@ -515,16 +549,6 @@ When all of the above are updated, run:
 This should create the necessary po files for the newly added language.
 Note: some po files for other languages may have been updated too, but you
 should only commit the files relevant for the new language.
-
-*meson only*
-Run meson with the new langcode selected to create the po files. (Does
-that work or will meson complain about missing files?)
-TBD (The po files for the new language will be in the build dir/po/lang/
-folder and will need to be copied top the source. All folders in the source
-should already have a meson.build file.)
-TODO Create a Python script that simplifies adding a language. Needs
-the language code, English name and localized name, then should be able
-to do most parts automatically.
 
 
 ## History of the gimp-help module
