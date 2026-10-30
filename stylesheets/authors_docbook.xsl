@@ -11,8 +11,8 @@
   <xsl:import href="authors_common.xsl" />
 
   <xsl:output method="xml" encoding="UTF-8" indent="yes"
-              doctype-public="-//OASIS//DTD DocBook XML V4.3//EN"
-              doctype-system="http://www.docbook.org/xml/4.3/docbookx.dtd"/>
+              doctype-public="-//OASIS//DTD DocBook XML V4.5//EN"
+              doctype-system="http://www.docbook.org/xml/4.5/docbookx.dtd"/>
 
   <xsl:param name="roles">documenter translator artist technican</xsl:param>
   <xsl:param name="print.roles.with.lang">translator</xsl:param>
