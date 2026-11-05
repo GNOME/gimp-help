@@ -33,8 +33,6 @@ if [ "x${ISCCDIR}" = "x" ]; then
   exit 1
 fi
 
-#mkdir -p "${ISCCDIR}/Languages/Unofficial"
-#cd "${ISCCDIR}/Languages/Unofficial"
 # Unofficial languages are now also moved to the main languages directory
 cd "${ISCCDIR}/Languages/"
 
@@ -82,10 +80,8 @@ if [ "x${NODOWNLOAD}" = "x" ]; then
   download_lang NorwegianNynorsk.isl
   download_lang Romanian.isl
   download_lang SerbianCyrillic.isl
-  cd -
 
   # Any language not in a release yet, but moved from Unofficial, should be added here
-  #cd "${ISCCDIR}/Languages/"
   download_lang_official ChineseSimplified.isl
   download_lang_official Lithuanian.isl
 fi
