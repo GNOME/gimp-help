@@ -70,12 +70,24 @@ class gimphelpXmlMode(docbookXmlMode):
                     hash = "THIS FILE DOESN'T EXIST"
                     sys.stderr.write("Warning: image file '%s' not found.\n" %
                                      origimagepath)
+
+                # See if there is a comment for translators
+                prev = node.prev
+                while prev and prev.type == 'text' and prev.content.strip() == '':
+                    prev = prev.prev
+                comment = ""
+                if prev and prev.type == 'comment':
+                    comment = prev.content.strip() + "\n"
+                    sys.stderr.write("prev node is comment\n")
+                elif prev:
+                    sys.stderr.write("prev node is %s\n" % prev.type)
+                comment = comment + \
+                    "When image changes, this message will be marked fuzzy " \
+                    "or untranslated for you.\nIt doesn't matter what you "  \
+                    "translate it to: it's not used at all."
                 msg.outputMessage(
-                    "@@image: '%s'; md5=%s" % (origimagepath, hash),
-                    node.lineNo(),
-                    "When image changes, this message will be marked fuzzy "
-                    "or untranslated for you.\nIt doesn't matter what you "
-                    "translate it to: it's not used at all.")
+                    "external ref='%s'; md5=%s" % (origimagepath, hash),
+                    node.lineNo(), comment)
         elif node and node.children:
             child = node.children
             while child:
