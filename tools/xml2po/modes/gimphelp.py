@@ -45,6 +45,7 @@ class gimphelpXmlMode(docbookXmlMode):
                              'guiicon', 'inlinemediaobject', 'imagedata', 'inlineequation',
                              'screenshot', 'author', 'personname', 'firstname', 'surname',
                              'othername', 'email', 'anchor' ]
+        self.verbose = False
 
     def getTreatedAttributes(self):
         "Return array of tag attributes which content is to be translated"
@@ -55,13 +56,18 @@ class gimphelpXmlMode(docbookXmlMode):
         if node.type == 'element' and node.name == 'imagedata':
             # Use .fileref to construct new message
             attr = node.prop("fileref")
-            if attr:
-                assert attr.startswith("images/")
+            if attr and attr.startswith("images/"):
                 origimagepath = attr
                 for subdir in ("C", "common"):
+                    if subdir == "C":
+                        translatable = True
+                    else:
+                        translatable = False
                     imagepath = origimagepath.replace("/", "/%s/" % subdir, 1)
                     # I need to search files relatively to the source directory.
                     scriptdir = os.path.dirname(os.path.realpath(__file__))
+                    # Use relative path from po file to image
+                    i18n_path = os.path.join('..', imagepath)
                     imagepath = os.path.join(scriptdir, '../../../', imagepath)
                     if os.path.exists(imagepath):
                         hash = self._md5_for_file(imagepath)
@@ -70,12 +76,29 @@ class gimphelpXmlMode(docbookXmlMode):
                     hash = "THIS FILE DOESN'T EXIST"
                     sys.stderr.write("Warning: image file '%s' not found.\n" %
                                      origimagepath)
-                msg.outputMessage(
-                    "@@image: '%s'; md5=%s" % (origimagepath, hash),
-                    node.lineNo(),
-                    "When image changes, this message will be marked fuzzy "
-                    "or untranslated for you.\nIt doesn't matter what you "
-                    "translate it to: it's not used at all.")
+
+                # See if there is a comment for translators
+                prev = node.prev
+                while prev and prev.type == 'text' and prev.content.strip() == '':
+                    prev = prev.prev
+                comment = ""
+                if prev and prev.type == 'comment':
+                    comment = prev.content.strip() + "\n"
+
+                if self.verbose and (not translatable or comment.startswith("translate=no")):
+                    if not translatable:
+                        sys.stderr.write("Image file '%s' is not translatable.\n" % i18n_path)
+                    else:
+                        sys.stderr.write("Translation is disabled for '%s'.\n" % i18n_path)
+
+                if translatable and not comment.startswith("translate=no"):
+                    comment = comment + \
+                        "When image changes, this message will be marked fuzzy " \
+                        "or untranslated for you.\nIt doesn't matter what you "  \
+                        "translate it to: it's not used at all."
+                    msg.outputMessage(
+                        "external ref='%s'; md5=%s" % (i18n_path, hash),
+                        node.lineNo(), comment)
         elif node and node.children:
             child = node.children
             while child:
