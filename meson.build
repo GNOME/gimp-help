@@ -346,6 +346,29 @@ maintainers_file = custom_target('MAINTAINERS',
   build_by_default: true,
 )
 
+if maintainer_enabled
+    copy_AUTHORS = custom_target('AUTHORS-to-source',
+        input: authors_file,
+        output: ['source-root-authors'],
+        command: [
+            'cp',
+            '@INPUT@',
+            meson.project_source_root() / 'AUTHORS',
+        ],
+        build_by_default: true,
+    )
+
+    copy_MAINTAINERS = custom_target('MAINTAINERS-to-source',
+        input: maintainers_file,
+        output: ['source-root-maintainers'],
+        command: [
+            'cp',
+            '@INPUT@',
+            meson.project_source_root() / 'MAINTAINERS',
+        ],
+        build_by_default: true,
+    )
+endif
 
 ########################################################################
 
