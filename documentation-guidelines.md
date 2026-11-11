@@ -7,56 +7,49 @@
 
 ## Style guide
 
-- Most lines should be no longer than 80 characters, except for long literal
+### Editing in General
+- We use American English spelling and grammar.
+- Lines should be no longer than 80 characters, except for long literal
   strings like website links.
 - Do not use TAB characters.
 - Do not add spaces at end of a line. If the sentence continues on the next
   line, Docbook is smart enough to add a space.
 - Use only Linux line endings.
-- Tags starting a block of text or other group should begin on a new line
-  and indented from its parent block.
 - Indentation should be two spaces.
 - Do not use two consecutive spaces to separate sentences or anywhere else
-  inside a sentence.
+  in a sentence.
 - Do not add a space before a ':' or other punctuation.
-- Use American English spelling.
+- Files should be saved UTF-8 encoded without BOM.
+
+Your editor of choice should have settings to adjust most of the above.
+Please save yourself the trouble of having to adjust this manually by
+setting it up beforehand.
+
+### Titles and Headings
 - Titles and Headings should use "Title-style Capitalization" rules,
   i.e. capitalize major words and the first and last word of the title
   or heading.
 - Do not put a period at the end of a Title or Heading.
-- Documentation does not need to reference back to anything before the current
-  main version (currently 3.0). So, things like "Since GIMP 2.6 you can do ..."
-  should be changed to not mention the GIMP version. Changes in a minor version
-  can be added ("this option was added in 3.0.4"), but should probably only
-  be done sparingly, since these remarks become obsolete in the next major
-  version.
-- Don't use "grayed out" or similar to denote a disabled item. The color depends
-  on the user's theme. Use "disabled" instead. Note: don't blindly replace
-  it, there are valid cases of grayed out, e.g. in sample-colorize.
-- Use grayscale instead of gray scale or gray-scale. Do not use grayscaled.
-- GIMP should be referenced as `<acronym>GIMP</acronym>`. The name is always
-  written in all uppercase. We do not add 'the' in front of it anymore. In the
-  rare case you need to mention the version number, do it like this:
-  `<acronym>GIMP</acronym> 2.10`, do not add a dash.
-- Referencing GEGL should be done in the same way.
-- Use of `<xref linkend="id"/>` is discouraged. Translators won't know what the
-  text of the link will be, which makes it more difficult for them to put it
-  in the correct order in the translated sentence.
-  Use `<link linkend="id">link text</link>` instead.
-- Do not use "image menu" or similar to denote the main menu. Call it
-  "main menu" instead. It can be confusing and is ambiguous since there is an
-  "Image" submenu in the main menu.
-  Historically, when GIMP was multi-window only, it may have made more sense to
-  call it that, but that is no longer the case.
-- Never ever say "self explanatory" or something with a similar meaning. Always
-  use an actual description, even if it means mostly repeating the option
-  label or other relevant text.
+
+### Content related
+- Always use the same exact spelling including capitalization as used in
+  GIMP (of the same version we are documenting), even if it means not following
+  other parts of this style guide.
 - Most documentation pages are structured the same way. Try to use the same
   sentences where possible to reduce work for translators.
+- Documentation does not need to reference back to anything before the current
+  main version (currently 3.2). So, things like "Since GIMP 2.6 you can do ..."
+  should be changed to not mention the GIMP version. Changes in a minor version
+  can be added ("this option was added in 3.2.2"), but should probably only
+  be done sparingly, since these remarks become obsolete in the next major
+  version.
 - Strings to be translated are in general divided per paragraph. Sometimes it
-  can be advantagous to split a paragraph in two if it means that one part
-  can be reused in other parts of the documentation and thus reducing work
+  can be advantageous to split a paragraph in two if it means that a paragraph
+  can be reused in other parts of the documentation and thus reduce work
   for translators.
+- Split paragraphs when they become too long. Shorter paragraphs are easier
+  to read.
+- Split sentences when they become too long.
 - Certain parts of the documentation are platform specific. We need to be
   clear about this when this is the case and where necessary explain it for
   each platform separately, e.g. when mentioning file paths.
@@ -67,6 +60,52 @@
 - In the past `section history` comments were added at the top of the source
   documentation xml files. Don't use or update these sections. Our history
   can easily be followed by checking the commit log.
+- In general: be consistent. Refer to other pages to check how common terms
+  are written and what layout is used.
+
+### Usage of specific words
+- Don't use "grayed out" or similar to denote a disabled item. The color depends
+  on the user's theme. Use "disabled" instead. Note: don't blindly replace
+  it, there are valid cases of grayed out, e.g. in sample-colorize.
+- Use grayscale instead of gray scale or gray-scale. Do not use grayscaled.
+- Do not use "image menu" or similar to denote the main menu. Call it
+  "main menu" instead. It can be confusing and is ambiguous since there is an
+  "Image" submenu in the main menu.
+  Historically, when GIMP was multi-window only, it may have made more sense to
+  call it that, but that is no longer the case.
+- Never ever say "self explanatory" or something with a similar meaning. Always
+  use an actual description, even if it means mostly repeating the option
+  label or other relevant text.
+
+### Adding a new document
+- Base the structure on a similar page from our documentation.
+- Add a reference in `gimp.xml` or other page depending on where
+  it fits within our manual.
+- Run `./tools/generate_meson_build.py` which adds the new file
+  to the relevant `meson.build` file. Not doing this will cause
+  our CI to fail. This also works for removing a file. If you
+  don't have meson building set up, you will have to add it
+  manually.
+
+### Tag and Docbook related
+- Tags starting a block of text or other group should begin on a new line
+  and indented from its parent block.
+- GIMP should be referenced as `<acronym>GIMP</acronym>`. The name is always
+  written in all uppercase. We do not add 'the' in front of it anymore. In the
+  rare case you need to mention the version number, do it like this:
+  `<acronym>GIMP</acronym> 2.10`, do not add a dash.
+- Referencing GEGL should be done in the same way.
+- Use of `<xref linkend="id"/>` is discouraged except at the end of short
+  sentences, e.g. see `<xref linkend="id"/>`.
+  Translators won't know what the text of the link will be, which makes
+  it more difficult for them to put it in the correct order in the
+  translated sentence.
+  In most cases you should use `<link linkend="id">link text</link>` instead.
+- Docbook XML tags are case sensitive and should always be all lowercase
+  or validation will fail.
+- Docbook can be very strict in what combination and order of tags are
+  allowed. We advise to run the meson build locally including running
+  `ninja test`, which will validate the documenation.
 - More technical Docbook related info can be found in [HACKING](HACKING).
 
 ## Image handling
