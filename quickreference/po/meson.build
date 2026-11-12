@@ -54,8 +54,19 @@ gimp_pot = custom_target('gimp-keys.pot',
     env: pot_env,
 )
 
-# FIXME We may need an optional target to copy an updated
-# pot file to the source so we can commit it.
+# FIXME Should we just remove pot from repo, should work,
+# just need to update DamnedLies settings for generating qr pot
+
+copy_qr_pot_to_source = custom_target('source-gimp-keys.pot',
+    input: [gimp_pot],
+    output: ['source-gimp-keys.pot'],
+    command: [
+        cp,
+        '@INPUT@',
+        meson.project_source_root() / 'quickreference' / 'po' / 'gimp-keys.pot',
+    ],
+    build_by_default: true,
+)
 
 qr_po_targets = {}
 qr_po_dependencies = []

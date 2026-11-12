@@ -8,6 +8,7 @@ qr_output = 'gimp-keys-' + lang + '.xml'
 # Copy the base xml to the build dir
 xml_lang = custom_target(qr_target,
     input: [keys_xml],
+    depends: [copy_qr_pot_to_source],
     output: [qr_output],
     command: [
         cp,
